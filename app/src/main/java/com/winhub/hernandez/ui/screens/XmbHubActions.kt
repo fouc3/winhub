@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.preference.PreferenceManager
 import com.winhub.hernandez.container.Shortcut
+import com.winhub.hernandez.util.I18n
 
 /** What only Home can do for a game: its own launch-method, settings, pin, container and delete flows. */
 internal class HubXmbOps(
@@ -63,7 +64,7 @@ internal fun hubXmbActions(
 }
 
 private fun hubDeleteMenu(xmb: XmbScope, game: HubGame, ops: HubXmbOps): XmbMenu =
-    XmbMenu("Delete game?", Icons.Filled.Delete, initialKey = "cancel") {
+    XmbMenu(I18n.s(R.string.ui_delete_game), Icons.Filled.Delete, initialKey = "cancel") {
         listOf(
             XmbRow.Info("msg", "Delete “${game.name}”?", Icons.Filled.Info),
             XmbRow.Action("delete", "Delete", Icons.Filled.Delete, danger = true) {

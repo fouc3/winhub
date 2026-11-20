@@ -873,7 +873,7 @@ private fun SourceToggleBox(
                     Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    SourceChip("Official", OfficialColor, OFFICIAL_KEY in activeSources) { onChipToggle(OFFICIAL_KEY) }
+                    SourceChip(I18n.s(R.string.ui_official), OfficialColor, OFFICIAL_KEY in activeSources) { onChipToggle(OFFICIAL_KEY) }
                     communityGroups.forEach { g ->
                         SourceChip(g.name, sourceColorFor(g.name), g.name in activeSources) { onChipToggle(g.name) }
                     }
@@ -1010,7 +1010,7 @@ private fun ColumnScope.ComponentVersionSections(
         val sections = remember(official, communityGroups, activeSources, includeCommunity) {
             buildList {
                 if (OFFICIAL_KEY in activeSources && official.isNotEmpty())
-                    add(SheetSection("Official", community = false, color = OfficialColor, rows = official))
+                    add(SheetSection(I18n.s(R.string.ui_official), community = false, color = OfficialColor, rows = official))
                 if (includeCommunity) communityGroups.forEach { g ->
                     if (g.name in activeSources)
                         add(SheetSection(g.name, community = true, color = sourceColorFor(g.name), rows = g.profiles))
@@ -1196,7 +1196,7 @@ private fun HeaderSourceControl(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SourceChip("Official", OfficialColor, OFFICIAL_KEY in activeSources) { onChipToggle(OFFICIAL_KEY) }
+                SourceChip(I18n.s(R.string.ui_official), OfficialColor, OFFICIAL_KEY in activeSources) { onChipToggle(OFFICIAL_KEY) }
                 communityGroups.forEach { g ->
                     SourceChip(g.name, sourceColorFor(g.name), g.name in activeSources) { onChipToggle(g.name) }
                 }

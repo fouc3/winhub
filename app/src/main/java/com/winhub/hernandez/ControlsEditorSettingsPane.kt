@@ -92,6 +92,7 @@ import com.winhub.hernandez.ui.theme.AppThemeState
 import kotlinx.coroutines.delay
 import java.util.Locale
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
 
 private val EditorMaxSliderWidth = 300.dp
 private val EditorPadding = 12.dp
@@ -1579,7 +1580,7 @@ private fun BindingSetupDialog(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(EditorSpacing),
             ) {
-                val filterCategories = listOf("All", "Keyboard", "Mouse", "Gamepad")
+                val filterCategories = listOf("All", I18n.s(R.string.ui_keyboard), "Mouse", I18n.s(R.string.ui_gamepad))
                 val filterLabels = listOf(
                     stringResource(R.string.binding_filter_all),
                     stringResource(R.string.binding_filter_keyboard),

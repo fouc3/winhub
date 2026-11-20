@@ -61,7 +61,7 @@ internal fun DeckPerformanceDialog(
     }
 
     DeckConfigDialog(title = I18n.s(R.string.performance), onDismiss = onDismiss) {
-        DeckConfigNote("Per-game preset · saved on OK · honored at launch")
+        DeckConfigNote(I18n.s(R.string.ui_per_game_preset_saved_on_ok_honored_at_launch))
 
         DeckConfigPanel("Device") {
             DeckRow("GPU clock", readouts["gpuMhz"]?.let { "$it MHz" } ?: "—") {}
@@ -71,47 +71,47 @@ internal fun DeckPerformanceDialog(
 
         DeckConfigChipGrid(
             label = I18n.s(R.string.ui_power_profile),
-            chips = listOf("Off", "Battery", "Balanced", "Performance", "Turbo")
+            chips = listOf("Off", I18n.s(R.string.ui_battery), I18n.s(R.string.ui_balanced), I18n.s(R.string.performance), I18n.s(R.string.ui_turbo))
                 .map { Triple(it, profile == it, { applyProfile(it) }) },
         )
 
         DeckGroup("Quick controls · no root") {
-            DeckRow("Sustained Performance Mode", "Holds a stable clock to avoid thermal throttling.") {
+            DeckRow(I18n.s(R.string.ui_sustained_performance_mode), "Holds a stable clock to avoid thermal throttling.") {
                 DeckToggle(sustained, onSustained)
             }
-            DeckRow("Thread Priority Boost", "Raises emulator thread priority so the scheduler favours the game.") {
+            DeckRow(I18n.s(R.string.ui_thread_priority_boost), "Raises emulator thread priority so the scheduler favours the game.") {
                 DeckToggle(priority, onPriority)
             }
-            DeckRow("Prefer Big Cores", "Routes emulator threads onto the big / prime cluster.") {
+            DeckRow(I18n.s(R.string.ui_prefer_big_cores), "Routes emulator threads onto the big / prime cluster.") {
                 DeckToggle(bigCores, onBigCores)
             }
-            DeckRow("Lock GPU to max clock", "Adreno: no-root KGSL turbo; sysfs pin with root.") {
+            DeckRow(I18n.s(R.string.ui_lock_gpu_to_max_clock), "Adreno: no-root KGSL turbo; sysfs pin with root.") {
                 val k = PerfRootApplier.KEY_GPU_CLOCK_LOCK
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
         }
 
         DeckGroup("Root & danger") {
-            DeckConfigNote("Saved for this game · applied at launch when root is available.")
-            DeckRow("CPU governor → performance", "Forces every cluster to the performance governor.") {
+            DeckConfigNote(I18n.s(R.string.ui_saved_for_this_game_applied_at_launch_when_root_is_av))
+            DeckRow(I18n.s(R.string.ui_cpu_governor_performance), "Forces every cluster to the performance governor.") {
                 val k = PerfRootApplier.KEY_CPU_GOVERNOR
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
-            DeckRow("Lock CPU frequency to max", "scaling_min_freq = scaling_max_freq on every cluster.") {
+            DeckRow(I18n.s(R.string.ui_lock_cpu_frequency_to_max), "scaling_min_freq = scaling_max_freq on every cluster.") {
                 val k = PerfRootApplier.KEY_CPU_FREQ_LOCK
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
-            DeckRow("Keep all cores online", "Prevents the kernel from hot-plugging cores offline.") {
+            DeckRow(I18n.s(R.string.ui_keep_all_cores_online), "Prevents the kernel from hot-plugging cores offline.") {
                 val k = PerfRootApplier.KEY_CORES_ONLINE
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
-            DeckRow("Disable thermal throttling", "Runtime watchdog still guards.") {
+            DeckRow(I18n.s(R.string.ui_disable_thermal_throttling), "Runtime watchdog still guards.") {
                 val k = PerfRootApplier.KEY_THERMAL_DISABLE
                 DeckToggle(rootValue(k)) { on ->
                     if (on) pendingDanger = "Disable thermal throttling" to { onRoot(k, true) } else onRoot(k, false)
                 }
             }
-            DeckRow("Fan to maximum", "Forces active cooling to full at launch.") {
+            DeckRow(I18n.s(R.string.ui_fan_to_maximum), "Forces active cooling to full at launch.") {
                 val k = PerfRootApplier.KEY_FAN_MAX
                 DeckToggle(rootValue(k)) { on ->
                     if (on) pendingDanger = "Fan to maximum" to { onRoot(k, true) } else onRoot(k, false)

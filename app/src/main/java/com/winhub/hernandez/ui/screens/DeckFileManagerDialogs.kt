@@ -205,7 +205,7 @@ internal fun DeckFmContextMenu(
         compact = true,
     ) {
         FmMenuRow("Select", Icons.Filled.Checklist, go(a.select))
-        FmMenuRow("Properties", Icons.Filled.Info, go(a.properties))
+        FmMenuRow(I18n.s(R.string.ui_properties), Icons.Filled.Info, go(a.properties))
         // Favorites are directories: only folders get the pin toggle.
         if (isDir) {
             FmMenuRow(
@@ -214,16 +214,16 @@ internal fun DeckFmContextMenu(
                 go(a.toggleFavorite),
             )
         }
-        if (runnable) FmMenuRow("Run", Icons.Filled.PlayArrow, go(a.run))
+        if (runnable) FmMenuRow(I18n.s(R.string.run), Icons.Filled.PlayArrow, go(a.run))
         // Only real PE executables can become a permanent Games tile (the importer execs `wine <path>`).
         if (!isDir && lower.endsWith(".exe")) FmMenuRow("Add to Shortcuts", Icons.Filled.Add, go(a.addToShortcuts))
         if (archive) {
             FmMenuRow(if (isInno) "Unpack / Install…" else "Unpack Archive…", Icons.Filled.Unarchive, go(a.unpack))
-            FmMenuRow("Fast Extract", Icons.Filled.Bolt, go(a.fastExtract))
+            FmMenuRow(I18n.s(R.string.ui_fast_extract), Icons.Filled.Bolt, go(a.fastExtract))
         }
-        FmMenuRow("Rename", Icons.Filled.Edit, go(a.rename))
-        FmMenuRow("Copy", Icons.Filled.FileCopy, go(a.copy))
-        FmMenuRow("Cut", Icons.Filled.ContentCut, go(a.cut))
+        FmMenuRow(I18n.s(R.string.ui_rename_2), Icons.Filled.Edit, go(a.rename))
+        FmMenuRow(I18n.s(R.string.copy), Icons.Filled.FileCopy, go(a.copy))
+        FmMenuRow(I18n.s(R.string.ui_cut), Icons.Filled.ContentCut, go(a.cut))
         FmMenuRow("Delete", Icons.Filled.Delete, go(a.delete), danger = true)
     }
 }
@@ -246,7 +246,7 @@ internal fun DeckFmOptionsDialog(
 ) {
     DeckFmDialog(title = I18n.s(R.string.ui_sort_view), onDismiss = onDismiss, dismissLabel = "Done") {
         FmSectionLabel("SORT BY")
-        listOf("name" to "Name", "date" to "Date modified", "size" to "Size").forEach { (key, label) ->
+        listOf("name" to I18n.s(R.string.name), "date" to I18n.s(R.string.ui_date_modified), "size" to "Size").forEach { (key, label) ->
             val on = sortBy == key
             FmMenuRow(
                 label = label,
@@ -268,10 +268,10 @@ internal fun DeckFmOptionsDialog(
             icon = if (gridView) Icons.Filled.ViewList else Icons.Filled.GridView,
             onClick = onGrid,
         )
-        if (!gridView) FmCheckRow("Compact rows", Icons.Filled.ViewList, compactRows, onCompact)
-        FmCheckRow("Show hidden files", Icons.Filled.Folder, showHidden, onHidden)
+        if (!gridView) FmCheckRow(I18n.s(R.string.ui_compact_rows), Icons.Filled.ViewList, compactRows, onCompact)
+        FmCheckRow(I18n.s(R.string.ui_show_hidden_files), Icons.Filled.Folder, showHidden, onHidden)
         FmSectionLabel("FOLDER")
-        FmMenuRow("Refresh", Icons.Filled.Refresh, onClick = { onDismiss(); onRefresh() })
+        FmMenuRow(I18n.s(R.string.social_hub_refresh), Icons.Filled.Refresh, onClick = { onDismiss(); onRefresh() })
     }
 }
 
@@ -309,14 +309,14 @@ internal fun DeckFmConflictDialog(
         else "Overwrite replaces the existing file.",
         onDismiss = onCancel,
     ) {
-        if (batch) FmCheckRow("Apply to all conflicts", Icons.Filled.Checklist, applyToAll) { onApplyToAll(!applyToAll) }
+        if (batch) FmCheckRow(I18n.s(R.string.ui_apply_to_all_conflicts), Icons.Filled.Checklist, applyToAll) { onApplyToAll(!applyToAll) }
         FmMenuRow(
             label = if (isDir) "Merge" else "Overwrite",
             icon = Icons.Filled.Edit,
             onClick = { onChoice(if (isDir) ConflictChoice.MERGE else ConflictChoice.OVERWRITE) },
         )
-        FmMenuRow("Keep both", Icons.Filled.FileCopy, onClick = { onChoice(ConflictChoice.KEEP_BOTH) })
-        FmMenuRow("Skip", Icons.Filled.Close, onClick = { onChoice(ConflictChoice.SKIP) })
+        FmMenuRow(I18n.s(R.string.ui_keep_both), Icons.Filled.FileCopy, onClick = { onChoice(ConflictChoice.KEEP_BOTH) })
+        FmMenuRow(I18n.s(R.string.ui_skip), Icons.Filled.Close, onClick = { onChoice(ConflictChoice.SKIP) })
     }
 }
 

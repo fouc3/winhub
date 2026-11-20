@@ -61,8 +61,8 @@ class SocialHubActivity : ComponentActivity() {
 
 private val SOCIAL_TABS = listOf(
     StoreSectionTab("feed", "Feed", Icons.Filled.Forum),
-    StoreSectionTab("configs", "Configs", Icons.Filled.Tune),
-    StoreSectionTab("profile", "Profile", Icons.Filled.Person),
+    StoreSectionTab("configs", I18n.s(R.string.ui_configs), Icons.Filled.Tune),
+    StoreSectionTab("profile", I18n.s(R.string.profile), Icons.Filled.Person),
 )
 
 @Composable

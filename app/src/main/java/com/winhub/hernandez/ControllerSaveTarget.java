@@ -7,6 +7,7 @@ import com.winhub.hernandez.container.Container;
 import com.winhub.hernandez.container.Shortcut;
 import com.winhub.hernandez.core.DInputVisibility;
 import com.winhub.hernandez.ui.XServerDialogState;
+import com.winhub.hernandez.util.I18n;
 
 /**
  * Where the in-game controller and rumble changes (Controls › Pad and › Vibration) are saved.
@@ -85,7 +86,7 @@ final class ControllerSaveTarget {
                 shortcut.saveData();
             }
         }
-        noteSaved("DirectInput visibility");
+        noteSaved(I18n.s(R.string.ui_directinput_visibility));
     }
 
     private void noteSaved(String what) {

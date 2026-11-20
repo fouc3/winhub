@@ -650,7 +650,7 @@ private fun xmbCommunityDetailMenu(xmb: XmbScope, s: Shortcut, pick: CommunityPi
                 voted = true
                 votePrefs.edit().putBoolean(sha, true).apply()
             } else {
-                xmb.toast("Couldn't record your vote.")
+                xmb.toast(I18n.s(R.string.ui_couldn_t_record_your_vote))
             }
         }
     }
@@ -954,7 +954,7 @@ private fun xmbMyUploadsMenu(xmb: XmbScope): XmbMenu {
         val list = uploads
         when {
             list == null -> listOf(XmbRow.Info("loading", "Loading…", Icons.Filled.HourglassEmpty))
-            list.isEmpty() -> listOf(XmbRow.Info("none", "You haven't shared any configs yet.", Icons.Filled.Info))
+            list.isEmpty() -> listOf(XmbRow.Info("none", I18n.s(R.string.ui_you_haven_t_shared_any_configs_yet), Icons.Filled.Info))
             else -> buildList<XmbRow> {
                 add(
                     XmbRow.Info(
@@ -1024,10 +1024,10 @@ private fun xmbMyUploadMenu(xmb: XmbScope, row: MyUploadRow, onDeleted: (String)
                 deleting = false
                 if (ok) {
                     onDeleted(row.record.sha)
-                    xmb.toast("Deleted your shared config.")
+                    xmb.toast(I18n.s(R.string.ui_deleted_your_shared_config))
                     me.close(xmb)
                 } else {
-                    xmb.toast("Couldn't reach the server.")
+                    xmb.toast(I18n.s(R.string.ui_couldn_t_reach_the_server))
                 }
             }
         }

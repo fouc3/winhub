@@ -192,7 +192,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
         if (showHelp) {
             AlertDialog(
                 onDismissRequest = { showHelp = false },
-                title = { Text("Friends") },
+                title = { Text(I18n.s(R.string.xmb_tab_friends)) },
                 text = { Text(HELP_TEXT) },
                 confirmButton = { TextButton(onClick = { showHelp = false }) { Text("OK") } },
             )

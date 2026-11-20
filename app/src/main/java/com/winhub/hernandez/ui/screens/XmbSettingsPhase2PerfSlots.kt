@@ -37,7 +37,7 @@ import com.winhub.hernandez.R
 
 private val P2_PERF_NO_ROOT = listOf("sustainedPerfMode", "perfPriorityBoost", "preferBigCores")
 private val P2_PERF_KEYS = P2_PERF_NO_ROOT + PerfRootApplier.ROOT_KEYS
-private val P2_PROFILES = listOf("Off", "Battery", "Balanced", "Performance", "Turbo")
+private val P2_PROFILES = listOf("Off", I18n.s(R.string.ui_battery), I18n.s(R.string.ui_balanced), I18n.s(R.string.performance), I18n.s(R.string.ui_turbo))
 
 private fun p2PerfGlobal(key: String): Boolean = when (key) {
     "sustainedPerfMode" -> PerformanceSettings.sustainedPerfMode.value
@@ -108,7 +108,7 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
     }
 
-    return XmbMenu("Performance", Icons.Filled.Speed, onClose = { jobs.cancel() }) {
+    return XmbMenu(I18n.s(R.string.performance), Icons.Filled.Speed, onClose = { jobs.cancel() }) {
         val rows = mutableListOf<XmbRow>()
         val granted = rootState == RootManager.RootState.GRANTED
 
@@ -176,7 +176,7 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 // "controllerSlotOverrides" holds the same JSON the container editor and the in-game Players tab use,
 // only ever parsed/built by WinHandler. Empty = inherit the container's Player Slots.
 
-private val P2_SLOT_LABELS = listOf("Auto", "Player 1", "Player 2", "Player 3", "Player 4", "Ignore")
+private val P2_SLOT_LABELS = listOf("Auto", I18n.s(R.string.ui_player_1), I18n.s(R.string.ui_player_2), I18n.s(R.string.ui_player_3), I18n.s(R.string.ui_player_4), "Ignore")
 private fun p2SlotValue(label: String): Int = when (label) {
     "Player 1" -> 0
     "Player 2" -> 1
@@ -204,7 +204,7 @@ internal fun xmbPlayerSlotsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         slotRows = build()
     }
 
-    return XmbMenu("Player slots", Icons.Filled.Gamepad) {
+    return XmbMenu(I18n.s(R.string.ui_player_slots_2), Icons.Filled.Gamepad) {
         val rows = mutableListOf<XmbRow>()
         val json = saved()
         if (json.isEmpty()) {

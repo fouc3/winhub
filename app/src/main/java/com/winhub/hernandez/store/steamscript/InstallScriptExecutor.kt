@@ -11,6 +11,7 @@ import com.winhub.hernandez.core.FileUtils
 import com.winhub.hernandez.core.WinePath
 import com.winhub.hernandez.core.WineRegistryEditor
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 /**
  * Runs a Steam game's `installScript.vdf` recipe inside a Wine container — the install-time step the
@@ -472,7 +473,7 @@ object InstallScriptExecutor {
             // findstr: ONLY the first bare quoted string is a pattern (the rest are FILE names) — every
             // pattern must be its own /c:"…" (device test #10: the loop never matched, gave up after
             // 30 s and the session closed mid-install).
-            val procPattern = listOf(exeBase, "EAappOfflineInstaller", "EAappInstaller", "msiexec", "UbisoftConnectInstaller")
+            val procPattern = listOf(exeBase, I18n.s(R.string.ui_eaappofflineinstaller), "EAappInstaller", "msiexec", I18n.s(R.string.ui_ubisoftconnectinstaller))
                 .distinct().joinToString(" ") { "/c:\"$it\"" }
             val guard = rp.hasRunKey?.trim()?.replace('/', '\\')
             val guardKey = guard?.substringBeforeLast('\\', "")?.takeIf { it.isNotEmpty() }

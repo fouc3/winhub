@@ -1301,10 +1301,10 @@ private fun TopLevelFields(
         // SurfaceDirect hands each window's buffer to SurfaceFlinger; these tune how it submits them.
         if (viewModel.selectedRenderer == "SurfaceDirect") {
             Spacer(Modifier.height(8.dp))
-            HudToggleRow("SurfaceDirect: performance mode", viewModel.surfaceDirectPerformanceMode) { viewModel.surfaceDirectPerformanceMode = it }
-            HudToggleRow("SurfaceDirect: present at refresh rate", viewModel.surfaceDirectPresentAtRefreshRate) { viewModel.surfaceDirectPresentAtRefreshRate = it }
-            HudToggleRow("SurfaceDirect: submit every buffer", viewModel.surfaceDirectBackPressure) { viewModel.surfaceDirectBackPressure = it }
-            HudToggleRow("SurfaceDirect: precise presentation", viewModel.surfaceDirectPrecisePresentation) { viewModel.surfaceDirectPrecisePresentation = it }
+            HudToggleRow(I18n.s(R.string.ui_surfacedirect_performance_mode), viewModel.surfaceDirectPerformanceMode) { viewModel.surfaceDirectPerformanceMode = it }
+            HudToggleRow(I18n.s(R.string.ui_surfacedirect_present_at_refresh_rate), viewModel.surfaceDirectPresentAtRefreshRate) { viewModel.surfaceDirectPresentAtRefreshRate = it }
+            HudToggleRow(I18n.s(R.string.ui_surfacedirect_submit_every_buffer), viewModel.surfaceDirectBackPressure) { viewModel.surfaceDirectBackPressure = it }
+            HudToggleRow(I18n.s(R.string.ui_surfacedirect_precise_presentation), viewModel.surfaceDirectPrecisePresentation) { viewModel.surfaceDirectPrecisePresentation = it }
         }
         // OpenGL card (core.FastOpenGL): Fast / Show FPS / Vsync off as three compact switch rows under
         // one "?". Fast greys with one short reason when the driver isn't a Turnip or the APK has no
@@ -1842,16 +1842,16 @@ private fun WineConfigTab(
         SectionBox(title = I18n.s(R.string.desktop)) {
             LabeledDropdown(
                 label = stringResource(R.string.theme),
-                options = listOf("Light", "Dark"),
-                selectedOption = listOf("Light", "Dark").getOrElse(viewModel.desktopThemeIndex) { "Light" },
-                onSelect = { opt -> viewModel.desktopThemeIndex = listOf("Light", "Dark").indexOf(opt).coerceAtLeast(0) }
+                options = listOf(I18n.s(R.string.ui_light), I18n.s(R.string.ui_dark)),
+                selectedOption = listOf(I18n.s(R.string.ui_light), I18n.s(R.string.ui_dark)).getOrElse(viewModel.desktopThemeIndex) { I18n.s(R.string.ui_light) },
+                onSelect = { opt -> viewModel.desktopThemeIndex = listOf(I18n.s(R.string.ui_light), I18n.s(R.string.ui_dark)).indexOf(opt).coerceAtLeast(0) }
             )
             Spacer(Modifier.height(8.dp))
             LabeledDropdown(
                 label = stringResource(R.string.background),
-                options = listOf("Image", "Solid Color"),
-                selectedOption = listOf("Image", "Solid Color").getOrElse(viewModel.desktopBgTypeIndex) { "Image" },
-                onSelect = { opt -> viewModel.desktopBgTypeIndex = listOf("Image", "Solid Color").indexOf(opt).coerceAtLeast(0) }
+                options = listOf(I18n.s(R.string.ui_image), I18n.s(R.string.ui_solid_color)),
+                selectedOption = listOf(I18n.s(R.string.ui_image), I18n.s(R.string.ui_solid_color)).getOrElse(viewModel.desktopBgTypeIndex) { I18n.s(R.string.ui_image) },
+                onSelect = { opt -> viewModel.desktopBgTypeIndex = listOf(I18n.s(R.string.ui_image), I18n.s(R.string.ui_solid_color)).indexOf(opt).coerceAtLeast(0) }
             )
             // Color picker (visible when Solid Color selected)
             if (viewModel.desktopBgTypeIndex == WineThemeManager.BackgroundType.COLOR.ordinal) {
@@ -1878,7 +1878,7 @@ private fun WineConfigTab(
             if (viewModel.desktopBgTypeIndex == WineThemeManager.BackgroundType.IMAGE.ordinal) {
                 val context = LocalContext.current
                 val ioScope = rememberCoroutineScope()
-                val scopeOptions = listOf("All containers", "This container")
+                val scopeOptions = listOf(I18n.s(R.string.ui_all_containers), I18n.s(R.string.ui_this_container))
                 val currentScope = WineThemeManager.BackgroundScope.values()
                     .getOrElse(viewModel.desktopWallpaperScopeIndex) { WineThemeManager.BackgroundScope.GLOBAL }
                 // File depends on the selected scope; getNextContainerId() is O(1) so recomputing
@@ -2061,7 +2061,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
 
 @Composable
 private fun WinComponentRow(comp: WinComponentEntry, onSelect: (Int) -> Unit) {
-    val options = listOf("Builtin (Wine)", "Native (Windows)")
+    val options = listOf(I18n.s(R.string.ui_builtin_wine), I18n.s(R.string.ui_native_windows))
     LabeledDropdown(
         label = comp.label,
         options = options,
@@ -2398,7 +2398,7 @@ private fun AdvancedTab(
                 }
             }
             // On-screen priority: what happens to the on-screen pad when a physical pad connects mid-game.
-            val onScreenModeLabels = listOf("Keep on-screen player", "Yield Player 1 to pad", "Share the player")
+            val onScreenModeLabels = listOf(I18n.s(R.string.ui_keep_on_screen_player), I18n.s(R.string.ui_yield_player_1_to_pad), I18n.s(R.string.ui_share_the_player))
             LabeledDropdown(
                 label = I18n.s(R.string.ui_on_screen_priority),
                 options = onScreenModeLabels,
@@ -4077,11 +4077,11 @@ internal fun GraphicsDriverConfigDialog(
                     style = MaterialTheme.typography.titleSmall
                 )
                 Spacer(Modifier.height(4.dp))
-                val gmemLabels = listOf("Auto (Adreno 710/720/722)", "Force On", "Force Off")
+                val gmemLabels = listOf("Auto (Adreno 710/720/722)", I18n.s(R.string.ui_force_on), I18n.s(R.string.ui_force_off))
                 val gmemValues = listOf("auto", "on", "off")
                 val gmemSel = gmemLabels[gmemValues.indexOf(turnipGmem).coerceAtLeast(0)]
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    LabeledDropdown("GMEM (tiled rendering)", gmemLabels, gmemSel, { picked ->
+                    LabeledDropdown(I18n.s(R.string.ui_gmem_tiled_rendering), gmemLabels, gmemSel, { picked ->
                         turnipGmem = gmemValues[gmemLabels.indexOf(picked).coerceAtLeast(0)]
                     }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_turnip_gmem }) {
@@ -4676,9 +4676,9 @@ internal fun DxvkConfigDialog(
     var asyncEnabled         by remember { mutableStateOf(config.get("async") == "1") }
     var asyncCacheEnabled    by remember { mutableStateOf(config.get("asyncCache") == "1") }
     // Texture filtering: labels index-aligned with DXVKConfigDialog.ANISOTROPY_VALUES / LOD_BIAS_VALUES.
-    val anisotropyLabels = remember { listOf("Game default", "2x", "4x", "8x", "16x") }
+    val anisotropyLabels = remember { listOf(I18n.s(R.string.ui_game_default), "2x", "4x", "8x", "16x") }
     val lodBiasLabels = remember {
-        listOf("Game default", "Auto (match scaling mode)", "Sharper (-0.25)", "Sharper (-0.5)",
+        listOf(I18n.s(R.string.ui_game_default), I18n.s(R.string.ui_auto_match_scaling_mode), I18n.s(R.string.ui_sharper_0_25), I18n.s(R.string.ui_sharper_0_5),
                "Sharper (-0.75)", "Sharpest (-1.0)")
     }
     var selectedAnisotropy by remember {
@@ -5313,7 +5313,7 @@ internal fun DxvkConfigDialog(
                 SectionLabel("API FEATURE LEVEL")
                 LabeledDropdown("", featureLevelEntries, selectedFeatureLevel, { selectedFeatureLevel = it })
                 Spacer(Modifier.height(8.dp))
-                LabeledDropdown("DDraw Wrapper", ddraEntries, selectedDdra, { selectedDdra = it })
+                LabeledDropdown(I18n.s(R.string.ddraw_wrapper), ddraEntries, selectedDdra, { selectedDdra = it })
                 // D7VK is a catalog-backed component: when it's the chosen DDraw wrapper, offer a
                 // version dropdown ("Bundled (default)" + any downloaded profiles) and a cloud button
                 // to fetch more — mirroring the DXVK/VKD3D version UI above.
@@ -6208,13 +6208,13 @@ internal fun WineD3DConfigDialog(
                 Spacer(Modifier.height(8.dp))
                 LabeledDropdown(stringResource(R.string.gpu_name), gpuNames, gpuName, { gpuName = it })
                 Spacer(Modifier.height(8.dp))
-                LabeledDropdown("DDraw Wrapper", ddraEntries, ddra, { ddra = it })
+                LabeledDropdown(I18n.s(R.string.ddraw_wrapper), ddraEntries, ddra, { ddra = it })
                 Spacer(Modifier.height(8.dp))
                 LabeledDropdown(stringResource(R.string.graphics_driver_max_device_memory), videoMemEntries, videoMem, { videoMem = it })
                 Spacer(Modifier.height(8.dp))
-                LabeledDropdown("Strict Shader Math", ssmOptions, ssm, { ssm = it })
+                LabeledDropdown(I18n.s(R.string.strict_shader_math), ssmOptions, ssm, { ssm = it })
                 Spacer(Modifier.height(8.dp))
-                LabeledDropdown("Offscreen Rendering Mode", ormOptions, orm, { orm = it })
+                LabeledDropdown(I18n.s(R.string.offscreen_rendering_mode), ormOptions, orm, { orm = it })
                 Spacer(Modifier.height(8.dp))
                 LabeledDropdown("Renderer", rendOptions, renderer, { renderer = it })
             }
@@ -6446,7 +6446,7 @@ internal fun FpsCounterConfigDialog(
                     // Danger bands as one 3-way rather than two toggles: "bands off but auto on"
                     // isn't a distinct state worth exposing.
                     val bandMode = if (!tempBands) 0 else if (tempAuto) 1 else 2
-                    HudThreeStop("Danger colors", listOf("Off", "Auto", "Manual"), bandMode) {
+                    HudThreeStop("Danger colors", listOf("Off", "Auto", I18n.s(R.string.ui_manual)), bandMode) {
                         tempBands = it != 0
                         tempAuto = it != 2
                     }
@@ -6500,7 +6500,7 @@ internal fun FpsCounterConfigDialog(
                     valueRange = 0f..100f, steps = 99
                 )
                 Spacer(Modifier.height(8.dp))
-                HudThreeStop("HUD color", listOf("Soft", "Mid", "Vivid"), colors.indexOf(color)) { color = colors[it] }
+                HudThreeStop("HUD color", listOf(I18n.s(R.string.ui_soft), I18n.s(R.string.ui_mid), I18n.s(R.string.ui_vivid)), colors.indexOf(color)) { color = colors[it] }
                 Spacer(Modifier.height(8.dp))
                 Text("HUD outline: $outlineValue", style = MaterialTheme.typography.bodySmall)
                 Slider(
@@ -6738,7 +6738,7 @@ internal fun StockConfigDownloadSheet(
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(Modifier.height(8.dp))
-                TextButton(onClick = { retryKey++ }) { Text("Retry") }
+                TextButton(onClick = { retryKey++ }) { Text(I18n.s(R.string.ui_retry)) }
             }
         } else {
             androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
@@ -6966,11 +6966,11 @@ private val KEY_DEFINITIONS: Map<String, String> = mapOf(
     "d3d9.useD32forD24" to "Uses D32 format where D24 would be used.",
     "d3d9.useFP16" to "Uses half-precision float where full precision is not required.",
     // --- HUD labels (VEGAS governor internal — not user-configurable) ---
-    "cap" to "HUD: Maximum draw-batch size before forced flush (governor internal).",
-    "draw" to "HUD: Draw calls per millisecond — game rendering workload.",
-    "flush" to "HUD: Number of GPU flushes per frame (auto-tuned by governor).",
+    "cap" to I18n.s(R.string.ui_hud_maximum_draw_batch_size_before_forced_flush_gover),
+    "draw" to I18n.s(R.string.ui_hud_draw_calls_per_millisecond_game_rendering_workloa),
+    "flush" to I18n.s(R.string.ui_hud_number_of_gpu_flushes_per_frame_auto_tuned_by_gov),
     "key" to "HUD/Sarek: Internal key identifier (not user-configurable).",
-    "thr" to "HUD: Draw-batch threshold — triggers flush when reached.",
+    "thr" to I18n.s(R.string.ui_hud_draw_batch_threshold_triggers_flush_when_reached),
     // --- vegas.* extended ---
     "vegas.enableHud" to "Enables the VEGAS governor HUD overlay.",
 )

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.preference.PreferenceManager
+import com.winhub.hernandez.util.I18n
 
 /**
  * The launcher icon: the default is the four blue circles, and each theme has the same icon with its own colour for the circles. Android
@@ -34,7 +35,7 @@ object AppIcon {
         themePresets.mapNotNull { p -> keyOf(p.name)?.takeIf { it != DEFAULT }?.let { it to p.name } }
 
     /** What the setting offers (key to name): the default, following the theme, then one icon per theme. */
-    val options: List<Pair<String, String>> = listOf(DEFAULT to "Default (blue)", FOLLOW_THEME to "Follow the theme") + colourIcons
+    val options: List<Pair<String, String>> = listOf(DEFAULT to I18n.s(R.string.ui_default_blue), FOLLOW_THEME to I18n.s(R.string.ui_follow_the_theme)) + colourIcons
 
     fun choice(context: Context): String =
         PreferenceManager.getDefaultSharedPreferences(context).getString(KEY, DEFAULT) ?: DEFAULT

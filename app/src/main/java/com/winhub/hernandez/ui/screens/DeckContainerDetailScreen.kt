@@ -121,8 +121,8 @@ internal fun DeckContainerDetailScreen(
 
     val advancedView = DeckSettingsMode.advanced(LocalContext.current)
     val tabTitles = remember(advancedView) {
-        if (advancedView) listOf("General", "Graphics", "Performance", "CPU", "Input", "Environment", "Wine")
-        else listOf("Simple")
+        if (advancedView) listOf(I18n.s(R.string.general), I18n.s(R.string.ui_graphics), I18n.s(R.string.performance), "CPU", I18n.s(R.string.ui_input), I18n.s(R.string.ui_environment), "Wine")
+        else listOf(I18n.s(R.string.ui_simple))
     }
     val tabs = LocalDeckTabs.current
     val tab = tabs.index
@@ -840,7 +840,7 @@ internal fun DeckContainerDetailScreen(
                         DeckGroup("Desktop") {
                             DeckChoiceRow(
                                 label = I18n.s(R.string.theme),
-                                options = listOf("0" to "Light", "1" to "Dark"),
+                                options = listOf("0" to I18n.s(R.string.ui_light), "1" to I18n.s(R.string.ui_dark)),
                                 selected = viewModel.desktopThemeIndex.toString(),
                                 onPick = { viewModel.desktopThemeIndex = it.toInt() },
                             )

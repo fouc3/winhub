@@ -303,7 +303,7 @@ internal fun SteamXmbView(
     val isSelected = focused != null && focused.file.path in selectedPaths
     // The All Games card offers just "Open".
     val actions = if (focused == null) {
-        if (onAdd) listOf(XmbAction("Add game", Icons.Filled.Add) { addCard?.invoke() })
+        if (onAdd) listOf(XmbAction(I18n.s(R.string.ui_add_game), Icons.Filled.Add) { addCard?.invoke() })
         else listOf(XmbAction(allLabel, Icons.Filled.GridView, allCount) { allOpen = true })
     } else buildList<XmbAction> {
         add(

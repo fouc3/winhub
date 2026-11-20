@@ -1298,7 +1298,7 @@ fun ShortcutsScreen(
             onDismissRequest = { exePickerFor = null },
             title = {
                 Column {
-                    Text("Choose the game's .exe")
+                    Text(I18n.s(R.string.ui_choose_the_game_s_exe))
                     Text(
                         target.name,
                         color = OnSurfaceVariant,
@@ -1994,7 +1994,7 @@ fun ShortcutsScreen(
         var didReset by remember { mutableStateOf(false) }
         OutlinedAlertDialog(
             onDismissRequest = { propertiesShortcut = null },
-            title = { Text("Properties") },
+            title = { Text(I18n.s(R.string.ui_properties)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(if (didReset) "Number of times played: 0" else "Number of times played: $playCount")
@@ -2149,7 +2149,7 @@ fun ShortcutsScreen(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Upload to community")
+                        Text(I18n.s(R.string.ui_upload_to_community))
                     }
                 }
                 // Manage the configs the user has shared (list / delete / edit description). Reinstall-
@@ -2898,7 +2898,7 @@ fun ShortcutsScreen(
                     }
                     if (res.advisories.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text("Heads up", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                 }
@@ -5006,7 +5006,7 @@ private fun CommunityConfigDetailDialog(
                             }
                         }
                         if (pre.advisories.isNotEmpty()) {
-                            Text("Heads up", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                     }
@@ -5359,7 +5359,7 @@ private fun ShortcutOverflowButton(
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
                 DropdownMenuItem(
-                    text = { Text("Game Doctor") },
+                    text = { Text(I18n.s(R.string.ui_game_doctor)) },
                     leadingIcon = { Icon(Icons.Filled.Healing, null) },
                     onClick = { menuExpanded = false; openDoctor(shortcut) },
                 )
@@ -5372,7 +5372,7 @@ private fun ShortcutOverflowButton(
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Clone to container") },
+                text = { Text(I18n.s(R.string.ui_clone_to_container)) },
                 leadingIcon = { Icon(Icons.Filled.ContentCopy, null) },
                 onClick = { menuExpanded = false; onClone() },
             )
@@ -5452,7 +5452,7 @@ private fun ShortcutOverflowButton(
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Properties") },
+                text = { Text(I18n.s(R.string.ui_properties)) },
                 leadingIcon = { Icon(Icons.Filled.Info, null) },
                 onClick = { menuExpanded = false; onProperties() },
             )
@@ -5618,12 +5618,12 @@ private fun ShortcutGridItem(
             DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
-                DropdownMenuItem(text = { Text("Game Doctor") }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
+                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_game_doctor)) }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
                 MenuItemDivider()
             }
             DropdownMenuItem(text = { Text(I18n.s(R.string.remove)) }, leadingIcon = { Icon(Icons.Filled.Delete, null) }, onClick = { menuExpanded = false; onRemove() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Clone to container") }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_clone_to_container)) }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
             MenuItemDivider()
             DropdownMenuItem(text = { Text(I18n.s(R.string.ui_copy_to_drive_c)) }, leadingIcon = { Icon(Icons.Filled.DriveFileMove, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCopyToDriveC() })
             MenuItemDivider()
@@ -5655,7 +5655,7 @@ private fun ShortcutGridItem(
             MenuItemDivider()
             DropdownMenuItem(text = { Text(I18n.s(R.string.ui_view_logs)) }, leadingIcon = { Icon(Icons.Filled.Description, null) }, onClick = { menuExpanded = false; onViewLogs() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Properties") }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_properties)) }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
         }
     }
 }
@@ -7789,7 +7789,7 @@ internal fun ShortcutSettingsDialogScreen(
                     // Display backend override (per-game): default to the container, or force X11 / Wayland.
                     // Wayland greys the Renderer group below (the compositor replaces it).
                     if (!isLinuxEntry) {
-                        val dbLabels = listOf("Use container default", "Force X11", "Force Wayland")
+                        val dbLabels = listOf(I18n.s(R.string.fullscreen_mode_default), I18n.s(R.string.ui_force_x11), I18n.s(R.string.ui_force_wayland))
                         val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
                         // A stored "Force Wayland" the container's layer can't honour shows as the
                         // effective backend (Force X11); see containerWaylandCapable above.
@@ -7980,7 +7980,7 @@ internal fun ShortcutSettingsDialogScreen(
                             val hdrUnavailable = remember { com.winhub.hernandez.display.WaylandHdr.unavailableReason(gfxContext) }
                             val containerHdr = shortcut.container.isWaylandHdr()
                             val values = listOf("", "1", "0")
-                            val labels = listOf("Use container default (" + (if (containerHdr) "On" else "Off") + ")", "On", "Off")
+                            val labels = listOf(I18n.s(R.string.ui_use_container_default) + (if (containerHdr) "On" else "Off") + ")", "On", "Off")
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 DpDrop(
                                     dp, com.winhub.hernandez.display.WaylandHdr.EXTRA,
@@ -8425,7 +8425,7 @@ internal fun ShortcutSettingsDialogScreen(
                         // #333 per-game auto-hide override (tri-state): inherit container / On / Off.
                         Spacer(Modifier.height(12.dp))
                         run {
-                            val autoHideLabels = listOf("Use container default", "On", "Off")
+                            val autoHideLabels = listOf(I18n.s(R.string.fullscreen_mode_default), "On", "Off")
                             val autoHideIdx = when (autoHideControlsOnPad) { "1" -> 1; "0" -> 2; else -> 0 }
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 LabeledDropdown(
@@ -9753,9 +9753,9 @@ private fun DeckShortcutSettingsBody(
                         when (selectedTab) {
                         0 -> {
                             DeckGroup("Game") {
-                                DeckTextRow("Name", value = name, onValueChange = { name = it })
+                                DeckTextRow(I18n.s(R.string.name), value = name, onValueChange = { name = it })
                                 if (!isLinuxEntry) {
-                                    DeckTextRow("Exec arguments", value = execArgs, onValueChange = { execArgs = it })
+                                    DeckTextRow(I18n.s(R.string.ui_exec_arguments), value = execArgs, onValueChange = { execArgs = it })
                                 }
                                 DeckRow(
                                     label = "Launch method",
@@ -9791,7 +9791,7 @@ private fun DeckShortcutSettingsBody(
                                     }
                                 }
                                 iconBitmap?.let { bmp ->
-                                    DeckRow("Current icon") {
+                                    DeckRow(I18n.s(R.string.ui_current_icon)) {
                                         Image(bitmap = bmp.asImageBitmap(), contentDescription = null, modifier = Modifier.size(40.dp))
                                     }
                                 }
@@ -9823,7 +9823,7 @@ private fun DeckShortcutSettingsBody(
                             }
                             DeckGroup("Display") {
                                 run {
-                                    val dbLabels = listOf("Use container default", "Force X11", "Force Wayland")
+                                    val dbLabels = listOf(I18n.s(R.string.fullscreen_mode_default), I18n.s(R.string.ui_force_x11), I18n.s(R.string.ui_force_wayland))
                                     val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
                                     val waylandStoredUnusable =
                                         displayBackendOverride == Container.DISPLAY_BACKEND_WAYLAND && !containerWaylandCapable
@@ -9847,8 +9847,8 @@ private fun DeckShortcutSettingsBody(
                                     onPick = { selectedScreenSize = it },
                                 )
                                 if (selectedScreenSize == "Custom") {
-                                    DeckTextRow("Width", value = customWidth, onValueChange = { customWidth = it }, width = 140.dp)
-                                    DeckTextRow("Height", value = customHeight, onValueChange = { customHeight = it }, width = 140.dp)
+                                    DeckTextRow(I18n.s(R.string.width), value = customWidth, onValueChange = { customWidth = it }, width = 140.dp)
+                                    DeckTextRow(I18n.s(R.string.height), value = customHeight, onValueChange = { customHeight = it }, width = 140.dp)
                                 }
                                 run {
                                     val saValues = listOf("", "0", "1", "2")
@@ -9911,7 +9911,7 @@ private fun DeckShortcutSettingsBody(
                                     },
                                 )
                                 if (!isLinuxEntry) {
-                                    DeckRow("Close when game exits") {
+                                    DeckRow(I18n.s(R.string.ui_close_when_game_exits)) {
                                         DeckToggle(checked = autoCloseOnExit, onChange = { autoCloseOnExit = it })
                                     }
                                 }
@@ -9959,7 +9959,7 @@ private fun DeckShortcutSettingsBody(
                                 )
                                 val scAudioId = StringUtils.parseIdentifier(selectedAudioDriver)
                                 if (scAudioId == "pulseaudio" || scAudioId == "alsa" || scAudioId == "directaudio") {
-                                    DeckRow("Audio settings") {
+                                    DeckRow(I18n.s(R.string.ui_audio_settings_2)) {
                                         DeckButton(I18n.s(R.string.configure), primary = false) { showScAudioSettings = true }
                                     }
                                 }
@@ -10117,7 +10117,7 @@ private fun DeckShortcutSettingsBody(
                                             DeckButton(I18n.s(R.string.configure), primary = false) { showGfxConfig = true }
                                         }
                                     }
-                                    DeckRow("Wrapper Manager", hint = stringResource(R.string.wrapper_manager_open)) {
+                                    DeckRow(I18n.s(R.string.ui_wrapper_manager), hint = stringResource(R.string.wrapper_manager_open)) {
                                         DeckButton(I18n.s(R.string.ui_manage), primary = false) { showWrapperManager = true }
                                     }
                                     DeckChoiceRow(
@@ -10175,7 +10175,7 @@ private fun DeckShortcutSettingsBody(
                                             }
                                         }
                                     } else {
-                                        DeckRow("DX Wrapper Config") {
+                                        DeckRow(I18n.s(R.string.ui_dx_wrapper_config)) {
                                             DeckButton(I18n.s(R.string.configure), primary = false) {
                                                 val w = StringUtils.parseIdentifier(selectedDxWrapper)
                                                 if (w.contains("dxvk") || w.contains("vegas")) showDxvkConfig = true else showWineD3DConfig = true
@@ -10289,7 +10289,7 @@ private fun DeckShortcutSettingsBody(
                                     }
                                     DeckControllerOverrideRows(shortcut.container, ctrlOv)
                                 }
-                                DeckRow("Touchscreen Mode") {
+                                DeckRow(I18n.s(R.string.ui_touchscreen_mode)) {
                                     DeckToggle(checked = simTouchScreen, onChange = { simTouchScreen = it })
                                 }
                                 if (!isLinuxEntry) {
@@ -10303,7 +10303,7 @@ private fun DeckShortcutSettingsBody(
                             }
                             DeckGroup("Overlay") {
                                 run {
-                                    val autoHideLabels = listOf("Use container default", "On", "Off")
+                                    val autoHideLabels = listOf(I18n.s(R.string.fullscreen_mode_default), "On", "Off")
                                     val autoHideValues = listOf("", "1", "0")
                                     val autoHideIdx = when (autoHideControlsOnPad) { "1" -> 1; "0" -> 2; else -> 0 }
                                     DeckChoiceRow(
@@ -10727,7 +10727,7 @@ private fun shortcutTabIcon(title: String): ImageVector = when (title) {
 private fun DeckWinComponentsTab(components: androidx.compose.runtime.snapshots.SnapshotStateList<WinComponentEntry>) {
     val directx = components.filter { it.key.startsWith("direct") }
     val general = components.filterNot { it.key.startsWith("direct") }
-    val options = listOf("Builtin (Wine)", "Native (Windows)")
+    val options = listOf(I18n.s(R.string.ui_builtin_wine), I18n.s(R.string.ui_native_windows))
     val optionPairs = options.indices.toList().map { it.toString() to options[it] }
     fun select(comp: WinComponentEntry, value: String) {
         val i = components.indexOfFirst { it.key == comp.key }
@@ -10881,7 +10881,7 @@ private fun DeckAdvancedTab(
                         selected = fexCoreVersions.firstOrNull { it == selectedFexCoreVersion } ?: selectedFexCoreVersion,
                         onPick = onFexVersionChange,
                     )
-                    DeckRow("FEXCore Downloads") {
+                    DeckRow(I18n.s(R.string.ui_fexcore_downloads)) {
                         DeckButton("Download", primary = false) { onShowFexCoreDownloadSheet() }
                     }
                 }
@@ -11015,7 +11015,7 @@ private fun DeckTvTab(
             }
             if (modes.size > 1) {
                 val values = listOf(0) + modes.map { it.modeId }
-                val labels = listOf("Default (leave the TV as it is)") +
+                val labels = listOf(I18n.s(R.string.ui_default_leave_the_tv_as_it_is)) +
                     modes.map { com.winhub.hernandez.display.ExternalDisplay.modeLabel(it) }
                 DeckChoiceRow(
                     label = I18n.s(R.string.ui_output_mode),
@@ -11155,7 +11155,7 @@ private fun ScTvTab(
         // plain row (and stays out of the D-pad order — see dpadIds).
         if (modes.size > 1) {
             val values = listOf(0) + modes.map { it.modeId }
-            val labels = listOf("Default (leave the TV as it is)") +
+            val labels = listOf(I18n.s(R.string.ui_default_leave_the_tv_as_it_is)) +
                 modes.map { com.winhub.hernandez.display.ExternalDisplay.modeLabel(it) }
             DpDrop(
                 dp, "tvModeId",
@@ -11263,7 +11263,7 @@ private fun TvNote(text: String) {
 private fun ScWinComponentsTab(components: androidx.compose.runtime.snapshots.SnapshotStateList<WinComponentEntry>) {
     val directx = components.filter { it.key.startsWith("direct") }
     val general = components.filterNot { it.key.startsWith("direct") }
-    val options = listOf("Builtin (Wine)", "Native (Windows)")
+    val options = listOf(I18n.s(R.string.ui_builtin_wine), I18n.s(R.string.ui_native_windows))
 
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         if (directx.isNotEmpty()) {

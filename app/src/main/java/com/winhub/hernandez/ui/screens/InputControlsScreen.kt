@@ -232,7 +232,7 @@ fun InputControlsScreen() {
     if (promptCreateName) {
         var name by remember { mutableStateOf("") }
         DeckConfigDialog(title = I18n.s(R.string.ui_new_profile), onDismiss = { promptCreateName = false }, compact = true) {
-            DeckConfigTextField("Profile name", name, { name = it })
+            DeckConfigTextField(I18n.s(R.string.ui_profile_name), name, { name = it })
             DeckDialogButtons("Create", enabled = name.isNotBlank(), onCancel = { promptCreateName = false }) {
                 currentProfile = manager.createProfile(name)
                 refreshProfiles()
@@ -245,7 +245,7 @@ fun InputControlsScreen() {
     if (promptRenameOldName != null) {
         var name by remember { mutableStateOf(promptRenameOldName ?: "") }
         DeckConfigDialog(title = I18n.s(R.string.ui_rename_profile), onDismiss = { promptRenameOldName = null }, compact = true) {
-            DeckConfigTextField("Profile name", name, { name = it })
+            DeckConfigTextField(I18n.s(R.string.ui_profile_name), name, { name = it })
             DeckDialogButtons("Save", enabled = name.isNotBlank(), onCancel = { promptRenameOldName = null }) {
                 currentProfile?.setName(name)
                 currentProfile?.save()
@@ -456,7 +456,7 @@ fun InputControlsScreen() {
                 onDismiss = { previewItem = null },
                 compact = true,
             ) {
-                DeckConfigNote("Preview of the layout on the game screen (not imported yet)")
+                DeckConfigNote(I18n.s(R.string.ui_preview_of_the_layout_on_the_game_screen_not_imported))
                 Box(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp)) {
                     val pp = previewProfile
                     when {
@@ -505,7 +505,7 @@ fun InputControlsScreen() {
     // ── Deck layout ─────────────────────────────────────────────────
     // Header and rail stay put; only the section body scrolls. The shell's L1/R1 and the rail both
     // drive deckTabs, so a pad and a finger land on the same section.
-    val sections = listOf("On-Screen", "Controller", "Assign", "Device")
+    val sections = listOf(I18n.s(R.string.ui_on_screen), I18n.s(R.string.vibration_mode_controller), I18n.s(R.string.ui_assign), "Device")
     val displayText = if (selectedProfileIdx > 0 && selectedProfileIdx - 1 < profiles.size)
         profiles[selectedProfileIdx - 1].getName() else "No profile selected"
     val hasProfile = currentProfile != null
@@ -634,7 +634,7 @@ fun InputControlsScreen() {
                                             }
                                         }
                                     }
-                                    DeckValueChip("Switch", showProfileDropdown) { showProfileDropdown = true }
+                                    DeckValueChip(I18n.s(R.string.ui_switch), showProfileDropdown) { showProfileDropdown = true }
                                     IconButton(onClick = { showOverflow = true }, modifier = Modifier.size(48.dp)) {
                                         Icon(Icons.Default.MoreVert, "Profile actions", tint = DeckPalette.onSurfaceVariant)
                                     }
@@ -1212,7 +1212,7 @@ private fun SteamControllerSection() {
         )
         if (enabled) {
             // Order = the labels; values are SteamControllerBackend.TRACKPAD_MOUSE_*.
-            val trackpadLabels = listOf("Right trackpad", "Left trackpad", "Both trackpads", "Off")
+            val trackpadLabels = listOf(I18n.s(R.string.ui_right_trackpad), I18n.s(R.string.ui_left_trackpad), I18n.s(R.string.ui_both_trackpads), "Off")
             val trackpadModes = listOf(
                 SteamControllerBackend.TRACKPAD_MOUSE_RIGHT, SteamControllerBackend.TRACKPAD_MOUSE_LEFT,
                 SteamControllerBackend.TRACKPAD_MOUSE_BOTH, SteamControllerBackend.TRACKPAD_MOUSE_OFF,
@@ -1334,7 +1334,7 @@ private fun GlobalPlayerSlotsSection() {
                 }
             },
         )
-        val onScreenModeLabels = listOf("Keep on-screen player", "Yield Player 1 to pad", "Share the player")
+        val onScreenModeLabels = listOf(I18n.s(R.string.ui_keep_on_screen_player), I18n.s(R.string.ui_yield_player_1_to_pad), I18n.s(R.string.ui_share_the_player))
         DeckChoiceRow(
             label = I18n.s(R.string.ui_on_screen_priority),
             options = onScreenModeLabels.map { it to it },

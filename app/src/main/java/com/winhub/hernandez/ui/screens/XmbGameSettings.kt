@@ -149,7 +149,7 @@ internal fun xmbSettingsMenu(xmb: XmbScope, shortcut: Shortcut, host: XmbGameHos
         com.winhub.hernandez.display.ExternalDisplay.find(xmb.context) != null ||
             com.winhub.hernandez.display.ExternalDisplay.launchOnTv(shortcut)
     }.getOrDefault(false)
-    val titles = listOf("General", "Graphics", "Win Components", "Env Vars", "Advanced", "Controller", "Mods") + if (tvOn) listOf("TV") else emptyList()
+    val titles = listOf(I18n.s(R.string.general), I18n.s(R.string.ui_graphics), I18n.s(R.string.ui_win_components_2), I18n.s(R.string.ui_env_vars), "Advanced", I18n.s(R.string.vibration_mode_controller), I18n.s(R.string.ui_mods)) + if (tvOn) listOf("TV") else emptyList()
     fun section(n: Int): XmbMenu = when (n) {
         0 -> xmbGeneralMenu(xmb, p, host)
         1 -> xmbGraphicsMenu(xmb, p, host)
@@ -173,10 +173,10 @@ internal fun xmbSettingsMenu(xmb: XmbScope, shortcut: Shortcut, host: XmbGameHos
 // ── General ─────────────────────────────────────────────────────────────────────────────────────────
 
 internal fun xmbGeneralMenu(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): XmbMenu =
-    XmbMenu("General", Icons.Filled.Settings) { generalRows(this, p, host).filter { it.key !in GFX_KEYS && it.key !in TV_KEYS } }
+    XmbMenu(I18n.s(R.string.general), Icons.Filled.Settings) { generalRows(this, p, host).filter { it.key !in GFX_KEYS && it.key !in TV_KEYS } }
 
 internal fun xmbGraphicsMenu(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): XmbMenu =
-    XmbMenu("Graphics", Icons.Filled.DesktopWindows) {
+    XmbMenu(I18n.s(R.string.ui_graphics), Icons.Filled.DesktopWindows) {
         val g = generalRows(this, p, host).filter { it.key in GFX_KEYS }
         // The editor lists the render scale last in Graphics; it is built with Display, so move it.
         g.filter { it.key == "hGfx" } + g.filter { it.key != "hGfx" && it.key != "renderScale" } + g.filter { it.key == "renderScale" }
@@ -277,7 +277,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         val h = if (rawSize.contains("x")) rawSize.substringAfter("x") else "600"
         fun setWH(nw: String, nh: String) {
             val ok = nw.matches(Regex("[0-9]+")) && nh.matches(Regex("[0-9]+")) && nw.toInt() % 2 == 0 && nh.toInt() % 2 == 0
-            if (!ok) xmb.toast("Width and height must be even numbers")
+            if (!ok) xmb.toast(I18n.s(R.string.ui_width_and_height_must_be_even_numbers))
             xmb.set(p, "screenSize", if (ok) "${nw}x$nh" else Container.DEFAULT_SCREEN_SIZE)
         }
         rows += XmbRow.Text("customW", "Width", Icons.Filled.AspectRatio, w, subtitle = I18n.s(R.string.ui_even_numbers_only), numeric = true) { setWH(it, h) }
@@ -361,7 +361,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         val tvModeId = com.winhub.hernandez.display.ExternalDisplay.modeId(s)
         if (tvModes.size > 1) {
             val tvValues = listOf(0) + tvModes.map { it.modeId }
-            val tvLabels = listOf("Default (leave the TV as it is)") +
+            val tvLabels = listOf(I18n.s(R.string.ui_default_leave_the_tv_as_it_is)) +
                 tvModes.map { com.winhub.hernandez.display.ExternalDisplay.modeLabel(it) }
             rows += XmbRow.Choice(I18n.s(R.string.ui_tvmodeid), "Output mode", Icons.Filled.DesktopWindows, tvLabels,
                 tvLabels[tvValues.indexOf(tvModeId).coerceAtLeast(0)],
@@ -479,7 +479,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         // "0" off) — same options as the pop-up editor (WaylandHdr). Greyed with the reason on a screen
         // that doesn't report HDR10, still showing what is stored.
         val hdrValues = listOf("", "1", "0")
-        val hdrLabels = listOf("Container default (" + (if (c.isWaylandHdr()) "On" else "Off") + ")", "On", "Off")
+        val hdrLabels = listOf(I18n.s(R.string.ui_container_default) + (if (c.isWaylandHdr()) "On" else "Off") + ")", "On", "Off")
         rows += XmbRow.Choice(WaylandHdr.EXTRA, WaylandHdr.TITLE, Icons.Filled.HdrOn, hdrLabels,
             hdrLabels[hdrValues.indexOf(WaylandHdr.shortcutChoice(s)).coerceAtLeast(0)],
             subtitle = WaylandHdr.HELP_SHORT, disabledReason = p.hdrUnavailableReason) { v ->
@@ -717,7 +717,7 @@ internal fun xmbApplyIconFile(s: Shortcut, f: File): Boolean = runCatching {
 // ── Controller ──────────────────────────────────────────────────────────────────────────────────────
 
 internal fun xmbControllerMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu =
-    XmbMenu("Controller", Icons.Filled.Gamepad) { controllerRows(this, p) }
+    XmbMenu(I18n.s(R.string.vibration_mode_controller), Icons.Filled.Gamepad) { controllerRows(this, p) }
 
 private fun controllerRows(xmb: XmbScope, p: XmbPrefs): List<XmbRow> {
     val s = p.shortcut
@@ -781,7 +781,7 @@ private fun controllerRows(xmb: XmbScope, p: XmbPrefs): List<XmbRow> {
         xmb.set(p, "numControllers", (nc.indexOf(v) + 1).coerceAtLeast(1).toString())
     }
     val ahValues = listOf("", "1", "0")
-    val ahLabels = listOf("Use container default", "On", "Off")
+    val ahLabels = listOf(I18n.s(R.string.fullscreen_mode_default), "On", "Off")
     val ah = p.ex("autoHideControlsOnPad", "")
     rows += XmbRow.Choice(I18n.s(R.string.ui_autohide), "Hide on-screen controls with a pad", Icons.Filled.TouchApp, ahLabels, ahLabels[ahValues.indexOf(ah).coerceAtLeast(0)],
         subtitle = I18n.s(R.string.ui_when_a_controller_connects)) { v -> xmb.set(p, "autoHideControlsOnPad", ahValues[ahLabels.indexOf(v)].ifEmpty { null }) }
@@ -871,7 +871,7 @@ private fun controllerRows(xmb: XmbScope, p: XmbPrefs): List<XmbRow> {
 
 // ── Audio settings (the editor's per-game AudioSettingsDialog, as XMB rows; stored in envVars) ──────
 
-private fun audioMenu(xmb: XmbScope, p: XmbPrefs, driverId: String): XmbMenu = XmbMenu("Audio settings", Icons.Filled.VolumeUp) {
+private fun audioMenu(xmb: XmbScope, p: XmbPrefs, driverId: String): XmbMenu = XmbMenu(I18n.s(R.string.ui_audio_settings_2), Icons.Filled.VolumeUp) {
     val env = p.ex("envVars", "")
     val cfg = audioConfigFromEnv(env, driverId)
     val direct = latencyIsDirectBuffer(driverId)
@@ -912,7 +912,7 @@ internal fun xmbGameDetailsMenu(xmb: XmbScope, s: Shortcut): XmbMenu {
     fun details(): GameDetails = GameDetails.from(s)
     fun write(d: GameDetails) { runCatching { d.writeTo(s) }; xmb.saved(); xmb.refresh() }
     // Opens on the name, not on "Unlink from Steam" (a stray A must not unlink).
-    return XmbMenu("Game Details", Icons.Filled.Edit, initialKey = "name") {
+    return XmbMenu(I18n.s(R.string.ui_game_details), Icons.Filled.Edit, initialKey = "name") {
         val d = details()
         val rows = mutableListOf<XmbRow>()
         d.steamAppId?.takeIf { it > 0 }?.let { id ->
@@ -930,14 +930,14 @@ internal fun xmbGameDetailsMenu(xmb: XmbScope, s: Shortcut): XmbMenu {
                 val r = withContext(Dispatchers.IO) { runCatching { SteamStoreSearch.searchByName(q) }.getOrDefault(emptyList()) }
                 results = r; searching = false
             }
-            XmbMenu("Search Steam", Icons.Filled.Search) {
+            XmbMenu(I18n.s(R.string.ui_search_steam), Icons.Filled.Search) {
                 when {
-                    searching -> listOf(XmbRow.Info("busy", "Searching Steam…", Icons.Filled.Search))
+                    searching -> listOf(XmbRow.Info("busy", I18n.s(R.string.ui_searching_steam), Icons.Filled.Search))
                     results.isEmpty() -> listOf(XmbRow.Info("none", "No results found for “$q”", Icons.Filled.Search))
                     else -> results.mapIndexed { i, r ->
                         XmbRow.Action("r$i", r.name, Icons.Filled.Search, subtitle = "App ID: ${r.appId}") {
                             xmb.scope.launch {
-                                xmb.toast("Filling from Steam…")
+                                xmb.toast(I18n.s(R.string.ui_filling_from_steam))
                                 val info = withContext(Dispatchers.IO) { runCatching { SteamStoreSearch.fetchDetails(r.appId) }.getOrNull() }
                                 val base = details()
                                 val nd = if (info != null) GameDetails(
@@ -975,7 +975,7 @@ internal fun xmbGameDetailsMenu(xmb: XmbScope, s: Shortcut): XmbMenu {
 // ── Properties ──────────────────────────────────────────────────────────────────────────────────────
 
 // Opens on the play count, not on "Reset properties".
-internal fun xmbPropertiesMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu("Properties", Icons.Filled.Info, initialKey = "plays") {
+internal fun xmbPropertiesMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu(I18n.s(R.string.ui_properties), Icons.Filled.Info, initialKey = "plays") {
     val prefs = xmb.context.getSharedPreferences("playtime_stats", Context.MODE_PRIVATE)
     val tKey = "${s.name}_playtime"
     val cKey = "${s.name}_play_count"
@@ -998,7 +998,7 @@ internal fun xmbPropertiesMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu("P
 
 // ── Clone / Remove ──────────────────────────────────────────────────────────────────────────────────
 
-internal fun xmbCloneMenu(xmb: XmbScope, s: Shortcut, host: XmbGameHost): XmbMenu = XmbMenu("Select container", Icons.Filled.ContentCopy) {
+internal fun xmbCloneMenu(xmb: XmbScope, s: Shortcut, host: XmbGameHost): XmbMenu = XmbMenu(I18n.s(R.string.ui_select_container), Icons.Filled.ContentCopy) {
     host.containers().mapIndexed { i, c ->
         XmbRow.Action("c${c.id}_$i", c.name, Icons.Filled.Folder, subtitle = if (c.id == s.container.id) "Current container" else null) {
             val ok = runCatching { s.cloneToContainer(c) }.getOrDefault(false)
@@ -1010,7 +1010,7 @@ internal fun xmbCloneMenu(xmb: XmbScope, s: Shortcut, host: XmbGameHost): XmbMen
 }
 
 internal fun xmbRemoveMenu(xmb: XmbScope, s: Shortcut, host: XmbGameHost): XmbMenu =
-    XmbMenu("Remove shortcut?", Icons.Filled.Delete, initialKey = "cancel") {
+    XmbMenu(I18n.s(R.string.ui_remove_shortcut), Icons.Filled.Delete, initialKey = "cancel") {
         listOf(
             XmbRow.Info("msg", "Remove “${s.name}”?", Icons.Filled.Info),
             XmbRow.Action("remove", "Remove", Icons.Filled.Delete, danger = true) {

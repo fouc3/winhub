@@ -66,7 +66,7 @@ fun AppearanceScreen() {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         // ── Preset themes ────────────────────────────────────────────────
-        SectionLabel("Theme Presets")
+        SectionLabel(I18n.s(R.string.ui_theme_presets))
 
         val rows = themePresets.chunked(4)
         rows.forEach { row ->
@@ -92,7 +92,7 @@ fun AppearanceScreen() {
         Box(Modifier.fillMaxWidth().height(1.dp).background(Divider))
 
         // ── Custom accent picker ─────────────────────────────────────────
-        SectionLabel("Custom Accent Color")
+        SectionLabel(I18n.s(R.string.ui_custom_accent_color))
         Text(
             text = I18n.s(R.string.ui_selecting_a_color_below_switches_to_custom_preset),
             color = OnSurfaceVariant,
@@ -108,7 +108,7 @@ fun AppearanceScreen() {
         Box(Modifier.fillMaxWidth().height(1.dp).background(Divider))
 
         // ── General tab style (Deck Mode navigation) ────────────────
-        SectionLabel("General Tab Style")
+        SectionLabel(I18n.s(R.string.ui_general_tab_style))
         Text(
             text = "How the main Home / Storage / Controls tabs are laid out in Deck Mode",
             color = OnSurfaceVariant,

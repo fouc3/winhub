@@ -66,7 +66,7 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
     private val _stepLabels = MutableStateFlow(DEFAULT_LABELS)
     val stepLabels: StateFlow<List<String>> = _stepLabels
 
-    private val _status = MutableStateFlow("Preparing system files")
+    private val _status = MutableStateFlow(I18n.s(R.string.ui_preparing_system_files))
     val status: StateFlow<String> = _status
 
     /** True when at least one component failed; setup still completes and Proceed is offered. */
@@ -127,7 +127,7 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
         _isInstalling.value = true
         _progress.value = 0
         _step.value = 0
-        _stepLabels.value = listOf("System files") + FIRST_RUN_CONTENTS.map { it.label } + extras.map { it.label }
+        _stepLabels.value = listOf(I18n.s(R.string.ui_system_files)) + FIRST_RUN_CONTENTS.map { it.label } + extras.map { it.label }
         _status.value = "Installing system files"
         _degraded.value = false
         _showProceed.value = false
@@ -229,6 +229,6 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
     private companion object {
         val PERCENT = Regex("(\\d+)%")
         const val KEY_SETUP_DONE = "first_run_setup_done"
-        val DEFAULT_LABELS = listOf("System files") + FIRST_RUN_CONTENTS.map { it.label }
+        val DEFAULT_LABELS = listOf(I18n.s(R.string.ui_system_files)) + FIRST_RUN_CONTENTS.map { it.label }
     }
 }

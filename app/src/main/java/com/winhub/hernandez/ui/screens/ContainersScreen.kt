@@ -848,7 +848,7 @@ private fun ContainerItem(
                     modifier = Modifier.outlinedMenuCard(),
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Edit") },
+                        text = { Text(I18n.s(R.string.edit)) },
                         leadingIcon = { Icon(Icons.Filled.Edit, null) },
                         onClick = { menuExpanded = false; onEdit() },
                     )

@@ -119,7 +119,7 @@ private fun PanelContent(
                 pending { it.playerEngine != settings.playerEngine }) { onChange(settings.copy(playerEngine = it)) }
             val lsfg = remember { com.winhub.hernandez.core.LsfgNative.isDllAvailable(ctx) }
             Choice(I18n.s(R.string.ui_frame_generation), listOf("off" to "Off", "winfg" to "Win-FG 2×") +
-                (if (lsfg) listOf("lsfg" to "LSFG 2×", "lsfg3" to "LSFG 3×", "lsfg4" to "LSFG 4×") else emptyList()),
+                (if (lsfg) listOf("lsfg" to I18n.s(R.string.ui_lsfg_2), "lsfg3" to I18n.s(R.string.ui_lsfg_3), "lsfg4" to I18n.s(R.string.ui_lsfg_4)) else emptyList()),
                 settings.frameGen) { onChange(settings.copy(frameGen = it)) }
             Text("Native engine (experimental): Google's WebRTC and Bannerlator's Vulkan compositor, so Win-FG or LSFG " +
                 "can add frames. LSFG uses the Lossless.dll imported in Settings. Screen effects and the overlay levels " +
@@ -128,7 +128,7 @@ private fun PanelContent(
         }
         // What Microsoft sends depends on the device profile we report: the PC profile gave 2560x1440 on the
         // Pocket FIT (10-23), so it is labelled by profile, not by a fixed size.
-        Choice("Resolution", listOf("720p" to "720p (phone profile)", "1080p" to "Best (PC profile)", "1080p_hq" to "1080p HQ (TV profile)"),
+        Choice("Resolution", listOf("720p" to "720p (phone profile)", "1080p" to I18n.s(R.string.ui_best_pc_profile), "1080p_hq" to "1080p HQ (TV profile)"),
             settings.resolution, pending { it.resolution != settings.resolution }) { onChange(settings.copy(resolution = it)) }
         Choice(I18n.s(R.string.ui_server_region), listOf("" to "Automatic") + regions.map { it to it }, settings.region,
             pending { it.region != settings.region }) { onChange(settings.copy(region = it)) }
@@ -136,7 +136,7 @@ private fun PanelContent(
             pending { it.language != settings.language }) { onChange(settings.copy(language = it)) }
         Choice(I18n.s(R.string.ui_video_codec_quality), listOf("default" to "Automatic", "high" to "High", "normal" to "Normal", "low" to "Low"), settings.codec,
             pending { it.codec != settings.codec }) { onChange(settings.copy(codec = it)) }
-        Choice("Bitrate limit", listOf(0 to "No limit") + listOf(5, 8, 10, 12, 15, 20, 25, 30, 40, 50).map { it to "$it Mb/s" }, settings.bitrateMbps,
+        Choice("Bitrate limit", listOf(0 to I18n.s(R.string.ui_no_limit)) + listOf(5, 8, 10, 12, 15, 20, 25, 30, 40, 50).map { it to "$it Mb/s" }, settings.bitrateMbps,
             pending { it.bitrateMbps != settings.bitrateMbps }) { onChange(settings.copy(bitrateMbps = it)) }
         Toggle("Stop quality drops", "Keeps the resolution up when this device decodes slowly.", settings.preventDrops) { onChange(settings.copy(preventDrops = it)) }
     }

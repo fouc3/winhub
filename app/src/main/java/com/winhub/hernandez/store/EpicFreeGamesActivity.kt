@@ -270,7 +270,7 @@ class EpicFreeGamesActivity : ComponentActivity() {
             if (parts.size < 3) return iso.substring(0, 10)
             val month = parts[1].toInt()
             val day = parts[2].toInt()
-            val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            val months = arrayOf(I18n.s(R.string.ui_jan), I18n.s(R.string.ui_feb), I18n.s(R.string.ui_mar), I18n.s(R.string.ui_apr), I18n.s(R.string.ui_may), I18n.s(R.string.ui_jun),
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
             val mon = if (month in 1..12) months[month - 1] else parts[1]
             "$mon $day"

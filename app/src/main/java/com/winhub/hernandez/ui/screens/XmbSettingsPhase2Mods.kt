@@ -59,7 +59,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
     }
 
-    return XmbMenu("Mods", Icons.Filled.Apps) {
+    return XmbMenu(I18n.s(R.string.ui_mods), Icons.Filled.Apps) {
         val rows = mutableListOf<XmbRow>()
         rows += XmbRow.Header("hMods", "Game mods")
         if (mods.isEmpty()) {
@@ -107,12 +107,12 @@ private fun saveProgramList(xmb: XmbScope, shortcut: Shortcut, list: List<StartP
     p2Put(xmb, shortcut, StartPrograms.EXTRA, StartPrograms.encode(list))
 
 private fun xmbAddProgramMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu =
-    XmbMenu("Add program", Icons.Filled.Add) {
-        listOf(XmbRow.Text("path", "Windows path", Icons.Filled.Add, "",
+    XmbMenu(I18n.s(R.string.ui_add_program), Icons.Filled.Add) {
+        listOf(XmbRow.Text("path", I18n.s(R.string.ui_windows_path), Icons.Filled.Add, "",
             subtitle = "e.g. F:\\Trainers\\Trainer.exe", placeholder = "F:\\Trainers\\Trainer.exe") { raw ->
             val path = raw.trim()
             if (path.isEmpty()) {
-                xmb.toast("Enter a Windows path")
+                xmb.toast(I18n.s(R.string.ui_enter_a_windows_path))
             } else {
                 val list = StartPrograms.parse(shortcut.getExtra(StartPrograms.EXTRA, ""))
                 // Same defaults as the editor: the first waits for the game to be running, the rest follow it.
@@ -147,7 +147,7 @@ private fun programRows(
     val rows = mutableListOf<XmbRow>()
     rows += XmbRow.Text("path", "Windows path", Icons.Filled.Apps, cur.path,
         subtitle = "e.g. F:\\Trainers\\Trainer.exe") { raw ->
-        if (raw.isBlank()) xmb.toast("Enter a Windows path") else replace(StartPrograms.Entry(raw.trim(), cur.delaySec))
+        if (raw.isBlank()) xmb.toast(I18n.s(R.string.ui_enter_a_windows_path)) else replace(StartPrograms.Entry(raw.trim(), cur.delaySec))
     }
     val delays = delayOptions(cur.delaySec.toString())
     rows += XmbRow.Choice("delay", "Wait before starting", Icons.Filled.Timer,

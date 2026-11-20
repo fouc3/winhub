@@ -428,7 +428,7 @@ private fun PortraitCard(
                 }
 
                 Column(Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp)) {
-                    MicroLabel("Launch with")
+                    MicroLabel(I18n.s(R.string.ui_launch_with))
                     Spacer(Modifier.height(7.dp))
                     ChipsRow(method, enabledMethods, accent, compact = false, onMethod, toggleHelp, xbox = source == GameSource.XBOX, rawLabel = LocalRawLabel.current)
                     Spacer(Modifier.height(9.dp))
@@ -530,7 +530,7 @@ private fun LandscapeCard(
                         }
                         Spacer(Modifier.height(2.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            MicroLabel("Launch with")
+                            MicroLabel(I18n.s(R.string.ui_launch_with))
                             Spacer(Modifier.width(6.dp))
                             HelpDot(accent, highlighted = false, onClick = { toggleHelp(HELP_LAUNCH_WITH) })
                         }
@@ -941,10 +941,10 @@ private fun MaintenanceRow(
         horizontalArrangement = Arrangement.spacedBy(if (compact) 6.dp else 8.dp),
     ) {
         if (onVerify != null) {
-            MaintButton("Verify files", Icons.Filled.Refresh, accent, compact, Modifier.weight(1f), onVerify)
+            MaintButton(I18n.s(R.string.ui_verify_files), Icons.Filled.Refresh, accent, compact, Modifier.weight(1f), onVerify)
         }
         if (onUpdate != null) {
-            MaintButton("Check for updates", Icons.Filled.Download, accent, compact, Modifier.weight(1f), onUpdate)
+            MaintButton(I18n.s(R.string.ui_check_for_updates_2), Icons.Filled.Download, accent, compact, Modifier.weight(1f), onUpdate)
         }
     }
 }
@@ -1170,7 +1170,7 @@ private fun GoldbergDropdownPortrait(mode: GoldbergMode, accent: Color, onSelect
 
     Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            MicroLabel("Goldberg mode")
+            MicroLabel(I18n.s(R.string.ui_goldberg_mode))
             Spacer(Modifier.width(7.dp))
             HelpDot(accent, highlighted = false, onClick = { toggleHelp(HELP_GOLDBERG_MODE) })
         }
@@ -1214,7 +1214,7 @@ private fun GoldbergSegmentedLandscape(mode: GoldbergMode, accent: Color, onSele
     val cs = MaterialTheme.colorScheme
     Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            MicroLabel("Goldberg mode")
+            MicroLabel(I18n.s(R.string.ui_goldberg_mode))
             Spacer(Modifier.width(6.dp))
             HelpDot(accent, highlighted = false, onClick = { toggleHelp(HELP_GOLDBERG_MODE) })
         }

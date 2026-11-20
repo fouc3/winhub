@@ -274,9 +274,9 @@ internal fun DrawerQuickPage(onOpen: (TabType) -> Unit) {
     val hz by state.currentRefreshRate.collectAsState()
     val vulkan by state.rendererIsVulkan.collectAsState()
     val cards = listOf(
-        QuickCard("FPS limit", if (limiterOn) "$limit" else "Off", Icons.Filled.Speed, limiterOn, TabType.HUD),
-        QuickCard("Frame generation", if (fgOn) "${fgMult}x" else "Off", Icons.Filled.AutoAwesome, fgOn, TabType.GRAPHICS),
-        QuickCard("Refresh rate", if (hz > 0) "$hz Hz" else "Auto", Icons.Filled.Refresh, false, TabType.HUD),
+        QuickCard(I18n.s(R.string.ui_fps_limit), if (limiterOn) "$limit" else "Off", Icons.Filled.Speed, limiterOn, TabType.HUD),
+        QuickCard(I18n.s(R.string.ui_frame_generation), if (fgOn) "${fgMult}x" else "Off", Icons.Filled.AutoAwesome, fgOn, TabType.GRAPHICS),
+        QuickCard(I18n.s(R.string.ui_refresh_rate), if (hz > 0) "$hz Hz" else "Auto", Icons.Filled.Refresh, false, TabType.HUD),
         QuickCard("Renderer", if (vulkan) "Vulkan" else "OpenGL", Icons.Filled.Tune, false, TabType.GRAPHICS),
     )
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {

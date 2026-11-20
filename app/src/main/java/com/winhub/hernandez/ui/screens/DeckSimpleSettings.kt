@@ -64,7 +64,7 @@ internal fun DeckViewModeRow() {
     DeckChoiceRow(
         label = I18n.s(R.string.ui_settings_view),
         hint = I18n.s(R.string.ui_simple_proton_dxvk_driver_and_fexcore_preset_advanced),
-        options = listOf("simple" to "Simple", "advanced" to "Advanced"),
+        options = listOf("simple" to I18n.s(R.string.ui_simple), "advanced" to "Advanced"),
         selected = if (DeckSettingsMode.advanced(context)) "advanced" else "simple",
         onPick = { DeckSettingsMode.set(context, it == "advanced") },
     )
@@ -92,7 +92,7 @@ private fun installedDriverChoices(context: Context): List<Pair<String, String>>
 /** The driver list with the value the config holds right now always present, so opening it never loses it. */
 private fun withCurrent(current: String, choices: List<Pair<String, String>>): List<Pair<String, String>> =
     if (choices.any { it.first == current }) choices
-    else listOf(current to current.ifEmpty { "Default" }) + choices
+    else listOf(current to current.ifEmpty { I18n.s(R.string.ui_default) }) + choices
 
 /**
  * In the New Container Defaults editor only: forget the saved profile for this architecture, so new
@@ -277,7 +277,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val dbOverride = p.ex("displayBackend", "")
         val containerWayland = p.c.isWaylandBackend && waylandCapable
         val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
-        val dbLabels = listOf("Container default (" + (if (containerWayland) "Wayland" else "X11") + ")", "X11", "Wayland")
+        val dbLabels = listOf(I18n.s(R.string.ui_container_default) + (if (containerWayland) "Wayland" else "X11") + ")", "X11", "Wayland")
         rows += XmbRow.Choice(I18n.s(R.string.ui_sbackend), "Display backend", Icons.Filled.DesktopWindows, dbLabels,
             dbLabels[dbValues.indexOf(dbOverride).coerceAtLeast(0)],
             subtitle = if (waylandCapable) "Wayland routes the game through the embedded compositor"
@@ -290,7 +290,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
             val own = p.ex("graphicsDriverConfig", "")
             val stored = GraphicsDriverConfigDialog.parseGraphicsDriverConfig(own)[WaylandAdapterSettings.KEY_PROFILE].orEmpty()
             val profileValues = listOf("") + WaylandAdapterSettings.PROFILES
-            val profileLabels = listOf("Container default") + WaylandAdapterSettings.PROFILES.map { WaylandAdapterSettings.profileLabel(it) }
+            val profileLabels = listOf(I18n.s(R.string.ui_container_default_2)) + WaylandAdapterSettings.PROFILES.map { WaylandAdapterSettings.profileLabel(it) }
             rows += XmbRow.Choice(I18n.s(R.string.ui_swlprofile), "Wayland profile", Icons.Filled.Tune, profileLabels,
                 profileLabels[profileValues.indexOf(stored).coerceAtLeast(0)],
                 subtitle = I18n.s(R.string.ui_smooth_evens_out_frame_pacing_fast_lowers_latency_com)) { v ->

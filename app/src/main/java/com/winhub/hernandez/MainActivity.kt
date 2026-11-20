@@ -1057,7 +1057,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 AboutSection(title = I18n.s(R.string.ui_powered_by)) {
                     AboutRow("Wine",    "Windows compatibility layer")
                     AboutRow("Box64",   "x86_64 emulation on ARM")
-                    AboutRow("FEX-Emu", "Fast x86 emulator")
+                    AboutRow(I18n.s(R.string.ui_fex_emu), "Fast x86 emulator")
                     AboutRow("Turnip",  "Open-source Vulkan driver")
                 }
 
@@ -1068,10 +1068,10 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 // Credits
                 AboutSection(title = I18n.s(R.string.ui_credits)) {
                     AboutRow("brunodev85",      "Winlator — original project")
-                    AboutRow("MishaMixXx",      "Winlator Bionic")
-                    AboutRow("The412Banner",    "WinHub")
+                    AboutRow(I18n.s(R.string.ui_mishamixxx),      "Winlator Bionic")
+                    AboutRow(I18n.s(R.string.ui_the412banner),    "WinHub")
                     AboutRow("ptitSeb",         "Box64")
-                    AboutRow("WineHQ",          "Wine project")
+                    AboutRow(I18n.s(R.string.ui_winehq),          "Wine project")
                     AboutRow("Mesa / Freedreno","Turnip Vulkan driver")
                 }
 

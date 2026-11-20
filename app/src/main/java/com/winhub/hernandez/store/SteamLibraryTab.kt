@@ -179,7 +179,7 @@ class SteamLibraryState internal constructor(
 fun rememberSteamLibrary(): SteamLibraryState {
     var games by remember { mutableStateOf<List<SteamGame>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
-    var statusText by remember { mutableStateOf("Loading library…") }
+    var statusText by remember { mutableStateOf(I18n.s(R.string.ui_loading_library)) }
     var steamStatus by remember {
         mutableStateOf(
             runCatching { SteamRepository.getInstance().status }

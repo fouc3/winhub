@@ -15,6 +15,7 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.zip.GZIPInputStream
+import com.winhub.hernandez.util.I18n
 
 private const val TAG = "RetroLibrary"
 
@@ -72,7 +73,7 @@ internal object RetroLibrary {
     private val SKIP_EXTENSIONS = setOf(
         ".txt", ".xml", ".nfo", ".jpg", ".jpeg", ".png", ".mp4", ".rar", ".sav", ".srm", ".state", ".dat", ".db", ".json", ".cfg", ".ini",
     )
-    private val ROOT_NAMES = listOf("ROMs", "Roms", "roms", "ROMS", "Games", "games", "RetroArch/roms", "retroarch/roms", "Emulation/roms")
+    private val ROOT_NAMES = listOf(I18n.s(R.string.ui_roms), I18n.s(R.string.ui_roms_2), "roms", "ROMS", I18n.s(R.string.shortcuts), "games", "RetroArch/roms", "retroarch/roms", "Emulation/roms")
 
     private fun prefs(context: Context) = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 

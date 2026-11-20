@@ -158,7 +158,7 @@ fun MediaTab(
 
             else -> {
                 if (media.videos.isNotEmpty()) {
-                    MediaRowTitle("Videos")
+                    MediaRowTitle(I18n.s(R.string.ui_videos))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -206,7 +206,7 @@ fun MediaTab(
                     Spacer(Modifier.height(14.dp))
                 }
                 if (media.screenshots.isNotEmpty()) {
-                    MediaRowTitle("Screenshots")
+                    MediaRowTitle(I18n.s(R.string.ui_screenshots))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),

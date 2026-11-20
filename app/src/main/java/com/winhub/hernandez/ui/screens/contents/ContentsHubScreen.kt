@@ -877,7 +877,7 @@ private fun MyFilesTab(vm: ContentsHubViewModel) {
         }
         Spacer(Modifier.height(12.dp))
         // Save location lives once in Contents settings (the cog) — no duplicate bar here.
-        PrimaryButton("Install content from file…", Icons.Filled.FolderOpen, enabled = true,
+        PrimaryButton(I18n.s(R.string.ui_install_content_from_file), Icons.Filled.FolderOpen, enabled = true,
             container = cs.onSurface.copy(alpha = 0.06f), content = cs.onSurface, modifier = Modifier.fillMaxWidth()) {
             installPicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"))
         }
@@ -1039,13 +1039,13 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(14.dp)) {
         InstalledSectionHeader("GPU Drivers", Icons.Filled.ViewInAr)
         Spacer(Modifier.height(10.dp))
-        PrimaryButton("Install content from file…", Icons.Filled.FolderOpen, enabled = true,
+        PrimaryButton(I18n.s(R.string.ui_install_content_from_file), Icons.Filled.FolderOpen, enabled = true,
             container = cs.onSurface.copy(alpha = 0.06f), content = cs.onSurface, modifier = Modifier.fillMaxWidth()) {
             filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"))
         }
         Spacer(Modifier.height(12.dp))
         if (drivers.isEmpty()) {
-            InstalledEmpty("No GPU drivers installed.")
+            InstalledEmpty(I18n.s(R.string.ui_no_gpu_drivers_installed))
         } else {
             drivers.forEach { id ->
                 InstalledRow(icon = Icons.Filled.ViewInAr, driver = true,
@@ -1063,9 +1063,9 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
             "zips (vulkan.adXXXX.so) belong under GPU Drivers above and are rejected here.",
             style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
         Spacer(Modifier.height(10.dp))
-        PrimaryButton("Import Wayland game driver (.zip)…", Icons.Filled.FolderOpen, enabled = true,
+        PrimaryButton(I18n.s(R.string.ui_import_wayland_game_driver_zip), Icons.Filled.FolderOpen, enabled = true,
             container = cs.onSurface.copy(alpha = 0.06f), content = cs.onSurface, modifier = Modifier.fillMaxWidth()) {
-            waylandDriverPicker.launch(InAppFilePicker.buildIntent(context, arrayOf("zip"), "Select Wayland game driver zip"))
+            waylandDriverPicker.launch(InAppFilePicker.buildIntent(context, arrayOf("zip"), I18n.s(R.string.ui_select_wayland_game_driver_zip)))
         }
         Spacer(Modifier.height(12.dp))
         if (waylandDrivers.isEmpty()) {
@@ -1086,7 +1086,7 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         InstalledSectionHeader("Components", Icons.Filled.Extension)
         Spacer(Modifier.height(10.dp))
         if (components.isEmpty()) {
-            InstalledEmpty("No components installed.")
+            InstalledEmpty(I18n.s(R.string.ui_no_components_installed))
         } else {
             components.forEach { (type, profiles) ->
                 val label = type.toString()

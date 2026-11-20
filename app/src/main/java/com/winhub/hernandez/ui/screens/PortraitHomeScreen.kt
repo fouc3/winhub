@@ -75,7 +75,7 @@ import kotlinx.coroutines.delay
 import java.util.Date
 import com.winhub.hernandez.util.I18n
 
-private val shelfLabels = listOf("All", "Recent", "Favourites", "Store games")
+private val shelfLabels = listOf("All", I18n.s(R.string.ui_recent), I18n.s(R.string.ui_favourites), I18n.s(R.string.ui_store_games))
 
 /**
  * Portrait Home: shelf chips, a hero card for the selected game (Play + menu), then a 3-column

@@ -211,7 +211,7 @@ private fun ReshadeModeRow(mode: String, onChange: (String) -> Unit) {
     val cs = MaterialTheme.colorScheme
     Column {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(ReshadeLoadout.MODE_SOLO to "Solo", ReshadeLoadout.MODE_STACK to "Stack").forEach { (value, label) ->
+            listOf(ReshadeLoadout.MODE_SOLO to I18n.s(R.string.ui_solo), ReshadeLoadout.MODE_STACK to "Stack").forEach { (value, label) ->
                 val selected = mode == value
                 Box(
                     modifier = Modifier

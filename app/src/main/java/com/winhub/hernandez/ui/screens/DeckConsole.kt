@@ -486,7 +486,7 @@ internal object DeckBoot {
 internal fun DeckBootScreen(onDone: () -> Unit) {
     val appContext = LocalContext.current.applicationContext
     remember { DeckConsole.boot = true }
-    val names = remember { listOf("Steam", "Epic", "GOG", "Amazon", "Xbox") }
+    val names = remember { listOf("Steam", "Epic", "GOG", "Amazon", I18n.s(R.string.ui_xbox)) }
     // 0 waiting, 1 working, 2 ready, 3 needs attention
     val status = remember { mutableStateMapOf<String, Pair<Int, String>>() }
     LaunchedEffect(Unit) {
@@ -509,7 +509,7 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
             }
             launch {
                 withContext(Dispatchers.IO) { DownloadRegistry.init(appContext) }
-                listOf("Epic", "GOG", "Amazon", "Xbox").forEach { name ->
+                listOf("Epic", "GOG", "Amazon", I18n.s(R.string.ui_xbox)).forEach { name ->
                     status[name] = 1 to "Checking"
                     delay(220)
                     val signedIn = withContext(Dispatchers.IO) {

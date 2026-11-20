@@ -13727,7 +13727,7 @@ return true;
         winHandler.setReconnectGapMs(preferences.getInt("live_reconnect_gap_ms", (int) com.winhub.hernandez.winhandler.SlotReconnector.GAP_MS_DEFAULT));
         liveControllerSession = new LiveControllerSession(container, shortcut, winHandler, new LiveControllerSession.Host() {
             @Override public void onReconnecting() {
-                XServerDialogState.INSTANCE.showInfoToast("CONTROLLER RECONNECTING…", "just now", null);
+                XServerDialogState.INSTANCE.showInfoToast(I18n.s(R.string.ui_controller_reconnecting), "just now", null);
             }
 
             @Override public void onReconnected(boolean ok, String identityLabel) {

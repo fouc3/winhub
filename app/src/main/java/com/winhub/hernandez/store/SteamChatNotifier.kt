@@ -176,7 +176,7 @@ object SteamChatNotifier {
     private fun buildSummary(context: Context, channelId: String): android.app.Notification =
         NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.stat_notify_chat)
-            .setContentTitle("Steam messages")
+            .setContentTitle(I18n.s(R.string.ui_steam_messages))
             .setGroup(GROUP_KEY)
             .setGroupSummary(true)
             .setAutoCancel(true)

@@ -1066,7 +1066,7 @@ private fun DeckContentsFilesTab(vm: ContentsHubViewModel) {
         }
         Spacer(Modifier.height(10.dp))
         if (folders.isEmpty()) {
-            DeckEmpty("No saved archives yet. Use Save on a component, or turn on Keep raw archive.")
+            DeckEmpty(I18n.s(R.string.ui_no_saved_archives_yet_use_save_on_a_component_or_turn))
         } else {
             DeckDragFrame(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
@@ -1310,10 +1310,10 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
         }
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
-                DeckSectionLabel("GPU Drivers", drivers.size)
+                DeckSectionLabel(I18n.s(R.string.ui_gpu_drivers), drivers.size)
             }
             if (drivers.isEmpty()) {
-                item { DeckEmpty("No GPU drivers installed.") }
+                item { DeckEmpty(I18n.s(R.string.ui_no_gpu_drivers_installed)) }
             } else {
                 itemsIndexed(drivers, key = { index, id -> "$index-$id" }) { _, id ->
                     DeckInstalledRow(
@@ -1329,7 +1329,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
                 DeckSectionLabel("Components", components.sumOf { it.second.size })
             }
             if (components.isEmpty()) {
-                item { DeckEmpty("No components installed.") }
+                item { DeckEmpty(I18n.s(R.string.ui_no_components_installed)) }
             } else {
                 itemsIndexed(
                     components,
@@ -1555,8 +1555,8 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
     var format by remember { mutableStateOf(RemoteSourceRepository.SourceFormat.WCP_JSON) }
 
     DeckConfigDialog(title = I18n.s(R.string.ui_add_repository), onDismiss = onDismiss) {
-        DeckConfigNote("Paste any component or GPU-driver source. It joins the list like a built-in.")
-        DeckConfigTextField("Display name", name, { name = it })
+        DeckConfigNote(I18n.s(R.string.ui_paste_any_component_or_gpu_driver_source_it_joi_2))
+        DeckConfigTextField(I18n.s(R.string.ui_display_name), name, { name = it })
         DeckConfigTextField(
             label = if (isDriver) "GitHub repo (owner/repo) or JSON URL" else "URL (repo, releases API, or JSON)",
             value = url,
@@ -1586,7 +1586,7 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
                 val pick: () -> Unit = { format = fmt }
                 Triple(fmt.name.replace('_', ' '), format == fmt, pick)
             }
-            DeckConfigChipGrid("Source format", chips)
+            DeckConfigChipGrid(I18n.s(R.string.ui_source_format), chips)
         }
         Row(
             horizontalArrangement = Arrangement.End,

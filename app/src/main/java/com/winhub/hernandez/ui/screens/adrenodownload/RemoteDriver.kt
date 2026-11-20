@@ -1,6 +1,7 @@
 package com.winhub.hernandez.ui.screens.adrenodownload
 
 import android.content.Context
+import com.winhub.hernandez.util.I18n
 
 /**
  * One feed within a driver source. A source can chain several feeds; [RemoteDriverRepository.fetchEntries]
@@ -70,13 +71,13 @@ object DriverSources {
         ),
         RemoteDriverSource(
             name = "FristOneRR PanVK (Mali)",
-            feeds = listOf(DriverFeed.GithubReleases("FristOneRR", "FristOneRR-Panvk-Driver")),
+            feeds = listOf(DriverFeed.GithubReleases(I18n.s(R.string.ui_fristonerr), I18n.s(R.string.ui_fristonerr_panvk_driver))),
             builtIn = true,
         ),
         // Built for the Mali-G615.
         RemoteDriverSource(
             name = "PanVK G615 (GunaCharanTeja)",
-            feeds = listOf(DriverFeed.GithubReleases("GunaCharanTeja", "panvk-kbase-android", "(?i)-adrenotools\\.zip$")),
+            feeds = listOf(DriverFeed.GithubReleases(I18n.s(R.string.ui_gunacharanteja), "panvk-kbase-android", "(?i)-adrenotools\\.zip$")),
             builtIn = true,
         ),
     )

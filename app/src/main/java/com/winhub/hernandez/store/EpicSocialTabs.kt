@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
 
 /** The Epic **Profile** tab, fed by one [EpicUserData] fetch. No Friends tab: the roster is empty for
  *  most accounts, so the count and a short list live here instead. */
@@ -115,7 +116,7 @@ fun EpicProfileTab(
             }
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StoreFilterChip("Account on epicgames.com", false) {
+                StoreFilterChip(I18n.s(R.string.ui_account_on_epicgames_com), false) {
                     onOpenWeb("https://www.epicgames.com/account/personal", "Epic account")
                 }
                 StoreFilterChip(if (loading) "Refreshing…" else "Refresh", false, onClick = onRefresh)

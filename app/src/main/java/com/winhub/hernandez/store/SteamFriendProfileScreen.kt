@@ -441,7 +441,7 @@ private fun ActionsRow(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
                 contentColor = MaterialTheme.colorScheme.onSurface,
             ),
-        ) { ActionLabel("Invite") }
+        ) { ActionLabel(I18n.s(R.string.ui_invite)) }
         ProfileMoreButton(onViewOnSteam, onRemove, tint = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
@@ -463,7 +463,7 @@ private fun ActionLabel(text: String) {
 @Composable
 private fun AboutSection(summary: String?) {
     if (summary.isNullOrBlank()) return
-    Section("About") {
+    Section(I18n.s(R.string.about)) {
         Text(
             text = summary,
             style = MaterialTheme.typography.bodyMedium,
@@ -500,7 +500,7 @@ private fun OverviewGrid(profile: SteamFriendsStore.FriendProfile?) {
         profile.mutualFriends?.let { add("Mutual" to fmtInt(it)) }
     }
     if (stats.isEmpty()) return
-    Section("Overview") {
+    Section(I18n.s(R.string.ui_overview)) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             stats.chunked(3).forEach { rowStats ->
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -544,7 +544,7 @@ private fun StatCell(label: String, value: String, modifier: Modifier = Modifier
 @Composable
 private fun RecentlyPlayed(games: List<SteamFriendsStore.RecentGame>) {
     if (games.isEmpty()) return
-    Section("Recently played") {
+    Section(I18n.s(R.string.ui_recently_played)) {
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp),

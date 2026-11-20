@@ -358,7 +358,7 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         rows += XmbRow.Toggle("fdDev", "OneUI / HyperOS Fix", Icons.Filled.Tune, cfg.fdDevFeatures) { on -> write { it.fdDevFeatures = on } }
 
         rows += XmbRow.Header("hTurnip", "Turnip")
-        val gmemLabels = listOf("Auto (Adreno 710/720/722)", "Force On", "Force Off")
+        val gmemLabels = listOf("Auto (Adreno 710/720/722)", I18n.s(R.string.ui_force_on), I18n.s(R.string.ui_force_off))
         val gmemValues = listOf("auto", "on", "off")
         rows += XmbRow.Choice("gmem", "GMEM (tiled rendering)", Icons.Filled.Memory, gmemLabels,
             gmemLabels[gmemValues.indexOf(cfg.turnipGmem).coerceAtLeast(0)],
@@ -392,7 +392,7 @@ internal fun xmbWaylandDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbM
     fun write(key: String, value: String) =
         p2Put(xmb, shortcut, "graphicsDriverConfig", withGraphicsDriverKeys(rawCfg(), mapOf(key to value)))
 
-    return XmbMenu("Wayland driver settings", Icons.Filled.Tune) {
+    return XmbMenu(I18n.s(R.string.ui_wayland_driver_settings), Icons.Filled.Tune) {
         val raw = rawCfg()
         val cfg = raw.split(";").associate { elem ->
             val parts = elem.split("=")
@@ -511,7 +511,7 @@ private fun p2ExtensionsMenu(
 ): XmbMenu = XmbMenu(xmb.context.getString(R.string.graphics_driver_available_extensions), Icons.Filled.Extension) {
     val cfg = P2GfxCfg(raw())
     val list = exts()
-    if (list.isEmpty()) listOf(XmbRow.Info("none", "No extensions available for this driver.", Icons.Filled.Info))
+    if (list.isEmpty()) listOf(XmbRow.Info("none", I18n.s(R.string.ui_no_extensions_available_for_this_driver), Icons.Filled.Info))
     else list.map { ext ->
         XmbRow.Toggle("ext:$ext", ext, Icons.Filled.Extension, ext !in cfg.blacklisted) { on ->
             write { it.blacklisted = if (on) it.blacklisted - ext else it.blacklisted + ext }
@@ -521,7 +521,7 @@ private fun p2ExtensionsMenu(
 
 /** The dialog's collapsed "Advanced Turnip (TU_DEBUG)" block. */
 private fun p2TurnipMenu(xmb: XmbScope, raw: () -> String, write: ((P2GfxCfg) -> Unit) -> Unit): XmbMenu =
-    XmbMenu("Advanced Turnip", Icons.Filled.Science) {
+    XmbMenu(I18n.s(R.string.ui_advanced_turnip), Icons.Filled.Science) {
         val cfg = P2GfxCfg(raw())
         val sysmemBlocked = cfg.turnipGmem == "on"
         listOf(
@@ -567,7 +567,7 @@ private fun p2BcnLayerMenu(
 /** #132 Layer 1: one control per env key scanned from an imported wrapper, stored under the raw key. */
 private fun p2DetectedMenu(
     xmb: XmbScope, keys: () -> List<String>, raw: () -> String, write: ((P2GfxCfg) -> Unit) -> Unit,
-): XmbMenu = XmbMenu("Detected settings", Icons.Filled.Science) {
+): XmbMenu = XmbMenu(I18n.s(R.string.ui_detected_settings), Icons.Filled.Science) {
     val cfg = P2GfxCfg(raw())
     val rows = mutableListOf<XmbRow>()
     rows += XmbRow.Info("note", "Values are passed to the wrapper as-is; unknown ones are safe to leave blank.", Icons.Filled.Info)
@@ -734,7 +734,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
     if (driverId.isNotEmpty() && driverId != "System") {
         rows += XmbRow.Action("adRecheck", "Re-check", Icons.Filled.Science,
             subtitle = I18n.s(R.string.ui_checks_the_graphics_driver_again_about_2_seconds)) {
-            xmb.toast("Checking driver… about 2 seconds")
+            xmb.toast(I18n.s(R.string.ui_checking_driver_about_2_seconds))
             xmb.scope.launch {
                 withContext(Dispatchers.IO) {
                     com.winhub.hernandez.core.WaylandDriverProbe.forget(ctx, driverId)

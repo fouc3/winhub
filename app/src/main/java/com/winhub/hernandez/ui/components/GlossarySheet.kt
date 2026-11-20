@@ -43,7 +43,7 @@ internal data class GlossaryEntry(val term: String, val definition: String)
 internal data class GlossarySection(val title: String, val entries: List<GlossaryEntry>)
 
 internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
-    GlossarySection("Graphics translation (DirectX → Vulkan)", listOf(
+    GlossarySection(I18n.s(R.string.ui_graphics_translation_directx_vulkan), listOf(
         GlossaryEntry("DXVK",
             "Translates a game's DirectX 9/10/11 graphics into Vulkan — the language your phone's GPU actually speaks. It's the default and usually the fastest option."),
         GlossaryEntry("VKD3D",
@@ -59,7 +59,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("Zink",
             "Translates OpenGL into Vulkan, so OpenGL-based games and tools still run on a phone GPU that only speaks Vulkan."),
     )),
-    GlossarySection("The Windows layer", listOf(
+    GlossarySection(I18n.s(R.string.ui_the_windows_layer), listOf(
         GlossaryEntry("Wine",
             "Runs Windows programs on Android without Windows itself — it translates a game's Windows system calls into Android/Linux ones on the fly."),
         GlossaryEntry("Proton",
@@ -69,7 +69,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("Wrapper (Graphics Driver)",
             "The Vulkan driver layer a container uses to talk to your GPU. Different wrappers suit different GPUs — this is where the Mali-vs-Adreno choice matters."),
     )),
-    GlossarySection("Running x86 games on ARM", listOf(
+    GlossarySection(I18n.s(R.string.ui_running_x86_games_on_arm), listOf(
         GlossaryEntry("FEXCore",
             "Translates a game's x86/x64 (Intel/AMD) instructions into ARM so they run on your phone's processor. WinHub's primary translator (arm64ec-focused)."),
         GlossaryEntry("box64",
@@ -79,7 +79,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("FEXCore preset",
             "Trades emulation accuracy for speed by tuning how faithfully FEXCore copies the PC's memory ordering (TSO). Stability/Compatibility stay fully accurate (safest); Performance relaxes it for more FPS (can break some games); the in-between and Denuvo presets are middle grounds. Start on the default."),
     )),
-    GlossarySection("GPUs & how they draw", listOf(
+    GlossarySection(I18n.s(R.string.ui_gpus_how_they_draw), listOf(
         GlossaryEntry("Vulkan",
             "The modern, low-level graphics standard your phone's GPU speaks. Every translator above ultimately outputs Vulkan."),
         GlossaryEntry("Mali vs Adreno",
@@ -99,7 +99,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("Max device memory (VRAM cap)",
             "Limits how much video memory the driver tells games it has. Useful when a game tries to use more than your phone can spare — a fix for out-of-memory crashes or stutter. Leave on Default unless a game misbehaves."),
     )),
-    GlossarySection("Turnip & driver tuning", listOf(
+    GlossarySection(I18n.s(R.string.ui_turnip_driver_tuning), listOf(
         GlossaryEntry("GMEM (tiled rendering)",
             "How the GPU draws each frame. GMEM (tiled) rendering splits the screen into small tiles and draws them in ultra-fast on-chip memory — the efficient, mobile-native way. Auto turns it on only for Adreno 710/720/722 (which need it to avoid glitches); Force On applies it to any GPU; Force Off never does. Its opposite is 'sysmem'."),
         GlossaryEntry("sysmem",
@@ -115,7 +115,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("BCn emulation / Transcode to ASTC",
             "On Mali and other non-Adreno GPUs, a game's compressed BCn/DXT textures have to be emulated. The BCn 'Type' picks the decoder (a GPU compute layer or a software one), the cache reuses decoded textures to cut stutter, and 'Transcode to ASTC' repacks them into ASTC — a format mobile GPUs read in hardware — to save memory. All of this has no effect on Adreno, which reads BCn natively."),
     )),
-    GlossarySection("Picture settings", listOf(
+    GlossarySection(I18n.s(R.string.ui_picture_settings), listOf(
         GlossaryEntry("Colors: RGBA vs BGRA",
             "The order of the red and blue colour channels. BGRA (the default) is correct for almost everything — only switch to RGBA if a game's colours look swapped (blue where red should be)."),
         GlossaryEntry("Render scale / supersampling",
@@ -141,7 +141,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("Shader stutter & cache",
             "The first time you play, the game compiles its shaders, which can cause brief stutters. DXVK's shader (state) cache saves them so later sessions run smoothly."),
     )),
-    GlossarySection("Under the hood", listOf(
+    GlossarySection(I18n.s(R.string.ui_under_the_hood), listOf(
         GlossaryEntry("glibc vs bionic",
             "Two different C libraries. Android uses 'bionic'; desktop Linux uses 'glibc'. WinHub's Wine and drivers are built for bionic — a glibc build simply won't load, no matter how good it looks."),
         GlossaryEntry("Environment variables",
@@ -153,7 +153,7 @@ internal val CONTAINER_GLOSSARY: List<GlossarySection> = listOf(
         GlossaryEntry("Components",
             "Extra Windows runtimes some games need (Visual C++ redistributables, .NET, DirectX, etc.). Install them from a container's Components list if a game complains one is missing."),
     )),
-    GlossarySection("Controls & audio", listOf(
+    GlossarySection(I18n.s(R.string.ui_controls_audio), listOf(
         GlossaryEntry("XInput vs DInput",
             "The two ways Windows games read controllers. XInput is the modern Xbox-style standard; DInput is the older one. Match whichever a game expects."),
         GlossaryEntry("Exclusive input",

@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.winhub.hernandez.util.I18n
 
 /**
  * The GOG **Profile** tab, fed by one [GogUserData] fetch. GOG friends are a Galaxy-only roster with
@@ -159,7 +160,7 @@ fun GogProfileTab(
             }
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StoreFilterChip("Account on GOG.com", false) { onOpenWeb("https://www.gog.com/account", "GOG account") }
+                StoreFilterChip(I18n.s(R.string.ui_account_on_gog_com), false) { onOpenWeb("https://www.gog.com/account", "GOG account") }
                 StoreFilterChip(if (loading) "Refreshing…" else "Refresh", false, onClick = onRefresh)
             }
         }

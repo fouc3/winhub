@@ -356,7 +356,7 @@ private fun CatalogRowItem(
             when {
                 isInstalled -> onToggle(entry.id, !selected)             // toggle membership
                 downloadingId != null -> {}                              // one at a time
-                offline -> onHint("Connect to the internet to download effects.")
+                offline -> onHint(I18n.s(R.string.ui_connect_to_the_internet_to_download_effects))
                 else -> onDownload(entry)
             }
         },

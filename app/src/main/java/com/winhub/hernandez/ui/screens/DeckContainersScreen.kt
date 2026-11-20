@@ -191,10 +191,10 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                 modifier = Modifier.weight(1f).fillMaxWidth(),
                 rail = {
                     if (LocalDeckPortrait.current) {
-                        DeckPortraitChips(listOf("Cronos", "Containers"), subtab) { tabs.select(it) }
+                        DeckPortraitChips(listOf(I18n.s(R.string.ui_cronos), I18n.s(R.string.containers)), subtab) { tabs.select(it) }
                     } else {
                         DeckEditorCategoryRail(
-                            labels = listOf("Cronos", "Containers"),
+                            labels = listOf(I18n.s(R.string.ui_cronos), I18n.s(R.string.containers)),
                             selected = subtab,
                             onSelect = { tabs.select(it) },
                             modifier = Modifier.width(200.dp).fillMaxHeight(),
@@ -599,7 +599,7 @@ private fun DeckCronosCard(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             DeckOutlineButton(if (store) "Uninstall Game" else "Remove Game", onRemoveGame)
-            DeckDangerButton("Remove Container", onRemoveContainer)
+            DeckDangerButton(I18n.s(R.string.ui_remove_container_2), onRemoveContainer)
         }
     }
 }
@@ -934,12 +934,12 @@ private fun DeckContainerCard(
                         .verticalScroll(rememberScrollState())
                         .padding(vertical = 8.dp),
                 ) {
-                    DeckMenuItem("Edit", Icons.Filled.Edit) { menuOpen = false; onEdit() }
+                    DeckMenuItem(I18n.s(R.string.edit), Icons.Filled.Edit) { menuOpen = false; onEdit() }
                     DeckMenuItem("Duplicate", Icons.Filled.ContentCopy) { menuOpen = false; onDuplicate() }
-                    DeckMenuItem("Remove", Icons.Filled.Delete) { menuOpen = false; onRemove() }
-                    DeckMenuItem("Export", Icons.Filled.FileUpload) { menuOpen = false; onExport() }
+                    DeckMenuItem(I18n.s(R.string.remove), Icons.Filled.Delete) { menuOpen = false; onRemove() }
+                    DeckMenuItem(I18n.s(R.string.export), Icons.Filled.FileUpload) { menuOpen = false; onExport() }
                     DeckMenuItem("Backup / Restore save", Icons.Filled.SettingsBackupRestore) { menuOpen = false; onBackupRestore() }
-                    DeckMenuItem("Properties", Icons.Filled.Info) { menuOpen = false; onInfo() }
+                    DeckMenuItem(I18n.s(R.string.ui_properties), Icons.Filled.Info) { menuOpen = false; onInfo() }
                 }
             }
         }
@@ -1061,9 +1061,9 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
                 )
                 Spacer(Modifier.height(4.dp))
 
-                DeckPropRow("Drive C", StringUtils.formatBytes(driveCSize))
-                DeckPropRow("Cache", StringUtils.formatBytes(cacheSize))
-                DeckPropRow("Total", StringUtils.formatBytes(totalSize))
+                DeckPropRow(I18n.s(R.string.ui_drive_c), StringUtils.formatBytes(driveCSize))
+                DeckPropRow(I18n.s(R.string.cache), StringUtils.formatBytes(cacheSize))
+                DeckPropRow(I18n.s(R.string.total), StringUtils.formatBytes(totalSize))
 
                 Spacer(Modifier.height(8.dp))
                 Row(

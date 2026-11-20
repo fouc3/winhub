@@ -205,7 +205,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             }
 
             // ── Where logs go ────────────────────────────────────────────
-            SectionLabel("Where logs go")
+            SectionLabel(I18n.s(R.string.ui_where_logs_go))
             LogCard {
                 PickRow(
                     label = when (locationMode) {
@@ -230,11 +230,11 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             saveMode(LogLocation.MODE_DOWNLOAD); showLocationMenu = false
                         }
                         MenuItemDivider()
-                        MenuRow("Documents", Icons.Default.Description) {
+                        MenuRow(I18n.s(R.string.ui_documents), Icons.Default.Description) {
                             saveMode(LogLocation.MODE_DOCUMENTS); showLocationMenu = false
                         }
                         MenuItemDivider()
-                        MenuRow("Choose folder…", Icons.Default.FolderOpen) {
+                        MenuRow(I18n.s(R.string.ui_choose_folder), Icons.Default.FolderOpen) {
                             showLocationMenu = false
                             dirLauncher.launch(InAppFilePicker.buildDirIntent(context, "Select log folder"))
                         }
@@ -248,7 +248,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             }
 
             // ── What to record ───────────────────────────────────────────
-            SectionLabel("What to record")
+            SectionLabel(I18n.s(R.string.ui_what_to_record))
             LogCard {
                 LogToggle("Wine debug", wineDebug,
                     hint = I18n.s(R.string.ui_slows_games_down_for_diagnosing_a_problem),
@@ -394,7 +394,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             }
 
             // ── Housekeeping ─────────────────────────────────────────────
-            SectionLabel("Housekeeping")
+            SectionLabel(I18n.s(R.string.ui_housekeeping))
             LogCard {
                 Box {
                     PickRow(
@@ -446,7 +446,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             }
 
             // ── Logs by game ─────────────────────────────────────────────
-            SectionLabel("Logs by game")
+            SectionLabel(I18n.s(R.string.ui_logs_by_game))
             if (entries.isEmpty()) {
                 LogCard {
                     Text(I18n.s(R.string.ui_no_logs_yet), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
@@ -1098,8 +1098,8 @@ private fun GameLogCard(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.fillMaxWidth().padding(top = 9.dp)
         ) {
-            CardAction("View", modifier = Modifier.weight(1f), primary = true, onClick = onView)
-            CardAction("Share", modifier = Modifier.weight(1f), onClick = onShare)
+            CardAction(I18n.s(R.string.xmb_all_view), modifier = Modifier.weight(1f), primary = true, onClick = onView)
+            CardAction(I18n.s(R.string.share), modifier = Modifier.weight(1f), onClick = onShare)
             CardAction("Delete", modifier = Modifier.weight(1f), danger = true, onClick = onDelete)
         }
     }

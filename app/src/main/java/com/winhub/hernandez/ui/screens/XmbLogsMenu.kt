@@ -354,7 +354,7 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
             }
             busy = false
             if (bundle == null) {
-                xmb.toast("Couldn't build the report.")
+                xmb.toast(I18n.s(R.string.ui_couldn_t_build_the_report))
                 return@launch
             }
             me.close(xmb)
@@ -362,7 +362,7 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
             try {
                 XmbTools.start(ctx, Intent(Intent.ACTION_VIEW, Uri.parse(LogReport.issueUrl(title, description, bundle.facts))))
             } catch (e: Exception) {
-                xmb.toast("No browser to open GitHub with.")
+                xmb.toast(I18n.s(R.string.ui_no_browser_to_open_github_with))
             }
         }
     }

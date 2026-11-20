@@ -320,7 +320,7 @@ private fun QrLoginScreen(
                 onClick = onRetry,
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 shape = RoundedCornerShape(8.dp),
-            ) { Text("Retry") }
+            ) { Text(I18n.s(R.string.ui_retry)) }
             Spacer(Modifier.height(8.dp))
         }
 

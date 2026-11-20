@@ -117,7 +117,7 @@ class EpicGameDetailActivity : ComponentActivity() {
 
     private var dlcJson by mutableStateOf<String?>(null)
 
-    private var cloudSaveDirText by mutableStateOf("No save folder set")
+    private var cloudSaveDirText by mutableStateOf(I18n.s(R.string.ui_no_save_folder_set))
     private var cloudSaveDirColor by mutableIntStateOf(0xFF445566.toInt())
     private var cloudSaveStatusText by mutableStateOf("")
     private var cloudSaveStatusVisible by mutableStateOf(false)
@@ -939,7 +939,7 @@ private fun EpicGameDetailScreen(
     }
     val hasMedia = media?.isEmpty == false
     // Appended LAST so the Details / DLC / Cloud saves indices never move.
-    val tabs = if (hasMedia) listOf("Details", "DLC", "Cloud saves", "Media") else listOf("Details", "DLC", "Cloud saves")
+    val tabs = if (hasMedia) listOf(I18n.s(R.string.ui_details), "DLC", I18n.s(R.string.ui_cloud_saves_2), I18n.s(R.string.ui_media)) else listOf(I18n.s(R.string.ui_details), "DLC", I18n.s(R.string.ui_cloud_saves_2))
     if (tab >= tabs.size) tab = 0
 
     StoreDetailScaffold(
@@ -988,7 +988,7 @@ private fun EpicGameDetailScreen(
                         if (appName.isNotEmpty()) InfoChip("App: $appName")
                         val releaseDate = prefs.getString("epic_release_$appName", null)
                         if (!releaseDate.isNullOrEmpty()) InfoChip(formatDateStatic(releaseDate))
-                        if (usesEos) InfoChip("EOS online services")
+                        if (usesEos) InfoChip(I18n.s(R.string.ui_eos_online_services))
                     }
                     if (description.isNotEmpty()) {
                         Spacer(Modifier.height(10.dp))
@@ -1003,7 +1003,7 @@ private fun EpicGameDetailScreen(
                 Spacer(Modifier.height(8.dp))
                 StoreSection(title = I18n.s(R.string.ui_updates)) {
                     if (!installed) {
-                        StoreStatusText("Install the game first to check for updates.")
+                        StoreStatusText(I18n.s(R.string.ui_install_the_game_first_to_check_for_updates))
                     } else {
                         val displayText = if (updateStatusText.isNotEmpty()) updateStatusText
                         else {
@@ -1045,9 +1045,9 @@ private fun EpicGameDetailScreen(
             1 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
                 StoreSection(title = I18n.s(R.string.ui_dlc)) {
                     if (dlcArr == null) {
-                        StoreStatusText("No DLCs in your library for this game")
+                        StoreStatusText(I18n.s(R.string.ui_no_dlcs_in_your_library_for_this_game))
                     } else if (dlcArr.length() == 0) {
-                        StoreStatusText("No DLCs in your library for this game")
+                        StoreStatusText(I18n.s(R.string.ui_no_dlcs_in_your_library_for_this_game))
                     } else {
                         Text(
                             text = "${dlcArr.length()} DLC${if (dlcArr.length() == 1) "" else "s"} owned",
@@ -1157,7 +1157,7 @@ private fun formatDateStatic(iso: String): String {
         val year = parts[0].toInt()
         val month = parts[1].toInt()
         val day = parts[2].toInt()
-        val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        val months = arrayOf(I18n.s(R.string.ui_jan), I18n.s(R.string.ui_feb), I18n.s(R.string.ui_mar), I18n.s(R.string.ui_apr), I18n.s(R.string.ui_may), I18n.s(R.string.ui_jun),
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         if (month < 1 || month > 12) return iso.substring(0, 10)
         "${months[month - 1]} $day, $year"

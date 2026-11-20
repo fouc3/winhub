@@ -151,7 +151,7 @@ internal fun DeckSettingsScreen() {
     LaunchedEffect(subTabs) { subTabs.bind(6) }
     LaunchedEffect(subTabs.index) { if (settingsTab != subTabs.index) settingsTab = subTabs.index }
     var settingsPagesCategoryOpen by remember { mutableStateOf(false) }
-    val settingsTabs = remember { listOf("General", "Interface", "Appearance", "System", "Graphics", "Updater") }
+    val settingsTabs = remember { listOf(I18n.s(R.string.general), I18n.s(R.string.ui_interface), I18n.s(R.string.ui_appearance), "System", I18n.s(R.string.ui_graphics), I18n.s(R.string.ui_updater)) }
 
     // ── Theme + config-editor presentation (immediate-write). ──
     val themeChoices = remember { selectableThemePresets }
@@ -596,7 +596,7 @@ internal fun DeckSettingsScreen() {
                     DeckButton(I18n.s(R.string.ui_choose)) {
                         musicLauncher.launch(
                             InAppFilePicker.buildIntent(
-                                context, arrayOf("mp3", "m4a", "ogg", "wav", "flac", "aac"), "Choose music",
+                                context, arrayOf("mp3", "m4a", "ogg", "wav", "flac", "aac"), I18n.s(R.string.ui_choose_music),
                             ),
                         )
                     }
@@ -776,8 +776,8 @@ internal fun DeckSettingsScreen() {
             DeckChoiceRow(
                 label = I18n.s(R.string.ui_default_landing_screen),
                 options = listOf(
-                    "games" to "Game Shortcuts",
-                    "containers" to "Containers",
+                    "games" to I18n.s(R.string.ui_game_shortcuts),
+                    "containers" to I18n.s(R.string.containers),
                 ),
                 selected = landing,
                 onPick = { landing = it; saved = false },
@@ -988,8 +988,8 @@ internal fun DeckSettingsScreen() {
                 label = I18n.s(R.string.ui_config_editor_style),
                 hint = I18n.s(R.string.ui_how_driver_wrapper_and_renderer_settings_open),
                 options = listOf(
-                    "popup" to "Popup (dialog)",
-                    "dropdown" to "Dropdown (inline)",
+                    "popup" to I18n.s(R.string.ui_popup_dialog),
+                    "dropdown" to I18n.s(R.string.ui_dropdown_inline),
                 ),
                 selected = configEditorStyle,
                 onPick = {
@@ -1001,8 +1001,8 @@ internal fun DeckSettingsScreen() {
                 label = I18n.s(R.string.ui_portrait_tabs),
                 hint = I18n.s(R.string.ui_how_the_container_editor_contents_and_settings_arrang),
                 options = listOf(
-                    "strip" to "Icon Tabs (top)",
-                    "pages" to "Category List",
+                    "strip" to I18n.s(R.string.ui_icon_tabs_top),
+                    "pages" to I18n.s(R.string.ui_category_list),
                 ),
                 selected = settingsLayout.let { if (it == "pages") "pages" else "strip" },
                 onPick = {
@@ -1015,8 +1015,8 @@ internal fun DeckSettingsScreen() {
                 label = I18n.s(R.string.ui_container_editor_layout),
                 hint = I18n.s(R.string.ui_how_the_container_editor_arranges_its_categories),
                 options = listOf(
-                    "rail" to "Side Rail",
-                    "pages" to "Category Pages",
+                    "rail" to I18n.s(R.string.ui_side_rail),
+                    "pages" to I18n.s(R.string.ui_category_pages),
                 ),
                 selected = editorLayout,
                 onPick = {
@@ -1028,8 +1028,8 @@ internal fun DeckSettingsScreen() {
                 label = I18n.s(R.string.ui_settings_layout),
                 hint = I18n.s(R.string.ui_how_the_settings_page_save_manager_and_contents_arran),
                 options = listOf(
-                    "rail" to "Side Rail",
-                    "pages" to "Category Pages",
+                    "rail" to I18n.s(R.string.ui_side_rail),
+                    "pages" to I18n.s(R.string.ui_category_pages),
                 ),
                 selected = settingsLayout,
                 onPick = {
@@ -1099,7 +1099,7 @@ internal fun DeckSettingsScreen() {
         // ── Logs ──
         DeckGroup(title = I18n.s(R.string.logs)) {
             DeckRow(label = I18n.s(R.string.ui_open_log_manager), hint = "Wine / Box64 logging and log location") {
-                DeckButton("Open", primary = false) { showLogManager = true }
+                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showLogManager = true }
             }
         }
 
@@ -1178,7 +1178,7 @@ internal fun DeckSettingsScreen() {
         // ── Performance ──
         DeckGroup(title = I18n.s(R.string.performance)) {
             DeckRow(label = I18n.s(R.string.ui_open_performance_settings)) {
-                DeckButton("Open", primary = false) { showPerformance = true }
+                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showPerformance = true }
             }
         }
         }

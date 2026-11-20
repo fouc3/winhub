@@ -288,7 +288,7 @@ private fun SaveItem(
                 modifier = Modifier.outlinedMenuCard(),
             ) {
                 DropdownMenuItem(
-                    text = { Text("Edit") },
+                    text = { Text(I18n.s(R.string.edit)) },
                     leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp)) },
                     onClick = { menuExpanded = false; onEdit() },
                 )

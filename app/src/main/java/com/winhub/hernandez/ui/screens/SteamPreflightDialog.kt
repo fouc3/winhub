@@ -396,7 +396,7 @@ private fun captionFor(
         }
         2 -> of("Cloud saves", Step.CLOUD, HELP_CLOUD, "Syncing cloud saves…")
         else -> when {
-            launching -> Caption("Ready", "Launching $gameName…", Tone.OK, Trail.CHECK, HELP_PREFLIGHT)
+            launching -> Caption(I18n.s(R.string.ui_ready), "Launching $gameName…", Tone.OK, Trail.CHECK, HELP_PREFLIGHT)
             states.containsKey(Step.CLIENT) -> of("SteamLite client", Step.CLIENT, HELP_CLIENT, "Checking for SteamLite updates…")
             else -> of("Game files", Step.UPDATE, HELP_UPDATE, "Checking for updates…")
         }
@@ -436,7 +436,7 @@ private fun failCardFor(
             "$needSignIn. Sign in again to play online with SteamLite, or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text("Launch with Goldberg", color = cs.onSurfaceVariant) }
+            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_launch_with_goldberg), color = cs.onSurfaceVariant) }
             TextButton(onClick = onSignIn) { Text(I18n.s(R.string.xmb_store_card_signed_out), color = cs.primary) }
         }
         offline != null -> FailCardModel(
@@ -446,7 +446,7 @@ private fun failCardFor(
         ) {
             TextButton(onClick = onGoldberg) { Text("Goldberg", color = cs.onSurfaceVariant) }
             TextButton(onClick = launchAnyway) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
-            TextButton(onClick = retry) { Text("Retry", color = cs.primary) }
+            TextButton(onClick = retry) { Text(I18n.s(R.string.ui_retry), color = cs.primary) }
         }
         updateOffer != null -> FailCardModel(
             "Update available",

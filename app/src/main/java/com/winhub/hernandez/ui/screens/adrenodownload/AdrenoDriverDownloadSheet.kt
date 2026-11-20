@@ -511,7 +511,7 @@ private fun CenteredError(message: String, onRetry: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
             )
             Spacer(Modifier.height(12.dp))
-            TextButton(onClick = onRetry) { Text("Retry") }
+            TextButton(onClick = onRetry) { Text(I18n.s(R.string.ui_retry)) }
         }
     }
 }
@@ -597,7 +597,7 @@ private fun ManageSourcesDialog(
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     SourceChip("JSON URL", selected = !isGithub, onClick = { isGithub = false })
-                    SourceChip("GitHub repo", selected = isGithub, onClick = { isGithub = true })
+                    SourceChip(I18n.s(R.string.ui_github_repo), selected = isGithub, onClick = { isGithub = true })
                 }
                 Spacer(Modifier.height(8.dp))
                 if (!isGithub) {

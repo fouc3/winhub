@@ -956,7 +956,7 @@ internal fun HubConfirmDialog(
                 )
 
                 Spacer(Modifier.height(14.dp))
-                DeckConfigTextField("Game name", name, { name = it })
+                DeckConfigTextField(I18n.s(R.string.ui_game_name), name, { name = it })
 
                 if (mode == HubAddMode.CRONOS) {
                     Spacer(Modifier.height(10.dp))
@@ -1034,7 +1034,7 @@ internal fun HubConfirmDialog(
 
                 Spacer(Modifier.height(14.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    HubGradientButton("Search on Steam") {
+                    HubGradientButton(I18n.s(R.string.ui_search_on_steam)) {
                         if (name.isBlank()) return@HubGradientButton
                         searching = true
                         results = null
@@ -1137,7 +1137,7 @@ internal fun HubConfirmDialog(
                         Text("Cancel", color = DeckPalette.onBackground)
                     }
                     Spacer(Modifier.width(10.dp))
-                    HubGradientButton("Add") {
+                    HubGradientButton(I18n.s(R.string.add)) {
                         onConfirm(name.trim().ifEmpty { file.nameWithoutExtension }, appId, if (mode == HubAddMode.CRONOS) -1 else containerIdx, coverPath)
                     }
                 }
@@ -1571,8 +1571,8 @@ internal fun DeckGameMenu(
             DeckGameMenuRow("Play", Icons.Filled.PlayArrow, onClick = onPlay)
             DeckGameMenuRow("Launch method\u2026", Icons.Filled.Layers, onClick = onLaunchMethod)
             DeckGameMenuRow("Settings", Icons.Filled.Settings, onClick = onSettings)
-            DeckGameMenuRow("Add to Home Screen", Icons.Filled.Home, onClick = onAddToHomeScreen)
-            DeckGameMenuRow("Properties", Icons.Filled.Info, onClick = onProperties)
+            DeckGameMenuRow(I18n.s(R.string.ui_add_to_home_screen_2), Icons.Filled.Home, onClick = onAddToHomeScreen)
+            DeckGameMenuRow(I18n.s(R.string.ui_properties), Icons.Filled.Info, onClick = onProperties)
             DeckGameMenuRow("Delete", Icons.Filled.Delete, danger = true, onClick = onDelete)
         }
     }
@@ -1674,7 +1674,7 @@ internal fun DeckCronosReviewDialog(
                 }
             }
             Spacer(Modifier.height(16.dp))
-            HubGradientButton("Settings are good", onClick = onKeep, modifier = Modifier.fillMaxWidth())
+            HubGradientButton(I18n.s(R.string.ui_settings_are_good), onClick = onKeep, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(8.dp))
             OutlinedButton(onClick = onEdit, modifier = Modifier.fillMaxWidth()) {
                 Text(I18n.s(R.string.wrapper_edit_settings), color = DeckPalette.onSurfaceVariant)

@@ -99,7 +99,7 @@ import kotlinx.coroutines.flow.update
 import com.winhub.hernandez.util.I18n
 import com.winhub.hernandez.R
 
-private val WIZARD_STEPS = listOf("Layout", "Theme", "Home", "Sounds", "Stores", "Retro", "Contents", "Social Hub", "Install")
+private val WIZARD_STEPS = listOf(I18n.s(R.string.ui_layout), I18n.s(R.string.theme), "Home", I18n.s(R.string.ui_sounds), "Stores", I18n.s(R.string.ui_retro), I18n.s(R.string.contents), I18n.s(R.string.ui_social_hub), "Install")
 private const val LAST_STEP = 7
 private const val LAYOUT = 0
 private const val THEME = 1
@@ -356,7 +356,7 @@ private fun WizardFooter(step: Int, wide: Boolean, extraCount: Int, onBack: () -
     ) {
         if (wide) {
             DeckHintBar(
-                hints = listOf("A" to "Select", "B" to "Back", "LB RB" to "Step"),
+                hints = listOf("A" to "Select", "B" to "Back", "LB RB" to I18n.s(R.string.ui_step)),
                 modifier = Modifier.weight(1f),
             )
         } else {
@@ -740,7 +740,7 @@ private fun ContentsBrowser(vm: FirstRunViewModel, hub: ContentsHubViewModel, mo
                     DeckIconAction(Icons.Filled.Close, "Clear search") { hub.setQuery("") }
                 }
                 Spacer(Modifier.height(8.dp))
-                if (searching) BrowserNote("Loading...")
+                if (searching) BrowserNote(I18n.s(R.string.ui_loading))
                 else if (results.isEmpty()) BrowserNote("No component matches \"$query\".")
                 else CatalogList(results, true, pinned, extras, vm)
             }
@@ -766,7 +766,7 @@ private fun ContentsBrowser(vm: FirstRunViewModel, hub: ContentsHubViewModel, mo
                 }
                 Spacer(Modifier.height(10.dp))
                 when {
-                    loading -> BrowserNote("Loading...")
+                    loading -> BrowserNote(I18n.s(R.string.ui_loading))
                     catalog.isEmpty() -> BrowserNote("No releases found for $title.")
                     repo == null -> {
                         val names = catalog.map { it.sourceName }.toSet()
@@ -968,7 +968,7 @@ private fun InstallPlan(picked: List<ExtraPick>, modifier: Modifier) {
                 Text(I18n.s(R.string.ui_install_plan), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, modifier = Modifier.weight(1f))
                 Text("${1 + FIRST_RUN_CONTENTS.size + picked.size} items", color = DeckPalette.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
-            PlanRow("System files", "Always", false)
+            PlanRow(I18n.s(R.string.ui_system_files), "Always", false)
             FIRST_RUN_CONTENTS.forEach { PlanRow(it.label, "Included", false) }
             picked.forEach { PlanRow(it.content.label, "${it.type} from ${it.source}", true) }
             if (picked.isEmpty()) {
@@ -1011,7 +1011,7 @@ private fun SocialStep(vm: FirstRunViewModel, modifier: Modifier) {
         val acct = account
         when {
             acct != null -> ConnectedCard(acct) { SocialHubStore.signOut() }
-            login is SocialHubStore.LoginState.Requesting -> StatusCard("Asking GitHub for a code...", null)
+            login is SocialHubStore.LoginState.Requesting -> StatusCard(I18n.s(R.string.ui_asking_github_for_a_code), null)
             login is SocialHubStore.LoginState.AwaitingUser -> {
                 val waiting = login as SocialHubStore.LoginState.AwaitingUser
                 CodeCard(waiting, onOpen = { openUrl(ctx, waiting.verificationUri) }, onCancel = { SocialHubStore.cancelLogin() })
@@ -1100,9 +1100,9 @@ private fun StatusCard(message: String, action: String?, onAction: () -> Unit = 
 private fun SocialPerks(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
         DeckGroup("What you get") {
-            DeckRow("Import configs", "Community settings for your game and hardware, in one tap.") {}
-            DeckRow("Share your own", "Publish what works and see who used it.") {}
-            DeckRow("Join in", "Post, reply, vote and follow what is working right now.") {}
+            DeckRow(I18n.s(R.string.ui_import_configs), "Community settings for your game and hardware, in one tap.") {}
+            DeckRow(I18n.s(R.string.ui_share_your_own), "Publish what works and see who used it.") {}
+            DeckRow(I18n.s(R.string.ui_join_in), "Post, reply, vote and follow what is working right now.") {}
         }
     }
 }

@@ -413,7 +413,7 @@ internal fun xmbChangeExeMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         onPick = { file ->
             val browser = browse.picked
             if (!file.isFile || !isSupported(file.name)) {
-                xmb.toast("Pick a .exe, .lnk, or .desktop file.")
+                xmb.toast(I18n.s(R.string.ui_pick_a_exe_lnk_or_desktop_file))
             } else if (info.argsSuffix.isBlank()) {
                 browser?.close(xmb)
                 applyExe(file, "")
@@ -501,13 +501,13 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             },
         ) {
             if (deleting) {
-                listOf(XmbRow.Info("deleting", "Deleting the original folder…", Icons.Filled.HourglassEmpty))
+                listOf(XmbRow.Info("deleting", I18n.s(R.string.ui_deleting_the_original_folder), Icons.Filled.HourglassEmpty))
             } else {
                 listOf<XmbRow>(
                     XmbRow.Action(key = "keep", label = I18n.s(R.string.ui_keep_original), icon = Icons.Filled.Check) {
                         if (!decided) {
                             decided = true
-                            xmb.toast("Copied to Drive C — original kept.")
+                            xmb.toast(I18n.s(R.string.ui_copied_to_drive_c_original_kept))
                             finish()
                         }
                     },
@@ -517,7 +517,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                             deleting = true
                             xmb.scope.launch {
                                 withContext(Dispatchers.IO) { runCatching { src.deleteRecursively() } }
-                                xmb.toast("Moved to Drive C — original deleted.")
+                                xmb.toast(I18n.s(R.string.ui_moved_to_drive_c_original_deleted))
                                 finish()
                             }
                         }
@@ -578,7 +578,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 },
                 onFailure = { e ->
                     if (e is CopyGameToDriveC.CancelledException) {
-                        xmb.toast("Copy cancelled — nothing was changed.")
+                        xmb.toast(I18n.s(R.string.ui_copy_cancelled_nothing_was_changed))
                     } else {
                         Log.e("CopyToDriveC", "copy/repoint failed for $name", e)
                         xmb.toast("Copy failed: ${e.message ?: "unknown error"}. Nothing was changed.")
@@ -761,9 +761,9 @@ internal fun xmbScrapeCoverMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 shortcut.icon = full
                 me.close(xmb)
                 xmb.reloadGames()
-                xmb.toast("Cover saved.")
+                xmb.toast(I18n.s(R.string.ui_cover_saved))
             } else {
-                xmb.toast("Couldn't download that cover.")
+                xmb.toast(I18n.s(R.string.ui_couldn_t_download_that_cover))
             }
         }
     }
@@ -822,7 +822,7 @@ internal fun xmbBackupSavesMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         CustomSaveVault.manualBackup(ctx, shortcut.container, shortcut, layout) { r ->
             running = false
             if (r.wholeContainer && r.ok) {
-                xmb.toast("No per-game saves detected — backed up the whole container.")
+                xmb.toast(I18n.s(R.string.ui_no_per_game_saves_detected_backed_up_the_whole_contai))
             }
             xmb.toast(
                 if (r.ok) "Backed up ${r.fileCount} files → ${r.path?.substringAfterLast('/')}"
@@ -1009,7 +1009,7 @@ private fun xmbEmuConflicts(xmb: XmbScope, conflicts: List<GameSaveBackup.EmuIdC
 
     fun show(i: Int) {
         if (i >= conflicts.size) {
-            if (applied > 0) xmb.toast("Emulator account switched to the backup's — relaunch the game")
+            if (applied > 0) xmb.toast(I18n.s(R.string.ui_emulator_account_switched_to_the_backup_s_relaunch_th))
             return
         }
         val c = conflicts[i]

@@ -367,7 +367,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
         rows += XmbRow.Text("new", "New preset", Icons.Filled.Add, "", subtitle = "Default values; becomes this game's preset",
             placeholder = I18n.s(R.string.ui_preset_name)) { name ->
             val clean = name.trim().replace(Regex("[,|]+"), "")
-            if (clean.isEmpty()) xmb.toast("Enter a name")
+            if (clean.isEmpty()) xmb.toast(I18n.s(R.string.ui_enter_a_name))
             else {
                 val env = EnvVars()
                 p2LoadSpecs(ctx, prefix).forEach { env.put(it.name, it.defaultValue) }
@@ -429,7 +429,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
 // ── Startup services / CPU cores ────────────────────────────────────────────────────────────────────
 
 /** StartupServicesToggleList: the Custom selection's per-service enabled set ("startupServices" CSV). */
-private fun p2ServicesMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu("Custom services", Icons.Filled.Checklist) {
+private fun p2ServicesMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu(I18n.s(R.string.ui_custom_services_2), Icons.Filled.Checklist) {
     val c = s.container
     val enabled: Set<String> = WineUtils.parseStartupServicesCsv(s.p2Ex("startupServices", c.startupServices)).toSet()
     val rows = mutableListOf<XmbRow>()
@@ -458,7 +458,7 @@ private fun p2CpuMenu(xmb: XmbScope, s: Shortcut): XmbMenu = XmbMenu(xmb.context
     (0 until cores).map { i ->
         XmbRow.Toggle("cpu$i", "CPU$i", Icons.Filled.Memory, i in checked) { on ->
             val next = (0 until cores).filter { j -> if (j == i) on else j in checked }
-            if (next.isEmpty()) xmb.toast("Keep at least one core enabled")
+            if (next.isEmpty()) xmb.toast(I18n.s(R.string.ui_keep_at_least_one_core_enabled))
             else p2Put(xmb, s, "cpuList", next.joinToString(","))
         }
     }
@@ -522,7 +522,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
 
     fun loadoutMenu(): XmbMenu {
         ensureLoaded()
-        return XmbMenu("ReShade loadout", Icons.Filled.Layers) body@{
+        return XmbMenu(I18n.s(R.string.ui_reshade_loadout), Icons.Filled.Layers) body@{
             val rows = mutableListOf<XmbRow>()
             if (!loaded) {
                 rows += XmbRow.Info("loading", "Scanning effects…", Icons.Filled.Info)
@@ -538,7 +538,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                 return@body rows
             }
             val solo = st.mode == ReshadeLoadout.MODE_SOLO
-            rows += XmbRow.Choice("mode", "Mode", Icons.Filled.Tune, listOf("Solo", "Stack"), if (solo) "Solo" else "Stack",
+            rows += XmbRow.Choice("mode", "Mode", Icons.Filled.Tune, listOf(I18n.s(R.string.ui_solo), "Stack"), if (solo) I18n.s(R.string.ui_solo) else "Stack",
                 subtitle = if (solo) "One effect active at a time (A/B compare)" else "Layer any subset of effects") { v ->
                 st.changeMode(if (v == "Stack") ReshadeLoadout.MODE_STACK else ReshadeLoadout.MODE_SOLO)
                 persist()
@@ -636,7 +636,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                 } else xmb.toast("Failed to download ${entry.name}.")
             }
         }
-        return XmbMenu("ReShade effects", Icons.Filled.CloudDownload) body@{
+        return XmbMenu(I18n.s(R.string.ui_reshade_effects), Icons.Filled.CloudDownload) body@{
             val rows = mutableListOf<XmbRow>()
             if (catLoading) {
                 rows += XmbRow.Info("loading", "Loading the effect catalog…", Icons.Filled.CloudDownload)

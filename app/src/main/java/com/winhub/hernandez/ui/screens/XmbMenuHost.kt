@@ -199,7 +199,7 @@ private fun XmbNavState.step(m: XmbMenu, rows: List<XmbRow>, d: Int) {
 }
 
 private fun XmbNavState.commitChoice(row: XmbRow.Choice, value: String, xmb: XmbScope) {
-    if (value in row.disabledOptions) { xmb.toast("Not available here"); return }
+    if (value in row.disabledOptions) { xmb.toast(I18n.s(R.string.ui_not_available_here)); return }
     picker = null
     if (value == row.selected) return
     val c = row.confirm?.invoke(value)

@@ -330,7 +330,7 @@ fun UnpackArchiveScreen(
                 Text(I18n.s(R.string.ui_power), style = sectionTitle())
                 Spacer(Modifier.height(8.dp))
                 SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                    val modes = listOf(PowerMode.AUTO to "Auto", PowerMode.MAX to "Max", PowerMode.MANUAL to "Manual")
+                    val modes = listOf(PowerMode.AUTO to "Auto", PowerMode.MAX to I18n.s(R.string.ui_max), PowerMode.MANUAL to I18n.s(R.string.ui_manual))
                     modes.forEachIndexed { index, (mode, label) ->
                         SegmentedButton(
                             selected = powerMode == mode,
@@ -739,7 +739,7 @@ fun UnpackArchiveScreen(
                     UnpackPhase.CANCELLED -> {
                         Spacer(Modifier.height(4.dp))
                         SectionCard {
-                            Text("Cancelled", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                            Text(I18n.s(R.string.xmb_dl_status_cancelled), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
                         }
                     }
                     else -> Unit

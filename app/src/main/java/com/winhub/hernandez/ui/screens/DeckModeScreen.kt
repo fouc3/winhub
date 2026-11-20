@@ -292,11 +292,11 @@ private fun deckSections() = listOf(
     DeckSection("home", "Home", Icons.Filled.Apps),
     DeckSection("containers", "Storage", Icons.Filled.Folder),
     DeckSection("stores", "Stores", Icons.Filled.Storefront),
-    DeckSection("file_manager", "Files", Icons.Filled.FolderOpen),
-    DeckSection("input_controls", "Controls", Icons.Filled.SportsEsports),
-    DeckSection("contents", "Contents", Icons.Filled.Inventory2),
-    DeckSection("saves", "Saves", Icons.Filled.Save),
-    DeckSection("social_hub", "Social", Icons.Filled.People),
+    DeckSection("file_manager", I18n.s(R.string.ui_files), Icons.Filled.FolderOpen),
+    DeckSection("input_controls", I18n.s(R.string.ui_controls), Icons.Filled.SportsEsports),
+    DeckSection("contents", I18n.s(R.string.contents), Icons.Filled.Inventory2),
+    DeckSection("saves", I18n.s(R.string.ui_saves), Icons.Filled.Save),
+    DeckSection("social_hub", I18n.s(R.string.ui_social), Icons.Filled.People),
     DeckSection("settings", "Settings", Icons.Filled.Settings),
 )
 
@@ -1211,16 +1211,16 @@ private fun DeckHome(
             }
         } else listOf(
             DeckMenuAction("Play", Icons.Filled.PlayArrow) { playEntry(entry) },
-            DeckMenuAction("Launch method", Icons.Filled.Layers) { openLaunchMethod(entry) },
+            DeckMenuAction(I18n.s(R.string.ui_launch_method), Icons.Filled.Layers) { openLaunchMethod(entry) },
             DeckMenuAction("Settings", Icons.Filled.Settings) { openGameSettings(entry) },
-            DeckMenuAction("Game Doctor", Icons.Filled.Healing) { openGameTool(entry, HubTool.DOCTOR) },
-            DeckMenuAction("Game details", Icons.Filled.Edit) { openGameTool(entry, HubTool.DETAILS) },
-            DeckMenuAction("Search covers", Icons.Filled.Search) { openGameTool(entry, HubTool.COVERS) },
-            DeckMenuAction("Clone to container", Icons.Filled.ContentCopy) { openGameTool(entry, HubTool.CLONE) },
-            DeckMenuAction("Copy to Drive C", Icons.Filled.DriveFileMove) { openGameTool(entry, HubTool.DRIVE_C) },
-            DeckMenuAction("Change executable", Icons.Filled.SwapHoriz) { openGameTool(entry, HubTool.CHANGE_EXE) },
-            DeckMenuAction("Add to Home Screen", Icons.Filled.Home) { addToHomeScreen(entry) },
-            DeckMenuAction("Properties", Icons.Filled.Info) { showProperties(entry) },
+            DeckMenuAction(I18n.s(R.string.ui_game_doctor), Icons.Filled.Healing) { openGameTool(entry, HubTool.DOCTOR) },
+            DeckMenuAction(I18n.s(R.string.ui_game_details_2), Icons.Filled.Edit) { openGameTool(entry, HubTool.DETAILS) },
+            DeckMenuAction(I18n.s(R.string.ui_search_covers), Icons.Filled.Search) { openGameTool(entry, HubTool.COVERS) },
+            DeckMenuAction(I18n.s(R.string.ui_clone_to_container), Icons.Filled.ContentCopy) { openGameTool(entry, HubTool.CLONE) },
+            DeckMenuAction(I18n.s(R.string.ui_copy_to_drive_c_2), Icons.Filled.DriveFileMove) { openGameTool(entry, HubTool.DRIVE_C) },
+            DeckMenuAction(I18n.s(R.string.ui_change_executable_2), Icons.Filled.SwapHoriz) { openGameTool(entry, HubTool.CHANGE_EXE) },
+            DeckMenuAction(I18n.s(R.string.ui_add_to_home_screen_2), Icons.Filled.Home) { addToHomeScreen(entry) },
+            DeckMenuAction(I18n.s(R.string.ui_properties), Icons.Filled.Info) { showProperties(entry) },
             DeckMenuAction("Delete", Icons.Filled.Delete, danger = true) { deleteEntry(entry) },
         )
     }.orEmpty()
@@ -1254,7 +1254,7 @@ private fun DeckHome(
     val cards = remember(fullXmb, showStores, storesSignedIn) {
         buildList {
             add(
-                DeckHomeCard("Add game", "Add games to your library", Icons.Filled.Add,
+                DeckHomeCard(I18n.s(R.string.ui_add_game), "Add games to your library", Icons.Filled.Add,
                     listOf(Color(0xFF2A2D33), Color(0xFF16181C))) { addModeMenu = true },
             )
             if (fullXmb && showStores) storeScreens.forEach { screen ->
@@ -1269,7 +1269,7 @@ private fun DeckHome(
                 )
             }
             if (fullXmb) add(
-                DeckHomeCard("Social", "Feed, configs and profile", Icons.Filled.People,
+                DeckHomeCard(I18n.s(R.string.ui_social), "Feed, configs and profile", Icons.Filled.People,
                     listOf(Color(0xFF134E4A), Color(0xFF0A2B29))) { openSocialNow() },
             )
         }
@@ -1586,7 +1586,7 @@ private fun DeckHome(
             )
             // Shelves (L2/R2) top centre, status top right.
             if (!portrait && !allOpen && !steamStyle) DeckStretchyTabs(
-                labels = listOf("All", "Recent", "Favourites", "Store games"),
+                labels = listOf("All", I18n.s(R.string.ui_recent), I18n.s(R.string.ui_favourites), I18n.s(R.string.ui_store_games)),
                 selected = shelf,
                 onSelect = { deckTabs.select(it) },
                 focusable = false,
@@ -1918,7 +1918,7 @@ private fun DeckGraphicsPane(pane: String, onSelect: (String) -> Unit) {
             else -> AdrenoToolsScreen()
         }
         DeckStretchyTabs(
-            labels = listOf("GPU drivers", "Wrappers"),
+            labels = listOf(I18n.s(R.string.ui_gpu_drivers_2), I18n.s(R.string.ui_wrappers)),
             selected = if (pane == "wrappers") 1 else 0,
             onSelect = { onSelect(if (it == 1) "wrappers" else "gpu") },
             focusable = true,
@@ -2015,7 +2015,7 @@ private fun SocialXmbEntry() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize(),
     ) {
-        DeckEmptyState("Social Hub", "Feed, configs and profile open as a full-screen XMB page.")
+        DeckEmptyState(I18n.s(R.string.ui_social_hub), "Feed, configs and profile open as a full-screen XMB page.")
         DeckButton(I18n.s(R.string.ui_open_social_hub)) { context.startActivity(Intent(context, SocialHubActivity::class.java)) }
     }
 }
@@ -2818,7 +2818,7 @@ private fun DeckStatusStrip(modifier: Modifier = Modifier) {
 private enum class HomeMode { GAMES, OPTIONS, STORES }
 
 /** The Steam style's shelves: All, Recent, Favourites, then one per store (see [XmbStoreShelfHome]). */
-private val STEAM_HOME_SHELF_LABELS = listOf("All", "Recent", "Favourites", "Steam", "Epic", "GOG", "Amazon")
+private val STEAM_HOME_SHELF_LABELS = listOf("All", I18n.s(R.string.ui_recent), I18n.s(R.string.ui_favourites), "Steam", "Epic", "GOG", "Amazon")
 private val STEAM_HOME_SHELVES = STEAM_HOME_SHELF_LABELS.size
 
 /** One row of the game's quick menu. */

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.winhub.hernandez.inputcontrols.StickShaper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import com.winhub.hernandez.util.I18n
 
 object XServerDialogState {
 
@@ -811,7 +812,7 @@ object XServerDialogState {
     private val _tmCpuTitle  = MutableStateFlow("CPU")
     val tmCpuTitle: StateFlow<String> = _tmCpuTitle
 
-    private val _tmMemTitle  = MutableStateFlow("Memory")
+    private val _tmMemTitle  = MutableStateFlow(I18n.s(R.string.ui_memory))
     val tmMemTitle: StateFlow<String> = _tmMemTitle
 
     private val _tmMemInfo   = MutableStateFlow("")

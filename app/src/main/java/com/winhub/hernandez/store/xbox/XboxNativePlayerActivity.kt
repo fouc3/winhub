@@ -191,7 +191,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     confirmButton = {
                         androidx.compose.foundation.layout.Row {
                             NoticeButton(if (connectedOnce) "Restart the stream" else "Try again", first) { restartStream() }
-                            if (webPlayer) NoticeButton("Open the web player", null) {
+                            if (webPlayer) NoticeButton(I18n.s(R.string.ui_open_the_web_player), null) {
                                 startActivity(Intent(this@XboxNativePlayerActivity, XboxCloudPlayerActivity::class.java).putExtras(intent)); finish()
                             }
                         }
@@ -617,15 +617,15 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     when (menuPage) {
                         "" -> {
                             XboxMenuEntry("Resume", "Back to the game", entries[0], { lastMainEntry = 0 }) { closeMenu() }
-                            XboxMenuEntry("Xbox menu", "The game's Xbox menu (also: Guide once)", entries[1], { lastMainEntry = 1 }) { closeMenu(); pressNexus() }
-                            XboxMenuEntry("Frame generation & low latency", "Now: ${fgName(current.frameGen)}" + if (zeroCopy) " · zero-copy" else "",
+                            XboxMenuEntry(I18n.s(R.string.ui_xbox_menu), "The game's Xbox menu (also: Guide once)", entries[1], { lastMainEntry = 1 }) { closeMenu(); pressNexus() }
+                            XboxMenuEntry(I18n.s(R.string.ui_frame_generation_low_latency), "Now: ${fgName(current.frameGen)}" + if (zeroCopy) " · zero-copy" else "",
                                 entries[2], { lastMainEntry = 2 }) { menuPage = "framegen" }
-                            XboxMenuEntry("Frame rate", "Target: ${fpsName(current)}", entries[3], { lastMainEntry = 3 }) { menuPage = "framerate" }
-                            XboxMenuEntry("Stream quality", "Engine, resolution, region, codec, bitrate (next stream)", entries[4], { lastMainEntry = 4 }) { menuPage = "stream" }
+                            XboxMenuEntry(I18n.s(R.string.ui_frame_rate), "Target: ${fpsName(current)}", entries[3], { lastMainEntry = 3 }) { menuPage = "framerate" }
+                            XboxMenuEntry(I18n.s(R.string.ui_stream_quality), "Engine, resolution, region, codec, bitrate (next stream)", entries[4], { lastMainEntry = 4 }) { menuPage = "stream" }
                             XboxMenuEntry("Performance overlay and rumble", if (current.statsLevel == 0) "Overlay off"
-                                else "Overlay: " + listOf("", "FPS only", "Basic", "Detailed", "Full")[current.statsLevel] + ", " + current.statsLayout,
+                                else "Overlay: " + listOf("", I18n.s(R.string.ui_fps_only), I18n.s(R.string.ui_basic), I18n.s(R.string.ui_detailed), I18n.s(R.string.ui_full))[current.statsLevel] + ", " + current.statsLayout,
                                 entries[5], { lastMainEntry = 5 }) { menuPage = "overlay-native" }
-                            XboxMenuEntry("Leave", "End the stream", entries[6], { lastMainEntry = 6 }) { finish() }
+                            XboxMenuEntry(I18n.s(R.string.ui_leave), "End the stream", entries[6], { lastMainEntry = 6 }) { finish() }
                             androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))

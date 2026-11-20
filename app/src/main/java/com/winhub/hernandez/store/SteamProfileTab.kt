@@ -422,7 +422,7 @@ private fun IdentityCard(c: ProfileTabContent) {
                             LevelChip(lvl)
                         }
                         Spacer(Modifier.width(8.dp))
-                        MiniButton("Edit") { editing = true }
+                        MiniButton(I18n.s(R.string.edit)) { editing = true }
                     }
                 }
                 Text(

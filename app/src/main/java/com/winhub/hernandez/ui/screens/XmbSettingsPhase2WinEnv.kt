@@ -40,7 +40,7 @@ import com.winhub.hernandez.R
 
 // ── Win Components (ScWinComponentsTab + RecommendedComponentsSection) ─────────────────────────────
 
-private val P2_WINCOMP_OPTIONS = listOf("Builtin (Wine)", "Native (Windows)")
+private val P2_WINCOMP_OPTIONS = listOf(I18n.s(R.string.ui_builtin_wine), I18n.s(R.string.ui_native_windows))
 
 internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     val ctx = xmb.context
@@ -131,7 +131,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     fun onInstallTap(c: Component) {
         if (installing != null) return
         if (!File(container.rootDir, ".wine").isDirectory) {
-            xmb.toast("Launch the game once first, then install its components from the game's settings.")
+            xmb.toast(I18n.s(R.string.ui_launch_the_game_once_first_then_install_its_component))
             return
         }
         // Prefer the file-drop `_dll` variant when the catalog has one (no container session).
@@ -163,7 +163,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
     }
 
-    return XmbMenu("Win Components", Icons.Filled.Widgets) {
+    return XmbMenu(I18n.s(R.string.ui_win_components_2), Icons.Filled.Widgets) {
         val rows = mutableListOf<XmbRow>()
 
         if (recLoading) {
@@ -328,7 +328,7 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     }
     fun overridesNow(): String = env.rows().firstOrNull { it.name == DllOverrides.VAR }?.value ?: ""
 
-    return XmbMenu("Env Vars", Icons.Filled.Extension) {
+    return XmbMenu(I18n.s(R.string.ui_env_vars), Icons.Filled.Extension) {
         val rows = mutableListOf<XmbRow>()
         val list = env.rows()
         val overrides = list.firstOrNull { it.name == DllOverrides.VAR }?.value ?: ""
@@ -440,11 +440,11 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
 private fun p2EnvAddMenu(env: P2Env): XmbMenu {
     val xmb = env.xmb
     fun addAndOpen(name: String, value: String) {
-        if (name.isEmpty()) { xmb.toast("Enter a variable name"); return }
+        if (name.isEmpty()) { xmb.toast(I18n.s(R.string.ui_enter_a_variable_name)); return }
         if (!env.add(name, value)) { xmb.toast("“$name” is already in the list"); return }
         xmb.push(p2EnvVarMenu(env, name, 0))
     }
-    return XmbMenu("Add variable", Icons.Filled.Add) {
+    return XmbMenu(I18n.s(R.string.ui_add_variable_2), Icons.Filled.Add) {
         val rows = mutableListOf<XmbRow>()
         val existing = env.rows().map { it.name }.toSet()
         rows += XmbRow.Text("name", "Name", Icons.Filled.Add, "", subtitle = "Type NAME or NAME=VALUE",

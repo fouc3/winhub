@@ -294,7 +294,7 @@ internal fun DeckFileManagerContent(ui: DeckFmUi, act: DeckFmActions) {
     ) {
         if (portrait) {
             Column(Modifier.fillMaxSize()) {
-                if (!ui.pickMode) PortraitScreenTitle("Files")
+                if (!ui.pickMode) PortraitScreenTitle(I18n.s(R.string.ui_files))
                 FmPickerTitle(ui)
                 FmLocationStrip(ui, act)
                 FmMain(
@@ -362,7 +362,7 @@ private fun FmLocationsPanel(ui: DeckFmUi, act: DeckFmActions, modifier: Modifie
             modifier = Modifier.padding(start = 8.dp, top = 6.dp, bottom = 6.dp),
         )
         FmLocationRow(
-            RailItem("Favorites", Icons.Filled.Star, ui.showFavorites) { act.openFavorites() },
+            RailItem(I18n.s(R.string.ui_favorites), Icons.Filled.Star, ui.showFavorites) { act.openFavorites() },
         )
         ui.sections.forEach { section ->
             val header = section.header?.removePrefix("★ ")
@@ -423,7 +423,7 @@ private fun FmLocationRow(item: RailItem) {
 @Composable
 private fun FmLocationStrip(ui: DeckFmUi, act: DeckFmActions) {
     val all = buildList {
-        add(RailItem("Favorites", Icons.Filled.Star, ui.showFavorites) { act.openFavorites() })
+        add(RailItem(I18n.s(R.string.ui_favorites), Icons.Filled.Star, ui.showFavorites) { act.openFavorites() })
         ui.sections.forEach { addAll(it.items) }
     }
     if (all.size < 2) return

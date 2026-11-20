@@ -2,6 +2,7 @@ package com.winhub.hernandez.components
 
 import java.io.File
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
 
 /**
  * Best-effort detection of the Windows redistributables a game bundles, by scanning its install
@@ -52,13 +53,13 @@ object DependencyDetector {
     )
 
     private val LABELS = mapOf(
-        "vcredist2005" to "Visual C++ 2005", "vcredist2008" to "Visual C++ 2008",
-        "vcredist2010" to "Visual C++ 2010", "vcredist2012" to "Visual C++ 2012",
-        "vcredist2013" to "Visual C++ 2013", "vcredist2015" to "Visual C++ 2015-2017",
-        "vcredist2019" to "Visual C++ 2019", "vcredist2022" to "Visual C++ 2015-2022",
-        "physx" to "NVIDIA PhysX", "oalinst" to "OpenAL", "xact" to "DirectX XACT audio",
-        "xact_x64" to "DirectX XACT audio (x64)", "xna40" to "XNA Framework 4.0",
-        "xna31" to "XNA Framework 3.1", "d3dx9" to "DirectX 9 (d3dx9)", "d3dx11" to "DirectX 11 (d3dx11)",
+        "vcredist2005" to I18n.s(R.string.ui_visual_c_2005), "vcredist2008" to I18n.s(R.string.ui_visual_c_2008),
+        "vcredist2010" to I18n.s(R.string.ui_visual_c_2010), "vcredist2012" to I18n.s(R.string.ui_visual_c_2012),
+        "vcredist2013" to I18n.s(R.string.ui_visual_c_2013), "vcredist2015" to I18n.s(R.string.ui_visual_c_2015_2017),
+        "vcredist2019" to I18n.s(R.string.ui_visual_c_2019), "vcredist2022" to I18n.s(R.string.ui_visual_c_2015_2022),
+        "physx" to I18n.s(R.string.ui_nvidia_physx), "oalinst" to I18n.s(R.string.ui_openal), "xact" to I18n.s(R.string.ui_directx_xact_audio),
+        "xact_x64" to I18n.s(R.string.ui_directx_xact_audio_x64), "xna40" to I18n.s(R.string.ui_xna_framework_4_0),
+        "xna31" to I18n.s(R.string.ui_xna_framework_3_1), "d3dx9" to I18n.s(R.string.ui_directx_9_d3dx9), "d3dx11" to I18n.s(R.string.ui_directx_11_d3dx11),
         "XLiveRedist" to "Games for Windows Live", "dotnet40" to ".NET Framework 4.0",
         "dotnet45" to ".NET Framework 4.5", "dotnet452" to ".NET Framework 4.5.2",
         "dotnet46" to ".NET Framework 4.6", "dotnet472" to ".NET Framework 4.7.2",
@@ -197,7 +198,7 @@ object DependencyDetector {
         // Codemasters' dbxLive32/64, gfwl*): GFWL titles need XLiveRedist to run even when they don't
         // bundle the redist itself.
         if (path.contains("xliveredist") || name.contains("xlive") || name.startsWith("gfwl") || name.startsWith("dbxlive")) {
-            return listOf("XLiveRedist")
+            return listOf(I18n.s(R.string.ui_xliveredist))
         }
         if (path.contains("xna")) return listOf(if (path.contains("3.1") || path.contains("3_1") || path.contains("v31")) "xna31" else "xna40")
         // .NET — Framework and Core/Desktop runtimes.

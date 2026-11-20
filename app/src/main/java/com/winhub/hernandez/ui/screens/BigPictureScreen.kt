@@ -647,7 +647,7 @@ fun BigPictureScreen(navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Text("No games yet", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Text(I18n.s(R.string.ui_no_games_yet), color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(16.dp))
                     Button(onClick = { navController.navigate(Screen.Games.route) }) { Text(I18n.s(R.string.ui_add_games)) }
                 }
@@ -1513,7 +1513,7 @@ private fun GameCommunitySheet(
                     }
                 },
         ) {
-            SheetTitle("Community configs")
+            SheetTitle(I18n.s(R.string.ui_community_configs_2))
             Text(
                 shortcut.name,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -1548,7 +1548,7 @@ private fun GameCommunitySheet(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Upload to community")
+                        Text(I18n.s(R.string.ui_upload_to_community))
                     }
                 }
             }

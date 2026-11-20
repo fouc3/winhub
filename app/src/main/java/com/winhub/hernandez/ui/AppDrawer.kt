@@ -321,7 +321,7 @@ private fun StorageWidget() {
     // dead gap at the bottom of the drawer.
     if (anyShown) Spacer(Modifier.height(8.dp))
     if (showInternal) {
-        StorageCard("Internal Storage", usedBytes, totalBytes)
+        StorageCard(I18n.s(R.string.ui_internal_storage), usedBytes, totalBytes)
     }
     sdCards.forEachIndexed { index, (label, used, total) ->
         if (showInternal || index > 0) Spacer(Modifier.height(4.dp))

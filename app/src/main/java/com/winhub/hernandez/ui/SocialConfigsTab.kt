@@ -182,7 +182,7 @@ internal fun SocialHubScreen(deck: Boolean = false, onExit: (() -> Unit)? = null
                 }
             },
     ) {
-        if (deck && !storeStyle) com.winhub.hernandez.ui.screens.PortraitScreenTitle("Social Hub", horizontal = 0.dp)
+        if (deck && !storeStyle) com.winhub.hernandez.ui.screens.PortraitScreenTitle(I18n.s(R.string.ui_social_hub), horizontal = 0.dp)
         if (layout == "tabs") {
             if (portraitDeck) {
                 com.winhub.hernandez.ui.screens.DeckPortraitChips(labels, tab, select)
@@ -211,7 +211,7 @@ internal fun SocialHubScreen(deck: Boolean = false, onExit: (() -> Unit)? = null
                         signedIn = account != null,
                     )
                     DeckStoreSideTabs(
-                        labels = listOf("Feed", "Configs", "Profile"),
+                        labels = listOf("Feed", I18n.s(R.string.ui_configs), I18n.s(R.string.profile)),
                         selected = tab,
                         onSelect = select,
                         selectedFocus = tabFocus,

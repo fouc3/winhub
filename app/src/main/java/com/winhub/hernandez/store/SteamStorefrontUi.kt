@@ -634,7 +634,7 @@ fun StoreActionButton(
             contentPadding = pad,
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         ) {
-            Text("Not owned", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_not_owned), style = style, maxLines = 1)
         }
     }
 }

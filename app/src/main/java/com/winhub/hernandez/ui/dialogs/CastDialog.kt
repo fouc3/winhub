@@ -185,7 +185,7 @@ private fun CastHelp() {
         HelpBlock(
             title = I18n.s(R.string.ui_cast_no_app_on_the_tv_this_screen_experimental),
             body = I18n.s(R.string.ui_pick_a_google_tv_or_chromecast_from_the_list_nothing),
-            pros = listOf("Nothing to set up on the TV", "Uses devices you already have"),
+            pros = listOf(I18n.s(R.string.ui_nothing_to_set_up_on_the_tv), I18n.s(R.string.ui_uses_devices_you_already_have)),
             cons = listOf(
                 "A few seconds of lag (video is buffered) — good for slower games, not fast ones",
                 "Video only for now — the game's sound stays on this device",
@@ -195,21 +195,21 @@ private fun CastHelp() {
         HelpBlock(
             title = I18n.s(R.string.ui_cast_with_a_receiver_app_coming_later),
             body = I18n.s(R.string.ui_install_our_small_app_on_the_google_tv_once_then_cast),
-            pros = listOf("Crisp, low-lag — good for any game", "Phone stays free (blank phone, game on TV)"),
-            cons = listOf("Needs a one-time install on the Google TV", "Won't work on Roku (closed device)")
+            pros = listOf(I18n.s(R.string.ui_crisp_low_lag_good_for_any_game), I18n.s(R.string.ui_phone_stays_free_blank_phone_game_on_tv)),
+            cons = listOf(I18n.s(R.string.ui_needs_a_one_time_install_on_the_google_tv), I18n.s(R.string.ui_won_t_work_on_roku_closed_device))
         )
         HelpBlock(
             title = I18n.s(R.string.ui_wired_cable_lowest_lag_today),
             body = I18n.s(R.string.ui_usb_c_hdmi_cable_moves_the_game_to_the_tv_with_almost),
-            pros = listOf("Best quality and responsiveness", "No Wi-Fi needed"),
-            cons = listOf("Needs a cable and an HDMI port")
+            pros = listOf(I18n.s(R.string.ui_best_quality_and_responsiveness), I18n.s(R.string.ui_no_wi_fi_needed)),
+            cons = listOf(I18n.s(R.string.ui_needs_a_cable_and_an_hdmi_port))
         )
         HelpBlock(
             title = I18n.s(R.string.ui_roku_tvs),
             body = "Roku can't run our app and can't take our stream. Use Android's built-in Screen " +
                 "Mirroring (in Settings) with the Roku's Screen-mirroring turned on.",
-            pros = listOf("No app needed"),
-            cons = listOf("Uses Android's system screen, not this in-app list", "Depends on your phone's Miracast")
+            pros = listOf(I18n.s(R.string.ui_no_app_needed)),
+            cons = listOf(I18n.s(R.string.ui_uses_android_s_system_screen_not_this_in_app_list), I18n.s(R.string.ui_depends_on_your_phone_s_miracast))
         )
     }
 }

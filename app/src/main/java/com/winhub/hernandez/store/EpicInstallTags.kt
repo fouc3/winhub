@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.ContainerManager
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
 
 /**
  * Resolves the Epic manifest "install tags" to download for a game, based on the container's
@@ -30,35 +31,35 @@ object EpicInstallTags {
 
     /** Container language name → Epic install-tag names/codes (Legendary/GameNative table). */
     private val LANGUAGE_TO_TAGS: Map<String, List<String>> = mapOf(
-        "arabic" to listOf("Arabic", "ar"),
-        "bulgarian" to listOf("Bulgarian", "bg-BG", "bg"),
-        "schinese" to listOf("Chinese", "ChineseSimplified", "zh-Hans", "zh_Hans", "zh"),
-        "tchinese" to listOf("ChineseTraditional", "zh-Hant", "zh_Hant"),
-        "czech" to listOf("Czech", "cs-CZ", "cs"),
-        "danish" to listOf("Danish", "da-DK", "da"),
-        "dutch" to listOf("Dutch", "nl-NL", "nl"),
-        "english" to listOf("English", "en-US", "en"),
-        "finnish" to listOf("Finnish", "fi-FI", "fi"),
-        "french" to listOf("French", "fr-FR", "fr"),
-        "german" to listOf("German", "de-DE", "de"),
-        "greek" to listOf("Greek", "el-GR", "el"),
-        "hungarian" to listOf("Hungarian", "hu-HU", "hu"),
-        "italian" to listOf("Italian", "it-IT", "it"),
-        "japanese" to listOf("Japanese", "ja-JP", "ja"),
-        "koreana" to listOf("Korean", "ko-KR", "ko"),
-        "norwegian" to listOf("Norwegian", "nb-NO", "no"),
-        "polish" to listOf("Polish", "pl-PL", "pl"),
-        "portuguese" to listOf("Portuguese", "pt-PT", "pt"),
-        "brazilian" to listOf("PortugueseBrazilian", "Brazilian", "pt-BR", "br"),
-        "romanian" to listOf("Romanian", "ro-RO", "ro"),
-        "russian" to listOf("Russian", "ru-RU", "ru"),
-        "spanish" to listOf("Spanish", "es-ES", "es"),
-        "latam" to listOf("SpanishLatinAmerica", "Latam", "es-MX", "es_mx"),
-        "swedish" to listOf("Swedish", "sv-SE", "sv"),
-        "thai" to listOf("Thai", "th-TH", "th"),
-        "turkish" to listOf("Turkish", "tr-TR", "tr"),
-        "ukrainian" to listOf("Ukrainian", "uk-UA", "uk"),
-        "vietnamese" to listOf("Vietnamese", "vi-VN", "vi"),
+        "arabic" to listOf(I18n.s(R.string.ui_arabic), "ar"),
+        "bulgarian" to listOf(I18n.s(R.string.ui_bulgarian), "bg-BG", "bg"),
+        "schinese" to listOf(I18n.s(R.string.ui_chinese), I18n.s(R.string.ui_chinesesimplified), "zh-Hans", "zh_Hans", "zh"),
+        "tchinese" to listOf(I18n.s(R.string.ui_chinesetraditional), "zh-Hant", "zh_Hant"),
+        "czech" to listOf(I18n.s(R.string.ui_czech), "cs-CZ", "cs"),
+        "danish" to listOf(I18n.s(R.string.ui_danish), "da-DK", "da"),
+        "dutch" to listOf(I18n.s(R.string.ui_dutch), "nl-NL", "nl"),
+        "english" to listOf(I18n.s(R.string.ui_english), "en-US", "en"),
+        "finnish" to listOf(I18n.s(R.string.ui_finnish), "fi-FI", "fi"),
+        "french" to listOf(I18n.s(R.string.ui_french), "fr-FR", "fr"),
+        "german" to listOf(I18n.s(R.string.ui_german), "de-DE", "de"),
+        "greek" to listOf(I18n.s(R.string.ui_greek), "el-GR", "el"),
+        "hungarian" to listOf(I18n.s(R.string.ui_hungarian), "hu-HU", "hu"),
+        "italian" to listOf(I18n.s(R.string.ui_italian), "it-IT", "it"),
+        "japanese" to listOf(I18n.s(R.string.ui_japanese), "ja-JP", "ja"),
+        "koreana" to listOf(I18n.s(R.string.ui_korean), "ko-KR", "ko"),
+        "norwegian" to listOf(I18n.s(R.string.ui_norwegian), "nb-NO", "no"),
+        "polish" to listOf(I18n.s(R.string.ui_polish), "pl-PL", "pl"),
+        "portuguese" to listOf(I18n.s(R.string.ui_portuguese), "pt-PT", "pt"),
+        "brazilian" to listOf(I18n.s(R.string.ui_portuguesebrazilian), I18n.s(R.string.ui_brazilian), "pt-BR", "br"),
+        "romanian" to listOf(I18n.s(R.string.ui_romanian), "ro-RO", "ro"),
+        "russian" to listOf(I18n.s(R.string.ui_russian), "ru-RU", "ru"),
+        "spanish" to listOf(I18n.s(R.string.ui_spanish), "es-ES", "es"),
+        "latam" to listOf(I18n.s(R.string.ui_spanishlatinamerica), I18n.s(R.string.ui_latam), "es-MX", "es_mx"),
+        "swedish" to listOf(I18n.s(R.string.ui_swedish), "sv-SE", "sv"),
+        "thai" to listOf(I18n.s(R.string.ui_thai), "th-TH", "th"),
+        "turkish" to listOf(I18n.s(R.string.ui_turkish), "tr-TR", "tr"),
+        "ukrainian" to listOf(I18n.s(R.string.ui_ukrainian), "uk-UA", "uk"),
+        "vietnamese" to listOf(I18n.s(R.string.ui_vietnamese), "vi-VN", "vi"),
     )
 
     private const val FALLBACK = "english"

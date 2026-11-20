@@ -498,7 +498,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
             text = {
                 Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
                     // What it is.
-                    DetailRow("What it is", importDescription(inspection.caps))
+                    DetailRow(I18n.s(R.string.ui_what_it_is), importDescription(inspection.caps))
                     DetailRow(
                         "Version",
                         if (inspection.notes.isNotBlank()) "${inspection.version} · ${inspection.notes}"
@@ -862,10 +862,10 @@ private fun WrapperDetailBox(
     envSourceId: String,
 ) {
     val cs = MaterialTheme.colorScheme
-    DetailRow("File", fileName)
-    DetailRow("State", stateLabel)
-    DetailRow("Version", version)
-    if (notes.isNotBlank()) DetailRow("Notes", notes)
+    DetailRow(I18n.s(R.string.ui_file), fileName)
+    DetailRow(I18n.s(R.string.ui_state), stateLabel)
+    DetailRow(I18n.s(R.string.ui_version), version)
+    if (notes.isNotBlank()) DetailRow(I18n.s(R.string.ui_notes), notes)
     val labels = capLabels(caps)
     if (labels.isNotEmpty()) {
         Spacer(Modifier.size(8.dp))

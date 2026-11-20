@@ -547,7 +547,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // ── Updates ──────────────────────────────────────────────────
-        FieldSetLabel("Updates")
+        FieldSetLabel(I18n.s(R.string.ui_updates))
         FieldSet {
             val latest = updateInfo
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -842,7 +842,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── FEXCore Preset ────────────────────────────────────────────
-        FieldSetLabel("FEXCore Config")
+        FieldSetLabel(I18n.s(R.string.ui_fexcore_config))
         FieldSet {
             Text(I18n.s(R.string.fexcore_preset), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(8.dp))
@@ -905,7 +905,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Sound ─────────────────────────────────────────────────────
-        FieldSetLabel("Sound")
+        FieldSetLabel(I18n.s(R.string.sound))
         FieldSet {
             Text(I18n.s(R.string.ui_midi_sound_font), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(8.dp))
@@ -980,7 +980,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Path Settings ─────────────────────────────────────────────
-        FieldSetLabel("Path Settings")
+        FieldSetLabel(I18n.s(R.string.ui_path_settings))
         FieldSet {
             Text(I18n.s(R.string.ui_winlator_path), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
@@ -1006,7 +1006,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Side Menu ──────────────────────────────────────────────
-        FieldSetLabel("Side Menu")
+        FieldSetLabel(I18n.s(R.string.ui_side_menu))
         FieldSet {
             val showStores by AppThemeState.showStores.collectAsState()
             val showInternal by AppThemeState.showInternalStorage.collectAsState()
@@ -1033,7 +1033,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── App Orientation ────────────────────────────────────────
-        FieldSetLabel("App Orientation")
+        FieldSetLabel(I18n.s(R.string.ui_app_orientation))
         FieldSet {
             Text(
                 "Applies to the app's own screens only — games keep their own orientation.",
@@ -1069,7 +1069,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Interface Scale ────────────────────────────────────────
-        FieldSetLabel("Interface Scale")
+        FieldSetLabel(I18n.s(R.string.ui_interface_scale))
         FieldSet {
             Text(
                 "Scales the app's own UI — games keep their own size.",
@@ -1092,7 +1092,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Appearance ────────────────────────────────────────────────
-        FieldSetLabel("Appearance")
+        FieldSetLabel(I18n.s(R.string.ui_appearance))
         FieldSet {
             val topBarOpacity by AppThemeState.topBarOpacity.collectAsState()
             ScaleSlider(
@@ -1111,8 +1111,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Spacer(Modifier.height(6.dp))
             var editorLayout by remember { mutableStateOf(prefs.getString("container_editor_layout", "rail")?.takeIf { it != "tabs" } ?: "rail") }
             val editorLayoutOptions = listOf(
-                "rail" to "Side Rail",
-                "pages" to "Pages",
+                "rail" to I18n.s(R.string.ui_side_rail),
+                "pages" to I18n.s(R.string.ui_pages),
             )
             SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                 editorLayoutOptions.forEachIndexed { index, (value, label) ->
@@ -1129,7 +1129,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Default Screen on Launch ──────────────────────────────────
-        FieldSetLabel("Default Screen on Launch")
+        FieldSetLabel(I18n.s(R.string.ui_default_screen_on_launch))
         FieldSet {
             Text(
                 "Which screen the app opens to.",
@@ -1154,7 +1154,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Big Picture Mode ──────────────────────────────────────────
-        FieldSetLabel("Big Picture Mode")
+        FieldSetLabel(I18n.s(R.string.ui_big_picture_mode))
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = bigPictureMode, onCheckedChange = { bigPictureMode = it })
@@ -1186,7 +1186,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── XServer ──────────────────────────────────────────────────
-        FieldSetLabel("XServer")
+        FieldSetLabel(I18n.s(R.string.xserver))
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(I18n.s(R.string.cursor_speed), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f))
@@ -1222,7 +1222,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         // here — the toggles used to exist in both places writing the same preferences, and this
         // screen saves on the FAB while the manager writes immediately, so one would silently
         // overwrite the other.
-        FieldSetLabel("Logs")
+        FieldSetLabel(I18n.s(R.string.logs))
         FieldSet {
             Text(
                 "Where logs are saved, which ones to record, how many past runs to keep, and what is " +
@@ -1238,7 +1238,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Experimental ──────────────────────────────────────────────
-        FieldSetLabel("Experimental")
+        FieldSetLabel(I18n.s(R.string.experimental))
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = enableFileProvider, onCheckedChange = { enableFileProvider = it })
@@ -1269,7 +1269,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── ImageFS ──────────────────────────────────────────────────
-        FieldSetLabel("ImageFS")
+        FieldSetLabel(I18n.s(R.string.ui_imagefs))
         FieldSet {
             Button(
                 onClick = {
@@ -1297,7 +1297,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Frame Generation: lsfg-vk (Lossless Scaling DLL) ─────────────
-        FieldSetLabel("Frame Generation — LSFG Native (Lossless Scaling)")
+        FieldSetLabel(I18n.s(R.string.ui_frame_generation_lsfg_native_lossless_scaling))
         FieldSet {
             Text(
                 "LSFG Native needs a Lossless Scaling \"Lossless.dll\". Download Lossless Scaling from the in-app " +
@@ -1330,7 +1330,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 onClick = { importLosslessDllInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.DLL, "Select Lossless.dll")) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Import Lossless.dll", color = Color.White) } // intentional: high-contrast label on green fill
+            ) { Text(I18n.s(R.string.ui_import_lossless_dll), color = Color.White) } // intentional: high-contrast label on green fill
             TextButton(
                 onClick = { importLosslessDllLauncher.launch(arrayOf("*/*")) },
                 modifier = Modifier.fillMaxWidth()
@@ -1351,7 +1351,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         }
 
         // ── Performance (power-user toggles) ─────────────────────────────
-        FieldSetLabel("Performance")
+        FieldSetLabel(I18n.s(R.string.performance))
         FieldSet {
             Text(
                 "Global performance defaults (Sustained Performance Mode, Thread Priority Boost, " +

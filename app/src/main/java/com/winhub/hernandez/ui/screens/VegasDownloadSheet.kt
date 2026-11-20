@@ -145,7 +145,7 @@ fun VegasDownloadSheet(
             title = { Text(I18n.s(R.string.xmb_dl_status_failed), color = MaterialTheme.colorScheme.onSurface) },
             text = { Text(msg, color = MaterialTheme.colorScheme.onSurface) },
             confirmButton = { TextButton(onClick = { errorMsg = null }) { Text("OK") } },
-            dismissButton = { TextButton(onClick = { errorMsg = null; retryKey++ }) { Text("Retry") } }
+            dismissButton = { TextButton(onClick = { errorMsg = null; retryKey++ }) { Text(I18n.s(R.string.ui_retry)) } }
         )
     }
 

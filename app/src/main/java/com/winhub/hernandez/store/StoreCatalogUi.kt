@@ -318,7 +318,7 @@ fun CatalogActionButton(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Spacer(Modifier.width(6.dp))
-            Text("Working…", style = style, maxLines = 1)
+            Text(I18n.s(R.string.social_hub_configs_working), style = style, maxLines = 1)
         }
 
         is CatalogAction.Open -> Button(

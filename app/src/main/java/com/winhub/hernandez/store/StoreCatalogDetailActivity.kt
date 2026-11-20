@@ -151,7 +151,7 @@ private fun CatalogDetailScreen(
         loading = false
     }
 
-    val tabs = listOf("Details", "Media")
+    val tabs = listOf(I18n.s(R.string.ui_details), I18n.s(R.string.ui_media))
     val primaryLabel = when {
         item.isFree -> "Get for free on $storeLabel"
         else -> "View on $storeLabel"
@@ -231,7 +231,7 @@ private fun CatalogDetailScreen(
                             )
                         }
                         if (lead.isBlank() && full.isBlank()) {
-                            StoreStatusText("No description available for this title.")
+                            StoreStatusText(I18n.s(R.string.ui_no_description_available_for_this_title))
                         }
                     }
                 }

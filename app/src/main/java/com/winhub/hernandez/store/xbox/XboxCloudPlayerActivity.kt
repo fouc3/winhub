@@ -339,13 +339,13 @@ class XboxCloudPlayerActivity : ComponentActivity() {
                             modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
                         if (menuPage.isEmpty()) {
                             MenuEntry("Resume", "Back to the game", entries[0], 0) { closeMenu() }
-                            MenuEntry("Xbox menu", "The game's Xbox menu (also: Guide once, or View + Menu)", entries[1], 1) {
+                            MenuEntry(I18n.s(R.string.ui_xbox_menu), "The game's Xbox menu (also: Guide once, or View + Menu)", entries[1], 1) {
                                 closeMenu(); web?.evaluateJavascript("window.__blNexus && window.__blNexus()", null)
                             }
-                            MenuEntry("Screen effects", "Sharpen, colour, deband, FXAA, CRT, NTSC, Toon, fps cap", entries[2], 2) { menuPage = "picture" }
-                            MenuEntry("Stream quality", "Resolution, region, language, codec, bitrate (next stream)", entries[3], 3) { menuPage = "stream" }
-                            MenuEntry("Performance overlay and sound", "Overlay level and layout, volume, controller rumble", entries[4], 4) { menuPage = "overlay" }
-                            MenuEntry("Leave", "End the stream", entries[5], 5) { finish() }
+                            MenuEntry(I18n.s(R.string.ui_screen_effects_2), "Sharpen, colour, deband, FXAA, CRT, NTSC, Toon, fps cap", entries[2], 2) { menuPage = "picture" }
+                            MenuEntry(I18n.s(R.string.ui_stream_quality), "Resolution, region, language, codec, bitrate (next stream)", entries[3], 3) { menuPage = "stream" }
+                            MenuEntry(I18n.s(R.string.ui_performance_overlay_and_sound), "Overlay level and layout, volume, controller rumble", entries[4], 4) { menuPage = "overlay" }
+                            MenuEntry(I18n.s(R.string.ui_leave), "End the stream", entries[5], 5) { finish() }
                             androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))

@@ -93,7 +93,7 @@ class XboxGameDetailActivity : ComponentActivity() {
                     downloading -> StorePrimaryAction.Progress(progressLabel.ifBlank { "Downloading… $progressPct%" }, progressPct / 100f)
                     busy != null -> StorePrimaryAction.Progress(busy!!, 0f)
                     inst != null -> StorePrimaryAction.Button("Add to Games", ::addToGames)
-                    game.access.isEmpty() -> StorePrimaryAction.Button("Not in your library", {}, enabled = false)
+                    game.access.isEmpty() -> StorePrimaryAction.Button(I18n.s(R.string.ui_not_in_your_library), {}, enabled = false)
                     !game.pc -> StorePrimaryAction.Button("Stream", ::stream)
                     else -> StorePrimaryAction.Button("Install", ::install)
                 }
@@ -170,14 +170,14 @@ class XboxGameDetailActivity : ComponentActivity() {
                             inst != null -> StoreStatusText("Installed · ${inst.exe.substringAfterLast('/')}${if (inst.version.isNotBlank()) " · v${inst.version}" else ""}", StoreDetailState.INSTALLED)
                             game.gamePass -> StoreStatusText(if (game.pc) "Included with PC Game Pass" else "Included with Game Pass · cloud only")
                             game.owned -> StoreStatusText(if (game.pc) "Owned" else "Owned · cloud only")
-                            else -> StoreStatusText("Not owned by this account")
+                            else -> StoreStatusText(I18n.s(R.string.ui_not_owned_by_this_account))
                         }
                         status?.let { Spacer(Modifier.height(2.dp)); StoreStatusText(it, StoreDetailState.FAILED) }
                     },
                     primary = primary,
                     secondary = secondary,
                     gear = gear,
-                    tabs = listOf("Details"),
+                    tabs = listOf(I18n.s(R.string.ui_details)),
                     selectedTab = tab,
                     onSelectTab = { tab = it },
                 ) {

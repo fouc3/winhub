@@ -611,12 +611,12 @@ private fun FriendActionsDialog(
                     MenuActionRow("Join ${friend.gameName ?: "game"}", onClick = onJoin)
                 }
                 HorizontalDivider(thickness = 1.dp, color = RowDivider)
-                MenuActionRow("View Steam profile", onClick = onProfile)
+                MenuActionRow(I18n.s(R.string.ui_view_steam_profile), onClick = onProfile)
                 HorizontalDivider(thickness = 1.dp, color = RowDivider)
                 if (!confirmRemove) {
-                    MenuActionRow("Remove friend", tint = MaterialTheme.colorScheme.error) { confirmRemove = true }
+                    MenuActionRow(I18n.s(R.string.ui_remove_friend), tint = MaterialTheme.colorScheme.error) { confirmRemove = true }
                 } else {
-                    MenuActionRow("Tap again to confirm removal", tint = MaterialTheme.colorScheme.error, onClick = onRemove)
+                    MenuActionRow(I18n.s(R.string.ui_tap_again_to_confirm_removal), tint = MaterialTheme.colorScheme.error, onClick = onRemove)
                 }
             }
         }

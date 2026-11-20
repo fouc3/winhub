@@ -183,8 +183,8 @@ internal fun TestBindToggle(bind: Boolean, onChange: (Boolean) -> Unit) {
             .clip(RoundedCornerShape(10.dp))
             .border(1.dp, cs.outline, RoundedCornerShape(10.dp))
     ) {
-        SegItem("Test", !bind, cs.primary, cs.onPrimary, cs.onSurfaceVariant) { onChange(false) }
-        SegItem("Bind", bind, cs.primary, cs.onPrimary, cs.onSurfaceVariant) { onChange(true) }
+        SegItem(I18n.s(R.string.ui_test), !bind, cs.primary, cs.onPrimary, cs.onSurfaceVariant) { onChange(false) }
+        SegItem(I18n.s(R.string.ui_bind), bind, cs.primary, cs.onPrimary, cs.onSurfaceVariant) { onChange(true) }
     }
 }
 

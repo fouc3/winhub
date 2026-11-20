@@ -256,7 +256,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             label = I18n.s(R.string.ui_log_location),
                             hint = logDir?.absolutePath ?: "—",
                             options = listOf(
-                                "documents" to "Documents",
+                                "documents" to I18n.s(R.string.ui_documents),
                                 "download" to "Download",
                                 "custom" to if (customPath.isNotEmpty()) "Custom folder" else "Choose folder…",
                             ),
@@ -329,7 +329,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 LogTab.GAMES -> {
                     if (entries.isEmpty()) {
                         DeckGroup("Game logs") {
-                            DeckRow("No logs yet", "Turn on a log in Capture, then launch a game.") {}
+                            DeckRow(I18n.s(R.string.ui_no_logs_yet_2), "Turn on a log in Capture, then launch a game.") {}
                         }
                     } else {
                         Spacer(Modifier.height(6.dp))
@@ -348,33 +348,33 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
 
                 LogTab.TOOLS -> {
                     DeckGroup("Capture now") {
-                        DeckRow("Capture logcat now", "Saves WinHub's recent output to your log folder.") {
+                        DeckRow(I18n.s(R.string.ui_capture_logcat_now), "Saves WinHub's recent output to your log folder.") {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Capture logcat now" to LogCopy.CAPTURE_NOW }
                                 LogAction(
                                     "Capture", LogActionKind.NEUTRAL,
                                     modifier = Modifier.alpha(if (logcat) 1f else 0.4f),
                                 ) {
-                                    if (!logcat) { toast("Turn on Android logcat first"); return@LogAction }
+                                    if (!logcat) { toast(I18n.s(R.string.ui_turn_on_android_logcat_first)); return@LogAction }
                                     // Runtime.exec, a redaction pass and a file write: not for the UI thread.
                                     scope.launch {
                                         withContext(Dispatchers.IO) {
                                             LogcatCapture.captureToFile(context, LogcatCapture.DEFAULT_LINES)
                                         }
                                         refreshTick++
-                                        toast("Logcat saved to your log folder")
+                                        toast(I18n.s(R.string.ui_logcat_saved_to_your_log_folder))
                                     }
                                 }
                             }
                         }
-                        DeckRow("Read last crash", "Why Android ended the app last time, saved with your logs.") {
+                        DeckRow(I18n.s(R.string.ui_read_last_crash), "Why Android ended the app last time, saved with your logs.") {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Exit reasons" to LogCopy.EXIT_REASONS }
                                 LogAction(
                                     "Read", LogActionKind.NEUTRAL,
                                     modifier = Modifier.alpha(if (ExitReasonReporter.isSupported()) 1f else 0.4f),
                                 ) {
-                                    if (!ExitReasonReporter.isSupported()) { toast("Needs Android 11 or newer"); return@LogAction }
+                                    if (!ExitReasonReporter.isSupported()) { toast(I18n.s(R.string.ui_needs_android_11_or_newer)); return@LogAction }
                                     scope.launch {
                                         val text = withContext(Dispatchers.IO) {
                                             ExitReasonReporter.captureToFile(context)
@@ -402,7 +402,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             "Rust engine: Amazon downloads", "Applies to the next download.",
                             onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
                         // One app-wide ceiling for the three store engines; tap cycles the tier.
-                        DeckRow("Store download speed", "Ceiling for the Epic, GOG and Amazon engines.") {
+                        DeckRow(I18n.s(R.string.ui_store_download_speed), "Ceiling for the Epic, GOG and Amazon engines.") {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }
                                 LogAction(StoreDownloadTier.label(storeDlTier), LogActionKind.NEUTRAL) {
@@ -413,7 +413,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         }
                     }
                     DeckGroup("Help") {
-                        DeckRow("Explain the log types", "What each log is for and what it costs.") {
+                        DeckRow(I18n.s(R.string.ui_explain_the_log_types), "What each log is for and what it costs.") {
                             LogAction("Open", LogActionKind.NEUTRAL) { showExplainAll = true }
                         }
                     }
@@ -431,7 +431,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
             }
 
             DeckHintBar(
-                hints = listOf("A" to "Select", "B" to "Back", "LB RB" to "Section"),
+                hints = listOf("A" to "Select", "B" to "Back", "LB RB" to I18n.s(R.string.ui_section)),
                 modifier = Modifier.padding(top = 12.dp),
             )
         }

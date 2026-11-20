@@ -91,9 +91,9 @@ fun InputControlsDialog(state: XServerDialogState) {
 
                 Spacer(Modifier.height(8.dp))
 
-                CheckRow("Show Touchscreen Controls", showTouchscreen) { showTouchscreen = it }
-                CheckRow("Enable Timeout", timeoutEnabled) { timeoutEnabled = it }
-                CheckRow("Enable Haptics", hapticsEnabled) { hapticsEnabled = it }
+                CheckRow(I18n.s(R.string.ui_show_touchscreen_controls), showTouchscreen) { showTouchscreen = it }
+                CheckRow(I18n.s(R.string.ui_enable_timeout), timeoutEnabled) { timeoutEnabled = it }
+                CheckRow(I18n.s(R.string.ui_enable_haptics), hapticsEnabled) { hapticsEnabled = it }
 
                 Spacer(Modifier.height(8.dp))
 

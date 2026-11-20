@@ -404,14 +404,14 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
     if (LocalViewerDeck.current) {
         DeckConfigDialog(title = I18n.s(R.string.ui_report_a_problem), onDismiss = { if (!busy) onDismiss() }) {
             DeckGroup("What happened") {
-                DeckTextRow("What went wrong?", value = title, onValueChange = { title = it })
-                DeckTextRow("Details", "Any detail that helps (optional)", value = description, onValueChange = { description = it })
+                DeckTextRow(I18n.s(R.string.ui_what_went_wrong), value = title, onValueChange = { title = it })
+                DeckTextRow(I18n.s(R.string.ui_details), "Any detail that helps (optional)", value = description, onValueChange = { description = it })
             }
             DeckGroup("Will be attached") {
                 willAttach.forEach { name ->
                     DeckRow(name) {}
                 }
-                DeckRow("Also app logcat and crash reports") { DeckToggle(includeApp) { includeApp = it } }
+                DeckRow(I18n.s(R.string.ui_also_app_logcat_and_crash_reports)) { DeckToggle(includeApp) { includeApp = it } }
             }
             DeckConfigNote(
                 "Saved as a zip in Downloads. E-mail addresses, auth tokens and your Steam " +

@@ -243,7 +243,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
                     p.entry.fex.takeIf { it.isNotBlank() }?.let { "FEX $it" },
                 ).filterNotNull().joinToString(" · ")
                 DoctorRow(
-                    label = listOf(p.entry.device, p.entry.soc).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { "Shared config" } +
+                    label = listOf(p.entry.device, p.entry.soc).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { I18n.s(R.string.ui_shared_config) } +
                         if (p.matchesDevice) "  ✓ your device" else "",
                     detail = parts.ifBlank { null }, icon = Icons.Filled.Download,
                     disabled = when {

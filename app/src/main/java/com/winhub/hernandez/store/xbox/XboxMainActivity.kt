@@ -200,9 +200,9 @@ class XboxMainActivity : ComponentActivity() {
 }
 
 private val XBOX_TABS = listOf(
-    StoreSectionTab("store", "Store", Icons.Filled.Storefront),
+    StoreSectionTab("store", I18n.s(R.string.ui_store), Icons.Filled.Storefront),
     StoreSectionTab("library", "Library", Icons.Filled.VideoLibrary),
-    StoreSectionTab("profile", "Profile", Icons.Filled.AccountCircle),
+    StoreSectionTab("profile", I18n.s(R.string.profile), Icons.Filled.AccountCircle),
 )
 
 /** The library as the tabs see it: cached at once, refreshed from Microsoft in the background. */
@@ -326,7 +326,7 @@ private fun XboxStorefrontHost(
                 Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton(Modifier.xmbRailStop(ring = true))
-            StoreRailOverflow(items = listOf(Triple("Xbox Cloud Gaming", Icons.Filled.Cloud) { ctx.startActivity(XboxCloudActivity.intent(ctx)) }), onSignOut = onSignOut)
+            StoreRailOverflow(items = listOf(Triple(I18n.s(R.string.ui_xbox_cloud_gaming), Icons.Filled.Cloud) { ctx.startActivity(XboxCloudActivity.intent(ctx)) }), onSignOut = onSignOut)
         },
         message = message,
         onMessageTimeout = { message = null },
@@ -511,7 +511,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
 private fun XboxLoginScreen(backendReady: Boolean, message: String?, onLoginClick: () -> Unit) {
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
         Column(Modifier.fillMaxWidth().padding(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Xbox", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_xbox), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
             Text(I18n.s(R.string.ui_sign_in_with_your_microsoft_account_to_download_the_p),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)

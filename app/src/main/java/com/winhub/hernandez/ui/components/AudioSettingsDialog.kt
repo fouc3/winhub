@@ -424,7 +424,7 @@ fun AudioSettingsDialog(
                         modifier = Modifier.fillMaxWidth()) {
                         Column(Modifier.padding(horizontal = 14.dp).alpha(ftAlpha)) {
                             // Output mode
-                            FtRow("Output mode", "AAudio performance mode", cs,
+                            FtRow(I18n.s(R.string.ui_output_mode), "AAudio performance mode", cs,
                                 onHelp = { helpRes = R.string.help_audio_perf_mode }) {
                                 Row {
                                     // DirectAudio must NOT offer POWER_SAVING: on this engine its AAudio
@@ -432,8 +432,8 @@ fun AudioSettingsDialog(
                                     // proven 2026-08-14), a wasteful churn. Every DirectAudio preset already
                                     // forces LOW_LATENCY for the same reason, so drop "Power" here too.
                                     val perfOpts = if (driverId == "directaudio")
-                                        listOf("None" to 0, "Low lat." to 1)
-                                    else listOf("None" to 0, "Low lat." to 1, "Power" to 2)
+                                        listOf("None" to 0, I18n.s(R.string.ui_low_lat) to 1)
+                                    else listOf("None" to 0, I18n.s(R.string.ui_low_lat) to 1, "Power" to 2)
                                     perfOpts.forEach { (lbl, v) ->
                                         val on = shown.perfMode == v
                                         Text(lbl, color = if (on) cs.onPrimary else cs.onSurfaceVariant, fontSize = 12.sp,
@@ -444,7 +444,7 @@ fun AudioSettingsDialog(
                                     }
                                 }
                             }
-                            FtRow("Adaptive buffer", "Auto-grow only if it hears crackle", cs,
+                            FtRow(I18n.s(R.string.ui_adaptive_buffer), "Auto-grow only if it hears crackle", cs,
                                 onHelp = { helpRes = R.string.help_audio_adaptive }) {
                                 Switch(checked = shown.adaptive, enabled = custom,
                                     onCheckedChange = { cfg = cfg.copy(adaptive = it) })

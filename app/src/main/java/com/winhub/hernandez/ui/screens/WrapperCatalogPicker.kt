@@ -372,7 +372,7 @@ private fun WrapperCatalogDetail(
         Text(entry.description, style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
         Spacer(Modifier.height(6.dp))
     }
-    if (entry.license.isNotBlank()) DetailRow("License", entry.license)
+    if (entry.license.isNotBlank()) DetailRow(I18n.s(R.string.ui_license), entry.license)
     formatSize(entry.fileSize)?.let { DetailRow("Size", it) }
 
     // gpuTargets chips.

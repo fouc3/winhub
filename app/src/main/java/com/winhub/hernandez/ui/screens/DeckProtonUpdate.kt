@@ -122,7 +122,7 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var phase by remember { mutableStateOf(UpdatePhase.OFFER) }
-    var status by remember { mutableStateOf("Starting") }
+    var status by remember { mutableStateOf(I18n.s(R.string.ui_starting)) }
     var fraction by remember { mutableStateOf(0f) }
     var installedId by remember { mutableStateOf<String?>(null) }
     var switchable by remember { mutableStateOf(0) }

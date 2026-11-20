@@ -197,7 +197,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
     private var nameText by mutableStateOf("Loading…")
     private var typeText by mutableStateOf("GAME")
     // Headline chip = on-disk footprint (estimate with "~", or the real measured size once installed).
-    private var sizeText by mutableStateOf("Size unknown")
+    private var sizeText by mutableStateOf(I18n.s(R.string.ui_size_unknown))
     // Breakdown lines under the chips: download (compressed), PICS estimate (labeled), free space.
     private var sizeBreakdown by mutableStateOf(SizeBreakdown())
     // "Includes DLC: <names>" — owned DLC that WILL download (excluded ones dropped); "" hides the line.

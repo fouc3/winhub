@@ -1006,7 +1006,7 @@ fun FileManagerScreen(
             danger = true,
             onConfirm = bulkDeleteNow,
         ) {
-            DeckConfigNote("This can't be undone.")
+            DeckConfigNote(I18n.s(R.string.ui_this_can_t_be_undone))
             // Name a few so an accidental Select-All is obvious before it's too late.
             victims.take(5).forEach { DeckConfigNote("• ${it.name}") }
             if (victims.size > 5) DeckConfigNote("…and ${victims.size - 5} more")
@@ -1243,8 +1243,8 @@ fun FileManagerScreen(
         }
     val quickItems = buildList {
         File("/storage/emulated/0/Download").takeIf { it.isDirectory }?.let { add(quickItem("Downloads", Icons.Filled.Download, it)) }
-        File("/storage/emulated/0/Winlator/Games").takeIf { it.isDirectory }?.let { add(quickItem("Games", Icons.Filled.SportsEsports, it)) }
-        File("/storage/emulated/0/Pictures").takeIf { it.isDirectory }?.let { add(quickItem("Pictures", Icons.Filled.Image, it)) }
+        File("/storage/emulated/0/Winlator/Games").takeIf { it.isDirectory }?.let { add(quickItem(I18n.s(R.string.shortcuts), Icons.Filled.SportsEsports, it)) }
+        File("/storage/emulated/0/Pictures").takeIf { it.isDirectory }?.let { add(quickItem(I18n.s(R.string.ui_pictures), Icons.Filled.Image, it)) }
     }
     val favItems = remember(favTick) { FavoritesStore.list(context).map(::File).filter { it.exists() } }
         .map { d -> RailItem(d.name, Icons.Filled.Star, false) { showFavorites = false; jumpTo(d) } }
@@ -1504,7 +1504,7 @@ fun FileManagerScreen(
                 else Modifier.background(if (deckMode) deckPageBackground() else MaterialTheme.colorScheme.background)
             ),
     ) {
-        if (deckMode && !pickMode) PortraitScreenTitle("Files")
+        if (deckMode && !pickMode) PortraitScreenTitle(I18n.s(R.string.ui_files))
         // ── Pick-mode title ──
         if (pickMode && !pickerTitle.isNullOrEmpty()) {
             Text(
@@ -1732,7 +1732,7 @@ fun FileManagerScreen(
                         Icon(Icons.Filled.Sort, "Sort", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     DropdownMenu(expanded = showSortMenu, onDismissRequest = { showSortMenu = false }) {
-                        listOf("name" to "Name", "date" to "Date modified", "size" to "Size")
+                        listOf("name" to I18n.s(R.string.name), "date" to I18n.s(R.string.ui_date_modified), "size" to "Size")
                             .forEach { (key, label) ->
                                 DropdownMenuItem(
                                     text = {
@@ -2246,7 +2246,7 @@ private fun FileContextMenuItems(
     // Properties: basic info + Read-only / Hidden toggles, for ANY file or folder (handy for config
     // files like .txt/.cfg/.ini). Kept near the top since it's a common reason to open this menu.
     DropdownMenuItem(
-        text = { Text("Properties") },
+        text = { Text(I18n.s(R.string.ui_properties)) },
         leadingIcon = { Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onProperties() },
     )
@@ -2901,7 +2901,7 @@ private fun FilePropertiesDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Properties") },
+        title = { Text(I18n.s(R.string.ui_properties)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 // ── Basic info ──

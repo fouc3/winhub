@@ -81,7 +81,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                     "Sign in to edit your profile",
                     "Your Social Hub profile is tied to your GitHub sign-in. Sign in from the Feed tab first.",
                     modifier = Modifier.heightIn(min = 240.dp),
-                ) { SocialButton("Go to Feed to sign in", onClick = onGoFeed) }
+                ) { SocialButton(I18n.s(R.string.ui_go_to_feed_to_sign_in), onClick = onGoFeed) }
             } else {
                 Text(I18n.s(R.string.ui_sign_in_to_edit_your_profile), color = cs.onSurface, fontSize = 18.sp)
                 Text(
@@ -184,7 +184,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 SocialButton(if (working) "Saving…" else "Save profile", onClick = { save() }, enabled = !working)
-                SocialButton("Reset to GitHub", onClick = { reset() }, primary = false, enabled = canReset)
+                SocialButton(I18n.s(R.string.ui_reset_to_github), onClick = { reset() }, primary = false, enabled = canReset)
             }
             message?.let { Text(it, color = cs.onSurfaceVariant, fontSize = 14.sp) }
             Text(

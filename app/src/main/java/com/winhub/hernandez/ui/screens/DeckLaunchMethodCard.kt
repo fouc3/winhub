@@ -139,7 +139,7 @@ internal fun DeckLaunchLandscapeCard(
                     Modifier.weight(0.27f).fillMaxHeight().verticalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    LaunchLabel("Launch with")
+                    LaunchLabel(I18n.s(R.string.ui_launch_with))
                     LAUNCH_OPTIONS.forEachIndexed { i, o ->
                         val selected = o.mode == method
                         LaunchChoiceRow(
@@ -174,7 +174,7 @@ internal fun DeckLaunchLandscapeCard(
                     Text(current.detail, color = cs.onSurface, fontSize = 14.sp, lineHeight = 20.sp)
                     if (current.mode == "Goldberg") {
                         Spacer(Modifier.height(4.dp))
-                        LaunchLabel("Goldberg mode")
+                        LaunchLabel(I18n.s(R.string.ui_goldberg_mode))
                         GOLDBERG_CHOICES.forEach { g ->
                             val selected = g.mode == goldbergMode
                             LaunchChoiceRow(

@@ -147,9 +147,9 @@ class AmazonMainActivity : ComponentActivity() {
 // ── Host ──────────────────────────────────────────────────────────────────────────────────────
 
 private val AMAZON_TABS = listOf(
-    StoreSectionTab("store", "Store", Icons.Filled.Storefront),
+    StoreSectionTab("store", I18n.s(R.string.ui_store), Icons.Filled.Storefront),
     StoreSectionTab("library", "Library", Icons.Filled.VideoLibrary),
-    StoreSectionTab("profile", "Profile", Icons.Filled.AccountCircle),
+    StoreSectionTab("profile", I18n.s(R.string.profile), Icons.Filled.AccountCircle),
 )
 
 @Composable

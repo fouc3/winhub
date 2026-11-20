@@ -214,7 +214,7 @@ internal fun HomePreview(vm: FirstRunViewModel, modifier: Modifier) {
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                listOf(PreviewView.HOME to "Home", PreviewView.SETTINGS to "Game settings", PreviewView.STORES to "Stores").forEach { (v, label) ->
+                listOf(PreviewView.HOME to "Home", PreviewView.SETTINGS to I18n.s(R.string.ui_game_settings), PreviewView.STORES to "Stores").forEach { (v, label) ->
                     val on = v == view
                     Text(
                         label,
@@ -307,15 +307,15 @@ private fun BoxWithConstraintsScope.MockSettings(glass: Boolean, classic: Boolea
     val row = if (glass) solid(Color.White.copy(alpha = 0.10f)) else solid(DeckPalette.surfaceVariant)
     if (classic) {
         Mk(0.06f, 0.08f, 0.88f, 0.84f, card, 8.dp, if (glass) null else DeckPalette.line)
-        listOf("Graphics", "Audio", "Input", "Advanced").forEachIndexed { i, t ->
+        listOf(I18n.s(R.string.ui_graphics), I18n.s(R.string.ui_audio), I18n.s(R.string.ui_input), "Advanced").forEachIndexed { i, t ->
             MkText(0.09f, 0.14f + i * 0.13f, t, 6f, if (i == 0) DeckPalette.primary else DeckPalette.onSurfaceVariant)
         }
-        listOf("Resolution", "Frame limit", "Upscaler", "Renderer").forEachIndexed { i, t ->
+        listOf("Resolution", I18n.s(R.string.ui_frame_limit), I18n.s(R.string.ui_upscaler), "Renderer").forEachIndexed { i, t ->
             Mk(0.26f, 0.13f + i * 0.19f, 0.64f, 0.14f, row, 5.dp) { Text(t, color = Color.White, fontSize = 6.sp, modifier = Modifier.align(Alignment.CenterStart).padding(start = 6.dp)) }
         }
     } else {
         Mk(0.08f, 0.14f, 0.16f, 0.3f, Brush.linearGradient(listOf(Color(PREVIEW_COVERS[0].first), Color(PREVIEW_COVERS[0].second))), 6.dp, Color.White)
-        listOf(0.30f to listOf("Graphics", "Audio", "Input"), 0.52f to listOf("Resolution", "Frame limit"), 0.74f to listOf("60 FPS", "Off")).forEachIndexed { c, (x, items) ->
+        listOf(0.30f to listOf(I18n.s(R.string.ui_graphics), I18n.s(R.string.ui_audio), I18n.s(R.string.ui_input)), 0.52f to listOf("Resolution", I18n.s(R.string.ui_frame_limit)), 0.74f to listOf("60 FPS", "Off")).forEachIndexed { c, (x, items) ->
             items.forEachIndexed { i, t ->
                 Mk(x, 0.16f + i * 0.2f, 0.19f, 0.14f, if (c == 0 && i == 0) solid(DeckPalette.primary.copy(alpha = 0.3f)) else row, 5.dp, if (c == 0 && i == 0) Color.White else null) {
                     Text(t, color = Color.White, fontSize = 6.sp, modifier = Modifier.align(Alignment.CenterStart).padding(start = 6.dp))
@@ -391,10 +391,10 @@ private fun SoundGlyph(symbol: String) {
 internal fun SoundTry(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
         DeckGroup("Try it") {
-            DeckRow("Move", "Stepping along a list") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
+            DeckRow(I18n.s(R.string.ui_move), "Stepping along a list") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
             DeckRow("Select", "Opening something") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.SELECT) } }
             DeckRow("Back", "Going up a level") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.BACK) } }
-            DeckRow("Tab", "Changing page") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
+            DeckRow(I18n.s(R.string.ui_tab), "Changing page") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
         }
     }
 }
@@ -473,9 +473,9 @@ private fun StoreLoginRow(store: DeckStore, signedIn: Boolean, onSignIn: () -> U
 internal fun StorePerks(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
         DeckGroup("What you get") {
-            DeckRow("Your libraries on Home", "One shelf per store, installed games first.") {}
-            DeckRow("Install in one press", "A game opens straight on its own page, B comes back to Home.") {}
-            DeckRow("Saves and downloads", "Cloud saves and the download queue follow your accounts.") {}
+            DeckRow(I18n.s(R.string.ui_your_libraries_on_home), "One shelf per store, installed games first.") {}
+            DeckRow(I18n.s(R.string.ui_install_in_one_press), "A game opens straight on its own page, B comes back to Home.") {}
+            DeckRow(I18n.s(R.string.ui_saves_and_downloads), "Cloud saves and the download queue follow your accounts.") {}
         }
     }
 }

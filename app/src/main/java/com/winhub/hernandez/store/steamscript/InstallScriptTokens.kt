@@ -3,6 +3,7 @@ package com.winhub.hernandez.store.steamscript
 import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.xenvironment.ImageFs
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 /**
  * Resolves installScript path tokens and Steam registry hive/WOW64 roots to concrete locations for a
@@ -160,8 +161,8 @@ class InstallScriptTokens(
     private fun canonicalCase(keyPath: String): String {
         val canon = mapOf(
             "software" to "Software", "wow6432node" to "Wow6432Node", "microsoft" to "Microsoft",
-            "windows" to "Windows", "currentversion" to "CurrentVersion", "uninstall" to "Uninstall",
-            "classes" to "Classes", "wine" to "Wine",
+            "windows" to "Windows", "currentversion" to I18n.s(R.string.ui_currentversion), "uninstall" to "Uninstall",
+            "classes" to I18n.s(R.string.ui_classes), "wine" to "Wine",
         )
         return keyPath.split('\\').joinToString("\\") { seg -> canon[seg.lowercase()] ?: seg }
     }

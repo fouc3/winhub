@@ -160,7 +160,7 @@ fun syncModeBlurb(mode: String, caps: SyncCaps?): String = when (mode) {
 
 /** Why each greyed pill is greyed, for [layer] (the layer's display name). */
 fun syncGreyedReasons(caps: SyncCaps?, layer: String): List<String> {
-    val out = mutableListOf("Android blocks fsync")
+    val out = mutableListOf(I18n.s(R.string.ui_android_blocks_fsync))
     if (caps != null && !caps.ntsync) out += "ntsync isn't in $layer"
     if (caps != null && !caps.esync) out += "esync isn't in $layer"
     return out

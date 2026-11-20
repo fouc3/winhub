@@ -2,6 +2,7 @@ package com.winhub.hernandez.store.xbox
 
 import java.io.File
 import org.xmlpull.v1.XmlPullParser
+import com.winhub.hernandez.util.I18n
 
 /** MicrosoftGame.config reader (ported from DroidDeck, GPL-3.0): identity, related products and the PC launch executable. */
 internal object XboxManifest {
@@ -32,7 +33,7 @@ internal object XboxManifest {
                         require(++elements <= 10_000 && parser.depth <= 64) { "Xbox game manifest is too complex." }
                         if (parser.depth == 1) { require(!root && parser.name == "Game"); root = true }
                         when (parser.name) {
-                            "Identity" -> identities.add(listOf(attribute("Name"), attribute("Publisher"), attribute("Version")))
+                            "Identity" -> identities.add(listOf(attribute(I18n.s(R.string.name)), attribute(I18n.s(R.string.ui_publisher)), attribute(I18n.s(R.string.ui_version))))
                             "StoreId" -> storeIds.add(parser.nextText().trim())
                             "MainPackageDependency" -> dependencies.add(attribute("Name"))
                             "RelatedProduct" -> related.add(parser.nextText().trim())

@@ -142,7 +142,7 @@ internal fun DeckContentDownloadSheet(
     }
 
     DeckConfigDialog(title = "Download " + types.first().toString().removePrefix("CONTENT_TYPE_").replace('_', ' '), onDismiss = onDismiss) {
-        DeckConfigNote("Tap a version to download and install it. Installed builds are marked.")
+        DeckConfigNote(I18n.s(R.string.ui_tap_a_version_to_download_and_install_it_installed_bu))
         when {
             loading -> {
                 Row(
@@ -153,9 +153,9 @@ internal fun DeckContentDownloadSheet(
                 }
             }
             profiles.isEmpty() -> {
-                DeckConfigNote("No components available — check your connection and retry.", error = true)
+                DeckConfigNote(I18n.s(R.string.ui_no_components_available_check_your_connection_and_ret), error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton("Retry", primary = false) { refreshKey++ }
+                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { refreshKey++ }
                 }
             }
             else -> profiles.forEach { profile ->
@@ -320,7 +320,7 @@ internal fun DeckStockConfigSheet(
     }
 
     DeckConfigDialog(title = I18n.s(R.string.ui_vegas_stock_configs), onDismiss = onDismiss) {
-        DeckConfigNote("Tap a version to fetch its config. Builds without a shipped config show none.")
+        DeckConfigNote(I18n.s(R.string.ui_tap_a_version_to_fetch_its_config_builds_without_a_sh))
         when {
             loading -> {
                 Row(
@@ -331,9 +331,9 @@ internal fun DeckStockConfigSheet(
                 }
             }
             rows.isEmpty() -> {
-                DeckConfigNote("Couldn't reach the releases feed — check connection and retry.", error = true)
+                DeckConfigNote(I18n.s(R.string.ui_couldn_t_reach_the_releases_feed_check_connection_and), error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton("Retry", primary = false) { retryKey++ }
+                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { retryKey++ }
                 }
             }
             else -> rows.forEach { rel ->

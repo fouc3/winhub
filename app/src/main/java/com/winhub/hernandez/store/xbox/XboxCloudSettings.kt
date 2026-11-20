@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.winhub.hernandez.core.KeyValueSet
 import org.json.JSONObject
+import com.winhub.hernandez.util.I18n
 
 /**
  * Xbox Cloud Gaming player settings (global). Stream-start settings (resolution, region, language, codec,
@@ -136,7 +137,7 @@ data class XboxCloudSettings(
             prefs.edit().putStringSet(WINE_PROFILES, profiles).apply()
         }
 
-        val LANGUAGES = listOf("" to "Device language", "en-US" to "English (US)", "en-GB" to "English (UK)", "de-DE" to "Deutsch",
+        val LANGUAGES = listOf("" to I18n.s(R.string.ui_device_language), "en-US" to I18n.s(R.string.ui_english_us), "en-GB" to I18n.s(R.string.ui_english_uk), "de-DE" to I18n.s(R.string.ui_deutsch),
             "es-ES" to "Español (España)", "es-MX" to "Español (México)", "fr-FR" to "Français", "it-IT" to "Italiano",
             "ja-JP" to "日本語", "ko-KR" to "한국어", "nl-NL" to "Nederlands", "pl-PL" to "Polski", "pt-BR" to "Português (Brasil)",
             "pt-PT" to "Português (Portugal)", "ru-RU" to "Русский", "sv-SE" to "Svenska", "tr-TR" to "Türkçe", "zh-CN" to "中文 (简体)",

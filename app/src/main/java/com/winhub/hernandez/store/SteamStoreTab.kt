@@ -254,9 +254,9 @@ private fun StorePortrait(
                 )
             }
         }
-        railItems("What's New", "New & trending", data.newReleases, actionFor, onOpen, onAction)
-        railItems("Top Free Games", "Add instantly", data.topFree, actionFor, onOpen, onAction)
-        railItems("Latest Deals", "Current specials", data.specials, actionFor, onOpen, onAction)
+        railItems(I18n.s(R.string.ui_what_s_new), "New & trending", data.newReleases, actionFor, onOpen, onAction)
+        railItems(I18n.s(R.string.ui_top_free_games), "Add instantly", data.topFree, actionFor, onOpen, onAction)
+        railItems(I18n.s(R.string.ui_latest_deals), "Current specials", data.specials, actionFor, onOpen, onAction)
     }
 }
 
@@ -316,8 +316,8 @@ private fun StoreLandscape(
                 .focusGroup(),
             contentPadding = PaddingValues(bottom = 24.dp),
         ) {
-            railItems("What's New", "New & trending", data.newReleases, actionFor, onOpen, onAction)
-            railItems("Latest Deals", "Current specials", data.specials, actionFor, onOpen, onAction)
+            railItems(I18n.s(R.string.ui_what_s_new), "New & trending", data.newReleases, actionFor, onOpen, onAction)
+            railItems(I18n.s(R.string.ui_latest_deals), "Current specials", data.specials, actionFor, onOpen, onAction)
             if (data.newReleases.isEmpty() && data.specials.isEmpty()) {
                 item(key = "browse_empty") {
                     StoreNotice(

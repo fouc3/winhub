@@ -48,7 +48,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                         disabledReason = if (session.busy) "Working…" else null,
                     ) {
                         session.undo {
-                            xmb.toast("Back to how it was")
+                            xmb.toast(I18n.s(R.string.ui_back_to_how_it_was))
                             xmb.reloadGames()
                             xmb.popToRoot()
                         }
@@ -77,7 +77,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     add(
                         XmbRow.Action(
                             key = "pick$i",
-                            label = listOf(p.entry.device, p.entry.soc).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { "Shared config" },
+                            label = listOf(p.entry.device, p.entry.soc).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { I18n.s(R.string.ui_shared_config) },
                             icon = Icons.Filled.Download,
                             subtitle = parts.ifBlank { null },
                             value = if (p.matchesDevice) "Your device" else "Other device",

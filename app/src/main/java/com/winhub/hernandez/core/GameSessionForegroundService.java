@@ -20,6 +20,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.XServerDisplayActivity;
+import com.winhub.hernandez.util.I18n;
 
 /**
  * Keeps a running container/game session alive while the app is backgrounded.
@@ -75,7 +76,7 @@ public class GameSessionForegroundService extends Service {
             NotificationChannel channel = new NotificationChannel(
                     XServerDisplayActivity.NOTIFICATION_CHANNEL_ID, "Winlator",
                     NotificationManager.IMPORTANCE_LOW);
-            channel.setDescription("Winlator XServer Messages");
+            channel.setDescription(I18n.s(R.string.ui_winlator_xserver_messages));
             nm.createNotificationChannel(channel);
         }
     }

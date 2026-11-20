@@ -1,6 +1,7 @@
 package com.winhub.hernandez.ui.deck
 
 import com.winhub.hernandez.container.Shortcut
+import com.winhub.hernandez.util.I18n
 
 // How the library is ordered. The Deck filter dialog's sort chips and the XMB All Games page share this, so the two can't
 // drift; the comparisons work on plain keys, so they don't need a Shortcut.
@@ -30,7 +31,7 @@ internal class GameSortKey(
 }
 
 // The Stores tab's order, then the entries no store owns. The labels are the ones storeLabelOf returns.
-private val STORE_ORDER = listOf("Windows Steam", "Steam", "Epic Games", "GOG", "Amazon Games", "Xbox", "Android", "Linux", "Added by me")
+private val STORE_ORDER = listOf(I18n.s(R.string.ui_windows_steam), "Steam", "Epic Games", "GOG", I18n.s(R.string.ui_amazon_games), I18n.s(R.string.ui_xbox), "Android", I18n.s(R.string.ui_linux), I18n.s(R.string.ui_added_by_me))
 
 /** Where a [storeLabelOf] label sorts; a label nobody knows goes last. */
 internal fun storeRank(label: String): Int = STORE_ORDER.indexOf(label).let { if (it < 0) STORE_ORDER.size else it }

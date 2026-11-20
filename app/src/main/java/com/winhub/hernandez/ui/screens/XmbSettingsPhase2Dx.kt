@@ -133,7 +133,7 @@ private data class P2DxSel(
 )
 
 // Index-aligned with DXVKConfigDialog.ANISOTROPY_VALUES / LOD_BIAS_VALUES (the dialog's labels).
-private val P2_ANISO_LABELS = listOf("Game default", "2x", "4x", "8x", "16x")
+private val P2_ANISO_LABELS = listOf(I18n.s(R.string.ui_game_default), "2x", "4x", "8x", "16x")
 private val P2_LOD_LABELS = listOf(
     "Game default", "Auto (match scaling mode)", "Sharper (-0.25)", "Sharper (-0.5)", "Sharper (-0.75)", "Sharpest (-1.0)",
 )
@@ -578,7 +578,7 @@ private class P2Vegas(
         }
     }
 
-    fun keysMenu(): XmbMenu = XmbMenu("Config keys", Icons.Filled.Tune) {
+    fun keysMenu(): XmbMenu = XmbMenu(I18n.s(R.string.ui_config_keys), Icons.Filled.Tune) {
         val rows = mutableListOf<XmbRow>()
         val live = liveFile()
         if (live == null || missing) {

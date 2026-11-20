@@ -103,7 +103,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
                 val year = parts[0].toInt()
                 val month = parts[1].toInt()
                 val day = parts[2].toInt()
-                val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+                val months = arrayOf(I18n.s(R.string.ui_jan), I18n.s(R.string.ui_feb), I18n.s(R.string.ui_mar), I18n.s(R.string.ui_apr), I18n.s(R.string.ui_may), I18n.s(R.string.ui_jun), I18n.s(R.string.ui_jul), I18n.s(R.string.ui_aug), I18n.s(R.string.ui_sep), I18n.s(R.string.ui_oct), I18n.s(R.string.ui_nov), I18n.s(R.string.ui_dec))
                 if (month < 1 || month > 12) return iso.substring(0, 10)
                 return "${months[month - 1]} $day, $year"
             } catch (_: Exception) {
@@ -165,7 +165,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
     private var dlcBaseInstalled by mutableStateOf(false)
 
     private var cloudSaveDir by mutableStateOf<String?>(null)
-    private var cloudSaveDirText by mutableStateOf("No save folder set")
+    private var cloudSaveDirText by mutableStateOf(I18n.s(R.string.ui_no_save_folder_set))
     private var cloudSaveDirColor by mutableIntStateOf(0xFF555577.toInt())
     private var cloudSaveStatusText by mutableStateOf("")
     private var cloudSaveStatusVisible by mutableStateOf(false)
@@ -1071,7 +1071,7 @@ private fun GogUpdatesContent(
 ) {
     // Not installed yet — just the muted hint, no buttons.
     if (!installed) {
-        StoreStatusText("Install the game first to check for updates.")
+        StoreStatusText(I18n.s(R.string.ui_install_the_game_first_to_check_for_updates))
         return
     }
 
@@ -1114,7 +1114,7 @@ private fun GogDlcContent(
         else runCatching { org.json.JSONArray(dlcJson) }.getOrNull()
     }
     if (arr == null || arr.length() == 0) {
-        StoreStatusText("No DLCs in your library for this game")
+        StoreStatusText(I18n.s(R.string.ui_no_dlcs_in_your_library_for_this_game))
         return
     }
 

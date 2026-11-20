@@ -1008,7 +1008,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
     ): BulkImportSummary {
         val containers = liveContainers()
         if (containerIndex < 0 || containerIndex >= containers.size) {
-            return BulkImportSummary(0, candidates.size, listOf("That container no longer exists."))
+            return BulkImportSummary(0, candidates.size, listOf(I18n.s(R.string.ui_that_container_no_longer_exists)))
         }
         val container = containers[containerIndex]
         var added = 0

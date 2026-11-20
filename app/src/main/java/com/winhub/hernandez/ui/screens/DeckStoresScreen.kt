@@ -1195,9 +1195,9 @@ internal fun DeckStoresScreen(
                         if (signed) {
                             // Store/Library/Settings, plus Friends/Profile on Steam alone.
                             val labels = if (active.screen == Screen.Steam) {
-                                listOf("Store", "Library", "Settings", "Friends", "Profile")
+                                listOf(I18n.s(R.string.ui_store), "Library", "Settings", I18n.s(R.string.xmb_tab_friends), I18n.s(R.string.profile))
                             } else {
-                                listOf("Store", "Library", "Settings")
+                                listOf(I18n.s(R.string.ui_store), "Library", "Settings")
                             }
                             DeckStoreSideTabs(
                                 labels = labels,
@@ -1236,7 +1236,7 @@ internal fun DeckStoresScreen(
             // Skipped on short landscape screens, where the page needs the room more.
             if (LocalConfiguration.current.screenHeightDp >= 400) DeckHintBar(
                 hints = if (!inStore) {
-                    listOf("A" to "Open", "\u25C0 \u25B6" to "Choose", "X" to "Downloads", "L2/R2" to "Switch store") +
+                    listOf("A" to I18n.s(R.string.xmb_all_games_open), "\u25C0 \u25B6" to "Choose", "X" to "Downloads", "L2/R2" to I18n.s(R.string.ui_switch_store)) +
                         if (onExit != null) listOf("B" to "Home") else emptyList()
                 } else {
                     listOf("A" to "Select", "X" to "Downloads", "L2/R2" to "Switch tab", "B" to if (onExit != null) "Home" else "Stores")
@@ -1406,7 +1406,7 @@ private fun DeckStoreSettingsPane(
             DeckRow(
                 label = I18n.s(R.string.xmb_tab_downloads),
                 hint = if (activeDownloads > 0) "$activeDownloads active" else "Nothing downloading",
-                control = { DeckButton("Open", primary = false) { onOpenDownloads() } },
+                control = { DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { onOpenDownloads() } },
             )
         }
     }

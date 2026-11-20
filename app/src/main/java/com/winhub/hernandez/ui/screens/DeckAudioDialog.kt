@@ -57,8 +57,8 @@ internal fun DeckAudioSettingsDialog(
 
         DeckGroup("Fine-tune" + if (custom) "" else " · pick Custom to edit") {
             val perfOpts = if (driverId == "directaudio")
-                listOf("0" to "None", "1" to "Low lat.")
-            else listOf("0" to "None", "1" to "Low lat.", "2" to "Power")
+                listOf("0" to "None", "1" to I18n.s(R.string.ui_low_lat))
+            else listOf("0" to "None", "1" to I18n.s(R.string.ui_low_lat), "2" to "Power")
             DeckChoiceRow(
                 label = I18n.s(R.string.ui_output_mode),
                 hint = I18n.s(R.string.ui_aaudio_performance_mode),
@@ -66,7 +66,7 @@ internal fun DeckAudioSettingsDialog(
                 selected = shown.perfMode.toString(),
                 onPick = { if (custom) cfg = cfg.copy(perfMode = it.toInt()) },
             )
-            DeckRow("Adaptive buffer", "Auto-grow only if it hears crackle") {
+            DeckRow(I18n.s(R.string.ui_adaptive_buffer), "Auto-grow only if it hears crackle") {
                 DeckToggle(shown.adaptive) { if (custom) cfg = cfg.copy(adaptive = it) }
             }
             if (directBuffer) {
@@ -91,12 +91,12 @@ internal fun DeckAudioSettingsDialog(
                     onChange = { if (custom && latencyUsed) cfg = cfg.copy(latencyMsec = (it / 10).toInt() * 10) },
                 )
             }
-            DeckRow("Initial sink buffer", "frames · 0 = auto") {
+            DeckRow(I18n.s(R.string.ui_initial_sink_buffer), "frames · 0 = auto") {
                 DeckAudioStepper(if (shown.bufferFrames > 0) "${shown.bufferFrames}" else "auto", custom) {
                     cfg = cfg.copy(bufferFrames = (cfg.bufferFrames + it * 256).coerceAtLeast(0))
                 }
             }
-            DeckRow("Max sink buffer", "growth cap · 0 = device max") {
+            DeckRow(I18n.s(R.string.ui_max_sink_buffer), "growth cap · 0 = device max") {
                 DeckAudioStepper(if (shown.maxBufferFrames > 0) "${shown.maxBufferFrames}" else "device max", custom) {
                     cfg = cfg.copy(maxBufferFrames = (cfg.maxBufferFrames + it * 256).coerceAtLeast(0))
                 }

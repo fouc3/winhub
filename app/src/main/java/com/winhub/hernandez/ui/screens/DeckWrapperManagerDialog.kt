@@ -112,7 +112,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                             browse(slot.fileName, false)
                         }
                         if (slot.isOverridden) {
-                            DeckConfigChip("Reset", selected = false) {
+                            DeckConfigChip(I18n.s(R.string.reset), selected = false) {
                                 manager.removeOverride(slot.fileName)
                                 Toast.makeText(context, R.string.wrapper_reset_toast, Toast.LENGTH_SHORT).show()
                                 refresh()

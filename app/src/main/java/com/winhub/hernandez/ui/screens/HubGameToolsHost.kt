@@ -77,7 +77,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
     val context = LocalContext.current
     OutlinedAlertDialog(
         onDismissRequest = onClose,
-        title = { Text("Clone to container") },
+        title = { Text(I18n.s(R.string.ui_clone_to_container)) },
         text = {
             if (containers.isEmpty()) {
                 Text(I18n.s(R.string.ui_no_containers_yet))

@@ -810,7 +810,7 @@ private fun AmazonGameDetailScreen(
     }
     val hasMedia = media?.isEmpty == false
     // Appended LAST so the Details / DLC indices never move.
-    val tabs = if (hasMedia) listOf("Details", "DLC", "Media") else listOf("Details", "DLC")
+    val tabs = if (hasMedia) listOf(I18n.s(R.string.ui_details), "DLC", I18n.s(R.string.ui_media)) else listOf(I18n.s(R.string.ui_details), "DLC")
     if (tab >= tabs.size) tab = 0
     // Poster for the hero when the library sync has resolved one; the square icon otherwise.
     val heroCandidates = remember(productId, artUrl) {
@@ -950,11 +950,11 @@ private fun AmazonDlcContent(
     }
 
     if (parseError) {
-        StoreStatusText("Error reading DLC data")
+        StoreStatusText(I18n.s(R.string.ui_error_reading_dlc_data))
         return
     }
     if (dlcArr == null || dlcArr.length() == 0) {
-        StoreStatusText("No DLCs in your library for this game")
+        StoreStatusText(I18n.s(R.string.ui_no_dlcs_in_your_library_for_this_game))
         return
     }
 
