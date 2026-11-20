@@ -1,8 +1,7 @@
 package com.winhub.hernandez.core;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

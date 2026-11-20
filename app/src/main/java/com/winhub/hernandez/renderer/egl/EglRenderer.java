@@ -1,8 +1,7 @@
 package com.winhub.hernandez.renderer.egl;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.view.Display;

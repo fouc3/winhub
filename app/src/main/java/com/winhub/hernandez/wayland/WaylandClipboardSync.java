@@ -1,8 +1,7 @@
 package com.winhub.hernandez.wayland;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;

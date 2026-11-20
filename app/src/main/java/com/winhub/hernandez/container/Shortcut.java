@@ -1,7 +1,7 @@
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
     package com.winhub.hernandez.container;
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 
     import android.graphics.Bitmap;
     import android.graphics.BitmapFactory;

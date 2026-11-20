@@ -1,8 +1,7 @@
 package com.winhub.hernandez;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import static com.winhub.hernandez.core.AppUtils.showToast;
 
 import android.Manifest;

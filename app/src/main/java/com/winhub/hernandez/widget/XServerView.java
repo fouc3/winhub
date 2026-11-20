@@ -1,8 +1,7 @@
 package com.winhub.hernandez.widget;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;

@@ -1,8 +1,7 @@
 package com.winhub.hernandez.restore;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

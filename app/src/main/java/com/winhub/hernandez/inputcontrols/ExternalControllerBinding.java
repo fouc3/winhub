@@ -1,8 +1,7 @@
 package com.winhub.hernandez.inputcontrols;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 

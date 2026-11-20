@@ -1,8 +1,7 @@
 package com.winhub.hernandez.xconnector;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;

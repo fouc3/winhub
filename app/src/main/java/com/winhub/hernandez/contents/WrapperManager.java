@@ -1,8 +1,7 @@
 package com.winhub.hernandez.contents;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;

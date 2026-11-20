@@ -10,9 +10,8 @@
  */
 package com.winhub.hernandez.xserver.extensions;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import static com.winhub.hernandez.xserver.XClientRequestHandler.RESPONSE_CODE_SUCCESS;
 
 import android.util.SparseArray;

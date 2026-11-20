@@ -1,8 +1,7 @@
 package com.winhub.hernandez.winhandler;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;

@@ -12,9 +12,8 @@
  */
 package com.winhub.hernandez.store;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;

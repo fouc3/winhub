@@ -1,8 +1,7 @@
 package com.winhub.hernandez.contentdialog;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;

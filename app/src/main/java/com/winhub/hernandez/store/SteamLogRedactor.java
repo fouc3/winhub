@@ -1,8 +1,7 @@
 package com.winhub.hernandez.store;
 
-import com.winhub.hernandez.R
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 import java.util.regex.Matcher;
