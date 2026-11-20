@@ -146,9 +146,11 @@ private fun DrawScope.drawMark(t: Float) {
 
     // Ripples leave all three dots together, as the second pulse peaks.
     if (t in 0.48f..0.72f) {
-        val e = RippleEase.transform((t - 0.48f) / 0.24f)
+        // CubicBezierEasing can return a value a hair outside 0..1; on Android 17 a negative
+        // alpha throws IllegalArgumentException, so clamp the phase and the alpha itself.
+        val e = RippleEase.transform((t - 0.48f) / 0.24f).coerceIn(0f, 1f)
         val grow = lerp(1f, 3f, e)
-        val ring = Blue.copy(alpha = 0.8f * (1f - e))
+        val ring = Blue.copy(alpha = (0.8f * (1f - e)).coerceIn(0f, 1f))
         for (c in Dots) {
             drawCircle(ring, radius = DOT_R * grow, center = c, style = Stroke(1.5f * grow))
         }
