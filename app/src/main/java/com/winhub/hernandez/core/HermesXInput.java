@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -146,7 +149,7 @@ public final class HermesXInput {
             }
             if (!files.isEmpty()) b = new Bundle(m.optString("version", "?"), files);
         } catch (Exception e) {
-            Log.w(TAG, "no bundled HERMES-XInput in this build: " + e);
+            Log.w(TAG, I18n.s(R.string.ui_no_bundled_hermes_xinput_in_this_build) + e);
         }
         cachedBundle = b;
         bundleRead = true;
@@ -320,7 +323,7 @@ public final class HermesXInput {
     static Forward forwardSources(File wineRoot, boolean arm64ec) {
         Forward f = new Forward();
         if (wineRoot == null) {
-            f.problem = "the Wine layer folder is unknown";
+            f.problem = I18n.s(R.string.ui_the_wine_layer_folder_is_unknown);
             return f;
         }
         File lib = new File(wineRoot, "lib/wine");
@@ -373,23 +376,23 @@ public final class HermesXInput {
                                   boolean direct, boolean switching, Forward fwd) throws Exception {
         Bundle b = bundle(context);
         if (b == null)
-            return new Result(true, false, "not in this build (no bundled HERMES-XInput), nothing installed", direct, false, false);
+            return new Result(true, false, I18n.s(R.string.ui_not_in_this_build_no_bundled_hermes_xinput_nothing_insta), direct, false, false);
         // x86_64 prefix: x86_64. arm64ec prefix: ARM64X (see the class comment), unless forced to x86_64.
         boolean forceX64 = "x86_64".equalsIgnoreCase(archOverride != null ? archOverride.trim() : "");
         String sys64 = arm64ec && !forceX64 ? "arm64x" : "x86_64";
         if (!b.has(sys64))
-            return new Result(true, false, "the bundle has no " + sys64 + " build, nothing installed", direct, false, false);
+            return new Result(true, false, "the bundle has no " + sys64 + I18n.s(R.string.ui_build_nothing_installed), direct, false, false);
         List<Item> items = new ArrayList<>();
         List<String> skipped = new ArrayList<>();
         String[][] dirs = {{"system32", sys64}, {"syswow64", "i386"}};
         for (String[] dir : dirs) {
             if (!new File(windows, dir[0]).isDirectory()) {
                 // A prefix without the folder (no syswow64 = no 32-bit side) doesn't get one made for us.
-                skipped.add(dir[0] + " (not in this prefix)");
+                skipped.add(dir[0] + I18n.s(R.string.ui_not_in_this_prefix));
                 continue;
             }
             if (!b.has(dir[1])) {
-                skipped.add(dir[0] + " (no " + dir[1] + " build bundled)");
+                skipped.add(dir[0] + " (no " + dir[1] + I18n.s(R.string.ui_build_bundled));
                 continue;
             }
             for (String dll : DLLS) {
@@ -454,7 +457,7 @@ public final class HermesXInput {
         store(m, marker);
         String detail = "HERMES-XInput " + b.version + " (system32 " + sys64 + "): "
                 + (did.isEmpty() ? "in place" : "installed " + did.size() + " file(s)")
-                + (forwardPlaced ? "; Wine's xinput beside it as " + FORWARD_DLL + " (in-game switching, launch mode "
+                + (forwardPlaced ? "; Wine's xinput beside it as " + FORWARD_DLL + I18n.s(R.string.ui_in_game_switching_launch_mode)
                         + (direct ? "direct" : "forward") + ")" : "")
                 + (removed.isEmpty() ? "" : "; removed " + String.join(", ", removed))
                 + (skipped.isEmpty() ? "" : "; skipped " + String.join(", ", skipped));
@@ -500,7 +503,7 @@ public final class HermesXInput {
         marker.delete();
         deleteEmptyDirs(new File(state, "backup"));
         state.delete(); // only if empty
-        String detail = "HERMES-XInput removed: " + back.size() + " file(s) back to the prefix's own (Wine's builtin xinput)"
+        String detail = I18n.s(R.string.ui_hermes_xinput_removed) + back.size() + I18n.s(R.string.ui_file_s_back_to_the_prefix_s_own_wine_s_builtin_xinput)
                 + (kept.isEmpty() ? "" : "; left as is (not ours): " + String.join(", ", kept));
         Log.i(TAG, detail);
         return new Result(false, false, detail);

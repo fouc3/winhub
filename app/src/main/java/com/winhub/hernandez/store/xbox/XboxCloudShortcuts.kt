@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity
 import android.content.Context
 import com.winhub.hernandez.container.ContainerManager
@@ -26,7 +29,7 @@ object XboxCloudShortcuts {
     /** Adds [game] to Games without installing it; [done] gets a message for the user. */
     fun addNotInstalled(activity: Activity, game: XboxGame, done: (Boolean, String) -> Unit) {
         val holding = ContainerManager(activity).containers.firstOrNull()
-            ?: return done(false, "Create a container first; downloaded games are installed into one.")
+            ?: return done(false, I18n.s(R.string.ui_create_a_container_first_downloaded_games_are_installed))
         // Never run: launches of a not-installed entry stream or download instead.
         val placeholder = File(activity.filesDir, "imagefs/xbox-cloud/${game.id}.exe").path
         StarLaunchBridge.writeShortcutAsync(activity, holding, game.title, placeholder, game.posterUrl ?: game.heroUrl,
@@ -35,7 +38,7 @@ object XboxCloudShortcuts {
             val file = File(holding.desktopDir, safeName(game.title) + ".desktop")
             runCatching { Shortcut(holding, file).apply { putExtra(NOT_INSTALLED, "1"); saveData() } }
                 .onSuccess { done(true, "${game.title} added to Games. Stream it now, or download it from its launch options.") }
-                .onFailure { done(false, "The Games entry could not be saved.") }
+                .onFailure { done(false, I18n.s(R.string.ui_the_games_entry_could_not_be_saved)) }
         }
     }
 
@@ -59,7 +62,7 @@ object XboxCloudShortcuts {
             val game = cachedGame(activity, id)
             activity.runOnUiThread {
                 if (game == null) {
-                    com.winhub.hernandez.core.AppUtils.showToast(activity, "Open the Xbox store once to sync your library, then try again.")
+                    com.winhub.hernandez.core.AppUtils.showToast(activity, I18n.s(R.string.ui_open_the_xbox_store_once_to_sync_your_library_then_try_a))
                     return@runOnUiThread
                 }
                 activity.startActivity(XboxMainActivity.detailIntent(activity, game)

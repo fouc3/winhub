@@ -235,7 +235,7 @@ internal fun DeckStorePicker(
                         Box(Modifier.size(8.dp).clip(CircleShape).background(ink.copy(alpha = if (signedIn[i]) 1f else 0.4f)))
                         Spacer(Modifier.width(6.dp))
                         Text(
-                            if (signedIn[i]) "Logged in" else "Not logged in",
+                            if (signedIn[i]) "Logged in" else I18n.s(R.string.ui_not_logged_in),
                             color = ink.copy(alpha = 0.9f),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -296,7 +296,7 @@ internal fun DeckStoreHeader(
                 Box(Modifier.size(7.dp).clip(CircleShape).background(if (signedIn) accent else Deck.onSurfaceVariant.copy(alpha = 0.5f)))
                 Spacer(Modifier.width(5.dp))
                 Text(
-                    if (signedIn) "Logged in" else "Not logged in",
+                    if (signedIn) "Logged in" else I18n.s(R.string.ui_not_logged_in),
                     color = Deck.onSurfaceVariant,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold,

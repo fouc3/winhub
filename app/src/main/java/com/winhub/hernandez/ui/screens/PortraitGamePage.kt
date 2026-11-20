@@ -180,7 +180,7 @@ internal fun PortraitGamePage(
                 if (favourite) PortraitPill("Favourite", Icons.Filled.Star)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                PortraitStat("Hours played", hours, Modifier.weight(1f))
+                PortraitStat(I18n.s(R.string.xmb_fr_stat_hours), hours, Modifier.weight(1f))
                 PortraitStat("Source", origin, Modifier.weight(1f))
             }
             DeckScoresRow(scores)

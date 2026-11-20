@@ -58,14 +58,14 @@ val OPENGL_VSYNC_ICON: ImageVector = Icons.Filled.LockOpen
 /** The Fast row's small inline note for a FastOpenGL lock reason (null = none). */
 fun openGLFastNote(reason: String?): String? = when (reason) {
     null -> null
-    com.winhub.hernandez.core.FastOpenGL.NEEDS_TURNIP -> "needs Turnip driver"
+    com.winhub.hernandez.core.FastOpenGL.NEEDS_TURNIP -> I18n.s(R.string.ui_needs_turnip_driver)
     com.winhub.hernandez.core.FastOpenGL.NOT_BUNDLED -> "not in this build"
     else -> reason.replaceFirstChar { it.lowercase() }
 }
 
 /** "→ Fast · FPS · Vsync off" / "→ all off": what the game will actually get. */
 fun openGLSummary(fast: Boolean, fps: Boolean, vsyncOff: Boolean): String {
-    val on = listOfNotNull("Fast".takeIf { fast }, "FPS".takeIf { fps }, "Vsync off".takeIf { vsyncOff })
+    val on = listOfNotNull("Fast".takeIf { fast }, "FPS".takeIf { fps }, I18n.s(R.string.ui_vsync_off).takeIf { vsyncOff })
     return if (on.isEmpty()) "→ all off" else "→ " + on.joinToString(" · ")
 }
 

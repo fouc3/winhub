@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -98,7 +101,7 @@ public class EpicApiClient {
                 }
 
             } catch (Exception e) {
-                Log.e(TAG, "getLibraryItems page failed", e);
+                Log.e(TAG, I18n.s(R.string.ui_getlibraryitems_page_failed), e);
                 break;
             }
         } while (cursor != null);
@@ -185,7 +188,7 @@ public class EpicApiClient {
             return true;
 
         } catch (Exception e) {
-            Log.e(TAG, "enrichFromCatalog failed for " + game.appName, e);
+            Log.e(TAG, I18n.s(R.string.ui_enrichfromcatalog_failed_for) + game.appName, e);
             return false;
         }
     }
@@ -227,7 +230,7 @@ public class EpicApiClient {
             return wrapper.toString();
 
         } catch (Exception e) {
-            Log.e(TAG, "getManifestApiJson failed for " + appName, e);
+            Log.e(TAG, I18n.s(R.string.ui_getmanifestapijson_failed_for) + appName, e);
             return null;
         }
     }
@@ -294,7 +297,7 @@ public class EpicApiClient {
             if (attrs == null) return "";
             return parseCloudSaveFolder(attrs);
         } catch (Exception e) {
-            Log.e(TAG, "getCloudSaveFolder failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_getcloudsavefolder_failed), e);
             return "";
         }
     }
@@ -321,12 +324,12 @@ public class EpicApiClient {
             conn.disconnect();
 
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "Epic GET HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + " (error body suppressed)");
+                Log.e(TAG, I18n.s(R.string.ui_epic_get_http) + code + " from " + StoreLog.redactUrl(urlStr) + I18n.s(R.string.ui_error_body_suppressed));
                 return null;
             }
             return sb.toString();
         } catch (Exception e) {
-            Log.e(TAG, "Epic getWithLegendaryUA failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_epic_getwithlegendaryua_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         }
     }

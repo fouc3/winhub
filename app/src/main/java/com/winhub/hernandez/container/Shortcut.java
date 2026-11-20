@@ -1,3 +1,6 @@
+
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
     package com.winhub.hernandez.container;
 
     import android.graphics.Bitmap;
@@ -150,7 +153,7 @@ import java.nio.file.Files;
             this.customCoverArtPath = customCoverArtPath;
             putExtra("customCoverArtPath", customCoverArtPath); // Save the custom cover art path to extra data
             saveData(); // Save immediately to ensure persistence
-            Log.d("Shortcut", "Set and saved custom cover art path: " + customCoverArtPath); // Add a log for debugging
+            Log.d("Shortcut", I18n.s(R.string.ui_set_and_saved_custom_cover_art_path) + customCoverArtPath); // Add a log for debugging
         }
 
         public String getExtra(String name) {
@@ -208,7 +211,7 @@ import java.nio.file.Files;
 
             // Verify that the file reference is correct
             if (!file.getName().endsWith(".desktop")) {
-                Log.e("Shortcut", "Incorrect file reference before saving: " + file.getPath());
+                Log.e("Shortcut", I18n.s(R.string.ui_incorrect_file_reference_before_saving) + file.getPath());
                 return; // Prevent saving to an incorrect file
             }
 
@@ -230,7 +233,7 @@ import java.nio.file.Files;
                 if (!coverArtDir.exists()) {
                     boolean created = coverArtDir.mkdirs();
                     if (!created) {
-                        Log.e("Shortcut", "Failed to create cover art directory: " + coverArtDir.getAbsolutePath());
+                        Log.e("Shortcut", I18n.s(R.string.ui_failed_to_create_cover_art_directory) + coverArtDir.getAbsolutePath());
                     }
                 }
 
@@ -239,9 +242,9 @@ import java.nio.file.Files;
                 if (FileUtils.saveBitmapToFile(coverArt, coverFile)) {
                     this.coverArt = coverArt; // Update the cover art
                     setCustomCoverArtPath(coverFile.getPath()); // Update the path and save data
-                    Log.d("Shortcut", "Custom cover art saved at: " + coverFile.getPath());
+                    Log.d("Shortcut", I18n.s(R.string.ui_custom_cover_art_saved_at) + coverFile.getPath());
                 } else {
-                    Log.e("Shortcut", "Failed to save custom cover art.");
+                    Log.e("Shortcut", I18n.s(R.string.ui_failed_to_save_custom_cover_art));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -255,13 +258,13 @@ import java.nio.file.Files;
                 File customCoverArtFile = new File(customCoverArtPath);
 
                 // Log the path to be deleted
-                Log.d("Shortcut", "Removing custom cover art file at: " + customCoverArtPath);
+                Log.d("Shortcut", I18n.s(R.string.ui_removing_custom_cover_art_file_at) + customCoverArtPath);
 
                 // Delete the file if it exists
                 if (customCoverArtFile.exists() && customCoverArtFile.delete()) {
-                    Log.d("Shortcut", "Custom cover art file deleted successfully.");
+                    Log.d("Shortcut", I18n.s(R.string.ui_custom_cover_art_file_deleted_successfully));
                 } else {
-                    Log.e("Shortcut", "Failed to delete custom cover art file or it doesn't exist.");
+                    Log.e("Shortcut", I18n.s(R.string.ui_failed_to_delete_custom_cover_art_file_or_it_doesn_t_exi));
                 }
             }
 
@@ -274,7 +277,7 @@ import java.nio.file.Files;
             saveData();
 
             // Log the state after removal
-            Log.d("Shortcut", "Shortcut state saved after removing custom cover art. Current path: " + customCoverArtPath);
+            Log.d("Shortcut", I18n.s(R.string.ui_shortcut_state_saved_after_removing_custom_cover_art_cur) + customCoverArtPath);
         }
 
         public boolean cloneToContainer(Container newContainer) {
@@ -315,7 +318,7 @@ import java.nio.file.Files;
 
                 return true;
             } catch (Exception e) {
-                Log.e("Shortcut", "Failed to clone shortcut to new container", e);
+                Log.e("Shortcut", I18n.s(R.string.ui_failed_to_clone_shortcut_to_new_container), e);
                 return false;
             }
         }

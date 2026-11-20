@@ -387,18 +387,18 @@ private fun captionFor(
         return Caption(label, st?.second ?: pendingLine, toneOf(st?.first), trailOf(st?.first), help)
     }
     return when (slide) {
-        0 -> of("Steam sign-in", Step.SESSION, HELP_SESSION, "Checking Steam sign-in…")
+        0 -> of(I18n.s(R.string.ui_steam_sign_in), Step.SESSION, HELP_SESSION, I18n.s(R.string.ui_checking_steam_sign_in))
         1 -> {
             // "Signed in to Steam" only when that's true; a Launch-anyway pass (session skipped)
             // keeps the plain step name so the photo isn't captioned with a claim it can't make.
             val signedIn = states[Step.SESSION]?.first == StepState.DONE
-            of(if (signedIn) "Signed in to Steam" else "Network", Step.NETWORK, HELP_NETWORK, "Checking network…")
+            of(if (signedIn) "Signed in to Steam" else "Network", Step.NETWORK, HELP_NETWORK, I18n.s(R.string.ui_checking_network))
         }
-        2 -> of("Cloud saves", Step.CLOUD, HELP_CLOUD, "Syncing cloud saves…")
+        2 -> of(I18n.s(R.string.ui_cloud_saves_2), Step.CLOUD, HELP_CLOUD, I18n.s(R.string.downloading_on_launch))
         else -> when {
             launching -> Caption(I18n.s(R.string.ui_ready), "Launching $gameName…", Tone.OK, Trail.CHECK, HELP_PREFLIGHT)
-            states.containsKey(Step.CLIENT) -> of("SteamLite client", Step.CLIENT, HELP_CLIENT, "Checking for SteamLite updates…")
-            else -> of("Game files", Step.UPDATE, HELP_UPDATE, "Checking for updates…")
+            states.containsKey(Step.CLIENT) -> of(I18n.s(R.string.ui_steamlite_client), Step.CLIENT, HELP_CLIENT, I18n.s(R.string.ui_checking_for_steamlite_updates))
+            else -> of(I18n.s(R.string.ui_game_files), Step.UPDATE, HELP_UPDATE, I18n.s(R.string.ui_checking_for_updates_2))
         }
     }
 }
@@ -462,7 +462,7 @@ private fun failCardFor(
             val size = if (clientOffer.downloadMb > 0) " (~${clientOffer.downloadMb} MB)" else ""
             val installed = SteamLiteComponent.versionLabel(clientOffer.installed)
             FailCardModel(
-                if (clientOffer.required) "SteamLite update required" else "SteamLite update available",
+                if (clientOffer.required) "SteamLite update required" else I18n.s(R.string.ui_steamlite_update_available),
                 if (clientOffer.required)
                     "This version of WinHub needs SteamLite v${clientOffer.latestVersion} for live launch " +
                         "status and in-game friends. Update now$size; if the download fails, the " +

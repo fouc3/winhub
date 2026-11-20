@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.download
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -165,7 +168,7 @@ fun startContentDownload(appContext: Context, profile: ContentProfile) {
             }
             if (uri == null) {
                 ContentDownloadRegistry.update(key) {
-                    it.copy(phase = ContentDownloadPhase.ERROR, error = "Download failed.")
+                    it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_download_failed_2))
                 }
                 return@launch
             }
@@ -190,7 +193,7 @@ fun startContentDownload(appContext: Context, profile: ContentProfile) {
 
             ContentDownloadRegistry.update(key) {
                 if (installed) it.copy(phase = ContentDownloadPhase.DONE, fraction = 1f)
-                else it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                else it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
             }
         } catch (c: CancellationException) {
             // A user Cancel: requestCancel already set the cancelled-terminal state — keep it and let
@@ -199,7 +202,7 @@ fun startContentDownload(appContext: Context, profile: ContentProfile) {
         } catch (e: Exception) {
             Log.w(TAG, "Component download/install failed for $key", e)
             ContentDownloadRegistry.update(key) {
-                it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
             }
         } finally {
             // Drop the shade line (FGS self-stops when no downloads remain) for success,
@@ -250,7 +253,7 @@ private suspend fun installContentBlocking(
                 // A component that's already installed is NOT a failure — mirror the sheet's
                 // Activity-bound installContent so the community inline installer's semantics hold.
                 if (reason == ContentsManager.InstallFailedReason.ERROR_EXIST) {
-                    Log.i(TAG, "Component already installed (ERROR_EXIST) — treating as success")
+                    Log.i(TAG, I18n.s(R.string.ui_component_already_installed_error_exist_treating_as_succ))
                     onProgress(1f)
                     if (cont.isActive) cont.resume(true)
                     return
@@ -269,13 +272,13 @@ private suspend fun installContentBlocking(
                         if (cont.isActive) cont.resume(true)
                     }
                 } catch (e: Exception) {
-                    Log.w(TAG, "Component finishInstall failed", e)
+                    Log.w(TAG, I18n.s(R.string.ui_component_finishinstall_failed), e)
                     if (cont.isActive) cont.resume(false)
                 }
             }
         })
     } catch (e: Exception) {
-        Log.w(TAG, "Component extract threw", e)
+        Log.w(TAG, I18n.s(R.string.ui_component_extract_threw), e)
         if (cont.isActive) cont.resume(false)
     }
 }

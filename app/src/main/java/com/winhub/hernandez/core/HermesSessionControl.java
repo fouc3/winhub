@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import com.winhub.hernandez.inputcontrols.HermesWriter;
@@ -45,7 +48,7 @@ public final class HermesSessionControl {
         }
         HermesWriter.setSessionControl(axisMode, axisHz, autoMax, xinputMode, xinputFlags);
         Log.i(TAG, "session control: pacing " + (pacingFromEnv ? "from env vars" : pacing.format())
-                + ", xinput mode " + xinputMode + " flags " + xinputFlags);
+                + I18n.s(R.string.ui_xinput_mode) + xinputMode + " flags " + xinputFlags);
     }
 
     /**
@@ -55,7 +58,7 @@ public final class HermesSessionControl {
      */
     public static void writeFfMode(boolean on) {
         applyFfMode(DInputVibration.ffMode(on));
-        Log.i(TAG, "DirectInput vibration: " + (on ? "on" : "off"));
+        Log.i(TAG, I18n.s(R.string.ui_directinput_vibration) + (on ? "on" : "off"));
     }
 
     private static void applyFfMode(int mode) {
@@ -63,7 +66,7 @@ public final class HermesSessionControl {
             HermesWriter.setFfMode(mode);
         } catch (UnsatisfiedLinkError e) {
             // libhermes.so missing or older than the force-feedback API: the readers keep their default.
-            Log.w(TAG, "DirectInput vibration: setFfMode unavailable", e);
+            Log.w(TAG, I18n.s(R.string.ui_directinput_vibration_setffmode_unavailable), e);
         }
     }
 
@@ -80,7 +83,7 @@ public final class HermesSessionControl {
         HermesWriter.setSessionControl(HermesWriter.AXIS_MODE_UNSET, 0, 0,
                 HermesWriter.XINPUT_MODE_UNSET, 0);
         applyFfMode(DInputVibration.FF_MODE_UNSET);
-        Log.i(TAG, "control block cleared: identity, pacing and DirectInput vibration from the env vars");
+        Log.i(TAG, I18n.s(R.string.ui_control_block_cleared_identity_pacing_and_directinput_vi));
     }
 
     /** The XInput mode for a live Direct/Wine choice, when the session can switch. */

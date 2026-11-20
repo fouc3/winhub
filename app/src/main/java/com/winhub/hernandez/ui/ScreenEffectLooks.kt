@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import kotlin.math.abs
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -62,29 +65,29 @@ object ScreenEffectLooks {
      */
     val LOOKS: List<Look> = listOf(
         Look("Off",              0f,   0f, 1.00f, 100,  0,
-             desc = "Nothing applied."),
-        Look("Game Clarity",     2f,  12f, 1.00f, 108, 55,
+             desc = I18n.s(R.string.ui_nothing_applied)),
+        Look(I18n.s(R.string.ui_game_clarity),     2f,  12f, 1.00f, 108, 55,
              desc = "Sharpening with a touch of contrast \u2014 the everyday one."),
         Look("Vivid",            3f,  10f, 0.98f, 145, 30, deband = true,
-             desc = "Colour pushed hard. Deband on so skies don't stripe."),
+             desc = I18n.s(R.string.ui_colour_pushed_hard_deband_on_so_skies_don_t_stripe)),
         Look("Cinematic",       -4f,  22f, 1.10f,  88, 20, fxaa = true, deband = true,
-             desc = "Deeper contrast, cooler colour, edges smoothed."),
+             desc = I18n.s(R.string.ui_deeper_contrast_cooler_colour_edges_smoothed)),
         Look("Competitive",     16f,  18f, 0.92f,  82, 75,
              desc = "Shadows lifted and heavy sharpening \u2014 spot people first."),
-        Look("Adaptive Sharpen", 0f,   0f, 1.00f, 100, 85,
-             desc = "Sharpening only, colour untouched."),
+        Look(I18n.s(R.string.ui_adaptive_sharpen), 0f,   0f, 1.00f, 100, 85,
+             desc = I18n.s(R.string.ui_sharpening_only_colour_untouched)),
         Look("Filmic",          -2f,  16f, 1.14f,  92, 15, fxaa = true, deband = true,
-             desc = "Film-like curve, slightly muted."),
+             desc = I18n.s(R.string.ui_film_like_curve_slightly_muted)),
         Look("Arcade",           6f,  20f, 0.95f, 170, 45, deband = true,
-             desc = "Loud and punchy."),
-        Look("Retro CRT",        6f,  14f, 1.05f, 115,  0, crt = true, ntsc = true,
-             desc = "The CRT tube and analogue signal passes together."),
-        Look("Upscale Sharp",    0f,   6f, 1.00f, 104, 70, scalingMode = SCALING_FSR,
-             desc = "For running below panel resolution."),
-        Look("Pixel Clean",      0f,   8f, 1.00f, 100,  0, deband = true, scalingMode = SCALING_NEAREST,
-             desc = "Crisp pixels for 2D and old titles."),
+             desc = I18n.s(R.string.ui_loud_and_punchy)),
+        Look(I18n.s(R.string.ui_retro_crt),        6f,  14f, 1.05f, 115,  0, crt = true, ntsc = true,
+             desc = I18n.s(R.string.ui_the_crt_tube_and_analogue_signal_passes_together)),
+        Look(I18n.s(R.string.ui_upscale_sharp),    0f,   6f, 1.00f, 104, 70, scalingMode = SCALING_FSR,
+             desc = I18n.s(R.string.ui_for_running_below_panel_resolution)),
+        Look(I18n.s(R.string.ui_pixel_clean),      0f,   8f, 1.00f, 100,  0, deband = true, scalingMode = SCALING_NEAREST,
+             desc = I18n.s(R.string.ui_crisp_pixels_for_2d_and_old_titles)),
         Look("Anime Edge",       2f,  10f, 1.00f, 125, 50, toon = true, deband = true,
-             desc = "Toon outlines plus sharpening."),
+             desc = I18n.s(R.string.ui_toon_outlines_plus_sharpening)),
     )
 
     /** Label of the trailing chip shown once the user has adjusted a Look's own controls. */

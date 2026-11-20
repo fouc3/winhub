@@ -75,7 +75,7 @@ private fun SocialHubXmbHost(onClose: () -> Unit) {
     LaunchedEffect(Unit) { com.winhub.hernandez.store.SocialHubStore.init(ctx) }
 
     StoreSectionHost(
-        storeName = "Social Hub",
+        storeName = I18n.s(R.string.social_hub_tab_label),
         tabs = SOCIAL_TABS,
         selected = tab,
         onSelect = { tab = it },

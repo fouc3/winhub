@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -73,9 +76,9 @@ public class ExternalControllerBinding {
             case AXIS_Z_POSITIVE:
                 return "AXIS Z+";
             case AXIS_RZ_NEGATIVE:
-                return "AXIS RZ-";
+                return I18n.s(R.string.ui_axis_rz_2);
             case AXIS_RZ_POSITIVE:
-                return "AXIS RZ+";
+                return I18n.s(R.string.ui_axis_rz);
             default:
                 return KeyEvent.keyCodeToString(keyCode).replace("KEYCODE_", "").replace("_", " ");
         }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import com.winhub.hernandez.xconnector.Client;
@@ -435,7 +438,7 @@ public class XClientRequestHandler implements RequestHandler {
                     try (XLock lock = client.xServer.lockAll()) {
                         client.xServer.setGrabbed(true, client);
                         outputStream.writeSuccessReply(client.getSequenceNumber(), 0);
-                        Log.d("XClientRequestHandler", "X_GrabServer request handled successfully:" + outputStream.buffer.position());
+                        Log.d("XClientRequestHandler", I18n.s(R.string.ui_x_grabserver_request_handled_successfully) + outputStream.buffer.position());
                     }
                     break;
 
@@ -445,7 +448,7 @@ public class XClientRequestHandler implements RequestHandler {
                             client.xServer.setGrabbed(false, null);
                         }
                         outputStream.writeSuccessReply(client.getSequenceNumber(), 0);
-                        Log.d("XClientRequestHandler", "X_UngrabServer request handled successfully:" + outputStream.buffer.position());
+                        Log.d("XClientRequestHandler", I18n.s(R.string.ui_x_ungrabserver_request_handled_successfully) + outputStream.buffer.position());
                     }
                     break;
                 default:
@@ -453,7 +456,7 @@ public class XClientRequestHandler implements RequestHandler {
                         Extension extension = client.xServer.extensions.get(opcode);
                         if (extension != null) extension.handleRequest(client, inputStream, outputStream);
                     }
-                    else Log.d("XClientRequestHandler", "Unsupported opcode " + opcode);
+                    else Log.d("XClientRequestHandler", I18n.s(R.string.ui_unsupported_opcode) + opcode);
                     break;
             }
         }

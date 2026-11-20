@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -69,7 +72,7 @@ public final class JoystickRegistry {
     public static String describe(boolean dinputVisible, boolean forced) {
         if (!dinputVisible) return "\"disabled\" (DirectInput does not see the pad)";
         if (forced) return "\"override\" (DirectInput opens Wine's XInput HID device for the pad)";
-        return "no entry (DirectInput sees the pad as its normal HID gamepad)";
+        return I18n.s(R.string.ui_no_entry_directinput_sees_the_pad_as_its_normal_hid_game);
     }
 
     /**

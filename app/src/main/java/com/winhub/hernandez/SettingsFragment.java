@@ -1,5 +1,8 @@
 package com.winhub.hernandez;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -360,7 +363,7 @@ public class SettingsFragment extends Fragment {
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }
 
-			com.winhub.hernandez.core.ComposeNotifier.show(context, "Settings saved!");
+			com.winhub.hernandez.core.ComposeNotifier.show(context, I18n.s(R.string.ui_settings_saved));
         });
 
 
@@ -530,7 +533,7 @@ public class SettingsFragment extends Fragment {
         Callback<String> onExportPreset = (String prefix) -> {
             final String presetId = Box64PresetManager.getSpinnerSelectedId(spinners.get(prefix));
             if (!presetId.startsWith(Box64Preset.CUSTOM)) {
-                AppUtils.showToast(context, "Cannot export this preset");
+                AppUtils.showToast(context, I18n.s(R.string.ui_cannot_export_this_preset));
                 return;
             }
             getActivity().runOnUiThread(() ->  {
@@ -592,7 +595,7 @@ public class SettingsFragment extends Fragment {
         Callback<String> onExportPreset = (String prefix) -> {
             final String presetId = FEXCorePresetManager.getSpinnerSelectedId(sFEXCorePreset);
             if (!presetId.startsWith(FEXCorePreset.CUSTOM)) {
-                AppUtils.showToast(context, "Cannot export this preset");
+                AppUtils.showToast(context, I18n.s(R.string.ui_cannot_export_this_preset));
                 return;
             }
             getActivity().runOnUiThread(() ->  {
@@ -711,12 +714,12 @@ public class SettingsFragment extends Fragment {
                 });
                 getActivity().runOnUiThread(() -> {
                     preloaderDialog.closeOnUiThread();
-                    AppUtils.showToast(getContext(), "Backup completed: " + backupFile.getPath());
+                    AppUtils.showToast(getContext(), I18n.s(R.string.ui_backup_completed) + backupFile.getPath());
                 });
             } catch (Exception e) {
                 getActivity().runOnUiThread(() -> {
                     preloaderDialog.closeOnUiThread();
-                    AppUtils.showToast(getContext(), "Backup failed.");
+                    AppUtils.showToast(getContext(), I18n.s(R.string.ui_backup_failed));
                 });
             }
         });
@@ -758,7 +761,7 @@ public class SettingsFragment extends Fragment {
                                     Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                             );
                         } catch (SecurityException e) {
-                            AppUtils.showToast(getContext(), "Unable to take persistable permissions: " + e.getMessage());
+                            AppUtils.showToast(getContext(), I18n.s(R.string.ui_unable_to_take_persistable_permissions) + e.getMessage());
                         }
 
                         // Convert the URI to an absolute path and display it
@@ -781,7 +784,7 @@ public class SettingsFragment extends Fragment {
                                     Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                             );
                         } catch (SecurityException e) {
-                            AppUtils.showToast(getContext(), "Unable to take persistable permissions: " + e.getMessage());
+                            AppUtils.showToast(getContext(), I18n.s(R.string.ui_unable_to_take_persistable_permissions) + e.getMessage());
                         }
 
                         // Convert the URI to an absolute path and display it
@@ -845,7 +848,7 @@ public class SettingsFragment extends Fragment {
     private void onRestoreSuccess() {
         getActivity().runOnUiThread(() -> {
             preloaderDialog.closeOnUiThread();
-            AppUtils.showToast(getContext(), "Data restored successfully.");
+            AppUtils.showToast(getContext(), I18n.s(R.string.ui_data_restored_successfully));
             AppUtils.restartApplication(getActivity());  // Restart the app to apply changes
         });
     }
@@ -853,7 +856,7 @@ public class SettingsFragment extends Fragment {
     private void onRestoreFailed() {
         getActivity().runOnUiThread(() -> {
             preloaderDialog.closeOnUiThread();
-            AppUtils.showToast(getContext(), "Data restore failed.");
+            AppUtils.showToast(getContext(), I18n.s(R.string.ui_data_restore_failed));
         });
 	}
 
@@ -869,7 +872,7 @@ public class SettingsFragment extends Fragment {
                     moveFiles(file, targetFile); // Recursively move directory contents
                 } else {
                     if (!file.renameTo(targetFile)) {
-                        throw new IOException("Failed to move file: " + file.getAbsolutePath());
+                        throw new IOException(I18n.s(R.string.ui_failed_to_move_file) + file.getAbsolutePath());
                     }
                 }
             }

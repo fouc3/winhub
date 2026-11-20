@@ -156,7 +156,7 @@ fun SavesScreen(vm: SavesViewModel = viewModel()) {
                 ) {
                     DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                         showImportMenu = false
-                        importInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, "Select save archive"))
+                        importInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, I18n.s(R.string.ui_select_save_archive)))
                     })
                     MenuItemDivider()
                     DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
@@ -393,7 +393,7 @@ private fun NewSaveDialog(
                             }
                             filePickerLauncher.launch(intent)
                         } else {
-                            Toast.makeText(context, "Select a container first", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_select_a_container_first), Toast.LENGTH_SHORT).show()
                         }
                     },
                     shape = RoundedCornerShape(20.dp),
@@ -411,7 +411,7 @@ private fun NewSaveDialog(
                 if (title.isNotBlank() && selectedPath.isNotEmpty() && selectedContainer != null) {
                     onConfirm(title.trim(), selectedPath, selectedContainer)
                 } else {
-                    Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_fill_all_fields), Toast.LENGTH_SHORT).show()
                 }
             }) { Text("OK") }
         },
@@ -451,7 +451,7 @@ private fun EditSaveDialog(
                 if (title.isNotBlank()) {
                     onConfirm(title.trim())
                 } else {
-                    Toast.makeText(context, "Name is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.name_required), Toast.LENGTH_SHORT).show()
                 }
             }) { Text("OK") }
         },

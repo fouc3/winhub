@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -1402,11 +1405,11 @@ public class Container {
             File dir = file.getParentFile();
             if (dir != null && !dir.exists()) dir.mkdirs();
             boolean ok = FileUtils.writeString(file, getData().toString());
-            if (!ok) Log.e("Container", "saveData: could not write " + file.getAbsolutePath());
+            if (!ok) Log.e("Container", I18n.s(R.string.ui_savedata_could_not_write) + file.getAbsolutePath());
             return ok;
         }
         catch (JSONException e) {
-            Log.e("Container", "saveData: could not serialise container config", e);
+            Log.e("Container", I18n.s(R.string.ui_savedata_could_not_serialise_container_config), e);
             return false;
         }
     }

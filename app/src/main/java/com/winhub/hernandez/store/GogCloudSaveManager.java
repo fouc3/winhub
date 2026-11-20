@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -67,7 +70,7 @@ public final class GogCloudSaveManager {
                 if (token == null) token = galaxyToken; // fallback
                 debug(ctx, "GOG upload — gameId=" + gameId + " clientId=" + clientId + " scopedToken=" + (token.equals(galaxyToken) ? "fallback" : "ok"));
 
-                cb.onStatus("Fetching cloud file list…");
+                cb.onStatus(I18n.s(R.string.ui_fetching_cloud_file_list));
                 List<CloudFile> cloudFiles = listCloudFiles(ctx, userId, clientId, token);
 
                 // Recursive walk: collect every file under localFolder (incl. subfolders
@@ -77,7 +80,7 @@ public final class GogCloudSaveManager {
                 List<File> localFiles = new ArrayList<>();
                 collectFiles(localFolder, localFiles);
                 if (localFiles.isEmpty()) {
-                    cb.onDone("No local files to upload");
+                    cb.onDone(I18n.s(R.string.ui_no_local_files_to_upload));
                     return;
                 }
 
@@ -120,14 +123,14 @@ public final class GogCloudSaveManager {
                                 if (localMd5 != null && localMd5.equalsIgnoreCase(cloud.etag)) {
                                     if (cloud.lastModifiedMs > 0) local.setLastModified(cloud.lastModifiedMs);
                                     skipped.incrementAndGet();
-                                    debug(ctx, "upload skip (content identical): " + key);
+                                    debug(ctx, I18n.s(R.string.ui_upload_skip_content_identical) + key);
                                     return;
                                 }
                             }
                             byte[] data = readFile(local);
                             if (data == null) { firstError.compareAndSet(null, "Failed to read: " + key); return; }
                             if (!putFile(fUserId, fClientId, fToken, key, data)) {
-                                firstError.compareAndSet(null, "Upload failed for: " + key); return;
+                                firstError.compareAndSet(null, I18n.s(R.string.ui_upload_failed_for) + key); return;
                             }
                             // Sync the local file's mtime to the cloud's freshly-assigned Last-Modified so
                             // the next launch's newest-wins treats them as equal and SKIPS (rather than
@@ -141,7 +144,7 @@ public final class GogCloudSaveManager {
                         } finally {
                             // Neutral verb: this fires per file completed whether it was uploaded OR
                             // skipped (newest-wins), so it must not claim every file is "uploading".
-                            cb.onStatus("Backing up game saves… (" + completed.incrementAndGet() + "/" + total + ")");
+                            cb.onStatus(I18n.s(R.string.ui_backing_up_game_saves) + completed.incrementAndGet() + "/" + total + ")");
                         }
                     });
                 }
@@ -156,16 +159,16 @@ public final class GogCloudSaveManager {
                     cb.onDone("Uploaded " + up + " file" + (up == 1 ? "" : "s")
                             + (sk > 0 ? ", skipped " + sk : ""));
                 } else {
-                    cb.onDone("No files to upload");
+                    cb.onDone(I18n.s(R.string.ui_no_files_to_upload));
                 }
 
             } catch (Exception e) {
-                Log.e(TAG, "uploadSaves failed", e);
-                debug(ctx, "uploadSaves exception: " + e.getClass().getSimpleName());
+                Log.e(TAG, I18n.s(R.string.ui_uploadsaves_failed), e);
+                debug(ctx, I18n.s(R.string.ui_uploadsaves_exception) + e.getClass().getSimpleName());
                 if ("CLOUD_SAVES_NOT_SUPPORTED".equals(e.getMessage()))
-                    cb.onError("This game does not support GOG cloud saves");
+                    cb.onError(I18n.s(R.string.ui_this_game_does_not_support_gog_cloud_saves));
                 else
-                    cb.onError("Upload error: " + e.getMessage());
+                    cb.onError(I18n.s(R.string.ui_upload_error) + e.getMessage());
             }
         }, "gog-cloud-upload-" + gameId).start();
     }
@@ -184,11 +187,11 @@ public final class GogCloudSaveManager {
                 if (token == null) token = galaxyToken; // fallback
                 debug(ctx, "GOG download — gameId=" + gameId + " clientId=" + clientId + " scopedToken=" + (token.equals(galaxyToken) ? "fallback" : "ok"));
 
-                cb.onStatus("Fetching cloud file list…");
+                cb.onStatus(I18n.s(R.string.ui_fetching_cloud_file_list));
                 List<CloudFile> cloudFiles = listCloudFiles(ctx, userId, clientId, token);
 
                 if (cloudFiles.isEmpty()) {
-                    cb.onDone("No cloud saves found");
+                    cb.onDone(I18n.s(R.string.ui_no_cloud_saves_found));
                     return;
                 }
 
@@ -229,7 +232,7 @@ public final class GogCloudSaveManager {
                                     if (localMd5 != null && localMd5.equalsIgnoreCase(cf.etag)) {
                                         if (cloudModMs > 0) dest.setLastModified(cloudModMs);
                                         skipped.incrementAndGet();
-                                        debug(ctx, "download skip (content identical): " + cf.name);
+                                        debug(ctx, I18n.s(R.string.ui_download_skip_content_identical) + cf.name);
                                         return;
                                     }
                                 }
@@ -250,7 +253,7 @@ public final class GogCloudSaveManager {
                             firstError.compareAndSet(null, e.getMessage());
                         } finally {
                             // Neutral verb: fires per file completed whether pulled OR skipped.
-                            cb.onStatus("Syncing game saves… (" + completed.incrementAndGet() + "/" + total + ")");
+                            cb.onStatus(I18n.s(R.string.ui_syncing_game_saves) + completed.incrementAndGet() + "/" + total + ")");
                         }
                     });
                 }
@@ -267,12 +270,12 @@ public final class GogCloudSaveManager {
                 }
 
             } catch (Exception e) {
-                Log.e(TAG, "downloadSaves failed", e);
-                debug(ctx, "downloadSaves exception: " + e.getClass().getSimpleName());
+                Log.e(TAG, I18n.s(R.string.ui_downloadsaves_failed), e);
+                debug(ctx, I18n.s(R.string.ui_downloadsaves_exception) + e.getClass().getSimpleName());
                 if ("CLOUD_SAVES_NOT_SUPPORTED".equals(e.getMessage()))
-                    cb.onError("This game does not support GOG cloud saves");
+                    cb.onError(I18n.s(R.string.ui_this_game_does_not_support_gog_cloud_saves));
                 else
-                    cb.onError("Download error: " + e.getMessage());
+                    cb.onError(I18n.s(R.string.ui_download_error) + e.getMessage());
             }
         }, "gog-cloud-download-" + gameId).start();
     }
@@ -290,12 +293,12 @@ public final class GogCloudSaveManager {
                                               SharedPreferences prefs) {
         String clientSecret = prefs.getString("gog_client_secret_" + gameId, null);
         if (clientSecret == null || clientSecret.isEmpty()) {
-            debug(ctx, "getGameScopedToken: no clientSecret cached for " + gameId + " — falling back");
+            debug(ctx, I18n.s(R.string.ui_getgamescopedtoken_no_clientsecret_cached_for) + gameId + I18n.s(R.string.ui_falling_back));
             return null;
         }
         String refreshToken = prefs.getString("refresh_token", null);
         if (refreshToken == null) {
-            debug(ctx, "getGameScopedToken: no Galaxy refresh_token");
+            debug(ctx, I18n.s(R.string.ui_getgamescopedtoken_no_galaxy_refresh_token));
             return null;
         }
         try {
@@ -317,11 +320,11 @@ public final class GogCloudSaveManager {
             JSONObject json = new JSONObject(body);
             String accessToken = json.optString("access_token", null);
             if (accessToken != null && !accessToken.isEmpty()) {
-                debug(ctx, "getGameScopedToken: OK, got scoped token");
+                debug(ctx, I18n.s(R.string.ui_getgamescopedtoken_ok_got_scoped_token));
                 return accessToken;
             }
         } catch (Exception e) {
-            debug(ctx, "getGameScopedToken exception: " + e.getClass().getSimpleName());
+            debug(ctx, I18n.s(R.string.ui_getgamescopedtoken_exception) + e.getClass().getSimpleName());
         }
         return null;
     }
@@ -388,7 +391,7 @@ public final class GogCloudSaveManager {
                 result.add(cf);
             }
         }
-        debug(ctx, "listCloudFiles parsed " + result.size() + " file(s)");
+        debug(ctx, I18n.s(R.string.ui_listcloudfiles_parsed) + result.size() + " file(s)");
         return result;
     }
 
@@ -475,14 +478,14 @@ public final class GogCloudSaveManager {
                 return -1L;
             }
             if (lastMod == null || lastMod.isEmpty()) {
-                debug(ctx, "HEAD missing Last-Modified for " + filename);
+                debug(ctx, I18n.s(R.string.ui_head_missing_last_modified_for) + filename);
                 return -1L;
             }
             long ms = parseHttpDate(lastMod);
-            if (ms < 0L) debug(ctx, "HEAD unparseable Last-Modified '" + lastMod + "' for " + filename);
+            if (ms < 0L) debug(ctx, I18n.s(R.string.ui_head_unparseable_last_modified) + lastMod + "' for " + filename);
             return ms;
         } catch (Exception e) {
-            debug(ctx, "headModifiedMs exception " + e.getClass().getSimpleName() + " for " + filename);
+            debug(ctx, I18n.s(R.string.ui_headmodifiedms_exception) + e.getClass().getSimpleName() + " for " + filename);
             return -1L;
         }
     }
@@ -569,7 +572,7 @@ public final class GogCloudSaveManager {
             conn.disconnect();
             return code >= 200 && code < 300;
         } catch (Exception e) {
-            Log.e(TAG, "putFile failed for " + filename, e);
+            Log.e(TAG, I18n.s(R.string.ui_putfile_failed_for) + filename, e);
             return false;
         }
     }
@@ -609,7 +612,7 @@ public final class GogCloudSaveManager {
             while ((n = fis.read(buf)) != -1) bos.write(buf, 0, n);
             return bos.toByteArray();
         } catch (Exception e) {
-            Log.e(TAG, "readFile failed: " + f, e);
+            Log.e(TAG, I18n.s(R.string.ui_readfile_failed) + f, e);
             return null;
         }
     }

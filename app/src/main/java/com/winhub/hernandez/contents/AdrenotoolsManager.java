@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contents;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.res.AssetManager;
 import android.net.Uri;
 
@@ -119,7 +122,7 @@ public class AdrenotoolsManager {
     private void reloadContainers(String adrenoToolsDriverId) {
         String driverName = getDriverName(adrenoToolsDriverId);
         if (driverName.isEmpty()) {
-            Log.w("AdrenotoolsManager", "No driver name for " + adrenoToolsDriverId + " (missing meta.json?) - skipping container migration");
+            Log.w("AdrenotoolsManager", I18n.s(R.string.ui_no_driver_name_for) + adrenoToolsDriverId + " (missing meta.json?) - skipping container migration");
             return;
         }
         String fallback = GPUInformation.isDriverSupported(DefaultVersion.WRAPPER_ADRENO, mContext)
@@ -129,9 +132,9 @@ public class AdrenotoolsManager {
         for (Container container : containerManager.getContainers()) {
             HashMap<String, String> config = GraphicsDriverConfigDialog.parseGraphicsDriverConfig(container.getGraphicsDriverConfig());
             String version = config.get("version");
-            Log.d("AdrenotoolsManager", "Checking if container driver version " + version + " matches " + driverName);
+            Log.d("AdrenotoolsManager", I18n.s(R.string.ui_checking_if_container_driver_version) + version + " matches " + driverName);
             if (version == null || !version.contains(driverName)) continue;
-            Log.d("AdrenotoolsManager", "Found a match for container " + container.getName());
+            Log.d("AdrenotoolsManager", I18n.s(R.string.ui_found_a_match_for_container) + container.getName());
             config.put("version", fallback);
             container.setGraphicsDriverConfig(GraphicsDriverConfigDialog.toGraphicsDriverConfig(config));
             container.saveData();
@@ -141,9 +144,9 @@ public class AdrenotoolsManager {
             if (own.isEmpty()) continue;   // inherits the container, which was just migrated
             HashMap<String, String> config = GraphicsDriverConfigDialog.parseGraphicsDriverConfig(own);
             String version = config.get("version");
-            Log.d("AdrenotoolsManager", "Checking if shortcut driver version " + version + " matches " + driverName);
+            Log.d("AdrenotoolsManager", I18n.s(R.string.ui_checking_if_shortcut_driver_version) + version + " matches " + driverName);
             if (version == null || !version.contains(driverName)) continue;
-            Log.d("AdrenotoolsManager", "Found a match for shortcut " + shortcut.name);
+            Log.d("AdrenotoolsManager", I18n.s(R.string.ui_found_a_match_for_shortcut) + shortcut.name);
             config.put("version", fallback);
             shortcut.putExtra("graphicsDriverConfig", GraphicsDriverConfigDialog.toGraphicsDriverConfig(config));
             shortcut.saveData();
@@ -151,7 +154,7 @@ public class AdrenotoolsManager {
     }
     
     public void removeDriver(String adrenoToolsDriverId) {
-        Log.d("AdrenotoolsManager", "Removing driver " + adrenoToolsDriverId);
+        Log.d("AdrenotoolsManager", I18n.s(R.string.ui_removing_driver) + adrenoToolsDriverId);
         File driverPath = new File(adrenotoolsContentDir, adrenoToolsDriverId);
         reloadContainers(adrenoToolsDriverId);
         FileUtils.delete(driverPath);
@@ -230,7 +233,7 @@ public class AdrenotoolsManager {
             // black screen wearing a driver's name. Refuse them here and say which list they belong in.
             String rejected = rejectionReason(tmpDir);
             if (rejected != null) {
-                Log.d("AdrenotoolsManager", "not an AdrenoTools driver: " + rejected);
+                Log.d("AdrenotoolsManager", I18n.s(R.string.ui_not_an_adrenotools_driver) + rejected);
                 FileUtils.delete(tmpDir);
                 return "";
             }
@@ -245,12 +248,12 @@ public class AdrenotoolsManager {
                 }
             }
             else {
-                Log.d("AdrenotoolsManager", "Failed to install driver, a valid driver has not been selected");
+                Log.d("AdrenotoolsManager", I18n.s(R.string.ui_failed_to_install_driver_a_valid_driver_has_not_been_sel));
                 tmpDir.delete();
             }
         }
         catch (IOException e) {
-            Log.d("AdrenotoolsManager", "Failed to install driver, a valid driver has not been selected");
+            Log.d("AdrenotoolsManager", I18n.s(R.string.ui_failed_to_install_driver_a_valid_driver_has_not_been_sel));
             tmpDir.delete();
         }
         
@@ -274,13 +277,13 @@ public class AdrenotoolsManager {
             return "meta.json is unreadable (" + e.getMessage() + ")";
         }
         if ("linux-vulkan-icd".equals(kind))
-            return "this is a Linux runtime driver (no longer supported)";
+            return I18n.s(R.string.ui_this_is_a_linux_runtime_driver_no_longer_supported);
         if ("wayland-game-driver".equals(kind))
             return "this is a Wayland game driver (import it under \"Wayland game drivers\")";
         if (libraryName.isEmpty())
             return "meta.json names no libraryName, so nothing could be handed to AdrenoTools";
         if (!new File(dir, libraryName).isFile())
-            return "meta.json names " + libraryName + ", which is not in the zip";
+            return "meta.json names " + libraryName + I18n.s(R.string.ui_which_is_not_in_the_zip);
         return null;
     }
 

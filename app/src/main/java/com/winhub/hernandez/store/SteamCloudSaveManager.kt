@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.Container
@@ -84,11 +87,11 @@ object SteamCloudSaveManager {
     fun downloadSaves(ctx: Context, appId: Int, localFolder: File, cb: Callback) {
         Thread({
             try {
-                val steamCloud = requireCloud() ?: run { cb.onError("Not signed in to Steam"); return@Thread }
+                val steamCloud = requireCloud() ?: run { cb.onError(I18n.s(R.string.ui_not_signed_in_to_steam)); return@Thread }
 
-                cb.onStatus("Fetching cloud file list…")
+                cb.onStatus(I18n.s(R.string.ui_fetching_cloud_file_list))
                 val files = steamCloud.listFiles(appId)
-                if (files.isEmpty()) { cb.onDone("No cloud saves found for this game"); return@Thread }
+                if (files.isEmpty()) { cb.onDone(I18n.s(R.string.ui_no_cloud_saves_found_for_this_game)); return@Thread }
 
                 if (!localFolder.exists()) localFolder.mkdirs()
 
@@ -135,7 +138,7 @@ object SteamCloudSaveManager {
                 val suffix = if (skipped > 0) " ($skipped skipped)" else ""
                 cb.onDone("Downloaded ${downloaded.get()} file${plural(downloaded.get())}$suffix")
             } catch (e: Exception) {
-                Log.e(TAG, "downloadSaves failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_downloadsaves_failed), e)
                 cb.onError("Download error: ${e.message ?: e.javaClass.simpleName}")
             }
         }, "steam-cloud-download-$appId").start()
@@ -157,9 +160,9 @@ object SteamCloudSaveManager {
     fun uploadSaves(ctx: Context, appId: Int, localFolder: File, cb: Callback) {
         Thread({
             try {
-                val steamCloud = requireCloud() ?: run { cb.onError("Not signed in to Steam"); return@Thread }
+                val steamCloud = requireCloud() ?: run { cb.onError(I18n.s(R.string.ui_not_signed_in_to_steam)); return@Thread }
 
-                cb.onStatus("Scanning local saves…")
+                cb.onStatus(I18n.s(R.string.ui_scanning_local_saves))
                 val localFiles = enumerateLocal(localFolder)   // List<Pair<File, cloudRelPath>>
 
                 // ── BELT-AND-SUSPENDERS GUARD (unchanged) ──────────────────────────────
@@ -167,7 +170,7 @@ object SteamCloudSaveManager {
                 // beginAppUploadBatch. This makes an empty/absent save folder a pure no-op and
                 // removes any chance of an "upload nothing" turning into a cloud wipe.
                 if (localFiles.isEmpty()) {
-                    cb.onDone("No local save files found — nothing was sent to the cloud")
+                    cb.onDone(I18n.s(R.string.ui_no_local_save_files_found_nothing_was_sent_to_the_cloud))
                     return@Thread
                 }
 
@@ -197,7 +200,7 @@ object SteamCloudSaveManager {
                 // SHA-1 (AppFileInfo.shaFile — a 20-byte digest). A failed fetch, or an entry with a
                 // missing/short sha, simply leaves that path OUT of the map, so it counts as
                 // "changed" and gets uploaded. We never skip a file we can't prove is byte-identical.
-                cb.onStatus("Comparing with cloud…")
+                cb.onStatus(I18n.s(R.string.ui_comparing_with_cloud))
                 val cloudShaByPath: Map<String, ByteArray> = try {
                     val map = HashMap<String, ByteArray>()
                     for (f in steamCloud.listFiles(appId)) {
@@ -212,7 +215,7 @@ object SteamCloudSaveManager {
                     map
                 } catch (e: Exception) {
                     // Can't diff → fall back to uploading everything (today's behavior). Never a wipe.
-                    Log.w(TAG, "Cloud manifest fetch failed; uploading all local files", e)
+                    Log.w(TAG, I18n.s(R.string.ui_cloud_manifest_fetch_failed_uploading_all_local_files), e)
                     emptyMap()
                 }
 
@@ -245,12 +248,12 @@ object SteamCloudSaveManager {
                 // deletion list at all, so nothing in this class can produce one. The incremental
                 // diff only ever SHRINKS the upload set; it never produces a deletion.
 
-                cb.onStatus("Opening cloud upload batch…")
+                cb.onStatus(I18n.s(R.string.ui_opening_cloud_upload_batch))
                 // clientId/appBuildId are best-effort 0L inside the backends (classic token logon
                 // exposes no auth-session clientID, and we don't parse the installed build id).
                 val batchId = steamCloud.beginBatch(appId, filesToUpload)
                 if (batchId == 0L) {
-                    cb.onError("Steam refused to open a cloud upload batch — try again in a moment")
+                    cb.onError(I18n.s(R.string.ui_steam_refused_to_open_a_cloud_upload_batch_try_again_in))
                     return@Thread
                 }
 
@@ -297,7 +300,7 @@ object SteamCloudSaveManager {
                     cb.onError("Uploaded ${uploaded.get()} of ${toUpload.size} changed; some files failed")
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "uploadSaves failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_uploadsaves_failed), e)
                 cb.onError("Upload error: ${e.message ?: e.javaClass.simpleName}")
             }
         }, "steam-cloud-upload-$appId").start()
@@ -405,7 +408,7 @@ object SteamCloudSaveManager {
      *  single [Callback.onError] if the game isn't in a container yet. */
     fun syncFromCloud(ctx: Context, appId: Int, installDir: String, cb: Callback) {
         if (SteamCloudSavePaths.resolveContainer(ctx, appId, installDir) == null) {
-            cb.onError("This game needs to be added to a container first.")
+            cb.onError(I18n.s(R.string.ui_this_game_needs_to_be_added_to_a_container_first))
             return
         }
         // Phase 1: Download. Its onDone chains into phase 2; its onError stops the whole combo.
@@ -429,7 +432,7 @@ object SteamCloudSaveManager {
      *  No work + a single [Callback.onError] if the game isn't in a container yet. */
     fun syncToCloud(ctx: Context, appId: Int, installDir: String, cb: Callback) {
         if (SteamCloudSavePaths.resolveContainer(ctx, appId, installDir) == null) {
-            cb.onError("This game needs to be added to a container first.")
+            cb.onError(I18n.s(R.string.ui_this_game_needs_to_be_added_to_a_container_first))
             return
         }
         // Phase 1: Collect. Its onDone chains into phase 2; its onError stops the whole combo.
@@ -478,14 +481,14 @@ object SteamCloudSaveManager {
                 }
             })
         } catch (e: Exception) {
-            Log.w(TAG, "runBlockingMove start failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_runblockingmove_start_failed), e)
             return BlockingResult(false, "Sync error: ${e.message ?: e.javaClass.simpleName}")
         }
         val done = try { latch.await(boundMs, TimeUnit.MILLISECONDS) } catch (e: InterruptedException) {
             Thread.currentThread().interrupt(); false
         }
         if (!done) return BlockingResult(false, "Still syncing in the background (didn't finish within ${boundMs / 1000}s)")
-        return holder.get() ?: BlockingResult(false, "No result")
+        return holder.get() ?: BlockingResult(false, I18n.s(R.string.ui_no_result))
     }
 
     /**
@@ -522,7 +525,7 @@ object SteamCloudSaveManager {
             catch (t: Throwable) { Log.w(TAG, "exit-sync signal failed", t) }
             r.summary
         } catch (e: Exception) {
-            Log.e(TAG, "syncToCloudBlocking failed", e)
+            Log.e(TAG, I18n.s(R.string.ui_synctocloudblocking_failed), e)
             "Sync error: ${e.message ?: e.javaClass.simpleName}"
         }
     }
@@ -537,7 +540,7 @@ object SteamCloudSaveManager {
     fun syncFromCloudNewestWins(ctx: Context, appId: Int, installDir: String): String {
         return try {
             if (SteamCloudSavePaths.resolveContainer(ctx, appId, installDir) == null) {
-                return "This game needs to be added to a container first."
+                return I18n.s(R.string.ui_this_game_needs_to_be_added_to_a_container_first)
             }
             // Same pre-launch signal the genuine client sends (`CCloud.AppLaunchIntent`): Steam
             // reports pending cloud operations from another machine. Logged only — the newest-wins
@@ -559,14 +562,14 @@ object SteamCloudSaveManager {
                 return "Nothing in the cloud to apply (${dl.summary})"
             }
             if (st.containerFileCount > 0 && st.containerNewestMtime >= st.libraryNewestMtime) {
-                return "Kept your local save — the container copy is newer than (or the same age as) " +
+                return I18n.s(R.string.ui_kept_your_local_save_the_container_copy_is_newer_than_or) +
                     "the cloud. Cloud copy downloaded to your Library (${dl.summary})."
             }
             // Cloud is newer (or the container has no save yet) → Apply Library → Container.
             val ap = runBlockingMove(BLOCKING_BOUND_MS) { cb -> applyToContainer(ctx, appId, installDir, cb) }
             "Synced from cloud (${dl.summary}; ${ap.summary})"
         } catch (e: Exception) {
-            Log.e(TAG, "syncFromCloudNewestWins failed", e)
+            Log.e(TAG, I18n.s(R.string.ui_syncfromcloudnewestwins_failed), e)
             "Sync error: ${e.message ?: e.javaClass.simpleName}"
         }
     }
@@ -600,12 +603,12 @@ object SteamCloudSaveManager {
             try {
                 val library = SteamCloudSavePaths.libraryDir(ctx, appId)
                 val container = SteamCloudSavePaths.resolveContainer(ctx, appId, installDir)
-                    ?: run { cb.onError("This game isn't set up in a container yet"); return@Thread }
+                    ?: run { cb.onError(I18n.s(R.string.ui_this_game_isn_t_set_up_in_a_container_yet)); return@Thread }
 
-                cb.onStatus("Scanning Library…")
+                cb.onStatus(I18n.s(R.string.ui_scanning_library))
                 val files = enumerateLocal(library)
                 if (files.isEmpty()) {
-                    cb.onDone("Library is empty — download from the cloud first")
+                    cb.onDone(I18n.s(R.string.ui_library_is_empty_download_from_the_cloud_first))
                     return@Thread
                 }
 
@@ -627,7 +630,7 @@ object SteamCloudSaveManager {
                 cb.onDone("Applied $applied file${plural(applied)} to " +
                     "${SteamCloudSavePaths.containerLabel(container)}$suffix")
             } catch (e: Exception) {
-                Log.e(TAG, "applyToContainer failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_applytocontainer_failed), e)
                 cb.onError("Apply error: ${e.message ?: e.javaClass.simpleName}")
             }
         }, "steam-cloud-apply-$appId").start()
@@ -645,12 +648,12 @@ object SteamCloudSaveManager {
             try {
                 val library = SteamCloudSavePaths.libraryDir(ctx, appId)
                 val shortcut = resolveShortcut(ctx, installDir)
-                    ?: run { cb.onError("This game isn't set up in a container yet"); return@Thread }
+                    ?: run { cb.onError(I18n.s(R.string.ui_this_game_isn_t_set_up_in_a_container_yet)); return@Thread }
 
-                cb.onStatus("Scanning container saves…")
+                cb.onStatus(I18n.s(R.string.ui_scanning_container_saves))
                 val saves = enumerateContainerSaves(ctx, appId, shortcut, installDir)
                 if (saves.isEmpty()) {
-                    cb.onDone("No saves found in " +
+                    cb.onDone(I18n.s(R.string.ui_no_saves_found_in) +
                         "${SteamCloudSavePaths.containerLabel(shortcut.container)} to collect")
                     return@Thread
                 }
@@ -672,7 +675,7 @@ object SteamCloudSaveManager {
                 val suffix = if (skipped > 0) " ($skipped skipped)" else ""
                 cb.onDone("Collected $collected file${plural(collected)} into your Library$suffix")
             } catch (e: Exception) {
-                Log.e(TAG, "collectFromContainer failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_collectfromcontainer_failed), e)
                 cb.onError("Collect error: ${e.message ?: e.javaClass.simpleName}")
             }
         }, "steam-cloud-collect-$appId").start()
@@ -768,7 +771,7 @@ object SteamCloudSaveManager {
                 dir.walkTopDown().filter { it.isFile }.forEach { consider(it) }
             }
         } catch (e: Exception) {
-            Log.w(TAG, "Collect discovery pass failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_collect_discovery_pass_failed), e)
         }
 
         return out
@@ -785,7 +788,7 @@ object SteamCloudSaveManager {
 
         val manager = ContainerManager(ctx)
         val shortcuts = try { manager.loadShortcuts() } catch (e: Exception) {
-            Log.w(TAG, "loadShortcuts failed", e); return null
+            Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), e); return null
         }
 
         val imageFsRoot = File(ctx.filesDir, "imagefs").absolutePath.replace('\\', '/').trimEnd('/')

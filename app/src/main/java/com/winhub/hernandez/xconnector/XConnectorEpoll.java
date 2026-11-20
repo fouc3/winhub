@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xconnector;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
@@ -31,19 +34,19 @@ public class XConnectorEpoll implements Runnable {
 
         serverFd = createAFUnixSocket(socketConfig.path);
         if (serverFd < 0) {
-            throw new RuntimeException("Failed to create an AF_UNIX socket.");
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_create_an_af_unix_socket));
         }
 
         epollFd = createEpollFd();
         if (epollFd < 0) {
             closeFd(serverFd);
-            throw new RuntimeException("Failed to create epoll fd.");
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_create_epoll_fd));
         }
 
         if (!addFdToEpoll(epollFd, serverFd)) {
             closeFd(serverFd);
             closeFd(epollFd);
-            throw new RuntimeException("Failed to add server fd to epoll.");
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_add_server_fd_to_epoll));
         }
 
         shutdownFd = createEventFd();
@@ -51,7 +54,7 @@ public class XConnectorEpoll implements Runnable {
             closeFd(serverFd);
             closeFd(shutdownFd);
             closeFd(epollFd);
-            throw new RuntimeException("Failed to add shutdown fd to epoll.");
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_add_shutdown_fd_to_epoll));
         }
 
         epollThread = new Thread(this);

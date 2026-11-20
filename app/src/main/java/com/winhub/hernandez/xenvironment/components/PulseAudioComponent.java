@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xenvironment.components;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.os.Process;
 
@@ -149,7 +152,7 @@ public class PulseAudioComponent extends EnvironmentComponent {
             int r2 = nativeSuspendSink(dir, server, currentSinkName, false);
             if (r1 != 0 || r2 != 0) android.util.Log.w("PulseAudio", "sink suspend/resume rc=" + r1 + "/" + r2);
         } catch (Throwable t) {
-            android.util.Log.w("PulseAudio", "resetAudioSink failed", t);
+            android.util.Log.w("PulseAudio", I18n.s(R.string.ui_resetaudiosink_failed), t);
         }
     }
 
@@ -161,7 +164,7 @@ public class PulseAudioComponent extends EnvironmentComponent {
      */
     public void setSinkSuspended(boolean suspend) {
         try { nativeSuspendSink(pulseDir().getAbsolutePath(), pulseServer(), currentSinkName, suspend); }
-        catch (Throwable t) { android.util.Log.w("PulseAudio", "setSinkSuspended failed", t); }
+        catch (Throwable t) { android.util.Log.w("PulseAudio", I18n.s(R.string.ui_setsinksuspended_failed), t); }
     }
 
     /**
@@ -185,7 +188,7 @@ public class PulseAudioComponent extends EnvironmentComponent {
                 if (idx >= 0) { lastRecoverModuleIdx = idx; currentSinkName = name; }
                 else android.util.Log.w("PulseAudio", "recreateSink rc=" + idx);
             } catch (Throwable t) {
-                android.util.Log.w("PulseAudio", "recreateSinkForRouteChange failed", t);
+                android.util.Log.w("PulseAudio", I18n.s(R.string.ui_recreatesinkforroutechange_failed), t);
             }
         }
     }
@@ -244,12 +247,12 @@ public class PulseAudioComponent extends EnvironmentComponent {
             // volume=1.0 is passed for the same reason as on the AAudio sink below.
             config.add("load-module module-directaudio-sink sink_name=DirectAudio socket=\"" + relaySocketPath
                     + "\" performance_mode=1 adaptive=1 volume=1.0");
-            config.add("set-default-sink DirectAudio");
+            config.add(I18n.s(R.string.ui_set_default_sink_directaudio));
             // Suspend and resume target the live sink by name.
             currentSinkName = "DirectAudio";
         } else {
             config.add("load-module module-aaudio-sink " + resolveSinkArgs());
-            config.add("set-default-sink AAudioSink");
+            config.add(I18n.s(R.string.ui_set_default_sink_aaudiosink));
             currentSinkName = "AAudioSink";
         }
         if (micFifoPath != null && !micFifoPath.isEmpty()) {
@@ -259,7 +262,7 @@ public class PulseAudioComponent extends EnvironmentComponent {
             // all this is for.
             config.add("load-module module-pipe-source source_name=DirectAudioMic file=\""
                     + micFifoPath + "\" format=s16le rate=48000 channels=1");
-            config.add("set-default-source DirectAudioMic");
+            config.add(I18n.s(R.string.ui_set_default_source_directaudiomic));
         }
         FileUtils.writeString(configFile, String.join("\n", config));
 

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -812,7 +815,7 @@ public class HudMetrics {
         String runtimeText;
         if (charging) {
             smoothedBatteryRuntimeHours = null;
-            runtimeText = "LEFT CHG";
+            runtimeText = I18n.s(R.string.ui_left_chg);
         } else if (currentMicroAmps <= 0L || chargeCounter <= 0L) {
             runtimeText = null;
         } else {
@@ -1258,8 +1261,8 @@ public class HudMetrics {
         sb.append("SoC: ").append(socString()).append('\n');
         sb.append("Android: ").append(Build.VERSION.RELEASE)
           .append(" (API ").append(Build.VERSION.SDK_INT).append(")\n");
-        sb.append("CPU cores: ").append(Runtime.getRuntime().availableProcessors()).append('\n');
-        sb.append("GPU renderer: ").append(safeGpu(() -> GPUInformation.getRenderer(null, ctx))).append('\n');
+        sb.append(I18n.s(R.string.ui_cpu_cores)).append(Runtime.getRuntime().availableProcessors()).append('\n');
+        sb.append(I18n.s(R.string.ui_gpu_renderer)).append(safeGpu(() -> GPUInformation.getRenderer(null, ctx))).append('\n');
         sb.append("Vulkan: ").append(safeGpu(() -> GPUInformation.getVulkanVersion(null, ctx))).append('\n');
 
         sb.append("\n== Metrics ==\n");
@@ -1295,17 +1298,17 @@ public class HudMetrics {
             coreClk.append('c').append(i).append('=').append(v <= 0 ? "?" : (v + "MHz"));
         }
         if (s.cpuClockMhz != null)
-            metricHit(sb, "CPU clock", s.cpuClockMhz + "MHz (peak); " + coreClk,
+            metricHit(sb, I18n.s(R.string.ui_cpu_clock), s.cpuClockMhz + "MHz (peak); " + coreClk,
                 "/sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq");
         else
-            metricMiss(sb, "CPU clock", "/sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq");
+            metricMiss(sb, I18n.s(R.string.ui_cpu_clock), "/sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq");
 
         // CPU temp
         String cpuTempPath = resolveTempPath(discoverPrioritizedCpuTempPaths());
         if (s.cpuTempC != null && cpuTempPath != null)
-            metricHit(sb, "CPU temp", s.cpuTempC + "°C", cpuTempPath);
+            metricHit(sb, I18n.s(R.string.ui_cpu_temp_2), s.cpuTempC + "°C", cpuTempPath);
         else
-            metricMiss(sb, "CPU temp",
+            metricMiss(sb, I18n.s(R.string.ui_cpu_temp_2),
                 "/sys/class/thermal/thermal_zone*/temp (types: cpu*/cpuss/tsens/mtktscpu/s5p-tmu/soc)");
 
         // ---- GPU ----
@@ -1317,16 +1320,16 @@ public class HudMetrics {
 
         String gpuClockPath = firstReadableGpuClockPath();
         if (s.gpuClockMhz != null && gpuClockPath != null)
-            metricHit(sb, "GPU clock", s.gpuClockMhz + "MHz", gpuClockPath);
+            metricHit(sb, I18n.s(R.string.ui_gpu_clock), s.gpuClockMhz + "MHz", gpuClockPath);
         else
-            metricMissList(sb, "GPU clock", discoverGpuClockPaths(), GPU_CLOCK_PATHS);
+            metricMissList(sb, I18n.s(R.string.ui_gpu_clock), discoverGpuClockPaths(), GPU_CLOCK_PATHS);
 
         String gpuTempPath = resolveTempPath(discoverPrioritizedGpuTempPaths());
         if (s.gpuTempC != null)
-            metricHit(sb, "GPU temp", s.gpuTempC + "°C",
+            metricHit(sb, I18n.s(R.string.ui_gpu_temp), s.gpuTempC + "°C",
                 gpuTempPath != null ? gpuTempPath : "kgsl/mali direct temp node");
         else
-            metricMiss(sb, "GPU temp",
+            metricMiss(sb, I18n.s(R.string.ui_gpu_temp),
                 "/sys/class/kgsl/kgsl-3d0/temp", "/sys/class/misc/mali0/device/temp",
                 "/sys/class/thermal/thermal_zone*/temp (types: gpu*/gpuss/g3d/kgsl/mali/mtktsgpu)");
 
@@ -1443,7 +1446,7 @@ public class HudMetrics {
             sb.append(p);
             first = false;
         }
-        if (first) sb.append("(no candidates)");
+        if (first) sb.append(I18n.s(R.string.ui_no_candidates));
         sb.append('\n');
     }
 

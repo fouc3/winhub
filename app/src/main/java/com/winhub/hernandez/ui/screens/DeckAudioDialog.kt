@@ -55,7 +55,7 @@ internal fun DeckAudioSettingsDialog(
             chips = AUDIO_PRESETS.map { Triple(it.name, cfg.preset == it.id, { cfg = it.cfg }) },
         )
 
-        DeckGroup("Fine-tune" + if (custom) "" else " · pick Custom to edit") {
+        DeckGroup("Fine-tune" + if (custom) "" else I18n.s(R.string.ui_pick_custom_to_edit)) {
             val perfOpts = if (driverId == "directaudio")
                 listOf("0" to "None", "1" to I18n.s(R.string.ui_low_lat))
             else listOf("0" to "None", "1" to I18n.s(R.string.ui_low_lat), "2" to "Power")
@@ -66,7 +66,7 @@ internal fun DeckAudioSettingsDialog(
                 selected = shown.perfMode.toString(),
                 onPick = { if (custom) cfg = cfg.copy(perfMode = it.toInt()) },
             )
-            DeckRow(I18n.s(R.string.ui_adaptive_buffer), "Auto-grow only if it hears crackle") {
+            DeckRow(I18n.s(R.string.ui_adaptive_buffer), I18n.s(R.string.ui_auto_grow_only_if_it_hears_crackle)) {
                 DeckToggle(shown.adaptive) { if (custom) cfg = cfg.copy(adaptive = it) }
             }
             if (directBuffer) {

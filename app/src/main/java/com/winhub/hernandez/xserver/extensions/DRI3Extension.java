@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver.extensions;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 import com.winhub.hernandez.renderer.GPUImage;
 
@@ -136,26 +139,26 @@ public class DRI3Extension implements Extension {
     }
 
     private void pixmapFromBuffers(XClient client, XInputStream inputStream, XOutputStream outputStream) throws IOException, XRequestError {
-        Log.d("Dri3", "Received pixmap from buffers");
+        Log.d("Dri3", I18n.s(R.string.ui_received_pixmap_from_buffers));
         int pixmapId = inputStream.readInt();
-        Log.d("Dri3", "Read pixmap id " + pixmapId);
+        Log.d("Dri3", I18n.s(R.string.ui_read_pixmap_id) + pixmapId);
         int windowId = inputStream.readInt();
-        Log.d("Dri3", "Read window id " + windowId);
+        Log.d("Dri3", I18n.s(R.string.ui_read_window_id) + windowId);
         inputStream.skip(4);
         short width = inputStream.readShort();
-        Log.d("Dri3", "Read width " + width);
+        Log.d("Dri3", I18n.s(R.string.ui_read_width) + width);
         short height = inputStream.readShort();
-        Log.d("Dri3", "Read height " + height);
+        Log.d("Dri3", I18n.s(R.string.ui_read_height) + height);
         int stride = inputStream.readInt();
-        Log.d("Dri3", "Read stride " + stride);
+        Log.d("Dri3", I18n.s(R.string.ui_read_stride) + stride);
         int offset = inputStream.readInt();
-        Log.d("Dri3", "Read offset " + offset);
+        Log.d("Dri3", I18n.s(R.string.ui_read_offset) + offset);
         inputStream.skip(24);
         byte depth = inputStream.readByte();
-        Log.d("Dri3", "Read depth " + depth);
+        Log.d("Dri3", I18n.s(R.string.ui_read_depth) + depth);
         inputStream.skip(3);
         long modifiers = inputStream.readLong();
-        Log.d("Dri3", "Read modifiers " + modifiers);
+        Log.d("Dri3", I18n.s(R.string.ui_read_modifiers) + modifiers);
         
         Window window = client.xServer.windowManager.getWindow(windowId);
         if (window == null) throw new BadWindow(windowId);
@@ -166,11 +169,11 @@ public class DRI3Extension implements Extension {
         long size = (long)stride * height;
 
         if (modifiers == 1255) {
-            Log.d("Dri3", "Creating pixmap from AHardwareBuffer");
+            Log.d("Dri3", I18n.s(R.string.ui_creating_pixmap_from_ahardwarebuffer));
             pixmapFromHardwareBuffer(client, pixmapId, width, height, depth, fd);
         }
         else if (modifiers == 1274) {
-            Log.d("Dri3", "Creating pixmap from dmabuf filedescriptor"); 
+            Log.d("Dri3", I18n.s(R.string.ui_creating_pixmap_from_dmabuf_filedescriptor)); 
             pixmapFromFd(client, pixmapId, width, height, stride, offset, depth, fd, size);
         }    
     }

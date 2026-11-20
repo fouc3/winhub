@@ -121,7 +121,7 @@ private fun PanelContent(
             Choice(I18n.s(R.string.ui_frame_generation), listOf("off" to "Off", "winfg" to "Win-FG 2×") +
                 (if (lsfg) listOf("lsfg" to I18n.s(R.string.ui_lsfg_2), "lsfg3" to I18n.s(R.string.ui_lsfg_3), "lsfg4" to I18n.s(R.string.ui_lsfg_4)) else emptyList()),
                 settings.frameGen) { onChange(settings.copy(frameGen = it)) }
-            Text("Native engine (experimental): Google's WebRTC and Bannerlator's Vulkan compositor, so Win-FG or LSFG " +
+            Text(I18n.s(R.string.ui_native_engine_experimental_google_s_webrtc_and_bannerlat) +
                 "can add frames. LSFG uses the Lossless.dll imported in Settings. Screen effects and the overlay levels " +
                 "apply to the web engine.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 6.dp))
@@ -138,26 +138,26 @@ private fun PanelContent(
             pending { it.codec != settings.codec }) { onChange(settings.copy(codec = it)) }
         Choice("Bitrate limit", listOf(0 to I18n.s(R.string.ui_no_limit)) + listOf(5, 8, 10, 12, 15, 20, 25, 30, 40, 50).map { it to "$it Mb/s" }, settings.bitrateMbps,
             pending { it.bitrateMbps != settings.bitrateMbps }) { onChange(settings.copy(bitrateMbps = it)) }
-        Toggle("Stop quality drops", "Keeps the resolution up when this device decodes slowly.", settings.preventDrops) { onChange(settings.copy(preventDrops = it)) }
+        Toggle(I18n.s(R.string.ui_stop_quality_drops), I18n.s(R.string.ui_keeps_the_resolution_up_when_this_device_decodes_slowly), settings.preventDrops) { onChange(settings.copy(preventDrops = it)) }
     }
 
     if ((section == null && XboxNativePlayerActivity.supported()) || section == "framerate") Section("Frame rate (native engine)",
         "With frame generation this is the rate shown; without it, only targets below the stream's 60 fps change anything.") {
         Choice(I18n.s(R.string.ui_target), listOf(0 to "Screen's rate", 30 to "30 fps", 45 to "45 fps", 60 to "60 fps", 120 to "120 fps", 144 to "144 fps", 165 to "165 fps"),
             settings.fpsLimit) { onChange(settings.copy(fpsLimit = it, fpsCustomOn = false)) }
-        Toggle("Custom frame rate", "Set any rate from 10 to 165 fps with the slider.", settings.fpsCustomOn) { onChange(settings.copy(fpsCustomOn = it)) }
+        Toggle(I18n.s(R.string.ui_custom_frame_rate), I18n.s(R.string.ui_set_any_rate_from_10_to_165_fps_with_the_slider), settings.fpsCustomOn) { onChange(settings.copy(fpsCustomOn = it)) }
         if (settings.fpsCustomOn) SliderRow("Custom", settings.fpsCustom, 10, 165) { onChange(settings.copy(fpsCustom = it)) }
     }
 
     if ((section == null && XboxNativePlayerActivity.supported()) || section == "latency") Section("Low latency (native engine)", null) {
-        Toggle("Instant controller input", "Sends each press the moment it happens instead of every 16 ms.", settings.instantInput) {
+        Toggle(I18n.s(R.string.ui_instant_controller_input), I18n.s(R.string.ui_sends_each_press_the_moment_it_happens_instead_of_every), settings.instantInput) {
             onChange(settings.copy(instantInput = it))
         }
-        Toggle("Small network buffer", "Shows frames as soon as they are decoded. Less delay; may stutter on weak Wi-Fi.",
+        Toggle(I18n.s(R.string.ui_small_network_buffer), I18n.s(R.string.ui_shows_frames_as_soon_as_they_are_decoded_less_delay_may),
             settings.smallBuffer, pending { it.smallBuffer != settings.smallBuffer }) { onChange(settings.copy(smallBuffer = it)) }
-        Toggle("Fast decoder", "The video chip's low-latency mode.", settings.fastDecoder,
+        Toggle(I18n.s(R.string.ui_fast_decoder), I18n.s(R.string.ui_the_video_chip_s_low_latency_mode), settings.fastDecoder,
             pending { it.fastDecoder != settings.fastDecoder }) { onChange(settings.copy(fastDecoder = it)) }
-        Toggle("Zero-copy picture", "Frames go straight from the video chip to the screen: the lowest delay. Used while frame generation is off; switches live.",
+        Toggle(I18n.s(R.string.ui_zero_copy_picture), I18n.s(R.string.ui_frames_go_straight_from_the_video_chip_to_the_screen_the),
             settings.zeroCopy) { onChange(settings.copy(zeroCopy = it)) }
     }
 
@@ -178,10 +178,10 @@ private fun PanelContent(
         Choice(I18n.s(R.string.ui_sharpen_type), listOf("cas" to "Contrast-adaptive", "usm" to "Unsharp mask"), settings.sharpenMode) { onChange(settings.copy(sharpenMode = it)) }
         Step("Deband", if (settings.deband == 0) "Off" else "${settings.deband}", { onChange(settings.copy(deband = (settings.deband - 1).coerceAtLeast(0))) },
             { onChange(settings.copy(deband = (settings.deband + 1).coerceAtMost(8))) })
-        Toggle("FXAA", "Smooths jagged edges.", settings.fxaa) { onChange(settings.copy(fxaa = it)) }
-        Toggle("CRT", "Scanlines and colour fringes.", settings.crt) { onChange(settings.copy(crt = it)) }
-        Toggle("NTSC", "Old TV signal look.", settings.ntsc) { onChange(settings.copy(ntsc = it)) }
-        Toggle("Toon", "Cartoon outlines.", settings.toon) { onChange(settings.copy(toon = it)) }
+        Toggle("FXAA", I18n.s(R.string.ui_smooths_jagged_edges), settings.fxaa) { onChange(settings.copy(fxaa = it)) }
+        Toggle("CRT", I18n.s(R.string.ui_scanlines_and_colour_fringes), settings.crt) { onChange(settings.copy(crt = it)) }
+        Toggle("NTSC", I18n.s(R.string.ui_old_tv_signal_look), settings.ntsc) { onChange(settings.copy(ntsc = it)) }
+        Toggle("Toon", I18n.s(R.string.ui_cartoon_outlines), settings.toon) { onChange(settings.copy(toon = it)) }
         Choice(I18n.s(R.string.ui_frame_rate_cap), listOf(0 to "Off", 30 to "30 fps", 45 to "45 fps", 60 to "60 fps"), settings.maxFps) { onChange(settings.copy(maxFps = it)) }
         Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { naming = true }) { Text(I18n.s(R.string.ui_save_as_profile)) }
@@ -197,7 +197,7 @@ private fun PanelContent(
             onChange(settings.copy(statsLevel = it))
         }
         Choice(I18n.s(R.string.ui_overlay_layout), listOf("horizontal" to "Horizontal", "vertical" to "Vertical"), settings.statsLayout) { onChange(settings.copy(statsLayout = it)) }
-        Text("Top right. Basic: fps, ping, resolution. Detailed: + bitrate, decode time, packet loss. Full: + codec, jitter, " +
+        Text(I18n.s(R.string.ui_top_right_basic_fps_ping_resolution_detailed_bitrate_dec) +
             "dropped frames, server.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (section != "overlay-native") Step("Volume", "${settings.volume}%", { onChange(settings.copy(volume = (settings.volume - 25).coerceAtLeast(100))) },
             { onChange(settings.copy(volume = (settings.volume + 25).coerceAtMost(300))) })

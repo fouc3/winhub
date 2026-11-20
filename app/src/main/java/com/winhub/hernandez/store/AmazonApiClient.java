@@ -9,6 +9,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -70,7 +73,7 @@ public class AmazonApiClient {
         try {
             hardwareHash = AmazonPKCEGenerator.sha256Upper(deviceSerial);
         } catch (Exception ex) {
-            Log.e(TAG, "hardwareHash computation failed", ex);
+            Log.e(TAG, I18n.s(R.string.ui_hardwarehash_computation_failed), ex);
             return new ArrayList<>();
         }
 
@@ -106,7 +109,7 @@ public class AmazonApiClient {
                 if (nextToken != null && nextToken.isEmpty()) nextToken = null;
 
             } catch (Exception ex) {
-                Log.e(TAG, "getEntitlements page failed", ex);
+                Log.e(TAG, I18n.s(R.string.ui_getentitlements_page_failed), ex);
                 break;
             }
         } while (nextToken != null);
@@ -173,7 +176,7 @@ public class AmazonApiClient {
 
             return game;
         } catch (Exception ex) {
-            Log.e(TAG, "parseEntitlement failed", ex);
+            Log.e(TAG, I18n.s(R.string.ui_parseentitlement_failed), ex);
             return null;
         }
     }
@@ -211,7 +214,7 @@ public class AmazonApiClient {
             if (!BuildConfig.DEBUG || !DETAIL_KEYS_LOGGED.compareAndSet(false, true)) return;
             StringBuilder sb = new StringBuilder();
             for (java.util.Iterator<String> it = details.keys(); it.hasNext();) sb.append(it.next()).append(' ');
-            Log.d(TAG, "productDetail.details keys: " + sb.toString().trim());
+            Log.d(TAG, I18n.s(R.string.ui_productdetail_details_keys) + sb.toString().trim());
         } catch (Throwable ignored) {
             // Log is a stub on the JVM unit-test host; never let diagnostics break parsing.
         }
@@ -246,7 +249,7 @@ public class AmazonApiClient {
             return spec.downloadUrl.isEmpty() ? null : spec;
 
         } catch (Exception e) {
-            Log.e(TAG, "getGameDownload failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_getgamedownload_failed), e);
             return null;
         }
     }
@@ -277,7 +280,7 @@ public class AmazonApiClient {
             return versions.optString(productId, null);
 
         } catch (Exception e) {
-            Log.e(TAG, "getLiveVersionId failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_getliveversionid_failed), e);
             return null;
         }
     }
@@ -340,13 +343,13 @@ public class AmazonApiClient {
             conn.disconnect();
 
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + " (error body suppressed)");
+                Log.e(TAG, "HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + I18n.s(R.string.ui_error_body_suppressed));
                 return null;
             }
             return resp;
 
         } catch (Exception e) {
-            Log.e(TAG, "postGaming failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_postgaming_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         }
     }
@@ -372,7 +375,7 @@ public class AmazonApiClient {
             conn.disconnect();
             return data;
         } catch (Exception e) {
-            Log.e(TAG, "getBytes failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_getbytes_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -87,7 +90,7 @@ public class GameSessionForegroundService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, contentIntent,
                 PendingIntent.FLAG_IMMUTABLE);
         String text = (label != null && !label.isEmpty())
-                ? label + " is running — do not swipe this notification"
+                ? label + I18n.s(R.string.ui_is_running_do_not_swipe_this_notification)
                 : "Winlator is running, do not kill or swipe this notification";
         return new NotificationCompat.Builder(this, XServerDisplayActivity.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_ab_gear_0011)
@@ -103,7 +106,7 @@ public class GameSessionForegroundService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        Log.i(TAG, "Task removed (user swipe). Tearing down session and exiting process.");
+        Log.i(TAG, I18n.s(R.string.ui_task_removed_user_swipe_tearing_down_session_and_exiting));
         // Recents-swipe destroys the activity WITHOUT running XServerDisplayActivity.exit(), so the
         // wine session would otherwise survive as an orphan (its stale wineserver/process tree then
         // fouls the next launch). Defensively tear it down here — the activity's own teardown, if it
@@ -114,7 +117,7 @@ public class GameSessionForegroundService extends Service {
             try {
                 ProcessHelper.terminateAllWineProcessesAndWait(1500, true);
             } catch (Throwable t) {
-                Log.w(TAG, "Defensive wine cleanup on task removal failed", t);
+                Log.w(TAG, I18n.s(R.string.ui_defensive_wine_cleanup_on_task_removal_failed), t);
             }
             stopForeground(STOP_FOREGROUND_REMOVE);
             stopSelf();

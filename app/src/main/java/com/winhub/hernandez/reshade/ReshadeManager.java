@@ -1,5 +1,8 @@
 package com.winhub.hernandez.reshade;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -145,7 +148,7 @@ public class ReshadeManager {
         File parent = dir.getParentFile();
         if (parent == null || !parent.equals(root) || dir.equals(root)) return false;
         boolean ok = FileUtils.delete(dir);
-        if (!ok) Log.w("ReshadeManager", "Failed to delete effect folder: " + dir);
+        if (!ok) Log.w("ReshadeManager", I18n.s(R.string.ui_failed_to_delete_effect_folder) + dir);
         return ok;
     }
 
@@ -177,7 +180,7 @@ public class ReshadeManager {
         try {
             src = FileUtils.readString(fxFile);
         } catch (Exception e) {
-            Log.e(TAG, "Failed to read .fx for reflection: " + fxFile, e);
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_read_fx_for_reflection) + fxFile, e);
             return params;
         }
         if (src == null) return params;

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contentdialog;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -357,7 +360,7 @@ public class DXVKConfigDialog {
 
         String textureOptions = textureFilteringOptions(config, autoLodBias);
         if (!textureOptions.isEmpty()) {
-            Log.i(TAG, "Texture filtering: [" + textureOptions + "] (lodBias=" + config.get("lodBias")
+            Log.i(TAG, I18n.s(R.string.ui_texture_filtering_4) + textureOptions + "] (lodBias=" + config.get("lodBias")
                     + ", auto=" + autoLodBias + ", configFile=" + hasConfigFile + ")");
         }
 

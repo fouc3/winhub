@@ -46,7 +46,7 @@ internal fun MoveStorageDialog(
     val fromLabel = if (plan.from == MoveGameStorage.Place.INTERNAL) "Internal storage" else "SD card"
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (toSd) "Move to SD card" else "Move to internal storage") },
+        title = { Text(if (toSd) "Move to SD card" else I18n.s(R.string.ui_move_to_internal_storage)) },
         text = {
             Column {
                 Text(
@@ -72,7 +72,7 @@ internal fun MoveStorageDialog(
                 // What the user is really asking: "will my game still work afterwards?" Say it up
                 // front rather than making them find out.
                 Text(
-                    text = "Your saves, cloud saves and achievements are kept — they don't live in " +
+                    text = I18n.s(R.string.ui_your_saves_cloud_saves_and_achievements_are_kept_they_do) +
                         "the game folder. The game's shortcut" +
                         (if (plan.shortcuts.size == 1) " is" else "s (${plan.shortcuts.size}) are") +
                         " updated to the new location, so launching works exactly as before.",
@@ -88,7 +88,7 @@ internal fun MoveStorageDialog(
                 if (toSd) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "⚠️ The SD card is slower than internal storage. Some games stall while " +
+                        text = I18n.s(R.string.ui_the_sd_card_is_slower_than_internal_storage_some_games_s_2) +
                             "loading from a card — if that happens, move it back, or use Copy game to " +
                             "Drive C from the shortcut editor.",
                         style = MaterialTheme.typography.bodySmall,
@@ -97,7 +97,7 @@ internal fun MoveStorageDialog(
                 if (plan.isEaTitle) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "⚠️ This is an EA game. EA's activation can treat a new install location " +
+                        text = I18n.s(R.string.ui_this_is_an_ea_game_ea_s_activation_can_treat_a_new_insta) +
                             "as a new computer and ask you to sign in and activate again, which uses up " +
                             "one of your limited activations.",
                         style = MaterialTheme.typography.bodySmall,
@@ -106,7 +106,7 @@ internal fun MoveStorageDialog(
                 }
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text = "The original copy is only deleted after the new one is checked, so a " +
+                    text = I18n.s(R.string.ui_the_original_copy_is_only_deleted_after_the_new_one_is_c) +
                         "failed move leaves the game exactly where it is.",
                     style = MaterialTheme.typography.bodySmall,
                 )
@@ -114,7 +114,7 @@ internal fun MoveStorageDialog(
         },
         confirmButton = {
             TextButton(onClick = onConfirm, enabled = plan.fitsOnTarget) {
-                Text(if (toSd) "Move to SD card" else "Move to internal")
+                Text(if (toSd) "Move to SD card" else I18n.s(R.string.ui_move_to_internal))
             }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
@@ -160,9 +160,9 @@ internal fun MoveProgressDialog(
                         MoveGameStorage.Phase.COPYING ->
                             "${progress.pct}%  ·  ${SteamSdInstall.fmtBytes(progress.copiedBytes)} of " +
                                 SteamSdInstall.fmtBytes(progress.totalBytes)
-                        MoveGameStorage.Phase.VERIFYING -> "Checking the copy…"
-                        MoveGameStorage.Phase.REPOINTING -> "Updating shortcuts…"
-                        MoveGameStorage.Phase.CLEANING -> "Freeing the old copy…"
+                        MoveGameStorage.Phase.VERIFYING -> I18n.s(R.string.ui_checking_the_copy)
+                        MoveGameStorage.Phase.REPOINTING -> I18n.s(R.string.ui_updating_shortcuts)
+                        MoveGameStorage.Phase.CLEANING -> I18n.s(R.string.ui_freeing_the_old_copy)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

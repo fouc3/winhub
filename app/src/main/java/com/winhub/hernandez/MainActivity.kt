@@ -1,5 +1,7 @@
 package com.winhub.hernandez
 
+import com.winhub.hernandez.R
+
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -1055,10 +1057,10 @@ private fun AboutDialog(onDismiss: () -> Unit) {
 
                 // Powered by
                 AboutSection(title = I18n.s(R.string.ui_powered_by)) {
-                    AboutRow("Wine",    "Windows compatibility layer")
-                    AboutRow("Box64",   "x86_64 emulation on ARM")
+                    AboutRow("Wine",    I18n.s(R.string.ui_windows_compatibility_layer))
+                    AboutRow("Box64",   I18n.s(R.string.ui_x86_64_emulation_on_arm))
                     AboutRow(I18n.s(R.string.ui_fex_emu), "Fast x86 emulator")
-                    AboutRow("Turnip",  "Open-source Vulkan driver")
+                    AboutRow("Turnip",  I18n.s(R.string.ui_open_source_vulkan_driver))
                 }
 
                 Spacer(androidx.compose.ui.Modifier.height(4.dp))
@@ -1067,12 +1069,12 @@ private fun AboutDialog(onDismiss: () -> Unit) {
 
                 // Credits
                 AboutSection(title = I18n.s(R.string.ui_credits)) {
-                    AboutRow("brunodev85",      "Winlator — original project")
+                    AboutRow("brunodev85",      I18n.s(R.string.ui_winlator_original_project))
                     AboutRow(I18n.s(R.string.ui_mishamixxx),      "Winlator Bionic")
                     AboutRow(I18n.s(R.string.ui_the412banner),    "WinHub")
                     AboutRow("ptitSeb",         "Box64")
-                    AboutRow(I18n.s(R.string.ui_winehq),          "Wine project")
-                    AboutRow("Mesa / Freedreno","Turnip Vulkan driver")
+                    AboutRow(I18n.s(R.string.ui_winehq),          I18n.s(R.string.ui_wine_project))
+                    AboutRow("Mesa / Freedreno",I18n.s(R.string.ui_turnip_vulkan_driver))
                 }
 
                 Spacer(androidx.compose.ui.Modifier.height(8.dp))

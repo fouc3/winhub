@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.components.ComponentCatalog
@@ -281,7 +284,7 @@ object EaSupport {
         var changed = false
         try {
             val cache = File(driveC, "ProgramData/Package Cache")
-            if (cache.isDirectory) { changed = cache.deleteRecursively() || changed; Log.i(TAG, "cleanup: removed Package Cache") }
+            if (cache.isDirectory) { changed = cache.deleteRecursively() || changed; Log.i(TAG, I18n.s(R.string.ui_cleanup_removed_package_cache)) }
             File(driveC, "windows/Temp").listFiles()?.filter { it.isDirectory && it.name.startsWith("{") }?.forEach { it.deleteRecursively(); changed = true }
             driveC.listFiles()?.filter { it.isFile && it.name.startsWith("bl_installscript_") && it.name.endsWith(".exit") }?.forEach { it.delete() }
 
@@ -309,7 +312,7 @@ object EaSupport {
                 }
             }
         } catch (e: Exception) {
-            Log.w(TAG, "cleanupFailedInstall failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_cleanupfailedinstall_failed), e)
         }
         return changed
     }

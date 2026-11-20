@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import java.io.File;
@@ -281,7 +284,7 @@ public class FakeInputWriter {
     private static RingSlot createFileRingSlotLocked(int slot, File ringFile) {
         File ringDir = ringFile.getParentFile();
         if (ringDir == null || (!ringDir.exists() && !ringDir.mkdirs())) {
-            Log.e(TAG, "Failed to create fake input ring directory for slot " + slot);
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_create_fake_input_ring_directory_for_slot) + slot);
             return null;
         }
 
@@ -300,10 +303,10 @@ public class FakeInputWriter {
             ringSlot.ringRaf = raf;
             ringSlot.ringChannel = channel;
             ringSlot.exportPath = getCanonicalOrAbsolutePath(ringFile);
-            Log.i(TAG, "Created fake input file ring for slot " + slot + ": " + ringSlot.exportPath);
+            Log.i(TAG, I18n.s(R.string.ui_created_fake_input_file_ring_for_slot) + slot + ": " + ringSlot.exportPath);
             return ringSlot;
         } catch (IOException e) {
-            Log.e(TAG, "Failed to create fake input file ring for slot " + slot + ": " + e.getMessage());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_create_fake_input_file_ring_for_slot) + slot + ": " + e.getMessage());
             if (channel != null) {
                 try {
                     channel.close();
@@ -342,7 +345,7 @@ public class FakeInputWriter {
                 clearSnapshotLocked(ringSlot.data);
                 ringSlot.data.putLong(RING_GENERATION_OFFSET, ringSlot.generation);
                 ringSlot.active = true;
-                Log.d(TAG, "Activated fake input ring for slot " + this.slot
+                Log.d(TAG, I18n.s(R.string.ui_activated_fake_input_ring_for_slot) + this.slot
                         + " generation=" + ringSlot.generation);
             }
         }
@@ -363,7 +366,7 @@ public class FakeInputWriter {
                 ringSlot.data.putLong(RING_WRITE_SEQ_OFFSET, 0L);
                 clearSnapshotLocked(ringSlot.data);
                 ringSlot.data.putLong(RING_GENERATION_OFFSET, ringSlot.generation);
-                Log.i(TAG, "Deactivated fake input ring for slot " + this.slot
+                Log.i(TAG, I18n.s(R.string.ui_deactivated_fake_input_ring_for_slot) + this.slot
                         + " generation=" + ringSlot.generation);
             }
             ringSlot.active = false;
@@ -475,14 +478,14 @@ public class FakeInputWriter {
                 if (eventFile.exists()) {
                     eventFile.delete();
                 }
-                Log.e(TAG, "Failed to open fake input mmap ring: " + eventFile.getAbsolutePath());
+                Log.e(TAG, I18n.s(R.string.ui_failed_to_open_fake_input_mmap_ring) + eventFile.getAbsolutePath());
                 return false;
             }
             isOpen = true;
-            Log.i(TAG, "Opened fake input: " + eventFile.getAbsolutePath());
+            Log.i(TAG, I18n.s(R.string.ui_opened_fake_input) + eventFile.getAbsolutePath());
             return true;
         } catch (IOException e) {
-            Log.e(TAG, "Failed to open: " + e.getMessage());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_open) + e.getMessage());
             return false;
         }
     }
@@ -550,15 +553,15 @@ public class FakeInputWriter {
             writeEvent(EV_SYN, SYN_REPORT, 0);
             buffer.flip();
             if (!flushBuffer())
-                Log.e(TAG, "Reset write error: fake input mmap ring unavailable");
+                Log.e(TAG, I18n.s(R.string.ui_reset_write_error_fake_input_mmap_ring_unavailable));
         }
-        Log.i(TAG, "Reset fake input to neutral state: " + eventFile.getAbsolutePath());
+        Log.i(TAG, I18n.s(R.string.ui_reset_fake_input_to_neutral_state) + eventFile.getAbsolutePath());
     }
 
     public synchronized void softRelease() {
         reset();
         close();
-        Log.i(TAG, "Soft released fake input: " + eventFile.getAbsolutePath());
+        Log.i(TAG, I18n.s(R.string.ui_soft_released_fake_input) + eventFile.getAbsolutePath());
     }
 
     /**
@@ -571,7 +574,7 @@ public class FakeInputWriter {
         deactivateRingSlot();
         if (eventFile != null && eventFile.exists()) {
             boolean deleted = eventFile.delete();
-            Log.i(TAG, "Deleted fake input discovery node: " + eventFile.getAbsolutePath() + " (" + deleted + ")");
+            Log.i(TAG, I18n.s(R.string.ui_deleted_fake_input_discovery_node) + eventFile.getAbsolutePath() + " (" + deleted + ")");
         }
     }
 
@@ -605,7 +608,7 @@ public class FakeInputWriter {
         forceResend = pendingFullResend;
         pendingFullResend = false;
         if (forceResend) {
-            Log.d(TAG, "Re-emitting full gamepad state after failed publish for slot " + slot);
+            Log.d(TAG, I18n.s(R.string.ui_re_emitting_full_gamepad_state_after_failed_publish_for) + slot);
         }
 
         buffer.clear();
@@ -675,7 +678,7 @@ public class FakeInputWriter {
             writeEvent(EV_SYN, SYN_REPORT, 0);
             buffer.flip();
             if (!flushBuffer()) {
-                Log.e(TAG, "Gamepad write error: fake input mmap ring unavailable");
+                Log.e(TAG, I18n.s(R.string.ui_gamepad_write_error_fake_input_mmap_ring_unavailable));
                 // Couldn't publish; re-assert the whole state on the next frame.
                 pendingFullResend = true;
             }

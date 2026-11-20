@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contents;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -164,9 +167,9 @@ public class ContentsManager {
                         ContentProfile profile = readProfile(proFile);
                         if (profile != null) {
                             profiles.add(profile);
-                            Log.d("ContentsManager", "Local profile loaded: " + profile.verName);
+                            Log.d("ContentsManager", I18n.s(R.string.ui_local_profile_loaded) + profile.verName);
                         } else {
-                            Log.w("ContentsManager", "Invalid local profile at: " + proFile.getAbsolutePath());
+                            Log.w("ContentsManager", I18n.s(R.string.ui_invalid_local_profile_at) + proFile.getAbsolutePath());
                         }
                     }
                 }
@@ -185,7 +188,7 @@ public class ContentsManager {
                         }
                         if (!exists) {
                             profiles.add(remote);
-                            Log.d("ContentsManager", "Remote profile added: " + remote.verName);
+                            Log.d("ContentsManager", I18n.s(R.string.ui_remote_profile_added) + remote.verName);
                         }
                     }
                 }

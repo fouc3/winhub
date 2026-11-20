@@ -1,5 +1,8 @@
 package com.winhub.hernandez.renderer.vulkan;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -222,7 +225,7 @@ public class VulkanRenderer implements WindowManager.OnWindowModificationListene
                                         }
                                     }
                                 } catch (Exception e) {
-                                    android.util.Log.w("VulkanRenderer", "SC recreate failed on surface restore: " + e);
+                                    android.util.Log.w("VulkanRenderer", I18n.s(R.string.ui_sc_recreate_failed_on_surface_restore) + e);
                                     synchronized (lock) {
                                         if (nativeHandle != 0) nativeInitScanout(nativeHandle);
                                     }
@@ -747,7 +750,7 @@ public class VulkanRenderer implements WindowManager.OnWindowModificationListene
                             }
                         }
                     } catch (Exception e) {
-                        android.util.Log.w("VulkanRenderer", "Sibling SC failed, using child SC: " + e);
+                        android.util.Log.w("VulkanRenderer", I18n.s(R.string.ui_sibling_sc_failed_using_child_sc) + e);
                         synchronized (lock) {
                             if (nativeHandle != 0) nativeInitScanout(nativeHandle);
                         }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -323,7 +326,7 @@ public final class GameMods {
                 return new Result(true, true, dll + " already in place");
             }
             if (marker == null || !have.equals(marker[0]))
-                return new Result(false, true, "the game folder has its own " + existing.getName() + " (not ours): left as it is");
+                return new Result(false, true, "the game folder has its own " + existing.getName() + I18n.s(R.string.ui_not_ours_left_as_it_is));
             if (source == null) return new Result(true, true, "an older " + dll + " of ours kept (no download available)");
             copy(source, existing);   // ours from an older release: update it
             writeMarker(dir, mod, sha, dll);

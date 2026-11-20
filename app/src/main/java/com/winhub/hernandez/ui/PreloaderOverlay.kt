@@ -450,10 +450,10 @@ private fun GuestProgress(tailLabel: String) {
  * neutral line rather than nothing, so a new action is never left unexplained.
  */
 private fun actionHelp(label: String): String = when (label) {
-    "Retry" -> "runs the Steam checks again and relaunches the game through SteamLite."
-    "Launch with Goldberg" -> "relaunches offline with the stand-in Steam — no online play, no VAC."
-    "Keep going" -> "ignores this and keeps waiting for the game; online features may not work."
-    else -> "does what it says; the log folder has the details if it doesn't help."
+    "Retry" -> I18n.s(R.string.ui_runs_the_steam_checks_again_and_relaunches_the_game_thro)
+    "Launch with Goldberg" -> I18n.s(R.string.ui_relaunches_offline_with_the_stand_in_steam_no_online_pla)
+    "Keep going" -> I18n.s(R.string.ui_ignores_this_and_keeps_waiting_for_the_game_online_featu)
+    else -> I18n.s(R.string.ui_does_what_it_says_the_log_folder_has_the_details_if_it_d)
 }
 
 /** The launch popup's corner "?" (LaunchMethodSheet.HelpDot), on the card's primary accent. */

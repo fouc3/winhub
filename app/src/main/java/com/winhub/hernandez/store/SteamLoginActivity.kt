@@ -77,10 +77,10 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         connectWaitListener = null
         pendingUsername = null; pendingPassword = null
         val msg = when (reachState) {
-            1    -> "Steam CM connection timed out. Port 27017 may be blocked — try a VPN or mobile data."
-            2    -> "Steam is blocked on your network. A VPN is required."
-            3    -> "No internet connection detected."
-            else -> "Could not reach Steam servers. Check your network."
+            1    -> I18n.s(R.string.ui_steam_cm_connection_timed_out_port_27017_may_be_blocked)
+            2    -> I18n.s(R.string.ui_steam_is_blocked_on_your_network_a_vpn_is_required)
+            3    -> I18n.s(R.string.ui_no_internet_connection_detected)
+            else -> I18n.s(R.string.ui_could_not_reach_steam_servers_check_your_network)
         }
         onFailure(msg)
     }
@@ -192,7 +192,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
                             repo.removeListener(this)
                             connectWaitListener = null
                             pendingUsername = null; pendingPassword = null
-                            runOnUiThread { onFailure("Could not connect to Steam") }
+                            runOnUiThread { onFailure(I18n.s(R.string.ui_could_not_connect_to_steam)) }
                         }
                     }
                 }
@@ -356,7 +356,7 @@ private fun SteamLoginScreen(
             Spacer(Modifier.height(16.dp))
 
             DeckButton(
-                text = if (isLoading) "Signing in\u2026" else "Sign In",
+                text = if (isLoading) "Signing in\u2026" else I18n.s(R.string.ui_sign_in),
                 primary = true,
                 onClick = onLoginClick,
                 modifier = Modifier.fillMaxWidth(),

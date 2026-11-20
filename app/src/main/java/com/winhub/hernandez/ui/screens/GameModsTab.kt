@@ -74,11 +74,11 @@ internal fun rememberGameModsSetting(shortcut: Shortcut): GameModsSetting = reme
 internal fun DeckModsTab(mods: GameModsSetting, programs: StartProgramsState) {
     val filesDir = LocalContext.current.filesDir
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        DeckGroup("Game mods") {
+        DeckGroup(I18n.s(R.string.ui_game_mods)) {
             if (mods.mods.isEmpty()) {
                 DeckRow(
                     label = I18n.s(R.string.ui_no_mods_for_this_game),
-                    hint = "REFramework is for RE Engine games and Special K for 32 and 64-bit Windows games. " +
+                    hint = I18n.s(R.string.ui_reframework_is_for_re_engine_games_and_special_k_for_32) +
                         "This game's EXE can't take either.",
                 ) {}
             }
@@ -87,9 +87,9 @@ internal fun DeckModsTab(mods: GameModsSetting, programs: StartProgramsState) {
                 DeckRow(
                     label = mod.name,
                     hint = when (status) {
-                        "" -> "Downloaded the first time it is switched on."
-                        "ready" -> "Downloaded and ready."
-                        "download failed" -> "Download failed. Check your connection and switch it off and on to retry."
+                        "" -> I18n.s(R.string.ui_downloaded_the_first_time_it_is_switched_on_2)
+                        "ready" -> I18n.s(R.string.ui_downloaded_and_ready_2)
+                        "download failed" -> I18n.s(R.string.ui_download_failed_check_your_connection_and_switch_it_off)
                         else -> "Downloading… $status"
                     },
                 ) {

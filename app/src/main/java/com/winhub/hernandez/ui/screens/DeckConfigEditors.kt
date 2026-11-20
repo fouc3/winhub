@@ -696,7 +696,7 @@ internal fun DeckEnvVarsEditor(
             }
         }
 
-        DeckConfigPanel("Environment Variables") {
+        DeckConfigPanel(I18n.s(R.string.environment_variables)) {
             if (rawMode) {
                 var rawText by remember { mutableStateOf(renderDeckEnvRows(rows)) }
                 val malformed = rawText.split(" ").filter { it.isNotBlank() && it.indexOf('=') <= 0 }
@@ -737,7 +737,7 @@ internal fun DeckEnvVarsEditor(
             modifier = Modifier.fillMaxWidth().padding(top = 2.dp),
         ) {
             DeckButton(I18n.s(R.string.ui_add_variable), primary = true) { showAddPicker = true }
-            DeckButton(if (rawMode) "Done" else "Edit as text", primary = false) { rawMode = !rawMode }
+            DeckButton(if (rawMode) "Done" else I18n.s(R.string.ui_edit_as_text), primary = false) { rawMode = !rawMode }
         }
     }
 
@@ -1018,7 +1018,7 @@ internal fun DeckVulkanConfigEditor(
         (listOf("system") + installed).distinct()
     }
 
-    DeckConfigPanel("Renderer Configuration") {
+    DeckConfigPanel(I18n.s(R.string.ui_renderer_configuration)) {
         DeckRow(
             label = I18n.s(R.string.ui_native_rendering),
             hint = I18n.s(R.string.ui_direct_scanout_straight_to_the_display),
@@ -1193,13 +1193,13 @@ internal fun DeckFpsConfigEditor(
             if (via("Clock")) add(Triple("Clock", showClock, { showClock = !showClock }))
             if (via("Engine")) add(Triple("Engine", showEngine, { showEngine = !showEngine }))
             if (via("GPU model")) add(Triple("GPU model", showGpuModel, { showGpuModel = !showGpuModel }))
-            add(Triple("Lock in place", hudLocked, { hudLocked = !hudLocked }))
+            add(Triple(I18n.s(R.string.ui_lock_in_place), hudLocked, { hudLocked = !hudLocked }))
         }
         DeckConfigChipGrid(I18n.s(R.string.ui_metrics), metricChips)
     }
 
     if (showTemp || showGpuTemp || showBattery) {
-        DeckConfigPanel("Temperature Display") {
+        DeckConfigPanel(I18n.s(R.string.ui_temperature_display)) {
             val bandMode = if (!tempBands) 0 else if (tempAuto) 1 else 2
             DeckChoiceRow(
                 label = I18n.s(R.string.ui_temp_unit),
@@ -1435,7 +1435,7 @@ internal fun DeckGraphicsDriverConfigEditor(
     val bcnTypeEntries = remember { context.resources.getStringArray(com.winhub.hernandez.R.array.bcn_emulation_type_entries).toList() }
     val bcnCacheEntries = remember { context.resources.getStringArray(com.winhub.hernandez.R.array.bcn_emulation_cache_entries).toList() }
 
-    DeckConfigPanel("Graphics Driver") {
+    DeckConfigPanel(I18n.s(R.string.graphics_driver)) {
         DeckChoiceRow(I18n.s(R.string.ui_vulkan_version), null, vulkanVersions.map { it to it }, vulkanVersion) { vulkanVersion = it }
         DeckChoiceRow(I18n.s(R.string.ui_driver_version), "Turnip / custom Vulkan driver", driverVersions.map { it to it }, version) { version = it }
         DeckRow(
@@ -1476,7 +1476,7 @@ internal fun DeckGraphicsDriverConfigEditor(
         }
         DeckRow(label = I18n.s(R.string.graphics_driver_sync_frame), control = { DeckToggle(syncFrame) { syncFrame = it } })
         DeckRow(label = I18n.s(R.string.ui_disable_present_wait), control = { DeckToggle(disablePresentWait) { disablePresentWait = it } })
-        DeckRow(label = "OneUI / HyperOS Fix", control = { DeckToggle(fdDevFeatures) { fdDevFeatures = it } })
+        DeckRow(label = I18n.s(R.string.ui_oneui_hyperos_fix), control = { DeckToggle(fdDevFeatures) { fdDevFeatures = it } })
     }
 
     DeckConfigPanel("Turnip") {
@@ -1502,16 +1502,16 @@ internal fun DeckGraphicsDriverConfigEditor(
             val sysmemBlocked = turnipGmem == "on"
             DeckRow(
                 label = "sysmem",
-                hint = if (sysmemBlocked) "Disabled — GMEM Force On overrides sysmem" else "Force sysmem (bypass GMEM)",
+                hint = if (sysmemBlocked) "Disabled — GMEM Force On overrides sysmem" else I18n.s(R.string.ui_force_sysmem_bypass_gmem),
                 control = { DeckToggle(turnipSysmem && !sysmemBlocked) { if (!sysmemBlocked) turnipSysmem = it } },
             )
             DeckRow(label = "deck_emu", hint = I18n.s(R.string.ui_advertise_as_steamdeck), control = { DeckToggle(turnipDeckEmu) { turnipDeckEmu = it } })
-            DeckConfigNote("deck_emu requires a Banners-Turnip driver (ignored on stock Turnip).")
+            DeckConfigNote(I18n.s(R.string.ui_deck_emu_requires_a_banners_turnip_driver_ignored_on))
         }
     }
 
     if (showBcnLayerSettings) {
-        DeckConfigPanel("BCn Layer Settings") {
+        DeckConfigPanel(I18n.s(R.string.bcn_layer_section)) {
             if (isQualcomm) DeckConfigNote("No effect on Adreno (native BCn) — applies to Mali/non-Qualcomm GPUs")
             DeckRow(label = I18n.s(R.string.bcn_layer_force_decode), control = { DeckToggle(bcnLayerAuto) { bcnLayerAuto = it } })
             DeckRow(label = I18n.s(R.string.bcn_layer_transcode_etc2), control = { DeckToggle(bcnTranscodeEtc2) { bcnTranscodeEtc2 = it } })
@@ -1526,7 +1526,7 @@ internal fun DeckGraphicsDriverConfigEditor(
     }
 
     if (isImported) {
-        DeckConfigPanel("Detected Settings (advanced)") {
+        DeckConfigPanel(I18n.s(R.string.ui_detected_settings_advanced_2)) {
             DeckConfigNote(I18n.s(R.string.ui_scanned_from_this_wrapper_values_are_passed_to_the_wr))
             if (detectedKeys.isEmpty()) {
                 DeckConfigNote(I18n.s(R.string.ui_no_extra_settings_detected))
@@ -1627,7 +1627,7 @@ internal fun DeckDxvkConfigEditor(
     val config = remember(initialConfig) { DXVKConfigDialog.parseConfig(initialConfig) }
     val activity = context.findActivity()
 
-    val BROWSE_CONFIG_MARKER = "Browse for file…"
+    val BROWSE_CONFIG_MARKER = I18n.s(R.string.ui_browse_for_file)
 
     val allDxvkVersions = remember { mutableStateOf(listOf<String>()) }
     val vkd3dVersions = remember { mutableStateOf(listOf<String>()) }
@@ -1927,7 +1927,7 @@ internal fun DeckDxvkConfigEditor(
                 }
             }
         } else {
-            DeckChoiceRowWithDownload("DXVK Version", filteredDxvk.map { it to it }, selectedDxvk, { selectedDxvk = it }, onDownloadDxvk)
+            DeckChoiceRowWithDownload(I18n.s(R.string.dxvk_version), filteredDxvk.map { it to it }, selectedDxvk, { selectedDxvk = it }, onDownloadDxvk)
         }
         if (dxvkType != DXVKConfigDialog.DXVK_TYPE_NONE) {
             DeckRow(label = I18n.s(R.string.ui_async), hint = I18n.s(R.string.ui_compile_shaders_on_background_threads), control = { DeckToggle(asyncEnabled) { asyncEnabled = it } })
@@ -1938,7 +1938,7 @@ internal fun DeckDxvkConfigEditor(
         DeckChoiceRow(I18n.s(R.string.ui_frame_rate_2), null, framerateEntries.map { it to it }, selectedFramerate) { selectedFramerate = it }
     }
 
-    DeckConfigPanel("Texture Filtering") {
+    DeckConfigPanel(I18n.s(R.string.ui_texture_filtering_3)) {
         DeckChoiceRow(I18n.s(R.string.ui_anisotropic_filtering), null, anisotropyLabels.mapIndexed { i, l -> l to l }, selectedAnisotropy) { selectedAnisotropy = it }
         DeckChoiceRow(I18n.s(R.string.ui_texture_sharpness), null, lodBiasLabels.mapIndexed { i, l -> l to l }, selectedLodBias) { selectedLodBias = it }
         DeckConfigNote(I18n.s(R.string.ui_directx_9_11_games_only_applies_the_next_time_the_gam))
@@ -1948,12 +1948,12 @@ internal fun DeckDxvkConfigEditor(
         DeckChoiceRow(I18n.s(R.string.ui_feature_level), null, featureLevelEntries.map { it to it }, selectedFeatureLevel) { selectedFeatureLevel = it }
         DeckChoiceRow(I18n.s(R.string.ddraw_wrapper), null, ddraEntries.map { it to it }, selectedDdra) { selectedDdra = it }
         if (StringUtils.parseIdentifier(selectedDdra) == "d7vk") {
-            DeckChoiceRowWithDownload("D7VK Version", d7vkVersions.value.map { it to it }, selectedD7vk, { selectedD7vk = it }, onDownloadD7vk)
+            DeckChoiceRowWithDownload(I18n.s(R.string.ui_d7vk_version), d7vkVersions.value.map { it to it }, selectedD7vk, { selectedD7vk = it }, onDownloadD7vk)
         }
     }
 
     if (isVegas) {
-        DeckConfigPanel("Performance Tier") {
+        DeckConfigPanel(I18n.s(R.string.ui_performance_tier_3)) {
             val staged = tierChoice
             val effectiveTier: Int? = staged ?: activeForceTier?.let { if (it == 0) null else it }
             DeckConfigNote(
@@ -1979,8 +1979,8 @@ internal fun DeckDxvkConfigEditor(
             }
         }
 
-        DeckConfigPanel("Config File") {
-            DeckConfigNote("Pick a stock config then edit it — your changes become your own copy. Or point at any .conf.")
+        DeckConfigPanel(I18n.s(R.string.ui_config_file_2)) {
+            DeckConfigNote(I18n.s(R.string.ui_pick_a_stock_config_then_edit_it_your_changes_become_you))
             DeckRow(
                 label = I18n.s(R.string.ui_use_defaults_no_config_file),
                 control = { DeckToggle(useDefaults) { useDefaults = it } },
@@ -2009,7 +2009,7 @@ internal fun DeckDxvkConfigEditor(
                     selectedCustom ?: "",
                 ) { c ->
                     if (c == BROWSE_CONFIG_MARKER) {
-                        pickCustomConfigLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select config file"))
+                        pickCustomConfigLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_config_file)))
                     } else {
                         selectedCustom = c; selectedStock = null; useDefaults = false
                     }
@@ -2089,7 +2089,7 @@ internal fun DeckDxvkConfigEditor(
                         }
                     }
                     if (stockEdited && !useDefaults) {
-                        DeckConfigNote(if (sidecarExists) "Edited · saved to your own copy" else "Edited · saved to the live config file")
+                        DeckConfigNote(if (sidecarExists) "Edited · saved to your own copy" else I18n.s(R.string.ui_edited_saved_to_the_live_config_file))
                     }
                 }
             }

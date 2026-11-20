@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -66,10 +69,10 @@ public class FolderPickerActivity extends Activity {
         // Build root label/dir arrays
         List<String> labels = new ArrayList<>();
         List<File>   dirs   = new ArrayList<>();
-        labels.add("App Files (Wine containers)");  dirs.add(rootAppFiles);
-        labels.add("Internal Storage");             dirs.add(rootInternal);
+        labels.add(I18n.s(R.string.ui_app_files_wine_containers));  dirs.add(rootAppFiles);
+        labels.add(I18n.s(R.string.ui_internal_storage));             dirs.add(rootInternal);
         if (rootSdCard != null) {
-            labels.add("SD Card");                  dirs.add(rootSdCard);
+            labels.add(I18n.s(R.string.ui_sd_card_2));                  dirs.add(rootSdCard);
         }
         rootLabels = labels.toArray(new String[0]);
         rootDirs   = dirs.toArray(new File[0]);
@@ -139,7 +142,7 @@ public class FolderPickerActivity extends Activity {
         btnRowLp.setMargins(dp(12), dp(8), dp(12), dp(4));
         btnRow.setLayoutParams(btnRowLp);
 
-        Button selectBtn = makeBtn("✓  Select this folder", 0xFF2E7D32);
+        Button selectBtn = makeBtn(I18n.s(R.string.ui_select_this_folder_2), 0xFF2E7D32);
         selectBtn.setOnClickListener(v -> {
             Intent result = new Intent();
             result.putExtra("path", currentDir.getAbsolutePath());
@@ -181,7 +184,7 @@ public class FolderPickerActivity extends Activity {
         // ── Subdirectories ────────────────────────────────────────────────────
         File[] files = currentDir.listFiles();
         if (files == null) {
-            addEmptyLabel("(empty or no read permission)");
+            addEmptyLabel(I18n.s(R.string.ui_empty_or_no_read_permission));
             return;
         }
 
@@ -241,22 +244,22 @@ public class FolderPickerActivity extends Activity {
             .setPositiveButton(I18n.s(R.string.create), (d, w) -> {
                 String name = input.getText().toString().trim();
                 if (name.isEmpty()) {
-                    showThemedMessage("Enter a folder name");
+                    showThemedMessage(I18n.s(R.string.ui_enter_a_folder_name));
                     return;
                 }
                 // Reject names with path separators
                 if (name.contains("/") || name.contains("\\")) {
-                    showThemedMessage("Folder name cannot contain slashes");
+                    showThemedMessage(I18n.s(R.string.ui_folder_name_cannot_contain_slashes));
                     return;
                 }
                 File newDir = new File(currentDir, name);
                 if (newDir.exists()) {
-                    showThemedMessage("Folder already exists");
+                    showThemedMessage(I18n.s(R.string.ui_folder_already_exists));
                 } else if (newDir.mkdir()) {
                     refreshList();
                     showThemedMessage("Created: " + name);
                 } else {
-                    showThemedMessage("Failed to create folder");
+                    showThemedMessage(I18n.s(R.string.ui_failed_to_create_folder));
                 }
             })
             .setNegativeButton("Cancel", null)

@@ -147,7 +147,7 @@ internal class DownloadActions(private val activity: Activity) {
     fun launch(entry: DownloadEntry) {
         val dir = entry.installPath
         if (dir.isNullOrEmpty()) {
-            notice = "Install directory not set"
+            notice = I18n.s(R.string.ui_install_directory_not_set)
             return
         }
         if (entry.store == Store.XBOX) {
@@ -241,7 +241,7 @@ internal class DownloadActions(private val activity: Activity) {
         if (entry.store == Store.EPIC) {
             AlertDialog.Builder(activity)
                 .setTitle(I18n.s(R.string.ui_cancel_download))
-                .setMessage("Keep the partial download so you can resume later, or delete all " +
+                .setMessage(I18n.s(R.string.ui_keep_the_partial_download_so_you_can_resume_later_or_del_2) +
                         "downloaded files for this game?")
                 .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                     EpicCancelPolicy.setDeleteOnCancel(entry.id, false)

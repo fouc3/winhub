@@ -81,9 +81,9 @@ internal fun launchMethodIcon(mode: String): Int = (LAUNCH_OPTIONS.firstOrNull {
 private class GoldbergChoice(val mode: GoldbergMode, val name: String, val sub: String)
 
 private val GOLDBERG_CHOICES = listOf(
-    GoldbergChoice(GoldbergMode.REGULAR, "Regular", "Standard emulation, best compatibility"),
-    GoldbergChoice(GoldbergMode.EXPERIMENTAL, "Experimental", "Newer features, for games Regular can't run"),
-    GoldbergChoice(GoldbergMode.COLDCLIENT, "ColdClient", "Runs the game's own launcher, heaviest option"),
+    GoldbergChoice(GoldbergMode.REGULAR, "Regular", I18n.s(R.string.ui_standard_emulation_best_compatibility_2)),
+    GoldbergChoice(GoldbergMode.EXPERIMENTAL, "Experimental", I18n.s(R.string.ui_newer_features_for_games_regular_can_t_run_2)),
+    GoldbergChoice(GoldbergMode.COLDCLIENT, "ColdClient", I18n.s(R.string.ui_runs_the_game_s_own_launcher_heaviest_option_2)),
 )
 
 @Composable

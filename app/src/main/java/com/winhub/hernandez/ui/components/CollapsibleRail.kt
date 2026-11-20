@@ -71,7 +71,7 @@ data class RailSection(val header: String?, val items: List<RailItem>)
 private fun collapsedLabel(label: String): String {
     when (label) {
         "ENVIROMENT" -> return "ENVIROMENT"   // full word; skip the length guard below
-        "WIN COMPONENTS" -> return "WIN COMP"
+        "WIN COMPONENTS" -> return I18n.s(R.string.ui_win_comp)
         "Downloads" -> return "Downlds"
     }
     if (label.contains(' ')) return label       // multi-word → wraps to 2 lines
@@ -408,8 +408,8 @@ fun RailTopTabs(
 /** Uppercase tab title for the horizontal strip, with the long ones abbreviated so five or six
  *  cells still fit a phone width without ellipsizing (same rule as [collapsedLabel]). */
 private fun topTabLabel(label: String): String = when (label) {
-    "Win Components" -> "WIN COMP"
-    "Env Vars" -> "ENV VARS"
+    "Win Components" -> I18n.s(R.string.ui_win_comp)
+    "Env Vars" -> I18n.s(R.string.ui_env_vars_3)
     "Controller" -> "CTRL"
     else -> label.uppercase()
 }

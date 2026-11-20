@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -96,7 +99,7 @@ public final class WaylandAdapter {
                 } finally {
                     FileUtils.delete(tmp);
                 }
-                Log.i(TAG, "installed the Wayland adapter " + version(context) + " (" + id + ") -> " + dir);
+                Log.i(TAG, I18n.s(R.string.ui_installed_the_wayland_adapter) + version(context) + " (" + id + ") -> " + dir);
             } else if (MaliPanvk.isMaliGpu()) {
                 // Mali only: an icd.json written escaped (an older build, same asset hash) is rewritten
                 // plain so winewayland can pin it. Elsewhere an existing icd.json is never touched.
@@ -115,7 +118,7 @@ public final class WaylandAdapter {
             cachedIcdPath = icd.getAbsolutePath();
             return cachedIcdPath;
         } catch (Exception e) {
-            Log.e(TAG, "could not install the Wayland adapter", e);
+            Log.e(TAG, I18n.s(R.string.ui_could_not_install_the_wayland_adapter), e);
             return null;
         }
     }
@@ -148,7 +151,7 @@ public final class WaylandAdapter {
             int r;
             while ((r = in.read(buf)) > 0) md.update(buf, 0, r);
         } catch (IOException e) {
-            Log.w(TAG, "no bundled Wayland adapter (" + ASSET_LIB + ")");
+            Log.w(TAG, I18n.s(R.string.ui_no_bundled_wayland_adapter) + ASSET_LIB + ")");
             return null;
         }
         StringBuilder sb = new StringBuilder();
@@ -207,9 +210,9 @@ public final class WaylandAdapter {
     public static String unusableReason(Context context, String driverId) {
         if (isMaliSystem(driverId)) return null;
         if (driverId == null || driverId.isEmpty() || driverId.equals("System"))
-            return "the graphics driver is System";
+            return I18n.s(R.string.ui_the_graphics_driver_is_system);
         if (isProprietaryBlob(context, driverId))
-            return "the graphics driver is the proprietary Qualcomm driver (" + driverId + ")";
+            return I18n.s(R.string.ui_the_graphics_driver_is_the_proprietary_qualcomm_driver) + driverId + ")";
         try {
             String lib = new AdrenotoolsManager(context).getLibraryName(driverId);
             if (lib == null || lib.isEmpty()) return "the graphics driver " + driverId + " is not installed";

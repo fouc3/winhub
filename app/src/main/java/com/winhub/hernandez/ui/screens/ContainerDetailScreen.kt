@@ -239,9 +239,9 @@ fun ContainerDetailScreen(
 
         val activeTab = tabTitles.getOrNull(viewModel.selectedTab) ?: "GENERAL"
         val screenTitle = when {
-            viewModel.defaultsMode -> "New Container Defaults"
-            containerId <= 0 -> "New Container"
-            else -> "Edit Container"
+            viewModel.defaultsMode -> I18n.s(R.string.new_container_defaults)
+            containerId <= 0 -> I18n.s(R.string.new_container)
+            else -> I18n.s(R.string.edit_container)
         }
         val railLinks = buildList {
             if (viewModel.defaultsMode) {
@@ -1091,11 +1091,11 @@ private fun TopLevelFields(
             }
             Text(
                 when {
-                    blobPicked -> "Qualcomm's own driver cannot put Wayland frames on screen, so the screen uses a " +
+                    blobPicked -> I18n.s(R.string.ui_qualcomm_s_own_driver_cannot_put_wayland_frames_on_scree) +
                         I18n.s(R.string.ui_bundled_turnip_automatically) + (if (adapterChoice) " and the game renders on the bundled " +
                         I18n.s(R.string.ui_wayland_turnip_the_adapter_needs_a_turnip_driver_here) else ".")
                     adapterActive -> I18n.s(R.string.ui_used_for_the_game_through_the_wayland_adapter_and_for)
-                    else -> "Used by the Wayland compositor to put frames on screen; the game renders on the " +
+                    else -> I18n.s(R.string.ui_used_by_the_wayland_compositor_to_put_frames_on_screen_t) +
                         I18n.s(R.string.ui_wayland_game_driver_under_advanced)
                 },
                 style = MaterialTheme.typography.bodySmall,
@@ -1332,7 +1332,7 @@ private fun TopLevelFields(
                     )
                 }
                 com.winhub.hernandez.ui.components.OpenGLCardRow(
-                    com.winhub.hernandez.ui.components.OPENGL_FPS_ICON, "Show FPS", null
+                    com.winhub.hernandez.ui.components.OPENGL_FPS_ICON, I18n.s(R.string.ui_show_fps), null
                 ) {
                     Switch(checked = viewModel.glFpsHud, onCheckedChange = { viewModel.glFpsHud = it })
                 }
@@ -3160,7 +3160,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_asynchronous_copy),
-                        help = "The compositor keeps frames in flight instead of waiting for each screen blit. Turn off if " +
+                        help = I18n.s(R.string.ui_the_compositor_keeps_frames_in_flight_instead_of_waiting) +
                             I18n.s(R.string.ui_frames_arrive_out_of_order_or_a_game_stutters_only_on),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY] ?: "",
@@ -3168,7 +3168,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_zero_copy_presentation),
-                        help = "The game's own buffer goes on screen without a copy (lowest latency, less heat). Needs " +
+                        help = I18n.s(R.string.ui_the_game_s_own_buffer_goes_on_screen_without_a_copy_lowe) +
                             I18n.s(R.string.ui_sync_file_fences_in_the_driver_see_the_report_turn_of),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY] ?: "",
@@ -3176,7 +3176,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_client_render_fences),
-                        help = "With zero-copy, the game's driver tells the compositor when a frame is finished. Turn off " +
+                        help = I18n.s(R.string.ui_with_zero_copy_the_game_s_driver_tells_the_compositor_wh) +
                             I18n.s(R.string.ui_only_to_compare_off_can_show_half_drawn_frames),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE] ?: "",
@@ -3184,7 +3184,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_ubwc_compressed_buffers),
-                        help = "Frames travel as compressed GPU buffers (less bandwidth). Turn off if the picture shows " +
+                        help = I18n.s(R.string.ui_frames_travel_as_compressed_gpu_buffers_less_bandwidth_t) +
                             I18n.s(R.string.ui_garbled_blocks_or_stripes),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC] ?: "",
@@ -3192,7 +3192,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_drm_format_modifiers),
-                        help = "Lets the game's driver and the compositor agree on buffer layouts. Off makes the game use " +
+                        help = I18n.s(R.string.ui_lets_the_game_s_driver_and_the_compositor_agree_on_buffe) +
                             I18n.s(R.string.ui_plain_linear_buffers_banner_wsi_no_modifiers_1_try_it),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS] ?: "",
@@ -3208,7 +3208,7 @@ internal fun WaylandDriverSettingsDialog(
                     )
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_subgroups),
-                        help = "Auto tells the game what subgroup operations your Mesa driver supports (DOOM Eternal and " +
+                        help = I18n.s(R.string.ui_auto_tells_the_game_what_subgroup_operations_your_mesa_d) +
                             "other games that need them start). Off hides them, as older adapters did; try it if a game " +
                             I18n.s(R.string.ui_shows_glitches_or_crashes_that_it_did_not_before),
                         options = if (perGame) listOf("" to defaultWord, "auto" to "Auto", "0" to "Off")
@@ -3270,7 +3270,7 @@ internal fun WaylandDriverSettingsDialog(
             onToggle = { aboutOpen = !aboutOpen },
         ) {
             DeckConfigNote(WAYLAND_DRIVER_SETTINGS_HELP)
-            DeckConfigNote("Env vars you type under Env vars always win over these; the switches below win over the profile.")
+            DeckConfigNote(I18n.s(R.string.ui_env_vars_you_type_under_env_vars_always_win_over_thes))
             DeckGroup(I18n.s(R.string.ui_what_the_profiles_do)) {
                 for (p in com.winhub.hernandez.core.WaylandAdapterSettings.PROFILES) {
                     DeckRow(
@@ -3491,7 +3491,7 @@ internal suspend fun defaultCompositorDriver(context: Context, preferred: String
                 .maxWithOrNull(Comparator { a, b -> compareVulkanVersions(a.second.vulkanVersion, b.second.vulkanVersion) })
                 ?.first
             val fromDefaults = usable.firstOrNull { it.first == preferred }?.first
-            android.util.Log.i("CompositorDriver", "default for a Wayland form: " + when {
+            android.util.Log.i("CompositorDriver", I18n.s(R.string.ui_default_for_a_wayland_form) + when {
                 fromDefaults != null -> I18n.s(R.string.ui_fromdefaults_the_new_container_defaults_driver_newest)
                 newest != null -> I18n.s(R.string.ui_newest_newest_usable) +
                     (if (preferred != null) I18n.s(R.string.ui_new_container_defaults_names_preferred_which_is_not_u) else "") + ")"
@@ -4008,7 +4008,7 @@ internal fun GraphicsDriverConfigDialog(
                     Text(I18n.s(R.string.ui_mali_panvk_driver), style = MaterialTheme.typography.titleSmall)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = maliHideExts, onCheckedChange = { maliHideExts = it })
-                        Text("Hide present-wait / dynamic-rendering extensions", modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.mali_panvk_hide_exts), modifier = Modifier.weight(1f))
                     }
                     Text(
                         I18n.s(R.string.ui_hides_present_id_present_wait_and_dynamic_rendering_f),
@@ -4105,7 +4105,7 @@ internal fun GraphicsDriverConfigDialog(
                         .clickable { turnipSectionExpanded = !turnipSectionExpanded }
                 ) {
                     Text(
-                        (if (turnipSectionExpanded) "▾  " else "▸  ") + "Advanced Turnip (TU_DEBUG)",
+                        (if (turnipSectionExpanded) "▾  " else "▸  ") + I18n.s(R.string.ui_advanced_turnip_tu_debug),
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.weight(1f)
                     )
@@ -6439,14 +6439,14 @@ internal fun FpsCounterConfigDialog(
                 // ── Temperature display ── only meaningful when a temperature is on screen.
                 if (showTemp || showGpuTemp || showBattery) {
                     Spacer(Modifier.height(12.dp))
-                    HudThreeStop("Temp unit", listOf("\u00B0C", "\u00B0F"), if (tempUnitF) 1 else 0) {
+                    HudThreeStop(I18n.s(R.string.ui_temp_unit), listOf("\u00B0C", "\u00B0F"), if (tempUnitF) 1 else 0) {
                         tempUnitF = it == 1
                     }
                     Spacer(Modifier.height(4.dp))
                     // Danger bands as one 3-way rather than two toggles: "bands off but auto on"
                     // isn't a distinct state worth exposing.
                     val bandMode = if (!tempBands) 0 else if (tempAuto) 1 else 2
-                    HudThreeStop("Danger colors", listOf("Off", "Auto", I18n.s(R.string.ui_manual)), bandMode) {
+                    HudThreeStop(I18n.s(R.string.ui_danger_colors), listOf("Off", "Auto", I18n.s(R.string.ui_manual)), bandMode) {
                         tempBands = it != 0
                         tempAuto = it != 2
                     }

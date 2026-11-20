@@ -73,7 +73,7 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                 try {
                     val token = AmazonCredentialStore.getValidAccessToken(appCtx)
                     if (token == null) {
-                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "Login required")
+                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, I18n.s(R.string.ui_login_required))
                         main.post { errorText = I18n.s(R.string.ui_login_required); started = false }
                         return@launch
                     }
@@ -119,13 +119,13 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                         return@launch
                     }
                     if (!ok) {
-                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "Download failed")
+                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, I18n.s(R.string.xmb_dl_status_failed))
                         main.post { errorText = I18n.s(R.string.xmb_dl_status_failed); started = false }
                         return@launch
                     }
                     val exePath = deckResolveExe(installDir, game.title)
                     if (exePath == null) {
-                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "No executable found")
+                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, I18n.s(R.string.ui_no_executable_found))
                         main.post { errorText = I18n.s(R.string.ui_no_executable_found); started = false }
                         return@launch
                     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import com.winhub.hernandez.ui.components.clickable
@@ -45,15 +48,15 @@ fun SteamStatusPill(
         SteamRepository.SteamStatus.CONNECTING ->
             Triple(Color(0xFFE0A82E), "Connecting…", false)
         SteamRepository.SteamStatus.SIGNED_IN_ELSEWHERE ->
-            Triple(Color(0xFFE07B2E), "Signed in elsewhere", true)
+            Triple(Color(0xFFE07B2E), I18n.s(R.string.ui_signed_in_elsewhere), true)
         SteamRepository.SteamStatus.OFFLINE ->
             Triple(Color(0xFFCB4B4B), "Offline", true)
         SteamRepository.SteamStatus.SIGNED_OUT ->
-            Triple(Color(0xFF9AA0A6), "Signed out", true)
+            Triple(Color(0xFF9AA0A6), I18n.s(R.string.ui_signed_out), true)
         // A real-Steam (SteamLite) game holds the account in-container; the app's own session is
         // deliberately down and comes back on game exit. Not an error, not tappable (a tap would tug).
         SteamRepository.SteamStatus.PAUSED_FOR_GAME ->
-            Triple(Color(0xFF5B8DEF), "Paused — game session active", false)
+            Triple(Color(0xFF5B8DEF), I18n.s(R.string.ui_paused_game_session_active), false)
     }
 
     val base = Modifier

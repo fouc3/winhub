@@ -150,7 +150,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
         if (viewModel.isWaylandStored && !viewModel.isWaylandBackend) {
             DeckRow(
                 label = I18n.s(R.string.ui_wayland_is_not_available),
-                hint = (viewModel.waylandLayerProblem() ?: "This Proton layer cannot run Wayland.") + " It will be saved as X11.",
+                hint = (viewModel.waylandLayerProblem() ?: "This Proton layer cannot run Wayland.") + I18n.s(R.string.ui_it_will_be_saved_as_x11),
                 control = {},
             )
         }
@@ -187,7 +187,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
             hint = if (wayland && compositorDriverUnusable(currentDriver, drivers.map { it.first }, drivers.isNotEmpty()))
                 "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
             else if (wayland) "The Turnip build the Wayland compositor and the game run on"
-            else "The Turnip build the game renders on",
+            else I18n.s(R.string.ui_turnip_build_the_game_renders_on),
             options = withCurrent(currentDriver, drivers),
             selected = currentDriver,
             onPick = { id ->
@@ -278,10 +278,10 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val containerWayland = p.c.isWaylandBackend && waylandCapable
         val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
         val dbLabels = listOf(I18n.s(R.string.ui_container_default) + (if (containerWayland) "Wayland" else "X11") + ")", "X11", "Wayland")
-        rows += XmbRow.Choice(I18n.s(R.string.ui_sbackend), "Display backend", Icons.Filled.DesktopWindows, dbLabels,
+        rows += XmbRow.Choice("sBackend", I18n.s(R.string.ui_display_backend), Icons.Filled.DesktopWindows, dbLabels,
             dbLabels[dbValues.indexOf(dbOverride).coerceAtLeast(0)],
             subtitle = if (waylandCapable) "Wayland routes the game through the embedded compositor"
-                else "Wayland needs a layer with winewayland; this container's layer has none",
+                else I18n.s(R.string.ui_wayland_needs_a_layer_with_winewayland_this_container_s),
             disabledOptions = if (waylandCapable) emptySet() else setOf(dbLabels[2])) { v ->
             write("displayBackend", dbValues[dbLabels.indexOf(v)].ifEmpty { null })
         }
@@ -291,7 +291,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
             val stored = GraphicsDriverConfigDialog.parseGraphicsDriverConfig(own)[WaylandAdapterSettings.KEY_PROFILE].orEmpty()
             val profileValues = listOf("") + WaylandAdapterSettings.PROFILES
             val profileLabels = listOf(I18n.s(R.string.ui_container_default_2)) + WaylandAdapterSettings.PROFILES.map { WaylandAdapterSettings.profileLabel(it) }
-            rows += XmbRow.Choice(I18n.s(R.string.ui_swlprofile), "Wayland profile", Icons.Filled.Tune, profileLabels,
+            rows += XmbRow.Choice("sWlProfile", I18n.s(R.string.ui_wayland_profile_2), Icons.Filled.Tune, profileLabels,
                 profileLabels[profileValues.indexOf(stored).coerceAtLeast(0)],
                 subtitle = I18n.s(R.string.ui_smooth_evens_out_frame_pacing_fast_lowers_latency_com)) { v ->
                 val value = profileValues[profileLabels.indexOf(v)]
@@ -307,7 +307,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val wrapper = StringUtils.parseIdentifier(p.ex("dxwrapper", p.c.getDXWrapper()))
         if (dxList != null && wrapper.contains("dxvk") && !wrapper.contains("vegas")) {
             val shown = if (dxCurrent.isNotEmpty() && dxCurrent !in dxList) listOf(dxCurrent) + dxList else dxList
-            rows += XmbRow.Choice(I18n.s(R.string.ui_sdxvk), "DXVK version", Icons.Filled.DesktopWindows, shown, dxCurrent,
+            rows += XmbRow.Choice("sDxvk", I18n.s(R.string.ui_dxvk_version), Icons.Filled.DesktopWindows, shown, dxCurrent,
                 subtitle = I18n.s(R.string.ui_direct3d_9_10_and_11_on_vulkan)) { v ->
                 write("dxwrapperConfig", AutoDefaults.withDxvkVersion(dxCfg, v))
             }
@@ -318,7 +318,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val driverList = drivers
         if (driverList != null) {
             val shown = withCurrent(gdCurrent, driverList)
-            rows += XmbRow.Choice(I18n.s(R.string.ui_sdriver), "Graphics driver", Icons.Filled.DesktopWindows, shown.map { it.second },
+            rows += XmbRow.Choice("sDriver", I18n.s(R.string.ui_graphics_driver), Icons.Filled.DesktopWindows, shown.map { it.second },
                 shown.firstOrNull { it.first == gdCurrent }?.second ?: gdCurrent, subtitle = I18n.s(R.string.ui_turnip_build_the_game_renders_on)) { label ->
                 shown.firstOrNull { it.second == label }?.let { write("graphicsDriverConfig", withGraphicsDriverVersion(gdCfg, it.first)) }
             }
@@ -327,14 +327,14 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         if (p.arm64ec == true) {
             val presets = FEXCorePresetManager.getPresets(xmb.context)
             val id = p.ex("fexcorePreset", p.c.getFEXCorePreset())
-            rows += XmbRow.Choice(I18n.s(R.string.ui_sfex), "FEXCore preset", Icons.Filled.Memory, presets.map { it.name },
+            rows += XmbRow.Choice("sFex", I18n.s(R.string.ui_fexcore_preset), Icons.Filled.Memory, presets.map { it.name },
                 presets.firstOrNull { it.id == id }?.name ?: id, subtitle = I18n.s(R.string.ui_speed_against_compatibility_of_the_cpu_translation)) { name ->
                 presets.firstOrNull { it.name == name }?.let { write("fexcorePreset", it.id) }
             }
         }
 
         rows += XmbRow.Header("hView", "View")
-        rows += XmbRow.Choice(I18n.s(R.string.ui_sview), "Settings view", Icons.Filled.Settings, listOf("Simple", "Advanced"), "Simple",
+        rows += XmbRow.Choice("sView", I18n.s(R.string.ui_settings_view), Icons.Filled.Settings, listOf("Simple", "Advanced"), "Simple",
             subtitle = I18n.s(R.string.ui_advanced_shows_every_setting_reopen_settings_after_sw)) { v ->
             DeckSettingsMode.set(xmb.context, v == "Advanced")
             xmb.toast(if (v == "Advanced") "Advanced view. Reopen Settings." else "Simple view")

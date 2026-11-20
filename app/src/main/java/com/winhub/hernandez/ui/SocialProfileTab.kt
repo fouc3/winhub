@@ -183,7 +183,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                SocialButton(if (working) "Saving…" else "Save profile", onClick = { save() }, enabled = !working)
+                SocialButton(if (working) "Saving…" else I18n.s(R.string.ui_save_profile), onClick = { save() }, enabled = !working)
                 SocialButton(I18n.s(R.string.ui_reset_to_github), onClick = { reset() }, primary = false, enabled = canReset)
             }
             message?.let { Text(it, color = cs.onSurfaceVariant, fontSize = 14.sp) }
@@ -224,7 +224,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             enabled = !working,
             modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
             onClick = { save() },
-        ) { Text(if (working) "Saving…" else "Save profile") }
+        ) { Text(if (working) "Saving…" else I18n.s(R.string.ui_save_profile)) }
 
         OutlinedButton(
             enabled = canReset,

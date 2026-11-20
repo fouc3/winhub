@@ -126,10 +126,10 @@ enum class LibraryTypeFilter(val label: String) {
 
     /** Copy shown when this chip matches nothing. */
     fun emptyMessage(): String = when (this) {
-        GAMES -> "No games in your library"
-        DEMOS -> "No demos in your library"
-        INSTALLED -> "Nothing installed yet"
-        ALL -> "No games yet"
+        GAMES -> I18n.s(R.string.ui_no_games_in_your_library)
+        DEMOS -> I18n.s(R.string.ui_no_demos_in_your_library)
+        INSTALLED -> I18n.s(R.string.ui_nothing_installed_yet)
+        ALL -> I18n.s(R.string.ui_no_games_yet)
     }
 
     companion object {
@@ -229,7 +229,7 @@ fun rememberSteamLibrary(): SteamLibraryState {
                     }
                 }
                 event.startsWith("LibrarySynced:") -> {
-                    StorefrontLog.i(StorefrontLog.LIBRARY, "library sync COMPLETED — re-reading cached rows")
+                    StorefrontLog.i(StorefrontLog.LIBRARY, I18n.s(R.string.ui_library_sync_completed_re_reading_cached_rows))
                     // The snapshot's published artwork lands with the sync. Parsing it is a JSON
                     // walk over every owned app, so it goes on a worker rather than the event thread.
                     Thread({ SteamLibraryArt.refreshFromSnapshot(appCtx) }, "SteamArtRefresh")
@@ -279,7 +279,7 @@ fun rememberSteamLibrary(): SteamLibraryState {
         val staleThresholdSec = 4 * 60 * 60L
         val elapsed = System.currentTimeMillis() / 1000L - repo.lastSyncTime
         if (games.isEmpty() || elapsed > staleThresholdSec) {
-            statusText = if (games.isEmpty()) "Syncing library…" else "Refreshing library…"
+            statusText = if (games.isEmpty()) "Syncing library…" else I18n.s(R.string.ui_refreshing_library)
             StorefrontLog.i(
                 StorefrontLog.LIBRARY,
                 "library sync KICKED (cached=${games.size}, ${elapsed}s since last sync)",
@@ -298,7 +298,7 @@ fun rememberSteamLibrary(): SteamLibraryState {
         refresh = {
             StorefrontLog.i(StorefrontLog.LIBRARY, "manual library refresh requested")
             runCatching { SteamRepository.getInstance().syncLibrary() }
-                .onFailure { StorefrontLog.w(StorefrontLog.LIBRARY, "syncLibrary() failed to start", it) }
+                .onFailure { StorefrontLog.w(StorefrontLog.LIBRARY, I18n.s(R.string.ui_synclibrary_failed_to_start), it) }
             Unit
         },
         reload = load,
@@ -347,7 +347,7 @@ fun SteamLibraryTab(
     fun launchInstalled(game: SteamGame) {
         if (game.installDir.isEmpty()) {
             StorefrontLog.w(StorefrontLog.LIBRARY, "launch app ${game.appId} (${game.name}): installDir is EMPTY")
-            onMessage("Install directory not set")
+            onMessage(I18n.s(R.string.ui_install_directory_not_set))
             return
         }
         val installDir = java.io.File(game.installDir)
@@ -418,8 +418,8 @@ fun SteamLibraryTab(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             when {
                 state.games.isEmpty() && !state.isLoading -> StoreNotice(
-                    title = "No games yet",
-                    body = "Nothing in this account's Steam library has synced yet. Pull a fresh sync " +
+                    title = I18n.s(R.string.ui_no_games_yet),
+                    body = I18n.s(R.string.ui_nothing_in_this_account_s_steam_library_has_synced_yet_p) +
                         "with Refresh, or add a free game from the Store tab.",
                     actionLabel = "Refresh",
                     onAction = state.refresh,

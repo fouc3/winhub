@@ -121,7 +121,7 @@ object GogRedistInstaller {
     @JvmStatic
     fun promptContainerAndInstall(activity: Activity, gameId: String) {
         if (!hasPrereqs(activity, gameId)) {
-            mainHandler().post { toast(activity, "No prerequisites needed for this game.") }
+            mainHandler().post { toast(activity, I18n.s(R.string.ui_no_prerequisites_needed_for_this_game)) }
             return
         }
         Thread {
@@ -129,7 +129,7 @@ object GogRedistInstaller {
             mainHandler().post {
                 if (activity.isFinishing || activity.isDestroyed) return@post
                 if (containers.isNullOrEmpty()) {
-                    toast(activity, "Add this game to a container first.")
+                    toast(activity, I18n.s(R.string.ui_add_this_game_to_a_container_first))
                     return@post
                 }
                 if (containers.size == 1) {
@@ -169,7 +169,7 @@ object GogRedistInstaller {
                 val repo = GogDependencyRepository.fetchRepository()
                 debug(app, "repository build_id=${GogDependencyRepository.lastBuildId()} entries=${repo.size}")
                 if (repo.isEmpty()) {
-                    finish(activity, "Couldn't reach GOG's redist repository — launch anyway.")
+                    finish(activity, I18n.s(R.string.ui_couldn_t_reach_gog_s_redist_repository_launch_anyway))
                     return@Thread
                 }
                 val installed = installedMarkers(app, container.id)
@@ -213,7 +213,7 @@ object GogRedistInstaller {
                 for (line in log) debug(app, line)
 
                 if (steps.isEmpty()) {
-                    finish(activity, "Prerequisites already installed (or nothing to do).")
+                    finish(activity, I18n.s(R.string.ui_prerequisites_already_installed_or_nothing_to_do))
                     return@Thread
                 }
 
@@ -239,9 +239,9 @@ object GogRedistInstaller {
                     val res = ComponentExecInstaller.startInstall(app, container, component) {}
                     when (res) {
                         is ComponentExecInstaller.Result.Launched ->
-                            toast(activity, "Installing prerequisites — a setup window will appear.")
+                            toast(activity, I18n.s(R.string.ui_installing_prerequisites_a_setup_window_will_appear))
                         is ComponentExecInstaller.Result.Done ->
-                            toast(activity, "Prerequisites installed.")
+                            toast(activity, I18n.s(R.string.ui_prerequisites_installed))
                         is ComponentExecInstaller.Result.Error -> {
                             debug(app, "startInstall error: ${res.message}")
                             toast(activity, "Couldn't start prerequisite install: ${res.message}")
@@ -250,7 +250,7 @@ object GogRedistInstaller {
                 }
             } catch (e: Exception) {
                 debug(app, "installPrereqs exception: $e")
-                finish(activity, "Prerequisite install error — launch anyway.")
+                finish(activity, I18n.s(R.string.ui_prerequisite_install_error_launch_anyway))
             }
         }.also { it.name = "gog-redist-install" }.start()
     }
@@ -280,7 +280,7 @@ object GogRedistInstaller {
     private fun extractInnerInstaller(
         ctx: Context, wrapper: File, log: ConcurrentLinkedQueue<String>,
     ): Pair<File, String>? {
-        if (!SevenZip.isAvailable(ctx)) { log.add("7z unavailable — no extraction fallback"); return null }
+        if (!SevenZip.isAvailable(ctx)) { log.add(I18n.s(R.string.ui_n7z_unavailable_no_extraction_fallback)); return null }
         val dest = File(ctx.cacheDir, "gog_redist_extract/${wrapper.nameWithoutExtension}").apply {
             deleteRecursively(); mkdirs()
         }

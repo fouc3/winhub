@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -126,15 +129,15 @@ public final class LsfgNative {
             case STATUS_UNREADABLE_FILE:
                 return "Lossless.dll could not be read";
             case STATUS_NOT_PORTABLE_EXECUTABLE:
-                return "That file is not a Windows DLL";
+                return I18n.s(R.string.ui_that_file_is_not_a_windows_dll);
             case STATUS_MISSING_SHADERS:
                 return "This Lossless.dll does not contain the frame-generation shaders";
             case STATUS_TRANSLATION_FAILED:
-                return "The frame-generation shaders could not be translated for this device";
+                return I18n.s(R.string.ui_the_frame_generation_shaders_could_not_be_translated_for);
             case STATUS_CACHE_UNUSABLE:
-                return "The shader cache could not be written";
+                return I18n.s(R.string.ui_the_shader_cache_could_not_be_written);
             default:
-                return "Unknown error";
+                return I18n.s(R.string.ui_unknown_error_2);
         }
     }
 }

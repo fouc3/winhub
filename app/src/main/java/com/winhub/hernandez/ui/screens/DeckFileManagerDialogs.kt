@@ -209,7 +209,7 @@ internal fun DeckFmContextMenu(
         // Favorites are directories: only folders get the pin toggle.
         if (isDir) {
             FmMenuRow(
-                if (isFavorite) "Remove from Favorites" else "Add to Favorites",
+                if (isFavorite) "Remove from Favorites" else I18n.s(R.string.ui_add_to_favorites),
                 if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
                 go(a.toggleFavorite),
             )
@@ -218,7 +218,7 @@ internal fun DeckFmContextMenu(
         // Only real PE executables can become a permanent Games tile (the importer execs `wine <path>`).
         if (!isDir && lower.endsWith(".exe")) FmMenuRow("Add to Shortcuts", Icons.Filled.Add, go(a.addToShortcuts))
         if (archive) {
-            FmMenuRow(if (isInno) "Unpack / Install…" else "Unpack Archive…", Icons.Filled.Unarchive, go(a.unpack))
+            FmMenuRow(if (isInno) "Unpack / Install…" else I18n.s(R.string.ui_unpack_archive), Icons.Filled.Unarchive, go(a.unpack))
             FmMenuRow(I18n.s(R.string.ui_fast_extract), Icons.Filled.Bolt, go(a.fastExtract))
         }
         FmMenuRow(I18n.s(R.string.ui_rename_2), Icons.Filled.Edit, go(a.rename))
@@ -245,7 +245,7 @@ internal fun DeckFmOptionsDialog(
     onDismiss: () -> Unit,
 ) {
     DeckFmDialog(title = I18n.s(R.string.ui_sort_view), onDismiss = onDismiss, dismissLabel = "Done") {
-        FmSectionLabel("SORT BY")
+        FmSectionLabel(I18n.s(R.string.ui_sort_by))
         listOf("name" to I18n.s(R.string.name), "date" to I18n.s(R.string.ui_date_modified), "size" to "Size").forEach { (key, label) ->
             val on = sortBy == key
             FmMenuRow(
@@ -264,7 +264,7 @@ internal fun DeckFmOptionsDialog(
         }
         FmSectionLabel("LAYOUT")
         FmMenuRow(
-            label = if (gridView) "Show as list" else "Show as grid",
+            label = if (gridView) "Show as list" else I18n.s(R.string.ui_show_as_grid),
             icon = if (gridView) Icons.Filled.ViewList else Icons.Filled.GridView,
             onClick = onGrid,
         )
@@ -306,7 +306,7 @@ internal fun DeckFmConflictDialog(
     DeckFmDialog(
         title = "\"${conflict.name}\" already exists",
         subtitle = if (isDir) "Merge adds and replaces files inside the existing folder."
-        else "Overwrite replaces the existing file.",
+        else I18n.s(R.string.ui_overwrite_replaces_the_existing_file),
         onDismiss = onCancel,
     ) {
         if (batch) FmCheckRow(I18n.s(R.string.ui_apply_to_all_conflicts), Icons.Filled.Checklist, applyToAll) { onApplyToAll(!applyToAll) }
@@ -373,7 +373,7 @@ internal fun DeckFmPropertiesDialog(
                             attrs = attrs?.copy(readOnly = want)
                             onChanged()
                         } else {
-                            Toast.makeText(context, "Couldn't change Read-only", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_couldn_t_change_read_only), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -384,7 +384,7 @@ internal fun DeckFmPropertiesDialog(
         DeckRow(
             label = "Hidden",
             hint = if (state != null && !hiddenSupported) "This storage can't store the hidden flag."
-            else "Marks the file hidden in Windows (Wine's hidden attribute).",
+            else I18n.s(R.string.ui_marks_the_file_hidden_in_windows_wine_s_hidden_attrib),
         ) {
             Box(Modifier.alpha(if (hiddenEnabled) 1f else 0.4f)) {
                 DeckToggle(checked = state?.hidden == true) { want ->
@@ -399,7 +399,7 @@ internal fun DeckFmPropertiesDialog(
                         } else {
                             // The write failed after all: disable the toggle rather than lie.
                             attrs = attrs?.copy(hiddenSupported = false)
-                            Toast.makeText(context, "Couldn't change Hidden on this storage", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_couldn_t_change_hidden_on_this_storage), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

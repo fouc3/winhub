@@ -445,7 +445,7 @@ internal fun StepHeading(step: Int, title: String, lede: String, recommended: Bo
 @Composable
 private fun LayoutStep(selected: String, modifier: Modifier, onPick: (String) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
-        StepHeading(LAYOUT, "How do you play?", "Pick the layout that fits how you hold your device. Landscape is the better choice if you want a console experience.")
+        StepHeading(LAYOUT, I18n.s(R.string.ui_how_do_you_play), I18n.s(R.string.ui_pick_the_layout_that_fits_how_you_hold_your_device_lands))
         WizChoice(
             title = I18n.s(R.string.ui_landscape),
             body = I18n.s(R.string.ui_controller_dock_or_tv_side_rail_wide_grid_button_hint),
@@ -539,7 +539,7 @@ private fun ThemeStep(wide: Boolean, modifier: Modifier) {
     val customAccent by AppThemeState.customAccent.collectAsState()
     val columns = if (wide) 4 else 2
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
-        StepHeading(THEME, "Pick your look", "The whole app follows this theme. This screen already does, so try a few.")
+        StepHeading(THEME, I18n.s(R.string.ui_pick_your_look), I18n.s(R.string.ui_the_whole_app_follows_this_theme_this_screen_already_doe))
         themePresets.withIndex().chunked(columns).forEach { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
                 row.forEach { (index, preset) ->
@@ -706,7 +706,7 @@ private fun MiniDeckPreview(portrait: Boolean, compact: Boolean, modifier: Modif
 private fun ContentsStep(vm: FirstRunViewModel, hub: ContentsHubViewModel, modifier: Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
         StepHeading(
-            CONTENTS, "Extra contents",
+            CONTENTS, I18n.s(R.string.ui_extra_contents),
             "The same browser as the Contents tab. GE-Proton 11, DXVK, FEXCore, VKD3D and the GPU driver for your chip are always installed. Tick anything else you want now.",
         )
         ContentsBrowser(vm, hub, Modifier.weight(1f).fillMaxWidth())
@@ -737,7 +737,7 @@ private fun ContentsBrowser(vm: FirstRunViewModel, hub: ContentsHubViewModel, mo
                         color = DeckPalette.onBackground, fontSize = 14.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
                     )
-                    DeckIconAction(Icons.Filled.Close, "Clear search") { hub.setQuery("") }
+                    DeckIconAction(Icons.Filled.Close, I18n.s(R.string.social_hub_search_clear)) { hub.setQuery("") }
                 }
                 Spacer(Modifier.height(8.dp))
                 if (searching) BrowserNote(I18n.s(R.string.ui_loading))
@@ -1007,7 +1007,7 @@ private fun SocialStep(vm: FirstRunViewModel, modifier: Modifier) {
     LaunchedEffect(Unit) { SocialHubStore.init(ctx) }
 
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
-        StepHeading(SOCIAL, "Connect to Social Hub", "Find configs that already work on your device, and share yours.", recommended = true)
+        StepHeading(SOCIAL, I18n.s(R.string.ui_connect_to_social_hub), I18n.s(R.string.ui_find_configs_that_already_work_on_your_device_and_share), recommended = true)
         val acct = account
         when {
             acct != null -> ConnectedCard(acct) { SocialHubStore.signOut() }
@@ -1017,7 +1017,7 @@ private fun SocialStep(vm: FirstRunViewModel, modifier: Modifier) {
                 CodeCard(waiting, onOpen = { openUrl(ctx, waiting.verificationUri) }, onCancel = { SocialHubStore.cancelLogin() })
             }
             login is SocialHubStore.LoginState.Failed -> StatusCard(
-                (login as SocialHubStore.LoginState.Failed).message, "Try again",
+                (login as SocialHubStore.LoginState.Failed).message, I18n.s(R.string.gog_login_retry),
             ) { SocialHubStore.beginLogin() }
             else -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (skipped) {
@@ -1099,10 +1099,10 @@ private fun StatusCard(message: String, action: String?, onAction: () -> Unit = 
 @Composable
 private fun SocialPerks(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
-        DeckGroup("What you get") {
-            DeckRow(I18n.s(R.string.ui_import_configs), "Community settings for your game and hardware, in one tap.") {}
-            DeckRow(I18n.s(R.string.ui_share_your_own), "Publish what works and see who used it.") {}
-            DeckRow(I18n.s(R.string.ui_join_in), "Post, reply, vote and follow what is working right now.") {}
+        DeckGroup(I18n.s(R.string.ui_what_you_get)) {
+            DeckRow(I18n.s(R.string.ui_import_configs), I18n.s(R.string.ui_community_settings_for_your_game_and_hardware_in_one_tap)) {}
+            DeckRow(I18n.s(R.string.ui_share_your_own), I18n.s(R.string.ui_publish_what_works_and_see_who_used_it)) {}
+            DeckRow(I18n.s(R.string.ui_join_in), I18n.s(R.string.ui_post_reply_vote_and_follow_what_is_working_right_now)) {}
         }
     }
 }
@@ -1129,6 +1129,6 @@ private fun openUrl(context: Context, url: String) {
     try {
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     } catch (e: ActivityNotFoundException) {
-        Toast.makeText(context, "No browser to open GitHub with.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_no_browser_to_open_github_with), Toast.LENGTH_SHORT).show()
     }
 }

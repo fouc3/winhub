@@ -702,7 +702,7 @@ internal fun DeckHubGamePage(
                     .fillMaxHeight(),
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DeckHubStat("Hours played", hours)
+                    DeckHubStat(I18n.s(R.string.xmb_fr_stat_hours), hours)
                     DeckHubStat("Source", origin)
                 }
                 DeckScoresRow(scores, Modifier.padding(top = 10.dp))
@@ -829,13 +829,13 @@ internal fun DeckAddModeMenu(onPick: (HubAddMode) -> Unit, onDismiss: () -> Unit
             )
             DeckAddModeCard(
                 title = I18n.s(R.string.ui_master_containers),
-                desc = "Add it as a shortcut inside a container you already have.",
+                desc = I18n.s(R.string.ui_add_it_as_a_shortcut_inside_a_container_you_already_have),
                 icon = Icons.Filled.Layers,
             ) { onPick(HubAddMode.MASTER) }
             Spacer(Modifier.height(10.dp))
             DeckAddModeCard(
                 title = I18n.s(R.string.ui_cronos),
-                desc = "A fresh dedicated container built just for this game — one game, one container.",
+                desc = I18n.s(R.string.ui_a_fresh_dedicated_container_built_just_for_this_game_one),
                 icon = Icons.Filled.SportsEsports,
             ) { onPick(HubAddMode.CRONOS) }
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -1154,7 +1154,7 @@ internal fun DeckLaunchMethodDialog(
     shortcut: Shortcut,
     onDismiss: () -> Unit,
     steamOverride: Boolean? = null,
-    heading: String = "Choose how to launch",
+    heading: String = I18n.s(R.string.ui_choose_how_to_launch),
     confirmLabel: String = "Launch",
     onLaunch: (mode: String, goldbergMode: GoldbergMode?, remember: Boolean) -> Unit,
 ) {
@@ -1178,9 +1178,9 @@ internal fun DeckLaunchMethodDialog(
     var rememberChoice by remember(shortcut) { mutableStateOf(shortcut.getExtra("launchModeRemembered", "") == "1") }
 
     val methods = listOf(
-        Triple("RealSteam", "SteamLite", "Real Steam client - online, VAC, cloud saves"),
-        Triple("Goldberg", "Goldberg", "Offline Steam emulator - no login"),
-        Triple("Raw", "Raw .exe", "Run the game directly - no Steam layer"),
+        Triple("RealSteam", "SteamLite", I18n.s(R.string.ui_real_steam_client_online_vac_cloud_saves)),
+        Triple("Goldberg", "Goldberg", I18n.s(R.string.ui_offline_steam_emulator_no_login)),
+        Triple("Raw", "Raw .exe", I18n.s(R.string.ui_run_the_game_directly_no_steam_layer)),
     )
 
     val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -1377,7 +1377,7 @@ internal fun DeckLaunchStack(
         }
         if (!GoldbergComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "Steam Emulator (Goldberg)"
+            componentDownloadLabel = I18n.s(R.string.ui_steam_emulator_goldberg)
             componentDownloadProgress = 0f
             GoldbergComponent.downloadAsync(
                 context,
@@ -1394,7 +1394,7 @@ internal fun DeckLaunchStack(
     fun launchWithSteamLite(s: Shortcut) {
         if (!SteamLiteComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "SteamLite (Real Steam / VAC)"
+            componentDownloadLabel = I18n.s(R.string.ui_steamlite_real_steam_vac)
             componentDownloadProgress = 0f
             SteamLiteComponent.downloadAsync(
                 context,

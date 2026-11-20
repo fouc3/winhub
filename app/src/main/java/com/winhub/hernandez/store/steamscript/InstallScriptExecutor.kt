@@ -172,7 +172,7 @@ object InstallScriptExecutor {
                     // EA's MSI custom actions (64-bit msiexec) load mshtml → real Gecko for both arches,
                     // else the install dies 0x8007065b / stalls on Wine's Gecko download dialog.
                     val msis = EaSupport.stageGeckoMsis(context, container)
-                    if (msis.isEmpty()) return Result.Error("Wine Gecko is required but could not be downloaded")
+                    if (msis.isEmpty()) return Result.Error(I18n.s(R.string.ui_wine_gecko_is_required_but_could_not_be_downloaded))
                     for (m in msis) preMsis += staging + m.name
                     Log.i(TAG, "Run-Process needs Wine Gecko (container ${container.id}) — staged ${msis.map { it.name }}")
                 }
@@ -337,7 +337,7 @@ object InstallScriptExecutor {
             r
         } catch (e: Exception) {
             clearPending(context)
-            Log.w(TAG, "resumePending failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_resumepending_failed), e)
             Result.Error(e.message ?: e.javaClass.simpleName)
         }
     }
@@ -450,7 +450,7 @@ object InstallScriptExecutor {
             lines += "title WinHub setup - ${rp.name}"
             lines += "if exist $exitMarker del $exitMarker"
             lines += "echo WinHub: running the Steam install script step \"${rp.name}\"."
-            lines += "echo This window closes by itself when everything has finished. Please wait."
+            lines += I18n.s(R.string.ui_echo_this_window_closes_by_itself_when_everything_has_fi)
             val total = preMsis.size + 1
             preMsis.forEachIndexed { i, msi ->
                 val name = msi.substringAfterLast('\\')
@@ -481,7 +481,7 @@ object InstallScriptExecutor {
             val guardKey = guard?.substringBeforeLast('\\', "")?.takeIf { it.isNotEmpty() }
             val guardName = guard?.substringAfterLast('\\')
             lines += "echo."
-            lines += "echo Waiting for the installer to finish - follow its prompts if it shows any..."
+            lines += I18n.s(R.string.ui_echo_waiting_for_the_installer_to_finish_follow_its_prom)
             lines += "set BL_N=0"
             lines += "set BL_MISS=0"
             lines += ":bl_wait"
@@ -491,13 +491,13 @@ object InstallScriptExecutor {
             }
             lines += "tasklist 2>nul | findstr /i $procPattern >nul 2>&1"
             lines += "if errorlevel 1 (set /a BL_MISS+=1) else (set BL_MISS=0)"
-            lines += "if %BL_MISS% GEQ 12 goto bl_done"
+            lines += I18n.s(R.string.ui_if_bl_miss_geq_12_goto_bl_done)
             lines += "set /a BL_N+=1"
-            lines += "if %BL_N% GEQ 180 goto bl_done"
+            lines += I18n.s(R.string.ui_if_bl_n_geq_180_goto_bl_done)
             lines += "timeout /t 5 /nobreak >nul 2>&1"
             lines += "goto bl_wait"
             lines += ":bl_done"
-            lines += "echo Installer finished. Closing this window..."
+            lines += I18n.s(R.string.ui_echo_installer_finished_closing_this_window)
             bat.writeText(lines.joinToString("\r\n") + "\r\n", Charsets.US_ASCII.takeIf { lines.all { l -> l.all { c -> c.code < 128 } } } ?: Charsets.UTF_8)
 
             val batWin = "C:\\" + bat.name
@@ -564,7 +564,7 @@ object InstallScriptExecutor {
             }
             if (!dstExe.isFile) return plain
         } catch (e: Exception) {
-            Log.w(TAG, "alias copy failed, using the real path", e); return plain
+            Log.w(TAG, I18n.s(R.string.ui_alias_copy_failed_using_the_real_path), e); return plain
         }
         return "C:\\bl_installscript\\$alias\\" + rel.replace('/', '\\')
     }
@@ -580,7 +580,7 @@ object InstallScriptExecutor {
             processes: List<InstallScriptModel.RunProcess>, tokens: InstallScriptTokens,
             preMsis: List<String>,
         ): Boolean {
-            Log.d(TAG, "Run-Process skipped (pre-baked container backend)")
+            Log.d(TAG, I18n.s(R.string.ui_run_process_skipped_pre_baked_container_backend))
             return false
         }
     }

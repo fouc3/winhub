@@ -1,5 +1,8 @@
 package com.winhub.hernandez.wayland;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -24,7 +27,7 @@ import android.util.Log;
 public final class WaylandClipboardSync implements WaylandCompositor.ClipboardListener,
         WaylandCompositor.ClipboardRequestListener, ClipboardManager.OnPrimaryClipChangedListener {
     private static final String TAG = "WaylandClipboard";
-    private static final String GUEST_LABEL = "Wayland guest";
+    private static final String GUEST_LABEL = I18n.s(R.string.ui_wayland_guest);
 
     private final Context context;
     private final ClipboardManager clipboard;

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.contents.AdrenotoolsManager
@@ -30,22 +33,22 @@ object FastOpenGL {
     private const val TAG = "FastOpenGL"
 
     const val EXTRA = "fastOpenGL"
-    const val TITLE = "Fast OpenGL"
+    const val TITLE = I18n.s(R.string.ui_fast_opengl)
     const val HINT = "Faster OpenGL games, and DirectDraw / older Direct3D games through WineD3D."
-    const val NEEDS_TURNIP = "Needs a Turnip driver"
-    const val NOT_BUNDLED = "Not in this build"
-    const val WAYLAND_ALWAYS_ON = "Always on with Wayland"
+    const val NEEDS_TURNIP = I18n.s(R.string.ui_needs_a_turnip_driver)
+    const val NOT_BUNDLED = I18n.s(R.string.ui_not_in_this_build)
+    const val WAYLAND_ALWAYS_ON = I18n.s(R.string.ui_always_on_with_wayland)
 
     // Two plain OpenGL launch switches that sit with Fast OpenGL in the editors. Independent of it:
     // both reach Mesa on either path (GLX or EGL) and on Wayland, so they are never greyed.
     /** "Show OpenGL FPS": GALLIUM_HUD=fps, Mesa's fps counter in the game's top-left corner. */
     @JvmField val FPS_HUD = GlLaunchSwitch(
-        "glFpsHud", "Show OpenGL FPS", "Mesa's fps counter in the corner of OpenGL games.",
+        "glFpsHud", I18n.s(R.string.ui_show_opengl_fps), I18n.s(R.string.ui_mesa_s_fps_counter_in_the_corner_of_opengl_games),
         defaultOn = false, envName = "GALLIUM_HUD", envValue = "fps")
 
     /** "OpenGL vsync off": vblank_mode=0, so a GL game's SwapBuffers stops waiting for the refresh. */
     @JvmField val VSYNC_OFF = GlLaunchSwitch(
-        "glVsyncOff", "OpenGL vsync off",
+        "glVsyncOff", I18n.s(R.string.ui_opengl_vsync_off),
         "Lets OpenGL games run above the screen's refresh rate. Very old games that tie game speed to " +
             "frame rate may run too fast: use the FPS limiter.",
         defaultOn = false, envName = "vblank_mode", envValue = "0")

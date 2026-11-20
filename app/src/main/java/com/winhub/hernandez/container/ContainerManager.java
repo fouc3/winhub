@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -142,7 +145,7 @@ public class ContainerManager {
                 }
             }
         } catch (JSONException | NullPointerException e) {
-            Log.e("ContainerManager", "Error loading containers", e);
+            Log.e("ContainerManager", I18n.s(R.string.ui_error_loading_containers), e);
         }
     }
 
@@ -251,7 +254,7 @@ public class ContainerManager {
             container.setBasePrefix(ContainerOverlay.canonicalHostPath(baseWine));
             return true;
         }
-        Log.w("ContainerManager", "Thin prefix creation failed, using a full prefix for " + container.id);
+        Log.w("ContainerManager", I18n.s(R.string.ui_thin_prefix_creation_failed_using_a_full_prefix_for) + container.id);
         FileUtils.delete(wineDir);
         return false;
     }
@@ -273,7 +276,7 @@ public class ContainerManager {
             return null;
         }
         if (skipped[0] > 0)
-            Log.w("ContainerManager", "Container duplicate skipped " + skipped[0] + " unreadable file(s)");
+            Log.w("ContainerManager", I18n.s(R.string.ui_container_duplicate_skipped) + skipped[0] + I18n.s(R.string.ui_unreadable_file_s));
 
         Container dstContainer = new Container(id, this);
         dstContainer.setRootDir(dstDir);
@@ -289,7 +292,7 @@ public class ContainerManager {
             data.put("id", id);
             dstContainer.loadData(data);
         } catch (JSONException e) {
-            Log.e("ContainerManager", "Failed to copy container config during duplicate", e);
+            Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_copy_container_config_during_duplicate), e);
             FileUtils.delete(dstDir);
             return null;
         }
@@ -308,7 +311,7 @@ public class ContainerManager {
 
     /** Desktop .lnk names written by store clients we install on the game's behalf — not games. */
     private static final java.util.Set<String> VENDOR_CLIENT_LNK = new java.util.HashSet<>(Arrays.asList(
-            "EA", "EA app", "EA Desktop", "EA app Updater", "App Recovery", "EA Error Reporter", "Origin",
+            "EA", "EA app", "EA Desktop", I18n.s(R.string.ui_ea_app_updater), I18n.s(R.string.ui_app_recovery), I18n.s(R.string.ui_ea_error_reporter), "Origin",
             "Ubisoft Connect", "Uplay"));
 
     public ArrayList<Shortcut> loadShortcuts() {
@@ -362,7 +365,7 @@ public class ContainerManager {
             return new Shortcut(container, file);
         }
         catch (RuntimeException e) {
-            Log.w("ContainerManager", "Skipping unreadable shortcut " + file.getPath() + ": " + e);
+            Log.w("ContainerManager", I18n.s(R.string.ui_skipping_unreadable_shortcut) + file.getPath() + ": " + e);
             return null;
         }
     }
@@ -529,7 +532,7 @@ public class ContainerManager {
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 if (!importDir.exists() || !importDir.isDirectory()) {
-                    Log.e("ContainerManager", "Invalid container directory for import: " + importDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_invalid_container_directory_for_import) + importDir.getPath());
                     return;
                 }
 
@@ -539,19 +542,19 @@ public class ContainerManager {
                 File newContainerDir = new File(homeDir, newContainerName);
 
                 if (newContainerDir.exists()) {
-                    Log.e("ContainerManager", "Container directory already exists: " + newContainerDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_container_directory_already_exists) + newContainerDir.getPath());
                     return;
                 }
 
                 if (!newContainerDir.mkdirs()) {
-                    Log.e("ContainerManager", "Failed to create directory: " + newContainerDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_create_directory) + newContainerDir.getPath());
                     return;
                 }
 
                 // Copy the files from the import directory to the new container directory
                 if (!FileUtils.copy(importDir, newContainerDir, file -> FileUtils.chmod(file, 0771))) {
                     FileUtils.delete(newContainerDir);
-                    Log.e("ContainerManager", "Failed to copy container files to: " + newContainerDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_copy_container_files_to) + newContainerDir.getPath());
                     return;
                 }
 
@@ -563,13 +566,13 @@ public class ContainerManager {
                 containers.add(newContainer);
                 maxContainerId++;
 
-                Log.d("ContainerManager", "Container imported successfully to: " + newContainerDir.getPath());
+                Log.d("ContainerManager", I18n.s(R.string.ui_container_imported_successfully_to) + newContainerDir.getPath());
                 // Make sure to run the callback after successful import
                 if (callback != null) {
                     callback.run();
                 }
             } catch (Exception e) {
-                Log.e("ContainerManager", "Failed to import container from: " + importDir.getPath(), e);
+                Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_import_container_from) + importDir.getPath(), e);
             }
         });
     }
@@ -581,7 +584,7 @@ public class ContainerManager {
                 File exportDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Winlator/Backups/Containers");
 
                 if (!exportDir.exists() && !exportDir.mkdirs()) {
-                    Log.e("ContainerManager", "Failed to create export directory: " + exportDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_create_export_directory) + exportDir.getPath());
                     runOnUiThread(() -> callback.run()); // Close the preloader dialog
                     return;
                 }
@@ -590,13 +593,13 @@ public class ContainerManager {
                 File destinationDir = new File(exportDir, containerDir.getName());
 
                 if (destinationDir.exists()) {
-                    Log.e("ContainerManager", "Export directory already exists: " + destinationDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_export_directory_already_exists) + destinationDir.getPath());
                     runOnUiThread(() -> callback.run()); // Close the preloader dialog
                     return;
                 }
 
                 if (!destinationDir.mkdirs()) {
-                    Log.e("ContainerManager", "Failed to create directory: " + destinationDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_create_directory) + destinationDir.getPath());
                     runOnUiThread(() -> callback.run()); // Close the preloader dialog
                     return;
                 }
@@ -609,13 +612,13 @@ public class ContainerManager {
                 if (!FileUtils.copyContainer(containerDir, destinationDir,
                         containerDir.getAbsolutePath(), destinationDir.getAbsolutePath(),
                         file -> FileUtils.chmod(file, 0771))) {
-                    Log.e("ContainerManager", "Failed to export container files to: " + destinationDir.getPath());
+                    Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_export_container_files_to) + destinationDir.getPath());
                     FileUtils.delete(destinationDir); // Optional: Delete partially copied directory
                 }
 
-                Log.d("ContainerManager", "Container exported successfully to: " + destinationDir.getPath());
+                Log.d("ContainerManager", I18n.s(R.string.ui_container_exported_successfully_to) + destinationDir.getPath());
             } catch (Exception e) {
-                Log.e("ContainerManager", "Failed to export container: " + container.getName(), e);
+                Log.e("ContainerManager", I18n.s(R.string.ui_failed_to_export_container) + container.getName(), e);
             } finally {
                 runOnUiThread(callback); // Ensure the callback runs and preloader dialog closes
             }

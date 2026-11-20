@@ -132,7 +132,7 @@ class EpicFreeGamesActivity : ComponentActivity() {
                     ?.optJSONArray("elements")
 
                 if (elements == null) {
-                    withContext(Dispatchers.Main) { setStatus("No data returned from Epic", false) }
+                    withContext(Dispatchers.Main) { setStatus(I18n.s(R.string.ui_no_data_returned_from_epic), false) }
                     return@launch
                 }
 
@@ -233,7 +233,7 @@ class EpicFreeGamesActivity : ComponentActivity() {
                     upcomingFree = upcoming
                     isLoading = false
                     if (current.isEmpty() && upcoming.isEmpty()) {
-                        setStatus("No free games available right now", false)
+                        setStatus(I18n.s(R.string.ui_no_free_games_available_right_now), false)
                     } else {
                         setStatus(
                             "${current.size} free now" +
@@ -244,7 +244,7 @@ class EpicFreeGamesActivity : ComponentActivity() {
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "fetchFreeGames failed: ${e.message}")
-                withContext(Dispatchers.Main) { setStatus("Failed to load free games", false) }
+                withContext(Dispatchers.Main) { setStatus(I18n.s(R.string.ui_failed_to_load_free_games), false) }
             }
         }
     }
@@ -348,7 +348,7 @@ private fun EpicFreeGamesScreen(
         ) {
             if (currentFree.isNotEmpty()) {
                 item {
-                    SectionLabel("FREE THIS WEEK", Color(0xFF00C853))
+                    SectionLabel(I18n.s(R.string.ui_free_this_week), Color(0xFF00C853))
                 }
                 items(currentFree, key = { it.title + "_current" }) { game ->
                     FreeGameCard(game = game, isFree = true, onClick = { onGameClick(game) })
@@ -356,7 +356,7 @@ private fun EpicFreeGamesScreen(
             }
             if (upcomingFree.isNotEmpty()) {
                 item {
-                    SectionLabel("FREE NEXT WEEK", Color(0xFFFFAA00))
+                    SectionLabel(I18n.s(R.string.ui_free_next_week), Color(0xFFFFAA00))
                 }
                 items(upcomingFree, key = { it.title + "_upcoming" }) { game ->
                     FreeGameCard(game = game, isFree = false, onClick = { onGameClick(game) })

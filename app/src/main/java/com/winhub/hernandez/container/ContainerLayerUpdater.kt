@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.contents.ContentProfile
@@ -202,7 +205,7 @@ class ContainerLayerUpdater(private val context: Context) {
     ): Result<Pair<Snapshot, Int>> {
         val time = System.currentTimeMillis()
         val snapshotDir = File(container.rootDir, "$BACKUP_DIR/$time")
-        if (!snapshotDir.mkdirs()) return fail("Couldn't create the backup folder")
+        if (!snapshotDir.mkdirs()) return fail(I18n.s(R.string.ui_couldn_t_create_the_backup_folder))
         for (rel in SNAPSHOT_FILES) {
             val src = File(container.rootDir, rel)
             if (src.isFile && !FileUtils.copy(src, File(snapshotDir, rel))) {

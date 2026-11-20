@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFormat
@@ -60,7 +63,7 @@ internal class DeckSoundMixer private constructor(private val clips: Array<Short
                 .setBufferSizeInBytes(maxOf(minBytes, CHUNK * 2 * 2))
                 .build()
         } catch (e: Exception) {
-            Log.e(TAG, "Could not open the sound output; navigation sounds fall back to the phone's", e)
+            Log.e(TAG, I18n.s(R.string.ui_could_not_open_the_sound_output_navigation_sounds_fall_b), e)
             failed = true
             return
         }
@@ -98,9 +101,9 @@ internal class DeckSoundMixer private constructor(private val clips: Array<Short
                 track.stop()
             }
         } catch (e: InterruptedException) {
-            Log.w(TAG, "Sound thread interrupted", e)
+            Log.w(TAG, I18n.s(R.string.ui_sound_thread_interrupted), e)
         } catch (e: Exception) {
-            Log.e(TAG, "Sound output failed; navigation sounds fall back to the phone's", e)
+            Log.e(TAG, I18n.s(R.string.ui_sound_output_failed_navigation_sounds_fall_back_to_the_p), e)
             failed = true
         } finally {
             runCatching { track.release() }
@@ -118,7 +121,7 @@ internal class DeckSoundMixer private constructor(private val clips: Array<Short
             val clips = try {
                 Array(ids.size) { i -> context.resources.openRawResource(ids[i]).use { decodeWav(it.readBytes()) } }
             } catch (e: Exception) {
-                Log.e(TAG, "Could not read the navigation sound clips", e)
+                Log.e(TAG, I18n.s(R.string.ui_could_not_read_the_navigation_sound_clips), e)
                 return null
             }
             return DeckSoundMixer(clips)
@@ -145,7 +148,7 @@ internal class DeckSoundMixer private constructor(private val clips: Array<Short
                 }
                 p += 8 + size + (size and 1)
             }
-            throw IllegalArgumentException("No data chunk in the WAV")
+            throw IllegalArgumentException(I18n.s(R.string.ui_no_data_chunk_in_the_wav))
         }
     }
 }

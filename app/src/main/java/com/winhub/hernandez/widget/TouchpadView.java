@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -266,15 +269,15 @@ public class TouchpadView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_HOVER_ENTER:
-                Log.d("StylusEvent", "Hover Enter");
+                Log.d("StylusEvent", I18n.s(R.string.ui_hover_enter));
                 break;
             case MotionEvent.ACTION_HOVER_MOVE:
-                Log.d("StylusEvent", "Hover Move: (" + event.getX() + ", " + event.getY() + ")");
+                Log.d("StylusEvent", I18n.s(R.string.ui_hover_move) + event.getX() + ", " + event.getY() + ")");
                 float[] transformedPoint = XForm.transformPoint(xform, event.getX(), event.getY());
                 xServer.injectPointerMove((int) transformedPoint[0], (int) transformedPoint[1]);
                 break;
             case MotionEvent.ACTION_HOVER_EXIT:
-                Log.d("StylusEvent", "Hover Exit");
+                Log.d("StylusEvent", I18n.s(R.string.ui_hover_exit));
                 break;
             default:
                 return false;

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 
 import com.winhub.hernandez.contents.ContentsManager;
@@ -55,7 +58,7 @@ public final class WineRandrSupport {
         boolean capable = false;
         if (winex11.isFile()) {
             boolean hasXrandr = fileContainsAny(winex11, "libXrandr.so", "RRQueryVersion");
-            boolean notCompiledIn = fileContainsAny(winex11, "XRandR support not compiled in.");
+            boolean notCompiledIn = fileContainsAny(winex11, I18n.s(R.string.ui_xrandr_support_not_compiled_in));
             capable = hasXrandr && !notCompiledIn;
         }
         cache.put(cacheKey, capable);

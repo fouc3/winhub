@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core.unpack
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Build
 import android.os.Environment
@@ -72,7 +75,7 @@ object FastExtract {
                 }
                 // srep / unarc-unavailable: a silent file extract is impossible — show the container card.
                 SevenZip.InnoRoute.CONTAINER_ONLY ->
-                    Outcome.OpenScreen(file.absolutePath, "This repack needs the container installer — opening Unpack")
+                    Outcome.OpenScreen(file.absolutePath, I18n.s(R.string.ui_this_repack_needs_the_container_installer_opening_unpack))
             }
         }
 

@@ -310,7 +310,7 @@ class AmazonGameDetailActivity : ComponentActivity() {
             val token = AmazonCredentialStore.getValidAccessToken(appCtx)
             if (token == null) {
                 withContext(Dispatchers.Main) {
-                    onInstallError("Login required")
+                    onInstallError(I18n.s(R.string.ui_login_required))
                 }
                 return@launch
             }
@@ -368,14 +368,14 @@ class AmazonGameDetailActivity : ComponentActivity() {
                 return@launch
             }
             if (!ok) {
-                withContext(Dispatchers.Main) { onInstallError("Download failed") }
+                withContext(Dispatchers.Main) { onInstallError(I18n.s(R.string.xmb_dl_status_failed)) }
                 return@launch
             }
 
             val exeFiles = mutableListOf<File>()
             AmazonLaunchHelper.collectExe(installDir, exeFiles)
             if (exeFiles.isEmpty()) {
-                withContext(Dispatchers.Main) { onInstallError("No executable found") }
+                withContext(Dispatchers.Main) { onInstallError(I18n.s(R.string.ui_no_executable_found)) }
                 return@launch
             }
 
@@ -557,7 +557,7 @@ class AmazonGameDetailActivity : ComponentActivity() {
                 if (token == null) {
                     withContext(Dispatchers.Main) {
                         checkUpdatesEnabled = true
-                        updateStatusText = "Login required."
+                        updateStatusText = I18n.s(R.string.ui_login_required_2)
                     }
                     return@launch
                 }
@@ -566,7 +566,7 @@ class AmazonGameDetailActivity : ComponentActivity() {
                 withContext(Dispatchers.Main) {
                     checkUpdatesEnabled = true
                     if (latestVer.isNullOrEmpty()) {
-                        updateStatusText = "Could not reach update server."
+                        updateStatusText = I18n.s(R.string.ui_could_not_reach_update_server)
                         return@withContext
                     }
                     val stored = prefs!!.getString(
@@ -790,10 +790,10 @@ private fun AmazonGameDetailScreen(
     }
     val gear = buildList {
         // onInstallClick doubles as Cancel while the label reads "Cancel".
-        if (downloading) add(StoreGearItem("🗑", "Cancel download", danger = true, onClick = onInstallClick))
+        if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstallClick))
         if (setExeBtnVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExeClick))
-        if (installed) add(StoreGearItem("🔄", "Check for updates", enabled = checkUpdatesEnabled, onClick = onCheckUpdatesClick))
-        if (updateBtnVisible) add(StoreGearItem("⬆️", "Update now", onClick = onUpdateNowClick))
+        if (installed) add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdatesEnabled, onClick = onCheckUpdatesClick))
+        if (updateBtnVisible) add(StoreGearItem("⬆️", I18n.s(R.string.ui_update_now), onClick = onUpdateNowClick))
         if (uninstallBtnVisible) add(StoreGearItem("🗑️", "Uninstall", danger = true, onClick = onUninstallClick))
     }
     val dlcCount = remember(dlcJson) {
@@ -969,7 +969,7 @@ private fun AmazonDlcContent(
         val dlc = dlcArr.optJSONObject(i) ?: continue
         val dlcEid = dlc.optString("eid", "")
         val dlcPid = dlc.optString("pid", "")
-        val dlcTitleText = dlc.optString("title", "Unknown DLC")
+        val dlcTitleText = dlc.optString("title", I18n.s(R.string.ui_unknown_dlc))
 
         val dlcInstalled = dlcPid.isNotEmpty() &&
             prefs.getString("amazon_exe_$dlcPid", null) != null

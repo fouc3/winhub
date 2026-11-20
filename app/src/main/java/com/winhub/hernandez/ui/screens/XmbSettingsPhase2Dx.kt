@@ -112,14 +112,14 @@ private fun p2WineD3DMenu(xmb: XmbScope, s: Shortcut): XmbMenu {
             }
         } else rows += XmbRow.Info(I18n.s(R.string.ui_gpuloading), ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard, "Loading…")
         if (ddraEntries.isNotEmpty()) {
-            rows += XmbRow.Choice("ddraw", "DDraw Wrapper", Icons.Filled.Layers, ddraEntries, cur.ddra) { v -> write(sel().copy(ddra = v)) }
+            rows += XmbRow.Choice("ddraw", I18n.s(R.string.ddraw_wrapper), Icons.Filled.Layers, ddraEntries, cur.ddra) { v -> write(sel().copy(ddra = v)) }
         }
         if (videoMemEntries.isNotEmpty()) {
-            rows += XmbRow.Choice(I18n.s(R.string.ui_videomem), ctx.getString(R.string.graphics_driver_max_device_memory), Icons.Filled.Memory,
+            rows += XmbRow.Choice("videoMem", ctx.getString(R.string.graphics_driver_max_device_memory), Icons.Filled.Memory,
                 videoMemEntries, cur.videoMem) { v -> write(sel().copy(videoMem = v)) }
         }
-        rows += XmbRow.Choice("ssm", "Strict Shader Math", Icons.Filled.Tune, onOff, cur.ssm) { v -> write(sel().copy(ssm = v)) }
-        rows += XmbRow.Choice("orm", "Offscreen Rendering Mode", Icons.Filled.Image, withCur(ormOptions, cur.orm), cur.orm) { v -> write(sel().copy(orm = v)) }
+        rows += XmbRow.Choice("ssm", I18n.s(R.string.strict_shader_math), Icons.Filled.Tune, onOff, cur.ssm) { v -> write(sel().copy(ssm = v)) }
+        rows += XmbRow.Choice("orm", I18n.s(R.string.offscreen_rendering_mode), Icons.Filled.Image, withCur(ormOptions, cur.orm), cur.orm) { v -> write(sel().copy(orm = v)) }
         rows += XmbRow.Choice("renderer", "Renderer", Icons.Filled.Layers, withCur(rendOptions, cur.renderer), cur.renderer) { v -> write(sel().copy(renderer = v)) }
         rows
     }
@@ -135,7 +135,7 @@ private data class P2DxSel(
 // Index-aligned with DXVKConfigDialog.ANISOTROPY_VALUES / LOD_BIAS_VALUES (the dialog's labels).
 private val P2_ANISO_LABELS = listOf(I18n.s(R.string.ui_game_default), "2x", "4x", "8x", "16x")
 private val P2_LOD_LABELS = listOf(
-    "Game default", "Auto (match scaling mode)", "Sharper (-0.25)", "Sharper (-0.5)", "Sharper (-0.75)", "Sharpest (-1.0)",
+    "Game default", I18n.s(R.string.ui_auto_match_scaling_mode), "Sharper (-0.25)", "Sharper (-0.5)", "Sharper (-0.75)", "Sharpest (-1.0)",
 )
 
 private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
@@ -267,9 +267,9 @@ private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
         if (isVegas) {
             rows += XmbRow.Header("hVegas", I18n.s(R.string.ui_vegas_version_3))
             if (filtered.isEmpty()) {
-                rows += XmbRow.Info(I18n.s(R.string.ui_novegas), "No VEGAS build installed — download one from the container's DX wrapper settings", Icons.Filled.Warning)
+                rows += XmbRow.Info(I18n.s(R.string.ui_novegas), I18n.s(R.string.ui_no_vegas_build_installed_download_one_from_the_container), Icons.Filled.Warning)
             } else {
-                rows += XmbRow.Choice(I18n.s(R.string.ui_vegasversion), "VEGAS version", Icons.Filled.Layers, dxvkOpts, cur.dxvk, disabledOptions = dxvkDisabled) { v ->
+                rows += XmbRow.Choice("vegasVersion", I18n.s(R.string.ui_vegas_version_3), Icons.Filled.Layers, dxvkOpts, cur.dxvk, disabledOptions = dxvkDisabled) { v ->
                     write(sel().copy(dxvk = v))
                 }
                 rows += XmbRow.Action("vegasDelete", I18n.s(R.string.ui_delete_this_vegas_build), Icons.Filled.Delete, danger = true,
@@ -300,7 +300,7 @@ private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
             rows += XmbRow.Toggle("async", "Async", Icons.Filled.Speed, cur.async) { on -> write(sel().copy(async = on)) }
         }
         if (type == DXVKConfigDialog.DXVK_TYPE_GPLASYNC) {
-            rows += XmbRow.Toggle("asyncCache", "Async Cache", Icons.Filled.Speed, cur.asyncCache) { on -> write(sel().copy(asyncCache = on)) }
+            rows += XmbRow.Toggle("asyncCache", I18n.s(R.string.ui_async_cache), Icons.Filled.Speed, cur.asyncCache) { on -> write(sel().copy(asyncCache = on)) }
         }
         if (framerates.isNotEmpty()) {
             rows += XmbRow.Choice("framerate", ctx.getString(R.string.frame_rate), Icons.Filled.Speed, framerates, cur.framerate) { v ->
@@ -324,7 +324,7 @@ private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
             rows += XmbRow.Choice("level", I18n.s(R.string.ui_vkd3d_feature_level), Icons.Filled.Layers, levels, cur.level) { v -> write(sel().copy(level = v)) }
         }
         if (ddraEntries.isNotEmpty()) {
-            rows += XmbRow.Choice("ddraw", "DDraw Wrapper", Icons.Filled.Layers, ddraEntries, cur.ddra) { v -> write(sel().copy(ddra = v)) }
+            rows += XmbRow.Choice("ddraw", I18n.s(R.string.ddraw_wrapper), Icons.Filled.Layers, ddraEntries, cur.ddra) { v -> write(sel().copy(ddra = v)) }
         }
         if (StringUtils.parseIdentifier(cur.ddra) == "d7vk") {
             rows += XmbRow.Choice("d7vk", I18n.s(R.string.ui_d7vk_version), Icons.Filled.Layers,
@@ -496,7 +496,7 @@ private class P2Vegas(
 
     fun rows(rows: MutableList<XmbRow>) {
         if (!ready) {
-            rows += XmbRow.Info(I18n.s(R.string.ui_vegasloading), "Reading VEGAS configs…", Icons.Filled.Info)
+            rows += XmbRow.Info(I18n.s(R.string.ui_vegasloading), I18n.s(R.string.ui_reading_vegas_configs), Icons.Filled.Info)
             return
         }
         val live = liveFile()
@@ -543,7 +543,7 @@ private class P2Vegas(
             storedStock != null -> 1 + stock.indexOf(storedStock)
             else -> 1 + stock.size + customs.indexOf(stored).coerceAtLeast(0)
         }.coerceIn(0, labels.size - 1)
-        rows += XmbRow.Choice(I18n.s(R.string.ui_configsource), "Config source", Icons.Filled.Description, labels, labels[selIdx],
+        rows += XmbRow.Choice("configSource", I18n.s(R.string.ui_config_source), Icons.Filled.Description, labels, labels[selIdx],
             subtitle = live?.absolutePath ?: I18n.s(R.string.ui_vegas_built_in_defaults)) { v ->
             val i = labels.indexOf(v)
             if (i >= 0) {
@@ -556,7 +556,7 @@ private class P2Vegas(
                 reloadText()
             }
         }
-        rows += XmbRow.Link("configBrowse", "Browse for a config file", Icons.Filled.FolderOpen, subtitle = I18n.s(R.string.ui_any_conf_the_built_in_dxvk_config_file)) {
+        rows += XmbRow.Link("configBrowse", I18n.s(R.string.ui_browse_for_a_config_file), Icons.Filled.FolderOpen, subtitle = I18n.s(R.string.ui_any_conf_the_built_in_dxvk_config_file)) {
             val ext = Environment.getExternalStorageDirectory()
             val roots = listOf("Download" to File(ext, "Download"), I18n.s(R.string.ui_internal_storage_2) to ext).filter { it.second.isDirectory }
             xmbFileBrowserMenu(xmb, I18n.s(R.string.ui_select_config_file), ext, roots, { true }) { f ->
@@ -571,7 +571,7 @@ private class P2Vegas(
                 rows += XmbRow.Info("missing", I18n.s(R.string.ui_not_found_live_absolutepath), Icons.Filled.Warning)
                 rows += XmbRow.Action("useDefaults", I18n.s(R.string.ui_use_defaults_instead), Icons.Filled.RestartAlt) { setPointer(""); reloadText() }
             } else {
-                rows += XmbRow.Link("configKeys", "Config keys", Icons.Filled.Tune, value = I18n.s(R.string.ui_cfgrows_size_keys),
+                rows += XmbRow.Link("configKeys", I18n.s(R.string.ui_config_keys), Icons.Filled.Tune, value = I18n.s(R.string.ui_cfgrows_size_keys),
                     subtitle = if (storedStock != null && !sidecarFor(storedStock).isFile) I18n.s(R.string.ui_read_only_until_the_first_edit_changes_create_y_2)
                                else I18n.s(R.string.ui_toggle_change_add_or_remove_keys)) { keysMenu() }
             }
@@ -592,11 +592,11 @@ private class P2Vegas(
                     else I18n.s(R.string.ui_read_only_until_the_first_edit_changes_create_your_ow), Icons.Filled.Info)
             }
             val pk = pendingKey
-            rows += XmbRow.Text(I18n.s(R.string.ui_addkey), "Add key", Icons.Filled.Add, pk ?: "",
+            rows += XmbRow.Text("addKey", I18n.s(R.string.ui_add_key), Icons.Filled.Add, pk ?: "",
                 subtitle = if (pk != null) I18n.s(R.string.ui_now_set_its_value_below) else I18n.s(R.string.ui_key_name_first_then_its_value),
                 placeholder = I18n.s(R.string.ui_e_g_dxvk_maxframelatency)) { k ->
                 val key = k.trim()
-                if (!VegasKeyKnowledge.isValidConfigKey(key)) xmb.toast("Not a valid config key — use a dotted name or ENV_STYLE caps")
+                if (!VegasKeyKnowledge.isValidConfigKey(key)) xmb.toast(I18n.s(R.string.ui_not_a_valid_config_key_use_a_dotted_name_or_env_style))
                 else pendingKey = key
             }
             if (pk != null) {
@@ -652,7 +652,7 @@ private class P2Vegas(
                     rows += XmbRow.Action("resetStock", I18n.s(R.string.ui_reset_to_stock_base_value), Icons.Filled.RestartAlt,
                         disabledReason = gatedReason) { applyValue(key, base.value) }
                 }
-                rows += XmbRow.Text("custom", "Custom value", Icons.Filled.Edit, r.value, disabledReason = gatedReason) { v ->
+                rows += XmbRow.Text("custom", I18n.s(R.string.ui_custom_value), Icons.Filled.Edit, r.value, disabledReason = gatedReason) { v ->
                     if (v.isNotBlank()) applyValue(key, v.trim())
                 }
             }

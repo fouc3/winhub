@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
@@ -91,13 +94,13 @@ object EpicLibraryRepo {
             if (!force && cachedList.isNotEmpty() && System.currentTimeMillis() - lastSync < THROTTLE_MS) {
                 return@withContext SyncResult.Throttled
             }
-            onStatus("Checking credentials…")
+            onStatus(I18n.s(R.string.ui_checking_credentials))
             val token = EpicCredentialStore.getValidAccessToken(appCtx) ?: return@withContext SyncResult.NotLoggedIn
 
-            onStatus("Fetching game list…")
+            onStatus(I18n.s(R.string.ui_fetching_game_list))
             val rawGames = EpicApiClient.getLibraryItems(token)
             if (rawGames.isNullOrEmpty()) {
-                return@withContext if (cachedList.isEmpty()) SyncResult.Failed("No games found in your Epic library")
+                return@withContext if (cachedList.isEmpty()) SyncResult.Failed(I18n.s(R.string.ui_no_games_found_in_your_epic_library))
                 else SyncResult.Ok(cachedList, 0)
             }
 

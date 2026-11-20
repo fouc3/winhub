@@ -186,7 +186,7 @@ object StorageRoots {
      */
     private fun labelFor(context: Context, volume: StorageVolume, uuid: String?): String {
         if (volume.isPrimary) return "Internal"
-        if (volume.isRemovable) return "SD card"
+        if (volume.isRemovable) return I18n.s(R.string.ui_sd_card)
         val description = volume.getDescription(context)?.trim()
         return description?.takeIf { it.isNotBlank() && !it.equals("android", ignoreCase = true) }
             ?: uuid

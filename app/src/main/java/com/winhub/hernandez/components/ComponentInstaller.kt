@@ -1,5 +1,8 @@
 package com.winhub.hernandez.components
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.contents.Downloader
@@ -32,7 +35,7 @@ object ComponentInstaller {
     fun blockedReason(c: Component): String? = when {
         c.status == "needs-upstream" -> "Needs a large package that isn't mirrored yet"
         c.status == "pending-manual" -> "Source unavailable — awaiting a re-hosted file"
-        !isInstallable(c) -> "Needs an installer step not yet supported"
+        !isInstallable(c) -> I18n.s(R.string.ui_needs_an_installer_step_not_yet_supported)
         else -> null
     }
 
@@ -42,7 +45,7 @@ object ComponentInstaller {
         val system32 = File(root, ".wine/drive_c/windows/system32")
         val syswow64 = File(root, ".wine/drive_c/windows/syswow64")
         val userReg = File(root, ".wine/user.reg")
-        if (!File(root, ".wine").isDirectory) return "Container has no Wine prefix yet — launch it once first."
+        if (!File(root, ".wine").isDirectory) return I18n.s(R.string.ui_container_has_no_wine_prefix_yet_launch_it_once_first)
         val tmp = File(context.cacheDir, "comp_${c.name}_${System.currentTimeMillis()}").apply { mkdirs() }
         return try {
             val total = c.steps.size.coerceAtLeast(1)

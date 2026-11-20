@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -161,7 +164,7 @@ public abstract class FileUtils {
         // Copying a directory into itself or its own subtree recurses forever (it keeps
         // re-finding the destination it just created) — refuse it.
         if (srcFile.isDirectory() && isWithin(dstFile, srcFile)) {
-            Log.e(TAG, "Refusing to copy directory into itself: " + srcFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
+            Log.e(TAG, I18n.s(R.string.ui_refusing_to_copy_directory_into_itself) + srcFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
             return false;
         }
         if (srcFile.isDirectory()) {
@@ -173,7 +176,7 @@ public abstract class FileUtils {
             if (filenames != null) {
                 for (String filename : filenames) {
                     if (!copy(new File(srcFile, filename), new File(dstFile, filename), callback)) {
-                        Log.e(TAG, "Failed to copy: " + new File(srcFile, filename).getAbsolutePath());
+                        Log.e(TAG, I18n.s(R.string.ui_failed_to_copy) + new File(srcFile, filename).getAbsolutePath());
                         allOk = false;
                         // Keep copying the rest, but report the overall failure.
                     }
@@ -195,7 +198,7 @@ public abstract class FileUtils {
                     position += transferred;
                 }
                 if (position < size)
-                    throw new IOException("Incomplete copy: " + position + "/" + size + " bytes");
+                    throw new IOException(I18n.s(R.string.ui_incomplete_copy) + position + "/" + size + " bytes");
 
                 if (callback != null) callback.call(dstFile);
                 return true;
@@ -243,7 +246,7 @@ public abstract class FileUtils {
 
         if (src.isDirectory()) {
             if (!dst.exists() && !dst.mkdirs()) {
-                Log.e(TAG, "Failed to create directory during duplicate: " + dst.getAbsolutePath());
+                Log.e(TAG, I18n.s(R.string.ui_failed_to_create_directory_during_duplicate) + dst.getAbsolutePath());
                 return false;
             }
             if (callback != null) callback.call(dst);
@@ -267,7 +270,7 @@ public abstract class FileUtils {
         // Regular file — mirror copy()'s FileChannel transferTo loop, but skip-on-error.
         File parent = dst.getParentFile();
         if (!src.exists() || (parent != null && !parent.exists() && !parent.mkdirs())) {
-            Log.w(TAG, "Skipping unreadable file during duplicate: " + src.getAbsolutePath());
+            Log.w(TAG, I18n.s(R.string.ui_skipping_unreadable_file_during_duplicate) + src.getAbsolutePath());
             if (skippedCount != null) skippedCount[0]++;
             return true;
         }
@@ -282,13 +285,13 @@ public abstract class FileUtils {
                 position += transferred;
             }
             if (position < size)
-                throw new IOException("Incomplete copy: " + position + "/" + size + " bytes");
+                throw new IOException(I18n.s(R.string.ui_incomplete_copy) + position + "/" + size + " bytes");
 
             if (callback != null) callback.call(dst);
             return true;
         } catch (IOException e) {
             // Skip the file, don't abort the whole duplicate.
-            Log.w(TAG, "Skipping unreadable file during duplicate: " + src.getAbsolutePath(), e);
+            Log.w(TAG, I18n.s(R.string.ui_skipping_unreadable_file_during_duplicate) + src.getAbsolutePath(), e);
             dst.delete();
             if (skippedCount != null) skippedCount[0]++;
             return true;
@@ -344,7 +347,7 @@ public abstract class FileUtils {
         if (isSymlink(srcFile)) return true;
         if (sameFile(srcFile, dstFile)) return true;
         if (srcFile.isDirectory() && isWithin(dstFile, srcFile)) {
-            Log.e(TAG, "Refusing to copy directory into itself: " + srcFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
+            Log.e(TAG, I18n.s(R.string.ui_refusing_to_copy_directory_into_itself) + srcFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
             return false;
         }
         if (srcFile.isDirectory()) {
@@ -354,7 +357,7 @@ public abstract class FileUtils {
             if (filenames != null) {
                 for (String filename : filenames) {
                     if (!copyWithProgress(new File(srcFile, filename), new File(dstFile, filename), done, total, progress)) {
-                        Log.e(TAG, "Failed to copy: " + new File(srcFile, filename).getAbsolutePath());
+                        Log.e(TAG, I18n.s(R.string.ui_failed_to_copy) + new File(srcFile, filename).getAbsolutePath());
                         allOk = false;
                     }
                 }
@@ -377,7 +380,7 @@ public abstract class FileUtils {
                     if (progress != null) progress.onProgress(done[0], total);
                 }
                 if (position < size)
-                    throw new IOException("Incomplete copy: " + position + "/" + size + " bytes");
+                    throw new IOException(I18n.s(R.string.ui_incomplete_copy) + position + "/" + size + " bytes");
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -421,7 +424,7 @@ public abstract class FileUtils {
             if (isSymlink(sourceFile)) return true;
             if (sameFile(sourceFile, dstFile)) return true;
             if (sourceFile.isDirectory() && isWithin(dstFile, sourceFile)) {
-                Log.e(TAG, "Refusing to copy directory into itself: " + sourceFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
+                Log.e(TAG, I18n.s(R.string.ui_refusing_to_copy_directory_into_itself) + sourceFile.getAbsolutePath() + " -> " + dstFile.getAbsolutePath());
                 return false;
             }
             if (sourceFile.isDirectory()) {
@@ -451,7 +454,7 @@ public abstract class FileUtils {
                         position += transferred;
                     }
                     if (position < size)
-                        throw new IOException("Incomplete copy: " + position + "/" + size + " bytes");
+                        throw new IOException(I18n.s(R.string.ui_incomplete_copy) + position + "/" + size + " bytes");
 
                     if (callback != null) callback.call(dstFile);
                     return true;
@@ -464,7 +467,7 @@ public abstract class FileUtils {
         } else if (src instanceof Uri) {
             // Handle Uri to File copying, which requires a Context
             if (context == null) {
-                throw new IllegalArgumentException("Context is required for Uri to File copying");
+                throw new IllegalArgumentException(I18n.s(R.string.ui_context_is_required_for_uri_to_file_copying));
             }
             Uri srcUri = (Uri) src;
             try (InputStream inputStream = context.getContentResolver().openInputStream(srcUri);
@@ -583,17 +586,17 @@ public abstract class FileUtils {
     }
 
     public static String getFilePathFromUriUsingSAF(Context context, Uri uri) {
-        Log.d(TAG, "getFilePathFromUriUsingSAF called with URI: " + uri.toString());
+        Log.d(TAG, I18n.s(R.string.ui_getfilepathfromuriusingsaf_called_with_uri) + uri.toString());
 
         String documentId;
         try {
             documentId = DocumentsContract.getTreeDocumentId(uri);
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Invalid URI: " + uri.toString(), e);
+            Log.e(TAG, I18n.s(R.string.ui_invalid_uri) + uri.toString(), e);
             return null;
         }
 
-        Log.d(TAG, "Document ID: " + documentId);
+        Log.d(TAG, I18n.s(R.string.ui_document_id) + documentId);
         String[] split = documentId.split(":");
         String type = split[0];
         String path = split.length > 1 ? split[1] : "";
@@ -601,7 +604,7 @@ public abstract class FileUtils {
         try {
             path = URLDecoder.decode(path, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "Error decoding path: " + path, e);
+            Log.e(TAG, I18n.s(R.string.ui_error_decoding_path) + path, e);
             return null;
         }
 
@@ -614,9 +617,9 @@ public abstract class FileUtils {
 
 
     public static String getFilePathFromUri(Context context, Uri uri) {
-        Log.d(TAG, "getFilePathFromUri called with URI: " + uri.toString());
+        Log.d(TAG, I18n.s(R.string.ui_getfilepathfromuri_called_with_uri) + uri.toString());
         String filePath = getFilePathFromUriUsingSAF(context, uri);
-        Log.d(TAG, "File path obtained: " + filePath);
+        Log.d(TAG, I18n.s(R.string.ui_file_path_obtained) + filePath);
         return filePath;
     }
 
@@ -753,7 +756,7 @@ public abstract class FileUtils {
     }
 
     public static File getFileFromUri(Context context, Uri uri) {
-        Log.d(TAG, "getFileFromUri called with URI: " + uri.toString());
+        Log.d(TAG, I18n.s(R.string.ui_getfilefromuri_called_with_uri) + uri.toString());
 
         // Try to get the file path using the SAF method first
         String filePath = getFilePathFromUriUsingSAF(context, uri);
@@ -776,7 +779,7 @@ public abstract class FileUtils {
                 return tempFile;
             }
         } catch (IOException e) {
-            Log.e(TAG, "Failed to open URI: " + uri.toString(), e);
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_open_uri) + uri.toString(), e);
         }
 
         // If all else fails, return null
@@ -803,7 +806,7 @@ public abstract class FileUtils {
             out.flush();
             return true;
         } catch (IOException e) {
-            Log.e(TAG, "Error saving bitmap to file: " + file.getAbsolutePath(), e);
+            Log.e(TAG, I18n.s(R.string.ui_error_saving_bitmap_to_file) + file.getAbsolutePath(), e);
             return false;
         }
     }

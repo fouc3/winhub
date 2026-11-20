@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver.extensions;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import static com.winhub.hernandez.xserver.XClientRequestHandler.RESPONSE_CODE_SUCCESS;
 
 import android.util.SparseArray;
@@ -167,7 +170,7 @@ public class PresentExtension implements Extension {
             try {
                 choreographer = android.view.Choreographer.getInstance();
             } catch (Exception ignored) {
-                android.util.Log.w("PresentExtension", "Choreographer unavailable, using CPU pacer");
+                android.util.Log.w("PresentExtension", I18n.s(R.string.ui_choreographer_unavailable_using_cpu_pacer));
             }
             if (choreographer == null) startCpuPacer();
             return choreographer;

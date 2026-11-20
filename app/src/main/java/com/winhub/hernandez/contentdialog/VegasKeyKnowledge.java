@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contentdialog;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -76,15 +79,15 @@ public final class VegasKeyKnowledge {
             String name = asNonEmptyString(e, "name", "gated entry");
             String intro = asNonEmptyString(e, "introducedIn", "gated entry " + name);
             Integer introIdx = released.indexOf(intro);
-            if (introIdx < 0) throw reject("gated key " + name + ": introducedIn '" + intro + "' not in released");
+            if (introIdx < 0) throw reject("gated key " + name + ": introducedIn '" + intro + I18n.s(R.string.ui_not_in_released));
             if (introduced.containsKey(name)) throw reject("duplicate gated key: " + name);
             if (vanilla.containsKey(name)) throw reject("key in both vanilla and gated: " + name);
             introduced.put(name, introIdx);
             if (e.containsKey("removedIn") && e.get("removedIn") != null) {
                 String rem = asNonEmptyString(e, "removedIn", "gated entry " + name);
                 Integer remIdx = released.indexOf(rem);
-                if (remIdx < 0) throw reject("gated key " + name + ": removedIn '" + rem + "' not in released");
-                if (remIdx <= introIdx) throw reject("gated key " + name + ": removedIn '" + rem + "' not after introducedIn '" + intro + "'");
+                if (remIdx < 0) throw reject("gated key " + name + ": removedIn '" + rem + I18n.s(R.string.ui_not_in_released));
+                if (remIdx <= introIdx) throw reject("gated key " + name + ": removedIn '" + rem + I18n.s(R.string.ui_not_after_introducedin) + intro + "'");
                 removed.put(name, remIdx);
             }
             if (e.containsKey("note") && e.get("note") != null)
@@ -519,12 +522,12 @@ public final class VegasKeyKnowledge {
     public String badgeFor(String key, String version) {
         if (key == null) return "?";
         String norm = normalizeKey(key);
-        if (vanilla.containsKey(norm)) return "vanilla DXVK · every version";
+        if (vanilla.containsKey(norm)) return I18n.s(R.string.ui_vanilla_dxvk_every_version);
         State st = stateFor(norm, version);
         switch (st) {
             case OK:
                 if (!norm.startsWith("vegas.") && !norm.startsWith("dxvk.")) return "[other] · always applies";
-                return "fork · applies to v" + version;
+                return I18n.s(R.string.ui_fork_applies_to_v) + version;
             case LATE:
                 return "needs " + nameAt(introduced.get(norm)) + "+";
             case REMOVED:
@@ -535,10 +538,10 @@ public final class VegasKeyKnowledge {
                 // but misleading (the claim that matters is it's not upstream). Reserve
                 // the generic wording for genuinely upstream-ish keys.
                 if (norm.startsWith("vegas.") || norm.startsWith("dxvk.vegas."))
-                    return "vegas-only · not in v" + version + " notes";
-                return "not in v" + version + " notes — DXVK still reads it";
+                    return I18n.s(R.string.ui_vegas_only_not_in_v) + version + " notes";
+                return "not in v" + version + I18n.s(R.string.ui_notes_dxvk_still_reads_it);
             case UNKNOWN:
-                return "? unknown for v" + version;
+                return I18n.s(R.string.ui_unknown_for_v) + version;
             default:
                 return st.name();
         }
@@ -558,8 +561,8 @@ public final class VegasKeyKnowledge {
             if (!TOP_FIELDS.contains(f)) throw reject("unknown top-level field: " + f);
         Object sv = root.get("schemaVersion");
         if (!(sv instanceof Integer) || (Integer) sv != 1)
-            throw reject("schemaVersion must be 1, got: " + sv);
-        if (!root.containsKey("forkBuild")) throw reject("missing forkBuild");
+            throw reject(I18n.s(R.string.ui_schemaversion_must_be_1_got) + sv);
+        if (!root.containsKey("forkBuild")) throw reject(I18n.s(R.string.ui_missing_forkbuild));
         if (!root.containsKey("generated")) throw reject("missing generated");
         if (!root.containsKey("released")) throw reject("missing released");
     }
@@ -618,7 +621,7 @@ public final class VegasKeyKnowledge {
     }
 
     private static String coerceString(Object o, String context) {
-        if (!(o instanceof String)) throw reject(context + ": expected string, got " + typeOf(o));
+        if (!(o instanceof String)) throw reject(context + I18n.s(R.string.ui_expected_string_got) + typeOf(o));
         return (String) o;
     }
 

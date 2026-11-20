@@ -21,6 +21,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -155,7 +158,7 @@ public final class DenuvoDetector {
                 isDenuvo = markerHit || sizeHit;
             }
         } catch (Throwable t) {
-            Log.w(TAG, "scanSync walk failed for " + shortcut.path, t);
+            Log.w(TAG, I18n.s(R.string.ui_scansync_walk_failed_for) + shortcut.path, t);
         }
         try {
             shortcut.putExtra("denuvo", isDenuvo ? "1" : "0");
@@ -201,7 +204,7 @@ public final class DenuvoDetector {
             try {
                 scanSync(ctx, shortcut);
             } catch (Throwable t) {
-                Log.w(TAG, "scanIfNeededAsync failed for " + shortcut.path, t);
+                Log.w(TAG, I18n.s(R.string.ui_scanifneededasync_failed_for) + shortcut.path, t);
             }
             if (onResolved != null) {
                 try { onResolved.run(); } catch (Throwable ignored) {}

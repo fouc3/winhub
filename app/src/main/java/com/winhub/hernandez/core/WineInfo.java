@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -119,7 +122,7 @@ public class WineInfo implements Parcelable {
         ImageFs imageFs = ImageFs.find(context);
         String path = "";
 
-        Log.d("WineInfo", "Creating WineInfo from identifier " + identifier);
+        Log.d("WineInfo", I18n.s(R.string.ui_creating_wineinfo_from_identifier) + identifier);
 
         if (identifier.equals(MAIN_WINE_VERSION.identifier())) return new WineInfo(MAIN_WINE_VERSION.type, MAIN_WINE_VERSION.version, MAIN_WINE_VERSION.arch, imageFs.getRootDir().getPath() + "/opt/" + MAIN_WINE_VERSION.identifier());
 

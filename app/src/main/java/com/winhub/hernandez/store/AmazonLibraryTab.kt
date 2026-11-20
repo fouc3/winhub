@@ -73,7 +73,7 @@ fun rememberAmazonLibrary(onMessage: (String) -> Unit = {}): AmazonLibraryState 
     val sync: (Boolean) -> Unit = { force ->
         if (!syncing) {
             syncing = true
-            status = "Syncing library…"
+            status = I18n.s(R.string.ui_syncing_library)
             scope.launch {
                 val result = AmazonLibraryRepo.sync(appCtx, force) { s -> status = s }
                 syncing = false
@@ -83,7 +83,7 @@ fun rememberAmazonLibrary(onMessage: (String) -> Unit = {}): AmazonLibraryState 
                         if (force) onMessage("Library updated — ${result.games.size} game${if (result.games.size == 1) "" else "s"}")
                     }
                     is AmazonLibraryRepo.SyncResult.Failed -> { load(); onMessage(result.message) }
-                    AmazonLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage("Please sign in to Amazon Games first") }
+                    AmazonLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage(I18n.s(R.string.ui_please_sign_in_to_amazon_games_first)) }
                     AmazonLibraryRepo.SyncResult.Busy, AmazonLibraryRepo.SyncResult.Throttled -> load()
                 }
             }
@@ -170,7 +170,7 @@ fun AmazonLibraryTab(
                 StoreNotice(
                     title = I18n.s(R.string.ui_your_amazon_library_is_empty_here),
                     body = I18n.s(R.string.ui_sync_to_pull_your_games_from_amazon_or_open_the_full),
-                    actionLabel = "Sync now",
+                    actionLabel = I18n.s(R.string.ui_sync_now),
                     onAction = { state.refresh(true) },
                 )
             }
@@ -200,7 +200,7 @@ fun AmazonLibraryTab(
                         StoreNotice(
                             title = I18n.s(R.string.ui_full_library),
                             body = I18n.s(R.string.ui_need_the_list_or_poster_view_or_in_list_installs_open),
-                            actionLabel = "Open full library",
+                            actionLabel = I18n.s(R.string.ui_open_full_library),
                             onAction = onOpenFullLibrary,
                         )
                     }

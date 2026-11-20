@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.media.MediaScannerConnection
 import android.os.Environment
@@ -26,7 +29,7 @@ import java.util.Locale
  */
 fun exportHudDiagnostics(context: Context) {
     val app = context.applicationContext
-    Toast.makeText(app, "Saving HUD diagnostics…", Toast.LENGTH_SHORT).show()
+    Toast.makeText(app, I18n.s(R.string.ui_saving_hud_diagnostics), Toast.LENGTH_SHORT).show()
     val main = Handler(Looper.getMainLooper())
     Thread {
         val result = runCatching {
@@ -44,7 +47,7 @@ fun exportHudDiagnostics(context: Context) {
             result.onSuccess { out ->
                 Toast.makeText(app, "Saved to Downloads › ${out.name}", Toast.LENGTH_LONG).show()
             }.onFailure {
-                Toast.makeText(app, "Couldn't export diagnostics.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(app, I18n.s(R.string.ui_couldn_t_export_diagnostics), Toast.LENGTH_SHORT).show()
             }
         }
     }.start()

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.core.CPUStatus
 import com.winhub.hernandez.core.FileUtils
 
@@ -51,16 +54,16 @@ object CpuTopology {
      */
     fun readCoreRatings(): IntArray = readRatings().first
 
-    /** The ratings and what they are ("max MHz" or "cpu_capacity"). */
+    /** The ratings and what they are (I18n.s(R.string.ui_max_mhz) or "cpu_capacity"). */
     private fun readRatings(): Pair<IntArray, String> {
         val n = Runtime.getRuntime().availableProcessors().coerceIn(0, 32)
-        if (n <= 0) return Pair(IntArray(0), "max MHz")
+        if (n <= 0) return Pair(IntArray(0), I18n.s(R.string.ui_max_mhz))
         // getMaxClockSpeed returns MHz (short); 0 when the node is unreadable.
         val freqs = IntArray(n) { i -> CPUStatus.getMaxClockSpeed(i).toInt() }
-        if (freqs.all { it > 0 }) return Pair(freqs, "max MHz")
+        if (freqs.all { it > 0 }) return Pair(freqs, I18n.s(R.string.ui_max_mhz))
         val capacities = IntArray(n) { i -> FileUtils.readInt("/sys/devices/system/cpu/cpu$i/cpu_capacity") }
         return if (capacities.count { it > 0 } > freqs.count { it > 0 }) Pair(capacities, "cpu_capacity")
-               else Pair(freqs, "max MHz")
+               else Pair(freqs, I18n.s(R.string.ui_max_mhz))
     }
 
     /** Read the ratings from sysfs and return the performance-tier cpuList, or "" on failure. */

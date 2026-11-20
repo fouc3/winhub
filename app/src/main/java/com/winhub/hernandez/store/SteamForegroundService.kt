@@ -73,13 +73,13 @@ class SteamForegroundService : Service() {
         fun stopIfIdle(ctx: Context) {
             val busy = try { DownloadRegistry.activeCount.value > 0 } catch (t: Throwable) { false }
             if (busy) {
-                Log.i(TAG, "stopIfIdle skipped — download in flight")
+                Log.i(TAG, I18n.s(R.string.ui_stopifidle_skipped_download_in_flight))
                 return
             }
             // A storage move is a long file copy with no download row behind it, so it has to be
             // asked about separately or an unrelated stopIfIdle would drop the wakelock mid-copy.
             if (try { MoveGameStorage.moveInProgress } catch (t: Throwable) { false }) {
-                Log.i(TAG, "stopIfIdle skipped — storage move in flight")
+                Log.i(TAG, I18n.s(R.string.ui_stopifidle_skipped_storage_move_in_flight))
                 return
             }
             stop(ctx)
@@ -90,7 +90,7 @@ class SteamForegroundService : Service() {
         super.onCreate()
         instance = this        // publish before anything can call setStatusText
         createNotificationChannel()
-        Log.i(TAG, "Service created")
+        Log.i(TAG, I18n.s(R.string.ui_service_created))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -101,7 +101,7 @@ class SteamForegroundService : Service() {
         // SteamGameDetailActivity / SteamSaveManagerActivity / SteamSessionManager on a session
         // that is already up (connect() below then early-returns without touching the status).
         startForeground(NOTIFICATION_ID, buildNotification(currentStatusText()))
-        Log.i(TAG, "Service started")
+        Log.i(TAG, I18n.s(R.string.ui_service_started))
 
         SteamRepository.getInstance().initialize(this)
 
@@ -131,21 +131,21 @@ class SteamForegroundService : Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
         if (hasActiveDownload()) {
-            Log.i(TAG, "Task removed — staying up for an active download")
+            Log.i(TAG, I18n.s(R.string.ui_task_removed_staying_up_for_an_active_download))
             return
         }
         // Same for a storage move: killing the process mid-copy would strand a half-copied folder
         // (recoverable — the source is only deleted once the copy verifies — but it wastes the work).
         if (try { MoveGameStorage.moveInProgress } catch (t: Throwable) { false }) {
-            Log.i(TAG, "Task removed — staying up for a storage move")
+            Log.i(TAG, I18n.s(R.string.ui_task_removed_staying_up_for_a_storage_move))
             return
         }
-        Log.i(TAG, "Task removed — stopping")
+        Log.i(TAG, I18n.s(R.string.ui_task_removed_stopping))
         stopSelf()
     }
 
     override fun onDestroy() {
-        Log.i(TAG, "Service destroyed — disconnecting")
+        Log.i(TAG, I18n.s(R.string.ui_service_destroyed_disconnecting))
         if (instance === this) instance = null   // only clear if we're the current live instance
         SteamRepository.getInstance().disconnect()
         super.onDestroy()

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.store.blsteam.BlSteamSession
@@ -72,12 +75,12 @@ object SteamRegion {
 
     /** Steam datacenter codes (as reported by the CM directory's `dc`) with friendly names. */
     val CATALOG: List<Datacenter> = listOf(
-        Datacenter("iad1", "US East — Virginia"),
-        Datacenter("ord1", "US Central — Chicago"),
-        Datacenter("atl3", "US East — Atlanta"),
-        Datacenter("dfw2", "US Central — Dallas"),
-        Datacenter("lax1", "US West — Los Angeles"),
-        Datacenter("sea1", "US West — Seattle"),
+        Datacenter("iad1", I18n.s(R.string.ui_us_east_virginia)),
+        Datacenter("ord1", I18n.s(R.string.ui_us_central_chicago)),
+        Datacenter("atl3", I18n.s(R.string.ui_us_east_atlanta)),
+        Datacenter("dfw2", I18n.s(R.string.ui_us_central_dallas)),
+        Datacenter("lax1", I18n.s(R.string.ui_us_west_los_angeles)),
+        Datacenter("sea1", I18n.s(R.string.ui_us_west_seattle)),
         Datacenter("lhr1", "UK — London"),
         Datacenter("fra1", "Germany — Frankfurt"),
         Datacenter("fra2", "Germany — Frankfurt 2"),
@@ -92,12 +95,12 @@ object SteamRegion {
         Datacenter("scl1", "Chile — Santiago"),
         Datacenter("syd1", "Australia — Sydney"),
         Datacenter("sgp1", "Singapore"),
-        Datacenter("hkg1", "Hong Kong"),
+        Datacenter("hkg1", I18n.s(R.string.ui_hong_kong)),
         Datacenter("tyo1", "Japan — Tokyo"),
-        Datacenter("seo1", "South Korea — Seoul"),
+        Datacenter("seo1", I18n.s(R.string.ui_south_korea_seoul)),
         Datacenter("bom1", "India — Mumbai"),
         Datacenter("maa1", "India — Chennai"),
-        Datacenter("jnb1", "South Africa — Johannesburg"),
+        Datacenter("jnb1", I18n.s(R.string.ui_south_africa_johannesburg)),
         Datacenter("dxb1", "UAE — Dubai"),
     )
 
@@ -326,7 +329,7 @@ object SteamRegion {
                 }
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "region pick failed — falling back to the engine's directory pick", t)
+            Log.w(TAG, I18n.s(R.string.ui_region_pick_failed_falling_back_to_the_engine_s_director), t)
         }
         val fallback = try { BlSteamSession.pickCmUrl(caBundlePath) } catch (_: Throwable) { "" }
         Log.i(TAG, "engine CM pick (directory fallback): $fallback")
@@ -357,7 +360,7 @@ object SteamRegion {
                 Log.i(TAG, "JavaSteam: ${tcp.size} TCP CM(s) for $dc")
                 tcp.map { ServerRecord.createServer(it.host, it.port, ProtocolTypes.TCP) }
             } catch (t: Throwable) {
-                Log.w(TAG, "JavaSteam provider failed", t); emptyList()
+                Log.w(TAG, I18n.s(R.string.ui_javasteam_provider_failed), t); emptyList()
             }
         }
         override fun updateServerList(list: List<ServerRecord>) { /* JavaSteam's own cache; not persisted */ }

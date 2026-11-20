@@ -250,7 +250,7 @@ private fun ProfileMoreButton(onViewOnSteam: () -> Unit, onRemove: () -> Unit, t
             DropdownMenuItem(
                 text = {
                     Text(
-                        text = if (confirmRemove) "Tap again to confirm removal" else "Remove friend",
+                        text = if (confirmRemove) "Tap again to confirm removal" else I18n.s(R.string.ui_remove_friend),
                         color = MaterialTheme.colorScheme.error,
                     )
                 },

@@ -210,7 +210,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 PickRow(
                     label = when (locationMode) {
                         LogLocation.MODE_DOWNLOAD -> "Download"
-                        LogLocation.MODE_CUSTOM -> if (customPath.isNotEmpty()) "Custom folder" else "Choose folder…"
+                        LogLocation.MODE_CUSTOM -> if (customPath.isNotEmpty()) "Custom folder" else I18n.s(R.string.ui_choose_folder)
                         // MODE_DOCUMENTS (default) and the retired MODE_APP_DATA both resolve to Documents.
                         else -> "Documents"
                     },
@@ -236,11 +236,11 @@ fun LogManagerScreen(onClose: () -> Unit) {
                         MenuItemDivider()
                         MenuRow(I18n.s(R.string.ui_choose_folder), Icons.Default.FolderOpen) {
                             showLocationMenu = false
-                            dirLauncher.launch(InAppFilePicker.buildDirIntent(context, "Select log folder"))
+                            dirLauncher.launch(InAppFilePicker.buildDirIntent(context, I18n.s(R.string.ui_select_log_folder)))
                         }
                     }
                 }
-                LogToggle("Folder for each game", perGame,
+                LogToggle(I18n.s(R.string.ui_folder_for_each_game), perGame,
                     hint = I18n.s(R.string.ui_each_game_keeps_its_own_folder),
                     onInfo = { info = "Folder for each game" to LogCopy.PER_GAME }) {
                     perGame = it; putBool(LogLocation.PREF_PER_GAME, it); refreshTick++
@@ -250,7 +250,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             // ── What to record ───────────────────────────────────────────
             SectionLabel(I18n.s(R.string.ui_what_to_record))
             LogCard {
-                LogToggle("Wine debug", wineDebug,
+                LogToggle(I18n.s(R.string.ui_wine_debug), wineDebug,
                     hint = I18n.s(R.string.ui_slows_games_down_for_diagnosing_a_problem),
                     onInfo = { info = "Wine debug" to LogCopy.WINE }) {
                     wineDebug = it; putBool("enable_wine_debug", it)
@@ -272,22 +272,22 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     onInfo = { info = "DXVK & VKD3D" to LogCopy.DXVK }) {
                     dxvkLogs = it; putBool("enable_dxvk_logs", it)
                 }
-                LogToggle("Controller input", controllerLogs,
+                LogToggle(I18n.s(R.string.ui_controller_input), controllerLogs,
                     hint = I18n.s(R.string.ui_for_controls_that_don_t_work_written_when_the_game_ex),
                     onInfo = { info = "Controller input" to LogCopy.CONTROLLER }) {
                     controllerLogs = it; putBool(com.winhub.hernandez.core.ControllerLog.PREF_KEY, it)
                 }
-                LogToggle("SteamLite (Steam client)", steamLite,
+                LogToggle(I18n.s(R.string.ui_steamlite_steam_client), steamLite,
                     hint = I18n.s(R.string.ui_only_when_a_game_launches_through_steamlite),
                     onInfo = { info = "SteamLite (Steam client)" to LogCopy.STEAMLITE }) {
                     steamLite = it; putBool("enable_steamlite_logs", it)
                 }
-                LogToggle("Android logcat", logcat,
+                LogToggle(I18n.s(R.string.ui_android_logcat), logcat,
                     hint = I18n.s(R.string.ui_winhub_own_output_only),
                     onInfo = { info = "Android logcat" to LogCopy.LOGCAT }) {
                     logcat = it; putBool("enable_logcat", it)
                 }
-                LogToggle("Crash reports", crashReports,
+                LogToggle(I18n.s(R.string.ui_crash_reports), crashReports,
                     hint = I18n.s(R.string.ui_nothing_runs_until_something_crashes),
                     onInfo = { info = "Crash reports" to LogCopy.CRASH }) {
                     crashReports = it; putBool("enable_crash_reports", it)
@@ -298,7 +298,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // system keeps the record either way, so the manual button below works even when off.
                 LogToggle(
                     if (ExitReasonReporter.isSupported()) "Exit reasons (auto-save on launch)"
-                    else "Exit reasons (needs Android 11+)",
+                    else I18n.s(R.string.ui_exit_reasons_needs_android_11),
                     exitAutosave,
                     hint = I18n.s(R.string.ui_records_native_crashes_without_root),
                     enabled = ExitReasonReporter.isSupported(),
@@ -310,7 +310,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // next app start. OFF = JavaSteam as today; ON = the full Steam stack (auth, session,
                 // library, downloads, cloud, achievements, social, presence) runs on libblsteam.so and
                 // the engine's steam_engine.txt is folded into the SteamLite log bundle (Phase 3b-4).
-                LogToggle("Native Steam engine (restart required)", rustSteamEngine,
+                LogToggle(I18n.s(R.string.ui_native_steam_engine_restart_required), rustSteamEngine,
                     hint = I18n.s(R.string.ui_on_by_default_the_whole_steam_session_sign_in_library),
                     onInfo = { info = "Rust Steam engine" to LogCopy.RUST_ENGINE }) {
                     rustSteamEngine = it
@@ -319,19 +319,19 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // Per-store switches for the native download engines (docs/RUST_STORE_ENGINES.md).
                 // Read at download start by each store's Java manager, so a flip applies to the next
                 // download — no restart. OFF = that manager's existing Java fetch loop.
-                LogToggle("Rust engine: Epic downloads", rustEpicEngine,
+                LogToggle(I18n.s(R.string.ui_rust_engine_epic_downloads), rustEpicEngine,
                     hint = I18n.s(R.string.ui_on_by_default_epic_file_chunks_are_fetched_by_the_nat),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustEpicEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlStoreEngineFlag.PREF_KEY_EPIC, it)
                 }
-                LogToggle("Rust engine: GOG downloads", rustGogEngine,
+                LogToggle(I18n.s(R.string.ui_rust_engine_gog_downloads), rustGogEngine,
                     hint = I18n.s(R.string.ui_on_by_default_gog_depot_chunks_are_fetched_by_the_nat),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustGogEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlStoreEngineFlag.PREF_KEY_GOG, it)
                 }
-                LogToggle("Rust engine: Amazon downloads", rustAmazonEngine,
+                LogToggle(I18n.s(R.string.ui_rust_engine_amazon_downloads), rustAmazonEngine,
                     hint = I18n.s(R.string.ui_on_by_default_amazon_games_files_are_fetched_by_the_n),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustAmazonEngine = it
@@ -548,7 +548,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             title = {
                 Text(
                     when {
-                        entry.isAppBucket -> "Delete app & crash logs?"
+                        entry.isAppBucket -> I18n.s(R.string.ui_delete_app_crash_logs)
                         entry.isLooseBucket -> "Delete ${entry.name.replaceFirstChar { it.lowercase() }}?"
                         else -> "Delete ${entry.name} logs?"
                     }
@@ -750,7 +750,7 @@ private fun WineChannelGroup(
             )
             Icon(
                 if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                if (expanded) "Collapse channels" else "Expand channels",
+                if (expanded) "Collapse channels" else I18n.s(R.string.ui_expand_channels),
                 tint = MaterialTheme.colorScheme.primary
             )
         }

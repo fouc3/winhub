@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -114,7 +117,7 @@ public final class StarLaunchBridge {
             try {
                 containers = new ContainerManager(activity).getContainers();
             } catch (Exception e) {
-                Log.e(TAG, "loadContainers failed", e);
+                Log.e(TAG, I18n.s(R.string.ui_loadcontainers_failed), e);
             }
             ArrayList<Container> result = (containers != null) ? containers : new ArrayList<>();
             h.post(() -> cb.onContainers(result));
@@ -191,7 +194,7 @@ public final class StarLaunchBridge {
                         .show());
 
             } catch (Exception e) {
-                Log.e(TAG, "addToLauncher failed", e);
+                Log.e(TAG, I18n.s(R.string.ui_addtolauncher_failed), e);
                 h.post(() -> showToast(activity,
                         "Error loading containers: " + e.getMessage()));
             }
@@ -239,7 +242,7 @@ public final class StarLaunchBridge {
                         .show());
             } catch (Exception e) {
                 Log.e(TAG, "addToLauncher(store) failed", e);
-                h.post(() -> showToast(activity, "Error loading containers: " + e.getMessage()));
+                h.post(() -> showToast(activity, I18n.s(R.string.ui_error_loading_containers_2) + e.getMessage()));
             }
         }, "store-launcher-picker").start();
     }
@@ -386,10 +389,10 @@ public final class StarLaunchBridge {
                         if (ea != null) {
                             content += com.winhub.hernandez.store.EaSupport.EXTRA_EA + "=1\n";
                             if (ea.getJavelinAntiCheat()) content += com.winhub.hernandez.store.EaSupport.EXTRA_JAVELIN + "=1\n";
-                            Log.i(TAG, "EA title tagged on shortcut: " + gameName + (ea.getJavelinAntiCheat() ? " (Javelin anti-cheat)" : ""));
+                            Log.i(TAG, I18n.s(R.string.ui_ea_title_tagged_on_shortcut) + gameName + (ea.getJavelinAntiCheat() ? " (Javelin anti-cheat)" : ""));
                         }
                     } catch (Throwable t) {
-                        Log.w(TAG, "EA detection at shortcut write failed for " + gameName, t);
+                        Log.w(TAG, I18n.s(R.string.ui_ea_detection_at_shortcut_write_failed_for) + gameName, t);
                     }
                 } else if (epic != null && !epic.appName.isEmpty()) {
                     // EOS Phase 1: tag Epic-origin shortcuts so EpicLaunchArgs can scope the
@@ -421,7 +424,7 @@ public final class StarLaunchBridge {
                     fw.write(content);
                 }
 
-                Log.d(TAG, "Wrote shortcut: " + shortcutFile.getPath());
+                Log.d(TAG, I18n.s(R.string.ui_wrote_shortcut) + shortcutFile.getPath());
 
                 // Steam install-recipe (local stages): a depot's installScript.vdf Registry + Copy Files
                 // (EA entitlement keys + Origin licence files) land in the chosen container now — the
@@ -433,7 +436,7 @@ public final class StarLaunchBridge {
                         com.winhub.hernandez.store.steamscript.InstallScriptExecutor.applyLocalStagesForLaunch(
                                 activity, container, steamAppId, exePath);
                     } catch (Throwable t) {
-                        Log.w(TAG, "installScript local stages failed for " + gameName, t);
+                        Log.w(TAG, I18n.s(R.string.ui_installscript_local_stages_failed_for) + gameName, t);
                     }
                 }
 
@@ -448,7 +451,7 @@ public final class StarLaunchBridge {
                 } else {
                     artUrl = normalizeUrl(coverArtUrl);
                     if (artUrl == null || artUrl.isEmpty()) {
-                        Log.d(TAG, "No store cover art URL — trying SteamGridDB for: " + gameName);
+                        Log.d(TAG, I18n.s(R.string.ui_no_store_cover_art_url_trying_steamgriddb_for) + gameName);
                         artUrl = sgdbFetchCover(gameName);
                     }
                 }
@@ -456,15 +459,15 @@ public final class StarLaunchBridge {
                 if (artUrl != null && !artUrl.isEmpty()) {
                     saveCoverArt(activity, container, shortcutFile, safeName, artUrl);
                 } else {
-                    Log.d(TAG, "No cover art found for: " + gameName);
+                    Log.d(TAG, I18n.s(R.string.ui_no_cover_art_found_for) + gameName);
                 }
 
                 h.post(() -> cb.onResult(true,
                         "\"" + gameName + "\" added to Shortcuts.\n"
-                                + "Open the side menu → Shortcuts to launch and configure it."));
+                                + I18n.s(R.string.ui_open_the_side_menu_shortcuts_to_launch_and_configure_it)));
 
             } catch (Exception e) {
-                Log.e(TAG, "writeShortcut failed for " + gameName, e);
+                Log.e(TAG, I18n.s(R.string.ui_writeshortcut_failed_for) + gameName, e);
                 h.post(() -> cb.onResult(false,
                         "Failed to add shortcut: " + e.getMessage()));
             }
@@ -556,7 +559,7 @@ public final class StarLaunchBridge {
 
         // If still nothing, try SteamGridDB by the (now proper) name as last resort.
         if (bmp == null) {
-            Log.w(TAG, "Store/appid cover art unavailable for " + safeName + ", trying SteamGridDB name search");
+            Log.w(TAG, "Store/appid cover art unavailable for " + safeName + I18n.s(R.string.ui_trying_steamgriddb_name_search));
             String sgdbUrl = sgdbFetchCover(safeName);
             if (sgdbUrl != null && !sgdbUrl.isEmpty()) {
                 bmp = downloadBitmap(sgdbUrl);
@@ -564,7 +567,7 @@ public final class StarLaunchBridge {
         }
 
         if (bmp == null) {
-            Log.w(TAG, "All cover art sources failed for " + safeName);
+            Log.w(TAG, I18n.s(R.string.ui_all_cover_art_sources_failed_for) + safeName);
             return;
         }
 
@@ -575,15 +578,15 @@ public final class StarLaunchBridge {
                 if (!iconsDir.exists()) iconsDir.mkdirs();
                 File iconFile = new File(iconsDir, safeName + ".png");
                 FileUtils.saveBitmapToFile(bmp, iconFile);
-                Log.d(TAG, "Saved icon to: " + iconFile.getPath());
+                Log.d(TAG, I18n.s(R.string.ui_saved_icon_to) + iconFile.getPath());
             }
 
             // Also register as customCoverArt so the shortcut detail view has it.
             Shortcut shortcut = new Shortcut(container, shortcutFile);
             shortcut.saveCustomCoverArt(bmp);
-            Log.d(TAG, "Cover art saved for " + safeName);
+            Log.d(TAG, I18n.s(R.string.ui_cover_art_saved_for) + safeName);
         } catch (Exception e) {
-            Log.w(TAG, "Cover art save failed for " + safeName + ": " + e.getMessage());
+            Log.w(TAG, I18n.s(R.string.ui_cover_art_save_failed_for) + safeName + ": " + e.getMessage());
         }
     }
 
@@ -598,14 +601,14 @@ public final class StarLaunchBridge {
     /** Downloads a URL and decodes it as a Bitmap. Returns null on any failure. */
     private static Bitmap downloadBitmap(String url) {
         try {
-            Log.d(TAG, "Downloading cover art: " + url);
+            Log.d(TAG, I18n.s(R.string.ui_downloading_cover_art) + url);
             HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setConnectTimeout(15_000);
             conn.setReadTimeout(20_000);
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             int code = conn.getResponseCode();
             if (code < 200 || code >= 300) {
-                Log.w(TAG, "Cover art HTTP " + code + " for " + url);
+                Log.w(TAG, I18n.s(R.string.ui_cover_art_http) + code + " for " + url);
                 conn.disconnect();
                 return null;
             }
@@ -617,7 +620,7 @@ public final class StarLaunchBridge {
             if (bmp == null) Log.w(TAG, "Cover art decode returned null for " + url);
             return bmp;
         } catch (Exception e) {
-            Log.w(TAG, "downloadBitmap failed: " + e.getMessage());
+            Log.w(TAG, I18n.s(R.string.ui_downloadbitmap_failed) + e.getMessage());
             return null;
         }
     }
@@ -664,10 +667,10 @@ public final class StarLaunchBridge {
             JSONArray grids = new JSONObject(gridsJson).optJSONArray("data");
             if (grids == null || grids.length() == 0) return "";
             String imgUrl = grids.getJSONObject(0).optString("url", "");
-            Log.d(TAG, "SteamGridDB cover for steam appId " + appId + ": " + imgUrl);
+            Log.d(TAG, I18n.s(R.string.ui_steamgriddb_cover_for_steam_appid) + appId + ": " + imgUrl);
             return imgUrl;
         } catch (Exception e) {
-            Log.w(TAG, "sgdbFetchCoverBySteamAppId failed for " + appId + ": " + e.getMessage());
+            Log.w(TAG, I18n.s(R.string.ui_sgdbfetchcoverbysteamappid_failed_for) + appId + ": " + e.getMessage());
             return "";
         }
     }
@@ -693,7 +696,7 @@ public final class StarLaunchBridge {
                 if (custom != null && !custom.trim().isEmpty()) return custom.trim();
             }
         } catch (Exception e) {
-            Log.w(TAG, "custom SteamGridDB key unreadable, using the bundled one");
+            Log.w(TAG, I18n.s(R.string.ui_custom_steamgriddb_key_unreadable_using_the_bundled_one));
         }
         return SGDB_KEY;
     }
@@ -724,7 +727,7 @@ public final class StarLaunchBridge {
             if (grids == null || grids.length() == 0) return "";
             return grids.getJSONObject(0).optString("url", "");
         } catch (Exception e) {
-            Log.w(TAG, "sgdbFetchCapsuleBySteamAppId failed for " + appId + ": " + e.getMessage());
+            Log.w(TAG, I18n.s(R.string.ui_sgdbfetchcapsulebysteamappid_failed_for) + appId + ": " + e.getMessage());
             return "";
         }
     }
@@ -758,7 +761,7 @@ public final class StarLaunchBridge {
                 entry.put("url", g.optString("url", ""));
                 out.put(entry);
             }
-            Log.d(TAG, "SteamGridDB found " + out.length() + " covers for \"" + title + "\"");
+            Log.d(TAG, I18n.s(R.string.ui_steamgriddb_found) + out.length() + " covers for \"" + title + "\"");
             return out.toString();
         } catch (Exception e) {
             Log.w(TAG, "sgdbFetchGridsJson failed for \"" + title + "\": " + e.getMessage());

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.display;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
@@ -143,7 +146,7 @@ public final class ExternalDisplay {
             String n = display.getName();
             if (n != null && !n.trim().isEmpty()) return n.trim();
         } catch (Throwable ignored) {}
-        return "External display";
+        return I18n.s(R.string.ui_external_display);
     }
 
     /**
@@ -296,7 +299,7 @@ public final class ExternalDisplay {
                 if (!t.isEmpty()) chips.add(t);
             }
         } else {
-            chips.add("no HDR reported");
+            chips.add(I18n.s(R.string.ui_no_hdr_reported));
         }
         if (info.maxLuminance > 0f) chips.add("peak " + nits(info.maxLuminance));
         return chips;

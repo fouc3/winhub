@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.steamscript
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.core.VdfParser
 import com.winhub.hernandez.core.VdfParser.VdfNode
 
@@ -93,19 +96,19 @@ class InstallScriptModel private constructor(
             }
 
             val copies = ArrayList<CopyFile>()
-            for (copyNode in root.nodes("Copy Files")) {
+            for (copyNode in root.nodes(I18n.s(R.string.ui_copy_files))) {
                 for ((_, group) in copyNode.childNodes()) copies += collectCopyGroup(group)
             }
             // Some scripts spell it "LocFiles" at the top level rather than nested under "Copy Files".
             for (loc in root.nodes("LocFiles")) copies += collectCopyGroup(loc)
 
             val runs = ArrayList<RunProcess>()
-            for (runNode in root.nodes("Run Process")) {
+            for (runNode in root.nodes(I18n.s(R.string.ui_run_process))) {
                 for ((name, group) in runNode.childNodes()) runs += parseRunProcess(name, group)
             }
 
             val deletes = ArrayList<String>()
-            for (delNode in root.nodes("Delete Files On Uninstall")) {
+            for (delNode in root.nodes(I18n.s(R.string.ui_delete_files_on_uninstall))) {
                 for ((_, v) in delNode.stringEntries()) deletes += v
             }
 

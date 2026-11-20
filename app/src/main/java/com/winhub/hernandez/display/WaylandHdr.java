@@ -1,5 +1,8 @@
 package com.winhub.hernandez.display;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.view.Display;
@@ -36,7 +39,7 @@ public final class WaylandHdr {
     /** The extra's key on the container and on a shortcut. */
     public static final String EXTRA = "waylandHdr";
 
-    public static final String TITLE = "HDR output (HDR10)";
+    public static final String TITLE = I18n.s(R.string.ui_hdr_output_hdr10);
 
     /** The setting's help text (every editor shows the same words). */
     public static final String HELP_TEXT =
@@ -71,7 +74,7 @@ public final class WaylandHdr {
         if (d.supportsHdr10) return null;
         if ("unknown".equals(d.formats)) return "This screen does not report its HDR capability, so HDR output stays off.";
         if ("none".equals(d.formats)) return "This screen does not support HDR (it reports no HDR types), so HDR output stays off.";
-        return "This screen does not support HDR10 (it reports " + d.formats + "), so HDR output stays off.";
+        return I18n.s(R.string.ui_this_screen_does_not_support_hdr10_it_reports) + d.formats + I18n.s(R.string.ui_so_hdr_output_stays_off);
     }
 
     /** {@link #unavailableReason(Display)} for the device's built-in screen. */

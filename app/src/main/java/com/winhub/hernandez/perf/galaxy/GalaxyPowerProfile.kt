@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf.galaxy
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import org.json.JSONObject
 
 /**
@@ -60,7 +63,7 @@ data class GalaxyPowerProfile(
          * Preset: keep peak clocks capped for a cooler, longer-lasting session.
          */
         val POWER_SAVE = GalaxyPowerProfile(
-            name = "Power Save",
+            name = I18n.s(R.string.ui_power_save),
             cpuMin = 0, cpuMax = 2,
             gpuMin = 0, gpuMax = 2,
             busMin = 0, busMax = 2,

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.topjohnwu.superuser.Shell
@@ -110,7 +113,7 @@ object RootManager {
         val root = try {
             Shell.getShell().isRoot // blocking; fires the prompt on first grant
         } catch (t: Throwable) {
-            Log.w(TAG, "requestGrant failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_requestgrant_failed), t)
             false
         }
         _state.value = if (root) RootState.GRANTED else RootState.DENIED
@@ -134,7 +137,7 @@ object RootManager {
         val root = try {
             Shell.getShell().isRoot
         } catch (t: Throwable) {
-            Log.w(TAG, "ensureGrantedBlocking failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_ensuregrantedblocking_failed), t)
             false
         }
         _state.value = if (root) RootState.GRANTED else RootState.DENIED
@@ -221,14 +224,14 @@ object RootManager {
                 Thread({
                     try {
                         val ok = ensureGrantedBlocking()
-                        Log.d(TAG, "silent re-acquire (grantedOnce flag set): " +
+                        Log.d(TAG, I18n.s(R.string.ui_silent_re_acquire_grantedonce_flag_set) +
                             if (ok) "GRANTED, no prompt" else "root revoked -> clearing flag")
                         if (!ok) setGrantedOnce(false)
                     } catch (t: Throwable) { Log.w(TAG, "silent re-acquire failed", t) }
                 }, "root-silent-reacquire").apply { isDaemon = true }.start()
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "onAppStartup failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onappstartup_failed), t)
         }
     }
 }

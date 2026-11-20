@@ -477,7 +477,7 @@ fun ShortcutsScreen(
         }
         if (!GoldbergComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "Steam Emulator (Goldberg)"
+            componentDownloadLabel = I18n.s(R.string.ui_steam_emulator_goldberg)
             componentDownloadProgress = 0f
             GoldbergComponent.downloadAsync(
                 context,
@@ -720,7 +720,7 @@ fun ShortcutsScreen(
                         putExtra(Intent.EXTRA_TEXT, I18n.s(R.string.ui_winhub_config_for_res_game))
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
-                    context.startActivity(Intent.createChooser(send, "Share config"))
+                    context.startActivity(Intent.createChooser(send, I18n.s(R.string.ui_share_config)))
                 } catch (e: Exception) {
                     Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_the_config), Toast.LENGTH_SHORT).show()
                 }
@@ -876,7 +876,7 @@ fun ShortcutsScreen(
         Toast.makeText(context, I18n.s(R.string.ui_backing_up_saves_for_name), Toast.LENGTH_SHORT).show()
         CustomSaveVault.manualBackup(context, shortcut.container, shortcut, layout) { r ->
             if (r.wholeContainer && r.ok) {
-                Toast.makeText(context, "No per-game saves detected — backed up the whole container.", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, I18n.s(R.string.ui_no_per_game_saves_detected_backed_up_the_whole_contai), Toast.LENGTH_LONG).show()
             }
             Toast.makeText(
                 context,
@@ -1095,22 +1095,22 @@ fun ShortcutsScreen(
     val xmbActionsFor: (Shortcut) -> List<XmbAction> = { shortcut ->
         buildList {
             add(XmbAction("Settings", Icons.Filled.Settings, I18n.s(R.string.ui_display_graphics_controller), menu = { xmbSettingsMenu(it, shortcut, xmbHost) }))
-            add(XmbAction("Game Doctor", Icons.Filled.Healing, I18n.s(R.string.ui_why_it_won_t_run_and_what_to_try), menu = { xmbGameDoctorMenu(it, shortcut) }))
-            add(XmbAction("Game Details", Icons.Filled.Edit, I18n.s(R.string.ui_name_genres_year_description), menu = { xmbGameDetailsMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_game_doctor), Icons.Filled.Healing, I18n.s(R.string.ui_why_it_won_t_run_and_what_to_try), menu = { xmbGameDoctorMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_game_details), Icons.Filled.Edit, I18n.s(R.string.ui_name_genres_year_description), menu = { xmbGameDetailsMenu(it, shortcut) }))
             if (isSteamOriginShortcut(shortcut)) {
-                add(XmbAction("Cloud Saves", Icons.Filled.CloudSync, I18n.s(R.string.ui_steam_cloud_sync_opens_its_own_screen)) { launchSaveManager(context, steamAppIdOf(shortcut)) })
+                add(XmbAction(I18n.s(R.string.ui_cloud_saves), Icons.Filled.CloudSync, I18n.s(R.string.ui_steam_cloud_sync_opens_its_own_screen)) { launchSaveManager(context, steamAppIdOf(shortcut)) })
             }
             if (isCustomShortcut(shortcut)) {
-                add(XmbAction("Back up saves", Icons.Filled.Archive, menu = { xmbBackupSavesMenu(it, shortcut) }))
-                add(XmbAction("Restore saves", Icons.Filled.Unarchive, menu = { xmbRestoreSavesMenu(it, shortcut) }))
+                add(XmbAction(I18n.s(R.string.ui_back_up_saves), Icons.Filled.Archive, menu = { xmbBackupSavesMenu(it, shortcut) }))
+                add(XmbAction(I18n.s(R.string.ui_restore_saves), Icons.Filled.Unarchive, menu = { xmbRestoreSavesMenu(it, shortcut) }))
             }
-            add(XmbAction("Community configs", Icons.Filled.Public, I18n.s(R.string.ui_shared_settings_for_this_game), menu = { xmbCommunityConfigsMenu(it, shortcut) }))
-            add(XmbAction("Scrape cover", Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
-            add(XmbAction("View logs", Icons.Filled.Description, menu = { xmbLogsMenu(it, shortcut) }))
-            add(XmbAction("Clone to container", Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, xmbHost) }))
-            add(XmbAction("Copy to Drive C…", Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
-            add(XmbAction("Change executable…", Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
-            add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, I18n.s(R.string.ui_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
+            add(XmbAction(I18n.s(R.string.ui_community_configs_2), Icons.Filled.Public, I18n.s(R.string.ui_shared_settings_for_this_game), menu = { xmbCommunityConfigsMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_scrape_cover), Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_view_logs), Icons.Filled.Description, menu = { xmbLogsMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_clone_to_container), Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, xmbHost) }))
+            add(XmbAction(I18n.s(R.string.ui_copy_to_drive_c), Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_change_executable), Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
+            add(XmbAction(I18n.s(R.string.ui_add_to_home_screen), Icons.Filled.AddToHomeScreen, I18n.s(R.string.ui_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
             add(XmbAction("Export", Icons.Filled.Upload) { exportShortcut(context, shortcut) })
             add(XmbAction("Properties", Icons.Filled.Info, I18n.s(R.string.ui_times_played_playtime), menu = { xmbPropertiesMenu(it, shortcut) }))
             add(XmbAction("Remove", Icons.Filled.Delete, I18n.s(R.string.ui_asks_to_confirm_first), danger = true, menu = { xmbRemoveMenu(it, shortcut, xmbHost) }))
@@ -2056,7 +2056,7 @@ fun ShortcutsScreen(
                                             withContext(Dispatchers.Main) {
                                                 scrapeTarget = null
                                                 vm.reloadShortcut(sc.file.path, full)
-                                                Toast.makeText(context, "Cover saved.", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, I18n.s(R.string.ui_cover_saved), Toast.LENGTH_SHORT).show()
                                             }
                                         }
                                     },
@@ -2563,7 +2563,7 @@ fun ShortcutsScreen(
                     vm.deleteMyUpload(row) { ok ->
                         if (ok) {
                             myUploads = myUploads?.filterNot { it.record.sha == row.record.sha }
-                            Toast.makeText(context, "Deleted your shared config.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_deleted_your_shared_config), Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, I18n.s(R.string.ui_couldn_t_reach_the_server_2), Toast.LENGTH_SHORT).show()
                         }
@@ -3019,7 +3019,7 @@ fun ShortcutsScreen(
                         if (exe != null && appId > 0) {
                             withContext(Dispatchers.IO) {
                                 try { InstallScriptExecutor.runForShortcut(context, s.container, appId, exe, true) }
-                                catch (t: Throwable) { android.util.Log.w("ShortcutsScreen", "EA setup failed", t) }
+                                catch (t: Throwable) { android.util.Log.w("ShortcutsScreen", I18n.s(R.string.ui_ea_setup_failed), t) }
                             }
                         } else {
                             android.util.Log.w("ShortcutsScreen", "EA setup: cannot start for '${s.name}' — exe=$exe appId=$appId path='${s.path}' container=${s.container.id}")
@@ -3843,7 +3843,7 @@ private fun SmartDriverInstallRow(
         buildString {
             append("config wants ")
             append(md.wanted)
-            md.current?.let { append("; you have ").append(it) }
+            md.current?.let { append(I18n.s(R.string.ui_you_have)).append(it) }
         }
     }
 
@@ -6827,7 +6827,7 @@ internal fun ShortcutSettingsDialogScreen(
     val tabTitles = remember(tabIndices) {
         tabIndices.map {
             when (it) {
-                0 -> "General"; 1 -> "Win Components"; 2 -> "Env Vars"
+                0 -> "General"; 1 -> I18n.s(R.string.win_components); 2 -> I18n.s(R.string.ui_env_vars)
                 3 -> "Advanced"; 4 -> "Controller"; 6 -> "Graphics"; else -> "TV"
             }
         }
@@ -7516,7 +7516,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     autoOn = containerFast, locked = fastGlLocked != null, onPick = pickFastGl)
                             }
                             com.winhub.hernandez.ui.components.OpenGLCardRow(
-                                com.winhub.hernandez.ui.components.OPENGL_FPS_ICON, "Show FPS", null,
+                                com.winhub.hernandez.ui.components.OPENGL_FPS_ICON, I18n.s(R.string.ui_show_fps), null,
                                 focused = dp.isFocused("glFpsHud"),
                                 modifier = Modifier.dpadBringIntoView(dp, "glFpsHud"),
                             ) {
@@ -7637,7 +7637,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Force Denuvo ownership token", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_force_denuvo_ownership_token), fontSize = 14.sp)
                                 Text(
                                     I18n.s(R.string.ui_force_the_ownership_token_for_denuvo_games_we_don_t_a),
                                     fontSize = 11.sp,
@@ -7656,7 +7656,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Launch offline", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_launch_offline), fontSize = 14.sp)
                                 Text(
                                     I18n.s(R.string.ui_skip_epic_sign_in_for_this_game_no_online_features),
                                     fontSize = 11.sp,
@@ -7775,7 +7775,7 @@ internal fun ShortcutSettingsDialogScreen(
                             DropdownMenu(expanded = showIconPickMenu, onDismissRequest = { showIconPickMenu = false }) {
                                 DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                     showIconPickMenu = false
-                                    iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select icon image"))
+                                    iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, I18n.s(R.string.select_icon_image)))
                                 })
                                 DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
                                     showIconPickMenu = false
@@ -7888,11 +7888,11 @@ internal fun ShortcutSettingsDialogScreen(
                         }
                         Text(
                             when {
-                                blobPicked -> "Qualcomm's own driver cannot put Wayland frames on screen, so the screen uses a " +
+                                blobPicked -> I18n.s(R.string.ui_qualcomm_s_own_driver_cannot_put_wayland_frames_on_scree) +
                                     I18n.s(R.string.ui_bundled_turnip_automatically) + (if (waylandAdapterChoice) " and the game renders on the bundled " +
                                     I18n.s(R.string.ui_wayland_turnip_the_adapter_needs_a_turnip_driver_here) else ".")
                                 adapterActive -> I18n.s(R.string.ui_used_for_the_game_through_the_wayland_adapter_and_for)
-                                else -> "Used by the Wayland compositor to put frames on screen; the game renders on the " +
+                                else -> I18n.s(R.string.ui_used_by_the_wayland_compositor_to_put_frames_on_screen_t) +
                                     I18n.s(R.string.ui_wayland_game_driver_under_advanced)
                             },
                             style = MaterialTheme.typography.bodySmall,
@@ -8137,7 +8137,7 @@ internal fun ShortcutSettingsDialogScreen(
                     // dialog instead of focusing the text field.
                     Box(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                         OutlinedTextField(
-                            value = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else "Global defaults",
+                            value = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else I18n.s(R.string.ui_global_defaults),
                             onValueChange = {},
                             readOnly = true,
                             label = { Text(I18n.s(R.string.performance)) },
@@ -8403,7 +8403,7 @@ internal fun ShortcutSettingsDialogScreen(
                         if (!isLinuxEntry) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DpCheck(dp, "disableXInput", checked = disabledXInput, onCheckedChange = { disabledXInput = it })
-                            Text("Disable XInput")
+                            Text(I18n.s(R.string.ui_disable_xinput))
                         }
                         ControllerOverrideRows(dp, shortcut.container, ctrlOv)
                         }
@@ -9618,7 +9618,7 @@ private fun DeckShortcutSettingsBody(
     val tabTitles = remember(tabIndices) {
         tabIndices.map {
             when (it) {
-                0 -> "General"; 1 -> "Win Components"; 2 -> "Env Vars"
+                0 -> "General"; 1 -> I18n.s(R.string.win_components); 2 -> I18n.s(R.string.ui_env_vars)
                 3 -> "Advanced"; 4 -> "Controller"; 6 -> "Graphics"; 7 -> "Mods"; else -> "TV"
             }
         }
@@ -9758,7 +9758,7 @@ private fun DeckShortcutSettingsBody(
                                     DeckTextRow(I18n.s(R.string.ui_exec_arguments), value = execArgs, onValueChange = { execArgs = it })
                                 }
                                 DeckRow(
-                                    label = "Launch method",
+                                    label = I18n.s(R.string.ui_launch_method),
                                     hint = if (!launchModeRemembered) I18n.s(R.string.ui_ask_every_launch) else when (launchMode) {
                                         "RealSteam" -> I18n.s(R.string.ui_steamlite_real_steam_client)
                                         "Goldberg" -> I18n.s(R.string.ui_goldberg_offline_emulator)
@@ -9781,7 +9781,7 @@ private fun DeckShortcutSettingsBody(
                                         DropdownMenu(expanded = showIconPickMenu, onDismissRequest = { showIconPickMenu = false }) {
                                             DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                                 showIconPickMenu = false
-                                                iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select icon image"))
+                                                iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, I18n.s(R.string.select_icon_image)))
                                             })
                                             DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
                                                 showIconPickMenu = false
@@ -9798,17 +9798,17 @@ private fun DeckShortcutSettingsBody(
                             }
                             if (isEpicShortcut) {
                                 DeckGroup(I18n.s(R.string.ui_epic_online_services)) {
-                                    DeckRow("EOS auth", hint = I18n.s(R.string.ui_sign_eos_games_in_with_your_epic_account)) {
+                                    DeckRow(I18n.s(R.string.ui_eos_auth), hint = I18n.s(R.string.ui_sign_eos_games_in_with_your_epic_account)) {
                                         DeckToggle(checked = epicEosEnabled, onChange = { epicEosEnabled = it })
                                     }
-                                    DeckRow("Force Denuvo ownership token", hint = I18n.s(R.string.ui_for_denuvo_games_we_don_t_auto_detect)) {
+                                    DeckRow(I18n.s(R.string.ui_force_denuvo_ownership_token), hint = I18n.s(R.string.ui_for_denuvo_games_we_don_t_auto_detect)) {
                                         DeckToggle(checked = epicOvtForce && epicEosEnabled, onChange = { epicOvtForce = it })
                                     }
-                                    DeckRow("Launch offline", hint = I18n.s(R.string.ui_skip_epic_sign_in_for_this_game)) {
+                                    DeckRow(I18n.s(R.string.ui_launch_offline), hint = I18n.s(R.string.ui_skip_epic_sign_in_for_this_game)) {
                                         DeckToggle(checked = epicOffline && epicEosEnabled, onChange = { epicOffline = it })
                                     }
                                     if (com.winhub.hernandez.FeatureFlags.EPIC_OVERLAY_ENABLED) {
-                                        DeckRow("Epic Friends Overlay", hint = I18n.s(R.string.ui_experimental_in_game_overlay_on_shift_f3)) {
+                                        DeckRow(I18n.s(R.string.ui_epic_friends_overlay), hint = I18n.s(R.string.ui_experimental_in_game_overlay_on_shift_f3)) {
                                             DeckToggle(checked = epicOverlayEnabled, onChange = { epicOverlayEnabled = it })
                                         }
                                     }
@@ -9816,7 +9816,7 @@ private fun DeckShortcutSettingsBody(
                             }
                             if (xboxShipsRuntime) {
                                 DeckGroup("Xbox") {
-                                    DeckRow("Use the app's Xbox runtime", hint = I18n.s(R.string.ui_this_game_ships_microsoft_own_xbox_runtime_which_need)) {
+                                    DeckRow(I18n.s(R.string.ui_use_the_app_xbox_runtime), hint = I18n.s(R.string.ui_this_game_ships_microsoft_own_xbox_runtime_which_need)) {
                                         DeckToggle(checked = xboxNexusRuntime, onChange = { xboxNexusRuntime = it })
                                     }
                                 }
@@ -9832,7 +9832,7 @@ private fun DeckShortcutSettingsBody(
                                         hint = when {
                                             effectiveWaylandShortcut -> I18n.s(R.string.ui_wayland_experimental_renders_through_the_embedded_com)
                                             waylandStoredUnusable -> I18n.s(R.string.ui_set_to_wayland_but_the_container_s_proton_layer_is_no)
-                                            !containerWaylandCapable -> "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT
+                                            !containerWaylandCapable -> I18n.s(R.string.ui_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT
                                             else -> I18n.s(R.string.ui_runs_on_the_x11_server)
                                         },
                                         options = dbValues.zip(dbLabels).filter { it.first != Container.DISPLAY_BACKEND_WAYLAND || containerWaylandCapable },
@@ -9916,7 +9916,7 @@ private fun DeckShortcutSettingsBody(
                                     }
                                 }
                             }
-                            DeckGroup("Frame Generation") {
+                            DeckGroup(I18n.s(R.string.ui_frame_generation_2)) {
                                 val fgLabels = listOf(
                                     stringResource(R.string.frame_generation_off),
                                     stringResource(R.string.frame_generation_lsfg_native),
@@ -9942,7 +9942,7 @@ private fun DeckShortcutSettingsBody(
                                         com.winhub.hernandez.perf.PerfRootApplier.ROOT_KEYS.count { (rootOverrides[it] ?: false) != com.winhub.hernandez.perf.PerformanceSettings.rootDefaultValue(it) }
                                     DeckRow(
                                         label = I18n.s(R.string.performance),
-                                        hint = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else "Global defaults",
+                                        hint = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else I18n.s(R.string.ui_global_defaults),
                                     ) {
                                         DeckButton(I18n.s(R.string.configure), primary = false) { showPerfDialog = true }
                                     }
@@ -10284,7 +10284,7 @@ private fun DeckShortcutSettingsBody(
                         4 -> {
                             DeckGroup("Input") {
                                 if (!isLinuxEntry) {
-                                    DeckRow("Disable XInput") {
+                                    DeckRow(I18n.s(R.string.ui_disable_xinput)) {
                                         DeckToggle(checked = disabledXInput, onChange = { disabledXInput = it })
                                     }
                                     DeckControllerOverrideRows(shortcut.container, ctrlOv)
@@ -10314,11 +10314,11 @@ private fun DeckShortcutSettingsBody(
                                     )
                                 }
                                 if (controllerSlotOverridesJson.isNotEmpty()) {
-                                    DeckRow("Player Slots", hint = I18n.s(R.string.ui_inheriting_shows_the_container_player_slots)) {
+                                    DeckRow(I18n.s(R.string.ui_player_slots), hint = I18n.s(R.string.ui_inheriting_shows_the_container_player_slots)) {
                                         DeckButton(I18n.s(R.string.fullscreen_mode_default), primary = false) { controllerSlotOverridesJson = "" }
                                     }
                                 } else {
-                                    DeckRow("Player Slots", hint = I18n.s(R.string.ui_inheriting_the_container_player_slots_pin_a_controlle)) {}
+                                    DeckRow(I18n.s(R.string.ui_player_slots), hint = I18n.s(R.string.ui_inheriting_the_container_player_slots_pin_a_controlle)) {}
                                 }
                                 PlayerSlotsEditor(
                                     savedOverridesJson = controllerSlotOverridesJson.ifEmpty { "{}" },
@@ -10676,7 +10676,7 @@ private fun DeckShortcutSettingsBody(
         DeckLaunchMethodDialog(
             shortcut = shortcut,
             onDismiss = { showLaunchMethod = false },
-            heading = "Launch method",
+            heading = I18n.s(R.string.ui_launch_method),
             confirmLabel = "Save",
             onLaunch = { mode, gm, remember ->
                 shortcut.putExtra("launchMode", mode)
@@ -10768,7 +10768,7 @@ private fun DeckEnvVarsTab(
     gameDir: File?,
     isLinuxEntry: Boolean = false,
 ) {
-    DeckGroup("Environment variables") {
+    DeckGroup(I18n.s(R.string.ui_environment_variables)) {
         EnvVarsEditor(
             value = envVars,
             onValueChange = onEnvVarsChange,
@@ -10973,7 +10973,7 @@ private fun DeckAdvancedTab(
                     onChange = { onSharpnessDenoiseChange(it.toInt()) },
                 )
             }
-            DeckGroup("ReShade loadout") {
+            DeckGroup(I18n.s(R.string.ui_reshade_loadout)) {
                 ReshadeLoadoutEditor(
                     state = reshadeLoadout,
                     effects = reshadeEffects,
@@ -12213,14 +12213,14 @@ internal fun CopyToDriveCCoordinator(
                     if (cleanFirst) dest.deleteRecursively()
                     CopyGameToDriveC.copyTree(src, dest, total, { cancelFlag.get() }) { p -> progress = p }
                     CopyGameToDriveC.repoint(target, src, dest)
-                        ?: throw java.io.IOException("Couldn't repoint the shortcut to the copied files.")
+                        ?: throw java.io.IOException(I18n.s(R.string.ui_couldn_t_repoint_the_shortcut_to_the_copied_files))
                 }
             }
             outcome.fold(
                 onSuccess = { phase = CopyToCPhase.DELETE_ORIGINAL },
                 onFailure = { e ->
                     if (e is CopyGameToDriveC.CancelledException) {
-                        Toast.makeText(context, "Copy cancelled — nothing was changed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_copy_cancelled_nothing_was_changed), Toast.LENGTH_SHORT).show()
                     } else {
                         android.util.Log.e("CopyToDriveC", "copy/repoint failed for ${target.name}", e)
                         Toast.makeText(
@@ -12398,14 +12398,14 @@ internal fun CopyToDriveCCoordinator(
                     val src = sourceRoot
                     scope.launch {
                         withContext(Dispatchers.IO) { runCatching { src.deleteRecursively() } }
-                        Toast.makeText(context, "Moved to Drive C — original deleted.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_moved_to_drive_c_original_deleted), Toast.LENGTH_SHORT).show()
                         onFinished()
                     }
                 }) { Text(I18n.s(R.string.ui_delete_original), color = DangerRed) }
             },
             dismissButton = {
                 TextButton(onClick = {
-                    Toast.makeText(context, "Copied to Drive C — original kept.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_copied_to_drive_c_original_kept), Toast.LENGTH_SHORT).show()
                     onFinished()
                 }) { Text(I18n.s(R.string.ui_keep_original)) }
             },

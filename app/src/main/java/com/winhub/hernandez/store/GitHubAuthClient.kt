@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Environment
 import android.util.Log
@@ -141,7 +144,7 @@ object GitHubAuthClient {
                 val deviceCode = json.optString("device_code")
                 val userCode = json.optString("user_code")
                 if (deviceCode.isBlank() || userCode.isBlank()) {
-                    lastError = "GitHub returned an incomplete device code."
+                    lastError = I18n.s(R.string.ui_github_returned_an_incomplete_device_code)
                     return null
                 }
                 DeviceCode(
@@ -153,7 +156,7 @@ object GitHubAuthClient {
                 )
             }
         } catch (t: Throwable) {
-            lastError = "Could not reach github.com. Check your connection."
+            lastError = I18n.s(R.string.ui_could_not_reach_github_com_check_your_connection)
             if (BuildConfig.DEBUG) Log.w(TAG, "requestDeviceCode", t)
             null
         }
@@ -198,7 +201,7 @@ object GitHubAuthClient {
             }
         } catch (t: Throwable) {
             if (BuildConfig.DEBUG) Log.w(TAG, "pollForToken", t)
-            Poll.Failed("Could not reach github.com. Check your connection.")
+            Poll.Failed(I18n.s(R.string.ui_could_not_reach_github_com_check_your_connection))
         }
     }
 

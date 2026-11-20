@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -124,9 +127,9 @@ public final class SteamRepository {
         try {
             java.security.Security.removeProvider("BC");
             java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            Log.i(TAG, "Registered full BouncyCastle provider (JavaSteam manifest SHA-1)");
+            Log.i(TAG, I18n.s(R.string.ui_registered_full_bouncycastle_provider_javasteam_manifest));
         } catch (Throwable t) {
-            Log.e(TAG, "Failed to register BouncyCastle provider", t);
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_register_bouncycastle_provider), t);
         }
     }
 
@@ -239,12 +242,12 @@ public final class SteamRepository {
                 if (state == BlSteamEngine.STATE_CONNECTED) {
                     rustReconnectAttempts = 0;
                     emit("Connected");
-                    BlSteamEngineLog.log("SESSION", "connected to CM (encrypted channel up)");
+                    BlSteamEngineLog.log("SESSION", I18n.s(R.string.ui_connected_to_cm_encrypted_channel_up));
                 }
                 if (realSteamSuspended) return;
                 // Connect-only (no saved sign-in): the channel is up for the login screens; the pill
                 // stays "Signed out" like a signed-out JavaSteam session would show nothing.
-                if (!isLoggedInPrefs()) setStatus(SteamStatus.SIGNED_OUT, "rust engine connected — no saved sign-in");
+                if (!isLoggedInPrefs()) setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_connected_no_saved_sign_in));
                 else setStatus(SteamStatus.CONNECTING, "rust engine state " + state);
             } else {
                 BlSteamEngineLog.log("SESSION", "disconnected"
@@ -252,9 +255,9 @@ public final class SteamRepository {
                         : loggingOut ? " (signed out)"
                         : rustTokenRejected ? " (refresh token rejected)"
                         : rustSignedInElsewhere ? " (account taken by another client)" : " (will reconnect)"));
-                if (realSteamSuspended)       setStatus(SteamStatus.PAUSED_FOR_GAME, "rust engine down — paused for in-game real-Steam session");
+                if (realSteamSuspended)       setStatus(SteamStatus.PAUSED_FOR_GAME, I18n.s(R.string.ui_rust_engine_down_paused_for_in_game_real_steam_session));
                 else if (loggingOut)          setStatus(SteamStatus.SIGNED_OUT, "rust engine: signed out");
-                else if (rustTokenRejected)   setStatus(SteamStatus.SIGNED_OUT, "rust engine: refresh token rejected — needs re-auth");
+                else if (rustTokenRejected)   setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_refresh_token_rejected_needs_re_auth));
                 else if (rustSignedInElsewhere) setStatus(SteamStatus.SIGNED_IN_ELSEWHERE, "rust engine: account owned by another client");
                 else if (!rustScheduleReconnect()) setStatus(SteamStatus.OFFLINE, "rust engine disconnected");
                 emit("Disconnected");
@@ -291,7 +294,7 @@ public final class SteamRepository {
                     // Involuntary logoff (e.g. Expired): the engine re-reports Connected and re-logs on
                     // from the saved token itself (bounded by its storm guard) — mirror the JavaSteam
                     // "involuntary logoff recovery" status so the pill shows we're recovering.
-                    setStatus(SteamStatus.CONNECTING, "rust engine: involuntary logoff " + name + " — re-logging on");
+                    setStatus(SteamStatus.CONNECTING, "rust engine: involuntary logoff " + name + I18n.s(R.string.ui_re_logging_on));
                 }
             }
         }
@@ -299,7 +302,7 @@ public final class SteamRepository {
             SteamLogRedactor.registerSecret(refreshToken);
             pPut("refresh_token", refreshToken);
             slog("rust engine: refresh token rotated");
-            BlSteamEngineLog.log("AUTH", "refresh token rotated (persisted)");
+            BlSteamEngineLog.log("AUTH", I18n.s(R.string.ui_refresh_token_rotated_persisted));
         }
         @Override public void onCellId(int cellId) {
             // Same key JavaSteam's onLoggedOn writes (LoggedOnCallback.cellID); the download CDN
@@ -331,7 +334,7 @@ public final class SteamRepository {
     private void rustConnect(String source) {
         if (appContext == null) { Log.e(RUST_TAG, "rustConnect before initialize()"); return; }
         if (realSteamSuspended) {
-            Log.i(REALSTEAM_TAG, "rustConnect skipped — app session suspended for in-game real-Steam session (" + source + ")");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_rustconnect_skipped_app_session_suspended_for_in_game_re) + source + ")");
             return;
         }
         loggingOut = false;
@@ -351,26 +354,26 @@ public final class SteamRepository {
         if (eng.isActive() || eng.isStarting()) {
             int st = eng.state();
             if (st == BlSteamEngine.STATE_LOGGED_ON) {
-                Log.i(RUST_TAG, "rustConnect skipped — already logged on (" + source + ")");
+                Log.i(RUST_TAG, I18n.s(R.string.ui_rustconnect_skipped_already_logged_on) + source + ")");
                 return;
             }
             if (saved) {
                 // Channel up (or coming up) without a session: log on to it — the interactive sign-in
                 // and the "connected but logged off" recovery both land here.
-                setStatus(SteamStatus.CONNECTING, "rust engine logon on live channel (" + source + ")");
+                setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_rust_engine_logon_on_live_channel) + source + ")");
                 if (eng.logon(user, token, sid)) return;
                 // No handle after all (a teardown raced us) — fall through to a fresh start.
             } else {
                 // Return WITH a status: bailing out silently left whatever the FGS notification
                 // was last seeded with (the hardcoded "Connecting to Steam…") standing forever.
-                setStatus(SteamStatus.SIGNED_OUT, "rust engine: channel up, no saved sign-in (" + source + ")");
+                setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_channel_up_no_saved_sign_in) + source + ")");
                 refreshFgsStatus();
-                Log.i(RUST_TAG, "rustConnect: channel up, no saved sign-in (" + source + ")");
+                Log.i(RUST_TAG, I18n.s(R.string.ui_rustconnect_channel_up_no_saved_sign_in) + source + ")");
                 return;
             }
         }
-        if (saved) setStatus(SteamStatus.CONNECTING, "rust engine connect (" + source + ")");
-        else setStatus(SteamStatus.SIGNED_OUT, "rust engine connect-only — no saved session (" + source + ")");
+        if (saved) setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_rust_engine_connect) + source + ")");
+        else setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_connect_only_no_saved_session) + source + ")");
         eng.setAutoPersonaOnline(rustSocialEnabled());
         eng.start(appContext, saved ? user : "", saved ? token : "", saved ? sid : 0L, rustListener);
     }
@@ -389,7 +392,7 @@ public final class SteamRepository {
         if (!rustEngine || appContext == null) return false;
         if (loggingOut || realSteamSuspended || rustTokenRejected || rustSignedInElsewhere) return false;
         if (rustReconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
-            Log.w(RUST_TAG, "auto-reconnect budget exhausted (" + MAX_RECONNECT_ATTEMPTS + ") — waiting for network/user");
+            Log.w(RUST_TAG, I18n.s(R.string.ui_auto_reconnect_budget_exhausted) + MAX_RECONNECT_ATTEMPTS + ") — waiting for network/user");
             return false;
         }
         rustReconnectAttempts++;
@@ -462,12 +465,12 @@ public final class SteamRepository {
 
     private boolean rustSendGamesPlayed(int appId, String why) {
         if (realSteamSuspended) {
-            Log.i(PRESENCE_TAG, "games-played skipped — app session paused for a real-Steam game (" + why + ")");
+            Log.i(PRESENCE_TAG, I18n.s(R.string.ui_games_played_skipped_app_session_paused_for_a_real_steam) + why + ")");
             return false;
         }
         BlSteamSession s = BlSteamEngine.INSTANCE.session();
         if (s == null || !BlSteamEngine.INSTANCE.isLoggedOn()) {
-            Log.i(PRESENCE_TAG, "games-played skipped — engine not logged on (" + why + ", appId=" + appId + ")");
+            Log.i(PRESENCE_TAG, I18n.s(R.string.ui_games_played_skipped_engine_not_logged_on) + why + ", appId=" + appId + ")");
             return false;
         }
         try {
@@ -477,7 +480,7 @@ public final class SteamRepository {
             slog("presence: " + (appId > 0 ? "in game " + appId : "left game") + " (" + why + ")");
             return true;
         } catch (Throwable t) {
-            Log.w(PRESENCE_TAG, "games-played failed (" + why + ")", t);
+            Log.w(PRESENCE_TAG, I18n.s(R.string.ui_games_played_failed) + why + ")", t);
             return false;
         }
     }
@@ -558,14 +561,14 @@ public final class SteamRepository {
         if (!rustEngine) return;
         final BlSteamSession s = BlSteamEngine.INSTANCE.session();
         if (s == null || !BlSteamEngine.INSTANCE.isLoggedOn()) {
-            Log.i(RUST_TAG, "library sync skipped — engine not logged on (" + source + ")");
+            Log.i(RUST_TAG, I18n.s(R.string.ui_library_sync_skipped_engine_not_logged_on) + source + ")");
             return;
         }
         if (!rustSyncing.compareAndSet(false, true)) {
-            Log.i(RUST_TAG, "library sync already running (" + source + ")");
+            Log.i(RUST_TAG, I18n.s(R.string.ui_library_sync_already_running) + source + ")");
             return;
         }
-        Log.i(RUST_TAG, "library sync starting on the Rust engine (" + source + ")");
+        Log.i(RUST_TAG, I18n.s(R.string.ui_library_sync_starting_on_the_rust_engine) + source + ")");
         Thread t = new Thread(() -> {
             try {
                 final SteamDatabase db = getDatabase();
@@ -577,7 +580,7 @@ public final class SteamRepository {
                     private int stored = 0;
 
                     @Override public void onLicenses(List<BlLibraryCrawler.License> licenses) {
-                        Log.i(RUST_TAG, licenses.size() + " licenses received (rust)");
+                        Log.i(RUST_TAG, licenses.size() + I18n.s(R.string.ui_licenses_received_rust));
                         db.clearLicenses();
                         for (BlLibraryCrawler.License lic : licenses)
                             db.upsertLicense(lic.getPackageId(), lic.getTimeCreated(), lic.getFlags(), lic.getLicenseType());
@@ -586,7 +589,7 @@ public final class SteamRepository {
                     @Override public void onPackagesResolved(Map<Integer, List<Integer>> packageApps, List<Integer> uniqueAppIds) {
                         for (Map.Entry<Integer, List<Integer>> e : packageApps.entrySet())
                             for (int appId : e.getValue()) db.linkLicenseApp(e.getKey(), appId);
-                        Log.i(RUST_TAG, "PICS packages resolved " + uniqueAppIds.size() + " unique app IDs (rust)");
+                        Log.i(RUST_TAG, I18n.s(R.string.ui_pics_packages_resolved) + uniqueAppIds.size() + I18n.s(R.string.ui_unique_app_ids_rust));
                         emit("LibraryProgress:1:" + uniqueAppIds.size());
                         licensedApps = new java.util.HashSet<>(db.getLicensedAppIds());
                     }
@@ -600,17 +603,17 @@ public final class SteamRepository {
                         stored += count;
                         rustSyncProcessed = processed;
                         emit("LibraryProgress:2:" + processed + ":" + total);
-                        Log.i(RUST_TAG, "PICS app batch parsed (rust): +" + count + " (" + processed + "/" + total + ")");
+                        Log.i(RUST_TAG, I18n.s(R.string.ui_pics_app_batch_parsed_rust) + count + " (" + processed + "/" + total + ")");
                     }
                     @Override public void onFinished(int total) {
                         recordSyncTime();
                         pPut("last_sync_engine", "rust");
-                        Log.i(RUST_TAG, "Library sync complete (rust): " + stored + " apps stored of " + total);
+                        Log.i(RUST_TAG, I18n.s(R.string.ui_library_sync_complete_rust) + stored + " apps stored of " + total);
                         emit("LibrarySynced:" + stored);
                         picsDiffReport(db, before, beforeEngine, "rust");
                     }
                     @Override public void onFailed(String reason, int processed) {
-                        Log.w(RUST_TAG, "Library sync stopped (rust): " + reason + " after " + processed + " apps");
+                        Log.w(RUST_TAG, I18n.s(R.string.ui_library_sync_stopped_rust) + reason + " after " + processed + " apps");
                         if (processed > 0) { cachedGameRows = null; emit("LibrarySynced:" + stored); }
                     }
                     @Override public boolean isCancelled() {
@@ -737,7 +740,7 @@ public final class SteamRepository {
                 lines.add("CHANGED   app " + e.getKey() + "\n    prev: " + prev + "\n    now:  " + e.getValue());
             }
             int onlyPrev = 0;
-            for (Integer id : before.keySet()) if (!after.containsKey(id)) { onlyPrev++; lines.add("ONLY-PREV app " + id + ": " + before.get(id)); }
+            for (Integer id : before.keySet()) if (!after.containsKey(id)) { onlyPrev++; lines.add(I18n.s(R.string.ui_only_prev_app) + id + ": " + before.get(id)); }
             int onlyNow = after.size() - same - changed;
             String head = "diff previous=" + (beforeEngine.isEmpty() ? "?" : beforeEngine) + " → now=" + nowEngine
                     + ": prevApps=" + before.size() + " nowApps=" + after.size() + " same=" + same
@@ -997,7 +1000,7 @@ public final class SteamRepository {
         steamFriends = steamClient.getHandler(SteamFriends.class);
 
         registerCallbacks();
-        Log.i(TAG, "SteamRepository initialised");
+        Log.i(TAG, I18n.s(R.string.ui_steamrepository_initialised));
     }
 
     private void registerCallbacks() {
@@ -1031,15 +1034,15 @@ public final class SteamRepository {
         if (realSteamSuspended) {
             // FGS START_STICKY restart / foreground ON_START / pill tap while a real-Steam game holds
             // the account: stay down; keep the notification honest about why.
-            Log.i(REALSTEAM_TAG, "connect() skipped — app session suspended for in-game real-Steam session");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_connect_skipped_app_session_suspended_for_in_game_real_s));
             refreshFgsStatus();
             return;
         }
         if (rustEngine) { rustConnect("connect"); return; }
-        if (connected) { Log.i(TAG, "connect() skipped — already connected"); return; }
+        if (connected) { Log.i(TAG, I18n.s(R.string.ui_connect_skipped_already_connected)); return; }
         // Guard against double-connect (e.g. onStartCommand called twice for START_STICKY)
         if (!connecting.compareAndSet(false, true)) {
-            Log.i(TAG, "connect() skipped — already connecting");
+            Log.i(TAG, I18n.s(R.string.ui_connect_skipped_already_connecting));
             return;
         }
         startPump();
@@ -1076,17 +1079,17 @@ public final class SteamRepository {
                 hasInternet = testUrl("http://connectivitycheck.gstatic.com/generate_204", 6000);
             }
             if (!hasInternet) {
-                Log.w(TAG, "No internet connectivity");
+                Log.w(TAG, I18n.s(R.string.ui_no_internet_connectivity));
                 emit("NoInternet");
                 return;
             }
             // Step 2: test Steam specifically
             boolean steamOk = testUrl("https://api.steampowered.com/ISteamDirectory/GetCMListForConnect/v1/?cellid=0", 6000);
             if (steamOk) {
-                Log.i(TAG, "Steam API reachable");
+                Log.i(TAG, I18n.s(R.string.ui_steam_api_reachable));
                 emit("Reachable");
             } else {
-                Log.w(TAG, "Steam blocked on this network");
+                Log.w(TAG, I18n.s(R.string.ui_steam_blocked_on_this_network));
                 emit("SteamBlocked");
             }
         }, "SteamReachCheck").start();
@@ -1161,7 +1164,7 @@ public final class SteamRepository {
         if (!pumping.get() || pumpHandler == null) return;
         pumpHandler.post(() -> {
             try { if (manager != null) manager.runWaitCallbacks(500L); }
-            catch (Throwable t) { Log.e(TAG, "Pump error", t); }
+            catch (Throwable t) { Log.e(TAG, I18n.s(R.string.ui_pump_error), t); }
             schedulePump();
         });
     }
@@ -1171,7 +1174,7 @@ public final class SteamRepository {
     // -------------------------------------------------------------------------
 
     private void onConnected() {
-        Log.i(TAG, "Connected to Steam CM");
+        Log.i(TAG, I18n.s(R.string.ui_connected_to_steam_cm));
         connected = true;
         connecting.set(false);
         reconnectAttempts = 0;
@@ -1185,7 +1188,7 @@ public final class SteamRepository {
                   "CM connected");
 
         if (isLoggedInPrefs()) {
-            Log.i(TAG, SteamLogRedactor.redact("Auto-login as " + pGet("username", "")));
+            Log.i(TAG, SteamLogRedactor.redact(I18n.s(R.string.ui_auto_login_as) + pGet("username", "")));
             loginWithToken(pGet("username", ""), pGet("refresh_token", ""));
         }
     }
@@ -1262,10 +1265,10 @@ public final class SteamRepository {
     private static String fgsTextFor(SteamStatus s) {
         switch (s) {
             case ONLINE:              return "Steam: Online";
-            case CONNECTING:          return "Connecting to Steam…";
-            case SIGNED_IN_ELSEWHERE: return "Signed in elsewhere";
-            case SIGNED_OUT:          return "Signed out";
-            case PAUSED_FOR_GAME:     return "Paused — game session active";
+            case CONNECTING:          return I18n.s(R.string.ui_connecting_to_steam_u2026);
+            case SIGNED_IN_ELSEWHERE: return I18n.s(R.string.ui_signed_in_elsewhere);
+            case SIGNED_OUT:          return I18n.s(R.string.ui_signed_out);
+            case PAUSED_FOR_GAME:     return I18n.s(R.string.ui_paused_game_session_active);
             case OFFLINE:
             default:                  return "Offline";
         }
@@ -1321,7 +1324,7 @@ public final class SteamRepository {
      */
     public void reconnectNow() {
         if (realSteamSuspended) {
-            Log.i(REALSTEAM_TAG, "reconnectNow ignored — app session suspended for in-game real-Steam session");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_reconnectnow_ignored_app_session_suspended_for_in_game_r));
             return;
         }
         loggingOut = false;
@@ -1364,10 +1367,10 @@ public final class SteamRepository {
      */
     public void suspendForRealSteam() {
         if (realSteamSuspended) {
-            Log.i(REALSTEAM_TAG, "suspendForRealSteam: already suspended");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_suspendforrealsteam_already_suspended));
             return;
         }
-        if (rustEngine) BlSteamEngineLog.log("SESSION", "suspending the app session for the in-game Steam client");
+        if (rustEngine) BlSteamEngineLog.log("SESSION", I18n.s(R.string.ui_suspending_the_app_session_for_the_in_game_steam_client));
         realSteamSuspended = true;   // set FIRST so every reconnect path sees it before the socket drops
         Log.i(REALSTEAM_TAG, "suspending app CM session for in-game real-Steam session (connected="
                 + connected + " loggedIn=" + loggedIn + " status=" + status + ")");
@@ -1381,7 +1384,7 @@ public final class SteamRepository {
         // disconnect() stops the pump, so an in-flight connect() can never resolve — clear its latch or
         // the post-game connect() would be skipped as "already connecting" forever.
         connecting.set(false);
-        setStatus(SteamStatus.PAUSED_FOR_GAME, "suspended for in-game real-Steam session");
+        setStatus(SteamStatus.PAUSED_FOR_GAME, I18n.s(R.string.ui_suspended_for_in_game_real_steam_session));
     }
 
     /**
@@ -1396,11 +1399,11 @@ public final class SteamRepository {
     public boolean resumeAfterRealSteam(long awaitLoggedInMs) {
         if (!realSteamSuspended) return isConnected() && isLoggedIn();
         realSteamSuspended = false;
-        if (rustEngine) BlSteamEngineLog.log("SESSION", "resuming the app session after the in-game Steam client");
+        if (rustEngine) BlSteamEngineLog.log("SESSION", I18n.s(R.string.ui_resuming_the_app_session_after_the_in_game_steam_client));
         boolean saved = isLoggedInPrefs();
         Log.i(REALSTEAM_TAG, "resuming app CM session after real-Steam game (savedSession=" + saved + ")");
         if (!saved) {
-            setStatus(SteamStatus.SIGNED_OUT, "resumed after real-Steam game — no saved session");
+            setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_resumed_after_real_steam_game_no_saved_session));
             return false;
         }
         reconnectNow();
@@ -1447,9 +1450,9 @@ public final class SteamRepository {
                 cm.registerDefaultNetworkCallback(cb);   // minSdk 26 >= API 24 requirement
                 networkCm = cm;
                 networkCallback = cb;
-                Log.i(TAG, "Network availability callback registered (background self-heal)");
+                Log.i(TAG, I18n.s(R.string.ui_network_availability_callback_registered_background_self));
             } catch (Throwable t) {
-                Log.w(TAG, "registerNetworkCallback failed — background self-heal disabled", t);
+                Log.w(TAG, I18n.s(R.string.ui_registernetworkcallback_failed_background_self_heal_disa), t);
                 networkCallback = null;
                 networkCm = null;
             }
@@ -1496,7 +1499,7 @@ public final class SteamRepository {
                 long now = System.currentTimeMillis();
                 if ((now - lastNetworkReconnectAt) < NETWORK_RECONNECT_DEBOUNCE_MS) return;
                 lastNetworkReconnectAt = now;
-                Log.i(RUST_TAG, "Network available (" + source + ") — self-healing Steam session");
+                Log.i(RUST_TAG, I18n.s(R.string.ui_network_available) + source + I18n.s(R.string.ui_self_healing_steam_session));
                 rustReconnectAttempts = 0;   // clear the auto-reconnect cap so it can't permanently strand us
                 reconnectNow();
                 return;
@@ -1511,11 +1514,11 @@ public final class SteamRepository {
             if (loggingOn.get() && (now - logonStartedAt) < LOGON_STALL_MS) return;    // logon in flight
             if ((now - lastNetworkReconnectAt) < NETWORK_RECONNECT_DEBOUNCE_MS) return; // debounce burst
             lastNetworkReconnectAt = now;
-            Log.i(TAG, "Network available (" + source + ") — self-healing Steam session");
+            Log.i(TAG, I18n.s(R.string.ui_network_available) + source + I18n.s(R.string.ui_self_healing_steam_session));
             reconnectAttempts = 0;   // clear the auto-reconnect cap so it can't permanently strand us
             reconnectNow();          // reuse the existing recovery entry point (resets caps + connect()/relogin)
         } catch (Throwable t) {
-            Log.w(TAG, "onNetworkAvailable handler failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_onnetworkavailable_handler_failed), t);
         }
     }
 
@@ -1531,7 +1534,7 @@ public final class SteamRepository {
         // Suspended for an in-game real-Steam session: this is the disconnect WE asked for (or a late
         // callback drained after it). Hold the paused state — no reconnect, no OFFLINE flip.
         if (realSteamSuspended) {
-            setStatus(SteamStatus.PAUSED_FOR_GAME, "disconnected — paused for in-game real-Steam session");
+            setStatus(SteamStatus.PAUSED_FOR_GAME, I18n.s(R.string.ui_disconnected_paused_for_in_game_real_steam_session));
             return;
         }
         // Reconnect on an involuntary socket drop, OR when we deliberately forced a reconnect to
@@ -1540,11 +1543,11 @@ public final class SteamRepository {
             reconnectAttempts++;
             long delayMs = reconnectAttempts * 2000L;  // 2s, 4s, 6s, 8s, 10s
             setStatus(SteamStatus.CONNECTING, "auto-reconnect attempt " + reconnectAttempts);
-            Log.i(TAG, "Auto-reconnect in " + delayMs + "ms (attempt " + reconnectAttempts + ")");
+            Log.i(TAG, I18n.s(R.string.ui_auto_reconnect_in) + delayMs + "ms (attempt " + reconnectAttempts + ")");
             if (pumpHandler != null) {
                 pumpHandler.postDelayed(() -> {
                     if (pumping.get() && !connected && !realSteamSuspended) {
-                        Log.i(TAG, "Auto-reconnect: calling connect()");
+                        Log.i(TAG, I18n.s(R.string.ui_auto_reconnect_calling_connect));
                         steamClient.connect();
                     }
                 }, delayMs);
@@ -1559,7 +1562,7 @@ public final class SteamRepository {
     private void onLoggedOn(LoggedOnCallback cb) {
         loggingOn.set(false);   // this logon has resolved (success or failure) — release the guard
         if (cb.getResult() != EResult.OK) {
-            Log.w(TAG, "Login failed: " + cb.getResult());
+            Log.w(TAG, I18n.s(R.string.ui_login_failed) + cb.getResult());
             lastSessionStatus = "LoginFailed:" + cb.getResult().name();
             // A token-rejection result won't self-heal (user must re-auth) -> SIGNED_OUT; anything
             // else (transient) stays CONNECTING so the pill shows we're still trying.
@@ -1581,12 +1584,12 @@ public final class SteamRepository {
         lastSessionStatus = "LoggedIn";
         setStatus(SteamStatus.ONLINE, "logged in");
         emit("LoggedIn:" + sid64);
-        Log.i(TAG, SteamLogRedactor.redact("Logged in as " + pGet("username", "")));
+        Log.i(TAG, SteamLogRedactor.redact(I18n.s(R.string.ui_logged_in_as) + pGet("username", "")));
     }
 
     private void onLoggedOff(LoggedOffCallback cb) {
         EResult r = cb.getResult();
-        Log.i(TAG, "Logged off: " + r);
+        Log.i(TAG, I18n.s(R.string.ui_logged_off_2) + r);
         lastSessionStatus = "LoggedOff:" + r.name();
 
         // SELF-REPLACEMENT: a LogonSessionReplaced landing right after OUR OWN logon is the eviction
@@ -1600,7 +1603,7 @@ public final class SteamRepository {
                 && isLoggedInPrefs()) {
             Log.i(TAG, "LogonSessionReplaced within self-logon window -> ignoring (our newer session is live)");
             loggingOn.set(false);
-            setStatus(SteamStatus.ONLINE, "self-replace ignored — newer session live");
+            setStatus(SteamStatus.ONLINE, I18n.s(R.string.ui_self_replace_ignored_newer_session_live));
             return;   // leave loggedIn as-is; the newer session's LoggedOn owns it
         }
 
@@ -1611,7 +1614,7 @@ public final class SteamRepository {
         // the agent's login replacing a session that hadn't fully closed yet), do NOT recover — the
         // game owns the account until resumeAfterRealSteam().
         if (realSteamSuspended) {
-            setStatus(SteamStatus.PAUSED_FOR_GAME, "logged off — paused for in-game real-Steam session");
+            setStatus(SteamStatus.PAUSED_FOR_GAME, I18n.s(R.string.ui_logged_off_paused_for_in_game_real_steam_session));
             return;
         }
 
@@ -1636,15 +1639,15 @@ public final class SteamRepository {
                 && logoffRecoveryAttempts < MAX_LOGOFF_RECOVERY) {
             logoffRecoveryAttempts++;
             setStatus(SteamStatus.CONNECTING, "involuntary logoff recovery " + logoffRecoveryAttempts);
-            Log.i(TAG, "Involuntary logoff (" + r + ") -> forcing reconnect+relogin (recovery "
+            Log.i(TAG, I18n.s(R.string.ui_involuntary_logoff) + r + ") -> forcing reconnect+relogin (recovery "
                     + logoffRecoveryAttempts + "/" + MAX_LOGOFF_RECOVERY + ")");
             forceReconnect = true;
             if (pumpHandler != null) pumpHandler.post(() -> { if (steamClient != null) steamClient.disconnect(); });
             else steamClient.disconnect();
         } else {
-            Log.w(TAG, "Logged off (" + r + ") and not recovering (attempts=" + logoffRecoveryAttempts
+            Log.w(TAG, I18n.s(R.string.ui_logged_off) + r + ") and not recovering (attempts=" + logoffRecoveryAttempts
                     + ") -> session needs re-auth");
-            setStatus(SteamStatus.SIGNED_OUT, "logged off, needs re-auth: " + r.name());
+            setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_logged_off_needs_re_auth) + r.name());
             emit("SessionExpired");
             emit("LoggedOut");
         }
@@ -1685,7 +1688,7 @@ public final class SteamRepository {
         }
         syncPhase = SYNC_PACKAGES;
         pendingPackages.clear();
-        Log.i(TAG, "PICS: requesting info for " + pkgRequests.size() + " packages");
+        Log.i(TAG, I18n.s(R.string.ui_pics_requesting_info_for) + pkgRequests.size() + " packages");
         steamApps.picsGetProductInfo(Collections.emptyList(), pkgRequests, false);
     }
 
@@ -1707,7 +1710,7 @@ public final class SteamRepository {
         appSyncProcessed = 0;
         appSyncPaused    = false;
         pendingApps.clear();
-        Log.i(TAG, "PICS: app sync starting for " + appSyncTotal + " apps in batches of " + APP_SYNC_BATCH);
+        Log.i(TAG, I18n.s(R.string.ui_pics_app_sync_starting_for) + appSyncTotal + " apps in batches of " + APP_SYNC_BATCH);
         requestNextAppBatch();
     }
 
@@ -1732,7 +1735,7 @@ public final class SteamRepository {
         // A download owns the CM connection right now — yield to it and keep our place in the queue.
         if (downloadActive) {
             appSyncPaused = true;
-            Log.i(TAG, "PICS app-sync paused (download active) — " + remainingAppIds.size() + " apps queued");
+            Log.i(TAG, I18n.s(R.string.ui_pics_app_sync_paused_download_active) + remainingAppIds.size() + " apps queued");
             return;
         }
         List<PICSRequest> appRequests = new ArrayList<>();
@@ -1741,7 +1744,7 @@ public final class SteamRepository {
         }
         syncPhase = SYNC_APPS;
         pendingApps.clear();
-        Log.i(TAG, "PICS: requesting info for " + appRequests.size() + " apps ("
+        Log.i(TAG, I18n.s(R.string.ui_pics_requesting_info_for) + appRequests.size() + " apps ("
                 + remainingAppIds.size() + " remaining)");
         steamApps.picsGetProductInfo(appRequests, Collections.emptyList(), false);
     }
@@ -1755,7 +1758,7 @@ public final class SteamRepository {
         appSyncPaused = false;
         recordSyncTime();
         pPut("last_sync_engine", "javasteam");   // BL_STEAM_PICS: labels the next cross-engine diff
-        Log.i(TAG, "Library sync complete: " + appSyncProcessed + " apps");
+        Log.i(TAG, I18n.s(R.string.ui_library_sync_complete) + appSyncProcessed + " apps");
         emit("LibrarySynced:" + appSyncProcessed);
     }
 
@@ -1776,7 +1779,7 @@ public final class SteamRepository {
             runOnLibraryWorker(() -> {
                 if (appSyncPaused && !remainingAppIds.isEmpty() && loggedIn) {
                     appSyncPaused = false;
-                    Log.i(TAG, "PICS app-sync resuming after download — " + remainingAppIds.size() + " apps queued");
+                    Log.i(TAG, I18n.s(R.string.ui_pics_app_sync_resuming_after_download) + remainingAppIds.size() + " apps queued");
                     requestNextAppBatch();
                 }
             });
@@ -1801,10 +1804,10 @@ public final class SteamRepository {
             case "7":  return "Simulation";
             case "8":  return "Adventure";
             case "9":  return "Racing";
-            case "18": return "Massively Multiplayer";
+            case "18": return I18n.s(R.string.ui_massively_multiplayer);
             case "23": return "Indie";
             case "25": return "Shooter";
-            case "37": return "Free to Play";
+            case "37": return I18n.s(R.string.ui_free_to_play);
             default:   return "";  // unknown IDs are hidden rather than shown as numbers
         }
     }
@@ -1852,7 +1855,7 @@ public final class SteamRepository {
                 }
             }
         }
-        Log.i(TAG, "PICS packages resolved " + appIds.size() + " unique app IDs");
+        Log.i(TAG, I18n.s(R.string.ui_pics_packages_resolved) + appIds.size() + I18n.s(R.string.ui_unique_app_ids));
         emit("LibraryProgress:1:" + appIds.size());
         syncApps(appIds);
     }
@@ -1874,7 +1877,7 @@ public final class SteamRepository {
         appSyncProcessed += count;
         pendingApps.clear();
         emit("LibraryProgress:2:" + appSyncProcessed + ":" + appSyncTotal);
-        Log.i(TAG, "PICS app batch parsed: +" + count + " (" + appSyncProcessed + "/" + appSyncTotal
+        Log.i(TAG, I18n.s(R.string.ui_pics_app_batch_parsed) + count + " (" + appSyncProcessed + "/" + appSyncTotal
                 + " processed, " + remainingAppIds.size() + " queued)");
         // Drive the next batch — or finish when the queue is drained (finishAppSync emits
         // LibrarySynced). If a download became active meanwhile, this parks the sync instead of
@@ -2030,14 +2033,14 @@ public final class SteamRepository {
                                     }
                                     if (!windows) {
                                         Log.d(TAG, "app " + appId + " skip depot " + depotId
-                                                + " oslist='" + oslist + "' (not windows)");
+                                                + " oslist='" + oslist + I18n.s(R.string.ui_not_windows));
                                         skippedCount++; continue;
                                     }
                                 }
                                 String lang = kvStr(config.get("language")).trim();
                                 if (!lang.isEmpty() && !"english".equalsIgnoreCase(lang)) {
                                     Log.d(TAG, "app " + appId + " skip depot " + depotId
-                                            + " language='" + lang + "' (not english)");
+                                            + " language='" + lang + I18n.s(R.string.ui_not_english));
                                     skippedCount++; continue;
                                 }
                                 String lv = kvStr(config.get("lowviolence")).trim();
@@ -2055,7 +2058,7 @@ public final class SteamRepository {
                                 //   - licensed → keep + record for the detail-page "Includes DLC:" line.
                                 if (dlcSet.contains(depotId)) {
                                     if (!licensedApps.contains(depotId)) {
-                                        Log.d(TAG, "app " + appId + " skip DLC depot " + depotId + " (not owned)");
+                                        Log.d(TAG, "app " + appId + I18n.s(R.string.ui_skip_dlc_depot) + depotId + I18n.s(R.string.ui_not_owned_2));
                                         skippedCount++; continue;
                                     }
                                     if (!includedDlcIds.contains(depotId)) includedDlcIds.add(depotId);
@@ -2168,7 +2171,7 @@ public final class SteamRepository {
                         db.replaceDlcSet(appId, dlcRows);
                         return true;
                     } catch (Exception e) {
-                        Log.w(TAG, "Skipping app " + appId + ": " + e.getMessage());
+                        Log.w(TAG, I18n.s(R.string.ui_skipping_app) + appId + ": " + e.getMessage());
                         return false;
                     }
     }
@@ -2177,10 +2180,10 @@ public final class SteamRepository {
     private void onDepotKey(DepotKeyCallback cb) {
         if (cb.getResult() == EResult.OK) {
             depotKeys.put(cb.getDepotID(), cb.getDepotKey());
-            Log.i(TAG, "Depot key received for depot " + cb.getDepotID());
+            Log.i(TAG, I18n.s(R.string.ui_depot_key_received_for_depot) + cb.getDepotID());
             emit("DepotKeyReady:" + cb.getDepotID());
         } else {
-            Log.w(TAG, "Depot key request failed for depot " + cb.getDepotID() + ": " + cb.getResult());
+            Log.w(TAG, I18n.s(R.string.ui_depot_key_request_failed_for_depot) + cb.getDepotID() + ": " + cb.getResult());
             emit("DepotKeyFailed:" + cb.getDepotID() + ":" + cb.getResult().name());
         }
     }
@@ -2194,7 +2197,7 @@ public final class SteamRepository {
         List<License> copy;
         synchronized (licenses) { copy = new ArrayList<>(licenses); }
         if (copy.isEmpty()) {
-            Log.w(TAG, "syncLibrary() called but license list is empty");
+            Log.w(TAG, I18n.s(R.string.ui_synclibrary_called_but_license_list_is_empty));
             return;
         }
         // picsGetProductInfo() does network I/O and must run off the main thread; route it to the
@@ -2221,14 +2224,14 @@ public final class SteamRepository {
      */
     public boolean refreshAppProductInfo(int appId, long timeoutMs) {
         if (!isSessionLoggedOn()) {
-            Log.i(TAG, "refreshAppProductInfo(" + appId + "): skipped (not signed in)");
+            Log.i(TAG, "refreshAppProductInfo(" + appId + I18n.s(R.string.ui_skipped_not_signed_in));
             return false;
         }
         try {
             KeyValue root = fetchProductInfoKv(Collections.singletonList(appId), timeoutMs).get(appId);
             // Metadata-only / missing-token response → no depot data to reparse. Leave the DB as-is.
             if (root == null || root.getChildren() == null || root.getChildren().isEmpty()) {
-                Log.w(TAG, "refreshAppProductInfo(" + appId + "): no populated product info");
+                Log.w(TAG, "refreshAppProductInfo(" + appId + I18n.s(R.string.ui_no_populated_product_info));
                 return false;
             }
             SteamDatabase db = SteamDatabase.getInstance();
@@ -2317,7 +2320,7 @@ public final class SteamRepository {
                         changed = true;
                     }
                 } catch (Exception e) {
-                    Log.w(TAG, "resolveOwnedDlc self-heal(" + baseAppId + ") failed: " + e.getMessage());
+                    Log.w(TAG, I18n.s(R.string.ui_resolveowneddlc_self_heal) + baseAppId + ") failed: " + e.getMessage());
                 }
             }
 
@@ -2344,7 +2347,7 @@ public final class SteamRepository {
                     }
                     changed = true;
                 } catch (Exception e) {
-                    Log.w(TAG, "resolveOwnedDlc names(" + baseAppId + ") failed: " + e.getMessage());
+                    Log.w(TAG, I18n.s(R.string.ui_resolveowneddlc_names) + baseAppId + ") failed: " + e.getMessage());
                 }
             }
         } catch (Exception e) {
@@ -2360,7 +2363,7 @@ public final class SteamRepository {
     /** Auto-login using a stored refresh token. Must not be called on the main thread. */
     public void loginWithToken(String username, String refreshToken) {
         if (realSteamSuspended) {
-            Log.i(REALSTEAM_TAG, "loginWithToken skipped — app session suspended for in-game real-Steam session");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_loginwithtoken_skipped_app_session_suspended_for_in_game));
             return;
         }
         if (rustEngine) {
@@ -2382,12 +2385,12 @@ public final class SteamRepository {
         // — is exactly what triggers LogonSessionReplaced and evicts us. Skip both. Only supersede
         // a STALLED logon (posted but no callback within LOGON_STALL_MS) so we can never lock out.
         if (loggedIn) {
-            Log.i(TAG, "loginWithToken skipped — already logged in");
+            Log.i(TAG, I18n.s(R.string.ui_loginwithtoken_skipped_already_logged_in));
             return;
         }
         long now = System.currentTimeMillis();
         if (loggingOn.get() && (now - logonStartedAt) < LOGON_STALL_MS) {
-            Log.i(TAG, "loginWithToken skipped — logon already in flight");
+            Log.i(TAG, I18n.s(R.string.ui_loginwithtoken_skipped_logon_already_in_flight));
             return;
         }
         loggingOn.set(true);
@@ -2462,14 +2465,14 @@ public final class SteamRepository {
      */
     public boolean reconnectAndRelogin(long timeoutMs) {
         if (realSteamSuspended) {
-            Log.i(REALSTEAM_TAG, "reconnectAndRelogin refused — app session suspended for in-game real-Steam session");
+            Log.i(REALSTEAM_TAG, I18n.s(R.string.ui_reconnectandrelogin_refused_app_session_suspended_for_in));
             return false;
         }
         if (!isLoggedInPrefs()) return false;   // no saved token — nothing to recover to; caller must re-auth
         if (rustEngine) {
             // Tear the engine session down and build a fresh one from the saved token, then wait.
-            Log.i(RUST_TAG, "reconnectAndRelogin: forcing a fresh engine session (timeout " + timeoutMs + "ms)");
-            setStatus(SteamStatus.CONNECTING, "forced reconnect+relogin for retry");
+            Log.i(RUST_TAG, I18n.s(R.string.ui_reconnectandrelogin_forcing_a_fresh_engine_session_timeo) + timeoutMs + "ms)");
+            setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_forced_reconnect_relogin_for_retry));
             loggingOut = false;
             rustReconnectAttempts = 0;
             BlSteamEngine.INSTANCE.stop();
@@ -2479,8 +2482,8 @@ public final class SteamRepository {
             return ok;
         }
         if (steamClient == null) return false;
-        Log.i(TAG, "reconnectAndRelogin: forcing a fresh session (timeout " + timeoutMs + "ms)");
-        setStatus(SteamStatus.CONNECTING, "forced reconnect+relogin for retry");
+        Log.i(TAG, I18n.s(R.string.ui_reconnectandrelogin_forcing_a_fresh_session_timeout) + timeoutMs + "ms)");
+        setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_forced_reconnect_relogin_for_retry));
         // Arm the involuntary-logoff recovery path so the client-initiated disconnect below re-logs-in
         // instead of being treated as a user sign-out (see onDisconnected/onLoggedOff).
         loggingOut = false;
@@ -2540,7 +2543,7 @@ public final class SteamRepository {
      * Phase 2 will implement the full SteamAuthentication API flow.
      */
     public void loginWithCredentials(String username, String password) {
-        Log.w(TAG, "loginWithCredentials: not yet implemented (Phase 2)");
+        Log.w(TAG, I18n.s(R.string.ui_loginwithcredentials_not_yet_implemented_phase_2));
         emit("LoginFailed:Phase2NotImplemented");
     }
 
@@ -2571,7 +2574,7 @@ public final class SteamRepository {
         cachedGameRows = null;
         SteamLogRedactor.clearSecrets();   // creds are being removed; forget them from the redactor too
         setStatus(SteamStatus.SIGNED_OUT, "user logout");
-        Log.i(TAG, "Logged out");
+        Log.i(TAG, I18n.s(R.string.ui_logged_out));
         emit("LoggedOut");
         if (rustEngine && !realSteamSuspended) {
             // JavaSteam keeps its CM channel up after logOff so the sign-in screens (which wait for
@@ -2615,7 +2618,7 @@ public final class SteamRepository {
             }
             if (bumped > 0) Log.i(TAG, "bumpPendingJobTimeouts: raised " + bumped + " job(s) to " + timeoutMs + "ms");
         } catch (Throwable t) {
-            Log.w(TAG, "bumpPendingJobTimeouts failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_bumppendingjobtimeouts_failed), t);
         }
     }
 
@@ -2710,7 +2713,7 @@ public final class SteamRepository {
             Log.i(TAG, "checkBranchPassword: app " + appId + " rejected (result="
                     + (cb != null ? cb.getResult() : "null") + ")");
         } catch (Exception e) {
-            Log.w(TAG, "checkBranchPassword failed for app " + appId + ": " + e.getMessage());
+            Log.w(TAG, I18n.s(R.string.ui_checkbranchpassword_failed_for_app) + appId + ": " + e.getMessage());
         }
         return false;
     }
@@ -2736,7 +2739,7 @@ public final class SteamRepository {
         }
         for (SteamEventListener l : listeners) {
             try { l.onEvent(event); }
-            catch (Exception e) { Log.e(TAG, "Listener error for event " + event, e); }
+            catch (Exception e) { Log.e(TAG, I18n.s(R.string.ui_listener_error_for_event) + event, e); }
         }
     }
 }

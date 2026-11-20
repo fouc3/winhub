@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -98,7 +101,7 @@ public class AmazonDownloadManager {
         if (game.entitlementId == null || game.entitlementId.isEmpty()) {
             dbg.append("ERROR: entitlementId is blank\n");
             writeDebug(ctx, dbg);
-            Log.e(TAG, "entitlementId is blank for: " + game.title);
+            Log.e(TAG, I18n.s(R.string.ui_entitlementid_is_blank_for) + game.title);
             return false;
         }
 
@@ -108,13 +111,13 @@ public class AmazonDownloadManager {
             new File(installDir, IN_PROGRESS_MARKER).createNewFile();
 
             // Step 1: GetGameDownload
-            log("Getting download spec for: " + game.title);
+            log(I18n.s(R.string.ui_getting_download_spec_for) + game.title);
             AmazonApiClient.GameDownloadSpec spec =
                     AmazonApiClient.getGameDownload(accessToken, game.entitlementId);
             if (spec == null) {
                 dbg.append("ERROR: getGameDownload returned null\n");
                 writeDebug(ctx, dbg);
-                Log.e(TAG, "getGameDownload failed for: " + game.title);
+                Log.e(TAG, I18n.s(R.string.ui_getgamedownload_failed_for) + game.title);
                 return false;
             }
             dbg.append("downloadUrl=").append(StoreLog.redactUrl(spec.downloadUrl)).append("\n");
@@ -122,7 +125,7 @@ public class AmazonDownloadManager {
             log("downloadUrl: " + StoreLog.redactUrl(spec.downloadUrl));
 
             // Step 2: Download manifest
-            log("Downloading manifest.proto...");
+            log(I18n.s(R.string.ui_downloading_manifest_proto));
             String manifestUrl = AmazonApiClient.appendPath(spec.downloadUrl, "manifest.proto");
             dbg.append("manifestUrl=").append(StoreLog.redactUrl(manifestUrl)).append("\n");
             byte[] manifestBytes = AmazonApiClient.getBytes(manifestUrl, accessToken);
@@ -133,14 +136,14 @@ public class AmazonDownloadManager {
                 return false;
             }
             dbg.append("manifestBytes=").append(manifestBytes.length).append("\n");
-            log("Manifest downloaded: " + manifestBytes.length + " bytes");
+            log(I18n.s(R.string.ui_manifest_downloaded) + manifestBytes.length + " bytes");
 
             // Step 3: Parse manifest
             AmazonManifest.ParsedManifest manifest = AmazonManifest.parse(manifestBytes);
             dbg.append("files=").append(manifest.allFiles.size())
                .append(" totalInstallSize=").append(manifest.totalInstallSize)
                .append(String.format(" (%.1f MB)\n", manifest.totalInstallSize / 1048576.0));
-            log("Manifest parsed: " + manifest.allFiles.size() + " files, "
+            log(I18n.s(R.string.ui_manifest_parsed) + manifest.allFiles.size() + " files, "
                     + manifest.totalInstallSize + " bytes total");
 
             if (progress != null) {
@@ -197,7 +200,7 @@ public class AmazonDownloadManager {
                         for (String line : fileLog) dbg.append(line).append("\n");
                         dbg.append("ERROR: a file failed — aborting\n");
                         writeDebug(ctx, dbg);
-                        log("A file failed — aborting download");
+                        log(I18n.s(R.string.ui_a_file_failed_aborting_download));
                         pool.shutdownNow();
                         deleteMarker(installDir, IN_PROGRESS_MARKER);
                         return false;
@@ -207,7 +210,7 @@ public class AmazonDownloadManager {
                 for (String line : fileLog) dbg.append(line).append("\n");
                 dbg.append("ERROR: pool exception=").append(e).append("\n");
                 writeDebug(ctx, dbg);
-                Log.e(TAG, "Download pool error", e);
+                Log.e(TAG, I18n.s(R.string.ui_download_pool_error), e);
                 pool.shutdownNow();
                 deleteMarker(installDir, IN_PROGRESS_MARKER);
                 return false;
@@ -227,10 +230,10 @@ public class AmazonDownloadManager {
             new File(installDir, IN_PROGRESS_MARKER).delete();
             new File(installDir, COMPLETE_MARKER).createNewFile();
 
-            dbg.append("INSTALL COMPLETE: ").append(game.title)
+            dbg.append(I18n.s(R.string.ui_install_complete)).append(game.title)
                .append(" → ").append(installDir.getAbsolutePath()).append("\n");
             writeDebug(ctx, dbg);
-            log("Install complete: " + game.title + " → " + installDir.getAbsolutePath());
+            log(I18n.s(R.string.ui_install_complete_3) + game.title + " → " + installDir.getAbsolutePath());
             return true;
 
         } catch (Exception e) {
@@ -250,9 +253,9 @@ public class AmazonDownloadManager {
             try (java.io.FileOutputStream fos = new java.io.FileOutputStream(f)) {
                 fos.write(dbg.toString().getBytes("UTF-8"));
             }
-            Log.i(TAG, "Debug written to: " + f.getAbsolutePath());
+            Log.i(TAG, I18n.s(R.string.ui_debug_written_to) + f.getAbsolutePath());
         } catch (Exception e) {
-            Log.e(TAG, "writeDebug failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_writedebug_failed), e);
         }
     }
 
@@ -278,7 +281,7 @@ public class AmazonDownloadManager {
                 arr.put(o);
             }
         } catch (Exception e) {
-            Log.e(RUST_TAG, "buildRustPlan failed", e);
+            Log.e(RUST_TAG, I18n.s(R.string.ui_buildrustplan_failed), e);
             return "";
         }
         return arr.toString();
@@ -311,14 +314,14 @@ public class AmazonDownloadManager {
         if (plan.isEmpty()) {
             dbg.append("ERROR: rust plan build failed\n");
             writeDebug(ctx, dbg);
-            log("A file failed — aborting download");
+            log(I18n.s(R.string.ui_a_file_failed_aborting_download));
             return false;
         }
         String caPath;
         try {
             caPath = CaBundleExtractor.INSTANCE.ensureBundle(ctx);
         } catch (Throwable t) {
-            Log.w(RUST_TAG, "CA bundle unavailable, using system roots: " + t);
+            Log.w(RUST_TAG, I18n.s(R.string.ui_ca_bundle_unavailable_using_system_roots) + t);
             caPath = "";
         }
 
@@ -375,7 +378,7 @@ public class AmazonDownloadManager {
         if (result.cancelled) {
             synchronized (dbg) { dbg.append("CANCELLED (rust engine)\n"); }
             writeDebug(ctx, dbg);
-            log("Download cancelled");
+            log(I18n.s(R.string.ui_download_cancelled));
             return false;
         }
         if (!result.success) {
@@ -384,7 +387,7 @@ public class AmazonDownloadManager {
                 dbg.append("ERROR: a file failed — aborting\n");
             }
             writeDebug(ctx, dbg);
-            log("A file failed — aborting download");
+            log(I18n.s(R.string.ui_a_file_failed_aborting_download));
             return false;
         }
         return true;
@@ -430,7 +433,7 @@ public class AmazonDownloadManager {
                     if (file.hashAlgorithm == 0 && file.hashBytes.length > 0) {
                         byte[] computed = sha256(tmpFile);
                         if (!Arrays.equals(computed, file.hashBytes)) {
-                            Log.e(TAG, "SHA-256 mismatch for: " + file.unixPath());
+                            Log.e(TAG, I18n.s(R.string.ui_sha_256_mismatch_for) + file.unixPath());
                             tmpFile.delete();
                             if (attempt < MAX_RETRIES) {
                                 Thread.sleep(1000L << (attempt - 1));
@@ -442,7 +445,7 @@ public class AmazonDownloadManager {
                     // Rename tmp → dest
                     if (destFile.exists()) destFile.delete();
                     if (!tmpFile.renameTo(destFile)) {
-                        Log.e(TAG, "Failed to rename tmp → " + destFile.getAbsolutePath());
+                        Log.e(TAG, I18n.s(R.string.ui_failed_to_rename_tmp) + destFile.getAbsolutePath());
                         return false;
                     }
                     return true;
@@ -552,7 +555,7 @@ public class AmazonDownloadManager {
             return (manifest != null && manifest.totalInstallSize > 0)
                     ? manifest.totalInstallSize : -1;
         } catch (Exception e) {
-            Log.w(TAG, "fetchInstallSizeBytes Amazon: " + e.getClass().getSimpleName());
+            Log.w(TAG, I18n.s(R.string.ui_fetchinstallsizebytes_amazon) + e.getClass().getSimpleName());
             return -1;
         }
     }
@@ -590,7 +593,7 @@ public class AmazonDownloadManager {
                 fos.write(data);
             }
         } catch (Exception e) {
-            Log.e(TAG, "cacheManifest failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_cachemanifest_failed), e);
         }
     }
 

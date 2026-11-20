@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -68,10 +71,10 @@ public final class WaylandGameDriver {
             "the normal path and is used automatically when nothing else is chosen.";
 
     /** The editors' expander title for the fallback choices. */
-    public static final String FALLBACK_EXPANDER = "Advanced: use a layer-bundled or imported Wayland driver instead";
+    public static final String FALLBACK_EXPANDER = I18n.s(R.string.ui_advanced_use_a_layer_bundled_or_imported_wayland_driver);
 
     /** Editor label of the adapter choice. */
-    public static final String ADAPTER_LABEL = "Adapter (uses your graphics driver)";
+    public static final String ADAPTER_LABEL = I18n.s(R.string.ui_adapter_uses_your_graphics_driver);
 
     /** The launch-time decision. */
     public static final class Resolution {
@@ -170,15 +173,15 @@ public final class WaylandGameDriver {
             String icd = why == null ? WaylandAdapter.ensureInstalled(context) : null;
             if (icd != null) return new Resolution(Container.WAYLAND_GAME_DRIVER_ADAPTER, VARIANT_PLAIN, icd, true);
             if (why == null) why = "the bundled adapter could not be installed";
-            Log.w(TAG, "Wayland adapter not used" + (autoChoice ? " (auto)" : "") + ": " + why
-                    + "; falling back to a bundled Wayland Turnip by GPU");
+            Log.w(TAG, I18n.s(R.string.ui_wayland_adapter_not_used) + (autoChoice ? " (auto)" : "") + ": " + why
+                    + I18n.s(R.string.ui_falling_back_to_a_bundled_wayland_turnip_by_gpu));
             choice = Container.WAYLAND_GAME_DRIVER_AUTO;
         }
         if (isImported(choice)) {
             String id = importedId(choice);
             String icd = new WaylandGameDriverManager(context).getIcdPath(id);
             if (icd != null) return new Resolution(choice, VARIANT_PLAIN, icd);
-            Log.w(TAG, "imported Wayland game driver '" + id + "' is not installed; falling back to auto");
+            Log.w(TAG, I18n.s(R.string.ui_imported_wayland_game_driver_2) + id + I18n.s(R.string.ui_is_not_installed_falling_back_to_auto));
             choice = Container.WAYLAND_GAME_DRIVER_AUTO;
         }
         switch (choice) {
@@ -192,7 +195,7 @@ public final class WaylandGameDriver {
             case Container.WAYLAND_GAME_DRIVER_BUNDLED_A8XX_UPSTREAM: return new Resolution(choice, VARIANT_A8XX_UPSTREAM, null);
             case Container.WAYLAND_GAME_DRIVER_AUTO:         break;
             default:
-                Log.w(TAG, "unknown waylandGameDriver '" + choice + "'; treating as auto");
+                Log.w(TAG, I18n.s(R.string.ui_unknown_waylandgamedriver) + choice + I18n.s(R.string.ui_treating_as_auto));
                 choice = Container.WAYLAND_GAME_DRIVER_AUTO;
         }
         return new Resolution(choice, autoVariant(context), null);
@@ -287,7 +290,7 @@ public final class WaylandGameDriver {
         if (isImported(value)) {
             String id = importedId(value);
             WaylandGameDriverManager m = new WaylandGameDriverManager(context);
-            if (!m.isInstalled(id)) return id + " (imported, missing — uses Auto)";
+            if (!m.isInstalled(id)) return id + I18n.s(R.string.ui_imported_missing_uses_auto);
             String ver = m.getDriverVersion(id);
             return m.getDriverName(id) + (ver.isEmpty() ? "" : " " + ver) + " (imported)";
         }

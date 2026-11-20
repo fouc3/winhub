@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -87,7 +90,7 @@ object ComponentUpdates {
         // Driver: only a chip with a Turnip family has one to manage.
         val driver = guarded("driver") { DriverUpdateChecker.inspect(app) }
         if (driver == null) {
-            out += Status("Graphics driver", "System driver", null, null)
+            out += Status(I18n.s(R.string.ui_graphics_driver), I18n.s(R.string.ui_system_driver), null, null)
         } else {
             val newest = driver.newest
             val newer = newest != null && (driver.have == null || DriverUpdateChecker.compareRank(newest.rank, driver.have.rank) > 0)

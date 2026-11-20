@@ -1,5 +1,8 @@
 package com.winhub.hernandez.renderer.egl;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.view.Display;
@@ -118,11 +121,11 @@ public class EglRenderer implements HostRenderer, WindowManager.OnWindowModifica
             ok = nativeInit(context, xServer, FILTER_LINEAR, surfaceDirect, performanceMode, presentAtRefreshRate,
                     backPressure, precisePresentation, getRefreshRate(context));
         } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, "native EGL renderer is not available", e);
+            Log.e(TAG, I18n.s(R.string.ui_native_egl_renderer_is_not_available), e);
             return false;
         }
         if (!ok) {
-            Log.e(TAG, "native EGL renderer failed to initialise");
+            Log.e(TAG, I18n.s(R.string.ui_native_egl_renderer_failed_to_initialise));
             return false;
         }
 
@@ -363,7 +366,7 @@ public class EglRenderer implements HostRenderer, WindowManager.OnWindowModifica
 
         GPUImage image = new GPUImage(drawable.width, drawable.height);
         if (image.getHardwareBufferPtr() == 0 || image.getVirtualData() == null) {
-            Log.w(TAG, "No hardware buffer for " + drawable.width + "x" + drawable.height + " drawable " + drawable.id);
+            Log.w(TAG, I18n.s(R.string.ui_no_hardware_buffer_for) + drawable.width + "x" + drawable.height + " drawable " + drawable.id);
             image.destroy();
             return false;
         }
@@ -382,7 +385,7 @@ public class EglRenderer implements HostRenderer, WindowManager.OnWindowModifica
         }
         GPUImage image = new GPUImage(source.width, source.height);
         if (image.getHardwareBufferPtr() == 0 || image.getVirtualData() == null) {
-            Log.w(TAG, "No hardware buffer for cursor " + cursor.id);
+            Log.w(TAG, I18n.s(R.string.ui_no_hardware_buffer_for_cursor) + cursor.id);
             image.destroy();
             return;
         }

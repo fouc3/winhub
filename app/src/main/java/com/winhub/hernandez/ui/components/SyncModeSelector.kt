@@ -152,10 +152,10 @@ fun SyncModeSelector(
 
 /** One-liner for the picked mode. */
 fun syncModeBlurb(mode: String, caps: SyncCaps?): String = when (mode) {
-    SyncMode.NTSYNC -> "ntsync — closest to Windows. New: try it per game."
-    SyncMode.WINESERVER -> "wineserver — slowest, most compatible. For games that misbehave."
+    SyncMode.NTSYNC -> I18n.s(R.string.ui_ntsync_closest_to_windows_new_try_it_per_game)
+    SyncMode.WINESERVER -> I18n.s(R.string.ui_wineserver_slowest_most_compatible_for_games_that_misbeh)
     else -> if (caps == null || caps.defaultMode == SyncMode.ESYNC) "esync — layer default. Fast and well tested."
-            else "esync — fast and well tested."
+            else I18n.s(R.string.ui_esync_fast_and_well_tested)
 }
 
 /** Why each greyed pill is greyed, for [layer] (the layer's display name). */

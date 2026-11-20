@@ -119,7 +119,7 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 )
             }
             if (files.isEmpty()) {
-                add(XmbRow.Info("empty", "This folder has no log files right now.", Icons.Filled.Info))
+                add(XmbRow.Info("empty", I18n.s(R.string.ui_this_folder_has_no_log_files_right_now), Icons.Filled.Info))
             } else {
                 files.forEach { f ->
                     add(
@@ -383,8 +383,8 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
                     value = includeApp, disabledReason = locked,
                 ) { includeApp = it }
             )
-            add(XmbRow.External(key = "go", label = if (busy) "Working…" else "Continue on GitHub", icon = Icons.Filled.OpenInNew) { submit() })
-            add(XmbRow.Header("attach", "Will be attached"))
+            add(XmbRow.External(key = "go", label = if (busy) "Working…" else I18n.s(R.string.ui_continue_on_github), icon = Icons.Filled.OpenInNew) { submit() })
+            add(XmbRow.Header("attach", I18n.s(R.string.ui_will_be_attached)))
             willAttach.forEachIndexed { i, f -> add(XmbRow.Info("a$i", "• $f", Icons.Filled.InsertDriveFile)) }
             addAll(
                 XmbTools.para(

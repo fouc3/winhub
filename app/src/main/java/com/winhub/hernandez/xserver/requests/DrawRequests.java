@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver.requests;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import static com.winhub.hernandez.xserver.XClientRequestHandler.RESPONSE_CODE_SUCCESS;
 
 import com.winhub.hernandez.xconnector.XInputStream;
@@ -41,7 +44,7 @@ public abstract class DrawRequests {
         if (graphicsContext == null) throw new BadGraphicsContext(gcId);
 
         if (!(graphicsContext.getFunction() == GraphicsContext.Function.COPY || format == Format.Z_PIXMAP)) {
-            throw new UnsupportedOperationException("GC Function other than COPY is not supported.");
+            throw new UnsupportedOperationException(I18n.s(R.string.ui_gc_function_other_than_copy_is_not_supported));
         }
 
         switch (format) {
@@ -107,13 +110,13 @@ public abstract class DrawRequests {
         Drawable srcDrawable = client.xServer.drawableManager.getDrawable(srcDrawableId);
         if (srcDrawable == null) throw new BadDrawable(srcDrawableId);
         if (srcDrawable.getData() == null) {
-            throw new IllegalStateException("srcDrawable has null data!");
+            throw new IllegalStateException(I18n.s(R.string.ui_srcdrawable_has_null_data));
         }
 
         Drawable dstDrawable = client.xServer.drawableManager.getDrawable(dstDrawableId);
         if (dstDrawable == null) throw new BadDrawable(dstDrawableId);
         if (dstDrawable.getData() == null) {
-            throw new IllegalStateException("dstDrawable has null data!");
+            throw new IllegalStateException(I18n.s(R.string.ui_dstdrawable_has_null_data));
         }
 
 

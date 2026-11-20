@@ -1,21 +1,24 @@
 package com.winhub.hernandez.ui
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 sealed class Screen(val route: String, val label: String, val iconName: String) {
     object Containers    : Screen("containers",     "Containers",             "folder")
     object Games         : Screen("games",           "Games",                  "shortcut")
     object Contents      : Screen("contents",       "Contents",               "inventory_2")
-    object InputControls : Screen("input_controls", "Input Controls",         "sports_esports")
-    object AdrenoTools   : Screen("adreno_tools",   "Adrenotools GPU Drivers","memory")
-    object Wrappers      : Screen("wrapper_manager","Manage Wrappers",        "layers")
+    object InputControls : Screen("input_controls", I18n.s(R.string.input_controls),         "sports_esports")
+    object AdrenoTools   : Screen("adreno_tools",   I18n.s(R.string.adrenotools_gpu_drivers),"memory")
+    object Wrappers      : Screen("wrapper_manager",I18n.s(R.string.wrapper_manager_title),        "layers")
     object Saves         : Screen("saves",          "Saves",                  "save")
-    object SaveManager   : Screen("save_manager",   "Save Manager",           "save")
-    object FileManager   : Screen("file_manager",   "File Manager",           "folder_open")
+    object SaveManager   : Screen("save_manager",   I18n.s(R.string.ui_save_manager),           "save")
+    object FileManager   : Screen("file_manager",   I18n.s(R.string.ui_file_manager),           "folder_open")
     object Settings      : Screen("settings",       "Settings",               "settings")
     object Appearance    : Screen("appearance",     "Appearance",             "palette")
 
     // Community feed over GitHub Issues on winhub-emu/social-hub. Own sign-in + own scrolling
     // (see ui/XServerSocialTab.kt), so it is a route like the others rather than a dialog.
-    object SocialHub     : Screen("social_hub",     "Social Hub",             "group")
+    object SocialHub     : Screen("social_hub",     I18n.s(R.string.social_hub_tab_label),             "group")
 
     object Gog    : Screen("gog",    "GOG",          "storefront")
     object Epic   : Screen("epic",   "Epic Games",   "storefront")
@@ -27,7 +30,7 @@ sealed class Screen(val route: String, val label: String, val iconName: String) 
 
     // Couch/TV launcher shown at startup instead of the normal UI when enable_big_picture_mode is on.
     // Registered as a route (see AppNavGraph) but intentionally NOT listed in the drawer.
-    object BigPicture : Screen("big_picture", "Big Picture", "sports_esports")
+    object BigPicture : Screen("big_picture", I18n.s(R.string.ui_big_picture), "sports_esports")
 
     // DroidDeck front end: full-bleed shell (no top bar) hosting this app's own screens.
     // Registered as a route (see AppNavGraph) but intentionally NOT listed in the drawer.

@@ -127,7 +127,7 @@ fun GogStoreTab(
                     query = query.trim(),
                     wide = wide,
                     storeLabel = "GOG",
-                    emptyBody = "Nothing on GOG matched that. Try a shorter or different title.",
+                    emptyBody = I18n.s(R.string.ui_nothing_on_gog_matched_that_try_a_shorter_or_different_t),
                     actionFor = ::actionFor,
                     onOpen = ::open,
                     onAction = ::act,
@@ -145,7 +145,7 @@ fun GogStoreTab(
                 ) {
                     StoreNotice(
                         title = I18n.s(R.string.ui_store_browsing_is_unavailable),
-                        body = "GOG's catalog didn't answer. Search still works, and everything you " +
+                        body = I18n.s(R.string.ui_gog_s_catalog_didn_t_answer_search_still_works_and_every) +
                             "already own is in the Library tab.",
                         actionLabel = "Retry",
                         onAction = { reloadKey++ },
@@ -183,14 +183,14 @@ private fun GogStorePortrait(
                     onOpen = { onOpen(hero) },
                     onAction = { onAction(hero) },
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                    eyebrow = "TRENDING ON GOG",
+                    eyebrow = I18n.s(R.string.ui_trending_on_gog),
                 )
             }
         }
-        catalogRail("Trending", "Popular right now", data.trending, "GOG", actionFor, onOpen, onAction)
-        catalogRail("Free Games", "Claim on GOG.com", data.free, "GOG", actionFor, onOpen, onAction)
-        catalogRail("New Releases", "Just landed", data.newReleases, "GOG", actionFor, onOpen, onAction)
-        catalogRail("Deals", "Biggest discounts", data.deals, "GOG", actionFor, onOpen, onAction)
+        catalogRail("Trending", I18n.s(R.string.ui_popular_right_now), data.trending, "GOG", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_free_games), I18n.s(R.string.ui_claim_on_gog_com), data.free, "GOG", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_new_releases), I18n.s(R.string.ui_just_landed), data.newReleases, "GOG", actionFor, onOpen, onAction)
+        catalogRail("Deals", I18n.s(R.string.ui_biggest_discounts), data.deals, "GOG", actionFor, onOpen, onAction)
     }
 }
 
@@ -216,12 +216,12 @@ private fun GogStoreLandscape(
                         onOpen = { onOpen(hero) },
                         onAction = { onAction(hero) },
                         modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                        eyebrow = "TRENDING ON GOG",
+                        eyebrow = I18n.s(R.string.ui_trending_on_gog),
                     )
                 }
             }
             if (data.free.isNotEmpty()) {
-                item(key = "free_hdr") { StoreSectionHeader("Free Games", "Claim on GOG.com") }
+                item(key = "free_hdr") { StoreSectionHeader(I18n.s(R.string.ui_free_games), I18n.s(R.string.ui_claim_on_gog_com)) }
                 items(data.free.distinctBy { it.id }, key = { "free_${it.id}" }) { g ->
                     CatalogResultRow(
                         item = g,
@@ -238,9 +238,9 @@ private fun GogStoreLandscape(
             modifier = Modifier.weight(0.58f).fillMaxHeight().focusGroup(),
             contentPadding = PaddingValues(bottom = 24.dp),
         ) {
-            catalogRail("Trending", "Popular right now", data.trending, "GOG", actionFor, onOpen, onAction)
-            catalogRail("New Releases", "Just landed", data.newReleases, "GOG", actionFor, onOpen, onAction)
-            catalogRail("Deals", "Biggest discounts", data.deals, "GOG", actionFor, onOpen, onAction)
+            catalogRail("Trending", I18n.s(R.string.ui_popular_right_now), data.trending, "GOG", actionFor, onOpen, onAction)
+            catalogRail(I18n.s(R.string.ui_new_releases), I18n.s(R.string.ui_just_landed), data.newReleases, "GOG", actionFor, onOpen, onAction)
+            catalogRail("Deals", I18n.s(R.string.ui_biggest_discounts), data.deals, "GOG", actionFor, onOpen, onAction)
             if (data.trending.isEmpty() && data.newReleases.isEmpty() && data.deals.isEmpty()) {
                 item(key = "browse_empty") {
                     StoreNotice(title = I18n.s(R.string.ui_nothing_to_browse_right_now), body = I18n.s(R.string.ui_gog_catalog_feeds_came_back_empty))

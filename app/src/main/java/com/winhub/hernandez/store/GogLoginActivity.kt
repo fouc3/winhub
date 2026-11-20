@@ -1,5 +1,7 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.util.I18n
+
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.net.Uri
@@ -309,12 +311,12 @@ class GogLoginActivity : ComponentActivity() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.REQUESTED_WITH_HEADER_ALLOW_LIST)) {
             try {
                 WebSettingsCompat.setRequestedWithHeaderOriginAllowList(webView.settings, emptySet())
-                Log.d(TAG, "X-Requested-With suppressed (empty origin allow-list)")
+                Log.d(TAG, I18n.s(R.string.ui_x_requested_with_suppressed_empty_origin_allow_list))
             } catch (e: Exception) {
-                Log.w(TAG, "could not suppress X-Requested-With", e)
+                Log.w(TAG, I18n.s(R.string.ui_could_not_suppress_x_requested_with), e)
             }
         } else {
-            Log.w(TAG, "REQUESTED_WITH_HEADER_ALLOW_LIST unsupported on this WebView build")
+            Log.w(TAG, I18n.s(R.string.ui_requested_with_header_allow_list_unsupported_on_this_web))
         }
     }
 
@@ -463,7 +465,7 @@ class GogLoginActivity : ComponentActivity() {
             if (!isPopup && isGogHost(uri.host) &&
                 view.settings.userAgentString != GALAXY_UA
             ) {
-                Log.d(TAG, "back on GOG → restoring Galaxy UA")
+                Log.d(TAG, I18n.s(R.string.ui_back_on_gog_restoring_galaxy_ua))
                 view.settings.userAgentString = GALAXY_UA
                 return false
             }
@@ -473,7 +475,7 @@ class GogLoginActivity : ComponentActivity() {
             if (!isPopup && isIdentityProviderHost(uri.host) &&
                 view.settings.userAgentString != CHROME_UA
             ) {
-                Log.d(TAG, "main-frame IdP hop → switching to Chrome UA")
+                Log.d(TAG, I18n.s(R.string.ui_main_frame_idp_hop_switching_to_chrome_ua))
                 view.settings.userAgentString = CHROME_UA
                 CookieManager.getInstance().setAcceptThirdPartyCookies(view, true)
                 view.loadUrl(uri.toString())
@@ -497,7 +499,7 @@ class GogLoginActivity : ComponentActivity() {
             val expected = oauthState
             val returnedState = frag.getQueryParameter("state")
             if (expected != null && returnedState != null && returnedState != expected) {
-                Log.e(TAG, "OAuth state mismatch — rejecting redirect")
+                Log.e(TAG, I18n.s(R.string.ui_oauth_state_mismatch_rejecting_redirect))
                 rejectLogin(getString(R.string.gog_login_error_verification))
                 return
             }
@@ -589,10 +591,10 @@ class GogLoginActivity : ComponentActivity() {
             ed.putInt("bh_gog_expires_in", 3600)
             ed.apply()
 
-            Log.d(TAG, "GOG login saved OK")   // don't log username (PII)
+            Log.d(TAG, I18n.s(R.string.ui_gog_login_saved_ok))   // don't log username (PII)
             withContext(Dispatchers.Main) { finish() }
         } catch (e: Exception) {
-            Log.e(TAG, "Login post-processing failed", e)
+            Log.e(TAG, I18n.s(R.string.ui_login_post_processing_failed), e)
             withContext(Dispatchers.Main) {
                 // Not a Compose screen (plain views via setContentView), so the shared
                 // UninstallResultBar can't apply — use the themed dark dialog instead of a

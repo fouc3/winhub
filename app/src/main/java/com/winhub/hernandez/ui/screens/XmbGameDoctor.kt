@@ -26,7 +26,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     lateinit var menu: XmbMenu
 
     menu = XmbMenu(
-        title = "Game Doctor",
+        title = I18n.s(R.string.ui_game_doctor),
         icon = Icons.Filled.Healing,
         initialKey = "busy",
         onClose = { if (session.changed) xmb.reloadGames() },
@@ -34,8 +34,8 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val r = session.report
         if (r == null) {
             listOf<XmbRow>(
-                XmbRow.Header("title", "Game Doctor"),
-                XmbRow.Info("busy", "Reading the last run, settings and shared configs…", Icons.Filled.HourglassEmpty),
+                XmbRow.Header("title", I18n.s(R.string.ui_game_doctor)),
+                XmbRow.Info("busy", I18n.s(R.string.ui_reading_the_last_run_settings_and_shared_configs), Icons.Filled.HourglassEmpty),
             )
         } else buildList<XmbRow> {
             add(XmbRow.Header("title", shortcut.name))
@@ -66,7 +66,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 f.tweaks.forEachIndexed { j, t -> add(tweakRow("f$i.t$j", t, session)) }
             }
             if (r.picks.isNotEmpty()) {
-                add(XmbRow.Header("cfg", "Shared configs for this game"))
+                add(XmbRow.Header("cfg", I18n.s(R.string.ui_shared_configs_for_this_game)))
                 r.picks.forEachIndexed { i, p ->
                     val parts = listOf(
                         p.entry.driver.takeIf { it.isNotBlank() }?.let { "Driver $it" },
@@ -80,7 +80,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                             label = listOf(p.entry.device, p.entry.soc).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { I18n.s(R.string.ui_shared_config) },
                             icon = Icons.Filled.Download,
                             subtitle = parts.ifBlank { null },
-                            value = if (p.matchesDevice) "Your device" else "Other device",
+                            value = if (p.matchesDevice) "Your device" else I18n.s(R.string.ui_other_device),
                             disabledReason = when {
                                 session.pickKey(p) in session.applied -> "Applied"
                                 session.busy -> "Working…"
@@ -91,7 +91,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 }
             }
             if (r.tweaks.isNotEmpty()) {
-                add(XmbRow.Header("more", "Try something else"))
+                add(XmbRow.Header("more", I18n.s(R.string.ui_try_something_else)))
                 r.tweaks.forEachIndexed { i, t -> add(tweakRow("try$i", t, session)) }
             }
         }

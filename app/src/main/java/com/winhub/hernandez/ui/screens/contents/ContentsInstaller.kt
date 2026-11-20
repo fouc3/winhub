@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens.contents
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.Uri
 import android.os.Handler
@@ -118,7 +121,7 @@ object ContentsInstaller {
 
                 ContentDownloadRegistry.update(key) {
                     if (ok) it.copy(phase = ContentDownloadPhase.DONE, fraction = 1f)
-                    else it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                    else it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
                 }
                 if (ok) runCatching { onChanged() }
             } catch (c: CancellationException) {
@@ -126,7 +129,7 @@ object ContentsInstaller {
             } catch (e: Exception) {
                 Log.w(TAG, "install failed for $key", e)
                 ContentDownloadRegistry.update(key) {
-                    it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                    it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
                 }
             } finally {
                 // Best-effort cancel still deletes the temp archive and closes the FGS bracket.
@@ -260,7 +263,7 @@ object ContentsInstaller {
 
                 ContentDownloadRegistry.update(key) {
                     if (ok) it.copy(phase = ContentDownloadPhase.DONE, fraction = 1f)
-                    else it.copy(phase = ContentDownloadPhase.ERROR, error = "Save failed.")
+                    else it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_save_failed))
                 }
                 if (ok) runCatching { onChanged() }
                 toast(ctx, if (ok) "Saved to ${library.baseDisplay()}$type/$fileName — see My Files"
@@ -270,7 +273,7 @@ object ContentsInstaller {
             } catch (e: Exception) {
                 Log.w(TAG, "save-only failed for $key", e)
                 ContentDownloadRegistry.update(key) {
-                    it.copy(phase = ContentDownloadPhase.ERROR, error = "Save failed.")
+                    it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_save_failed))
                 }
                 toast(ctx, "Save failed — $versionName")
             } finally {
@@ -353,13 +356,13 @@ object ContentsInstaller {
                 }
                 ContentDownloadRegistry.update(key) {
                     if (ok) it.copy(phase = ContentDownloadPhase.DONE, fraction = 1f)
-                    else it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                    else it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
                 }
             } catch (c: CancellationException) {
                 throw c // user Cancel — requestCancel already set the cancelled-terminal state; keep it.
             } catch (e: Exception) {
                 Log.w(TAG, "install-from-file failed for $key", e)
-                ContentDownloadRegistry.update(key) { it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.") }
+                ContentDownloadRegistry.update(key) { it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed)) }
             } finally {
                 runCatching { onDone(ok) }
                 DownloadForegroundService.finish(key)
@@ -486,7 +489,7 @@ object ContentsInstaller {
                             if (cont.isActive) cont.resume(true)
                         }
                     } catch (e: Exception) {
-                        Log.w(TAG, "component finishInstall failed", e)
+                        Log.w(TAG, I18n.s(R.string.ui_component_finishinstall_failed_2), e)
                         if (cont.isActive) cont.resume(false)
                     }
                 }

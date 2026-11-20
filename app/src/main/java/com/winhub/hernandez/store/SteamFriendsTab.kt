@@ -85,8 +85,8 @@ fun SteamFriendsTab(
             "state: socialEnabled=$socialEnabled sessionAvailable=$available roster=${friends.size}",
         )
         if (available && socialEnabled) SteamFriendsStore.refresh()
-        else if (!socialEnabled) StorefrontLog.i(StorefrontLog.FRIENDS, "feature OFF (opt-in) — showing the off-state")
-        else StorefrontLog.w(StorefrontLog.FRIENDS, "no live Steam session — roster cannot refresh")
+        else if (!socialEnabled) StorefrontLog.i(StorefrontLog.FRIENDS, I18n.s(R.string.ui_feature_off_opt_in_showing_the_off_state))
+        else StorefrontLog.w(StorefrontLog.FRIENDS, I18n.s(R.string.ui_no_live_steam_session_roster_cannot_refresh))
     }
 
     // Feature is opt-in and OFF: the standalone off-state, minus its back arrow (the tab bar is the
@@ -211,7 +211,7 @@ private fun FriendDetail(
         forceSingleColumn = true,
         // Game/lobby invites still aren't wired to the CM — same honest stub the standalone
         // screen shows, routed through the storefront's message bar instead of a Toast.
-        onInvite = { onMessage("Game invites are coming soon") },
+        onInvite = { onMessage(I18n.s(R.string.ui_game_invites_are_coming_soon)) },
         onRemove = { SteamFriendsStore.removeFriend(friend.steamId); onBack() },
         onViewOnSteam = {
             runCatching {

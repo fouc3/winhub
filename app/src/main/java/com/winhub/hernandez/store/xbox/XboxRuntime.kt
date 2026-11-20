@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.SystemClock
 import org.json.JSONObject
@@ -72,10 +75,10 @@ object XboxRuntime {
      */
     fun prepare(app: Context, id: String, sessionId: String, imagefsRoot: File, system32: File, cloudSaves: Boolean,
                 nexusRuntime: Boolean = true): Launch {
-        val game = XboxInstallState.get(app, id) ?: error("This Xbox game is not installed.")
+        val game = XboxInstallState.get(app, id) ?: error(I18n.s(R.string.ui_this_xbox_game_is_not_installed))
         check(File(game.folder, game.exe).isFile) { "This Xbox game's files are missing. Reinstall it." }
         session = sessionId
-        val account = XboxAccountStore.signedInAs(app) ?: error("Sign in to Xbox before playing.")
+        val account = XboxAccountStore.signedInAs(app) ?: error(I18n.s(R.string.ui_sign_in_to_xbox_before_playing))
         val (token, current, credentials) = XboxCredentials.lifecycle(app) { epoch ->
             synchronized(state) { Triple(launches.begin(id, account, sessionId), generation, epoch) }
         }
@@ -96,7 +99,7 @@ object XboxRuntime {
                 Xodus.start(app, listOf("run", game.folder, "droiddeck:prepare", "--exe", game.exe,
                     "--materialize-chain", "--market", market), launchDirectory = directory, credentialGeneration = credentials)
             } catch (e: Exception) { XboxLaunchViews.remove(directory); throw e }
-            if (!launches.attach(token, process)) { process.close(); error("Xbox launch was cancelled") }
+            if (!launches.attach(token, process)) { process.close(); error(I18n.s(R.string.ui_xbox_launch_was_cancelled)) }
             Xodus.diagnostics(app, process)
             val result = FutureTask {
                 val input = process.process.inputStream.buffered()
@@ -106,7 +109,7 @@ object XboxRuntime {
             }
             Thread(result, "xbox-launch-view").start()
             val view = try { result.get(150, TimeUnit.SECONDS) } catch (e: Exception) {
-                error("The Xbox game could not be prepared (license or files). Check your sign-in and try again.")
+                error(I18n.s(R.string.ui_the_xbox_game_could_not_be_prepared_license_or_files_che))
             }
             check(launches.renew(token, id, account, sessionId) && synchronized(state) { generation == current }) { "Xbox launch was cancelled" }
             val exe = File(view.getString("exe"))
@@ -165,7 +168,7 @@ object XboxRuntime {
             val accepted = synchronized(state) {
                 (generation == current).also { if (it) { child = service; owner = account; serviceSocket = socket } }
             }
-            if (!accepted) { service.close(); error("Xbox launch was cancelled") }
+            if (!accepted) { service.close(); error(I18n.s(R.string.ui_xbox_launch_was_cancelled)) }
             try {
                 Xodus.diagnostics(app, service)
                 Thread({ runCatching { service.process.inputStream.use { input ->

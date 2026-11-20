@@ -21,23 +21,23 @@ import com.winhub.hernandez.R
  */
 object WineChannelInfo {
 
-    const val CAT_TRACING = "Errors and tracing"
-    const val CAT_GRAPHICS = "Direct3D and graphics"
+    const val CAT_TRACING = I18n.s(R.string.ui_errors_and_tracing)
+    const val CAT_GRAPHICS = I18n.s(R.string.ui_direct3d_and_graphics)
     const val CAT_AUDIO = "Sound"
-    const val CAT_VIDEO = "Video and media playback"
-    const val CAT_UI = "Windows, menus and controls"
-    const val CAT_INPUT = "Input and devices"
-    const val CAT_NET = "Networking and the internet"
-    const val CAT_FILES = "Files and storage"
-    const val CAT_RUNTIME = "Processes, threads and memory"
-    const val CAT_REGISTRY = "Registry and settings"
-    const val CAT_SECURITY = "Security and encryption"
-    const val CAT_COM = "COM, scripting and automation"
-    const val CAT_TEXT = "Fonts and text"
+    const val CAT_VIDEO = I18n.s(R.string.ui_video_and_media_playback)
+    const val CAT_UI = I18n.s(R.string.ui_windows_menus_and_controls)
+    const val CAT_INPUT = I18n.s(R.string.ui_input_and_devices)
+    const val CAT_NET = I18n.s(R.string.ui_networking_and_the_internet)
+    const val CAT_FILES = I18n.s(R.string.ui_files_and_storage)
+    const val CAT_RUNTIME = I18n.s(R.string.ui_processes_threads_and_memory)
+    const val CAT_REGISTRY = I18n.s(R.string.ui_registry_and_settings)
+    const val CAT_SECURITY = I18n.s(R.string.ui_security_and_encryption)
+    const val CAT_COM = I18n.s(R.string.ui_com_scripting_and_automation)
+    const val CAT_TEXT = I18n.s(R.string.ui_fonts_and_text)
     const val CAT_PRINT = "Printing"
-    const val CAT_INSTALL = "Installers and packaging"
-    const val CAT_HOST = "The Android side"
-    const val CAT_OTHER = "Everything else"
+    const val CAT_INSTALL = I18n.s(R.string.ui_installers_and_packaging)
+    const val CAT_HOST = I18n.s(R.string.ui_the_android_side)
+    const val CAT_OTHER = I18n.s(R.string.ui_everything_else)
 
     /** Order the browse dialog groups them in — most useful first, not alphabetical. */
     val CATEGORY_ORDER = listOf(
@@ -48,23 +48,23 @@ object WineChannelInfo {
 
     /** Short note on what each category is for, shown once above its group. */
     fun categoryBlurb(category: String): String = when (category) {
-        CAT_TRACING -> "Start here. These decide how much detail everything else prints."
-        CAT_GRAPHICS -> "The graphics stack — where most game problems actually live."
-        CAT_AUDIO -> "Sound output, mixing and the audio APIs games use."
-        CAT_VIDEO -> "Cutscenes, codecs and media playback."
-        CAT_INPUT -> "Controllers, mouse, keyboard and other hardware."
-        CAT_UI -> "Windows, dialogs and the standard Windows controls."
-        CAT_RUNTIME -> "How the program runs: processes, threads, memory, exceptions."
-        CAT_FILES -> "Reading and writing files, drives and the filesystem."
-        CAT_NET -> "Anything that talks over a network."
-        CAT_REGISTRY -> "The Windows registry and configuration."
-        CAT_SECURITY -> "Certificates, encryption, credentials and permissions."
+        CAT_TRACING -> I18n.s(R.string.ui_start_here_these_decide_how_much_detail_everything_else)
+        CAT_GRAPHICS -> I18n.s(R.string.ui_the_graphics_stack_where_most_game_problems_actually_liv)
+        CAT_AUDIO -> I18n.s(R.string.ui_sound_output_mixing_and_the_audio_apis_games_use)
+        CAT_VIDEO -> I18n.s(R.string.ui_cutscenes_codecs_and_media_playback)
+        CAT_INPUT -> I18n.s(R.string.ui_controllers_mouse_keyboard_and_other_hardware)
+        CAT_UI -> I18n.s(R.string.ui_windows_dialogs_and_the_standard_windows_controls)
+        CAT_RUNTIME -> I18n.s(R.string.ui_how_the_program_runs_processes_threads_memory_exceptions)
+        CAT_FILES -> I18n.s(R.string.ui_reading_and_writing_files_drives_and_the_filesystem)
+        CAT_NET -> I18n.s(R.string.ui_anything_that_talks_over_a_network)
+        CAT_REGISTRY -> I18n.s(R.string.ui_the_windows_registry_and_configuration)
+        CAT_SECURITY -> I18n.s(R.string.ui_certificates_encryption_credentials_and_permissions)
         CAT_COM -> "Windows' component/automation plumbing, used heavily by launchers."
-        CAT_TEXT -> "Font loading and text rendering."
-        CAT_PRINT -> "Printers and print jobs."
-        CAT_INSTALL -> "Game and dependency installers."
-        CAT_HOST -> "Where Wine meets Android — the display driver and sound backends."
-        else -> "Components without an obvious home. Mostly niche Windows DLLs."
+        CAT_TEXT -> I18n.s(R.string.ui_font_loading_and_text_rendering)
+        CAT_PRINT -> I18n.s(R.string.ui_printers_and_print_jobs)
+        CAT_INSTALL -> I18n.s(R.string.ui_game_and_dependency_installers)
+        CAT_HOST -> I18n.s(R.string.ui_where_wine_meets_android_the_display_driver_and_sound_ba)
+        else -> I18n.s(R.string.ui_components_without_an_obvious_home_mostly_niche_windows)
     }
 
     /**

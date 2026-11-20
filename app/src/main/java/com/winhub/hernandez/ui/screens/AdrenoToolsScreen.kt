@@ -135,7 +135,7 @@ fun AdrenoToolsScreen() {
             confirmButton = {
                 TextButton(onClick = {
                     confirmInstallPrompt = false
-                    filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.DRIVER, "Select GPU driver"))
+                    filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.DRIVER, I18n.s(R.string.ui_select_gpu_driver)))
                 }) { Text(I18n.s(R.string.browse_files)) }
             },
             dismissButton = {

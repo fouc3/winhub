@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import java.io.File
 
@@ -35,7 +38,7 @@ object PerfGpuTurbo {
         System.loadLibrary("winlator")
         true
     } catch (t: Throwable) {
-        Log.w(TAG, "libwinlator not loadable — GPU turbo unavailable", t)
+        Log.w(TAG, I18n.s(R.string.ui_libwinlator_not_loadable_gpu_turbo_unavailable), t)
         false
     }
 

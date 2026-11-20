@@ -1,5 +1,7 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.util.I18n
+
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
@@ -302,7 +304,7 @@ class ContainerDetailViewModel(app: Application) : AndroidViewModel(app) {
     }
     /** Why the selected layer cannot run Wayland (null when it can). */
     fun waylandLayerProblem(): String? {
-        if (!::contentsManager.isInitialized) return "Layers are still loading."
+        if (!::contentsManager.isInitialized) return I18n.s(R.string.ui_layers_are_still_loading)
         return com.winhub.hernandez.core.WineWaylandSupport.problem(context, contentsManager, selectedWineVersion)
     }
     // Render scale (supersampling) — stored via the "renderScale" extra (no DB field). "1.0" = Off.
@@ -569,8 +571,8 @@ class ContainerDetailViewModel(app: Application) : AndroidViewModel(app) {
 
     val xrMappingLabels = listOf(
         "Button A", "Button B", "Button X", "Button Y",
-        "Button Grip", "Button Trigger",
-        "Thumbstick Up", "Thumbstick Down", "Thumbstick Left", "Thumbstick Right"
+        "Button Grip", I18n.s(R.string.ui_button_trigger),
+        "Thumbstick Up", I18n.s(R.string.ui_thumbstick_down), I18n.s(R.string.ui_thumbstick_left), I18n.s(R.string.ui_thumbstick_right)
     )
 
     // ── Tab selection ─────────────────────────────────────────────────────────

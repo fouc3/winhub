@@ -130,7 +130,7 @@ fun EpicStoreTab(
                     query = query.trim(),
                     wide = wide,
                     storeLabel = "Epic",
-                    emptyBody = "Nothing on the Epic Games Store matched that. Try a shorter or different title.",
+                    emptyBody = I18n.s(R.string.ui_nothing_on_the_epic_games_store_matched_that_try_a_short),
                     actionFor = ::actionFor,
                     onOpen = ::open,
                     onAction = ::act,
@@ -148,7 +148,7 @@ fun EpicStoreTab(
                 ) {
                     StoreNotice(
                         title = I18n.s(R.string.ui_store_browsing_is_unavailable),
-                        body = "Epic's storefront didn't answer. Search still works, and everything you " +
+                        body = I18n.s(R.string.ui_epic_s_storefront_didn_t_answer_search_still_works_and_e) +
                             "already own is in the Library tab.",
                         actionLabel = "Retry",
                         onAction = { reloadKey++ },
@@ -190,10 +190,10 @@ private fun EpicStorePortrait(
                 )
             }
         }
-        catalogRail("Free This Week", "Claim before it's gone", data.freeNow, "Epic", actionFor, onOpen, onAction)
-        catalogRail("On Sale", "Current discounts", data.onSale, "Epic", actionFor, onOpen, onAction)
-        catalogRail("New Releases", "Just landed", data.newReleases, "Epic", actionFor, onOpen, onAction)
-        catalogRail("Free To Play", "Always free", data.freeToPlay, "Epic", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_free_this_week_2), I18n.s(R.string.ui_claim_before_it_s_gone), data.freeNow, "Epic", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_on_sale), I18n.s(R.string.ui_current_discounts), data.onSale, "Epic", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_new_releases), I18n.s(R.string.ui_just_landed), data.newReleases, "Epic", actionFor, onOpen, onAction)
+        catalogRail(I18n.s(R.string.ui_free_to_play_2), I18n.s(R.string.ui_always_free), data.freeToPlay, "Epic", actionFor, onOpen, onAction)
     }
 }
 
@@ -225,7 +225,7 @@ private fun EpicStoreLandscape(
             }
             val actOn = (data.freeNow + data.freeToPlay).distinctBy { it.id }
             if (actOn.isNotEmpty()) {
-                item(key = "free_hdr") { StoreSectionHeader("Free Games", "Claim on the Epic Games Store") }
+                item(key = "free_hdr") { StoreSectionHeader(I18n.s(R.string.ui_free_games), I18n.s(R.string.ui_claim_on_the_epic_games_store)) }
                 items(actOn, key = { "free_${it.id}" }) { g ->
                     CatalogResultRow(
                         item = g,
@@ -242,8 +242,8 @@ private fun EpicStoreLandscape(
             modifier = Modifier.weight(0.58f).fillMaxHeight().focusGroup(),
             contentPadding = PaddingValues(bottom = 24.dp),
         ) {
-            catalogRail("On Sale", "Current discounts", data.onSale, "Epic", actionFor, onOpen, onAction)
-            catalogRail("New Releases", "Just landed", data.newReleases, "Epic", actionFor, onOpen, onAction)
+            catalogRail(I18n.s(R.string.ui_on_sale), I18n.s(R.string.ui_current_discounts), data.onSale, "Epic", actionFor, onOpen, onAction)
+            catalogRail(I18n.s(R.string.ui_new_releases), I18n.s(R.string.ui_just_landed), data.newReleases, "Epic", actionFor, onOpen, onAction)
             if (data.onSale.isEmpty() && data.newReleases.isEmpty()) {
                 item(key = "browse_empty") {
                     StoreNotice(title = I18n.s(R.string.ui_nothing_to_browse_right_now), body = I18n.s(R.string.ui_epic_store_feeds_came_back_empty))

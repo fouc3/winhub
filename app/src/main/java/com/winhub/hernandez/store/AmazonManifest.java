@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -108,7 +111,7 @@ public class AmazonManifest {
         // 4-byte big-endian headerSize
         int headerSize = ByteBuffer.wrap(data, 0, 4).order(ByteOrder.BIG_ENDIAN).getInt();
         if (headerSize < 0 || 4 + headerSize > data.length) {
-            throw new IOException("Invalid headerSize: " + headerSize);
+            throw new IOException(I18n.s(R.string.ui_invalid_headersize) + headerSize);
         }
 
         // Parse ManifestHeader (just need compression algorithm)
@@ -189,8 +192,8 @@ public class AmazonManifest {
             return (InputStream) ctor.newInstance(
                     new ByteArrayInputStream(body), -1);
         } catch (Exception e) {
-            throw new IOException("Cannot create " + className
-                    + " (org.tukaani.xz not available?): " + e.getMessage(), e);
+            throw new IOException(I18n.s(R.string.ui_cannot_create) + className
+                    + I18n.s(R.string.ui_org_tukaani_xz_not_available) + e.getMessage(), e);
         }
     }
 

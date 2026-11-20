@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -148,13 +151,13 @@ public class EpicDownloadManager {
             try {
                 List<CdnUrl> cdnUrls = parseCdnUrls(manifestApiJson);
                 if (cdnUrls.isEmpty()) {
-                    Log.e(TAG, "No CDN URLs in manifest API response");
+                    Log.e(TAG, I18n.s(R.string.ui_no_cdn_urls_in_manifest_api_response));
                     return null;
                 }
 
                 byte[] manifestBytes = downloadManifest(manifestApiJson, cdnUrls);
                 if (manifestBytes == null || manifestBytes.length == 0) {
-                    Log.e(TAG, "Manifest binary download failed");
+                    Log.e(TAG, I18n.s(R.string.ui_manifest_binary_download_failed));
                     return null;
                 }
 
@@ -162,7 +165,7 @@ public class EpicDownloadManager {
                 if (pm != null) pm.cdnUrls = cdnUrls;
                 return pm;
             } catch (Exception e) {
-                Log.e(TAG, "parseManifestApiJson failed", e);
+                Log.e(TAG, I18n.s(R.string.ui_parsemanifestapijson_failed), e);
                 return null;
             }
         }
@@ -231,7 +234,7 @@ public class EpicDownloadManager {
     private static boolean cancelOut(android.content.Context ctx, StringBuilder dbg, String where) {
         dbg.append("CANCELLED ").append(where).append("\n");
         writeDebug(ctx, dbg);
-        Log.i(TAG, "Epic install cancelled (" + where + ")");
+        Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled) + where + ")");
         return false;
     }
 
@@ -248,13 +251,13 @@ public class EpicDownloadManager {
         dbg.append("installDirPath=").append(installDirPath).append("\n");
         try {
             if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, "before start");
-            progress(progressCallback, "Parsing CDN URLs...", 0);
+            progress(progressCallback, I18n.s(R.string.ui_parsing_cdn_urls), 0);
 
             List<CdnUrl> cdnUrls = parseCdnUrls(manifestApiJson);
             if (cdnUrls.isEmpty()) {
                 dbg.append("ERROR: No CDN URLs in manifest API response\n");
                 writeDebug(ctx, dbg);
-                Log.e(TAG, "No CDN URLs in manifest API response");
+                Log.e(TAG, I18n.s(R.string.ui_no_cdn_urls_in_manifest_api_response));
                 return false;
             }
             for (CdnUrl c : cdnUrls) {
@@ -264,25 +267,25 @@ public class EpicDownloadManager {
                 Log.i(TAG, "  CDN: " + c.baseUrl + "  auth: " + (c.authParams.isEmpty() ? "(none)" : "YES"));
             }
 
-            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, "after CDN parse");
-            progress(progressCallback, "Downloading manifest...", 0);
+            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, I18n.s(R.string.ui_after_cdn_parse));
+            progress(progressCallback, I18n.s(R.string.ui_downloading_manifest), 0);
             byte[] manifestBytes = downloadManifest(manifestApiJson, cdnUrls);
             if (manifestBytes == null) {
                 dbg.append("ERROR: Manifest binary download failed\n");
                 writeDebug(ctx, dbg);
-                Log.e(TAG, "Manifest binary download failed");
+                Log.e(TAG, I18n.s(R.string.ui_manifest_binary_download_failed));
                 return false;
             }
             dbg.append("manifestBytes=").append(manifestBytes.length).append("\n");
-            Log.i(TAG, "Manifest bytes: " + manifestBytes.length);
+            Log.i(TAG, I18n.s(R.string.ui_manifest_bytes) + manifestBytes.length);
 
             if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, "after manifest download");
-            progress(progressCallback, "Parsing manifest...", 0);
+            progress(progressCallback, I18n.s(R.string.ui_parsing_manifest), 0);
             EpicManifest.ParsedManifest manifest = parseManifest(manifestBytes);
             if (manifest == null) {
                 dbg.append("ERROR: Manifest parse failed\n");
                 writeDebug(ctx, dbg);
-                Log.e(TAG, "Manifest parse failed");
+                Log.e(TAG, I18n.s(R.string.ui_manifest_parse_failed));
                 return false;
             }
             manifest.cdnUrls = cdnUrls;
@@ -312,7 +315,7 @@ public class EpicDownloadManager {
             // Feature #3 — delta / resume: skip files already on disk with matching size + SHA-1.
             // Fresh install → nothing on disk → no hashing cost. Resume/repair → re-hash existing
             // completed files (streamed, off the main thread) and only fetch the rest.
-            progress(progressCallback, "Verifying existing files…", 0);
+            progress(progressCallback, I18n.s(R.string.ui_verifying_existing_files), 0);
             List<FileInfo> pendingFiles = new ArrayList<>(selectedFiles.size());
             int alreadyGood = 0;
             int checked = 0;
@@ -321,10 +324,10 @@ public class EpicDownloadManager {
                 // Cancel: hashing an already-installed game can take minutes — honor cancel here too,
                 // not just in the chunk pool. This is the "Verifying…"/0% phase the UI shows.
                 if (cancelFlag != null && cancelFlag.get()) {
-                    dbg.append("CANCELLED during verify (").append(checked).append("/")
+                    dbg.append(I18n.s(R.string.ui_cancelled_during_verify)).append(checked).append("/")
                        .append(selCount).append(" files hashed)\n");
                     writeDebug(ctx, dbg);
-                    Log.i(TAG, "Epic install cancelled during verify phase");
+                    Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled_during_verify_phase));
                     return false;
                 }
                 File out = new File(installDir, f.filename.replace("\\", "/"));
@@ -333,7 +336,7 @@ public class EpicDownloadManager {
                 checked++;
                 // Report verify progress every 64 files so the phase is visible and responsive.
                 if ((checked & 63) == 0) {
-                    progress(progressCallback, "Verifying existing files… (" + checked + "/" + selCount + ")", 0);
+                    progress(progressCallback, I18n.s(R.string.ui_verifying_existing_files_2) + checked + "/" + selCount + ")", 0);
                 }
             }
             dbg.append("delta: ").append(alreadyGood).append(" up-to-date, ")
@@ -343,10 +346,10 @@ public class EpicDownloadManager {
             // Nothing to do (fully-installed re-check, or repair found no damage): success.
             if (pendingFiles.isEmpty()) {
                 deleteDir(chunkCacheDir);
-                dbg.append("INSTALL COMPLETE (nothing to download): ").append(installDirPath).append("\n");
+                dbg.append(I18n.s(R.string.ui_install_complete_nothing_to_download)).append(installDirPath).append("\n");
                 writeDebug(ctx, dbg);
                 progress(progressCallback, "Complete", 100);
-                Log.i(TAG, "Epic install complete (delta no-op): " + installDirPath);
+                Log.i(TAG, I18n.s(R.string.ui_epic_install_complete_delta_no_op) + installDirPath);
                 return true;
             }
 
@@ -384,11 +387,11 @@ public class EpicDownloadManager {
                 if (rr.started) {
                     useJavaPool = false;
                     if (rr.cancelled) {
-                        dbg.append("CANCELLED during chunk download ")
+                        dbg.append(I18n.s(R.string.ui_cancelled_during_chunk_download))
                            .append("(").append(completedCount.get()).append("/").append(totalChunks)
                            .append(" chunks)\n");
                         writeDebug(ctx, dbg);
-                        Log.i(TAG, "Epic install cancelled during chunk download");
+                        Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled_during_chunk_download));
                         return false;
                     }
                     if (!rr.success) {
@@ -398,9 +401,9 @@ public class EpicDownloadManager {
                         failCount.incrementAndGet();
                     }
                 } else {
-                    dbg.append("rust engine not started (").append(rr.error)
+                    dbg.append(I18n.s(R.string.ui_rust_engine_not_started)).append(rr.error)
                        .append(") -> Java chunk pool\n");
-                    Log.w(TAG, "Rust Epic engine not started (" + rr.error + "), using Java chunk pool");
+                    Log.w(TAG, I18n.s(R.string.ui_rust_epic_engine_not_started) + rr.error + I18n.s(R.string.ui_using_java_chunk_pool));
                 }
             }
             if (useJavaPool) {
@@ -414,7 +417,7 @@ public class EpicDownloadManager {
                         File cachedFile = new File(chunkCacheDir, fc.guidStr());
                         if (!cachedFile.exists()) {
                             if (!downloadChunkStreaming(fc, manifest.chunkDir, cdnUrls, cachedFile)) {
-                                Log.e(TAG, "Chunk download failed: " + fc.guidStr());
+                                Log.e(TAG, I18n.s(R.string.ui_chunk_download_failed) + fc.guidStr());
                                 chunkLog.add("FAIL chunk=" + fc.guidStr());
                                 failCount.incrementAndGet();
                                 return;
@@ -448,11 +451,11 @@ public class EpicDownloadManager {
                         if (cancelFlag != null && cancelFlag.get()) {
                             pool.shutdownNow();
                             pool.awaitTermination(5, TimeUnit.SECONDS);
-                            dbg.append("CANCELLED during chunk download ")
+                            dbg.append(I18n.s(R.string.ui_cancelled_during_chunk_download))
                                .append("(").append(completedCount.get()).append("/").append(totalChunks)
                                .append(" chunks)\n");
                             writeDebug(ctx, dbg);
-                            Log.i(TAG, "Epic install cancelled during chunk download");
+                            Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled_during_chunk_download));
                             return false;
                         }
                     }
@@ -469,7 +472,7 @@ public class EpicDownloadManager {
             if (cancelFlag != null && cancelFlag.get()) {
                 dbg.append("CANCELLED after chunk download\n");
                 writeDebug(ctx, dbg);
-                Log.i(TAG, "Epic install cancelled after chunk download");
+                Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled_after_chunk_download));
                 return false;
             }
 
@@ -490,10 +493,10 @@ public class EpicDownloadManager {
             dbg.append("assembling ").append(totalFiles).append(" files\n");
             for (FileInfo file : pendingFiles) {
                 if (cancelFlag != null && cancelFlag.get()) {
-                    dbg.append("CANCELLED during assembly (").append(doneFiles).append("/")
+                    dbg.append(I18n.s(R.string.ui_cancelled_during_assembly)).append(doneFiles).append("/")
                        .append(totalFiles).append(" files)\n");
                     writeDebug(ctx, dbg);
-                    Log.i(TAG, "Epic install cancelled during assembly");
+                    Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled_during_assembly));
                     return false;
                 }
                 String relPath = file.filename.replace("\\", "/");
@@ -511,10 +514,10 @@ public class EpicDownloadManager {
                     for (ChunkPart part : file.parts) {
                         File cachedChunk = new File(chunkCacheDir, part.guidStr());
                         if (!cachedChunk.exists()) {
-                            dbg.append("ERROR: missing chunk ").append(part.guidStr())
+                            dbg.append(I18n.s(R.string.ui_error_missing_chunk)).append(part.guidStr())
                                .append(" for ").append(relPath).append("\n");
                             writeDebug(ctx, dbg);
-                            Log.e(TAG, "Missing cached chunk " + part.guidStr() + " for " + relPath);
+                            Log.e(TAG, I18n.s(R.string.ui_missing_cached_chunk) + part.guidStr() + " for " + relPath);
                             return false;
                         }
                         byte[] chunkData = readFile(cachedChunk);
@@ -526,15 +529,15 @@ public class EpicDownloadManager {
             }
 
             deleteDir(chunkCacheDir);
-            dbg.append("INSTALL COMPLETE: ").append(installDirPath).append("\n");
+            dbg.append(I18n.s(R.string.ui_install_complete)).append(installDirPath).append("\n");
             writeDebug(ctx, dbg);
-            Log.i(TAG, "Epic install complete: " + installDirPath);
+            Log.i(TAG, I18n.s(R.string.ui_epic_install_complete) + installDirPath);
             return true;
 
         } catch (Exception e) {
             dbg.append("EXCEPTION: ").append(e).append("\n");
             writeDebug(ctx, dbg);
-            Log.e(TAG, "Epic install failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_epic_install_failed), e);
             return false;
         }
     }
@@ -666,9 +669,9 @@ public class EpicDownloadManager {
             try (FileOutputStream fos = new FileOutputStream(f)) {
                 fos.write(dbg.toString().getBytes("UTF-8"));
             }
-            Log.i(TAG, "Debug written to: " + f.getAbsolutePath());
+            Log.i(TAG, I18n.s(R.string.ui_debug_written_to) + f.getAbsolutePath());
         } catch (Exception e) {
-            Log.e(TAG, "writeDebug failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_writedebug_failed), e);
         }
     }
 
@@ -718,7 +721,7 @@ public class EpicDownloadManager {
                 result.add(new CdnUrl(baseUrl, cloudDir, authParams));
             }
         } catch (Exception e) {
-            Log.e(TAG, "parseCdnUrls error: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_parsecdnurls_error) + e.getClass().getSimpleName());
         }
         return result;
     }
@@ -794,19 +797,19 @@ public class EpicDownloadManager {
             int lastSlash = uriPath.lastIndexOf("/");
             if (lastSlash < 0) return null;
             String manifestFilename = uriPath.substring(lastSlash + 1);
-            Log.i(TAG, "Manifest filename: " + manifestFilename);
+            Log.i(TAG, I18n.s(R.string.ui_manifest_filename) + manifestFilename);
 
             for (CdnUrl cdn : cdnUrls) {
                 String url = cdn.baseUrl + cdn.cloudDir + "/" + manifestFilename + cdn.authParams;
-                Log.i(TAG, "Trying manifest CDN: " + cdn.baseUrl);
+                Log.i(TAG, I18n.s(R.string.ui_trying_manifest_cdn) + cdn.baseUrl);
                 byte[] bytes = downloadBytes(url, null);
                 if (bytes != null && bytes.length > 4) {
-                    Log.i(TAG, "Manifest OK (" + bytes.length + " bytes) from " + cdn.baseUrl);
+                    Log.i(TAG, I18n.s(R.string.ui_manifest_ok) + bytes.length + " bytes) from " + cdn.baseUrl);
                     return bytes;
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "downloadManifest error: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_downloadmanifest_error) + e.getClass().getSimpleName());
         }
         return null;
     }
@@ -819,7 +822,7 @@ public class EpicDownloadManager {
 
             int magic = buf.getInt();
             if (magic != 0x44BEC00C) {
-                Log.w(TAG, "Non-binary manifest, trying JSON parser");
+                Log.w(TAG, I18n.s(R.string.ui_non_binary_manifest_trying_json_parser));
                 return parseJsonManifest(bytes);
             }
 
@@ -847,7 +850,7 @@ public class EpicDownloadManager {
                 int got = inflater.inflate(decomp);
                 inflater.end();
                 if (got != sizeUncompressed) {
-                    Log.e(TAG, "Decomp size mismatch: expected " + sizeUncompressed + " got " + got);
+                    Log.e(TAG, I18n.s(R.string.ui_decomp_size_mismatch_expected) + sizeUncompressed + " got " + got);
                     return null;
                 }
                 bodyBytes = decomp;
@@ -934,7 +937,7 @@ public class EpicDownloadManager {
             return result;
 
         } catch (Exception e) {
-            Log.e(TAG, "parseManifest error", e);
+            Log.e(TAG, I18n.s(R.string.ui_parsemanifest_error), e);
             return null;
         }
     }
@@ -960,7 +963,7 @@ public class EpicDownloadManager {
             JSONObject chunkFilesizeList = root.optJSONObject("ChunkFilesizeList");
 
             if (chunkHashList == null) {
-                Log.e(TAG, "JSON manifest: no ChunkHashList");
+                Log.e(TAG, I18n.s(R.string.ui_json_manifest_no_chunkhashlist));
                 return null;
             }
 
@@ -995,7 +998,7 @@ public class EpicDownloadManager {
 
             JSONArray fileList = root.optJSONArray("FileManifestList");
             if (fileList == null) {
-                Log.e(TAG, "JSON manifest: no FileManifestList");
+                Log.e(TAG, I18n.s(R.string.ui_json_manifest_no_filemanifestlist));
                 return null;
             }
 
@@ -1048,7 +1051,7 @@ public class EpicDownloadManager {
             return result;
 
         } catch (Exception e) {
-            Log.e(TAG, "parseJsonManifest error", e);
+            Log.e(TAG, I18n.s(R.string.ui_parsejsonmanifest_error), e);
             return null;
         }
     }
@@ -1067,7 +1070,7 @@ public class EpicDownloadManager {
 
                 byte[] data = decompressChunk(raw, chunk.windowSize);
                 if (data == null) {
-                    Log.w(TAG, "Decompress failed from " + cdn.baseUrl);
+                    Log.w(TAG, I18n.s(R.string.ui_decompress_failed_from) + cdn.baseUrl);
                     continue;
                 }
 
@@ -1081,7 +1084,7 @@ public class EpicDownloadManager {
                         + ": " + e.getMessage());
             }
         }
-        Log.e(TAG, "All CDNs failed for chunk " + chunk.guidStr());
+        Log.e(TAG, I18n.s(R.string.ui_all_cdns_failed_for_chunk) + chunk.guidStr());
         return false;
     }
 
@@ -1101,7 +1104,7 @@ public class EpicDownloadManager {
             int storedAs = buf.get() & 0xFF;
 
             if (headerSize < 0 || headerSize >= raw.length) {
-                Log.e(TAG, "Bad chunk headerSize: " + headerSize);
+                Log.e(TAG, I18n.s(R.string.ui_bad_chunk_headersize) + headerSize);
                 return null;
             }
             byte[] data = new byte[compressedSize];
@@ -1118,7 +1121,7 @@ public class EpicDownloadManager {
                 inflater.end();
                 byte[] result = baos.toByteArray();
                 if (result.length == 0) {
-                    Log.e(TAG, "Chunk inflate produced 0 bytes");
+                    Log.e(TAG, I18n.s(R.string.ui_chunk_inflate_produced_0_bytes));
                     return null;
                 }
                 return result;
@@ -1126,7 +1129,7 @@ public class EpicDownloadManager {
             return data;
 
         } catch (Exception e) {
-            Log.e(TAG, "decompressChunk error: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_decompresschunk_error) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -1159,7 +1162,7 @@ public class EpicDownloadManager {
             in.close();
             return out.toByteArray();
         } catch (Exception e) {
-            Log.w(TAG, "downloadBytes error [" + StoreLog.redactUrl(urlStr) + "]: " + e.getClass().getSimpleName());
+            Log.w(TAG, I18n.s(R.string.ui_downloadbytes_error) + StoreLog.redactUrl(urlStr) + "]: " + e.getClass().getSimpleName());
             return null;
         } finally {
             if (conn != null) conn.disconnect();
@@ -1262,7 +1265,7 @@ public class EpicDownloadManager {
                 }
 
                 if (sha != null && !MessageDigest.isEqual(sha.digest(), chunk.sha1)) {
-                    Log.w(TAG, "Chunk SHA-1 mismatch (streaming) for " + chunk.guidStr() + ", trying next CDN");
+                    Log.w(TAG, I18n.s(R.string.ui_chunk_sha_1_mismatch_streaming_for) + chunk.guidStr() + I18n.s(R.string.ui_trying_next_cdn));
                     tmp.delete();
                     conn.disconnect();
                     continue;
@@ -1270,7 +1273,7 @@ public class EpicDownloadManager {
                 // Verified → publish atomically. If the rename can't happen, treat as a failure
                 // rather than leaving a bad/again-partial file under the final name.
                 if (!tmp.renameTo(outFile)) {
-                    Log.w(TAG, "Chunk rename failed for " + chunk.guidStr() + ", trying next CDN");
+                    Log.w(TAG, I18n.s(R.string.ui_chunk_rename_failed_for) + chunk.guidStr() + I18n.s(R.string.ui_trying_next_cdn));
                     tmp.delete();
                     conn.disconnect();
                     continue;
@@ -1285,7 +1288,7 @@ public class EpicDownloadManager {
             }
         }
         tmp.delete();
-        Log.e(TAG, "All CDNs failed (streaming) for chunk " + chunk.guidStr());
+        Log.e(TAG, I18n.s(R.string.ui_all_cdns_failed_streaming_for_chunk) + chunk.guidStr());
         return false;
     }
 
@@ -1293,7 +1296,7 @@ public class EpicDownloadManager {
         int offset = 0;
         while (offset < buf.length) {
             int n = in.read(buf, offset, buf.length - offset);
-            if (n < 0) throw new IOException("Stream ended after " + offset + "/" + buf.length + " bytes");
+            if (n < 0) throw new IOException(I18n.s(R.string.ui_stream_ended_after) + offset + "/" + buf.length + " bytes");
             offset += n;
         }
     }
@@ -1303,7 +1306,7 @@ public class EpicDownloadManager {
         int remaining = count;
         while (remaining > 0) {
             int n = in.read(skip, 0, Math.min(skip.length, remaining));
-            if (n < 0) throw new IOException("Stream ended during skip");
+            if (n < 0) throw new IOException(I18n.s(R.string.ui_stream_ended_during_skip));
             remaining -= n;
         }
     }
@@ -1364,7 +1367,7 @@ public class EpicDownloadManager {
             }
             return total > 0 ? total : -1;
         } catch (Exception e) {
-            Log.w(TAG, "fetchInstallSizeBytes Epic: " + e.getClass().getSimpleName());
+            Log.w(TAG, I18n.s(R.string.ui_fetchinstallsizebytes_epic) + e.getClass().getSimpleName());
             return -1;
         }
     }
@@ -1441,7 +1444,7 @@ public class EpicDownloadManager {
             while ((n = fis.read(buf)) != -1) digest.update(buf, 0, n);
             return MessageDigest.isEqual(digest.digest(), expectedHash);
         } catch (Exception e) {
-            Log.w(TAG, "Could not verify existing file " + outputFile.getName() + ", will re-download");
+            Log.w(TAG, I18n.s(R.string.ui_could_not_verify_existing_file) + outputFile.getName() + I18n.s(R.string.ui_will_re_download));
             return false;
         }
     }
@@ -1487,7 +1490,7 @@ public class EpicDownloadManager {
             }
             return r;
         } catch (Exception e) {
-            Log.w(TAG, "verifyInstall failed: " + e.getClass().getSimpleName());
+            Log.w(TAG, I18n.s(R.string.ui_verifyinstall_failed) + e.getClass().getSimpleName());
             return null;
         }
     }

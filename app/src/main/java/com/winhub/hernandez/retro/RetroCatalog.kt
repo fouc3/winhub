@@ -1,5 +1,8 @@
 package com.winhub.hernandez.retro
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import org.json.JSONArray
@@ -94,7 +97,7 @@ internal class RetroCatalog(val systems: List<RetroSystem>, val emulators: List<
             val root = try {
                 context.assets.open("retro/systems.json").use { JSONObject(it.bufferedReader().readText()) }
             } catch (e: Exception) {
-                Log.e(TAG, "Could not read the bundled system list", e)
+                Log.e(TAG, I18n.s(R.string.ui_could_not_read_the_bundled_system_list), e)
                 return RetroCatalog(emptyList(), emptyList())
             }
             val systems = ArrayList<RetroSystem>()

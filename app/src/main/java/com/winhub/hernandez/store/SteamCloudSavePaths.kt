@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Environment
 import android.util.Log
@@ -58,7 +61,7 @@ object SteamCloudSavePaths {
             if (appId > 0) File(SaveLocator.profileDir(c), "AppData/Roaming/GSE Saves/$appId/remote") else null
         },
         // Profile-relative roots.
-        Root("%WinSavedGames%") { c, _, _ -> File(SaveLocator.profileDir(c), "Saved Games") },
+        Root("%WinSavedGames%") { c, _, _ -> File(SaveLocator.profileDir(c), I18n.s(R.string.ui_saved_games)) },
         Root("%WinAppDataLocalLow%") { c, _, _ -> File(SaveLocator.profileDir(c), "AppData/LocalLow") },
         Root("%WinAppDataLocal%") { c, _, _ -> File(SaveLocator.profileDir(c), "AppData/Local") },
         Root("%WinAppDataRoaming%") { c, _, _ -> File(SaveLocator.profileDir(c), "AppData/Roaming") },
@@ -102,7 +105,7 @@ object SteamCloudSavePaths {
 
         val manager = ContainerManager(ctx)
         val shortcuts = try { manager.loadShortcuts() } catch (e: Exception) {
-            Log.w(TAG, "loadShortcuts failed", e); return null
+            Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), e); return null
         }
 
         // Build the comparison keys: the install dir made relative to the imagefs root (what a

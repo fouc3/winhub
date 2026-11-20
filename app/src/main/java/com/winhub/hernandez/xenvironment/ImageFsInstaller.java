@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xenvironment;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -85,10 +88,10 @@ public abstract class ImageFsInstaller {
                 FileUtils.copy(context, "win-fg/libwin_fg.so", soTmp);
                 if (!soTmp.renameTo(soDst)) {
                     soTmp.delete();
-                    Log.e("ImageFsInstaller", "Failed to swap in the staged win-fg layer");
+                    Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_swap_in_the_staged_win_fg_layer));
                     return;
                 }
-                Log.i("ImageFsInstaller", "Staged bundled win-fg layer (" + assetSize + " bytes)");
+                Log.i("ImageFsInstaller", I18n.s(R.string.ui_staged_bundled_win_fg_layer) + assetSize + " bytes)");
             }
             File manifestDir = new File(imageFs.getRootDir(), "usr/share/vulkan/implicit_layer.d");
             manifestDir.mkdirs();
@@ -99,7 +102,7 @@ public abstract class ImageFsInstaller {
             FileUtils.copy(context, "win-fg/VkLayer_win_framegen.json", manifestDst);
             FileUtils.writeString(stamp, want);
         } catch (Exception e) {
-            Log.e("ImageFsInstaller", "Failed to stage win-fg layer", e);
+            Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_stage_win_fg_layer), e);
         }
     }
 
@@ -148,7 +151,7 @@ public abstract class ImageFsInstaller {
                 Log.e("ImageFsInstaller", "Failed to park usr/lib/libjpeg.so; frame-gen layers may not load on this device");
             }
         } catch (Exception e) {
-            Log.e("ImageFsInstaller", "Failed to apply the Xiaomi libjpeg workaround", e);
+            Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_apply_the_xiaomi_libjpeg_workaround), e);
         }
     }
 
@@ -171,10 +174,10 @@ public abstract class ImageFsInstaller {
                 FileUtils.copy(context, "lsfg-vk/liblsfg-vk.so", soTmp);
                 if (!soTmp.renameTo(soDst)) {
                     soTmp.delete();
-                    Log.e("ImageFsInstaller", "Failed to swap in the staged lsfg-vk layer");
+                    Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_swap_in_the_staged_lsfg_vk_layer));
                     return;
                 }
-                Log.i("ImageFsInstaller", "Staged bundled lsfg-vk layer (" + assetSize + " bytes)");
+                Log.i("ImageFsInstaller", I18n.s(R.string.ui_staged_bundled_lsfg_vk_layer) + assetSize + " bytes)");
             }
             File manifestDir = new File(imageFs.getRootDir(), "usr/share/vulkan/implicit_layer.d");
             manifestDir.mkdirs();
@@ -183,7 +186,7 @@ public abstract class ImageFsInstaller {
             FileUtils.copy(context, "lsfg-vk/VkLayer_LS_frame_generation.json", manifestDst);
             FileUtils.writeString(stamp, want);
         } catch (Exception e) {
-            Log.e("ImageFsInstaller", "Failed to stage lsfg-vk layer", e);
+            Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_stage_lsfg_vk_layer), e);
         }
     }
 
@@ -209,7 +212,7 @@ public abstract class ImageFsInstaller {
             symlinkLib(libDir, "libavdevice.so.62.1.100", "libavdevice.so.62");
             stamp.createNewFile();
         } catch (Exception e) {
-            Log.e("ImageFsInstaller", "Failed to stage ffmpeg-8", e);
+            Log.e("ImageFsInstaller", I18n.s(R.string.ui_failed_to_stage_ffmpeg_8), e);
         }
     }
 

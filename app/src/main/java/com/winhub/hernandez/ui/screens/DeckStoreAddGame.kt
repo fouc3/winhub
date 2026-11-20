@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -90,7 +93,7 @@ internal fun DeckStoreAddFlow(request: DeckAddRequest, onDismiss: () -> Unit) {
     }
 
     if (resolving) {
-        DeckAddBusyDialog("Finding the installed game…")
+        DeckAddBusyDialog(I18n.s(R.string.ui_finding_the_installed_game))
         return
     }
     val path = exe ?: return
@@ -124,7 +127,7 @@ internal fun DeckStoreAddFlow(request: DeckAddRequest, onDismiss: () -> Unit) {
                     }.getOrNull()
                     busy = false
                     if (added == null) {
-                        Toast.makeText(context, "Cronos setup failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_cronos_setup_failed), Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(
                             context, "Added \"$name\" to its own Cronos container", Toast.LENGTH_SHORT,
@@ -136,7 +139,7 @@ internal fun DeckStoreAddFlow(request: DeckAddRequest, onDismiss: () -> Unit) {
                 val container = containers.filter { !it.isCronos }.getOrNull(containerIndex)
                 if (container == null) {
                     busy = false
-                    Toast.makeText(context, "Create a container first", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_create_a_container_first), Toast.LENGTH_SHORT).show()
                     return@HubConfirmDialog
                 }
                 scope.launch {
@@ -150,7 +153,7 @@ internal fun DeckStoreAddFlow(request: DeckAddRequest, onDismiss: () -> Unit) {
                     }.getOrNull()
                     busy = false
                     if (added == null) {
-                        Toast.makeText(context, "Couldn't add that game", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_couldn_t_add_that_game), Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context, "Added \"$name\"", Toast.LENGTH_SHORT).show()
                         onDismiss()

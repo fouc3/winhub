@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens.contents
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,7 +49,7 @@ sealed interface HubSource {
 
     data class Driver(val source: RemoteDriverSource) : HubSource {
         override val name get() = source.name
-        override val displayFormat get() = "GPU driver source"
+        override val displayFormat get() = I18n.s(R.string.ui_gpu_driver_source)
         override val typePills get() = listOf(ContentsTypes.GPU_DRIVERS)
         override val driverOnly get() = true
         override val removeIsHide get() = source.builtIn

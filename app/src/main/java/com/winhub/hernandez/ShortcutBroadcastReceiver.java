@@ -1,5 +1,8 @@
 package com.winhub.hernandez;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,17 +24,17 @@ public class ShortcutBroadcastReceiver extends BroadcastReceiver {
         if (action != null && action.equals("com.winhub.hernandez.SHORTCUT_ADDED")) {
             boolean isShortcutAdded = intent.getBooleanExtra("shortcut_added", false);
             if (isShortcutAdded) {
-                Log.d(LOG_TAG, "Shortcut added successfully!");
-                Toast.makeText(context, "Sorry, your device may not be supported", Toast.LENGTH_SHORT).show(); // yeah. I'm at a loss here.
+                Log.d(LOG_TAG, I18n.s(R.string.ui_shortcut_added_successfully));
+                Toast.makeText(context, I18n.s(R.string.ui_sorry_your_device_may_not_be_supported), Toast.LENGTH_SHORT).show(); // yeah. I'm at a loss here.
             } else {
-                Log.d(LOG_TAG, "Shortcut addition failed.");
-                Toast.makeText(context, "Failed to add shortcut.", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, I18n.s(R.string.ui_shortcut_addition_failed));
+                Toast.makeText(context, I18n.s(R.string.ui_failed_to_add_shortcut), Toast.LENGTH_SHORT).show();
 
                 // Attempt to add the shortcut here if it failed
                 addShortcutToHomeScreen(context, intent);
             }
         } else {
-            Log.d(LOG_TAG, "Unexpected broadcast action received.");
+            Log.d(LOG_TAG, I18n.s(R.string.ui_unexpected_broadcast_action_received));
         }
     }
 
@@ -51,14 +54,14 @@ public class ShortcutBroadcastReceiver extends BroadcastReceiver {
                             .setIntent(shortcutIntent)
                             .build();
 
-                    Log.d(LOG_TAG, "Requesting pin shortcut from the BroadcastReceiver...");
+                    Log.d(LOG_TAG, I18n.s(R.string.ui_requesting_pin_shortcut_from_the_broadcastreceiver));
                     boolean result = shortcutManager.requestPinShortcut(pinShortcutInfo, null);
-                    Log.d(LOG_TAG, "Pin shortcut requested with result: " + result);
+                    Log.d(LOG_TAG, I18n.s(R.string.ui_pin_shortcut_requested_with_result) + result);
 
                     if (result) {
-                        Toast.makeText(context, "Shortcut added successfully from BroadcastReceiver!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, I18n.s(R.string.ui_shortcut_added_successfully_from_broadcastreceiver), Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e(LOG_TAG, "Failed to add shortcut from BroadcastReceiver.");
+                        Log.e(LOG_TAG, I18n.s(R.string.ui_failed_to_add_shortcut_from_broadcastreceiver));
                     }
                 }
             } else {
@@ -71,15 +74,15 @@ public class ShortcutBroadcastReceiver extends BroadcastReceiver {
 
                 try {
                     context.sendBroadcast(addIntent);
-                    Log.d(LOG_TAG, "Sent broadcast to install shortcut from BroadcastReceiver.");
-                    Toast.makeText(context, "Shortcut added successfully (Broadcast).", Toast.LENGTH_SHORT).show();
+                    Log.d(LOG_TAG, I18n.s(R.string.ui_sent_broadcast_to_install_shortcut_from_broadcastreceive));
+                    Toast.makeText(context, I18n.s(R.string.ui_shortcut_added_successfully_broadcast), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "Error sending broadcast for installing shortcut: " + e.getMessage(), e);
-                    Toast.makeText(context, "Failed to add shortcut via broadcast.", Toast.LENGTH_SHORT).show();
+                    Log.e(LOG_TAG, I18n.s(R.string.ui_error_sending_broadcast_for_installing_shortcut) + e.getMessage(), e);
+                    Toast.makeText(context, I18n.s(R.string.ui_failed_to_add_shortcut_via_broadcast), Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
-            Log.e(LOG_TAG, "Missing shortcut data, cannot add to home screen.");
+            Log.e(LOG_TAG, I18n.s(R.string.ui_missing_shortcut_data_cannot_add_to_home_screen));
         }
     }
 }

@@ -587,15 +587,15 @@ private fun FmToolbar(ui: DeckFmUi, act: DeckFmActions, portrait: Boolean) {
             FmIconButton(Icons.Filled.Search, "Filter", active = ui.showSearch, onClick = act.toggleSearch)
             FmIconButton(
                 if (ui.gridView) Icons.Filled.ViewList else Icons.Filled.GridView,
-                if (ui.gridView) "List view" else "Grid view",
+                if (ui.gridView) "List view" else I18n.s(R.string.ui_grid_view),
                 onClick = act.toggleGrid,
             )
-            if (!ui.pickMode) FmIconButton(Icons.Filled.CreateNewFolder, "New folder", onClick = act.newFolder)
-            FmIconButton(Icons.Filled.Tune, "Sort and view options", onClick = act.openOptions)
+            if (!ui.pickMode) FmIconButton(Icons.Filled.CreateNewFolder, I18n.s(R.string.ui_new_folder_2), onClick = act.newFolder)
+            FmIconButton(Icons.Filled.Tune, I18n.s(R.string.ui_sort_and_view_options), onClick = act.openOptions)
         }
         FmIconButton(
             icon = if (ui.showFavorites) Icons.Filled.Star else Icons.Filled.StarBorder,
-            description = if (ui.showFavorites) "Close favorites" else "Open favorites",
+            description = if (ui.showFavorites) "Close favorites" else I18n.s(R.string.ui_open_favorites),
             active = ui.showFavorites,
             onClick = if (ui.showFavorites) act.closeFavorites else act.openFavorites,
         )
@@ -771,7 +771,7 @@ private fun FmPasteBar(ui: DeckFmUi, act: DeckFmActions) {
                 overflow = TextOverflow.Ellipsis,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FmPill(if (ui.isCut) "Move here" else "Paste here", Icons.Filled.ContentPaste, act.paste, enabled = !ui.busy, primary = true)
+                FmPill(if (ui.isCut) "Move here" else I18n.s(R.string.ui_paste_here), Icons.Filled.ContentPaste, act.paste, enabled = !ui.busy, primary = true)
                 FmPill("Cancel", Icons.Filled.Close, act.clearClipboard)
             }
         }
@@ -839,14 +839,14 @@ private fun FmDirectory(ui: DeckFmUi, act: DeckFmActions, portrait: Boolean, onF
                 icon = Icons.Filled.Lock,
                 title = I18n.s(R.string.ui_can_t_read_this_folder),
                 body = I18n.s(R.string.ui_android_didn_t_let_the_app_list_it_try_another_locati),
-                actionLabel = if (atFloor) "Try again" else "Go up",
+                actionLabel = if (atFloor) "Try again" else I18n.s(R.string.ui_go_up),
                 onAction = if (atFloor) act.refresh else act.goUp,
             )
             ui.entries.isEmpty() -> FmStateView(
                 icon = Icons.Filled.FolderOpen,
                 title = I18n.s(R.string.ui_empty_folder),
-                body = if (ui.pickMode) "Nothing to pick here." else "Copy something in, or create a new folder.",
-                actionLabel = if (atFloor) null else "Go up",
+                body = if (ui.pickMode) "Nothing to pick here." else I18n.s(R.string.ui_copy_something_in_or_create_a_new_folder),
+                actionLabel = if (atFloor) null else I18n.s(R.string.ui_go_up),
                 onAction = act.goUp,
             )
             ui.shown.isEmpty() -> FmStateView(
@@ -1116,7 +1116,7 @@ private fun FmFavorites(ui: DeckFmUi, act: DeckFmActions, onFocused: (File) -> U
             ) {
                 Text(
                     text = if (pinned) "\"${ui.currentDir.name.ifBlank { ui.driveLabel }}\" is pinned"
-                    else "Pin the folder you were in",
+                    else I18n.s(R.string.ui_pin_the_folder_you_were_in),
                     color = DeckPalette.onSurfaceVariant,
                     fontSize = 13.sp,
                     maxLines = 1,
@@ -1124,7 +1124,7 @@ private fun FmFavorites(ui: DeckFmUi, act: DeckFmActions, onFocused: (File) -> U
                     modifier = Modifier.weight(1f),
                 )
                 Spacer(Modifier.width(8.dp))
-                FmPill("Pin folder", Icons.Filled.PushPin, act.pinCurrent, enabled = !pinned, primary = !pinned)
+                FmPill(I18n.s(R.string.ui_pin_folder), Icons.Filled.PushPin, act.pinCurrent, enabled = !pinned, primary = !pinned)
             }
         }
         if (favorites.isEmpty()) {
@@ -1194,9 +1194,9 @@ private fun FmFavCard(file: File, ui: DeckFmUi, act: DeckFmActions, onFocused: (
                 Spacer(Modifier.width(8.dp))
                 Text(
                     text = loc.containerName?.let { "Container: \"$it\"" } ?: when (loc.storage) {
-                        FavStorage.INTERNAL -> "Internal storage"
-                        FavStorage.SD -> "SD card"
-                        FavStorage.CONTAINER -> "System files (shared)"
+                        FavStorage.INTERNAL -> I18n.s(R.string.ui_internal_storage_2)
+                        FavStorage.SD -> I18n.s(R.string.ui_sd_card)
+                        FavStorage.CONTAINER -> I18n.s(R.string.ui_system_files_shared)
                         FavStorage.OTHER -> "Storage"
                     },
                     color = DeckPalette.onSurfaceVariant,

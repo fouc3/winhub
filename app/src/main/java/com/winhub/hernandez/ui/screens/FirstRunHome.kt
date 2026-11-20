@@ -80,26 +80,26 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
         StepHeading(
             HOME,
-            if (portrait) "Set up your stores" else "Set up your Home",
+            if (portrait) "Set up your stores" else I18n.s(R.string.ui_set_up_your_home),
             "Choose how ${if (portrait) "your stores" else "Home, your stores and a game's settings"} look. All of it can be changed later in Settings, Appearance.",
         )
         if (!portrait) {
-            WizOptionGroup("Interface look", "Glass puts every page on see-through glass, and a game's settings on the game's own art", PreviewView.SETTINGS, vm) {
-                WizOption("Glass", "See-through pages on the game's art", glass, Modifier.weight(1f), badge = "Recommended") { vm.setLook(ctx, GlassLook.GLASS) }
-                WizOption("Material", "The plain Deck look", !glass, Modifier.weight(1f)) { vm.setLook(ctx, GlassLook.MATERIAL) }
+            WizOptionGroup(I18n.s(R.string.ui_interface_look), I18n.s(R.string.ui_glass_puts_every_page_on_see_through_glass_and_a_game_s), PreviewView.SETTINGS, vm) {
+                WizOption("Glass", I18n.s(R.string.ui_see_through_pages_on_the_game_s_art), glass, Modifier.weight(1f), badge = "Recommended") { vm.setLook(ctx, GlassLook.GLASS) }
+                WizOption("Material", I18n.s(R.string.ui_the_plain_deck_look), !glass, Modifier.weight(1f)) { vm.setLook(ctx, GlassLook.MATERIAL) }
             }
-            WizOptionGroup("Home style", "Where your games, stores and Social live", PreviewView.HOME, vm) {
+            WizOptionGroup(I18n.s(R.string.ui_home_style), I18n.s(R.string.ui_where_your_games_stores_and_social_live), PreviewView.HOME, vm) {
                 WizOption(
-                    "Steam", "One row of covers at the bottom, one shelf per store. Stores, Downloads, Friends and Social slide up as pages",
+                    "Steam", I18n.s(R.string.ui_one_row_of_covers_at_the_bottom_one_shelf_per_store_stor),
                     home == DeckHomeStyle.STEAM, Modifier.weight(1f), badge = "Recommended",
                 ) { vm.setHome(ctx, DeckHomeStyle.STEAM) }
                 WizOption("Full XMB", "Stores and Social as cards above your games", home == DeckHomeStyle.FULL_XMB, Modifier.weight(1f)) {
                     vm.setHome(ctx, DeckHomeStyle.FULL_XMB)
                 }
             }
-            WizOptionGroup("Game settings", "What a game's Settings opens from Home", PreviewView.SETTINGS, vm) {
+            WizOptionGroup(I18n.s(R.string.ui_game_settings), I18n.s(R.string.ui_what_a_game_s_settings_opens_from_home), PreviewView.SETTINGS, vm) {
                 WizOption(
-                    "Classic", "A settings page on glass over the game's art, small tabs, every setting",
+                    "Classic", I18n.s(R.string.ui_a_settings_page_on_glass_over_the_game_s_art_small_tabs),
                     gset == GameSettingsStyle.CLASSIC, Modifier.weight(1f), badge = "Recommended",
                 ) { vm.setGameSettings(ctx, GameSettingsStyle.CLASSIC) }
                 WizOption("XMB", "The settings as XMB columns beside the game", gset == GameSettingsStyle.XMB, Modifier.weight(1f)) {
@@ -110,18 +110,18 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
         // The Glass look puts the stores on XMB pages whatever this says, so Deck stays out of reach while it is on.
         val xmb = glass || store == com.winhub.hernandez.ui.deck.StoreStyle.XMB
         WizOptionGroup(
-            "Store style", if (glass) "The Glass look always uses XMB store pages" else "How each store opens", PreviewView.STORES, vm,
+            "Store style", if (glass) "The Glass look always uses XMB store pages" else I18n.s(R.string.ui_how_each_store_opens), PreviewView.STORES, vm,
         ) {
-            WizOption("XMB", "Each store as its own full-screen XMB page", xmb, Modifier.weight(1f), badge = "Recommended") {
+            WizOption("XMB", I18n.s(R.string.ui_each_store_as_its_own_full_screen_xmb_page), xmb, Modifier.weight(1f), badge = "Recommended") {
                 vm.setStore(ctx, com.winhub.hernandez.ui.deck.StoreStyle.XMB)
             }
-            WizOption("Deck", "Stores stay inside the Deck pages", !xmb, Modifier.weight(1f), enabled = !glass) {
+            WizOption("Deck", I18n.s(R.string.ui_stores_stay_inside_the_deck_pages), !xmb, Modifier.weight(1f), enabled = !glass) {
                 vm.setStore(ctx, com.winhub.hernandez.ui.deck.StoreStyle.DECK)
             }
         }
         Text(
             if (portrait) "Portrait Home is always the cover grid. Change it any time in Settings."
-            else "Home keeps its own style whatever the look. Change any of this in Settings, Appearance.",
+            else I18n.s(R.string.ui_home_keeps_its_own_style_whatever_the_look_change_any_of),
             color = DeckPalette.onSurfaceVariant, fontSize = 13.sp,
         )
     }
@@ -275,7 +275,7 @@ private fun BoxWithConstraintsScope.MockHome(steam: Boolean) {
     Mk(0f, 0f, 1f, 1f, Brush.verticalGradient(0f to Color.Black.copy(alpha = 0.5f), 0.2f to Color.Transparent, 0.6f to Color.Transparent, 1f to MOCK_NAVY.copy(alpha = 0.9f)))
     if (steam) {
         // The shelf strip, the row of covers (the first one wide), the title and the four tabs.
-        MkText(0.36f, 0.04f, "ALL   RECENT   FAVOURITES   STEAM   EPIC   GOG", 5f, Color.White.copy(alpha = 0.8f))
+        MkText(0.36f, 0.04f, I18n.s(R.string.ui_all_recent_favourites_steam_epic_gog), 5f, Color.White.copy(alpha = 0.8f))
         Mk(0.05f, 0.5f, 0.35f, 0.3f, Brush.linearGradient(PREVIEW_COVERS[0].let { listOf(Color(it.first), Color(it.second)) }), 4.dp, Color.White)
         for (i in 1..4) {
             val c = PREVIEW_COVERS[i]
@@ -358,7 +358,7 @@ internal fun SoundsStep(vm: FirstRunViewModel, modifier: Modifier) {
     val ctx = LocalContext.current
     val snd by vm.sounds.collectAsState()
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
-        StepHeading(SOUNDS, "Pick your sounds", "The D-pad and buttons make a sound as you move through Deck mode. Pick a set and try it.")
+        StepHeading(SOUNDS, I18n.s(R.string.ui_pick_your_sounds), I18n.s(R.string.ui_the_d_pad_and_buttons_make_a_sound_as_you_move_through_d))
         WizChoice(
             title = I18n.s(R.string.ui_steamos), body = I18n.s(R.string.ui_app_own_soft_set_plays_at_the_media_volume), selected = snd == DeckSound.STEAMOS,
             onClick = { vm.setSounds(ctx, DeckSound.STEAMOS) }, badge = "Recommended",
@@ -390,11 +390,11 @@ private fun SoundGlyph(symbol: String) {
 @Composable
 internal fun SoundTry(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
-        DeckGroup("Try it") {
-            DeckRow(I18n.s(R.string.ui_move), "Stepping along a list") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
-            DeckRow("Select", "Opening something") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.SELECT) } }
-            DeckRow("Back", "Going up a level") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.BACK) } }
-            DeckRow(I18n.s(R.string.ui_tab), "Changing page") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
+        DeckGroup(I18n.s(R.string.ui_try_it)) {
+            DeckRow(I18n.s(R.string.ui_move), I18n.s(R.string.ui_stepping_along_a_list)) { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
+            DeckRow("Select", I18n.s(R.string.ui_opening_something)) { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.SELECT) } }
+            DeckRow("Back", I18n.s(R.string.ui_going_up_a_level)) { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.BACK) } }
+            DeckRow(I18n.s(R.string.ui_tab), I18n.s(R.string.ui_changing_page)) { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
         }
     }
 }
@@ -417,7 +417,7 @@ internal fun StoresStep(modifier: Modifier) {
     }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
         StepHeading(
-            STORES, "Sign in to your stores",
+            STORES, I18n.s(R.string.ui_sign_in_to_your_stores),
             "Sign in to the stores you have and every game you own shows up on Home, one shelf per store. Skip any you don't use.",
         )
         DeckStore.entries.forEach { store ->
@@ -454,7 +454,7 @@ private fun StoreLoginRow(store: DeckStore, signedIn: Boolean, onSignIn: () -> U
         Column(Modifier.weight(1f)) {
             Text(store.label, color = DeckPalette.onBackground, fontSize = 17.sp, fontWeight = FontWeight.Bold)
             Text(
-                if (signedIn) "Signed in" else "Not signed in",
+                if (signedIn) "Signed in" else I18n.s(R.string.ui_not_signed_in),
                 color = if (signedIn) DeckPalette.good else DeckPalette.onSurfaceVariant, fontSize = 13.sp,
             )
         }
@@ -472,10 +472,10 @@ private fun StoreLoginRow(store: DeckStore, signedIn: Boolean, onSignIn: () -> U
 @Composable
 internal fun StorePerks(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
-        DeckGroup("What you get") {
-            DeckRow(I18n.s(R.string.ui_your_libraries_on_home), "One shelf per store, installed games first.") {}
-            DeckRow(I18n.s(R.string.ui_install_in_one_press), "A game opens straight on its own page, B comes back to Home.") {}
-            DeckRow(I18n.s(R.string.ui_saves_and_downloads), "Cloud saves and the download queue follow your accounts.") {}
+        DeckGroup(I18n.s(R.string.ui_what_you_get)) {
+            DeckRow(I18n.s(R.string.ui_your_libraries_on_home), I18n.s(R.string.ui_one_shelf_per_store_installed_games_first)) {}
+            DeckRow(I18n.s(R.string.ui_install_in_one_press), I18n.s(R.string.ui_a_game_opens_straight_on_its_own_page_b_comes_back_to_ho)) {}
+            DeckRow(I18n.s(R.string.ui_saves_and_downloads), I18n.s(R.string.ui_cloud_saves_and_the_download_queue_follow_your_accounts)) {}
         }
     }
 }

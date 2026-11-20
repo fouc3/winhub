@@ -167,7 +167,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val rows = mutableListOf<XmbRow>()
 
         if (recLoading) {
-            rows += XmbRow.Info(I18n.s(R.string.ui_recloading), "Looking for recommended components…", Icons.Filled.Search)
+            rows += XmbRow.Info(I18n.s(R.string.ui_recloading), I18n.s(R.string.ui_looking_for_recommended_components), Icons.Filled.Search)
         } else if (recs.isNotEmpty()) {
             // BUNDLED = redist installers the game ships; SHIPPED = loose runtime DLLs (optional).
             val bundled = recs.filter { it.kind == DependencyDetector.Kind.BUNDLED }
@@ -193,11 +193,11 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             }
             when {
                 bundled.isNotEmpty() && shipped.isNotEmpty() -> {
-                    group("hRec", "Recommended", "Redistributable this game bundles", bundled)
-                    group("hOpt", "Optional", "Ships with the game — install only if it misbehaves", shipped)
+                    group("hRec", "Recommended", I18n.s(R.string.ui_redistributable_this_game_bundles), bundled)
+                    group("hOpt", "Optional", I18n.s(R.string.ui_ships_with_the_game_install_only_if_it_misbehaves_2), shipped)
                 }
-                shipped.isNotEmpty() -> group("hOpt", "Optional components", "Ships with the game — install only if it misbehaves", shipped)
-                else -> group("hRec", "Recommended components", "Installs into this game's container (shared by its games)", bundled)
+                shipped.isNotEmpty() -> group("hOpt", I18n.s(R.string.ui_optional_components), I18n.s(R.string.ui_ships_with_the_game_install_only_if_it_misbehaves_2), shipped)
+                else -> group("hRec", I18n.s(R.string.ui_recommended_components), I18n.s(R.string.ui_installs_into_this_game_s_container_shared_by_its_games), bundled)
             }
         }
 
@@ -218,7 +218,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             rows += XmbRow.Header("hGeneral", "General")
             general.forEach { addChoice(it) }
         }
-        if (all.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nocomponents), "No Windows components configured", Icons.Filled.Info)
+        if (all.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nocomponents), I18n.s(R.string.ui_no_windows_components_configured), Icons.Filled.Info)
         rows
     }
 }
@@ -339,9 +339,9 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
         rows += XmbRow.Header("hCompat", "Compatibility")
         rows += XmbRow.Toggle(
-            "preferDlls", "Prefer game-folder DLLs", Icons.Filled.Extension, allPreferred,
+            "preferDlls", I18n.s(R.string.ui_prefer_game_folder_dlls), Icons.Filled.Extension, allPreferred,
             subtitle = if (anyPreferred && !allPreferred) "Some game-folder DLLs on — see below"
-                       else "Load the game's own " + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") + " instead of Wine's",
+                       else I18n.s(R.string.ui_load_the_game_s_own) + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") + I18n.s(R.string.ui_instead_of_wine_s),
         ) { on ->
             val cur = overridesNow()
             env.putVar(DllOverrides.VAR, if (on) DllOverrides.enable(cur, masterScope) else DllOverrides.disable(cur, dllBaseline, masterScope))
@@ -354,8 +354,8 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             }
         }
 
-        rows += XmbRow.Header("hVars", "Environment variables")
-        if (list.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_novars), "No environment variables set", Icons.Filled.Info)
+        rows += XmbRow.Header("hVars", I18n.s(R.string.ui_environment_variables))
+        if (list.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_novars), I18n.s(R.string.ui_no_environment_variables_set), Icons.Filled.Info)
         val seen = HashMap<String, Int>()
         list.forEach { r ->
             val occ = seen[r.name] ?: 0
@@ -365,10 +365,10 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 value = r.value.ifEmpty { "(empty)" },
             ) { p2EnvVarMenu(env, r.name, occ) }
         }
-        rows += XmbRow.Link("add", "Add variable", Icons.Filled.Add, subtitle = I18n.s(R.string.ui_pick_a_known_variable_or_type_your_own)) { p2EnvAddMenu(env) }
+        rows += XmbRow.Link("add", I18n.s(R.string.ui_add_variable_2), Icons.Filled.Add, subtitle = I18n.s(R.string.ui_pick_a_known_variable_or_type_your_own)) { p2EnvAddMenu(env) }
         val malformed = env.raw().split(" ").filter { it.isNotBlank() && it.indexOf('=') <= 0 }
         rows += XmbRow.Text(
-            "raw", "Edit as text", Icons.Filled.ShortText, env.raw(),
+            "raw", I18n.s(R.string.ui_edit_as_text), Icons.Filled.ShortText, env.raw(),
             subtitle = if (malformed.isEmpty()) "NAME=VALUE, separated by spaces"
                        else "Ignored — needs NAME=VALUE: " + malformed.joinToString(", "),
         ) { v -> p2Put(xmb, shortcut, "envVars", v.ifEmpty { null }) }
@@ -385,7 +385,7 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
         val rows = mutableListOf<XmbRow>()
         val cur = env.valueOf(name, occ)
         if (cur == null) {
-            rows += XmbRow.Info("gone", "This variable was removed", Icons.Filled.Info)
+            rows += XmbRow.Info("gone", I18n.s(R.string.ui_this_variable_was_removed), Icons.Filled.Info)
             return@body rows
         }
         when (type) {
@@ -406,7 +406,7 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
                         env.setAt(name, occ, v)
                     }
                 }
-                rows += XmbRow.Text("custom", "Custom value", Icons.Filled.Edit, cur, subtitle = I18n.s(R.string.ui_kept_exactly_as_typed_no_spaces)) { v ->
+                rows += XmbRow.Text("custom", I18n.s(R.string.ui_custom_value), Icons.Filled.Edit, cur, subtitle = I18n.s(R.string.ui_kept_exactly_as_typed_no_spaces)) { v ->
                     env.setAt(name, occ, v)
                 }
             }
@@ -426,7 +426,7 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
             }
         }
         env.help(name)?.let { rows.add(XmbRow.Info("help", it, Icons.Filled.Info)) }
-        rows += XmbRow.Action("remove", "Remove variable", Icons.Filled.Delete, danger = true) {
+        rows += XmbRow.Action("remove", I18n.s(R.string.ui_remove_variable), Icons.Filled.Delete, danger = true) {
             xmb.confirm(XmbConfirm("Remove variable", "Remove $name from this game?", "Remove", danger = true)) {
                 env.removeAt(name, occ)
                 xmb.pop()
@@ -456,7 +456,7 @@ private fun p2EnvAddMenu(env: P2Env): XmbMenu {
             addAndOpen(name, value)
         }
         val candidates = KnownEnvVars.names.filter { it !in existing }
-        if (candidates.isNotEmpty()) rows += XmbRow.Header("hKnown", "Known variables")
+        if (candidates.isNotEmpty()) rows += XmbRow.Header("hKnown", I18n.s(R.string.ui_known_variables))
         candidates.forEach { n ->
             rows += XmbRow.Action("k:$n", n, Icons.Filled.Tune, subtitle = env.help(n)) { addAndOpen(n, p2EnvDefault(n)) }
         }

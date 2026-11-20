@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xconnector;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import androidx.annotation.Keep;
@@ -43,7 +46,7 @@ public class ClientSocket {
         else if (bytesRead == 0) {
             return -1;
         }
-        else throw new IOException("Failed to read data.");
+        else throw new IOException(I18n.s(R.string.ui_failed_to_read_data));
     }
 
     public void write(ByteBuffer data) throws IOException {
@@ -51,7 +54,7 @@ public class ClientSocket {
         if (bytesWritten >= 0) {
             data.position(bytesWritten);
         }
-        else Log.d("ClientSocket", "Failed to write data.");
+        else Log.d("ClientSocket", I18n.s(R.string.ui_failed_to_write_data));
     }
 
     public int recvAncillaryMsg(ByteBuffer data) throws IOException {
@@ -64,7 +67,7 @@ public class ClientSocket {
         else if (bytesRead == 0) {
             return -1;
         }
-        else throw new IOException("Failed to receive ancillary messages.");
+        else throw new IOException(I18n.s(R.string.ui_failed_to_receive_ancillary_messages));
     }
 
     public void sendAncillaryMsg(ByteBuffer data, int ancillaryFd) throws IOException {
@@ -72,7 +75,7 @@ public class ClientSocket {
         if (bytesSent >= 0) {
             data.position(bytesSent);
         }
-        else throw new IOException("Failed to send ancillary messages.");
+        else throw new IOException(I18n.s(R.string.ui_failed_to_send_ancillary_messages));
     }
 
     private native int read(int fd, ByteBuffer data, int offset, int length);

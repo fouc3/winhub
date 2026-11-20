@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -74,22 +77,22 @@ object SteamSessionManager {
             repo.initialize(ctx.applicationContext)
             if (repo.isSessionLoggedOn) return SessionResult.Ok
             SteamPrefs.init(ctx)
-            if (!SteamPrefs.isLoggedIn) return SessionResult.NeedsSignIn("Not signed in to Steam")
+            if (!SteamPrefs.isLoggedIn) return SessionResult.NeedsSignIn(I18n.s(R.string.ui_not_signed_in_to_steam))
             if (repo.isSuspendedForRealSteam) {
                 // A previous real-Steam game still holds the account (or its release is in flight).
-                progress("Releasing the previous game's Steam session…")
+                progress(I18n.s(R.string.ui_releasing_the_previous_game_s_steam_session))
                 repo.resumeAfterRealSteam(0L)
             }
             when (repo.status) {
                 SteamRepository.SteamStatus.SIGNED_OUT ->
-                    return SessionResult.NeedsSignIn("Steam rejected the saved sign-in")
+                    return SessionResult.NeedsSignIn(I18n.s(R.string.ui_steam_rejected_the_saved_sign_in))
                 else -> {}
             }
-            progress("Connecting to Steam…")
+            progress(I18n.s(R.string.ui_connecting_to_steam_u2026))
             // Bring the service up (initialises + connects if it isn't running) and re-drive the
             // token logon through the same entry point the status pill uses. Both are safe from a
             // worker thread — CM I/O is posted to the pump / engine thread.
-            try { SteamForegroundService.start(ctx.applicationContext) } catch (t: Throwable) { Log.w(TAG, "FGS start failed", t) }
+            try { SteamForegroundService.start(ctx.applicationContext) } catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_fgs_start_failed), t) }
             repo.reconnectNow()
             val deadline = System.currentTimeMillis() + timeoutMs
             var lastStatus: SteamRepository.SteamStatus? = null
@@ -100,10 +103,10 @@ object SteamSessionManager {
                     lastStatus = st
                     progress(
                         when (st) {
-                            SteamRepository.SteamStatus.CONNECTING -> "Signing in to Steam…"
-                            SteamRepository.SteamStatus.OFFLINE -> "Waiting for a Steam connection…"
-                            SteamRepository.SteamStatus.SIGNED_IN_ELSEWHERE -> "Account is signed in elsewhere…"
-                            else -> "Connecting to Steam…"
+                            SteamRepository.SteamStatus.CONNECTING -> I18n.s(R.string.ui_signing_in_to_steam)
+                            SteamRepository.SteamStatus.OFFLINE -> I18n.s(R.string.ui_waiting_for_a_steam_connection)
+                            SteamRepository.SteamStatus.SIGNED_IN_ELSEWHERE -> I18n.s(R.string.ui_account_is_signed_in_elsewhere)
+                            else -> I18n.s(R.string.ui_connecting_to_steam_u2026)
                         },
                     )
                 }
@@ -114,7 +117,7 @@ object SteamSessionManager {
             }
             return SessionResult.Offline("Couldn't reach Steam in ${timeoutMs / 1000}s (${repo.status})")
         } catch (t: Throwable) {
-            Log.w(TAG, "ensureSession errored", t)
+            Log.w(TAG, I18n.s(R.string.ui_ensuresession_errored), t)
             return SessionResult.Offline("${t.javaClass.simpleName}: ${t.message}")
         }
     }
@@ -141,7 +144,7 @@ object SteamSessionManager {
             Log.i(TAG, "refresh token renewal " + (if (fresh.isNullOrEmpty()) "did not land" else "OK (len=${fresh.length})"))
             !fresh.isNullOrEmpty()
         } catch (t: Throwable) {
-            Log.w(TAG, "renewRefreshToken errored", t)
+            Log.w(TAG, I18n.s(R.string.ui_renewrefreshtoken_errored), t)
             false
         }
     }
@@ -249,15 +252,15 @@ object SteamSessionManager {
 
                 // 1. Session -------------------------------------------------------------------
                 if (skipSession) {
-                    step(Step.SESSION, StepState.SKIPPED, "Launching without a live Steam session")
+                    step(Step.SESSION, StepState.SKIPPED, I18n.s(R.string.ui_launching_without_a_live_steam_session))
                 } else {
-                    step(Step.SESSION, StepState.RUNNING, "Checking Steam sign-in…")
+                    step(Step.SESSION, StepState.RUNNING, I18n.s(R.string.ui_checking_steam_sign_in))
                     val r = ensureSession(app) { msg -> step(Step.SESSION, StepState.RUNNING, msg) }
                     if (handle.isCancelled) { post { listener.onCancelled() }; return@Thread }
                     when (r) {
                         is SessionResult.Ok -> {
                             val renewed = maybeRenewRefreshToken(app)
-                            step(Step.SESSION, StepState.DONE, if (renewed) "Signed in (sign-in refreshed)" else "Signed in")
+                            step(Step.SESSION, StepState.DONE, if (renewed) "Signed in (sign-in refreshed)" else I18n.s(R.string.ui_signed_in_2))
                         }
                         is SessionResult.NeedsSignIn -> {
                             step(Step.SESSION, StepState.WARN, r.reason)
@@ -276,7 +279,7 @@ object SteamSessionManager {
                 // Steam sign-in and downloads work on any NAT; this is for games with their own
                 // servers / P2P (Brawlhalla "Incorrect Version" on a hotspot or VPN), so the user
                 // sees the network verdict up front instead of guessing.
-                step(Step.NETWORK, StepState.RUNNING, "Checking network…")
+                step(Step.NETWORK, StepState.RUNNING, I18n.s(R.string.ui_checking_network))
                 netLatch.await(NETWORK_PROBE_MS + 500L, TimeUnit.MILLISECONDS)
                 val verdict = net
                 if (verdict == null) {
@@ -289,13 +292,13 @@ object SteamSessionManager {
 
                 // 3. Cloud saves ---------------------------------------------------------------
                 if (!req.pullCloudSaves || req.appId <= 0 || req.installDir.isEmpty()) {
-                    step(Step.CLOUD, StepState.SKIPPED, if (req.appId <= 0) "Cloud saves: game not resolved" else "Cloud saves: off")
+                    step(Step.CLOUD, StepState.SKIPPED, if (req.appId <= 0) "Cloud saves: game not resolved" else I18n.s(R.string.ui_cloud_saves_off))
                 } else if (skipSession || !isLoggedOn()) {
-                    step(Step.CLOUD, StepState.SKIPPED, "Cloud saves: skipped (no Steam session)")
+                    step(Step.CLOUD, StepState.SKIPPED, I18n.s(R.string.ui_cloud_saves_skipped_no_steam_session))
                 } else {
                     // Engine-agnostic since Phase 3b-1: the same newest-wins pull runs on the
                     // JavaSteam handler or the Rust engine's ccloud calls (SteamCloudBackend).
-                    step(Step.CLOUD, StepState.RUNNING, "Syncing cloud saves…")
+                    step(Step.CLOUD, StepState.RUNNING, I18n.s(R.string.downloading_on_launch))
                     val summary = runBounded(CLOUD_WAIT_MS) {
                         SteamCloudSaveManager.syncFromCloudNewestWins(app, req.appId, req.installDir)
                     } ?: "Cloud saves: still syncing — launching with local saves"
@@ -306,9 +309,9 @@ object SteamSessionManager {
 
                 // 4. Update check ----------------------------------------------------------------
                 if (skipUpdate || !req.checkForUpdates || req.appId <= 0) {
-                    step(Step.UPDATE, StepState.SKIPPED, if (skipUpdate) "Launching this build" else "Update check: off")
+                    step(Step.UPDATE, StepState.SKIPPED, if (skipUpdate) "Launching this build" else I18n.s(R.string.ui_update_check_off))
                 } else {
-                    step(Step.UPDATE, StepState.RUNNING, "Checking for updates…")
+                    step(Step.UPDATE, StepState.RUNNING, I18n.s(R.string.ui_checking_for_updates_2))
                     val status = checkForUpdateBlocking(app, req.appId)
                     if (handle.isCancelled) { post { listener.onCancelled() }; return@Thread }
                     when (status?.state) {
@@ -317,17 +320,17 @@ object SteamSessionManager {
                             step(Step.UPDATE, StepState.DONE, "Up to date$b")
                         }
                         SteamGameUpdater.State.NOT_INSTALLED ->
-                            step(Step.UPDATE, StepState.WARN, "Game files not found on disk")
+                            step(Step.UPDATE, StepState.WARN, I18n.s(R.string.ui_game_files_not_found_on_disk))
                         SteamGameUpdater.State.UPDATE_AVAILABLE -> {
                             step(Step.UPDATE, StepState.WARN,
                                 if (status.installedBuild > 0L && status.liveBuild > 0L)
                                     "Update available: build ${status.installedBuild} → ${status.liveBuild}"
-                                else "A newer build is available")
+                                else I18n.s(R.string.ui_a_newer_build_is_available))
                             post { listener.onUpdateAvailable(status) }
                             return@Thread
                         }
                         SteamGameUpdater.State.UNKNOWN, null ->
-                            step(Step.UPDATE, StepState.DONE, "Couldn't check for updates — launching this build")
+                            step(Step.UPDATE, StepState.DONE, I18n.s(R.string.ui_couldn_t_check_for_updates_launching_this_build))
                     }
                 }
 
@@ -337,9 +340,9 @@ object SteamSessionManager {
                 // blocks — the installed package launches (even below MIN_AGENT_VERSION: the agent
                 // is backwards compatible, newer app features just stay off).
                 if (!SteamLiteComponent.isInstalled(app)) {
-                    step(Step.CLIENT, StepState.SKIPPED, "SteamLite client: downloaded by the launch")
+                    step(Step.CLIENT, StepState.SKIPPED, I18n.s(R.string.ui_steamlite_client_downloaded_by_the_launch))
                 } else {
-                    step(Step.CLIENT, StepState.RUNNING, "Checking for SteamLite updates…")
+                    step(Step.CLIENT, StepState.RUNNING, I18n.s(R.string.ui_checking_for_steamlite_updates))
                     val check = SteamLiteComponent.checkUpdateBlocking(app)
                     if (handle.isCancelled) { post { listener.onCancelled() }; return@Thread }
                     val installed = SteamLiteComponent.versionLabel(check.installed)
@@ -348,7 +351,7 @@ object SteamSessionManager {
                             step(Step.CLIENT, StepState.DONE, "Couldn't check for SteamLite updates — using installed $installed")
                         check.available -> {
                             step(Step.CLIENT, StepState.WARN,
-                                (if (check.required) "Update required" else "Update available") +
+                                (if (check.required) "Update required" else I18n.s(R.string.winhub_update_available)) +
                                     " ($installed → v${check.latestVersion})")
                             post { listener.onClientUpdateAvailable(check) }
                             return@Thread
@@ -419,7 +422,7 @@ object SteamSessionManager {
                 .apply()
             Log.i(TAG, "pending relaunch recorded: $mode for $shortcutPath")
         } catch (t: Throwable) {
-            Log.w(TAG, "setPendingRelaunch failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_setpendingrelaunch_failed), t)
         }
     }
 
@@ -445,7 +448,7 @@ object SteamSessionManager {
             if (mode == null || System.currentTimeMillis() - at > RELAUNCH_TTL_MS) null
             else PendingRelaunch(path, p.getInt("container", 0), mode)
         } catch (t: Throwable) {
-            Log.w(TAG, "takePendingRelaunch failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_takependingrelaunch_failed), t)
             null
         }
     }
@@ -457,7 +460,7 @@ object SteamSessionManager {
             SteamGameUpdater.checkForUpdate(ctx, appId) { s -> out = s; latch.countDown() }
             latch.await(UPDATE_CHECK_WAIT_MS, TimeUnit.MILLISECONDS)
         } catch (t: Throwable) {
-            Log.w(TAG, "checkForUpdate errored", t)
+            Log.w(TAG, I18n.s(R.string.ui_checkforupdate_errored), t)
         }
         return out
     }

@@ -238,7 +238,7 @@ fun BigPictureScreen(navController: NavController) {
         }
         if (!GoldbergComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "Steam Emulator (Goldberg)"
+            componentDownloadLabel = I18n.s(R.string.ui_steam_emulator_goldberg)
             componentDownloadProgress = 0f
             GoldbergComponent.downloadAsync(
                 context,
@@ -1249,8 +1249,8 @@ private fun GameOptionsSheet(
     val rows = buildList {
         add(BpRow(Icons.Filled.Edit, I18n.s(R.string.ui_edit_shortcut), onEditShortcut))
         add(BpRow(Icons.Filled.Tune, I18n.s(R.string.ui_container_settings), onContainerSettings))
-        doctor?.let { open -> add(BpRow(Icons.Filled.Healing, "Game Doctor") { onDismiss(); open(shortcut) }) }
-        add(BpRow(Icons.Filled.Public, "Community configs", onCommunityConfigs))
+        doctor?.let { open -> add(BpRow(Icons.Filled.Healing, I18n.s(R.string.ui_game_doctor)) { onDismiss(); open(shortcut) }) }
+        add(BpRow(Icons.Filled.Public, I18n.s(R.string.ui_community_configs_2), onCommunityConfigs))
         add(BpRow(Icons.Filled.Image, I18n.s(R.string.ui_change_cover_art)) {
             coverPicker.launch(
                 com.winhub.hernandez.util.InAppFilePicker.buildIntent(
@@ -1276,7 +1276,7 @@ private fun ToolsSheet(
         title = I18n.s(R.string.ui_tools),
         rows = listOf(
             BpRow(Icons.Filled.FolderOpen, I18n.s(R.string.ui_file_manager), onFileManager),
-            BpRow(Icons.Filled.Layers, "Manage Wrappers", onWrappers),
+            BpRow(Icons.Filled.Layers, I18n.s(R.string.wrapper_manager_title), onWrappers),
             BpRow(Icons.Filled.Download, "Downloads", onDownloads),
         ),
         onDismiss = onDismiss,
@@ -1419,7 +1419,7 @@ private fun GameCommunitySheet(
                             putExtra(Intent.EXTRA_TEXT, I18n.s(R.string.ui_winhub_config_for_res_game))
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
-                        context.startActivity(Intent.createChooser(send, "Share config"))
+                        context.startActivity(Intent.createChooser(send, I18n.s(R.string.ui_share_config)))
                     } catch (e: Exception) {
                         Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_the_config), Toast.LENGTH_SHORT).show()
                     }
@@ -1663,7 +1663,7 @@ private fun GameCommunitySheet(
                     Spacer(Modifier.height(8.dp))
                     if (cards.isEmpty()) {
                         Text(
-                            if (matchesMine) "No uploaded configs match your device." else "No configs listed.",
+                            if (matchesMine) "No uploaded configs match your device." else I18n.s(R.string.ui_no_configs_listed),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     } else {

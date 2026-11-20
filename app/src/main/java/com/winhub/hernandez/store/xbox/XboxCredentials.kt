@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.LocalServerSocket
 import org.json.JSONObject
@@ -115,7 +118,7 @@ internal class XboxCredentials(private val app: Context, expectedGeneration: Str
                 XboxAccountStore.write(app, json)
             }
             "remove" -> { slots.remove(key); XboxAccountStore.write(app, json) }
-            else -> error("Invalid credential operation")
+            else -> error(I18n.s(R.string.ui_invalid_credential_operation))
         }
         return result
     }
@@ -159,10 +162,10 @@ internal class XboxCredentials(private val app: Context, expectedGeneration: Str
             while (out.size() <= limit) {
                 val byte = input.read()
                 if (byte == 10) return out.toString("UTF-8")
-                if (byte < 0) throw java.io.EOFException("Xbox backend disconnected")
+                if (byte < 0) throw java.io.EOFException(I18n.s(R.string.ui_xbox_backend_disconnected))
                 out.write(byte)
             }
-            error("Xbox backend response exceeded its limit")
+            error(I18n.s(R.string.ui_xbox_backend_response_exceeded_its_limit))
         }
     }
 }

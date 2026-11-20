@@ -75,17 +75,17 @@ internal fun DeckPerformanceDialog(
                 .map { Triple(it, profile == it, { applyProfile(it) }) },
         )
 
-        DeckGroup("Quick controls · no root") {
-            DeckRow(I18n.s(R.string.ui_sustained_performance_mode), "Holds a stable clock to avoid thermal throttling.") {
+        DeckGroup(I18n.s(R.string.ui_quick_controls_no_root)) {
+            DeckRow(I18n.s(R.string.ui_sustained_performance_mode), I18n.s(R.string.ui_holds_a_stable_clock_to_avoid_thermal_throttling_2)) {
                 DeckToggle(sustained, onSustained)
             }
-            DeckRow(I18n.s(R.string.ui_thread_priority_boost), "Raises emulator thread priority so the scheduler favours the game.") {
+            DeckRow(I18n.s(R.string.ui_thread_priority_boost), I18n.s(R.string.ui_raises_emulator_thread_priority_so_the_scheduler_favours_2)) {
                 DeckToggle(priority, onPriority)
             }
             DeckRow(I18n.s(R.string.ui_prefer_big_cores), "Routes emulator threads onto the big / prime cluster.") {
                 DeckToggle(bigCores, onBigCores)
             }
-            DeckRow(I18n.s(R.string.ui_lock_gpu_to_max_clock), "Adreno: no-root KGSL turbo; sysfs pin with root.") {
+            DeckRow(I18n.s(R.string.ui_lock_gpu_to_max_clock), I18n.s(R.string.ui_adreno_no_root_kgsl_turbo_sysfs_pin_with_root_2)) {
                 val k = PerfRootApplier.KEY_GPU_CLOCK_LOCK
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
@@ -93,7 +93,7 @@ internal fun DeckPerformanceDialog(
 
         DeckGroup("Root & danger") {
             DeckConfigNote(I18n.s(R.string.ui_saved_for_this_game_applied_at_launch_when_root_is_av))
-            DeckRow(I18n.s(R.string.ui_cpu_governor_performance), "Forces every cluster to the performance governor.") {
+            DeckRow(I18n.s(R.string.ui_cpu_governor_performance), I18n.s(R.string.ui_forces_every_cluster_to_the_performance_governor_2)) {
                 val k = PerfRootApplier.KEY_CPU_GOVERNOR
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
@@ -101,17 +101,17 @@ internal fun DeckPerformanceDialog(
                 val k = PerfRootApplier.KEY_CPU_FREQ_LOCK
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
-            DeckRow(I18n.s(R.string.ui_keep_all_cores_online), "Prevents the kernel from hot-plugging cores offline.") {
+            DeckRow(I18n.s(R.string.ui_keep_all_cores_online), I18n.s(R.string.ui_prevents_the_kernel_from_hot_plugging_cores_offline_2)) {
                 val k = PerfRootApplier.KEY_CORES_ONLINE
                 DeckToggle(rootValue(k)) { onRoot(k, it) }
             }
-            DeckRow(I18n.s(R.string.ui_disable_thermal_throttling), "Runtime watchdog still guards.") {
+            DeckRow(I18n.s(R.string.ui_disable_thermal_throttling), I18n.s(R.string.ui_runtime_watchdog_still_guards_2)) {
                 val k = PerfRootApplier.KEY_THERMAL_DISABLE
                 DeckToggle(rootValue(k)) { on ->
                     if (on) pendingDanger = "Disable thermal throttling" to { onRoot(k, true) } else onRoot(k, false)
                 }
             }
-            DeckRow(I18n.s(R.string.ui_fan_to_maximum), "Forces active cooling to full at launch.") {
+            DeckRow(I18n.s(R.string.ui_fan_to_maximum), I18n.s(R.string.ui_forces_active_cooling_to_full_at_launch_2)) {
                 val k = PerfRootApplier.KEY_FAN_MAX
                 DeckToggle(rootValue(k)) { on ->
                     if (on) pendingDanger = "Fan to maximum" to { onRoot(k, true) } else onRoot(k, false)

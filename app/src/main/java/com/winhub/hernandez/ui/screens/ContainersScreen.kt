@@ -681,7 +681,7 @@ fun ContainersScreen(
 
     EmuAccountConflictDialog(conflicts = emuConflicts) { applied, _ ->
         emuConflicts = emptyList()
-        if (applied > 0) resultMessage = "Emulator account switched to the backup's — relaunch the game"
+        if (applied > 0) resultMessage = I18n.s(R.string.ui_emulator_account_switched_to_the_backup_s_relaunch_th)
     }
 }
 

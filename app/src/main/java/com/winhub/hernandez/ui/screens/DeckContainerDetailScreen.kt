@@ -109,14 +109,14 @@ internal fun DeckContainerDetailScreen(
     LaunchedEffect(Unit) { runCatching { backFocus.requestFocus() } }
 
     val title = when {
-        viewModel.defaultsMode -> "New Container Defaults"
-        containerId <= 0 -> "New Container"
+        viewModel.defaultsMode -> I18n.s(R.string.new_container_defaults)
+        containerId <= 0 -> I18n.s(R.string.new_container)
         else -> viewModel.containerName.ifBlank { "Container" }
     }
     val saveLabel = when {
         viewModel.isSaving -> "Saving…"
-        viewModel.isEditMode -> "Save Changes"
-        else -> "Create Container"
+        viewModel.isEditMode -> I18n.s(R.string.ui_save_changes)
+        else -> I18n.s(R.string.ui_create_container)
     }
 
     val advancedView = DeckSettingsMode.advanced(LocalContext.current)
@@ -219,9 +219,9 @@ internal fun DeckContainerDetailScreen(
                 )
                 Text(
                     text = when {
-                        viewModel.defaultsMode -> "Saved as the profile every NEW container starts from"
-                        viewModel.isEditMode -> "Editing an existing container"
-                        else -> "Configure a fresh container, then create it"
+                        viewModel.defaultsMode -> I18n.s(R.string.ui_saved_as_the_profile_every_new_container_starts_from)
+                        viewModel.isEditMode -> I18n.s(R.string.ui_editing_an_existing_container)
+                        else -> I18n.s(R.string.ui_configure_a_fresh_container_then_create_it)
                     },
                     color = Deck.onSurfaceVariant,
                     fontSize = 12.sp,
@@ -372,7 +372,7 @@ internal fun DeckContainerDetailScreen(
                     }
 
                     1 -> {
-                        DeckGroup("Graphics Driver") {
+                        DeckGroup(I18n.s(R.string.graphics_driver)) {
                         if (viewModel.isWaylandBackend) {
                             // Wayland: one Turnip pick for the compositor (and the game, on the adapter).
                             val waylandVersion = com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog
@@ -381,7 +381,7 @@ internal fun DeckContainerDetailScreen(
                                 label = I18n.s(R.string.graphics_driver),
                                 hint = if (compositorDriverUnusable(waylandVersion, waylandCompositorChoices, waylandCompositorChoices.isNotEmpty()))
                                     "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
-                                else "Turnip the Wayland compositor (and the adapter) runs on",
+                                else I18n.s(R.string.ui_turnip_the_wayland_compositor_and_the_adapter_runs_on),
                                 options = waylandCompositorChoices.map { it to it },
                                 selected = compositorDriverLabel(waylandVersion, waylandCompositorChoices, waylandCompositorChoices.isNotEmpty()),
                                 onPick = { viewModel.onCompositorDriverPicked(it) },
@@ -610,13 +610,13 @@ internal fun DeckContainerDetailScreen(
 
                     2 -> {
                         if (viewModel.vulkanSupported) {
-                        DeckGroup("Frame Generation") {
+                        DeckGroup(I18n.s(R.string.ui_frame_generation_2)) {
                         DeckChoiceRow(
                             label = I18n.s(R.string.ui_frame_generation_2),
                             hint = if (viewModel.frameGenEngine != "off" &&
                                 viewModel.selectedRenderer != "Vulkan")
                                 "LSFG Native needs Vulkan — the Renderer switches on pick"
-                            else "LSFG Native frame interpolation",
+                            else I18n.s(R.string.ui_lsfg_native_frame_interpolation),
                             options = listOf(
                                 "off" to "Off",
                                 "lsfg-native" to "LSFG",
@@ -625,7 +625,7 @@ internal fun DeckContainerDetailScreen(
                             onPick = {
                                 viewModel.frameGenEngine = it
                                 if (BuildConfig.DEBUG)
-                                    android.util.Log.d("FrameGen", "container editor picked [" + it + "] -> form frameGenEngine=[" + viewModel.frameGenEngine + "]")
+                                    android.util.Log.d("FrameGen", I18n.s(R.string.ui_container_editor_picked) + it + "] -> form frameGenEngine=[" + viewModel.frameGenEngine + "]")
                                 if (it != "off" && viewModel.selectedRenderer != "Vulkan")
                                     viewModel.selectedRenderer = "Vulkan"
                             },
@@ -748,9 +748,9 @@ internal fun DeckContainerDetailScreen(
                     5 -> {
                         DeckGroup("Environment") {
                         DeckConfigSection(
-                            label = "Env Vars",
+                            label = I18n.s(R.string.ui_env_vars),
                             hint = I18n.s(R.string.ui_key_value_pairs),
-                            title = "Env Vars",
+                            title = I18n.s(R.string.ui_env_vars),
                             sectionKey = "envVars",
                             style = configEditorStyle,
                             openSection = openSection,

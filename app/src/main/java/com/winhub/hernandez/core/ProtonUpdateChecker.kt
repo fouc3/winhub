@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -65,7 +68,7 @@ object ProtonUpdateChecker {
         } else {
             val json = Downloader.downloadString(ContentsManager.REMOTE_PROFILES)
             if (json == null) {
-                Log.w(TAG, "Catalog unreachable; no Proton update check")
+                Log.w(TAG, I18n.s(R.string.ui_catalog_unreachable_no_proton_update_check))
                 return null
             }
             contents.setRemoteProfiles(json)

@@ -179,7 +179,7 @@ fun SteamFriendsRoot(
             // into the right pane — by leaving the profile route with openChat set.
             onMessage = { openChat = pf; profileFriend = null },
             // Invite is a no-op stub for now (game/lobby invites aren't wired to the CM yet).
-            onInvite = { Toast.makeText(ctx, "Game invites are coming soon", Toast.LENGTH_SHORT).show() },
+            onInvite = { Toast.makeText(ctx, I18n.s(R.string.ui_game_invites_are_coming_soon), Toast.LENGTH_SHORT).show() },
             onRemove = { SteamFriendsStore.removeFriend(pf.steamId); profileFriend = null },
             onViewOnSteam = {
                 runCatching {
@@ -349,7 +349,7 @@ fun SteamSocialSettingsSheet(onDismiss: () -> Unit) {
             Column {
                 SocialSettingRow(
                     title = I18n.s(R.string.ui_enable_steam_friends_chat),
-                    subtitle = "See your friends list, presence and chat. Off by default — no online status " +
+                    subtitle = I18n.s(R.string.ui_see_your_friends_list_presence_and_chat_off_by_default_n) +
                         "is shared until you turn this on.",
                     checked = socialEnabled,
                     enabled = true,

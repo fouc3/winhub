@@ -118,7 +118,7 @@ fun EpicProfileTab(
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StoreFilterChip(I18n.s(R.string.ui_account_on_epicgames_com), false) {
-                    onOpenWeb("https://www.epicgames.com/account/personal", "Epic account")
+                    onOpenWeb("https://www.epicgames.com/account/personal", I18n.s(R.string.ui_epic_account_2))
                 }
                 StoreFilterChip(if (loading) "Refreshing…" else "Refresh", false, onClick = onRefresh)
             }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
@@ -105,16 +108,16 @@ object AmazonLibraryRepo {
                 backfillPosters(p, cachedList, onStatus)
                 return@withContext SyncResult.Throttled
             }
-            onStatus("Checking credentials…")
+            onStatus(I18n.s(R.string.ui_checking_credentials))
             val creds = AmazonCredentialStore.load(appCtx)
             if (creds == null || creds.accessToken == null) return@withContext SyncResult.NotLoggedIn
             val token = AmazonCredentialStore.getValidAccessToken(appCtx)
-                ?: return@withContext SyncResult.Failed("Amazon session expired — please sign in again")
+                ?: return@withContext SyncResult.Failed(I18n.s(R.string.ui_amazon_session_expired_please_sign_in_again))
 
-            onStatus("Fetching game list…")
+            onStatus(I18n.s(R.string.ui_fetching_game_list))
             val all = AmazonApiClient.getEntitlements(token, creds.deviceSerial)
             if (all.isNullOrEmpty()) {
-                return@withContext if (cachedList.isEmpty()) SyncResult.Failed("No games found in your Amazon library")
+                return@withContext if (cachedList.isEmpty()) SyncResult.Failed(I18n.s(R.string.ui_no_games_found_in_your_amazon_library))
                 else SyncResult.Ok(cachedList)
             }
 
@@ -143,7 +146,7 @@ object AmazonLibraryRepo {
                 fresh.installSize = old.installSize
             }
 
-            onStatus("Checking for updates…")
+            onStatus(I18n.s(R.string.ui_checking_for_updates_2))
             for (game in finalGames) {
                 if (p.getString("amazon_exe_${game.productId}", null) == null || game.productId.isEmpty()) continue
                 runCatching {
@@ -170,7 +173,7 @@ object AmazonLibraryRepo {
         val missing = games.filter { it.productId.isNotEmpty() && !p.contains("$VCOVER_PREFIX${it.productId}") }
             .take(POSTER_BUDGET)
         if (missing.isEmpty()) return
-        onStatus("Fetching cover art…")
+        onStatus(I18n.s(R.string.ui_fetching_cover_art))
         val pool = Executors.newFixedThreadPool(4)
         val futures = missing.map { g ->
             pool.submit(Callable { g.productId to StoreNet.sgdbPoster(g.title) })

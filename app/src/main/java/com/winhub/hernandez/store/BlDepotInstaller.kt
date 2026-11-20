@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.BuildConfig
@@ -171,7 +174,7 @@ internal object BlDepotInstaller {
         val row = db.getGame(appId)
         if (row == null) {
             dlog("FAIL: appId=$appId not found in database")
-            fail(appId, "Game not found in database"); return
+            fail(appId, I18n.s(R.string.ui_game_not_found_in_database)); return
         }
         dlog("Game: name='${row.name}' type=${row.type} sizeBytes=${row.sizeBytes}")
 
@@ -179,7 +182,7 @@ internal object BlDepotInstaller {
         val session = ensureSession(ctx)
         if (session == null) {
             dlog("Session status at failure: ${repo.lastSessionStatus}")
-            fail(appId, "Steam session not ready — sign in again or retry in a moment"); return
+            fail(appId, I18n.s(R.string.ui_steam_session_not_ready_sign_in_again_or_retry_in_a_mome)); return
         }
         if (cancelled.get()) { finishCancelled(appId, db); return }
 
@@ -213,7 +216,7 @@ internal object BlDepotInstaller {
         val keptRows = allRows.filter { it.depotId !in excludedDlc && it.depotId !in staleDupes }
         if (keptRows.isEmpty()) {
             dlog("FAIL: no depot rows for appId=$appId (library not synced for this app?)")
-            fail(appId, "No downloadable depots known for this game yet — open its store page to refresh, then retry")
+            fail(appId, I18n.s(R.string.ui_no_downloadable_depots_known_for_this_game_yet_open_its))
             return
         }
         if (excludedDlc.isNotEmpty() || staleDupes.isNotEmpty()) {
@@ -430,7 +433,7 @@ internal object BlDepotInstaller {
                 specs.forEach { (d, m) ->
                     val st = when {
                         journal[d] == m -> "COMPLETE (journal manifest $m)"
-                        d in denied -> "DENIED by Steam — skipped (not owned on this account)"
+                        d in denied -> I18n.s(R.string.ui_denied_by_steam_skipped_not_owned_on_this_account)
                         else -> "SHORT (journal ${journal[d] ?: "absent"} ≠ $m)"
                     }
                     dlog("Depot $d: $st")
@@ -459,7 +462,7 @@ internal object BlDepotInstaller {
                     // depot was denied. The account owns none of this game: fail honestly rather than
                     // let "tolerate denied" turn a fully-unowned game into a false success.
                     completedNormally = true
-                    val msg = "Steam denied access to every depot of this game (not owned on this account?)"
+                    val msg = I18n.s(R.string.ui_steam_denied_access_to_every_depot_of_this_game_not_owne)
                     dlog("NOT OWNED: all ${specs.size} selected depot(s) denied — $msg")
                     BlSteamEngineLog.log("DL", "not-owned app=$appId all=${specs.size} denied")
                     fail(appId, msg)
@@ -553,7 +556,7 @@ internal object BlDepotInstaller {
                     dlog("Auto-resume made NO forward progress (on-disk ${fmt(curOnDisk)} <= floor " +
                             "${fmt(resumeFloorBytes)} + ${fmt(MIN_RESUME_PROGRESS_BYTES)}) — a selected depot is " +
                             "unavailable (no key / dead CDN). Failing fast. SHORT: $shortSummary")
-                    fail(appId, "Download stalled — a depot delivered no new data on resume; please retry")
+                    fail(appId, I18n.s(R.string.ui_download_stalled_a_depot_delivered_no_new_data_on_resume))
                 }
                 else -> {
                     val backoff = DEPOT_RESUME_BACKOFF_MS[resumeAttempt.coerceAtMost(DEPOT_RESUME_BACKOFF_MS.size - 1)]
@@ -588,7 +591,7 @@ internal object BlDepotInstaller {
     /** A logged-on engine session, re-driving the saved-token logon (bounded) when needed. */
     private fun ensureSession(ctx: Context): BlSteamSession? {
         if (!BlSteamEngine.isLoggedOn()) {
-            dlog("Engine not logged on — waiting for the session (re-logon from saved token)…")
+            dlog(I18n.s(R.string.ui_engine_not_logged_on_waiting_for_the_session_re_logon_fr))
             val r = SteamSessionManager.ensureSession(ctx, SESSION_WAIT_MS) { msg -> dlog("session: $msg") }
             dlog("ensureSession → $r")
         }
@@ -716,7 +719,7 @@ internal object BlDepotInstaller {
     }
 
     private fun humanError(error: String): String = when {
-        error.isBlank() -> "Unknown error"
+        error.isBlank() -> I18n.s(R.string.ui_unknown_error_2)
         error.contains("no entitled depots") -> "Steam denied access to every depot of this game (not owned on this account?)"
         error.contains("CDN server request failed") -> "Couldn't get a Steam content server — check the connection and retry"
         error.contains("not connected") || error.contains("session closed") -> "Steam session lost — retry in a moment"
@@ -730,7 +733,7 @@ internal object BlDepotInstaller {
     }
 
     private fun finishPaused(appId: Int, db: SteamDatabase, installDone: Long) {
-        dlog("finally: paused — marking DL_PAUSED")
+        dlog(I18n.s(R.string.ui_finally_paused_marking_dl_paused))
         db.markDownloadPaused(appId, installDone)
         SteamRepository.getInstance().emit("DownloadPaused:$appId")
         DownloadRegistry.update("${Store.STEAM}:$appId") { it.copy(state = DownloadState.PAUSED) }

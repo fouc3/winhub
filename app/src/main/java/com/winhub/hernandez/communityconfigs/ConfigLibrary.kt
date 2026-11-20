@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -62,12 +65,12 @@ object ConfigLibrary {
             try {
                 cache.writeText(body)
             } catch (e: IOException) {
-                Log.w(TAG, "couldn't cache the index", e)
+                Log.w(TAG, I18n.s(R.string.ui_couldn_t_cache_the_index), e)
             }
             return@withContext Result.success(games)
         }
         readCache(cache)?.let { return@withContext Result.success(it) }
-        Result.failure(IOException("Couldn't reach the config library."))
+        Result.failure(IOException(I18n.s(R.string.ui_couldn_t_reach_the_config_library)))
     }
 
     /** The raw config JSON for one entry, or null when offline or the file is gone. */
@@ -80,7 +83,7 @@ object ConfigLibrary {
         return try {
             parse(file.readText())
         } catch (e: IOException) {
-            Log.w(TAG, "couldn't read the cached index", e)
+            Log.w(TAG, I18n.s(R.string.ui_couldn_t_read_the_cached_index), e)
             null
         }
     }
@@ -114,7 +117,7 @@ object ConfigLibrary {
         }
         out
     } catch (e: JSONException) {
-        Log.w(TAG, "index is not valid JSON", e)
+        Log.w(TAG, I18n.s(R.string.ui_index_is_not_valid_json), e)
         null
     }
 

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -206,7 +209,7 @@ internal object XboxCatalog {
             val text = connection.inputStream.use { it.readBytes() }.also { require(it.size <= 16_000_000) }
             return String(text, Charsets.UTF_8)
         } catch (e: java.io.IOException) {
-            error("Microsoft Store could not be reached. Try again.")
+            error(I18n.s(R.string.ui_microsoft_store_could_not_be_reached_try_again))
         } finally { connection.disconnect() }
     }
 }

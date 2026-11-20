@@ -148,7 +148,7 @@ object EpicInstallTags {
             return it
         }
         // 3. English fallback (Legendary/GameNative parity)
-        Log.i(TAG, "Epic install language falling back to English")
+        Log.i(TAG, I18n.s(R.string.ui_epic_install_language_falling_back_to_english))
         return LANGUAGE_TO_TAGS.getValue(FALLBACK)
     }
 
@@ -183,7 +183,7 @@ object EpicInstallTags {
             Log.i(TAG, "Epic launch locale from device locale -> $it")
             return it
         }
-        Log.i(TAG, "Epic launch locale falling back to en")
+        Log.i(TAG, I18n.s(R.string.ui_epic_launch_locale_falling_back_to_en))
         return "en"
     }
 

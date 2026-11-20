@@ -111,7 +111,7 @@ fun VegasDownloadSheet(
                     }
                 }
                 releases = list
-                if (list.isEmpty()) errorMsg = "No releases found — check GitHub status or retry."
+                if (list.isEmpty()) errorMsg = I18n.s(R.string.ui_no_releases_found_check_github_status_or_retry)
             } catch (e: Exception) {
                 errorMsg = "Failed to parse releases: ${e.message} — tap Retry."
             }
@@ -271,11 +271,11 @@ Column(modifier = Modifier.weight(1f)) {
                                                             onDismiss()
                                                         }
                                                     } else {
-                                                        errorMsg = "Install failed."
+                                                        errorMsg = I18n.s(R.string.ui_install_failed)
                                                     }
                                                 }
                                             } else {
-                                                errorMsg = "Download failed."
+                                                errorMsg = I18n.s(R.string.ui_download_failed_2)
                                             }
                                         }
                                     }

@@ -90,7 +90,7 @@ val AUDIO_PRESETS = listOf(
         "Starts low-latency, grows the buffer only if it hears crackle.",
         AudioConfig(PRESET_AUTO, 1, true, 0, 0, 100), 0.46f,
         "Aims for the lowest delay your device can hold without crackling.", R.string.help_audio_preset_auto),
-    AudioPreset(PRESET_LOW, "⚡", "Low latency", null,
+    AudioPreset(PRESET_LOW, "⚡", I18n.s(R.string.ui_low_latency), null,
         "Tightest sync. May crackle under heavy load.",
         // adaptive TRUE. This rung pinned the buffer with no way to grow, so a title that
         // could not hold it crackled for the whole session with nothing to recover it -
@@ -106,7 +106,7 @@ val AUDIO_PRESETS = listOf(
         "Calmer buffer with an adaptive safety net.",
         AudioConfig(PRESET_BALANCED, 2, true, 0, 0, 100), 0.60f,
         "Smooth all-rounder for most games.", R.string.help_audio_preset_balanced),
-    AudioPreset(PRESET_STABLE, "🛡️", "Stable (no crackle)", null,
+    AudioPreset(PRESET_STABLE, "🛡️", I18n.s(R.string.ui_stable_no_crackle), null,
         "Biggest safety margin for weak devices / demanding games.",
         AudioConfig(PRESET_STABLE, 0, true, 0, 0, 144), 0.90f,
         "Maximum crackle protection; most audio delay.", R.string.help_audio_preset_stable),
@@ -410,7 +410,7 @@ fun AudioSettingsDialog(
                         }
                     }
 
-                    Text(if (custom) "FINE-TUNE" else "FINE-TUNE — what this preset applies (Custom to edit)",
+                    Text(if (custom) "FINE-TUNE" else I18n.s(R.string.ui_fine_tune_what_this_preset_applies_custom_to_edit),
                         color = cs.onSurfaceVariant, fontSize = 11.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(4.dp, 16.dp, 0.dp, 8.dp))
                     val ftAlpha = if (custom) 1f else 0.4f
@@ -424,7 +424,7 @@ fun AudioSettingsDialog(
                         modifier = Modifier.fillMaxWidth()) {
                         Column(Modifier.padding(horizontal = 14.dp).alpha(ftAlpha)) {
                             // Output mode
-                            FtRow(I18n.s(R.string.ui_output_mode), "AAudio performance mode", cs,
+                            FtRow(I18n.s(R.string.ui_output_mode), I18n.s(R.string.ui_aaudio_performance_mode), cs,
                                 onHelp = { helpRes = R.string.help_audio_perf_mode }) {
                                 Row {
                                     // DirectAudio must NOT offer POWER_SAVING: on this engine its AAudio
@@ -444,7 +444,7 @@ fun AudioSettingsDialog(
                                     }
                                 }
                             }
-                            FtRow(I18n.s(R.string.ui_adaptive_buffer), "Auto-grow only if it hears crackle", cs,
+                            FtRow(I18n.s(R.string.ui_adaptive_buffer), I18n.s(R.string.ui_auto_grow_only_if_it_hears_crackle), cs,
                                 onHelp = { helpRes = R.string.help_audio_adaptive }) {
                                 Switch(checked = shown.adaptive, enabled = custom,
                                     onCheckedChange = { cfg = cfg.copy(adaptive = it) })
@@ -455,7 +455,7 @@ fun AudioSettingsDialog(
                             // go below. PulseAudio keeps the guest winepulse buffer it always had.
                             val latencyUsed = latencyUsedBy(driverId)
                             FtRow(
-                                if (directBuffer) "Audio buffer" else "Guest buffer",
+                                if (directBuffer) "Audio buffer" else I18n.s(R.string.ui_guest_buffer),
                                 // ALSA reaches AAudio through the app's own server, which takes its sizing
                                 // from the buffer rows below - there is no guest-side latency for this row
                                 // to set, so say that rather than leaving a live-looking slider that does
@@ -480,12 +480,12 @@ fun AudioSettingsDialog(
                                         onValueChange = { cfg = cfg.copy(latencyMsec = (it / 10).toInt() * 10) },
                                         modifier = Modifier.width(140.dp))
                             }
-                            FtStepper("Initial sink buffer", "frames · 0 = auto",
+                            FtStepper(I18n.s(R.string.ui_initial_sink_buffer), "frames · 0 = auto",
                                 if (shown.bufferFrames > 0) "${shown.bufferFrames}" else "auto", custom, cs,
                                 onHelp = { helpRes = R.string.help_audio_buffer_frames }) {
                                 cfg = cfg.copy(bufferFrames = (cfg.bufferFrames + it * 256).coerceAtLeast(0))
                             }
-                            FtStepper("Max sink buffer", "growth cap · 0 = device max",
+                            FtStepper(I18n.s(R.string.ui_max_sink_buffer), "growth cap · 0 = device max",
                                 if (shown.maxBufferFrames > 0) "${shown.maxBufferFrames}" else "device max", custom, cs,
                                 onHelp = { helpRes = R.string.help_audio_max_buffer_frames }) {
                                 cfg = cfg.copy(maxBufferFrames = (cfg.maxBufferFrames + it * 256).coerceAtLeast(0))

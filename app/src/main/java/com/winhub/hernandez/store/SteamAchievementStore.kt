@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.store.blsteam.BlSteamEngine
@@ -722,7 +725,7 @@ object SteamAchievementStore {
                 }
             }
         } catch (e: Exception) {
-            Log.w(TAG, "flushPendingSyncBack failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_flushpendingsyncback_failed), e)
         }
     }
 

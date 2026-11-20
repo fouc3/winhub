@@ -220,7 +220,7 @@ private fun ReshadeCatalogSheet(
                 Text(
                     if (source == ReshadeCatalog.Source.CACHE)
                         "Offline — showing a cached list. Connect to download new effects."
-                    else "Offline — showing installed effects only. Connect to browse the catalog.",
+                    else I18n.s(R.string.ui_offline_showing_installed_effects_only_connect_to_browse),
                     color = cs.onSurfaceVariant, style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 2.dp),
                 )
@@ -279,7 +279,7 @@ private fun ReshadeCatalogSheet(
                             item("__empty__") {
                                 Text(
                                     if (query.isNotBlank()) "No effects match \"$query\"."
-                                    else "No effects available. Connect to the internet to browse the catalog.",
+                                    else I18n.s(R.string.ui_no_effects_available_connect_to_the_internet_to_browse_t),
                                     color = cs.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.padding(24.dp),
                                 )

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -56,7 +59,7 @@ public final class EpicCloudSaveManager {
                 if (accountId == null || accountId.isEmpty()) { cb.onError("Epic account ID not found — please sign in again"); return; }
                 debug(ctx, "Epic upload — appName=" + appName);
 
-                cb.onStatus("Fetching cloud file list…");
+                cb.onStatus(I18n.s(R.string.ui_fetching_cloud_file_list));
                 List<CloudFile> cloudFiles = listCloudFiles(ctx, accountId, appName, token);
 
                 // Recursive walk: collect every file under localFolder as a '/'-joined RELATIVE path
@@ -65,8 +68,8 @@ public final class EpicCloudSaveManager {
                 collectRelativeFiles(localFolder, "", localRel);
                 debug(ctx, "upload localFolder=" + localFolder + " localFiles=" + localRel.size() + " cloudFiles=" + cloudFiles.size());
                 if (localRel.isEmpty()) {
-                    debug(ctx, "upload — no local files under resolved folder");
-                    cb.onDone("No local files to upload");
+                    debug(ctx, I18n.s(R.string.ui_upload_no_local_files_under_resolved_folder));
+                    cb.onDone(I18n.s(R.string.ui_no_local_files_to_upload));
                     return;
                 }
 
@@ -81,12 +84,12 @@ public final class EpicCloudSaveManager {
                 debug(ctx, "upload toUpload=" + toUpload.size() + " of " + localRel.size() + " (newer-than-cloud) " + toUpload);
 
                 if (toUpload.isEmpty()) {
-                    debug(ctx, "upload — already up to date, nothing PUT");
-                    cb.onDone("Already up to date");
+                    debug(ctx, I18n.s(R.string.ui_upload_already_up_to_date_nothing_put));
+                    cb.onDone(I18n.s(R.string.ui_already_up_to_date));
                     return;
                 }
 
-                cb.onStatus("Requesting upload links for " + toUpload.size() + " file(s)…");
+                cb.onStatus(I18n.s(R.string.ui_requesting_upload_links_for) + toUpload.size() + " file(s)…");
                 List<WriteLink> writeLinks = requestWriteLinks(accountId, appName, token, toUpload);
                 debug(ctx, "upload writeLinks granted=" + writeLinks.size() + " for requested=" + toUpload.size());
 
@@ -94,12 +97,12 @@ public final class EpicCloudSaveManager {
                 for (WriteLink wl : writeLinks) {
                     cb.onStatus("Uploading: " + wl.name);
                     File local = new File(localFolder, wl.name);
-                    if (!local.exists()) { debug(ctx, "upload PUT skip (missing local): " + wl.name); continue; }
+                    if (!local.exists()) { debug(ctx, I18n.s(R.string.ui_upload_put_skip_missing_local) + wl.name); continue; }
                     byte[] data = readFile(local);
                     if (data == null) { cb.onError("Failed to read: " + wl.name); return; }
                     boolean ok = putToPresignedUrl(wl.url, data);
-                    debug(ctx, "upload PUT " + wl.name + " bytes=" + data.length + " -> " + (ok ? "ok" : "FAIL"));
-                    if (!ok) { cb.onError("Upload failed for: " + wl.name); return; }
+                    debug(ctx, I18n.s(R.string.ui_upload_put) + wl.name + " bytes=" + data.length + " -> " + (ok ? "ok" : "FAIL"));
+                    if (!ok) { cb.onError(I18n.s(R.string.ui_upload_failed_for) + wl.name); return; }
                     uploaded++;
                 }
 
@@ -108,8 +111,8 @@ public final class EpicCloudSaveManager {
                 cb.onDone("Uploaded " + uploaded + " file" + (uploaded == 1 ? "" : "s"));
 
             } catch (Exception e) {
-                Log.e(TAG, "uploadSaves failed", e);
-                cb.onError("Upload error: " + e.getMessage());
+                Log.e(TAG, I18n.s(R.string.ui_uploadsaves_failed), e);
+                cb.onError(I18n.s(R.string.ui_upload_error) + e.getMessage());
             }
         }, "epic-cloud-upload-" + appName).start();
     }
@@ -125,13 +128,13 @@ public final class EpicCloudSaveManager {
                 if (accountId == null || accountId.isEmpty()) { cb.onError("Epic account ID not found — please sign in again"); return; }
                 debug(ctx, "Epic download — appName=" + appName);
 
-                cb.onStatus("Fetching cloud file list…");
+                cb.onStatus(I18n.s(R.string.ui_fetching_cloud_file_list));
                 List<CloudFile> cloudFiles = listCloudFiles(ctx, accountId, appName, token);
                 debug(ctx, "download cloudFiles=" + cloudFiles.size() + " -> localFolder=" + localFolder);
 
                 if (cloudFiles.isEmpty()) {
-                    debug(ctx, "download — no cloud saves found");
-                    cb.onDone("No cloud saves found");
+                    debug(ctx, I18n.s(R.string.ui_download_no_cloud_saves_found));
+                    cb.onDone(I18n.s(R.string.ui_no_cloud_saves_found));
                     return;
                 }
 
@@ -148,7 +151,7 @@ public final class EpicCloudSaveManager {
                     File parent = dest.getParentFile();
                     if (parent != null && !parent.exists()) parent.mkdirs();
                     writeFile(dest, data);
-                    debug(ctx, "download GET " + cf.name + " bytes=" + data.length + " -> " + dest);
+                    debug(ctx, I18n.s(R.string.ui_download_get) + cf.name + " bytes=" + data.length + " -> " + dest);
                     downloaded++;
                 }
 
@@ -157,8 +160,8 @@ public final class EpicCloudSaveManager {
                 cb.onDone("Downloaded " + downloaded + " file" + (downloaded == 1 ? "" : "s"));
 
             } catch (Exception e) {
-                Log.e(TAG, "downloadSaves failed", e);
-                cb.onError("Download error: " + e.getMessage());
+                Log.e(TAG, I18n.s(R.string.ui_downloadsaves_failed), e);
+                cb.onError(I18n.s(R.string.ui_download_error) + e.getMessage());
             }
         }, "epic-cloud-download-" + appName).start();
     }
@@ -185,7 +188,7 @@ public final class EpicCloudSaveManager {
         int code = conn.getResponseCode();
         debug(ctx, "listCloudFiles HTTP=" + code);
         if (code == 404) {
-            debug(ctx, "listCloudFiles 404 — no saves on cloud yet");
+            debug(ctx, I18n.s(R.string.ui_listcloudfiles_404_no_saves_on_cloud_yet));
             conn.disconnect();
             return new ArrayList<>();
         }
@@ -193,7 +196,7 @@ public final class EpicCloudSaveManager {
             String errBody = "";
             try { errBody = readStream(conn.getErrorStream()); } catch (Exception ignored) {}
             conn.disconnect();
-            debug(ctx, "listCloudFiles error HTTP " + code);
+            debug(ctx, I18n.s(R.string.ui_listcloudfiles_error_http) + code);
             throw new Exception("HTTP " + code + " listing saves");
         }
         String body = readStream(conn.getInputStream());
@@ -286,7 +289,7 @@ public final class EpicCloudSaveManager {
             conn.disconnect();
             return code >= 200 && code < 300;
         } catch (Exception e) {
-            Log.e(TAG, "putToPresignedUrl failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_puttopresignedurl_failed) + e.getClass().getSimpleName());
             return false;
         }
     }
@@ -303,7 +306,7 @@ public final class EpicCloudSaveManager {
             conn.disconnect();
             return data;
         } catch (Exception e) {
-            Log.e(TAG, "getFromPresignedUrl failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_getfrompresignedurl_failed) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -424,7 +427,7 @@ public final class EpicCloudSaveManager {
             while ((n = fis.read(buf)) != -1) bos.write(buf, 0, n);
             return bos.toByteArray();
         } catch (Exception e) {
-            Log.e(TAG, "readFile failed: " + f, e);
+            Log.e(TAG, I18n.s(R.string.ui_readfile_failed) + f, e);
             return null;
         }
     }

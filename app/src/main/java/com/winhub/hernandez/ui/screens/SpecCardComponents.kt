@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -70,9 +73,9 @@ internal fun rendererLabelOf(renderer: String, wayland: Boolean): String =
 // Map a frame-gen engine id (bionic/lsfg/lsfg-native/off) to a display label,
 // or "" if off/unknown.
 internal fun frameGenLabelOf(engine: String): String = when (engine) {
-    "bionic" -> "Win-FG Native"
+    "bionic" -> I18n.s(R.string.ui_win_fg_native)
     "lsfg" -> "LSFG-VK"
-    "lsfg-native" -> "LSFG Native"
+    "lsfg-native" -> I18n.s(R.string.ui_lsfg_native)
     else -> ""
 }
 

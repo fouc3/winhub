@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -158,7 +161,7 @@ public final class GogDownloadManager {
            .append(" title=").append(game.title).append("\n");
         try {
             if (cancelled.get()) return;
-            cb.onProgress("Checking token…", 0);
+            cb.onProgress(I18n.s(R.string.ui_checking_token), 0);
 
             SharedPreferences prefs = ctx.getSharedPreferences("bh_gog_prefs", 0);
             String token = prefs.getString("access_token", null);
@@ -168,7 +171,7 @@ public final class GogDownloadManager {
             int expiresIn  = prefs.getInt("bh_gog_expires_in", 3600);
             int nowSec     = (int) (System.currentTimeMillis() / 1000L);
             if (loginTime == 0 || nowSec >= loginTime + expiresIn) {
-                cb.onProgress("Refreshing token…", 0);
+                cb.onProgress(I18n.s(R.string.ui_refreshing_token), 0);
                 String newToken = GogTokenRefresh.refresh(ctx);
                 if (newToken == null) { cb.onError("Token expired — please sign in again"); return; }
                 token = newToken;
@@ -176,7 +179,7 @@ public final class GogDownloadManager {
             dbg.append("token OK\n");
 
             if (cancelled.get()) return;
-            cb.onProgress("Fetching builds…", 2);
+            cb.onProgress(I18n.s(R.string.ui_fetching_builds), 2);
 
             // Try Gen 2 — builds list is public, no auth needed; fall back to authed if null
             String buildsUrl = "https://content-system.gog.com/products/" + game.gameId
@@ -201,7 +204,7 @@ public final class GogDownloadManager {
             }
 
             if (cancelled.get()) return;
-            cb.onProgress("Gen 2 unavailable, trying Gen 1…", 10);
+            cb.onProgress(I18n.s(R.string.ui_gen_2_unavailable_trying_gen_1), 10);
 
             // Fallback Gen 1
             String builds1Url = "https://content-system.gog.com/products/" + game.gameId
@@ -212,7 +215,7 @@ public final class GogDownloadManager {
                     : builds1Json.substring(0, Math.min(300, builds1Json.length()))).append("\n");
             if (builds1Json == null) {
                 writeDebug(ctx, dbg);
-                cb.onError("No builds available for this game"); return;
+                cb.onError(I18n.s(R.string.ui_no_builds_available_for_this_game)); return;
             }
             String err1 = runGen1(ctx, game, token, builds1Json, cb, dbg, cancelled, installDirRef);
             if (err1 != null) {
@@ -220,15 +223,15 @@ public final class GogDownloadManager {
 
                 // Both gen1 and gen2 empty → old installer system, fall back to direct download
                 if ("NO_CS_BUILDS".equals(err1)) {
-                    cb.onProgress("No Galaxy builds — trying installer download…", 12);
+                    cb.onProgress(I18n.s(R.string.ui_no_galaxy_builds_trying_installer_download), 12);
                     String installerErr = runInstaller(ctx, game, token, cb, dbg, cancelled, installDirRef);
                     if (installerErr == null) { writeDebug(ctx, dbg); return; }
                     dbg.append("installer_failed=").append(installerErr).append("\n");
                     writeDebug(ctx, dbg);
-                    cb.onError("No downloadable builds for this game");
+                    cb.onError(I18n.s(R.string.ui_no_downloadable_builds_for_this_game));
                 } else {
                     writeDebug(ctx, dbg);
-                    cb.onError("Download failed: " + err1);
+                    cb.onError(I18n.s(R.string.ui_download_failed_3) + err1);
                 }
             } else {
                 writeDebug(ctx, dbg);
@@ -236,7 +239,7 @@ public final class GogDownloadManager {
         } catch (Exception e) {
             dbg.append("EXCEPTION=").append(e).append("\n");
             writeDebug(ctx, dbg);
-            cb.onError("Download error: " + e.getMessage());
+            cb.onError(I18n.s(R.string.ui_download_error) + e.getMessage());
         }
     }
 
@@ -246,9 +249,9 @@ public final class GogDownloadManager {
             if (dir == null) dir = ctx.getFilesDir();
             java.io.File f = new java.io.File(dir, "bh_gog_debug.txt");
             writeFile(f, dbg.toString().getBytes("UTF-8"));
-            Log.i(TAG, "Debug written to: " + f.getAbsolutePath());
+            Log.i(TAG, I18n.s(R.string.ui_debug_written_to) + f.getAbsolutePath());
         } catch (Exception e) {
-            Log.e(TAG, "writeDebug failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_writedebug_failed), e);
         }
     }
 
@@ -282,7 +285,7 @@ public final class GogDownloadManager {
                                    AtomicBoolean cancelled, AtomicReference<File> installDirRef) {
         try {
             dbg.append("\n--- Gen2 ---\n");
-            cb.onProgress("Fetching manifest…", 5);
+            cb.onProgress(I18n.s(R.string.ui_fetching_manifest_2), 5);
             // Shared build-manifest head (token → builds → windows build → meta → decompress → JSON),
             // reused by installDlc() so the fetch/decompress logic lives in one place.
             Gen2Manifest gm = resolveGen2Manifest(buildsJson, token, dbg);
@@ -333,7 +336,7 @@ public final class GogDownloadManager {
             dbg.append("baseProductId=").append(baseProductId).append("\n");
 
             // Collect DepotFiles from each language-compatible BASE depot
-            cb.onProgress("Reading depot manifests…", 10);
+            cb.onProgress(I18n.s(R.string.ui_reading_depot_manifests), 10);
             List<DepotFile> files = new ArrayList<>();
             // The same inflated depot manifests, kept for the Rust engine (it parses them with the
             // same rules as parseDepotManifest — see docs/RUST_GOG_PARITY.md §3).
@@ -391,7 +394,7 @@ public final class GogDownloadManager {
             dbg.append("total files=").append(files.size()).append("\n");
 
             // Fetch CDN base URL via secure_link (base product — path-scoped to baseProductId)
-            cb.onProgress("Fetching CDN link…", 15);
+            cb.onProgress(I18n.s(R.string.ui_fetching_cdn_link), 15);
             String secureLinkUrl = "https://content-system.gog.com/products/" + baseProductId
                     + "/secure_link?_version=2&generation=2&path=/";
             String secureLinkJson = httpGet(secureLinkUrl, token);
@@ -420,7 +423,7 @@ public final class GogDownloadManager {
                 dbg.append("disk guard: planned=").append(plannedBytes)
                    .append(" usable=").append(usable).append("\n");
                 if (usable > 0 && plannedBytes > usable) {
-                    cb.onError("Not enough free space: need " + formatBytes(plannedBytes)
+                    cb.onError(I18n.s(R.string.ui_not_enough_free_space_need) + formatBytes(plannedBytes)
                             + ", only " + formatBytes(usable) + " free");
                     return "DISK_GUARD: need=" + plannedBytes + " usable=" + usable;
                 }
@@ -535,7 +538,7 @@ public final class GogDownloadManager {
             // Delete chunks temp dir
             deleteDir(chunksDir);
 
-            cb.onProgress("Install complete!", 100);
+            cb.onProgress(I18n.s(R.string.ui_install_complete_2), 100);
 
             // Save install dir + build ID + client ID before exe resolution
             SharedPreferences.Editor ed0 = ctx.getSharedPreferences("bh_gog_prefs", 0).edit();
@@ -632,7 +635,7 @@ public final class GogDownloadManager {
             if (manifestStr == null) { dbg.append("resolveGen2Manifest: decompress failed\n"); return null; }
             return new Gen2Manifest(new JSONObject(manifestStr), buildId, manifestUrl);
         } catch (Exception e) {
-            dbg.append("resolveGen2Manifest exception: ").append(e).append("\n");
+            dbg.append(I18n.s(R.string.ui_resolvegen2manifest_exception)).append(e).append("\n");
             return null;
         }
     }
@@ -664,21 +667,21 @@ public final class GogDownloadManager {
             // Base must be installed — DLC files interleave into the base install dir.
             String dirName = prefs.getString("gog_dir_" + baseId, null);
             if (dirName == null) {
-                GogCloudSaveManager.debug(ctx, dlgTag + " ABORT base not installed");
-                cb.onError("Install the game first"); return;
+                GogCloudSaveManager.debug(ctx, dlgTag + I18n.s(R.string.ui_abort_base_not_installed));
+                cb.onError(I18n.s(R.string.ui_install_the_game_first)); return;
             }
 
             boolean already = isDlcInstalled(ctx, baseId, dlcProductId);
-            if (already) GogCloudSaveManager.debug(ctx, dlgTag + " already marked installed — verify-and-skip run");
+            if (already) GogCloudSaveManager.debug(ctx, dlgTag + I18n.s(R.string.ui_already_marked_installed_verify_and_skip_run));
 
-            cb.onProgress("Checking token…", 0);
+            cb.onProgress(I18n.s(R.string.ui_checking_token), 0);
             String token = prefs.getString("access_token", null);
             if (token == null) { cb.onError("Not logged in to GOG"); return; }
             int loginTime = prefs.getInt("bh_gog_login_time", 0);
             int expiresIn = prefs.getInt("bh_gog_expires_in", 3600);
             int nowSec    = (int) (System.currentTimeMillis() / 1000L);
             if (loginTime == 0 || nowSec >= loginTime + expiresIn) {
-                cb.onProgress("Refreshing token…", 0);
+                cb.onProgress(I18n.s(R.string.ui_refreshing_token), 0);
                 String newToken = GogTokenRefresh.refresh(ctx);
                 if (newToken == null) { cb.onError("Token expired — please sign in again"); return; }
                 token = newToken;
@@ -687,26 +690,26 @@ public final class GogDownloadManager {
             if (cancelled.get()) return;
 
             // Re-fetch the base build manifest (DLC lives in the SAME manifest, tagged by productId).
-            cb.onProgress("Fetching manifest…", 3);
+            cb.onProgress(I18n.s(R.string.ui_fetching_manifest_2), 3);
             String buildsUrl = "https://content-system.gog.com/products/" + baseId
                     + "/os/windows/builds?generation=2";
             String buildsJson = httpGet(buildsUrl, null);
             if (buildsJson == null) buildsJson = httpGet(buildsUrl, token);
             if (buildsJson == null) {
                 GogCloudSaveManager.debug(ctx, dlgTag + " builds fetch null");
-                cb.onError("DLC install failed: no builds"); return;
+                cb.onError(I18n.s(R.string.ui_dlc_install_failed_no_builds)); return;
             }
             Gen2Manifest gm = resolveGen2Manifest(buildsJson, token, dbg);
             if (gm == null) {
                 GogCloudSaveManager.debug(ctx, dlgTag + " manifest resolve failed: " + dbg);
-                cb.onError("DLC install failed: manifest unavailable"); return;
+                cb.onError(I18n.s(R.string.ui_dlc_install_failed_manifest_unavailable)); return;
             }
             JSONObject manifest = gm.manifest;
             JSONArray depots = manifest.optJSONArray("depots");
             if (depots == null) { cb.onError("DLC install failed: no depots"); return; }
 
             // Collect the DLC's own depots (productId == dlcProductId) + language compat.
-            cb.onProgress("Reading DLC manifests…", 8);
+            cb.onProgress(I18n.s(R.string.ui_reading_dlc_manifests), 8);
             List<DepotFile> files = new ArrayList<>();
             List<String> depotJsons = new ArrayList<>();   // for the Rust engine (same strings)
             int matched = 0;
@@ -733,15 +736,15 @@ public final class GogDownloadManager {
             // download. Mark installed and finish cleanly (not an error).
             if (files.isEmpty()) {
                 markDlcInstalled(ctx, baseId, dlcProductId, new ArrayList<>());
-                GogCloudSaveManager.debug(ctx, dlgTag + " no own depots — content included in base, marked installed");
-                cb.onProgress("Already included in the base game", 100);
+                GogCloudSaveManager.debug(ctx, dlgTag + I18n.s(R.string.ui_no_own_depots_content_included_in_base_marked_installed));
+                cb.onProgress(I18n.s(R.string.ui_already_included_in_the_base_game), 100);
                 cb.onComplete("");
                 return;
             }
 
             // The DLC's OWN secure link (path-scoped to dlcProductId). 403/parse-fail ⇒ not owned
             // (server-side entitlement gate) or the licence hasn't propagated yet.
-            cb.onProgress("Fetching CDN link…", 12);
+            cb.onProgress(I18n.s(R.string.ui_fetching_cdn_link), 12);
             String secureLinkUrl = "https://content-system.gog.com/products/" + dlcProductId
                     + "/secure_link?_version=2&generation=2&path=/";
             String secureLinkJson = httpGet(secureLinkUrl, token);
@@ -750,7 +753,7 @@ public final class GogDownloadManager {
                 GogCloudSaveManager.debug(ctx, dlgTag + " secure_link FAILED (403/entitlement) resp="
                         + (secureLinkJson == null ? "NULL"
                            : secureLinkJson.substring(0, Math.min(160, secureLinkJson.length()))));
-                cb.onError("You may not own this DLC (or the licence hasn't propagated yet)");
+                cb.onError(I18n.s(R.string.ui_you_may_not_own_this_dlc_or_the_licence_hasn_t_propagate));
                 return;
             }
             GogCloudSaveManager.debug(ctx, dlgTag + " secure_link OK");
@@ -766,7 +769,7 @@ public final class GogDownloadManager {
                 long usable = installPath.getUsableSpace();
                 if (usable > 0 && plannedBytes > usable) {
                     GogCloudSaveManager.debug(ctx, dlgTag + " disk guard need=" + plannedBytes + " usable=" + usable);
-                    cb.onError("Not enough free space: need " + formatBytes(plannedBytes)
+                    cb.onError(I18n.s(R.string.ui_not_enough_free_space_need) + formatBytes(plannedBytes)
                             + ", only " + formatBytes(usable) + " free");
                     return;
                 }
@@ -837,7 +840,7 @@ public final class GogDownloadManager {
             } catch (Exception e) {
                 pool.shutdownNow();
                 GogCloudSaveManager.debug(ctx, dlgTag + " pool error: " + e);
-                cb.onError("DLC install failed: " + e.getMessage());
+                cb.onError(I18n.s(R.string.ui_dlc_install_failed_2) + e.getMessage());
                 return;
             }
             } // end Java engine
@@ -845,19 +848,19 @@ public final class GogDownloadManager {
 
             if (cancelled.get()) { GogCloudSaveManager.debug(ctx, dlgTag + " cancelled"); return; }
             if (anyFailed.get()) {
-                GogCloudSaveManager.debug(ctx, dlgTag + " FAILED — one or more chunks failed");
-                cb.onError("DLC install failed");
+                GogCloudSaveManager.debug(ctx, dlgTag + I18n.s(R.string.ui_failed_one_or_more_chunks_failed));
+                cb.onError(I18n.s(R.string.ui_dlc_install_failed));
                 return;
             }
 
             // Full success only: write the installed marker + the written-file list (for uninstall).
             markDlcInstalled(ctx, baseId, dlcProductId, new ArrayList<>(written));
             GogCloudSaveManager.debug(ctx, dlgTag + " DONE files=" + written.size() + " marker written");
-            cb.onProgress("DLC installed!", 100);
+            cb.onProgress(I18n.s(R.string.ui_dlc_installed), 100);
             cb.onComplete("");
         } catch (Exception e) {
             GogCloudSaveManager.debug(ctx, dlgTag + " EXCEPTION " + e);
-            cb.onError("DLC install error: " + e.getMessage());
+            cb.onError(I18n.s(R.string.ui_dlc_install_error) + e.getMessage());
         }
     }
 
@@ -902,10 +905,10 @@ public final class GogDownloadManager {
                 }
             }
             if (manifestUrl == null || manifestUrl.isEmpty())
-                return "no windows manifest URL";
+                return I18n.s(R.string.ui_no_windows_manifest_url);
             dbg.append("manifestUrl=").append(manifestUrl.substring(0, Math.min(80, manifestUrl.length()))).append("\n");
 
-            cb.onProgress("Fetching Gen 1 manifest…", 12);
+            cb.onProgress(I18n.s(R.string.ui_fetching_gen_1_manifest), 12);
             byte[] raw = fetchBytes(manifestUrl, token);
             if (raw == null) return "manifest fetch null";
             String manifestStr = decompressBytes(raw);
@@ -1012,7 +1015,7 @@ public final class GogDownloadManager {
                         }
                     }
                     fileLog1.add("FAIL file=" + gf.path);
-                    Log.e(TAG, "Gen1 file failed after 3 attempts: " + gf.path);
+                    Log.e(TAG, I18n.s(R.string.ui_gen1_file_failed_after_3_attempts) + gf.path);
                     anyFailedG1.set(true);
                     return null;
                 }));
@@ -1030,7 +1033,7 @@ public final class GogDownloadManager {
             if (anyFailedG1.get()) return "one or more gen1 files failed to download";
             dbg.append("gen1 download complete: ").append(doneG1.get()).append(" files OK\n");
 
-            cb.onProgress("Install complete!", 100);
+            cb.onProgress(I18n.s(R.string.ui_install_complete_2), 100);
 
             SharedPreferences.Editor ed0 = ctx.getSharedPreferences("bh_gog_prefs", 0).edit();
             ed0.putString("gog_dir_" + game.gameId, installDir);
@@ -1121,7 +1124,7 @@ public final class GogDownloadManager {
             if (cancelled.get()) return "cancelled";
             File outFile = new File(installDir, fileName);
 
-            cb.onProgress("Downloading installer: " + fileName, 15);
+            cb.onProgress(I18n.s(R.string.ui_downloading_installer) + fileName, 15);
             downloadWithProgress(downloadUrl, outFile, cb, cancelled);
 
             // Save prefs
@@ -1130,7 +1133,7 @@ public final class GogDownloadManager {
             ed.putString("gog_exe_" + game.gameId, outFile.getAbsolutePath());
             ed.apply();
 
-            cb.onProgress("Installer downloaded!", 100);
+            cb.onProgress(I18n.s(R.string.ui_installer_downloaded), 100);
             cb.onComplete(outFile.getAbsolutePath());
             return null; // success
         } catch (Exception e) {
@@ -1234,7 +1237,7 @@ public final class GogDownloadManager {
             }
             conn.disconnect();
         } catch (Exception e) {
-            Log.e(TAG, "downloadWithProgress failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_downloadwithprogress_failed) + e.getClass().getSimpleName());
         }
     }
 
@@ -1279,7 +1282,7 @@ public final class GogDownloadManager {
                 if (!df.chunks.isEmpty()) out.add(df);
             }
         } catch (Exception e) {
-            Log.w(TAG, "parseDepotManifest error", e);
+            Log.w(TAG, I18n.s(R.string.ui_parsedepotmanifest_error), e);
         }
     }
 
@@ -1307,7 +1310,7 @@ public final class GogDownloadManager {
             dbg.append("gog deps captured: ").append(deps.toString())
                .append(" scriptInterpreter=").append(scriptInterpreter).append("\n");
         } catch (Exception e) {
-            dbg.append("persistDependencies failed: ").append(e).append("\n");
+            dbg.append(I18n.s(R.string.ui_persistdependencies_failed)).append(e).append("\n");
         }
     }
 
@@ -1412,7 +1415,7 @@ public final class GogDownloadManager {
                         new AtomicLong(System.currentTimeMillis()), new AtomicLong(0), new AtomicLong(0),
                         null, false, null, log);
                 if (cancelled.get() || anyFailed.get()) {
-                    log.add("dep chunk assembly failed (rust engine)");
+                    log.add(I18n.s(R.string.ui_dep_chunk_assembly_failed_rust_engine));
                     return null;
                 }
                 File rustExeOut = null;
@@ -1436,7 +1439,7 @@ public final class GogDownloadManager {
             }
             return exeOut;
         } catch (Exception e) {
-            log.add("assembleDependencyInstaller exception: " + e);
+            log.add(I18n.s(R.string.ui_assembledependencyinstaller_exception) + e);
             return null;
         }
     }
@@ -1487,7 +1490,7 @@ public final class GogDownloadManager {
             conn.disconnect();
             return true;
         } catch (Exception e) {
-            Log.w(TAG, "downloadRange failed: " + out.getName() + " (" + e.getClass().getSimpleName() + ")");
+            Log.w(TAG, I18n.s(R.string.ui_downloadrange_failed) + out.getName() + " (" + e.getClass().getSimpleName() + ")");
             return false;
         }
     }
@@ -1684,7 +1687,7 @@ public final class GogDownloadManager {
             String current = cdnBaseRef.get();
             if (staleBase == null || !staleBase.equals(current)) return true; // already refreshed
             if (refreshCount.get() >= cap) {
-                log.add("CDN refresh cap reached (" + cap + ")");
+                log.add(I18n.s(R.string.ui_cdn_refresh_cap_reached) + cap + ")");
                 return false;
             }
             String json = httpGet(secureLinkUrl, token);
@@ -1695,7 +1698,7 @@ public final class GogDownloadManager {
             }
             cdnBaseRef.set(neu);
             int n = refreshCount.incrementAndGet();
-            log.add("secure-link refreshed #" + n);
+            log.add(I18n.s(R.string.ui_secure_link_refreshed) + n);
             return true;
         }
     }
@@ -1826,7 +1829,7 @@ public final class GogDownloadManager {
         try {
             caPath = com.winhub.hernandez.store.blsteam.CaBundleExtractor.INSTANCE.ensureBundle(ctx);
         } catch (Throwable t) {
-            log.add("rust engine: CA bundle unavailable: " + t);
+            log.add(I18n.s(R.string.ui_rust_engine_ca_bundle_unavailable) + t);
             anyFailed.set(true);
             return;
         }
@@ -1841,10 +1844,10 @@ public final class GogDownloadManager {
             rustWorkers = Math.max(1, Math.min(128, cfg.getMaxNetworkWindow()));
             rustProcess = Math.max(rustProcess, Math.max(1, Math.min(32, cfg.getMaxDecompress())));
         } catch (Throwable t) {
-            log.add("rust engine: speed config unavailable (" + t + "), keeping Java counts");
+            log.add(I18n.s(R.string.ui_rust_engine_speed_config_unavailable) + t + I18n.s(R.string.ui_keeping_java_counts));
         }
         log.add("rust engine concurrency: workers=" + rustWorkers + " process_workers=" + rustProcess
-                + " (java loop would use " + maxWorkers + ")");
+                + I18n.s(R.string.ui_java_loop_would_use) + maxWorkers + ")");
         final String[] manifests = depotJsons.toArray(new String[0]);
         // Files completed by earlier runs of THIS download (refresh re-runs skip them silently).
         final java.util.Set<String> donePaths = java.util.concurrent.ConcurrentHashMap.newKeySet();
@@ -1902,7 +1905,7 @@ public final class GogDownloadManager {
                     donePaths.toArray(new String[0]), caPath,
                     rustWorkers, rustProcess, sortLargestFirst, label + " run=" + run, listener);
             if (handle == 0L) {
-                log.add("rust engine: start failed (see logcat BL_GOG_DL)");
+                log.add(I18n.s(R.string.ui_rust_engine_start_failed_see_logcat_bl_gog_dl));
                 anyFailed.set(true);
                 return;
             }
@@ -1932,11 +1935,11 @@ public final class GogDownloadManager {
             String err = errRef.get();
             if (linkExpiryRef.get() && tryRefreshCdn(cdnBaseRef, base, secureLinkUrl, token,
                     cdnRefreshCount, maxCdnRefresh, log)) {
-                log.add("rust engine: secure-link expiry (" + err
-                        + ") — refreshed, re-running for the remaining files");
+                log.add(I18n.s(R.string.ui_rust_engine_secure_link_expiry) + err
+                        + I18n.s(R.string.ui_refreshed_re_running_for_the_remaining_files));
                 continue;
             }
-            log.add("rust engine FAILED: " + err);
+            log.add(I18n.s(R.string.ui_rust_engine_failed) + err);
             anyFailed.set(true);
             return;
         }
@@ -2234,7 +2237,7 @@ public final class GogDownloadManager {
                 copyDir(src, dest);
                 return dest.getAbsolutePath();
             } catch (Exception e) {
-                Log.e(TAG, "copyToDownloads failed", e);
+                Log.e(TAG, I18n.s(R.string.ui_copytodownloads_failed), e);
                 return null;
             }
         }
@@ -2310,13 +2313,13 @@ public final class GogDownloadManager {
         if (cached != null && !cached.isEmpty()
                 && cachedSecret != null && !cachedSecret.isEmpty()) return cached;
 
-        Log.d(TAG, "clientId or clientSecret not cached for " + gameId + ", fetching from builds API");
+        Log.d(TAG, I18n.s(R.string.ui_clientid_or_clientsecret_not_cached_for) + gameId + I18n.s(R.string.ui_fetching_from_builds_api));
         try {
             String buildsUrl = "https://content-system.gog.com/products/" + gameId
                     + "/os/windows/builds?generation=2";
             String buildsJson = httpGet(buildsUrl, token);
             if (buildsJson == null) {
-                Log.w(TAG, "builds API returned null for " + gameId);
+                Log.w(TAG, I18n.s(R.string.ui_builds_api_returned_null_for) + gameId);
                 return gameId;
             }
             JSONObject builds = new JSONObject(buildsJson);
@@ -2351,7 +2354,7 @@ public final class GogDownloadManager {
                 return clientId;
             }
         } catch (Exception e) {
-            Log.w(TAG, "getOrFetchClientId failed for " + gameId + ": " + e.getClass().getSimpleName());
+            Log.w(TAG, I18n.s(R.string.ui_getorfetchclientid_failed_for) + gameId + ": " + e.getClass().getSimpleName());
         }
         return gameId; // last resort fallback
     }

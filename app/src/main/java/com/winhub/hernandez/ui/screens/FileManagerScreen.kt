@@ -1571,7 +1571,7 @@ fun FileManagerScreen(
                 enabled = currentDir != currentRoot,
                 modifier = Modifier.deckSelfFocusStroke(RoundedCornerShape(12.dp)),
             ) {
-                Icon(Icons.Filled.ArrowBack, "Parent folder", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.ArrowBack, I18n.s(R.string.ui_parent_folder), tint = MaterialTheme.colorScheme.primary)
             }
 
             // describeLocation labels C: by matching against the container list, which is empty in the
@@ -1751,7 +1751,7 @@ fun FileManagerScreen(
                             }
                         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
                         DropdownMenuItem(
-                            text = { Text(if (compactRows) I18n.s(R.string.ui_comfortable_rows) else "Compact rows") },
+                            text = { Text(if (compactRows) I18n.s(R.string.ui_comfortable_rows) else I18n.s(R.string.ui_compact_rows)) },
                             onClick = {
                                 compactRows = !compactRows
                                 browsePrefs.edit().putBoolean("fmCompactRows", compactRows).apply()
@@ -1759,7 +1759,7 @@ fun FileManagerScreen(
                             },
                         )
                         DropdownMenuItem(
-                            text = { Text(if (showHidden) I18n.s(R.string.ui_hide_hidden_files) else "Show hidden files") },
+                            text = { Text(if (showHidden) I18n.s(R.string.ui_hide_hidden_files) else I18n.s(R.string.ui_show_hidden_files)) },
                             onClick = {
                                 showHidden = !showHidden
                                 browsePrefs.edit().putBoolean("fmShowHidden", showHidden).apply()
@@ -2364,7 +2364,7 @@ private fun FileItemRow(
     onToggleFavorite: () -> Unit = {},
     onProperties: () -> Unit = {},
 ) {
-    val dateFormat = remember { SimpleDateFormat(I18n.s(R.string.ui_yyyy_mm_dd_hh_mm), Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
     val isDir = file.isDirectory
     val isExe = !isDir && file.name.lowercase().let { it.endsWith(".exe") || it.endsWith(".bat") || it.endsWith(".msi") || it.endsWith(".sh") }
     // Image files show a real thumbnail instead of the generic file icon (handy when picking a
@@ -2891,7 +2891,7 @@ private fun FilePropertiesDialog(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val dateFormat = remember { SimpleDateFormat(I18n.s(R.string.ui_yyyy_mm_dd_hh_mm), Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
     var attrs by remember(file.absolutePath) { mutableStateOf<FileAttrState?>(null) }
     // Guards against a second toggle landing while the first is still being applied off-thread.
     var busy by remember(file.absolutePath) { mutableStateOf(false) }

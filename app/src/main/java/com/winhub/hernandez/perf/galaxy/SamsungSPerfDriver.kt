@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf.galaxy
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import java.lang.reflect.Constructor
@@ -59,13 +62,13 @@ class SamsungSPerfDriver(context: Context) : GalaxyPerfDriver {
             val initialized = sperfClass.getMethod("initialize", Context::class.java)
                 .invoke(null, appContext) as? Boolean ?: false
             if (!initialized) {
-                Log.w(TAG, "Galaxy Performance SDK present but initialize() returned false")
+                Log.w(TAG, I18n.s(R.string.ui_galaxy_performance_sdk_present_but_initialize_returned_f))
                 return@runCatching false
             }
 
             val pm = pmClass.getMethod("getInstance").invoke(null)
             if (pm == null) {
-                Log.w(TAG, "Galaxy Performance SDK returned a null PerformanceManager")
+                Log.w(TAG, I18n.s(R.string.ui_galaxy_performance_sdk_returned_a_null_performancemanage))
                 return@runCatching false
             }
 
@@ -78,7 +81,7 @@ class SamsungSPerfDriver(context: Context) : GalaxyPerfDriver {
             startMethod = pmClass.getMethod("start", cpClass)
             stopMethod = pmClass.getMethod("stop")
 
-            Log.i(TAG, "Galaxy Performance SDK initialized")
+            Log.i(TAG, I18n.s(R.string.ui_galaxy_performance_sdk_initialized))
             true
         }.getOrElse { e ->
             // ClassNotFoundException here is the normal "jar not bundled" path.

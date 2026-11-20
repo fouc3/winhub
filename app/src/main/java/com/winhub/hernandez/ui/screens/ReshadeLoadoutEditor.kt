@@ -233,7 +233,7 @@ private fun ReshadeModeRow(mode: String, onChange: (String) -> Unit) {
         }
         Text(
             if (mode == ReshadeLoadout.MODE_SOLO) "One effect active at a time (A/B compare)."
-            else "Layer any subset of effects.",
+            else I18n.s(R.string.ui_layer_any_subset_of_effects),
             style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
             modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
         )

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import java.io.File;
@@ -153,7 +156,7 @@ public final class WinebusRumblePatcher {
             return;
         }
         if (winebus == null || !winebus.exists() || winebus.length() <= 0) {
-            Log.w(TAG, "rumble: winebus missing, skipping: " + winebus);
+            Log.w(TAG, I18n.s(R.string.ui_rumble_winebus_missing_skipping) + winebus);
             return;
         }
 
@@ -161,14 +164,14 @@ public final class WinebusRumblePatcher {
         try {
             data = readAll(winebus);
         } catch (IOException e) {
-            Log.w(TAG, "rumble: read failed, skipping: " + e);
+            Log.w(TAG, I18n.s(R.string.ui_rumble_read_failed_skipping) + e);
             return;
         }
 
         // Idempotency: our patch leaves exactly EXPECTED patched windows.
         int patchedCount = count(data, plan.patchedWindow);
         if (patchedCount == EXPECTED) {
-            Log.i(TAG, "rumble: already patched (" + patchedCount + " sites), no-op");
+            Log.i(TAG, I18n.s(R.string.ui_rumble_already_patched) + patchedCount + " sites), no-op");
             return;
         }
 
@@ -178,7 +181,7 @@ public final class WinebusRumblePatcher {
                 replaceAll(data, sig.original, sig.patched);
                 if (writeBack(winebus, data)) {
                     Log.i(TAG, "rumble: forced never-expire duration on " + EXPECTED
-                            + " site(s) via exact pattern [" + sig.name + "] in " + archDir);
+                            + I18n.s(R.string.ui_site_s_via_exact_pattern) + sig.name + "] in " + archDir);
                 }
                 return;
             }
@@ -199,7 +202,7 @@ public final class WinebusRumblePatcher {
         for (int off : sites) System.arraycopy(plan.patchedWindow, 0, data, off, plan.patchedWindow.length);
         if (writeBack(winebus, data)) {
             Log.i(TAG, "rumble: forced never-expire duration on " + EXPECTED
-                    + " site(s) via structural fallback in " + archDir + " winebus");
+                    + I18n.s(R.string.ui_site_s_via_structural_fallback_in) + archDir + " winebus");
         }
     }
 
@@ -243,7 +246,7 @@ public final class WinebusRumblePatcher {
             writeAll(f, data);
             return true;
         } catch (IOException e) {
-            Log.w(TAG, "rumble: write failed, winebus left unchanged: " + e);
+            Log.w(TAG, I18n.s(R.string.ui_rumble_write_failed_winebus_left_unchanged) + e);
             return false;
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.graphics.Bitmap;
 
 import com.winhub.hernandez.core.Callback;
@@ -33,7 +36,7 @@ public class Drawable extends XResource {
         this.visual = visual;
         this.data = DrawableBufferPool.obtain(width * height * 4);
         if (this.data == null) {
-            throw new IllegalStateException("Drawable.data initialized as null!");
+            throw new IllegalStateException(I18n.s(R.string.ui_drawable_data_initialized_as_null));
         }
     }
 
@@ -98,7 +101,7 @@ public class Drawable extends XResource {
 
     public void setData(ByteBuffer data) {
         if (data == null) {
-            throw new IllegalArgumentException("Attempting to set Drawable.data to null!");
+            throw new IllegalArgumentException(I18n.s(R.string.ui_attempting_to_set_drawable_data_to_null));
         }
         this.data = data;
     }

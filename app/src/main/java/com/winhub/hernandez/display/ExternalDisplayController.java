@@ -1,5 +1,8 @@
 package com.winhub.hernandez.display;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.Presentation;
 import android.content.Context;
@@ -312,7 +315,7 @@ public class ExternalDisplayController {
         try {
             p.show();
         } catch (WindowManager.InvalidDisplayException e) {
-            Log.w(TAG, "presentation display went away before show()", e);
+            Log.w(TAG, I18n.s(R.string.ui_presentation_display_went_away_before_show), e);
             return;
         }
         presentation = p;

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.ContainerManager
@@ -119,9 +122,9 @@ object MoveGameStorage {
      */
     fun buildPlan(ctx: Context, appId: Int, isCancelled: () -> Boolean = { false }): Plan {
         val row = SteamDatabase.getInstance(ctx).getGame(appId)
-            ?: throw MoveException("This game isn't in the library database.")
+            ?: throw MoveException(I18n.s(R.string.ui_this_game_isn_t_in_the_library_database))
         val installDir = row.installDir.orEmpty()
-        if (!row.isInstalled || installDir.isBlank()) throw MoveException("This game isn't installed.")
+        if (!row.isInstalled || installDir.isBlank()) throw MoveException(I18n.s(R.string.ui_this_game_isn_t_installed))
 
         val source = File(installDir)
         if (!source.isDirectory) {
@@ -132,12 +135,12 @@ object MoveGameStorage {
         val to = when (from) {
             Place.INTERNAL -> {
                 val sd = SteamSdInstall.detect(ctx)
-                    ?: throw MoveException("No SD card is mounted, so there's nowhere to move this game.")
+                    ?: throw MoveException(I18n.s(R.string.ui_no_sd_card_is_mounted_so_there_s_nowhere_to_move_this_ga))
                 Target(Place.SD, sd.steamGamesBase, sd.label, sd.freeBytes)
             }
             Place.SD -> {
                 val base = internalBase(ctx)
-                Target(Place.INTERNAL, base, "Internal storage", CopyGameToDriveC.freeBytes(ctx))
+                Target(Place.INTERNAL, base, I18n.s(R.string.ui_internal_storage_2), CopyGameToDriveC.freeBytes(ctx))
             }
         }
 
@@ -160,7 +163,7 @@ object MoveGameStorage {
      */
     private fun shortcutsUnder(ctx: Context, source: File): List<Shortcut> {
         val all = runCatching { ContainerManager(ctx).loadShortcuts() }.getOrElse {
-            Log.w(TAG, "loadShortcuts failed", it); return emptyList()
+            Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), it); return emptyList()
         }
         return all.filter { sc ->
             val exe = runCatching { CopyGameToDriveC.parse(sc).exeAndroid }.getOrNull()
@@ -366,7 +369,7 @@ object MoveGameStorage {
 
     /** Gear-menu wording for the direction on offer — always the side the game ISN'T on. */
     fun menuLabel(from: Place): String = when (from) {
-        Place.INTERNAL -> "Move to SD card"
-        Place.SD -> "Move to internal storage"
+        Place.INTERNAL -> I18n.s(R.string.ui_move_to_sd_card)
+        Place.SD -> I18n.s(R.string.ui_move_to_internal_storage)
     }
 }

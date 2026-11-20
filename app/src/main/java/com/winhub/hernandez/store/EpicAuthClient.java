@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Base64;
 import android.util.Log;
 
@@ -89,7 +92,7 @@ public class EpicAuthClient {
             if (code < 200 || code >= 300) {
                 // Log only the status code, NOT the raw response body — it can carry error/
                 // correlation context we don't want in logcat.
-                Log.e(TAG, "Epic token HTTP " + code + " (error body suppressed)");
+                Log.e(TAG, I18n.s(R.string.ui_epic_token_http) + code + I18n.s(R.string.ui_error_body_suppressed));
                 return null;
             }
 
@@ -119,7 +122,7 @@ public class EpicAuthClient {
             return result.accessToken != null ? result : null;
 
         } catch (Exception e) {
-            Log.e(TAG, "Epic postToken failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_epic_posttoken_failed) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -135,7 +138,7 @@ public class EpicAuthClient {
             JSONObject json = new JSONObject(resp);
             return json.optString("code", null);
         } catch (Exception e) {
-            Log.e(TAG, "Epic getExchangeCode failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_epic_getexchangecode_failed), e);
             return null;
         }
     }
@@ -157,12 +160,12 @@ public class EpicAuthClient {
             conn.disconnect();
 
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "Epic GET HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + " (error body suppressed)");
+                Log.e(TAG, I18n.s(R.string.ui_epic_get_http) + code + " from " + StoreLog.redactUrl(urlStr) + I18n.s(R.string.ui_error_body_suppressed));
                 return null;
             }
             return resp;
         } catch (Exception e) {
-            Log.e(TAG, "Epic getRequest failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_epic_getrequest_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         } finally {
             if (conn != null) conn.disconnect();
@@ -183,12 +186,12 @@ public class EpicAuthClient {
 
             int code = conn.getResponseCode();
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "Epic getBytes HTTP " + code + " from " + StoreLog.redactUrl(urlStr));
+                Log.e(TAG, I18n.s(R.string.ui_epic_getbytes_http) + code + " from " + StoreLog.redactUrl(urlStr));
                 return null;
             }
             return conn.getInputStream().readAllBytes();
         } catch (Exception e) {
-            Log.e(TAG, "Epic getBytes failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_epic_getbytes_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         } finally {
             if (conn != null) conn.disconnect();

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import java.io.File;
@@ -361,7 +364,7 @@ public final class HermesWriter {
 
     private void noteResult(boolean ok) {
         if (!ok && !lastPublishFailed) {
-            Log.w(TAG, "slot " + slot + ": publish could not reach the backing; state kept, retrying");
+            Log.w(TAG, "slot " + slot + I18n.s(R.string.ui_publish_could_not_reach_the_backing_state_kept_retrying));
         }
         lastPublishFailed = !ok;
     }

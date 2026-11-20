@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.runtime.Composable
@@ -86,7 +89,7 @@ internal fun DeckGogInstall(game: GogGame, onBack: () -> Unit, onOpenStore: (() 
 
     val shownError = when {
         errorText != null -> errorText
-        notOwned -> "Not in your library yet."
+        notOwned -> I18n.s(R.string.ui_not_in_your_library_yet)
         else -> null
     }
 

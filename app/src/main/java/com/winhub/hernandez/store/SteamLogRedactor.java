@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -139,7 +142,7 @@ public final class SteamLogRedactor {
             return out;
         } catch (Throwable t) {
             // A scrub that throws must NEVER emit the raw line to a file destined for sharing.
-            return "[line withheld: SteamLite redaction failed]";
+            return I18n.s(R.string.ui_line_withheld_steamlite_redaction_failed);
         }
     }
 

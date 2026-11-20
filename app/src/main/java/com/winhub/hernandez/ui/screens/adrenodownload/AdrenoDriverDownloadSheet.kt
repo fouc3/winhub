@@ -632,7 +632,7 @@ private fun ManageSourcesDialog(
                         name.isEmpty() ->
                             Toast.makeText(context, "Enter a name", Toast.LENGTH_SHORT).show()
                         !isGithub && newUrl.isBlank() ->
-                            Toast.makeText(context, "Enter a JSON URL", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_enter_a_json_url), Toast.LENGTH_SHORT).show()
                         !isGithub -> {
                             mutate { store.addCustom(name, DriverFeed.Json(newUrl.trim())) }
                             newName = ""; newUrl = ""; newOwner = ""; newRepo = ""
@@ -640,7 +640,7 @@ private fun ManageSourcesDialog(
                         else -> {
                             val gh = DriverSourceStore.parseGithubRepo(newOwner, newRepo)
                             if (gh == null) {
-                                Toast.makeText(context, "Enter owner and repo", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18n.s(R.string.ui_enter_owner_and_repo), Toast.LENGTH_SHORT).show()
                             } else {
                                 mutate { store.addCustom(name, DriverFeed.GithubReleases(gh.first, gh.second)) }
                                 newName = ""; newUrl = ""; newOwner = ""; newRepo = ""

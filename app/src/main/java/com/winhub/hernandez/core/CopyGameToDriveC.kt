@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.StatFs
 import android.util.Log
@@ -90,7 +93,7 @@ object CopyGameToDriveC {
      */
     fun storageLabel(shortcut: Shortcut): String {
         val info = parse(shortcut)
-        if (info.onDriveC) return "Drive C: — app storage (native, fast)"
+        if (info.onDriveC) return I18n.s(R.string.ui_drive_c_app_storage_native_fast)
         val root = info.exeAndroid?.absolutePath?.let { WinePath.storageVolumeRootOf(it) }
         val where = when {
             root == null -> if (info.driveLetter.isEmpty()) "Unknown location" else "${info.driveLetter}: drive"
@@ -143,7 +146,7 @@ object CopyGameToDriveC {
     fun freeBytes(context: Context): Long = try {
         StatFs(context.filesDir.absolutePath).availableBytes
     } catch (e: Exception) {
-        Log.w(TAG, "StatFs on filesDir failed", e)
+        Log.w(TAG, I18n.s(R.string.ui_statfs_on_filesdir_failed), e)
         Long.MAX_VALUE
     }
 
@@ -167,7 +170,7 @@ object CopyGameToDriveC {
     }
 
     /** Thrown by [copyTree] when [copyTree]'s isCancelled callback goes true. */
-    class CancelledException : IOException("Copy cancelled")
+    class CancelledException : IOException(I18n.s(R.string.ui_copy_cancelled))
 
     /** Live copy progress: bytes done / total, and the file currently being written. */
     data class Progress(val copiedBytes: Long, val totalBytes: Long, val currentFile: String)

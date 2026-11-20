@@ -1,5 +1,8 @@
 package com.winhub.hernandez;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -178,8 +181,8 @@ final class LiveControllerSession {
 
     /** The game ships its own XInput DLL ({@code names}), served by Wine's builtin this launch: say so on Pad. */
     void noteGameShipsXInput(String names) {
-        addNote("This game ships its own " + names + ": Wine's XInput serves it, so the XInput source doesn't change it. "
-                + "Game settings › Controller: Use Direct XInput over the game's own XInput DLL.");
+        addNote(I18n.s(R.string.ui_this_game_ships_its_own) + names + I18n.s(R.string.ui_wine_s_xinput_serves_it_so_the_xinput_source_doesn_t_cha)
+                + I18n.s(R.string.ui_game_settings_controller_use_direct_xinput_over_the_game));
         publish();
     }
 

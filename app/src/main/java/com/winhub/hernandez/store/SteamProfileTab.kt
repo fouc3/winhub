@@ -158,7 +158,7 @@ fun SteamProfileTab(
     // network when that is stale, so this is cheap to call on every tab open.
     LaunchedEffect(steamId) {
         if (steamId == 0L) {
-            StorefrontLog.w(StorefrontLog.PROFILE, "no SteamID64 on record — showing the signed-out state")
+            StorefrontLog.w(StorefrontLog.PROFILE, I18n.s(R.string.ui_no_steamid64_on_record_showing_the_signed_out_state))
             return@LaunchedEffect
         }
         SteamFriendsStore.refreshSelfProfile()
@@ -176,8 +176,8 @@ fun SteamProfileTab(
                 StorefrontLog.i(StorefrontLog.PROFILE, "persona name changed (${trimmed.length} chars)")
                 onMessage("Persona name changed to $trimmed")
             } else {
-                StorefrontLog.w(StorefrontLog.PROFILE, "setPersonaName FAILED — neither engine nor JavaSteam handler is live")
-                onMessage("Couldn't change your persona name — not connected to Steam.")
+                StorefrontLog.w(StorefrontLog.PROFILE, I18n.s(R.string.ui_setpersonaname_failed_neither_engine_nor_javasteam_handl))
+                onMessage(I18n.s(R.string.ui_couldn_t_change_your_persona_name_not_connected_to_steam))
             }
         }
     }
@@ -189,7 +189,7 @@ fun SteamProfileTab(
             onMessage("Status set to ${state.name}")
         } else {
             StorefrontLog.w(StorefrontLog.PROFILE, "setPersonaState(${state.name}) FAILED — no live session")
-            onMessage("Couldn't change your status — not connected to Steam.")
+            onMessage(I18n.s(R.string.ui_couldn_t_change_your_status_not_connected_to_steam))
         }
     }
 
@@ -444,7 +444,7 @@ private fun IdentityCard(c: ProfileTabContent) {
                 Spacer(Modifier.height(7.dp))
                 SteamIdRow(c.steamId) {
                     copyToClipboard(ctx, "Steam ID", c.steamId.toString())
-                    c.onMessage("Steam ID copied")
+                    c.onMessage(I18n.s(R.string.ui_steam_id_copied))
                 }
             }
         }
@@ -770,7 +770,7 @@ private fun BadgesRail(c: ProfileTabContent) {
     }
     if (badgeArt.isEmpty() && equippedTiles.isEmpty()) return
 
-    StoreSectionHeader("Badges & Showcase", "Showcased on your profile")
+    StoreSectionHeader("Badges & Showcase", I18n.s(R.string.ui_showcased_on_your_profile))
     LazyRow(
         modifier = Modifier.fillMaxWidth().focusGroup(),
         contentPadding = PaddingValues(horizontal = 14.dp),
@@ -889,14 +889,14 @@ private fun RecentlyPlayedList(c: ProfileTabContent, fillsPane: Boolean = false)
         Box(modifier = paneBox, contentAlignment = Alignment.Center) {
             StoreNotice(
                 title = I18n.s(R.string.ui_no_recent_play_data),
-                body = "Steam only shares playtime when your game details are public. " +
+                body = I18n.s(R.string.ui_steam_only_shares_playtime_when_your_game_details_are_pu) +
                     "Anything you've played recently will show up here once it does.",
             )
         }
         return
     }
 
-    StoreSectionHeader("Recently Played", "By playtime")
+    StoreSectionHeader(I18n.s(R.string.ui_recently_played_2), I18n.s(R.string.ui_by_playtime_2))
     Column(
         modifier = Modifier
             .fillMaxWidth()

@@ -427,7 +427,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             lsfgDllStatus = lsfgDllStatusText()
             buildLsfgShaderCache()
         } catch (e: Exception) {
-            lsfgDllStatus = "Import failed: " + e.message
+            lsfgDllStatus = I18n.s(R.string.ui_import_failed) + e.message
         }
     }
     // Locate a Lossless.dll from a Steam-store install (appId 993090 lands under
@@ -457,8 +457,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             buildLsfgShaderCache()
             Toast.makeText(context, I18n.s(R.string.ui_lossless_dll_set_from_steam_store_install), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
-            lsfgDllStatus = "Detect failed: " + e.message
-            Toast.makeText(context, "Detect failed: " + e.message, Toast.LENGTH_LONG).show()
+            lsfgDllStatus = I18n.s(R.string.ui_detect_failed) + e.message
+            Toast.makeText(context, I18n.s(R.string.ui_detect_failed) + e.message, Toast.LENGTH_LONG).show()
         }
     }
     val importLosslessDllLauncher = rememberLauncherForActivityResult(
@@ -597,7 +597,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 },
                 enabled = !checkingUpdate,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text(if (checkingUpdate) I18n.s(R.string.ui_checking) else "Check for updates", color = MaterialTheme.colorScheme.onPrimary) }
+            ) { Text(if (checkingUpdate) I18n.s(R.string.ui_checking) else I18n.s(R.string.ui_check_for_updates_2), color = MaterialTheme.colorScheme.onPrimary) }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = notifyUpdates, onCheckedChange = {
                     notifyUpdates = it
@@ -630,7 +630,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Text(I18n.s(R.string.ui_steam_chat_notifications), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
-                    steamHelp = "Steam chat notifications" to
+                    steamHelp = I18n.s(R.string.ui_steam_chat_notifications) to
                         "Shows an Android notification when a Steam friend messages you and their chat " +
                         "isn't open in the app. Tap it to open the chat. Off = messages still arrive, you " +
                         I18n.s(R.string.ui_just_aren_t_told_until_you_open_friends)
@@ -669,7 +669,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Text(I18n.s(R.string.ui_steam_connection_region), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
-                    steamHelp = "Steam connection region" to
+                    steamHelp = I18n.s(R.string.ui_steam_connection_region) to
                         "Which Steam datacenter to connect to. Auto pings each one and keeps the fastest " +
                         "for a day, re-testing after a failed connect. Pick a specific one only if Auto " +
                         I18n.s(R.string.ui_keeps_choosing_badly_the_store_applies_it_on_its_next)
@@ -1212,7 +1212,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = xinputToggle, onCheckedChange = { xinputToggle = it })
-                Text("Disable Xinput (Used for Exclusive M/KB support)", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_disable_xinput_used_for_exclusive_m_kb_support), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
         }
 

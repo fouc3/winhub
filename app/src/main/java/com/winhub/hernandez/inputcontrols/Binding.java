@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.annotation.NonNull;
 
 import com.winhub.hernandez.xserver.Pointer;
@@ -34,7 +37,7 @@ public enum Binding {
     public String toString() {
         switch (this) {
             case SHOW_ANDROID_KEYBOARD:
-                return "ANDROID KEYBOARD";
+                return I18n.s(R.string.ui_android_keyboard);
             case KEY_INSERT:
                 return "INSERT";
             case KEY_SHIFT_L:

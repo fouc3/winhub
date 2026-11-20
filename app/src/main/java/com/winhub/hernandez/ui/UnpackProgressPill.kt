@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.foundation.BorderStroke
 import com.winhub.hernandez.ui.components.clickable
 import androidx.compose.foundation.layout.Box
@@ -94,7 +97,7 @@ fun UnpackProgressPill(modifier: Modifier = Modifier) {
                     )
                 }
                 IconButton(onClick = { UnpackService.cancel(context) }) {
-                    Icon(Icons.Filled.Close, "Cancel unpack", tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Filled.Close, I18n.s(R.string.ui_cancel_unpack), tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(20.dp))
                 }
             }
             Spacer(Modifier.height(6.dp))

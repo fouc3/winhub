@@ -277,8 +277,8 @@ internal fun PresetEditDialog(
                         "Customised for this container. Reset makes it follow the shared preset again."
                     scope == PresetScope.CONTAINER ->
                         "Saved for this container only — the shared preset is left alone."
-                    isBuiltIn && modified -> "Built-in preset — edited. Reset restores the original."
-                    isBuiltIn -> "Built-in preset — edits are saved separately and can be reset."
+                    isBuiltIn && modified -> I18n.s(R.string.ui_built_in_preset_edited_reset_restores_the_original)
+                    isBuiltIn -> I18n.s(R.string.ui_built_in_preset_edits_are_saved_separately_and_can_be_re)
                     else -> null
                 }
                 scopeNote?.let {

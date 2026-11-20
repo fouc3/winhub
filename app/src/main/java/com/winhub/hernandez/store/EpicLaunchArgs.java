@@ -24,6 +24,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -133,9 +136,9 @@ public final class EpicLaunchArgs {
                 sb.append(" -AUTH_LOGIN=unused");
                 sb.append(" -AUTH_PASSWORD=").append(sanitize(exchangeCode));
                 sb.append(" -AUTH_TYPE=exchangecode");
-                Log.i(TAG, "Epic launch mode ONLINE for " + appName);
+                Log.i(TAG, I18n.s(R.string.ui_epic_launch_mode_online_for) + appName);
             } else {
-                Log.i(TAG, "Epic launch mode OFFLINE for " + appName
+                Log.i(TAG, I18n.s(R.string.ui_epic_launch_mode_offline_for) + appName
                         + (forceOffline ? " (forced via epicOffline)" : " (no exchange code available)"));
             }
 
@@ -153,13 +156,13 @@ public final class EpicLaunchArgs {
             // same lazy pattern as the deployment id. Control chars are stripped defensively.
             appendAdditionalCommandLine(ctx, appName, namespace, catalogId, sb);
 
-            Log.i(TAG, "built Epic launch args for " + appName
+            Log.i(TAG, I18n.s(R.string.ui_built_epic_launch_args_for) + appName
                     + " (deploymentId=" + (deploymentId.isEmpty() ? "<none>" : deploymentId)
                     + ", mode=" + (offline ? "offline" : "online") + ")");
             return sb.toString();
         } catch (Throwable t) {
             // Defensive: never let a bug here break game launches.
-            Log.w(TAG, "buildArgString failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_buildargstring_failed), t);
             return "";
         }
     }
@@ -182,10 +185,10 @@ public final class EpicLaunchArgs {
             String extra = sanitizeCommandLine(cached);
             if (!extra.isEmpty()) {
                 sb.append(' ').append(extra);
-                Log.i(TAG, "appended AdditionalCommandLine for " + appName + ": " + extra);
+                Log.i(TAG, I18n.s(R.string.ui_appended_additionalcommandline_for) + appName + ": " + extra);
             }
         } catch (Throwable t) {
-            Log.w(TAG, "appendAdditionalCommandLine failed for " + appName, t);
+            Log.w(TAG, I18n.s(R.string.ui_appendadditionalcommandline_failed_for) + appName, t);
         }
     }
 
@@ -244,7 +247,7 @@ public final class EpicLaunchArgs {
             if (!denuvo && !forced) return; // non-Denuvo EOS game, override off → Phase 1 only, unchanged.
 
             if (catalogId == null || catalogId.isEmpty()) {
-                Log.w(TAG, "Denuvo game " + appName + " missing epicCatalogId; skipping ownership token");
+                Log.w(TAG, I18n.s(R.string.ui_denuvo_game) + appName + I18n.s(R.string.ui_missing_epiccatalogid_skipping_ownership_token));
                 return;
             }
 
@@ -261,7 +264,7 @@ public final class EpicLaunchArgs {
             } else {
                 tokenBytes = EpicSidecar.fetchOwnershipTokenSync(ctx, accountId, namespace, catalogId);
                 if (tokenBytes == null || tokenBytes.length == 0) {
-                    Log.w(TAG, "ownership token fetch returned nothing for " + appName + "; launching without -epicovt");
+                    Log.w(TAG, "ownership token fetch returned nothing for " + appName + I18n.s(R.string.ui_launching_without_epicovt));
                     return;
                 }
                 EpicSidecar.saveOwnershipTokenHex(ctx, appName, EpicSidecar.bytesToHex(tokenBytes));
@@ -270,7 +273,7 @@ public final class EpicLaunchArgs {
             String fileName = sanitizeFilename(appName) + ".ovt";
             File tokenDir = new File(ImageFs.find(ctx).wineprefix, EPIC_TOKENS_SUBDIR);
             if (!tokenDir.exists() && !tokenDir.mkdirs()) {
-                Log.w(TAG, "failed to create EpicTokens dir at " + tokenDir.getAbsolutePath());
+                Log.w(TAG, I18n.s(R.string.ui_failed_to_create_epictokens_dir_at) + tokenDir.getAbsolutePath());
                 return;
             }
             File tokenFile = new File(tokenDir, fileName);
@@ -281,11 +284,11 @@ public final class EpicLaunchArgs {
 
             String winPath = EPIC_TOKENS_WIN + fileName;
             sb.append(" -epicovt=").append(winPath);
-            Log.i(TAG, "Denuvo ownership token written for " + appName + " → " + tokenFile.getAbsolutePath()
+            Log.i(TAG, I18n.s(R.string.ui_denuvo_ownership_token_written_for) + appName + " → " + tokenFile.getAbsolutePath()
                     + " (wine: " + winPath + ")");
         } catch (Throwable t) {
             // Never let the Denuvo path break a launch — fall back to Phase 1 args.
-            Log.w(TAG, "appendOwnershipTokenArgs failed for " + appName, t);
+            Log.w(TAG, I18n.s(R.string.ui_appendownershiptokenargs_failed_for) + appName, t);
         }
     }
 
@@ -307,7 +310,7 @@ public final class EpicLaunchArgs {
                 Log.i(TAG, "deleted ownership token for " + appName);
             }
         } catch (Throwable t) {
-            Log.w(TAG, "cleanupOwnershipToken failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_cleanupownershiptoken_failed), t);
         }
     }
 

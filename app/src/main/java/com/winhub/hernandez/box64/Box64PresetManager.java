@@ -1,5 +1,8 @@
 package com.winhub.hernandez.box64;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -468,7 +471,7 @@ public abstract class Box64PresetManager {
         if (presetFile != null && presetFile.exists())
             AppUtils.showToast(context, "Preset " + presetFile.getName() + " exported successfully at " + presetFile.getParentFile().getPath());
         else
-            AppUtils.showToast(context, "Failed to export preset");
+            AppUtils.showToast(context, I18n.s(R.string.ui_failed_to_export_preset));
     }
 
     public static void importPreset(String prefix, Context context, InputStream stream) {

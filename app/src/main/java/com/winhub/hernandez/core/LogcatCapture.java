@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -54,7 +57,7 @@ public final class LogcatCapture {
             return com.winhub.hernandez.store.SteamLogRedactor.redact(line);
         } catch (Throwable t) {
             // Redaction failing must not silently produce an UNREDACTED file — drop the line.
-            return "[line withheld: redaction failed]";
+            return I18n.s(R.string.ui_line_withheld_redaction_failed);
         }
     }
 
@@ -86,7 +89,7 @@ public final class LogcatCapture {
             return sb.length() == 0 ? "(logcat returned no lines)" : sb.toString();
         } catch (Exception e) {
             Log.w(TAG, "logcat capture failed", e);
-            return "Failed to capture logcat: " + e.getMessage();
+            return I18n.s(R.string.ui_failed_to_capture_logcat) + e.getMessage();
         }
     }
 

@@ -77,7 +77,7 @@ fun rememberGogLibrary(onMessage: (String) -> Unit = {}): GogLibraryState {
     val sync: (Boolean) -> Unit = { force ->
         if (!syncing) {
             syncing = true
-            status = "Syncing library…"
+            status = I18n.s(R.string.ui_syncing_library)
             scope.launch {
                 val result = GogLibraryRepo.sync(appCtx, force) { s -> status = s }
                 syncing = false
@@ -87,7 +87,7 @@ fun rememberGogLibrary(onMessage: (String) -> Unit = {}): GogLibraryState {
                         if (result.fetched > 0) onMessage("Library updated — ${result.fetched} game${if (result.fetched == 1) "" else "s"} synced")
                     }
                     is GogLibraryRepo.SyncResult.Failed -> { load(); onMessage(result.message) }
-                    GogLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage("Session expired — please sign in again") }
+                    GogLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage(I18n.s(R.string.ui_session_expired_please_sign_in_again)) }
                     GogLibraryRepo.SyncResult.Busy -> load()
                 }
             }
@@ -181,7 +181,7 @@ fun GogLibraryTab(
                 StoreNotice(
                     title = I18n.s(R.string.ui_your_gog_library_is_empty_here),
                     body = I18n.s(R.string.ui_sync_to_pull_your_games_from_gog_or_open_the_full_lib),
-                    actionLabel = "Sync now",
+                    actionLabel = I18n.s(R.string.ui_sync_now),
                     onAction = { state.refresh(true) },
                 )
             }
@@ -210,7 +210,7 @@ fun GogLibraryTab(
                         StoreNotice(
                             title = I18n.s(R.string.ui_full_library),
                             body = I18n.s(R.string.ui_need_the_list_view_batch_installs_or_dlc_sync_open_th),
-                            actionLabel = "Open full library",
+                            actionLabel = I18n.s(R.string.ui_open_full_library),
                             onAction = onOpenFullLibrary,
                         )
                     }

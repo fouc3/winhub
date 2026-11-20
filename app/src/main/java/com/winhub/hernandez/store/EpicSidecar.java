@@ -14,6 +14,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -92,7 +95,7 @@ public final class EpicSidecar {
             try {
                 String token = EpicCredentialStore.getValidAccessToken(ctx);
                 if (token == null) {
-                    Log.w(TAG, "refresh: no Epic access token, skipping");
+                    Log.w(TAG, I18n.s(R.string.ui_refresh_no_epic_access_token_skipping));
                     return;
                 }
                 String deploymentId = fetch(token, namespace, catalogItemId, appName);
@@ -196,7 +199,7 @@ public final class EpicSidecar {
             try {
                 String token = EpicCredentialStore.getValidAccessToken(ctx);
                 if (token == null) {
-                    Log.w(TAG, "addcmd refresh: no Epic access token, skipping");
+                    Log.w(TAG, I18n.s(R.string.ui_addcmd_refresh_no_epic_access_token_skipping));
                     return;
                 }
                 String cmd = fetchAdditionalCommandLine(token, namespace, catalogItemId);
@@ -204,7 +207,7 @@ public final class EpicSidecar {
                         .putString("epic_addcmd_" + appName, cmd != null ? cmd : "")
                         .putLong("epic_addcmd_at_" + appName, System.currentTimeMillis())
                         .apply();
-                Log.i(TAG, "addcmd refresh(" + appName + ") = "
+                Log.i(TAG, I18n.s(R.string.ui_addcmd_refresh) + appName + ") = "
                         + (cmd == null || cmd.isEmpty() ? "<none>" : cmd));
             } catch (Exception e) {
                 Log.w(TAG, "addcmd refresh failed for " + appName, e);
@@ -269,7 +272,7 @@ public final class EpicSidecar {
     public static String fetchExchangeCodeSync(Context ctx) {
         String token = EpicCredentialStore.getValidAccessToken(ctx);
         if (token == null) {
-            Log.w(TAG, "fetchExchangeCode: no Epic access token");
+            Log.w(TAG, I18n.s(R.string.ui_fetchexchangecode_no_epic_access_token));
             return null;
         }
         HttpURLConnection conn = null;
@@ -296,13 +299,13 @@ public final class EpicSidecar {
 
             String exchangeCode = new JSONObject(body.toString()).optString("code", "");
             if (exchangeCode.isEmpty()) {
-                Log.w(TAG, "fetchExchangeCode: empty code in response");
+                Log.w(TAG, I18n.s(R.string.ui_fetchexchangecode_empty_code_in_response));
                 return null;
             }
             Log.i(TAG, "fetchExchangeCode: OK (length=" + exchangeCode.length() + ")");
             return exchangeCode;
         } catch (Exception e) {
-            Log.w(TAG, "fetchExchangeCode failed", e);
+            Log.w(TAG, I18n.s(R.string.ui_fetchexchangecode_failed), e);
             return null;
         } finally {
             if (conn != null) try { conn.disconnect(); } catch (Exception ignored) {}
@@ -344,7 +347,7 @@ public final class EpicSidecar {
         }
         String token = EpicCredentialStore.getValidAccessToken(ctx);
         if (token == null) {
-            Log.w(TAG, "fetchOwnershipToken: no Epic access token");
+            Log.w(TAG, I18n.s(R.string.ui_fetchownershiptoken_no_epic_access_token));
             return null;
         }
         HttpURLConnection conn = null;
@@ -383,13 +386,13 @@ public final class EpicSidecar {
             }
             byte[] tokenBytes = bos.toByteArray();
             if (tokenBytes.length == 0) {
-                Log.w(TAG, "fetchOwnershipToken: empty token response");
+                Log.w(TAG, I18n.s(R.string.ui_fetchownershiptoken_empty_token_response));
                 return null;
             }
             Log.i(TAG, "fetchOwnershipToken: OK (" + tokenBytes.length + " bytes)");
             return tokenBytes;
         } catch (Exception e) {
-            Log.w(TAG, "fetchOwnershipToken failed", e);
+            Log.w(TAG, I18n.s(R.string.ui_fetchownershiptoken_failed), e);
             return null;
         } finally {
             if (conn != null) try { conn.disconnect(); } catch (Exception ignored) {}
@@ -444,7 +447,7 @@ public final class EpicSidecar {
                 String deploymentId = new JSONObject(configStr).optString("deploymentId", "");
                 return deploymentId; // may be empty if the sidecar config has no deploymentId
             } catch (Exception parseE) {
-                Log.w(TAG, "sidecar.config parse failed for " + appName + " (likely transient)", parseE);
+                Log.w(TAG, "sidecar.config parse failed for " + appName + I18n.s(R.string.ui_likely_transient), parseE);
                 return null;
             }
         } finally {

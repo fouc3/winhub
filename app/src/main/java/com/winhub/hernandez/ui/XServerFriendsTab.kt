@@ -168,7 +168,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
             Spacer(Modifier.weight(1f))
             Text(
                 when (src.kind) {
-                    InGameFriendsSource.Kind.AGENT_RELAY -> "via in-game Steam"
+                    InGameFriendsSource.Kind.AGENT_RELAY -> I18n.s(R.string.ui_via_in_game_steam)
                     InGameFriendsSource.Kind.APP_SESSION -> "via app session"
                     else -> ""
                 },

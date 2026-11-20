@@ -283,7 +283,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                 cloudSaveDirText = shortenPath(selectedPath)
                 cloudSaveDirColor = 0xFFCCCCCC.toInt()
                 cloudButtonsEnabled = true
-                resultBarMsg = "Save folder set"
+                resultBarMsg = I18n.s(R.string.ui_save_folder_set)
             }
         }
     }
@@ -321,7 +321,7 @@ class EpicGameDetailActivity : ComponentActivity() {
             // Ask what to do with the partial download before cancelling.
             AlertDialog.Builder(this)
                 .setTitle(I18n.s(R.string.ui_cancel_download))
-                .setMessage("Keep the partial download so you can resume later, or delete all " +
+                .setMessage(I18n.s(R.string.ui_keep_the_partial_download_so_you_can_resume_later_or_del_2) +
                         "downloaded files for this game?")
                 .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                     appName?.let { EpicCancelPolicy.setDeleteOnCancel(it, false) }
@@ -419,7 +419,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                     }
                     onInstallCancelled(); return@launch
                 }
-                if (!ok) { onInstallError("Download failed"); return@launch }
+                if (!ok) { onInstallError(I18n.s(R.string.xmb_dl_status_failed)); return@launch }
 
                 try {
                     val vid = JSONObject(manifestJson).optString("versionId", "")
@@ -430,7 +430,7 @@ class EpicGameDetailActivity : ComponentActivity() {
 
                 val exeFiles = mutableListOf<File>()
                 AmazonLaunchHelper.collectExe(installDir, exeFiles)
-                if (exeFiles.isEmpty()) { onInstallError("No executable found"); return@launch }
+                if (exeFiles.isEmpty()) { onInstallError(I18n.s(R.string.ui_no_executable_found)); return@launch }
 
                 val lowerTitle = (title ?: "").lowercase()
                 exeFiles.sortWith { a, b ->
@@ -593,7 +593,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                 if (token == null) {
                     runOnUiThread {
                         checkUpdatesEnabled = true
-                        updateStatusText = "Login required."
+                        updateStatusText = I18n.s(R.string.ui_login_required_2)
                     }
                     return@launch
                 }
@@ -606,7 +606,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                 runOnUiThread {
                     checkUpdatesEnabled = true
                     if (latest.isNullOrEmpty()) {
-                        updateStatusText = "Could not reach update server."
+                        updateStatusText = I18n.s(R.string.ui_could_not_reach_update_server)
                         return@runOnUiThread
                     }
                     val stored = prefs!!.getString("epic_manifest_version_$appName", null)
@@ -648,12 +648,12 @@ class EpicGameDetailActivity : ComponentActivity() {
             try {
                 val token = EpicCredentialStore.getValidAccessToken(appCtx)
                 if (token == null) {
-                    runOnUiThread { verifyEnabled = true; verifyStatusText = "Login required." }
+                    runOnUiThread { verifyEnabled = true; verifyStatusText = I18n.s(R.string.ui_login_required_2) }
                     return@launch
                 }
                 val manifestJson = EpicApiClient.getManifestApiJson(token, namespace, catalogItemId, an)
                 if (manifestJson == null) {
-                    runOnUiThread { verifyEnabled = true; verifyStatusText = "Could not fetch manifest." }
+                    runOnUiThread { verifyEnabled = true; verifyStatusText = I18n.s(R.string.ui_could_not_fetch_manifest) }
                     return@launch
                 }
                 val installTags = EpicInstallTags.tagsForCurrentContainer(appCtx)
@@ -661,7 +661,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                     if (!isDestroyed && !isFinishing) runOnUiThread { verifyStatusText = msg }
                 }
                 if (result == null) {
-                    runOnUiThread { verifyEnabled = true; verifyStatusText = "Verify failed." }
+                    runOnUiThread { verifyEnabled = true; verifyStatusText = I18n.s(R.string.ui_verify_failed) }
                     return@launch
                 }
                 if (!result.needsRepair()) {
@@ -691,13 +691,13 @@ class EpicGameDetailActivity : ComponentActivity() {
             try {
                 val token = EpicCredentialStore.getValidAccessToken(this@EpicGameDetailActivity)
                 if (token == null) {
-                    runOnUiThread { resultBarMsg = "Login required" }
+                    runOnUiThread { resultBarMsg = I18n.s(R.string.ui_login_required) }
                     return@launch
                 }
 
                 val manifestJson = EpicApiClient.getManifestApiJson(token, dlcNs, dlcCat, dlcApp)
                 if (manifestJson == null) {
-                    runOnUiThread { resultBarMsg = "Failed to fetch manifest for DLC" }
+                    runOnUiThread { resultBarMsg = I18n.s(R.string.ui_failed_to_fetch_manifest_for_dlc) }
                     return@launch
                 }
 
@@ -713,7 +713,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                     installDir.absolutePath,
                 ) { _, _ -> }
                 if (!ok) {
-                    runOnUiThread { resultBarMsg = "DLC download failed" }
+                    runOnUiThread { resultBarMsg = I18n.s(R.string.ui_dlc_download_failed) }
                     return@launch
                 }
 
@@ -778,7 +778,7 @@ class EpicGameDetailActivity : ComponentActivity() {
         Thread {
             val dir = resolveEpicSaveDir()
             if (dir == null || !dir.exists()) {
-                runOnUiThread { cloudSaveStatusText = "No save folder found for this game"; cloudButtonsEnabled = true }
+                runOnUiThread { cloudSaveStatusText = I18n.s(R.string.ui_no_save_folder_found_for_this_game); cloudButtonsEnabled = true }
                 return@Thread
             }
             runOnUiThread { cloudSaveStatusText = "Preparing upload\u2026" }
@@ -797,7 +797,7 @@ class EpicGameDetailActivity : ComponentActivity() {
         Thread {
             val dir = resolveEpicSaveDir()
             if (dir == null) {
-                runOnUiThread { cloudSaveStatusText = "No save folder found for this game"; cloudButtonsEnabled = true }
+                runOnUiThread { cloudSaveStatusText = I18n.s(R.string.ui_no_save_folder_found_for_this_game); cloudButtonsEnabled = true }
                 return@Thread
             }
             runOnUiThread { cloudSaveStatusText = "Preparing download\u2026" }
@@ -906,10 +906,10 @@ private fun EpicGameDetailScreen(
     }
     val gear = buildList {
         // onInstallClick doubles as Cancel (keep / delete dialog) while the label reads "Cancel".
-        if (downloading) add(StoreGearItem("🗑", "Cancel download", danger = true, onClick = onInstallClick))
+        if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstallClick))
         if (setExeBtnVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExeClick))
         if (installed) {
-            add(StoreGearItem("🔄", "Check for updates", enabled = checkUpdatesEnabled, onClick = onCheckUpdates))
+            add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdatesEnabled, onClick = onCheckUpdates))
             add(StoreGearItem("🩹", "Verify / repair files", enabled = verifyEnabled, onClick = onVerifyRepair))
         }
         if (uninstallBtnVisible) add(StoreGearItem("🗑️", "Uninstall", danger = true, onClick = onUninstallClick))
@@ -1009,7 +1009,7 @@ private fun EpicGameDetailScreen(
                         else {
                             val storedVer = prefs.getString("epic_manifest_version_$appName", null)
                             if (storedVer != null) "Installed: ${storedVer.substring(0, minOf(14, storedVer.length))}…"
-                            else "Version not recorded — tap Check to verify"
+                            else I18n.s(R.string.ui_version_not_recorded_tap_check_to_verify)
                         }
                         StoreStatusText(displayText)
                         Spacer(Modifier.height(8.dp))
@@ -1060,7 +1060,7 @@ private fun EpicGameDetailScreen(
                             val dlcApp = dlc.optString("app", "")
                             val dlcNs = dlc.optString("ns", "")
                             val dlcCat = dlc.optString("cat", "")
-                            val dlcTitle = dlc.optString("title", "Unknown DLC")
+                            val dlcTitle = dlc.optString("title", I18n.s(R.string.ui_unknown_dlc))
                             val dlcInstalled = prefs.getString("epic_exe_$dlcApp", null) != null
 
                             Spacer(Modifier.height(8.dp))

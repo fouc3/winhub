@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -250,7 +253,7 @@ internal fun portraitTabIcon(label: String): ImageVector = when (label) {
     "Appearance" -> Icons.Filled.Visibility
     "Cronos" -> Icons.Filled.Layers
     "Steam", "Epic", "GOG" -> Icons.Filled.Storefront
-    "Custom", "Game Configurations" -> Icons.Filled.Tune
+    "Custom", I18n.s(R.string.social_hub_subtab_configs) -> Icons.Filled.Tune
     "Feed" -> Icons.Filled.People
     "Profile" -> Icons.Filled.Person
     else -> Icons.Filled.Settings

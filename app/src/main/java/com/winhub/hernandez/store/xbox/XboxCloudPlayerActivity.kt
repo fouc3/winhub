@@ -75,16 +75,16 @@ class XboxCloudPlayerActivity : ComponentActivity() {
         root = FrameLayout(this).apply { setBackgroundColor(Color.BLACK) }
         setContentView(root)
         val requested = intent.getStringExtra("product").orEmpty()
-        showNotice("Signing in to Xbox Cloud Gaming…", withButtons = false)
+        showNotice(I18n.s(R.string.ui_signing_in_to_xbox_cloud_gaming), withButtons = false)
         worker.execute {
             val result = runCatching {
-                val account = XboxAccountStore.signedInAs(applicationContext) ?: error("Sign in to the Xbox store first.")
+                val account = XboxAccountStore.signedInAs(applicationContext) ?: error(I18n.s(R.string.ui_sign_in_to_the_xbox_store_first))
                 // A PC game whose console edition streams (one card in the library) streams that edition.
                 val cached = XboxLibraryCache.read(applicationContext, account, Xodus.market())?.games?.firstOrNull { it.id == requested }
                 val product = cached?.cloudId ?: requested
                 webUrl = (cached ?: XboxGame(requested, intent.getStringExtra("title").orEmpty())).cloudUrl
                 val active = XboxCloudSession.get(applicationContext, account)
-                val title = XboxCloudSession.titles(active)[product] ?: error("This game can't be streamed with this account here.")
+                val title = XboxCloudSession.titles(active)[product] ?: error(I18n.s(R.string.ui_this_game_can_t_be_streamed_with_this_account_here))
                 settings = XboxCloudSettings.load(applicationContext)
                 startedWith = settings
                 session = active.forStream(settings.region, settings.osName); titleId = title
@@ -338,14 +338,14 @@ class XboxCloudPlayerActivity : ComponentActivity() {
                             style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = cs.onSurface,
                             modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
                         if (menuPage.isEmpty()) {
-                            MenuEntry("Resume", "Back to the game", entries[0], 0) { closeMenu() }
-                            MenuEntry(I18n.s(R.string.ui_xbox_menu), "The game's Xbox menu (also: Guide once, or View + Menu)", entries[1], 1) {
+                            MenuEntry("Resume", I18n.s(R.string.ui_back_to_the_game), entries[0], 0) { closeMenu() }
+                            MenuEntry(I18n.s(R.string.ui_xbox_menu), I18n.s(R.string.ui_the_game_s_xbox_menu_also_guide_once_or_view_menu), entries[1], 1) {
                                 closeMenu(); web?.evaluateJavascript("window.__blNexus && window.__blNexus()", null)
                             }
-                            MenuEntry(I18n.s(R.string.ui_screen_effects_2), "Sharpen, colour, deband, FXAA, CRT, NTSC, Toon, fps cap", entries[2], 2) { menuPage = "picture" }
-                            MenuEntry(I18n.s(R.string.ui_stream_quality), "Resolution, region, language, codec, bitrate (next stream)", entries[3], 3) { menuPage = "stream" }
-                            MenuEntry(I18n.s(R.string.ui_performance_overlay_and_sound), "Overlay level and layout, volume, controller rumble", entries[4], 4) { menuPage = "overlay" }
-                            MenuEntry(I18n.s(R.string.ui_leave), "End the stream", entries[5], 5) { finish() }
+                            MenuEntry(I18n.s(R.string.ui_screen_effects_2), I18n.s(R.string.ui_sharpen_colour_deband_fxaa_crt_ntsc_toon_fps_cap), entries[2], 2) { menuPage = "picture" }
+                            MenuEntry(I18n.s(R.string.ui_stream_quality), I18n.s(R.string.ui_resolution_region_language_codec_bitrate_next_stream), entries[3], 3) { menuPage = "stream" }
+                            MenuEntry(I18n.s(R.string.ui_performance_overlay_and_sound), I18n.s(R.string.ui_overlay_level_and_layout_volume_controller_rumble), entries[4], 4) { menuPage = "overlay" }
+                            MenuEntry(I18n.s(R.string.ui_leave), I18n.s(R.string.ui_end_the_stream), entries[5], 5) { finish() }
                             androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
@@ -388,7 +388,7 @@ class XboxCloudPlayerActivity : ComponentActivity() {
         val active = session; val path = sessionPath
         sessionPath = null
         closeMenu()
-        showNotice("Restarting the stream…", withButtons = false)
+        showNotice(I18n.s(R.string.ui_restarting_the_stream), withButtons = false)
         Thread({
             if (active != null && path != null) runCatching { XboxCloudSession.request(active, "DELETE", "/$path") }
                 .onSuccess { XboxDiag.log(applicationContext, "cloud player restart: session closed ${it.status}") }

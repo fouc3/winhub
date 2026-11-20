@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.store.download.MediaImage
@@ -275,7 +278,7 @@ object EpicStoreCatalog {
             Log.i(TAG, "rails: freeNow=${freeNow.size} sale=${onSale.size} new=${newest.size} f2p=${freeToPlay.size}")
             return@withContext result
         }
-        Log.w(TAG, "every store feed came back empty — falling back to the on-disk mirror")
+        Log.w(TAG, I18n.s(R.string.ui_every_store_feed_came_back_empty_falling_back_to_the_on))
         loadPersistedFeatured(ctx)
     }
 

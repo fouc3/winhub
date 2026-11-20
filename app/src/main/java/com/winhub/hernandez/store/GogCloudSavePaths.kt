@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.Container
@@ -137,7 +140,7 @@ object GogCloudSavePaths {
      */
     fun resolveContainer(ctx: Context, gameId: String, installDir: String?): Container? {
         val shortcuts = try { ContainerManager(ctx).loadShortcuts() } catch (e: Exception) {
-            Log.w(TAG, "loadShortcuts failed", e); return null
+            Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), e); return null
         }
         return matchContainer(ctx, shortcuts, installDir)
     }
@@ -276,7 +279,7 @@ object GogCloudSavePaths {
                 }
                 base = inst; boundary = inst
             }
-            "SAVED_GAMES" -> { base = File(profile, "Saved Games"); boundary = profile }
+            "SAVED_GAMES" -> { base = File(profile, I18n.s(R.string.ui_saved_games)); boundary = profile }
             "DOCUMENTS" -> { base = File(profile, "Documents"); boundary = profile }
             "APPLICATION_DATA_LOCAL", "LOCALAPPDATA" -> { base = File(profile, "AppData/Local"); boundary = profile }
             "APPLICATION_DATA_LOCAL_LOW" -> { base = File(profile, "AppData/LocalLow"); boundary = profile }

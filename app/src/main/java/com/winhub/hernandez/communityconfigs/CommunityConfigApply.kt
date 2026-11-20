@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import com.winhub.hernandez.container.Shortcut
 import com.winhub.hernandez.contents.ContentProfile
@@ -131,7 +134,7 @@ object CommunityConfigApply {
             try {
                 shortcut.saveData()
             } catch (e: Exception) {
-                Log.w(TAG, "Failed to persist shortcut after apply", e)
+                Log.w(TAG, I18n.s(R.string.ui_failed_to_persist_shortcut_after_apply), e)
                 return result.copy(
                     ok = false,
                     message = "Failed to save shortcut: ${e.message ?: e.javaClass.simpleName}",
@@ -352,7 +355,7 @@ object CommunityConfigApply {
             try {
                 shortcut.saveData()
             } catch (e: Exception) {
-                Log.w(TAG, "Failed to persist shortcut after component install", e)
+                Log.w(TAG, I18n.s(R.string.ui_failed_to_persist_shortcut_after_component_install), e)
                 return false
             }
         }
@@ -374,7 +377,7 @@ object CommunityConfigApply {
             shortcut.saveData()
             true
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to persist shortcut after driver install", e)
+            Log.w(TAG, I18n.s(R.string.ui_failed_to_persist_shortcut_after_driver_install), e)
             false
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.core.HttpUtils
@@ -76,7 +79,7 @@ class CommunityConfigRepository(context: Context) {
         return try {
             parseIndexJson(indexFile.readText())
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to read cached index", e)
+            Log.w(TAG, I18n.s(R.string.ui_failed_to_read_cached_index), e)
             null
         }
     }
@@ -85,7 +88,7 @@ class CommunityConfigRepository(context: Context) {
         val parsed = try {
             parseIndexJson(json)
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to parse fetched index", e)
+            Log.w(TAG, I18n.s(R.string.ui_failed_to_parse_fetched_index), e)
             return null
         }
         writeIndexToDisk(json)
@@ -101,7 +104,7 @@ class CommunityConfigRepository(context: Context) {
             if (!cacheDir.exists()) cacheDir.mkdirs()
             indexFile.writeText(json)
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to persist index cache", e)
+            Log.w(TAG, I18n.s(R.string.ui_failed_to_persist_index_cache), e)
         }
     }
 

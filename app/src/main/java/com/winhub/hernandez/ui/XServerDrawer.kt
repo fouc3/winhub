@@ -350,13 +350,13 @@ private fun XServerDrawerContent() {
                         state.onClose?.run(); state.onKeyboard?.run()
                     }
                     Spacer(Modifier.width(6.dp))
-                    DrawerTile(R.drawable.icon_task_manager, "Task manager", onFocus = hintFor(I18n.s(R.string.ui_task_manager))) {
+                    DrawerTile(R.drawable.icon_task_manager, I18n.s(R.string.ui_task_manager), onFocus = hintFor(I18n.s(R.string.ui_task_manager))) {
                         state.selectTab(TabType.TASK_MANAGER)
                         state.onTaskManager?.run()
                     }
                     Spacer(Modifier.width(6.dp))
                     DrawerTile(
-                        R.drawable.icon_exit, "Exit game", tint = DeckPalette.error,
+                        R.drawable.icon_exit, I18n.s(R.string.ui_exit_game_2), tint = DeckPalette.error,
                         focusRequester = exitFocus, onFocus = hintFor(I18n.s(R.string.ui_exit_game_2)),
                     ) { exitTried = true; confirmExit = true }
                 }
@@ -529,7 +529,7 @@ private fun TvContent(state: XServerDrawerState) {
     // ───────────── Wireless cast (screen mirroring — no app on the TV) ─────────────
     SectionHeader(I18n.s(R.string.ui_cast_to_a_tv_wireless))
     Text(
-        text = "⚠ EXPERIMENTAL · VIDEO ONLY — wireless streaming is new: the picture runs a few seconds " +
+        text = I18n.s(R.string.ui_experimental_video_only_wireless_streaming_is_new_the_pi) +
             "behind, there's no TV sound yet (game audio stays on this device), and it may take a moment " +
             I18n.s(R.string.ui_to_start_or_need_a_second_try),
         color = MaterialTheme.colorScheme.error,
@@ -694,7 +694,7 @@ private fun TvContent(state: XServerDrawerState) {
     SectionHeader(I18n.s(R.string.ui_audio_power))
 
     val audioOut by state.tvAudioOut.collectAsState()
-    ReshadeDropdown("Audio output", listOf(I18n.s(R.string.ui_follow_system), "TV / HDMI", I18n.s(R.string.ui_handheld)), audioOut) { i ->
+    ReshadeDropdown(I18n.s(R.string.ui_audio_output), listOf(I18n.s(R.string.ui_follow_system), "TV / HDMI", I18n.s(R.string.ui_handheld)), audioOut) { i ->
         state.setTvAudioOut(i)
         state.onTvAudioOutChange?.accept(i)
     }
@@ -716,7 +716,7 @@ private fun TvContent(state: XServerDrawerState) {
     SectionHeader("Advanced")
 
     val renderRes by state.tvRenderRes.collectAsState()
-    ReshadeDropdown("TV render resolution", listOf(I18n.s(R.string.ui_match_tv), I18n.s(R.string.ui_match_handheld), "1080p", "1440p"), renderRes) { i ->
+    ReshadeDropdown(I18n.s(R.string.ui_tv_render_resolution), listOf(I18n.s(R.string.ui_match_tv), I18n.s(R.string.ui_match_handheld), "1080p", "1440p"), renderRes) { i ->
         state.setTvRenderRes(i)
         state.onTvRenderResChange?.accept(i)
     }
@@ -729,7 +729,7 @@ private fun TvContent(state: XServerDrawerState) {
     val disabledColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
     Text(I18n.s(R.string.ui_streaming), style = MaterialTheme.typography.titleSmall.copy(
         fontSize = 15.sp, fontWeight = FontWeight.Bold), color = disabledColor)
-    Text("Wireless streaming to a TV without a cable (bitrate, codec, transport) is coming in a " +
+    Text(I18n.s(R.string.ui_wireless_streaming_to_a_tv_without_a_cable_bitrate_codec) +
         I18n.s(R.string.ui_future_update_wired_hdmi_dex_casting_works_today_via),
         color = disabledColor, fontSize = 11.sp, modifier = Modifier.padding(top = 4.dp))
     listOf(I18n.s(R.string.ui_bitrate), "Codec (H.264 / HEVC)", "Transport (WebRTC / DLNA)", I18n.s(R.string.ui_stream_resolution_fps)).forEach {
@@ -1213,15 +1213,15 @@ private fun WaylandHdrOutputRow(state: XServerDrawerState) {
         state.setWaylandHdrOutput(it)
         state.onWaylandHdrOutputToggle?.accept(it)
     }
-    HelperText("On: HDR games show real HDR on this screen. Off: the same picture tone-mapped to SDR. " +
+    HelperText(I18n.s(R.string.ui_on_hdr_games_show_real_hdr_on_this_screen_off_the_same_p) +
         I18n.s(R.string.ui_applies_immediately_for_this_session_only_the_game_s))
     HelperText(
         when {
             checked && onScreen    -> I18n.s(R.string.ui_on_hdr_frames_on_screen_now)
-            checked && noHeadroom  -> "On, but the screen gives HDR no headroom right now: brightness at maximum, " +
+            checked && noHeadroom  -> I18n.s(R.string.ui_on_but_the_screen_gives_hdr_no_headroom_right_now_bright) +
                                       I18n.s(R.string.ui_or_the_screen_is_being_recorded_android_turns_hdr_hea)
             checked && toneMapped  -> I18n.s(R.string.ui_on_but_shown_tone_mapped_frame_generation_on_a_screen)
-            checked && !screenCapable -> "On, but this screen has no HDR10: Android tone-maps the picture for it. " +
+            checked && !screenCapable -> I18n.s(R.string.ui_on_but_this_screen_has_no_hdr10_android_tone_maps_the_pi) +
                                       I18n.s(R.string.ui_the_game_keeps_the_hdr_it_was_offered_until_it_closes)
             checked                -> I18n.s(R.string.ui_on_no_hdr_frames_right_now_is_hdr_on_in_the_game_s_se)
             onScreen || noHeadroom -> I18n.s(R.string.ui_off_but_these_frames_cannot_be_tone_mapped_here_they)
@@ -2823,7 +2823,7 @@ private fun HudContent(state: XServerDrawerState) {
                     I18n.s(R.string.ui_auto_is_on_with_frame_generation_running_the_display)
                 nativeFgLocksVrr ->
                     (if (fgAutoPerGame) "Auto is off for this game while frame generation runs. "
-                     else "Auto is off while frame generation runs. ") +
+                     else I18n.s(R.string.ui_auto_is_off_while_frame_generation_runs)) +
                         I18n.s(R.string.ui_turn_it_on_to_fit_the_screen_to_max_fps_multiplier) +
                         (if (manualRefreshRate > 0) " Display locked to ${manualRefreshRate} Hz." else "")
                 matchRefreshOn ->
@@ -3563,7 +3563,7 @@ private fun PadSection() {
 
     // Stick updates: HERMES's pacing, live.
     Spacer(Modifier.height(8.dp))
-    PadRowHeader("Stick updates", PadApply.LIVE, R.string.help_stick_pacing)
+    PadRowHeader(I18n.s(R.string.stick_pacing_label), PadApply.LIVE, R.string.help_stick_pacing)
     val pacing = StickPacing.parse(pad.pacing) ?: StickPacing.DEFAULT
     val pacingLocked = pad.pacingLockedReason != null
     ModeChipGrid(
@@ -4306,11 +4306,11 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
         )
     }
 
-    RootToggleRow(PerfRootApplier.KEY_CPU_GOVERNOR, "CPU governor → performance", state, toggles, granted, harnessProven, overridden)
-    RootToggleRow(PerfRootApplier.KEY_CPU_FREQ_LOCK, "Lock CPU frequency to max", state, toggles, granted, harnessProven, overridden)
-    RootToggleRow(PerfRootApplier.KEY_CORES_ONLINE, "Keep all cores online", state, toggles, granted, harnessProven, overridden)
-    RootToggleRow(PerfRootApplier.KEY_THERMAL_DISABLE, "Disable thermal throttling", state, toggles, granted, harnessProven, overridden)
-    RootToggleRow(PerfRootApplier.KEY_FAN_MAX, "Fan to maximum", state, toggles, granted, harnessProven, overridden)
+    RootToggleRow(PerfRootApplier.KEY_CPU_GOVERNOR, I18n.s(R.string.ui_cpu_governor_performance), state, toggles, granted, harnessProven, overridden)
+    RootToggleRow(PerfRootApplier.KEY_CPU_FREQ_LOCK, I18n.s(R.string.ui_lock_cpu_frequency_to_max), state, toggles, granted, harnessProven, overridden)
+    RootToggleRow(PerfRootApplier.KEY_CORES_ONLINE, I18n.s(R.string.ui_keep_all_cores_online), state, toggles, granted, harnessProven, overridden)
+    RootToggleRow(PerfRootApplier.KEY_THERMAL_DISABLE, I18n.s(R.string.ui_disable_thermal_throttling), state, toggles, granted, harnessProven, overridden)
+    RootToggleRow(PerfRootApplier.KEY_FAN_MAX, I18n.s(R.string.ui_fan_to_maximum), state, toggles, granted, harnessProven, overridden)
 
     if (granted && !harnessProven) {
         Text(
@@ -4421,7 +4421,7 @@ private fun TmContent() {
         onDispose { XServerDialogState.onTmDismissed?.run() }
     }
 
-    SectionHeader("Task Manager")
+    SectionHeader(I18n.s(R.string.task_manager))
 
     // Enriched header: live perf stat grid + per-core clocks + collapsible container config.
     TmStatGrid(header)

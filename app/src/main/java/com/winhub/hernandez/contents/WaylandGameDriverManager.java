@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contents;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -114,7 +117,7 @@ public class WaylandGameDriverManager {
 
     public void removeDriver(String id) {
         if (id == null || id.isEmpty() || id.contains("/") || id.contains("..")) return;
-        Log.d(TAG, "removing imported Wayland game driver " + id);
+        Log.d(TAG, I18n.s(R.string.ui_removing_imported_wayland_game_driver) + id);
         FileUtils.delete(getDriverDir(id));
         // Containers/shortcuts still set to imported:<id> fall back to Auto at launch (logged there).
     }
@@ -167,7 +170,7 @@ public class WaylandGameDriverManager {
             }
             File so = new File(tmpDir, LIB_NAME);
             if (!isAarch64Elf(so)) {
-                throw new IllegalArgumentException(soName + " is not a 64-bit AArch64 ELF shared library.");
+                throw new IllegalArgumentException(soName + I18n.s(R.string.ui_is_not_a_64_bit_aarch64_elf_shared_library));
             }
             boolean hasWaylandWsi = containsAscii(so, "wayland");
             if (!hasWaylandWsi) Log.w(TAG, soName + " has no \"wayland\" string: probably not a Wayland build");
@@ -205,7 +208,7 @@ public class WaylandGameDriverManager {
 
             if (!tmpDir.renameTo(dir)) throw new IOException("cannot move into " + dir);
             keep = true;
-            Log.i(TAG, "imported Wayland game driver " + id + " (" + soName + ", libdrm=" + hasDrm
+            Log.i(TAG, I18n.s(R.string.ui_imported_wayland_game_driver) + id + " (" + soName + ", libdrm=" + hasDrm
                     + ", waylandWsi=" + hasWaylandWsi + ") -> " + dir);
             return id;
         } catch (org.json.JSONException e) {

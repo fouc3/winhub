@@ -1254,7 +1254,7 @@ private fun DeckHome(
     val cards = remember(fullXmb, showStores, storesSignedIn) {
         buildList {
             add(
-                DeckHomeCard(I18n.s(R.string.ui_add_game), "Add games to your library", Icons.Filled.Add,
+                DeckHomeCard(I18n.s(R.string.ui_add_game), I18n.s(R.string.ui_add_games_to_your_library), Icons.Filled.Add,
                     listOf(Color(0xFF2A2D33), Color(0xFF16181C))) { addModeMenu = true },
             )
             if (fullXmb && showStores) storeScreens.forEach { screen ->
@@ -1269,7 +1269,7 @@ private fun DeckHome(
                 )
             }
             if (fullXmb) add(
-                DeckHomeCard(I18n.s(R.string.ui_social), "Feed, configs and profile", Icons.Filled.People,
+                DeckHomeCard(I18n.s(R.string.ui_social), I18n.s(R.string.ui_feed_configs_and_profile), Icons.Filled.People,
                     listOf(Color(0xFF134E4A), Color(0xFF0A2B29))) { openSocialNow() },
             )
         }
@@ -1722,7 +1722,7 @@ private fun DeckHome(
                     shortcut = s,
                     onDismiss = { launchMethodFor = null; launchMethodSteam = null },
                     steamOverride = launchMethodSteam,
-                    heading = "Launch method",
+                    heading = I18n.s(R.string.ui_launch_method),
                     confirmLabel = "Save",
                     onLaunch = { mode, gm, remember ->
                         s.putExtra("launchMode", mode)
@@ -2015,7 +2015,7 @@ private fun SocialXmbEntry() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize(),
     ) {
-        DeckEmptyState(I18n.s(R.string.ui_social_hub), "Feed, configs and profile open as a full-screen XMB page.")
+        DeckEmptyState(I18n.s(R.string.ui_social_hub), I18n.s(R.string.ui_feed_configs_and_profile_open_as_a_full_screen_xmb_page))
         DeckButton(I18n.s(R.string.ui_open_social_hub)) { context.startActivity(Intent(context, SocialHubActivity::class.java)) }
     }
 }

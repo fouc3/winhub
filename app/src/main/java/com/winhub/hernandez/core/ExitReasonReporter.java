@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ApplicationExitInfo;
@@ -61,14 +64,14 @@ public final class ExitReasonReporter {
     @SuppressLint("NewApi") // every ApplicationExitInfo use is behind the isSupported() gate below
     public static String capture(Context context) {
         if (!isSupported())
-            return "Exit-reason capture needs Android 11 (SDK 30) or newer — this device is SDK "
+            return I18n.s(R.string.ui_exit_reason_capture_needs_android_11_sdk_30_or_newer_thi)
                     + Build.VERSION.SDK_INT + ".";
         try {
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             List<ApplicationExitInfo> infos =
                     am.getHistoricalProcessExitReasons(context.getPackageName(), 0, MAX_RECORDS);
             if (infos == null || infos.isEmpty())
-                return "No exit records yet — the system has not recorded a previous exit for this app.";
+                return I18n.s(R.string.ui_no_exit_records_yet_the_system_has_not_recorded_a_previo);
 
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             StringBuilder sb = new StringBuilder();
@@ -89,7 +92,7 @@ public final class ExitReasonReporter {
             return sb.toString();
         } catch (Throwable t) {
             Log.w(TAG, "capture failed", t);
-            return "Failed to read exit reasons: " + t.getMessage();
+            return I18n.s(R.string.ui_failed_to_read_exit_reasons) + t.getMessage();
         }
     }
 
@@ -109,7 +112,7 @@ public final class ExitReasonReporter {
             }
             data = bos.toByteArray();
         } catch (Throwable t) {
-            return "native trace: (could not read: " + t.getMessage() + ")\n";
+            return I18n.s(R.string.ui_native_trace_could_not_read) + t.getMessage() + ")\n";
         } finally {
             if (in != null) try { in.close(); } catch (Exception ignored) {}
         }

@@ -301,12 +301,12 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 probe(v)
             }
         } else {
-            rows += XmbRow.Info(I18n.s(R.string.ui_nodrivers), "No compatible drivers found — turn on Show incompatible drivers", Icons.Filled.Warning)
+            rows += XmbRow.Info(I18n.s(R.string.ui_nodrivers), I18n.s(R.string.ui_no_compatible_drivers_found_turn_on_show_incompatible_dr), Icons.Filled.Warning)
         }
         rows += XmbRow.Toggle("showAll", ctx.getString(R.string.graphics_driver_show_incompatible), Icons.Filled.Visibility, showAllDrivers,
             subtitle = I18n.s(R.string.ui_lists_drivers_this_gpu_may_not_run)) { on -> showAllDrivers = on; ready = false; loadDrivers() }
         if (isCustomDriver) {
-            rows += XmbRow.Info(I18n.s(R.string.ui_customdriver), "Custom Qualcomm (Adreno) driver — its extensions load when a game starts, so none are listed here.", Icons.Filled.Info)
+            rows += XmbRow.Info(I18n.s(R.string.ui_customdriver), I18n.s(R.string.ui_custom_qualcomm_adreno_driver_its_extensions_load_when_a), Icons.Filled.Info)
         } else if (allExtensions.isNotEmpty()) {
             val enabled = allExtensions.count { it !in cfg.blacklisted }
             rows += XmbRow.Link("extensions", ctx.getString(R.string.graphics_driver_available_extensions), Icons.Filled.Extension,
@@ -328,9 +328,9 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             I18n.s(R.string.ui_bcn_compat_layers_apply_to_mali_and_other_non_qualcom), Icons.Filled.Info)
         rows += XmbRow.Choice("bcnEmulation", ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
             uniq(bcnEmulations, cfg.bcnEmulation), cfg.bcnEmulation) { v -> write { it.bcnEmulation = v } }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_bcntype), ctx.getString(R.string.graphics_driver_bcn_emulation_type), Icons.Filled.Layers,
+        rows += XmbRow.Choice("bcnType", ctx.getString(R.string.graphics_driver_bcn_emulation_type), Icons.Filled.Layers,
             uniq(bcnTypes, cfg.bcnEmulationType), cfg.bcnEmulationType) { v -> write { it.bcnEmulationType = v } }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_bcncache), ctx.getString(R.string.graphics_driver_bcn_emulation_cache), Icons.Filled.Layers,
+        rows += XmbRow.Choice("bcnCache", ctx.getString(R.string.graphics_driver_bcn_emulation_cache), Icons.Filled.Layers,
             uniq(bcnCaches, cfg.bcnEmulationCache), cfg.bcnEmulationCache) { v -> write { it.bcnEmulationCache = v } }
         val adrenoNote = if (isQualcomm) I18n.s(R.string.ui_no_effect_on_adreno_native_bcn) else null
         if (isIntegratedBcn) {
@@ -360,12 +360,12 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         rows += XmbRow.Header("hTurnip", "Turnip")
         val gmemLabels = listOf("Auto (Adreno 710/720/722)", I18n.s(R.string.ui_force_on), I18n.s(R.string.ui_force_off))
         val gmemValues = listOf("auto", "on", "off")
-        rows += XmbRow.Choice("gmem", "GMEM (tiled rendering)", Icons.Filled.Memory, gmemLabels,
+        rows += XmbRow.Choice("gmem", I18n.s(R.string.ui_gmem_tiled_rendering), Icons.Filled.Memory, gmemLabels,
             gmemLabels[gmemValues.indexOf(cfg.turnipGmem).coerceAtLeast(0)],
             subtitle = I18n.s(R.string.ui_auto_uses_tu_debug_gmem_only_on_adreno_710_720_722)) { v ->
             write { it.turnipGmem = gmemValues[gmemLabels.indexOf(v).coerceAtLeast(0)] }
         }
-        rows += XmbRow.Link("turnipTokens", "Advanced Turnip (TU_DEBUG)", Icons.Filled.Science,
+        rows += XmbRow.Link("turnipTokens", I18n.s(R.string.ui_advanced_turnip_tu_debug), Icons.Filled.Science,
             subtitle = I18n.s(R.string.ui_expert_only_debug_tokens_off_by_default)) { p2TurnipMenu(xmb, { rawCfg() }, { ch -> write(ch) }) }
 
         if (isImported) {
@@ -453,7 +453,7 @@ private fun xmbMaliPanvkRows(
     }
     if (on) {
         val entries = ctx.resources.getStringArray(R.array.bcn_emulation_entries).toList()
-        rows += XmbRow.Choice(I18n.s(R.string.ui_malibcn), ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
+        rows += XmbRow.Choice("maliBcn", ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
             entries, bcn, subtitle = ctx.getString(R.string.mali_panvk_bcn_warning)) { v ->
             write(mapOf(MaliPanvk.KEY_MODE to "1", "bcnEmulation" to v))
         }
@@ -526,11 +526,11 @@ private fun p2TurnipMenu(xmb: XmbScope, raw: () -> String, write: ((P2GfxCfg) ->
         val sysmemBlocked = cfg.turnipGmem == "on"
         listOf(
             XmbRow.Info("note", I18n.s(R.string.ui_expert_only_turnip_debug_tokens_unioned_with_the_gmem), Icons.Filled.Warning),
-            XmbRow.Toggle("forcecb", "forcecb — force concurrent binning", Icons.Filled.Science, cfg.forceCb) { on -> write { it.forceCb = on } },
-            XmbRow.Toggle("nocb", "nocb — disable concurrent binning", Icons.Filled.Science, cfg.noCb) { on -> write { it.noCb = on } },
+            XmbRow.Toggle("forcecb", I18n.s(R.string.ui_forcecb_force_concurrent_binning), Icons.Filled.Science, cfg.forceCb) { on -> write { it.forceCb = on } },
+            XmbRow.Toggle("nocb", I18n.s(R.string.ui_nocb_disable_concurrent_binning), Icons.Filled.Science, cfg.noCb) { on -> write { it.noCb = on } },
             XmbRow.Toggle("sysmem", I18n.s(R.string.ui_sysmem_force_sysmem_bypass_gmem), Icons.Filled.Science, cfg.sysmem && !sysmemBlocked,
                 disabledReason = if (sysmemBlocked) I18n.s(R.string.ui_disabled_turnip_gmem_force_on_overrides_sysmem) else null) { on -> write { it.sysmem = on } },
-            XmbRow.Toggle("deckEmu", "deck_emu — advertise as SteamDeck", Icons.Filled.Science, cfg.deckEmu,
+            XmbRow.Toggle("deckEmu", I18n.s(R.string.ui_deck_emu_advertise_as_steamdeck), Icons.Filled.Science, cfg.deckEmu,
                 subtitle = I18n.s(R.string.ui_needs_a_banners_turnip_driver_ignored_on_stock_turnip)) { on -> write { it.deckEmu = on } },
         )
     }
@@ -572,7 +572,7 @@ private fun p2DetectedMenu(
     val rows = mutableListOf<XmbRow>()
     rows += XmbRow.Info("note", I18n.s(R.string.ui_values_are_passed_to_the_wrapper_as_is_unknown_ones_a), Icons.Filled.Info)
     val list = keys()
-    if (list.isEmpty()) rows += XmbRow.Info("none", "No extra settings detected.", Icons.Filled.Info)
+    if (list.isEmpty()) rows += XmbRow.Info("none", I18n.s(R.string.ui_no_extra_settings_detected), Icons.Filled.Info)
     list.forEach { key ->
         val def = WrapperSettingsDictionary.defFor(key)
         val current = cfg.extras[key] ?: ""
@@ -630,7 +630,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
 
     // Applied at launch + the profile.
     val effective = com.winhub.hernandez.core.WaylandAdapterSettings.resolve(containerCfg, own().ifEmpty { null }, null, probe)
-    rows += XmbRow.Info(I18n.s(R.string.ui_adapplied), "Applied at launch", Icons.Filled.Info, subtitle = effective.summary("mailbox"))
+    rows += XmbRow.Info(I18n.s(R.string.ui_adapplied), I18n.s(R.string.ui_applied_at_launch), Icons.Filled.Info, subtitle = effective.summary("mailbox"))
     val containerProfile = com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(
         com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog.parseGraphicsDriverConfig(containerCfg)[
             com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PROFILE] ?: "")
@@ -642,7 +642,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         else com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(storedProfile)
     val profileHelp = if (storedProfile.isEmpty()) I18n.s(R.string.ui_use_whatever_the_container_is_set_to)
         else com.winhub.hernandez.core.WaylandAdapterSettings.profileHelp(storedProfile)
-    rows += XmbRow.Choice(I18n.s(R.string.ui_adprofile), "Profile", Icons.Filled.Tune, profileLabels, selectedProfile,
+    rows += XmbRow.Choice("adProfile", "Profile", Icons.Filled.Tune, profileLabels, selectedProfile,
         subtitle = profileHelp +
             (if (effective.profile != com.winhub.hernandez.core.WaylandAdapterSettings.PROFILE_SMOOTH)
                 "  Tip: if frames look uneven or jittery, try Smooth. It paces frames through the compositor " +
@@ -650,11 +650,11 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         val i = profileLabels.indexOf(picked)
         write(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PROFILE, if (i <= 0) "" else profiles[i - 1])
     }
-    rows += XmbRow.Info(I18n.s(R.string.ui_adenvnote), "Env vars always win", Icons.Filled.Info,
+    rows += XmbRow.Info(I18n.s(R.string.ui_adenvnote), I18n.s(R.string.ui_env_vars_always_win), Icons.Filled.Info,
         subtitle = I18n.s(R.string.ui_env_vars_you_type_under_env_vars_always_win_over_thes))
 
     // Advanced: single switches.
-    rows += XmbRow.Header("adAdvanced", "Advanced: single switches")
+    rows += XmbRow.Header("adAdvanced", I18n.s(R.string.ui_advanced_single_switches))
     fun tri(key: String, label: String, help: String) {
         val labels = listOf(defaultWord, "On", "Off")
         rows += XmbRow.Choice("ad_$key", label, Icons.Filled.Tune, labels,
@@ -673,22 +673,22 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
             write(presentKey, if (picked == defaultWord) "" else picked)
         }
     }
-    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY, "Asynchronous copy",
+    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY, I18n.s(R.string.ui_asynchronous_copy),
         "The compositor keeps frames in flight instead of waiting for each screen blit. Turn off if " +
             I18n.s(R.string.ui_frames_arrive_out_of_order_or_a_game_stutters_only_on))
-    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY, "Zero-copy presentation",
+    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY, I18n.s(R.string.ui_zero_copy_presentation),
         "The game's own buffer goes on screen without a copy (lowest latency, less heat). Needs " +
             I18n.s(R.string.ui_sync_file_fences_in_the_driver_see_the_report_turn_of))
-    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE, "Client render fences",
+    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE, I18n.s(R.string.ui_client_render_fences),
         "With zero-copy, the game's driver tells the compositor when a frame is finished. Turn off " +
             I18n.s(R.string.ui_only_to_compare_off_can_show_half_drawn_frames))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC, I18n.s(R.string.ui_ubwc_compressed_buffers),
         "Frames travel as compressed GPU buffers (less bandwidth). Turn off if the picture shows " +
             I18n.s(R.string.ui_garbled_blocks_or_stripes))
-    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS, "DRM format modifiers",
+    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS, I18n.s(R.string.ui_drm_format_modifiers),
         "Lets the game's driver and the compositor agree on buffer layouts. Off makes the game use " +
             I18n.s(R.string.ui_plain_linear_buffers_banner_wsi_no_modifiers_1_try_it))
-    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM, "KGSL timing shim",
+    tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM, I18n.s(R.string.ui_kgsl_timing_shim),
         "Works around a Turnip bug where asking \"is the GPU done?\" waits for the whole frame " +
             I18n.s(R.string.ui_the_report_s_timing_bug_default_lets_the_adapter_dete))
     run {
@@ -696,7 +696,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         val labels = listOf(defaultWord, "Auto", "Off")
         rows += XmbRow.Choice("ad_$key", "Subgroups", Icons.Filled.Tune, labels,
             when (v(key)) { "auto" -> "Auto"; "0" -> "Off"; else -> defaultWord },
-            subtitle = "Auto tells the game what subgroup operations your Mesa driver supports (DOOM Eternal and " +
+            subtitle = I18n.s(R.string.ui_auto_tells_the_game_what_subgroup_operations_your_mesa_d) +
                 "other games that need them start). Off hides them, as older adapters did; try it if a game " +
                 I18n.s(R.string.ui_shows_glitches_or_crashes_that_it_did_not_before)) { picked ->
             write(key, when (picked) { "Auto" -> "auto"; "Off" -> "0"; else -> "" })
@@ -704,13 +704,13 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
     }
 
     // Adapter report.
-    rows += XmbRow.Header("adReportHeader", "Adapter report")
+    rows += XmbRow.Header("adReportHeader", I18n.s(R.string.ui_adapter_report))
     fun info(key: String, label: String, value: String) {
         rows += XmbRow.Info(key, label, Icons.Filled.Info, subtitle = value)
     }
     when {
         driverId.isEmpty() || driverId == "System" ->
-            info("adReport", "Adapter report", I18n.s(R.string.ui_no_turnip_graphics_driver_is_set_so_there_is_nothing))
+            info("adReport", I18n.s(R.string.ui_adapter_report), I18n.s(R.string.ui_no_turnip_graphics_driver_is_set_so_there_is_nothing))
         probe == null -> info("adReport", "Adapter report", I18n.s(R.string.ui_not_checked_yet))
         !probe.ok -> info("adReport", I18n.s(R.string.ui_could_not_check), probe.error ?: I18n.s(R.string.ui_unknown_error))
         else -> {

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -292,7 +295,7 @@ object SteamLiteComponent {
      *  the copy looking like version 0 → offered as an update next time. */
     private fun writeInstalledVersion(context: Context, version: Int) {
         runCatching { File(installDir(context), VERSION_MARKER_REL).writeText(version.toString()) }
-            .onFailure { Log.w(TAG, "couldn't write steamlite version marker", it) }
+            .onFailure { Log.w(TAG, I18n.s(R.string.ui_couldn_t_write_steamlite_version_marker), it) }
     }
 
     private fun md5Upper(file: File): String {

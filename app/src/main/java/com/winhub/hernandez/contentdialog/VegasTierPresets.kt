@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contentdialog
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import com.winhub.hernandez.core.GPUInformation
 import java.io.File
@@ -29,7 +32,7 @@ object VegasTierPresets {
     val TIERS = listOf(
         Tier(1, "Tier 1", "Entry — 5xx / 6xx entry (506–620) · GTX 1050 Ti-class",
             listOf("506", "508", "509", "512", "610", "615", "616", "618", "619", "620")),
-        Tier(2, "Tier 2", "Mid — 6xx mid (630–690, 642L) · GTX 1070-class",
+        Tier(2, "Tier 2", I18n.s(R.string.ui_mid_6xx_mid_630_690_642l_gtx_1070_class),
             listOf("630", "640", "642", "650", "660", "680", "690")),
         Tier(3, "Tier 3", "High — 7xx / 8xx (830, 840) · RTX 3060-class",
             listOf("730", "740", "750", "830", "840"))

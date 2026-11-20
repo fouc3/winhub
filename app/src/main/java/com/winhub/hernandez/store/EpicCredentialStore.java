@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -32,7 +35,7 @@ public class EpicCredentialStore {
                     .putLong("expires_at",      creds.expiresAt)
                     .apply();
         } catch (Exception e) {
-            Log.e(TAG, "Failed to save Epic credentials: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_save_epic_credentials) + e.getClass().getSimpleName());
         }
     }
 
@@ -50,7 +53,7 @@ public class EpicCredentialStore {
             creds.expiresAt    = sp.getLong("expires_at",      0L);
             return creds;
         } catch (Exception e) {
-            Log.e(TAG, "Failed to load Epic credentials: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_load_epic_credentials) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -82,14 +85,14 @@ public class EpicCredentialStore {
         long fiveMinutesMs = 5L * 60L * 1000L;
         if ((creds.expiresAt - System.currentTimeMillis()) < fiveMinutesMs
                 && creds.refreshToken != null) {
-            Log.d(TAG, "Epic token near expiry, refreshing...");
+            Log.d(TAG, I18n.s(R.string.ui_epic_token_near_expiry_refreshing));
             EpicAuthClient.TokenResult result = EpicAuthClient.refreshToken(creds.refreshToken);
             if (result != null) {
                 creds.accessToken  = result.accessToken;
                 creds.refreshToken = result.refreshToken != null ? result.refreshToken : creds.refreshToken;
                 creds.expiresAt    = result.expiresAt;
                 save(ctx, creds);
-                Log.d(TAG, "Epic token refreshed OK");
+                Log.d(TAG, I18n.s(R.string.ui_epic_token_refreshed_ok));
             }
         }
 

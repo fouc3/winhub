@@ -79,7 +79,7 @@ object AppIcon {
         } catch (e: IllegalArgumentException) {
             Log.w(TAG, "No launcher alias for $key", e)
         } catch (e: SecurityException) {
-            Log.w(TAG, "The launcher icon could not be switched", e)
+            Log.w(TAG, I18n.s(R.string.ui_the_launcher_icon_could_not_be_switched), e)
         }
     }
 }

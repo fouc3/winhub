@@ -126,28 +126,28 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             }
         }
 
-        rows += XmbRow.Header("hNow", "This device now")
-        rows += XmbRow.Info(I18n.s(R.string.ui_gpuclock), "GPU clock", Icons.Filled.Memory, readouts["gpuMhz"] ?: "…")
-        rows += XmbRow.Info("socTemp", "SoC temp", Icons.Filled.Speed, readouts["socTemp"] ?: "…")
+        rows += XmbRow.Header("hNow", I18n.s(R.string.ui_this_device_now))
+        rows += XmbRow.Info(I18n.s(R.string.ui_gpuclock), I18n.s(R.string.ui_gpu_clock), Icons.Filled.Memory, readouts["gpuMhz"] ?: "…")
+        rows += XmbRow.Info("socTemp", I18n.s(R.string.ui_soc_temp), Icons.Filled.Speed, readouts["socTemp"] ?: "…")
         rows += XmbRow.Info("governor", "Governor", Icons.Filled.Tune, readouts["governor"] ?: "…")
 
-        rows += XmbRow.Header("hProfile", "Power profile")
+        rows += XmbRow.Header("hProfile", I18n.s(R.string.ui_power_profile))
         val profOpts = if (profile == null) listOf("Custom") + P2_PROFILES else P2_PROFILES
-        rows += XmbRow.Choice("profile", "Power profile", Icons.Filled.Speed, profOpts, profile ?: "Custom",
+        rows += XmbRow.Choice("profile", I18n.s(R.string.ui_power_profile), Icons.Filled.Speed, profOpts, profile ?: "Custom",
             subtitle = I18n.s(R.string.ui_sets_the_toggles_below_in_one_go), disabledOptions = setOf("Custom")) { v -> applyProfile(v) }
 
-        rows += XmbRow.Header("hQuick", "Quick controls · no root")
-        toggle("sustainedPerfMode", "Sustained Performance Mode", "Holds a stable clock to avoid thermal throttling")
-        toggle("perfPriorityBoost", "Thread Priority Boost", "Raises emulator thread priority so the scheduler favours the game")
-        toggle("preferBigCores", "Prefer Big Cores", "Routes emulator threads onto the big / prime cluster")
-        toggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, "Lock GPU to max clock", "Adreno: no-root KGSL turbo; sysfs pin with root")
+        rows += XmbRow.Header("hQuick", I18n.s(R.string.ui_quick_controls_no_root))
+        toggle("sustainedPerfMode", I18n.s(R.string.ui_sustained_performance_mode), I18n.s(R.string.ui_holds_a_stable_clock_to_avoid_thermal_throttling))
+        toggle("perfPriorityBoost", I18n.s(R.string.ui_thread_priority_boost), I18n.s(R.string.ui_raises_emulator_thread_priority_so_the_scheduler_favours))
+        toggle("preferBigCores", I18n.s(R.string.ui_prefer_big_cores), "Routes emulator threads onto the big / prime cluster")
+        toggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, I18n.s(R.string.ui_lock_gpu_to_max_clock), I18n.s(R.string.ui_adreno_no_root_kgsl_turbo_sysfs_pin_with_root))
 
         rows += XmbRow.Header("hRoot", "Root & danger")
-        rows += XmbRow.Info(I18n.s(R.string.ui_rootstate), if (granted) "Root granted" else "Saved for this game · applied at launch when root is available",
+        rows += XmbRow.Info(I18n.s(R.string.ui_rootstate), if (granted) "Root granted" else I18n.s(R.string.ui_saved_for_this_game_applied_at_launch_when_root_is_avail),
             if (granted) Icons.Filled.Info else Icons.Filled.Warning)
         if (!granted) {
-            rows += XmbRow.Action("grantRoot", "Grant root", Icons.Filled.Warning, subtitle = I18n.s(R.string.ui_power_user_controls_read_the_warning_first)) {
-                xmb.confirm(XmbConfirm("Power-user performance", "Use at your own risk — these controls write system files and can overheat or damage the device.", "Grant Root", danger = true)) {
+            rows += XmbRow.Action("grantRoot", I18n.s(R.string.ui_grant_root_2), Icons.Filled.Warning, subtitle = I18n.s(R.string.ui_power_user_controls_read_the_warning_first)) {
+                xmb.confirm(XmbConfirm(I18n.s(R.string.ui_power_user_performance), I18n.s(R.string.ui_use_at_your_own_risk_these_controls_write_system_files_a), I18n.s(R.string.ui_grant_root), danger = true)) {
                     xmb.scope.launch {
                         RootManager.requestGrant()
                         rootState = RootManager.state.value
@@ -155,15 +155,15 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 }
             }
         }
-        toggle(PerfRootApplier.KEY_CPU_GOVERNOR, "CPU governor → performance", "Forces every cluster to the performance governor")
-        toggle(PerfRootApplier.KEY_CPU_FREQ_LOCK, "Lock CPU frequency to max", "scaling_min_freq = scaling_max_freq on every cluster")
-        toggle(PerfRootApplier.KEY_CORES_ONLINE, "Keep all cores online", "Prevents the kernel from hot-plugging cores offline")
-        toggle(PerfRootApplier.KEY_THERMAL_DISABLE, "Disable thermal throttling", "Runtime watchdog still guards", danger = true)
-        toggle(PerfRootApplier.KEY_FAN_MAX, "Fan to maximum", "Forces active cooling to full at launch", danger = true)
+        toggle(PerfRootApplier.KEY_CPU_GOVERNOR, I18n.s(R.string.ui_cpu_governor_performance), I18n.s(R.string.ui_forces_every_cluster_to_the_performance_governor))
+        toggle(PerfRootApplier.KEY_CPU_FREQ_LOCK, I18n.s(R.string.ui_lock_cpu_frequency_to_max), "scaling_min_freq = scaling_max_freq on every cluster")
+        toggle(PerfRootApplier.KEY_CORES_ONLINE, I18n.s(R.string.ui_keep_all_cores_online), I18n.s(R.string.ui_prevents_the_kernel_from_hot_plugging_cores_offline))
+        toggle(PerfRootApplier.KEY_THERMAL_DISABLE, I18n.s(R.string.ui_disable_thermal_throttling), I18n.s(R.string.ui_runtime_watchdog_still_guards), danger = true)
+        toggle(PerfRootApplier.KEY_FAN_MAX, I18n.s(R.string.ui_fan_to_maximum), I18n.s(R.string.ui_forces_active_cooling_to_full_at_launch), danger = true)
 
         val anyOverride = P2_PERF_KEYS.any { p2PerfValue(shortcut, it) != p2PerfGlobal(it) }
         if (anyOverride) {
-            rows += XmbRow.Action("resetAll", "Reset all to global", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_this_game_follows_app_settings_again)) {
+            rows += XmbRow.Action("resetAll", I18n.s(R.string.ui_reset_all_to_global), Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_this_game_follows_app_settings_again)) {
                 profile = null
                 write(P2_PERF_KEYS.map { it to p2PerfGlobal(it) })
             }
@@ -208,17 +208,17 @@ internal fun xmbPlayerSlotsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val rows = mutableListOf<XmbRow>()
         val json = saved()
         if (json.isEmpty()) {
-            rows += XmbRow.Info("inherit", "Inheriting the container's Player Slots. Pin a controller below to set a per-game override.", Icons.Filled.Info)
+            rows += XmbRow.Info("inherit", I18n.s(R.string.ui_inheriting_the_container_s_player_slots_pin_a_control), Icons.Filled.Info)
         } else {
-            rows += XmbRow.Action("useDefault", "Use container default", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_drop_this_game_pins)) {
+            rows += XmbRow.Action("useDefault", I18n.s(R.string.fullscreen_mode_default), Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_drop_this_game_pins)) {
                 p2Put(xmb, shortcut, "controllerSlotOverrides", null)
                 slotRows = build()
             }
         }
-        rows += XmbRow.Info("about", "Pin a controller (or the on-screen pad) to a player slot. Applied on launch.", Icons.Filled.Info)
-        rows += XmbRow.Action("refresh", "Refresh controllers", Icons.Filled.Refresh, subtitle = I18n.s(R.string.ui_re_scan_connected_pads)) { slotRows = build() }
+        rows += XmbRow.Info("about", I18n.s(R.string.ui_pin_a_controller_or_the_on_screen_pad_to_a_player_slot_a), Icons.Filled.Info)
+        rows += XmbRow.Action("refresh", I18n.s(R.string.ui_refresh_controllers), Icons.Filled.Refresh, subtitle = I18n.s(R.string.ui_re_scan_connected_pads)) { slotRows = build() }
         if (slotRows.isEmpty()) {
-            rows += XmbRow.Info("none", "No controllers detected. Connect one to assign it.", Icons.Filled.Info)
+            rows += XmbRow.Info("none", I18n.s(R.string.ui_no_controllers_detected_connect_one_to_assign_it), Icons.Filled.Info)
         }
         val seen = HashSet<String>()
         slotRows.forEach { r ->
@@ -226,11 +226,11 @@ internal fun xmbPlayerSlotsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             val status = when {
                 r.override == WinHandler.SLOT_IGNORE -> "Ignored"
                 r.override >= 0 -> "Pinned to Player ${r.override + 1}"
-                else -> "Auto (assigned by launch order)"
+                else -> I18n.s(R.string.ui_auto_assigned_by_launch_order)
             }
             val suffix = when {
-                r.isOnScreen -> " · on-screen controls"
-                !r.connected -> " · not connected (saved pin)"
+                r.isOnScreen -> I18n.s(R.string.ui_on_screen_controls)
+                !r.connected -> I18n.s(R.string.ui_not_connected_saved_pin)
                 else -> ""
             }
             rows += XmbRow.Choice("slot:${r.descriptor}", r.displayName, if (r.isOnScreen) Icons.Filled.TouchApp else Icons.Filled.Gamepad,

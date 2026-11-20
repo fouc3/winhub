@@ -145,7 +145,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                 if (zeroCopy) decoders?.setZeroCopySurface(null) else nativeVideo.setSurface(null, 0, 0, 60f)
             }
         })
-        show("Signing in to Xbox Cloud Gaming…")
+        show(I18n.s(R.string.ui_signing_in_to_xbox_cloud_gaming))
         worker.execute { runCatching { run() }.onFailure { fail("start", it.message ?: it.javaClass.simpleName) } }
     }
 
@@ -155,7 +155,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
     private fun fail(stage: String, detail: String) {
         log("failed at $stage: $detail")
         if (closed) return
-        if (connectedOnce) showNotice("The connection to the cloud console was lost",
+        if (connectedOnce) showNotice(I18n.s(R.string.ui_the_connection_to_the_cloud_console_was_lost),
             "The stream stopped reaching this device ($detail). Restart the stream to play again: the game starts over, " +
                 "unsaved progress is lost.", webPlayer = false)
         else showNotice("The native stream could not start ($stage)",
@@ -190,7 +190,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     text = { androidx.compose.material3.Text(text) },
                     confirmButton = {
                         androidx.compose.foundation.layout.Row {
-                            NoticeButton(if (connectedOnce) "Restart the stream" else "Try again", first) { restartStream() }
+                            NoticeButton(if (connectedOnce) "Restart the stream" else I18n.s(R.string.gog_login_retry), first) { restartStream() }
                             if (webPlayer) NoticeButton(I18n.s(R.string.ui_open_the_web_player), null) {
                                 startActivity(Intent(this@XboxNativePlayerActivity, XboxCloudPlayerActivity::class.java).putExtras(intent)); finish()
                             }
@@ -243,18 +243,18 @@ class XboxNativePlayerActivity : ComponentActivity() {
     // ---- session ----
 
     private fun run() {
-        val account = XboxAccountStore.signedInAs(applicationContext) ?: error("Sign in to the Xbox store first.")
+        val account = XboxAccountStore.signedInAs(applicationContext) ?: error(I18n.s(R.string.ui_sign_in_to_the_xbox_store_first))
         val requested = intent.getStringExtra("product").orEmpty()
         val cached = XboxLibraryCache.read(applicationContext, account, Xodus.market())?.games?.firstOrNull { it.id == requested }
         val product = cached?.cloudId ?: requested
         val active = XboxCloudSession.get(applicationContext, account).forStream(settings.region, settings.osName)
         regionNames = active.regionList.map { it.name }
         serverName = active.regionList.firstOrNull { it.baseUri == active.baseUri }?.name
-        val title = XboxCloudSession.titles(active)[product] ?: error("This game can't be streamed with this account here.")
+        val title = XboxCloudSession.titles(active)[product] ?: error(I18n.s(R.string.ui_this_game_can_t_be_streamed_with_this_account_here))
         val signals = XboxCloudSignalling(active, title, settings).also { signalling = it }
         log("$product -> $title, region ${java.net.URI(active.baseUri).host}, frame gen ${settings.frameGen}")
 
-        show("Starting the game on Xbox Cloud Gaming…")
+        show(I18n.s(R.string.ui_starting_the_game_on_xbox_cloud_gaming))
         expect("start", signals.start())
         var connected = false
         var waited = 0
@@ -263,7 +263,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
             when (state.optString("state")) {
                 "Provisioned" -> break
                 "Failed" -> error("provision: ${state.optJSONObject("errorDetails")}")
-                "ReadyToConnect" -> if (!connected) { connected = true; show("Signing in to the cloud console…"); expect("connect", signals.connect()) }
+                "ReadyToConnect" -> if (!connected) { connected = true; show(I18n.s(R.string.ui_signing_in_to_the_cloud_console)); expect("connect", signals.connect()) }
                 "WaitingForResources" -> show("In the queue for a cloud console… ${waited / 1000} s")
                 else -> show("Getting a cloud console ready… ${waited / 1000} s")
             }
@@ -296,7 +296,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
             .setVideoEncoderFactory(DefaultVideoEncoderFactory(egl.eglBaseContext, true, true))
             .createPeerConnectionFactory().also { factory = it }
         val config = PeerConnection.RTCConfiguration(emptyList()).apply { sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN }
-        val peer = f.createPeerConnection(config, observer) ?: error("WebRTC unavailable")
+        val peer = f.createPeerConnection(config, observer) ?: error(I18n.s(R.string.ui_webrtc_unavailable))
         pc = peer
         peer.addTransceiver(MediaStreamTrack.MediaType.MEDIA_TYPE_AUDIO, RtpTransceiver.RtpTransceiverInit(RtpTransceiver.RtpTransceiverDirection.SEND_RECV))
         peer.addTransceiver(MediaStreamTrack.MediaType.MEDIA_TYPE_VIDEO, RtpTransceiver.RtpTransceiverInit(RtpTransceiver.RtpTransceiverDirection.RECV_ONLY))
@@ -392,7 +392,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     video?.setFrameGeneration(effectiveFrameGen())
                 }
                 PeerConnection.PeerConnectionState.FAILED -> fail("webrtc", "connection failed")
-                PeerConnection.PeerConnectionState.DISCONNECTED -> show("Connection lost…")
+                PeerConnection.PeerConnectionState.DISCONNECTED -> show(I18n.s(R.string.ui_connection_lost))
                 else -> {}
             }
         }
@@ -616,16 +616,16 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     fun fpsName(s: XboxCloudSettings) = if (s.fpsTarget == 0) "the screen's rate" else "${s.fpsTarget} fps"
                     when (menuPage) {
                         "" -> {
-                            XboxMenuEntry("Resume", "Back to the game", entries[0], { lastMainEntry = 0 }) { closeMenu() }
-                            XboxMenuEntry(I18n.s(R.string.ui_xbox_menu), "The game's Xbox menu (also: Guide once)", entries[1], { lastMainEntry = 1 }) { closeMenu(); pressNexus() }
+                            XboxMenuEntry("Resume", I18n.s(R.string.ui_back_to_the_game), entries[0], { lastMainEntry = 0 }) { closeMenu() }
+                            XboxMenuEntry(I18n.s(R.string.ui_xbox_menu), I18n.s(R.string.ui_the_game_s_xbox_menu_also_guide_once), entries[1], { lastMainEntry = 1 }) { closeMenu(); pressNexus() }
                             XboxMenuEntry(I18n.s(R.string.ui_frame_generation_low_latency), "Now: ${fgName(current.frameGen)}" + if (zeroCopy) " · zero-copy" else "",
                                 entries[2], { lastMainEntry = 2 }) { menuPage = "framegen" }
                             XboxMenuEntry(I18n.s(R.string.ui_frame_rate), "Target: ${fpsName(current)}", entries[3], { lastMainEntry = 3 }) { menuPage = "framerate" }
-                            XboxMenuEntry(I18n.s(R.string.ui_stream_quality), "Engine, resolution, region, codec, bitrate (next stream)", entries[4], { lastMainEntry = 4 }) { menuPage = "stream" }
+                            XboxMenuEntry(I18n.s(R.string.ui_stream_quality), I18n.s(R.string.ui_engine_resolution_region_codec_bitrate_next_stream), entries[4], { lastMainEntry = 4 }) { menuPage = "stream" }
                             XboxMenuEntry("Performance overlay and rumble", if (current.statsLevel == 0) "Overlay off"
                                 else "Overlay: " + listOf("", I18n.s(R.string.ui_fps_only), I18n.s(R.string.ui_basic), I18n.s(R.string.ui_detailed), I18n.s(R.string.ui_full))[current.statsLevel] + ", " + current.statsLayout,
                                 entries[5], { lastMainEntry = 5 }) { menuPage = "overlay-native" }
-                            XboxMenuEntry(I18n.s(R.string.ui_leave), "End the stream", entries[6], { lastMainEntry = 6 }) { finish() }
+                            XboxMenuEntry(I18n.s(R.string.ui_leave), I18n.s(R.string.ui_end_the_stream), entries[6], { lastMainEntry = 6 }) { finish() }
                             androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
@@ -635,10 +635,10 @@ class XboxNativePlayerActivity : ComponentActivity() {
                             val modes = if (lsfg) FG_MODES else FG_MODES.take(2)
                             modes.forEachIndexed { i, mode ->
                                 XboxMenuEntry((if (current.frameGen == mode) "✓  " else "") + fgName(mode), when (mode) {
-                                    XboxNativeVideo.FG_WINFG -> "Bannerlator's own frame generation; doubles the shown frame rate"
+                                    XboxNativeVideo.FG_WINFG -> I18n.s(R.string.ui_bannerlator_s_own_frame_generation_doubles_the_shown_fra)
                                     XboxNativeVideo.FG_LSFG, XboxNativeVideo.FG_LSFG3, XboxNativeVideo.FG_LSFG4 ->
                                         "Lossless Scaling frame generation (Lossless.dll from Settings); the frame-rate target caps the output"
-                                    else -> "Show the stream's own frames only"
+                                    else -> I18n.s(R.string.ui_show_the_stream_s_own_frames_only)
                                 }, choices[i]) { current = current.copy(frameGen = mode); setFrameGen(mode) }
                             }
                             if (!lsfg) androidx.compose.material3.Text(I18n.s(R.string.ui_lsfg_appears_here_once_lossless_dll_is_imported_in_se),
@@ -654,7 +654,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                                 current = changed; settings = changed; XboxCloudSettings.save(this@XboxNativePlayerActivity, changed)
                                 if (routeChanged) applyRoute()
                             }
-                            XboxMenuEntry("Restart the stream with these settings",
+                            XboxMenuEntry(I18n.s(R.string.ui_restart_the_stream_with_these_settings),
                                 "Ends this cloud session and starts a new one; the game restarts, unsaved progress is lost.") { restartStream() }
                         }
                         else -> {
@@ -695,7 +695,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
         closeMenu()
         notice?.let { root.removeView(it) }
         notice = null
-        show("Restarting the stream…")
+        show(I18n.s(R.string.ui_restarting_the_stream))
         Thread({
             signals?.stop()?.let { log("restart: session closed ${it.status}") }
             runOnUiThread { if (!isFinishing) { startActivity(XboxCloudPlayerActivity.intent(this, intent.getStringExtra("product").orEmpty(), intent.getStringExtra("title").orEmpty())); finish() } }
@@ -728,9 +728,9 @@ class XboxNativePlayerActivity : ComponentActivity() {
             if (target == null) return
             video?.setSurface(null, 0, 0, 60f)
             if (d.useScreen(target)) { lastZeroCopyFrames = zeroCopyFrames; zeroCopy = true; log("route: zero-copy") }
-            else { attachCompositor(target); log("route: zero-copy refused by the decoder, compositor kept") }
+            else { attachCompositor(target); log(I18n.s(R.string.ui_route_zero_copy_refused_by_the_decoder_compositor_kept)) }
         } else {
-            if (!d.useScreen(null)) { log("route: decoder could not leave the screen, zero-copy kept"); return }
+            if (!d.useScreen(null)) { log(I18n.s(R.string.ui_route_decoder_could_not_leave_the_screen_zero_copy_kept)); return }
             zeroCopy = false
             target?.let { attachCompositor(it) }
             log("route: compositor")

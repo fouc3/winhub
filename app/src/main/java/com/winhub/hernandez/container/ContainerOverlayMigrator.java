@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -49,13 +52,13 @@ public final class ContainerOverlayMigrator {
             if (!ContainerOverlay.isEligible(container)) return true;
             boolean thin = !container.getBasePrefix().isEmpty();
             if (!thin && !ContainerOverlay.overlayLibFile(context).isFile()) {
-                Log.i(TAG, "Overlay library missing, container " + container.id + " stays a full prefix");
+                Log.i(TAG, I18n.s(R.string.ui_overlay_library_missing_container) + container.id + " stays a full prefix");
                 return true;
             }
 
             File baseWine = BasePrefix.ensure(context, contentsManager, container.getWineVersion());
             if (baseWine == null) {
-                Log.e(TAG, "No base prefix for " + container.getWineVersion() + ", repairing container " + container.id);
+                Log.e(TAG, I18n.s(R.string.ui_no_base_prefix_for) + container.getWineVersion() + I18n.s(R.string.ui_repairing_container) + container.id);
                 if (thin) repairToFullPrefix(context, contentsManager, container);
                 return true;
             }
@@ -74,7 +77,7 @@ public final class ContainerOverlayMigrator {
             }
         }
         catch (Throwable t) {
-            Log.w(TAG, "migrateIfNeeded failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_migrateifneeded_failed), t);
         }
         return true;
     }
@@ -83,16 +86,16 @@ public final class ContainerOverlayMigrator {
         try {
             ContainerManager containerManager = new ContainerManager(context);
             if (!containerManager.extractContainerPatternFile(container, container.getWineVersion(), contentsManager, container.getRootDir(), null)) {
-                Log.e(TAG, "Full-prefix repair failed for container " + container.id);
+                Log.e(TAG, I18n.s(R.string.ui_full_prefix_repair_failed_for_container) + container.id);
                 return;
             }
             ContainerFiles.deleteRecursively(new File(new File(container.getRootDir(), ".wine"), ContainerOverlay.OVERLAY_DIR));
             container.setBasePrefix("");
             container.saveData();
-            Log.i(TAG, "Container " + container.id + " rebuilt as a full prefix (overlay base unavailable)");
+            Log.i(TAG, "Container " + container.id + I18n.s(R.string.ui_rebuilt_as_a_full_prefix_overlay_base_unavailable));
         }
         catch (Throwable t) {
-            Log.w(TAG, "repairToFullPrefix failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_repairtofullprefix_failed), t);
         }
     }
 
@@ -106,7 +109,7 @@ public final class ContainerOverlayMigrator {
     }
 
     static final String[] BUILTIN_DIRS = {"drive_c/windows/system32", "drive_c/windows/syswow64"};
-    private static final byte[] BUILTIN_MARKER = "Wine builtin DLL".getBytes();
+    private static final byte[] BUILTIN_MARKER = I18n.s(R.string.ui_wine_builtin_dll).getBytes();
 
     static int dropStaleBuiltins(File upperWine, File baseWine) {
         int dropped = 0;
@@ -121,7 +124,7 @@ public final class ContainerOverlayMigrator {
                 if (file.delete()) dropped++;
             }
         }
-        if (dropped > 0) Log.i(TAG, "Dropped " + dropped + " stale Wine builtins from " + upperWine);
+        if (dropped > 0) Log.i(TAG, "Dropped " + dropped + I18n.s(R.string.ui_stale_wine_builtins_from) + upperWine);
         return dropped;
     }
 
@@ -149,7 +152,7 @@ public final class ContainerOverlayMigrator {
     public static Result migrate(Container container, File baseWine, List<File> protonLibDirs) {
         File upper = new File(container.getRootDir(), ".wine");
         Result result = prune(upper, baseWine, protonLibDirs);
-        Log.i(TAG, "Overlay migration for container " + container.id + ": " + result);
+        Log.i(TAG, I18n.s(R.string.ui_overlay_migration_for_container) + container.id + ": " + result);
         if (result.completed) {
             ContainerFiles.deleteRecursively(new File(container.getRootDir(), ".cache/original_dlls"));
             new File(upper, ContainerOverlay.OVERLAY_DIR).mkdirs();

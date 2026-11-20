@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -112,7 +115,7 @@ object SocialProfiles {
         } else {
             SocialHubStore.postJson("$ISSUES_URL/$PROFILES_ISSUE/comments", payload)
         }
-        if (code !in 200..299) return@withContext SocialHubStore.githubError(text, code, "Could not save your profile.")
+        if (code !in 200..299) return@withContext SocialHubStore.githubError(text, code, I18n.s(R.string.ui_could_not_save_your_profile))
         runCatching { JSONObject(text).optLong("id") }.getOrNull()?.takeIf { it > 0 }?.let { newId ->
             synchronized(commentIds) { commentIds[login] = newId }
         }

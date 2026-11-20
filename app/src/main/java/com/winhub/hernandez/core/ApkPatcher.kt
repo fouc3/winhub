@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import org.tukaani.xz.XZInputStream
 import java.io.BufferedInputStream
 import java.io.EOFException
@@ -34,7 +37,7 @@ object ApkPatcher {
     fun readHeader(input: InputStream): Header {
         val b = ByteBuffer.wrap(readFully(input, HEADER_SIZE)).order(ByteOrder.LITTLE_ENDIAN)
         val magic = ByteArray(4).also { b.get(it) }
-        if (!magic.contentEquals(MAGIC)) throw IOException("not a BLDP patch")
+        if (!magic.contentEquals(MAGIC)) throw IOException(I18n.s(R.string.ui_not_a_bldp_patch))
         val version = b.short.toInt()
         if (version != 1) throw IOException("BLDP version $version is not supported")
         b.short  // flags

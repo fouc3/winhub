@@ -154,7 +154,7 @@ object SteamChatNotifier {
             activeIds.clear()
             convos.clear()
         } catch (t: Throwable) {
-            Log.w(TAG, "cancelAll failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_cancelall_failed), t)
         }
     }
 
@@ -214,7 +214,7 @@ object SteamChatNotifier {
                 nm.createNotificationChannel(silent)
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "ensureChannels failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_ensurechannels_failed), t)
         }
     }
 
@@ -234,7 +234,7 @@ object SteamChatNotifier {
                 conn.disconnect()
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "loadAvatar failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_loadavatar_failed), t)
             null
         }
     }

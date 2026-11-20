@@ -1,5 +1,8 @@
 package com.winhub.hernandez.cast;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
@@ -74,7 +77,7 @@ public class CastDiscovery {
             nsd.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
             discovering = true;
         } catch (Exception e) {
-            Log.w(TAG, "discoverServices failed", e);
+            Log.w(TAG, I18n.s(R.string.ui_discoverservices_failed), e);
         }
     }
 
@@ -94,7 +97,7 @@ public class CastDiscovery {
                 }
             });
         } catch (Exception e) {
-            Log.w(TAG, "resolveService failed", e);
+            Log.w(TAG, I18n.s(R.string.ui_resolveservice_failed), e);
         }
     }
 

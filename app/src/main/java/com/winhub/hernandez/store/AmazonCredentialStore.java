@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -55,7 +58,7 @@ public class AmazonCredentialStore {
                 fos.write(json.toString().getBytes(StandardCharsets.UTF_8));
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed to save credentials: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_save_credentials) + e.getClass().getSimpleName());
         }
     }
 
@@ -82,7 +85,7 @@ public class AmazonCredentialStore {
         } catch (Exception e) {
             // Do NOT log the throwable — a JSONException message can echo the raw
             // contents of credentials.json (tokens, device serial).
-            Log.e(TAG, "Failed to load credentials: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_load_credentials) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -95,7 +98,7 @@ public class AmazonCredentialStore {
                 file.delete();
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed to clear credentials", e);
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_clear_credentials), e);
         }
     }
 
@@ -119,7 +122,7 @@ public class AmazonCredentialStore {
         boolean nearExpiry = (creds.expiresAt - System.currentTimeMillis()) < fiveMinutesMs;
 
         if (nearExpiry && creds.refreshToken != null) {
-            Log.d(TAG, "Token near expiry, refreshing...");
+            Log.d(TAG, I18n.s(R.string.ui_token_near_expiry_refreshing));
             AmazonAuthClient.RegisterResult result =
                     AmazonAuthClient.refreshAccessToken(creds.refreshToken);
             if (result != null) {
@@ -127,7 +130,7 @@ public class AmazonCredentialStore {
                 creds.expiresAt   = System.currentTimeMillis() + (result.expiresIn * 1000L);
                 // refreshToken unchanged — NOT returned in refresh response
                 save(ctx, creds);
-                Log.d(TAG, "Token refreshed OK");
+                Log.d(TAG, I18n.s(R.string.ui_token_refreshed_ok));
             }
         }
 

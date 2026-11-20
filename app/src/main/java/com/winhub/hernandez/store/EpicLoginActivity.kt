@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -41,7 +44,7 @@ class EpicLoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "EpicLoginActivity: loading auth page")
+        Log.d(TAG, I18n.s(R.string.ui_epicloginactivity_loading_auth_page))
         setContent {
             WinlatorTheme {
                 DeckStoreTheme {
@@ -72,19 +75,19 @@ class EpicLoginActivity : ComponentActivity() {
             if (authCode.isNullOrEmpty()) {
                 Log.e(TAG, "authorizationCode not found in redirect page (len=${result.length})")
                 codeCaptured.set(false)
-                resultBarMsg = "Epic login failed, please try again"
+                resultBarMsg = I18n.s(R.string.ui_epic_login_failed_please_try_again)
                 view.loadUrl(AUTH_URL)
                 return@evaluateJavascript
             }
 
-            Log.d(TAG, "Epic auth code captured, exchanging for tokens...")
+            Log.d(TAG, I18n.s(R.string.ui_epic_auth_code_captured_exchanging_for_tokens))
             lifecycleScope.launch(Dispatchers.IO) {
                 val tokenResult = EpicAuthClient.exchangeCode(authCode)
                 if (tokenResult == null) {
-                    Log.e(TAG, "Epic token exchange failed")
+                    Log.e(TAG, I18n.s(R.string.ui_epic_token_exchange_failed))
                     withContext(Dispatchers.Main) {
                         codeCaptured.set(false)
-                        resultBarMsg = "Epic login failed, please try again"
+                        resultBarMsg = I18n.s(R.string.ui_epic_login_failed_please_try_again)
                         view.loadUrl(AUTH_URL)
                     }
                     return@launch
@@ -98,7 +101,7 @@ class EpicLoginActivity : ComponentActivity() {
                 creds.expiresAt = tokenResult.expiresAt
                 EpicCredentialStore.save(this@EpicLoginActivity, creds)
 
-                Log.d(TAG, "Epic login saved OK")   // don't log displayName (PII)
+                Log.d(TAG, I18n.s(R.string.ui_epic_login_saved_ok))   // don't log displayName (PII)
                 withContext(Dispatchers.Main) { finish() }
             }
         }

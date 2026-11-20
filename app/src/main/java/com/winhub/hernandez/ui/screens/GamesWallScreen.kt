@@ -926,12 +926,12 @@ private fun WallToolsSheet(onDismiss: () -> Unit, onNavigate: (String) -> Unit, 
     WallSheetScaffold(
         title = I18n.s(R.string.ui_tools),
         rows = listOf(
-            WallSheetRow(Icons.Filled.FolderOpen, "File Manager") { onNavigate(Screen.FileManager.route) },
+            WallSheetRow(Icons.Filled.FolderOpen, I18n.s(R.string.ui_file_manager)) { onNavigate(Screen.FileManager.route) },
             WallSheetRow(Icons.Filled.Layers, "Containers") { onNavigate(Screen.Containers.route) },
             WallSheetRow(Icons.Filled.Inventory2, "Contents") { onNavigate(Screen.Contents.route) },
             WallSheetRow(Icons.Filled.Save, "Saves") { onNavigate(Screen.Saves.route) },
-            WallSheetRow(Icons.Filled.SportsEsports, "Input Controls") { onNavigate(Screen.InputControls.route) },
-            WallSheetRow(Icons.Filled.Layers, "Manage Wrappers") { onNavigate(Screen.Wrappers.route) },
+            WallSheetRow(Icons.Filled.SportsEsports, I18n.s(R.string.input_controls)) { onNavigate(Screen.InputControls.route) },
+            WallSheetRow(Icons.Filled.Layers, I18n.s(R.string.wrapper_manager_title)) { onNavigate(Screen.Wrappers.route) },
             WallSheetRow(Icons.Filled.Download, "Downloads") { onDownloads() },
             WallSheetRow(Icons.Filled.Settings, "Settings") { onNavigate(Screen.Settings.route) },
         ),
@@ -944,7 +944,7 @@ private fun WallPowerSheet(onDismiss: () -> Unit, onSettings: () -> Unit, onQuit
     WallSheetScaffold(
         title = I18n.s(R.string.ui_power),
         rows = listOf(
-            WallSheetRow(Icons.Filled.Settings, "App settings", onSettings),
+            WallSheetRow(Icons.Filled.Settings, I18n.s(R.string.ui_app_settings_2), onSettings),
             WallSheetRow(Icons.Filled.PowerSettingsNew, "Quit", onQuit),
         ),
         onDismiss = onDismiss,
@@ -962,12 +962,12 @@ private fun GameOptionsWallSheet(
 ) {
     val doctor = LocalGameDoctor.current
     val rows = buildList {
-        add(WallSheetRow(Icons.Filled.Edit, "Edit shortcut", onEditShortcut))
-        add(WallSheetRow(Icons.Filled.Tune, "Container settings", onContainerSettings))
-        doctor?.let { open -> add(WallSheetRow(Icons.Filled.Healing, "Game Doctor") { onDismiss(); open(shortcut) }) }
-        add(WallSheetRow(Icons.Filled.Public, "Community configs", onCommunityConfigs))
+        add(WallSheetRow(Icons.Filled.Edit, I18n.s(R.string.ui_edit_shortcut), onEditShortcut))
+        add(WallSheetRow(Icons.Filled.Tune, I18n.s(R.string.ui_container_settings), onContainerSettings))
+        doctor?.let { open -> add(WallSheetRow(Icons.Filled.Healing, I18n.s(R.string.ui_game_doctor)) { onDismiss(); open(shortcut) }) }
+        add(WallSheetRow(Icons.Filled.Public, I18n.s(R.string.ui_community_configs_2), onCommunityConfigs))
         if (!shortcut.customCoverArtPath.isNullOrEmpty()) {
-            add(WallSheetRow(Icons.Filled.Image, "Remove cover art", onRemoveCover))
+            add(WallSheetRow(Icons.Filled.Image, I18n.s(R.string.ui_remove_cover_art), onRemoveCover))
         }
     }
     WallSheetScaffold(title = shortcut.name, rows = rows, onDismiss = onDismiss)

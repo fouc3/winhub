@@ -324,7 +324,7 @@ internal fun SaveManagerScreen(
     suspend fun syncOne(appId: Int, syncFrom: Boolean): Boolean {
         if (appId in busyAppIds) return false
         busyAppIds = busyAppIds + appId
-        rowProgress[appId] = RowProgress(if (syncFrom) "Preparing sync from Cloud…" else "Preparing sync to Cloud…")
+        rowProgress[appId] = RowProgress(if (syncFrom) "Preparing sync from Cloud…" else I18n.s(R.string.ui_preparing_sync_to_cloud))
         // Use the same installDir source as SaveSyncStore + the detail page (getGame), so the combo
         // resolves the identical container. An empty dir → the manager's not-set-up guard fires.
         val installDir = withContext(Dispatchers.IO) {
@@ -424,7 +424,7 @@ internal fun SaveManagerScreen(
         }
         if (jobs.isEmpty()) {
             // Everything flagged is un-syncable (e.g. all NOT_SET_UP) — say so rather than no-op silently.
-            resultBarMsg = "Nothing to sync yet — add these games to a container first."
+            resultBarMsg = I18n.s(R.string.ui_nothing_to_sync_yet_add_these_games_to_a_container_first)
             return
         }
         syncAllRunning = true
@@ -1033,7 +1033,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
         onMessage("Backing up saves for \"${s.name}\"…")
         CustomSaveVault.manualBackup(context, s.shortcut.container, s.shortcut, layout) { r ->
             if (r.wholeContainer && r.ok) {
-                onMessage("No per-game saves detected — backed up the whole container.")
+                onMessage(I18n.s(R.string.ui_no_per_game_saves_detected_backed_up_the_whole_contai))
             }
             onMessage(
                 if (r.ok) "Backed up ${r.fileCount} files → ${r.path?.substringAfterLast('/')}"
@@ -1108,7 +1108,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
 
     EmuAccountConflictDialog(conflicts = emuConflicts) { applied, _ ->
         emuConflicts = emptyList()
-        if (applied > 0) onMessage("Emulator account switched to the backup's — relaunch the game")
+        if (applied > 0) onMessage(I18n.s(R.string.ui_emulator_account_switched_to_the_backup_s_relaunch_th))
     }
 
     // Backup layout picker (Winlator / GameHub) — mirrors the shortcut ⋮ menu's choice.
@@ -1131,7 +1131,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                             .padding(vertical = 8.dp),
                     ) {
                         Text(I18n.s(R.string.save_backup_format_winlator), color = MaterialTheme.colorScheme.primary)
-                        Text("Sibling Winlator / WinNative builds", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.save_backup_format_winlator_sub), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                     Column(
                         modifier = Modifier
@@ -1477,12 +1477,12 @@ private fun EpicSaveRow(
                 overflow = TextOverflow.Ellipsis,
             )
             val statusLine = when {
-                !setUp -> "Add this game to a container first to sync."
+                !setUp -> I18n.s(R.string.ui_add_this_game_to_a_container_first_to_sync)
                 status.cloudSaveEnabled && status.lastSyncMillis > 0L -> "Synced ${relTime(status.lastSyncMillis)}"
-                status.cloudSaveEnabled -> "Cloud saves ready — not synced yet"
+                status.cloudSaveEnabled -> I18n.s(R.string.ui_cloud_saves_ready_not_synced_yet)
                 // Metadata fetched, but Epic ships no CloudSaveFolder for this title → genuinely unsupported.
-                status.metadataChecked -> "No cloud-save support for this title"
-                else -> "Open the Epic store to load this game's cloud-save info."
+                status.metadataChecked -> I18n.s(R.string.ui_no_cloud_save_support_for_this_title)
+                else -> I18n.s(R.string.ui_open_the_epic_store_to_load_this_game_s_cloud_save_info)
             }
             Text(
                 text = statusLine,
@@ -1769,7 +1769,7 @@ private fun GogSaveRow(
                 autoTail != null -> "Auto: …/$autoTail"
                 status.autoResolvable -> status.containerLabel?.let { "Container: $it" } ?: "Auto-resolve on sync"
                 status.containerLabel != null -> "Container: ${status.containerLabel}"
-                else -> "No save folder set"
+                else -> I18n.s(R.string.ui_no_save_folder_set)
             }
             Text(
                 text = folderLine,
@@ -1781,10 +1781,10 @@ private fun GogSaveRow(
             // Line 3: sync state / actionable hint.
             val canSync = hasManualFolder || status.autoResolvable
             val statusLine = when {
-                hasManualFolder -> "Manual sync — GOG Cloud"
-                status.autoResolvable -> "Auto save-folder — GOG Cloud"
+                hasManualFolder -> I18n.s(R.string.ui_manual_sync_gog_cloud)
+                status.autoResolvable -> I18n.s(R.string.ui_auto_save_folder_gog_cloud)
                 status.containerLabel == null -> "Add this game to a container first to sync."
-                else -> "No cloud-save location — set a folder on its GOG detail page."
+                else -> I18n.s(R.string.ui_no_cloud_save_location_set_a_folder_on_its_gog_detail_pa)
             }
             Text(
                 text = statusLine,
@@ -1914,7 +1914,7 @@ private fun SaveStatusRow(
                 // Can't sync without a container — tell the user how to enable it (tap-through opens
                 // the detail page where they can set it up).
                 Text(
-                    text = "Add this game to a container first to sync.",
+                    text = I18n.s(R.string.ui_add_this_game_to_a_container_first_to_sync),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,

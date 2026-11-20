@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -264,7 +267,7 @@ object SteamGameUpdater {
             }, "steam-check-refresh-$appId").apply { isDaemon = true }.start()
             val landed = latch.await(CHECK_REFRESH_MS, java.util.concurrent.TimeUnit.MILLISECONDS)
             Log.i(TAG, "app $appId fresh PICS refresh for the update check → " +
-                    (if (landed) refreshed.toString() else "timed out (comparing the synced build)"))
+                    (if (landed) refreshed.toString() else I18n.s(R.string.ui_timed_out_comparing_the_synced_build)))
         }
         val row = try { db.getGame(appId) } catch (_: Throwable) { null }
             ?: return UpdateStatus(State.UP_TO_DATE, 0L, 0L)   // not in DB — can't compare, treat as clean
@@ -298,15 +301,15 @@ object SteamGameUpdater {
         postProgress: (Float, String) -> Unit,
         postDone: (Result, String) -> Unit,
     ) {
-        if (appId <= 0) { postDone(Result.FAILED, "Not a Steam game — nothing to verify"); return }
+        if (appId <= 0) { postDone(Result.FAILED, I18n.s(R.string.ui_not_a_steam_game_nothing_to_verify)); return }
 
-        postProgress(-1f, "Preparing to verify…")
+        postProgress(-1f, I18n.s(R.string.ui_preparing_to_verify))
 
         val repo = SteamRepository.getInstance()
         val db = repo.database
         val row = try { db.getGame(appId) } catch (_: Throwable) { null }
         if (row == null) {
-            postDone(Result.FAILED, "This game isn't in the Steam library yet — can't verify its files.")
+            postDone(Result.FAILED, I18n.s(R.string.ui_this_game_isn_t_in_the_steam_library_yet_can_t_verify_it))
             return
         }
 
@@ -320,7 +323,7 @@ object SteamGameUpdater {
 
         // A verify re-resolves live manifests from the CM, so it needs a live session. Check cheaply first
         // so an offline verify fails fast instead of hanging behind the downloader's recovery retries.
-        postProgress(-1f, "Connecting to Steam…")
+        postProgress(-1f, I18n.s(R.string.ui_connecting_to_steam_u2026))
         val online = repo.isLoggedIn || repo.ensureLoggedIn(SESSION_WAIT_MS)
         if (!online) {
             postDone(Result.OFFLINE_UNKNOWN, "Steam is offline — can't verify ${row.name}'s files right now.")
@@ -342,7 +345,7 @@ object SteamGameUpdater {
         // Not a resolvable Steam appId (custom import etc.) — nothing to check, let it launch.
         if (appId <= 0) { postDone(Result.CURRENT, ""); return }
 
-        postProgress(-1f, "Checking for updates…")
+        postProgress(-1f, I18n.s(R.string.ui_checking_for_updates_2))
 
         val repo = SteamRepository.getInstance()
         val db = repo.database
@@ -363,7 +366,7 @@ object SteamGameUpdater {
         if (liveBuild > 0L && installedBuild > 0L && installedBuild == liveBuild &&
             row.isInstalled && filesPresent) {
             Log.i(TAG, "app $appId already on live build $liveBuild ($branch) — no update needed")
-            postDone(Result.CURRENT, "Already up to date"); return
+            postDone(Result.CURRENT, I18n.s(R.string.ui_already_up_to_date)); return
         }
 
         if (handle.isCancelled) { postDone(Result.CANCELLED, "Cancelled"); return }
@@ -379,7 +382,7 @@ object SteamGameUpdater {
         // We know the live build and are NOT confirmed current → a delta update is required. That needs a
         // live session; check cheaply first so an offline launch fails fast instead of hanging on the
         // downloader's session-recovery retries behind the modal.
-        postProgress(-1f, "Connecting to Steam…")
+        postProgress(-1f, I18n.s(R.string.ui_connecting_to_steam_u2026))
         val online = repo.isLoggedIn || repo.ensureLoggedIn(SESSION_WAIT_MS)
         if (!online) {
             Log.i(TAG, "app $appId behind/incomplete but Steam offline — deferring to user")
@@ -437,7 +440,7 @@ object SteamGameUpdater {
         // refreshes the DB (depot_manifests / steam_branches) that the completion guard + build-id marker
         // read, so the stamped build after a successful update is the real current one. Runs on this
         // update worker thread (never the pump), before any download owns the CM connection.
-        postProgress(-1f, "Checking latest version…")
+        postProgress(-1f, I18n.s(R.string.ui_checking_latest_version))
         try {
             val refreshed = repo.refreshAppProductInfo(appId, PICS_REFRESH_MS)
             Log.i(TAG, "app $appId product-info refresh before update → $refreshed")
@@ -464,7 +467,7 @@ object SteamGameUpdater {
                         finished.compareAndSet(false, true)) {
                         listenerRef.get()?.let { repo.removeListener(it) }
                         recordInstalledBuild(ctx, appId, installDir, branch)  // stamp the now-current build
-                        postDone(Result.UPDATED, if (verifyFirst) "Files verified" else "Updated to the latest version")
+                        postDone(Result.UPDATED, if (verifyFirst) "Files verified" else I18n.s(R.string.ui_updated_to_the_latest_version))
                     }
                 } else if (event.startsWith("DownloadFailed:")) {
                     val parts = event.split(":")
@@ -482,7 +485,7 @@ object SteamGameUpdater {
                             if (!startInstallPass(ctx, appId, handle, verify = true) &&
                                 finished.compareAndSet(false, true)) {
                                 listenerRef.get()?.let { repo.removeListener(it) }
-                                postDone(Result.FAILED, "Couldn't start the verify pass")
+                                postDone(Result.FAILED, I18n.s(R.string.ui_couldn_t_start_the_verify_pass))
                             }
                         } else if (finished.compareAndSet(false, true)) {
                             listenerRef.get()?.let { repo.removeListener(it) }
@@ -493,7 +496,7 @@ object SteamGameUpdater {
                     if (event.substringAfter("DownloadCancelled:").toIntOrNull() == appId &&
                         finished.compareAndSet(false, true)) {
                         listenerRef.get()?.let { repo.removeListener(it) }
-                        postDone(Result.CANCELLED, "Update cancelled")
+                        postDone(Result.CANCELLED, I18n.s(R.string.ui_update_cancelled))
                     }
                 }
             } catch (_: Throwable) { /* one bad event line must never kill the listener */ }
@@ -517,7 +520,7 @@ object SteamGameUpdater {
         if (!startInstallPass(ctx, appId, handle, verify = verifyFirst) &&
             finished.compareAndSet(false, true)) {
             repo.removeListener(listener)
-            postDone(Result.FAILED, if (verifyFirst) "Couldn't start the verify" else "Couldn't start the update")
+            postDone(Result.FAILED, if (verifyFirst) "Couldn't start the verify" else I18n.s(R.string.ui_couldn_t_start_the_update))
         }
     }
 

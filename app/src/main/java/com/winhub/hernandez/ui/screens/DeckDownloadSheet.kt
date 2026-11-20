@@ -130,7 +130,7 @@ internal fun DeckContentDownloadSheet(
             }) { ok ->
                 ContentDownloadRegistry.update(key) {
                     if (ok) it.copy(fraction = 1f, phase = ContentDownloadPhase.DONE)
-                    else it.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                    else it.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
                 }
                 if (ok) {
                     refreshKey++
@@ -175,7 +175,7 @@ internal fun DeckContentDownloadSheet(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             DeckButton(I18n.s(R.string.ui_install_from_file), primary = false) {
-                filePicker.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select component archive"))
+                filePicker.launch(InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_component_archive)))
             }
             Spacer(Modifier.width(8.dp))
             DeckButton(I18n.s(R.string.wrapper_manager_close)) { onDismiss() }
@@ -226,7 +226,7 @@ private fun DeckDownloadRow(
                     maxLines = 1,
                 )
                 val sub = when {
-                    inUse -> "In use"
+                    inUse -> I18n.s(R.string.retro_emulator_in_use)
                     local || done -> "Installed"
                     errored -> state?.error ?: "Failed"
                     !profile.desc.isNullOrEmpty() -> profile.desc

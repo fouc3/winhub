@@ -42,11 +42,11 @@ import com.winhub.hernandez.R
 private class PortraitStore(val name: String, val blurb: String, val screen: Screen, val activity: Class<*>)
 
 private val portraitStores = listOf(
-    PortraitStore("Steam", "Your Steam library", Screen.Steam, SteamMainActivity::class.java),
-    PortraitStore("Epic Games", "Library and free games", Screen.Epic, EpicMainActivity::class.java),
-    PortraitStore("GOG", "DRM-free games", Screen.Gog, GogMainActivity::class.java),
-    PortraitStore("Xbox", "Game Pass and PC games", Screen.Xbox, XboxMainActivity::class.java),
-    PortraitStore("Amazon Games", "Prime Gaming library", Screen.Amazon, AmazonMainActivity::class.java),
+    PortraitStore("Steam", I18n.s(R.string.ui_your_steam_library), Screen.Steam, SteamMainActivity::class.java),
+    PortraitStore("Epic Games", I18n.s(R.string.ui_library_and_free_games), Screen.Epic, EpicMainActivity::class.java),
+    PortraitStore("GOG", I18n.s(R.string.ui_drm_free_games), Screen.Gog, GogMainActivity::class.java),
+    PortraitStore("Xbox", I18n.s(R.string.ui_game_pass_and_pc_games), Screen.Xbox, XboxMainActivity::class.java),
+    PortraitStore("Amazon Games", I18n.s(R.string.ui_prime_gaming_library), Screen.Amazon, AmazonMainActivity::class.java),
 )
 
 /**

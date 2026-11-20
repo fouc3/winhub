@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -30,7 +33,7 @@ public class AmazonAuthClient {
     static final String DEREGISTER_URL = "https://api.amazon.com/auth/deregister";
 
     static final String USER_AGENT   = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0";
-    static final String APP_NAME     = "AGSLauncher for Windows";
+    static final String APP_NAME     = I18n.s(R.string.ui_agslauncher_for_windows);
     static final String APP_VERSION  = "1.0.0";
     static final String DEVICE_TYPE  = "A2UMVHOX7UP4V7";
     static final String OS_VERSION   = "10.0.19044.0";
@@ -98,7 +101,7 @@ public class AmazonAuthClient {
             return result;
 
         } catch (Exception e) {
-            Log.e(TAG, "registerDevice failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_registerdevice_failed), e);
             return null;
         }
     }
@@ -130,7 +133,7 @@ public class AmazonAuthClient {
             return result;
 
         } catch (Exception e) {
-            Log.e(TAG, "refreshAccessToken failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_refreshaccesstoken_failed) + e.getClass().getSimpleName());
             return null;
         }
     }
@@ -149,7 +152,7 @@ public class AmazonAuthClient {
 
             postJson(DEREGISTER_URL, body.toString(), accessToken, null, null);
         } catch (Exception e) {
-            Log.e(TAG, "deregisterDevice failed (non-fatal)", e);
+            Log.e(TAG, I18n.s(R.string.ui_deregisterdevice_failed_non_fatal), e);
         }
     }
 
@@ -188,13 +191,13 @@ public class AmazonAuthClient {
             conn.disconnect();
 
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + " (error body suppressed)");
+                Log.e(TAG, "HTTP " + code + " from " + StoreLog.redactUrl(urlStr) + I18n.s(R.string.ui_error_body_suppressed));
                 return null;
             }
             return resp;
 
         } catch (Exception e) {
-            Log.e(TAG, "postJson failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_postjson_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         }
     }
@@ -228,7 +231,7 @@ public class AmazonAuthClient {
             return resp;
 
         } catch (Exception e) {
-            Log.e(TAG, "getRequest failed: " + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
+            Log.e(TAG, I18n.s(R.string.ui_getrequest_failed) + StoreLog.redactUrl(urlStr) + " (" + e.getClass().getSimpleName() + ")");
             return null;
         }
     }

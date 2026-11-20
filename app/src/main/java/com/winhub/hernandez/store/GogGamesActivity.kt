@@ -344,10 +344,10 @@ class GogGamesActivity : ComponentActivity() {
                     }
                 }
             } catch (_: Exception) {
-                withContext(Dispatchers.Main) { setSync("Error parsing library") }; return
+                withContext(Dispatchers.Main) { setSync(I18n.s(R.string.ui_error_parsing_library)) }; return
             }
 
-            if (ids.isEmpty()) { withContext(Dispatchers.Main) { setSync("No games found in library") }; return }
+            if (ids.isEmpty()) { withContext(Dispatchers.Main) { setSync(I18n.s(R.string.ui_no_games_found_in_library)) }; return }
 
             // \u2500\u2500 gap #8: incremental diff + 15-min throttle + prune \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
             // `ids` above is the COMPLETE owned-id set \u2014 the diff source.
@@ -378,7 +378,7 @@ class GogGamesActivity : ComponentActivity() {
                 saveCachedGames(merged.values.toList())
                 withContext(Dispatchers.Main) {
                     val list = merged.values.toList()
-                    if (list.isEmpty()) setSync("No compatible games found")
+                    if (list.isEmpty()) setSync(I18n.s(R.string.ui_no_compatible_games_found))
                     else {
                         allGames = list.sortedBy { it.title.lowercase() }
                         applyFilter(searchQuery)
@@ -415,7 +415,7 @@ class GogGamesActivity : ComponentActivity() {
 
             withContext(Dispatchers.Main) {
                 if (finalList.isEmpty()) {
-                    setSync("No compatible games found")
+                    setSync(I18n.s(R.string.ui_no_compatible_games_found))
                 } else {
                     allGames = finalList.sortedBy { it.title.lowercase() }
                     applyFilter(searchQuery)
@@ -556,7 +556,7 @@ class GogGamesActivity : ComponentActivity() {
             val titleObj = prod.optJSONObject("title")
             if (titleObj != null) dlcTitle = titleObj.optString("*", "")
             if (dlcTitle.isEmpty()) dlcTitle = prod.optString("title", "")
-            if (dlcTitle.isEmpty()) dlcTitle = "Unknown DLC"
+            if (dlcTitle.isEmpty()) dlcTitle = I18n.s(R.string.ui_unknown_dlc)
 
             var baseId = ""
             val reqGame = prod.optJSONObject("required_game")
@@ -732,7 +732,7 @@ class GogGamesActivity : ComponentActivity() {
                         bytes = prefs.getLong("gog_size_${game.gameId}", 0L),
                     )
                 } else {
-                    StoreDownloadHooks.markFailed(Store.GOG, game.gameId, "No executable found")
+                    StoreDownloadHooks.markFailed(Store.GOG, game.gameId, I18n.s(R.string.ui_no_executable_found))
                 }
                 runOnUiThread {
                     downloadStates[game.gameId] = GameDownloadState(
@@ -1046,7 +1046,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
+                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameListCard(
@@ -1076,7 +1076,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
+                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameGridTile(
@@ -1270,7 +1270,7 @@ private fun ExpandedSection(
             onClick = {
                 when (btnText) {
                     "Cancel" -> onCancelClick()
-                    "Add Game", "Add to Launcher" -> onAddToLauncher()
+                    "Add Game", I18n.s(R.string.ui_add_to_launcher) -> onAddToLauncher()
                     else -> onInstallClick()
                 }
             },
@@ -1403,7 +1403,7 @@ private fun GameGridTile(
                     onClick = {
                         when (btnText) {
                             "Cancel" -> onCancelClick()
-                            "Add Game", "Add to Launcher" -> onAddToLauncher()
+                            "Add Game", I18n.s(R.string.ui_add_to_launcher) -> onAddToLauncher()
                             else -> onInstallClick()
                         }
                     },

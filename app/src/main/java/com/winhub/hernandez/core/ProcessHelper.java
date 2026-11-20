@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Process;
 import android.util.Log;
 
@@ -26,22 +29,22 @@ public abstract class ProcessHelper {
 
     public static void suspendProcess(int pid) {
         Process.sendSignal(pid, SIGSTOP);
-        Log.d("ProcessHelper", "Process suspended with pid: " + pid);
+        Log.d("ProcessHelper", I18n.s(R.string.ui_process_suspended_with_pid) + pid);
     }
 
     public static void resumeProcess(int pid) {
         Process.sendSignal(pid, SIGCONT);
-        Log.d("ProcessHelper", "Process resumed with pid: " + pid);
+        Log.d("ProcessHelper", I18n.s(R.string.ui_process_resumed_with_pid) + pid);
     }
 
     public static void terminateProcess(int pid) {
         Process.sendSignal(pid, SIGTERM);
-        Log.d("ProcessHelper", "Process terminated with pid: " + pid);
+        Log.d("ProcessHelper", I18n.s(R.string.ui_process_terminated_with_pid) + pid);
     }
 
     public static void killProcess(int pid) {
         Process.sendSignal(pid, SIGKILL);
-        Log.d("ProcessHelper", "Process killed with pid: " + pid);
+        Log.d("ProcessHelper", I18n.s(R.string.ui_process_killed_with_pid) + pid);
     }
 
     public static void terminateAllWineProcesses() {
@@ -158,7 +161,7 @@ public abstract class ProcessHelper {
         if (onStarted != null) onStarted.accept(pid);
         try {
             if (!done.await(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)) {
-                Log.w("ProcessHelper", "execAndWait: pid " + pid + " still running after " + timeoutMs + " ms, killing it: " + command);
+                Log.w("ProcessHelper", "execAndWait: pid " + pid + " still running after " + timeoutMs + I18n.s(R.string.ui_ms_killing_it) + command);
                 killProcess(pid);
                 return -1;
             }
@@ -234,10 +237,10 @@ public abstract class ProcessHelper {
 
         int pid = -1;
         try {
-            Log.d("ProcessHelper", "Splitting command: " + command);
+            Log.d("ProcessHelper", I18n.s(R.string.ui_splitting_command) + command);
             String[] splitCommand = splitCommand(command);
-            Log.d("ProcessHelper", "Split command result: " + Arrays.toString(splitCommand));
-            Log.d("ProcessHelper", "Starting process...");
+            Log.d("ProcessHelper", I18n.s(R.string.ui_split_command_result) + Arrays.toString(splitCommand));
+            Log.d("ProcessHelper", I18n.s(R.string.ui_starting_process));
             ProcessBuilder pb = new ProcessBuilder(splitCommand);
             pb.directory(workingDir);
             pb.environment().putAll(EnvironmentManager.getEnvVars());
@@ -249,12 +252,12 @@ public abstract class ProcessHelper {
             java.lang.Process process = pb.start();
 
             // Accessing hidden field
-            Log.d("ProcessHelper", "Accessing hidden field to get PID");
+            Log.d("ProcessHelper", I18n.s(R.string.ui_accessing_hidden_field_to_get_pid));
             Field pidField = process.getClass().getDeclaredField("pid");
             pidField.setAccessible(true);
             pid = pidField.getInt(process);
             pidField.setAccessible(false);
-            Log.d("ProcessHelper", "Process started with pid: " + pid);
+            Log.d("ProcessHelper", I18n.s(R.string.ui_process_started_with_pid) + pid);
 
             if (!debugCallbacks.isEmpty()) {
                 createDebugThread(process.getInputStream());
@@ -265,7 +268,7 @@ public abstract class ProcessHelper {
 
         }
         catch (Exception e) {
-            Log.e("ProcessHelper", "Error executing command: " + command, e);
+            Log.e("ProcessHelper", I18n.s(R.string.ui_error_executing_command) + command, e);
         }
         return pid;
     }
@@ -284,7 +287,7 @@ public abstract class ProcessHelper {
                 }
             }
             catch (IOException e) {
-                Log.e("ProcessHelper", "Error in debug thread", e);
+                Log.e("ProcessHelper", I18n.s(R.string.ui_error_in_debug_thread), e);
             }
         });
     }
@@ -298,7 +301,7 @@ public abstract class ProcessHelper {
                     terminationCallback.call(status);
                 }
                 catch (InterruptedException e) {
-                    Log.e("ProcessHelper", "Error waiting for process termination", e);
+                    Log.e("ProcessHelper", I18n.s(R.string.ui_error_waiting_for_process_termination), e);
                 }
             }
         });
@@ -307,21 +310,21 @@ public abstract class ProcessHelper {
     public static void removeAllDebugCallbacks() {
         synchronized (debugCallbacks) {
             debugCallbacks.clear();
-            Log.d("ProcessHelper", "All debug callbacks removed");
+            Log.d("ProcessHelper", I18n.s(R.string.ui_all_debug_callbacks_removed));
         }
     }
 
     public static void addDebugCallback(Callback<String> callback) {
         synchronized (debugCallbacks) {
             if (!debugCallbacks.contains(callback)) debugCallbacks.add(callback);
-            Log.d("ProcessHelper", "Added debug callback: " + callback.toString());
+            Log.d("ProcessHelper", I18n.s(R.string.ui_added_debug_callback) + callback.toString());
         }
     }
 
     public static void removeDebugCallback(Callback<String> callback) {
         synchronized (debugCallbacks) {
             debugCallbacks.remove(callback);
-            Log.d("ProcessHelper", "Removed debug callback: " + callback.toString());
+            Log.d("ProcessHelper", I18n.s(R.string.ui_removed_debug_callback) + callback.toString());
         }
     }
 

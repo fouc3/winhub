@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.download
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 /**
  * Store-agnostic download model shared by the cross-store Download Manager.
  *
@@ -28,10 +31,10 @@ fun formatDownloadSize(bytes: Long): String = when {
 fun formatDownloadSpeed(bytesPerSec: Long): String =
     if (bytesPerSec <= 0L) "" else "${formatDownloadSize(bytesPerSec)}/s"
 
-/** Human ETA, e.g. "<1 min left", "~8 min left", "~1 h 20 m left". Negative → "" (unknown). */
+/** Human ETA, e.g. I18n.s(R.string.ui_n1_min_left), "~8 min left", "~1 h 20 m left". Negative → "" (unknown). */
 fun formatEta(seconds: Long): String = when {
     seconds < 0L    -> ""
-    seconds < 60L   -> "<1 min left"
+    seconds < 60L   -> I18n.s(R.string.ui_n1_min_left)
     seconds < 3600L -> "~${seconds / 60} min left"
     else            -> {
         val h = seconds / 3600L; val m = (seconds % 3600L) / 60L

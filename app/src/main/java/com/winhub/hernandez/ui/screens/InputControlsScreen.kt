@@ -206,7 +206,7 @@ fun InputControlsScreen() {
             try {
                 val json = FileUtils.readString(context, uri)
                 val imported = manager.importProfile(JSONObject(json))
-                    ?: throw IllegalArgumentException("Unsupported control profile version")
+                    ?: throw IllegalArgumentException(I18n.s(R.string.ui_unsupported_control_profile_version))
                 importProfileCallback!!(imported)
             } catch (_: Exception) {
                 AppUtils.showToast(context, R.string.unable_to_import_profile)
@@ -507,7 +507,7 @@ fun InputControlsScreen() {
     // drive deckTabs, so a pad and a finger land on the same section.
     val sections = listOf(I18n.s(R.string.ui_on_screen), I18n.s(R.string.vibration_mode_controller), I18n.s(R.string.ui_assign), "Device")
     val displayText = if (selectedProfileIdx > 0 && selectedProfileIdx - 1 < profiles.size)
-        profiles[selectedProfileIdx - 1].getName() else "No profile selected"
+        profiles[selectedProfileIdx - 1].getName() else I18n.s(R.string.no_profile_selected)
     val hasProfile = currentProfile != null
 
     // Shared by the Edit Layout button AND tapping the preview.
@@ -636,7 +636,7 @@ fun InputControlsScreen() {
                                     }
                                     DeckValueChip(I18n.s(R.string.ui_switch), showProfileDropdown) { showProfileDropdown = true }
                                     IconButton(onClick = { showOverflow = true }, modifier = Modifier.size(48.dp)) {
-                                        Icon(Icons.Default.MoreVert, "Profile actions", tint = DeckPalette.onSurfaceVariant)
+                                        Icon(Icons.Default.MoreVert, I18n.s(R.string.ui_profile_actions), tint = DeckPalette.onSurfaceVariant)
                                     }
                                 }
 
@@ -762,7 +762,7 @@ fun InputControlsScreen() {
 
                         when (selectedTab) {
                             // ── On-Screen: the touch overlay layout ──────────────
-                            0 -> DeckGroup("On-screen controls") {
+                            0 -> DeckGroup(I18n.s(R.string.ui_on_screen_controls_2)) {
                                 Column(
                                     modifier = Modifier.padding(12.dp),
                                     verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -777,7 +777,7 @@ fun InputControlsScreen() {
                                     } else {
                                         Text(
                                             if (cp == null) "Pick a profile to see its touch overlay."
-                                            else "No on-screen layout yet. Edit layout to add one.",
+                                            else I18n.s(R.string.ui_no_on_screen_layout_yet_edit_layout_to_add_one),
                                             color = DeckPalette.onSurfaceVariant, fontSize = 14.sp,
                                             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
                                         )
@@ -795,7 +795,7 @@ fun InputControlsScreen() {
                                     subtitle = I18n.s(R.string.ui_remap_buttons_and_check_every_input_registers),
                                 ) { showControllerTest = true }
 
-                                DeckGroup("Connected controllers") {
+                                DeckGroup(I18n.s(R.string.ui_connected_controllers)) {
                                     // #333: the Default / Any Controller binding template. Newly connected
                                     // controllers inherit it, so a fresh pad is never blank. Always shown.
                                     DeckPadRow(
@@ -805,7 +805,7 @@ fun InputControlsScreen() {
                                         onClick = { openBindings(ControlsProfile.DEFAULT_CONTROLLER_ID) },
                                     ) {
                                         Icon(
-                                            Icons.Default.ChevronRight, "Edit bindings",
+                                            Icons.Default.ChevronRight, I18n.s(R.string.ui_edit_bindings),
                                             tint = DeckPalette.secondary, modifier = Modifier.size(18.dp),
                                         )
                                     }
@@ -834,7 +834,7 @@ fun InputControlsScreen() {
                                                 } catch (_: Throwable) {}
                                             }
                                             val padHasVibrator = padDevice?.vibrator?.hasVibrator() == true
-                                            val status = (if (connected) "Connected" else "Not connected") +
+                                            val status = (if (connected) "Connected" else I18n.s(R.string.not_connected)) +
                                                 " · $bindingsCount bindings" +
                                                 (if (padBattery >= 0) " · Battery $padBattery%" else "")
 
@@ -847,13 +847,13 @@ fun InputControlsScreen() {
                                                 // Test rumble: pulse this pad's own vibrator (no game running at rest).
                                                 if (padHasVibrator && padDevice != null) {
                                                     IconButton(onClick = { pulsePad(padDevice) }, modifier = Modifier.size(48.dp)) {
-                                                        Icon(Icons.Default.Vibration, "Test rumble", tint = DeckPalette.onSurfaceVariant)
+                                                        Icon(Icons.Default.Vibration, I18n.s(R.string.ui_test_rumble), tint = DeckPalette.onSurfaceVariant)
                                                     }
                                                 }
                                                 // #333: copy bindings from the Default template or another controller onto this one.
                                                 Box {
                                                     IconButton(onClick = { copyMenuForId = controller.getId() }, modifier = Modifier.size(48.dp)) {
-                                                        Icon(Icons.Default.ContentCopy, "Copy bindings", tint = DeckPalette.onSurfaceVariant)
+                                                        Icon(Icons.Default.ContentCopy, I18n.s(R.string.ui_copy_bindings), tint = DeckPalette.onSurfaceVariant)
                                                     }
                                                     DropdownMenu(
                                                         expanded = copyMenuForId == controller.getId(),
@@ -1135,7 +1135,7 @@ private fun GyroscopeSection() {
             modifier = Modifier.padding(start = 12.dp, top = 10.dp, end = 12.dp),
         )
         val summary = when {
-            !calibrated -> "Not calibrated"
+            !calibrated -> I18n.s(R.string.ui_not_calibrated)
             abs(biasX) < GyroCalibrator.NEGLIGIBLE_BIAS && abs(biasY) < GyroCalibrator.NEGLIGIBLE_BIAS ->
                 "Very little drift detected — your device already compensates"
             else -> "Bias removed: x %.4f, y %.4f rad/s".format(biasX, biasY)
@@ -1144,15 +1144,15 @@ private fun GyroscopeSection() {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 DeckButton(if (activeRun == null) "Calibrate" else "Calibrating…") {
                     if (activeRun != null) return@DeckButton
-                    status = "Hold still…"
+                    status = I18n.s(R.string.ui_hold_still)
                     activeRun = GyroCalibrator.calibrate(context) { result ->
                         activeRun = null
                         status = when (result) {
                             is GyroCalibrator.Result.Success ->
                                 if (result.negligible) "Calibrated — nothing to remove" else "Calibrated"
-                            GyroCalibrator.Result.Moved -> "Hold the device still and try again"
-                            GyroCalibrator.Result.NotEnoughSamples -> "Couldn't sample — try again"
-                            GyroCalibrator.Result.Unavailable -> "Gyroscope unavailable"
+                            GyroCalibrator.Result.Moved -> I18n.s(R.string.ui_hold_the_device_still_and_try_again)
+                            GyroCalibrator.Result.NotEnoughSamples -> I18n.s(R.string.ui_couldn_t_sample_try_again)
+                            GyroCalibrator.Result.Unavailable -> I18n.s(R.string.ui_gyroscope_unavailable)
                         }
                         refreshBias()
                     }
@@ -1160,7 +1160,7 @@ private fun GyroscopeSection() {
                 DeckButton(I18n.s(R.string.reset), primary = false) {
                     if (!calibrated || activeRun != null) return@DeckButton
                     GyroCalibrator.clearBias(context)
-                    status = "Calibration reset"
+                    status = I18n.s(R.string.ui_calibration_reset)
                     refreshBias()
                 }
             }
@@ -1192,7 +1192,7 @@ private fun SteamControllerSection() {
             permissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
     }
 
-    DeckGroup("Steam Controller") {
+    DeckGroup(I18n.s(R.string.ui_steam_controller)) {
         Text(
             "Reads the Steam Controller directly, the way Steam does, so it works as a normal gamepad in " +
                 "games. Pair it in Android's Bluetooth settings first, or connect it by USB. Other " +
@@ -1245,7 +1245,7 @@ private fun SteamControllerSection() {
         var paddles by remember {
             mutableStateOf(com.winhub.hernandez.ui.components.GlobalControllerPrefs.getSteamPaddleBindings(context).toList())
         }
-        DeckGroup("Extra buttons") {
+        DeckGroup(I18n.s(R.string.ui_extra_buttons)) {
             Text(
                 "What the four back buttons and the … button do, in every game. To change what the other " +
                     "buttons do, bind them on the Controller tab under Default / Any Controller (the Steam " +
@@ -1271,7 +1271,7 @@ private fun SteamControllerSection() {
 
 // SteamControllerBackend's extra-button order.
 private val STEAM_PADDLE_NAMES = listOf(
-    "L4 (upper left)", "L5 (lower left)", "R4 (upper right)", "R5 (lower right)",
+    "L4 (upper left)", I18n.s(R.string.ui_l5_lower_left), I18n.s(R.string.ui_r4_upper_right), I18n.s(R.string.ui_r5_lower_right),
     "… button (between the trackpads)",
 )
 
@@ -1323,7 +1323,7 @@ private fun GlobalPlayerSlotsSection() {
         mutableStateOf(com.winhub.hernandez.ui.components.GlobalControllerPrefs.getAutoHideControlsOnPad(context))
     }
 
-    DeckGroup("Player slots") {
+    DeckGroup(I18n.s(R.string.ui_player_slots_2)) {
         DeckRow(
             label = I18n.s(R.string.ui_defaults_for_new_containers),
             hint = I18n.s(R.string.ui_assign_two_devices_to_one_player_to_share_control_exi),

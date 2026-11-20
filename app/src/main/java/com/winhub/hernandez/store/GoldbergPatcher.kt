@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -95,7 +98,7 @@ object GoldbergPatcher {
             val (ok, msg) = try {
                 applyModeBlocking(appContext, appId, installDir, gameName, mode)
             } catch (e: Exception) {
-                Log.e(TAG, "applyMode failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_applymode_failed), e)
                 false to "Goldberg patch failed: ${e.message}"
             }
             if (ok) {
@@ -130,7 +133,7 @@ object GoldbergPatcher {
             if (loader.isFile) loader.absolutePath
             else File(dir, Arch.X64.loaderExe).takeIf { it.isFile }?.absolutePath ?: exePath
         } catch (e: Exception) {
-            Log.w(TAG, "resolveLaunchExe failed, using original exe", e)
+            Log.w(TAG, I18n.s(R.string.ui_resolvelaunchexe_failed_using_original_exe), e)
             exePath
         }
     }

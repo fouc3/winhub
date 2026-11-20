@@ -91,14 +91,14 @@ private fun DeckDoctorNoticeDialog(notice: GameDoctor.Notice, onClose: () -> Uni
         GameDoctor.dismissNotice(context, notice)
         onClose()
     }
-    DeckConfigDialog(title = "Game Doctor", onDismiss = { close() }, compact = true) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_game_doctor), onDismiss = { close() }, compact = true) {
         Text(notice.game, color = DeckPalette.onBackground, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(6.dp))
         Text(
             when (undone) {
                 true -> "Put back to ${presetName(notice.from)}."
-                false -> "Couldn't put it back. You can change the FEX preset in the game's settings."
-                null -> "It crashed soon after launch, so its CPU translation preset went from " +
+                false -> I18n.s(R.string.ui_couldn_t_put_it_back_you_can_change_the_fex_preset_in_th)
+                null -> I18n.s(R.string.ui_it_crashed_soon_after_launch_so_its_cpu_translation_pres) +
                     "${presetName(notice.from)} to ${presetName(notice.to)}. Launch it again to try."
             },
             color = if (undone == false) DeckPalette.error else DeckPalette.onSurfaceVariant,
@@ -208,10 +208,10 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
                     if (switchable > 0) {
                         "Installed. Switch $switchable container${if (switchable == 1) "" else "s"} to it now? " +
                             "Containers keep their other settings, and you can undo this right after."
-                    } else "Installed. Pick it in a container's settings."
-                UpdatePhase.SWITCHING -> "Switching containers…"
+                    } else I18n.s(R.string.ui_installed_pick_it_in_a_container_s_settings)
+                UpdatePhase.SWITCHING -> I18n.s(R.string.ui_switching_containers)
                 UpdatePhase.DONE -> note.orEmpty()
-                UpdatePhase.FAILED -> "The download or install failed. Check your connection and try again later from Contents."
+                UpdatePhase.FAILED -> I18n.s(R.string.ui_the_download_or_install_failed_check_your_connection_and)
             },
             color = if (failed) DeckPalette.error else DeckPalette.onSurfaceVariant,
             fontSize = 14.sp,
@@ -262,7 +262,7 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
                         undo = null
                         scope.launch {
                             withContext(Dispatchers.IO) { revert() }
-                            note = "Put back the way it was."
+                            note = I18n.s(R.string.ui_put_back_the_way_it_was)
                         }
                     }
                 }
@@ -274,9 +274,9 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
 }
 
 private fun offerHint(kind: String): String = when (kind) {
-    "Proton" -> "It is added to your layers. Your containers keep the layer they use until you switch them."
-    "Driver" -> "It is added to your drivers. Containers on an older build can be switched once it is installed."
-    else -> "It is added to your FEXCore versions. Containers on an older build can be switched once it is installed."
+    "Proton" -> I18n.s(R.string.ui_it_is_added_to_your_layers_your_containers_keep_the_laye)
+    "Driver" -> I18n.s(R.string.ui_it_is_added_to_your_drivers_containers_on_an_older_build)
+    else -> I18n.s(R.string.ui_it_is_added_to_your_fexcore_versions_containers_on_an_ol)
 }
 
 private fun switchSummary(r: ComponentUpdates.SwitchResult): String {

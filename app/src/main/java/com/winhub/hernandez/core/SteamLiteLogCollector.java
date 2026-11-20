@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -59,8 +62,8 @@ public final class SteamLiteLogCollector {
     private static final int ENGINE_LINES_MAX = 400;
     // Exact "watching ... for exit (<path>)" suffixes from the agent's launch log; the "for exit ("
     // prefix keeps the steamservice line ("... will use CreateProcess fallback") from matching.
-    private static final String LAUNCHER_SECURE_MARK   = "for exit (LaunchApp path)";
-    private static final String LAUNCHER_FALLBACK_MARK = "for exit (CreateProcess fallback)";
+    private static final String LAUNCHER_SECURE_MARK   = I18n.s(R.string.ui_for_exit_launchapp_path);
+    private static final String LAUNCHER_FALLBACK_MARK = I18n.s(R.string.ui_for_exit_createprocess_fallback);
     private static final long DX_SCAN_TAIL_BYTES   = 1L * 1024 * 1024;
 
     /** The Steam logs we include, in the debug-flow order the summary reads top-to-bottom. */
@@ -194,7 +197,7 @@ public final class SteamLiteLogCollector {
 
             File target = new File(perGameLogDir, OUTPUT_NAME);
             if (FileUtils.writeString(target, finished)) {
-                Log.i(TAG, "wrote " + target.getAbsolutePath() + " (" + steamRedacted.size() + " Steam logs)");
+                Log.i(TAG, "wrote " + target.getAbsolutePath() + " (" + steamRedacted.size() + I18n.s(R.string.ui_steam_logs));
             }
         } catch (Throwable t) {
             // Never let log collection break a game exiting.
@@ -219,10 +222,10 @@ public final class SteamLiteLogCollector {
 
         out.append("Game: ").append(safe(gameName)).append(appId > 0 ? " (appID " + appId + ")" : "").append('\n');
         if (info != null) {
-            out.append("Container ID: ").append(safe(info.containerId)).append('\n');
+            out.append(I18n.s(R.string.ui_container_id)).append(safe(info.containerId)).append('\n');
             out.append("Wine / Proton: ").append(safe(info.wineLayer)).append('\n');
             out.append("Emulator: ").append(translator(info)).append('\n');
-            out.append("DX wrapper: ").append(safe(info.dxwrapper))
+            out.append(I18n.s(R.string.ui_dx_wrapper_2)).append(safe(info.dxwrapper))
                .append("  (DXVK ").append(orDash(info.dxvkVersion))
                .append(", VKD3D ").append(orDash(info.vkd3dVersion)).append(")\n");
         }
@@ -241,7 +244,7 @@ public final class SteamLiteLogCollector {
         }
         if (gpu != null) out.append("GPU: ").append(gpu).append('\n');
         if (driver != null) out.append("Driver: ").append(driver).append('\n');
-        out.append("SteamLite version: ").append(orDash(steamLiteVersion)).append('\n');
+        out.append(I18n.s(R.string.ui_steamlite_version)).append(orDash(steamLiteVersion)).append('\n');
 
         // Network shape (NAT / UDP verdict): the pre-flight's cached STUN result when it is still
         // fresh, else a bounded (~2.5 s) probe now — we are on the exit worker thread. The public IP
@@ -255,8 +258,8 @@ public final class SteamLiteLogCollector {
 
         // The scrub note, matching the app's own wording (Log Manager / LogReport).
         out.append('\n');
-        out.append("Safe to share — auth tokens, cookies and your Steam account name are removed and ")
-           .append("your Steam ID is partially masked; timestamps, servers, results and file paths are ")
+        out.append(I18n.s(R.string.ui_safe_to_share_auth_tokens_cookies_and_your_steam_account))
+           .append(I18n.s(R.string.ui_your_steam_id_is_partially_masked_timestamps_servers_res))
            .append("kept for debugging.\n");
     }
 
@@ -278,9 +281,9 @@ public final class SteamLiteLogCollector {
                                           List<String> agentEvents, List<String> engineLines) {
         out.append("\n===== DIAGNOSTICS (auto-scan) =====\n");
         if (since != null)
-            out.append("- Session scope: findings below are from THIS run (since ").append(since).append(").\n");
+            out.append(I18n.s(R.string.ui_session_scope_findings_below_are_from_this_run_since)).append(since).append(").\n");
         else
-            out.append("- Session scope: could not anchor this run in the logs; some counts may include "
+            out.append(I18n.s(R.string.ui_session_scope_could_not_anchor_this_run_in_the_logs_some)
                     + "earlier sessions.\n");
         List<String> f = new ArrayList<>();
 
@@ -299,7 +302,7 @@ public final class SteamLiteLogCollector {
         Hit font = scan(wineText, FONT_HANDLES);
         if (font.count > 0) {
             f.add("FONT: Wine ran out of font handles (" + font.count + "x) — text/VGUI can fail to "
-                    + "render and a big burst can FREEZE on a map change. Fix: a larger font-handle cap "
+                    + I18n.s(R.string.ui_render_and_a_big_burst_can_freeze_on_a_map_change_fix_a)
                     + "in the Wine build, or set cl_disablehtmlmotd 1." + when(font));
         } else {
             Hit fontErr = scan(wineText, ERR_FONT);
@@ -337,7 +340,7 @@ public final class SteamLiteLogCollector {
         // ── CRASH / teardown (wine_debug — per-run) ──
         Hit crash = scan(wineText, CRASH);
         if (crash.count > 0) {
-            f.add("CRASH: native crash detected (" + crash.count + "x — unhandled exception / access "
+            f.add(I18n.s(R.string.ui_crash_native_crash_detected) + crash.count + "x — unhandled exception / access "
                     + "violation)." + when(crash));
             // Quote the exception/backtrace lines around the FIRST crash so the diagnostic carries the
             // faulting address, the frames and (with +seh,+loaddll — added automatically on RealSteam
@@ -383,12 +386,12 @@ public final class SteamLiteLogCollector {
             if (launcherLog.contains(LAUNCHER_FALLBACK_MARK)) {
                 f.add("SECURE LAUNCH: NO — the steam.exe agent started the game via CreateProcess fallback "
                         + "(Steam's LaunchApp did not spawn it) = INSECURE launch: VAC servers will reject "
-                        + "it and live-service titles report a wrong build (INCORRECT VERSION).");
+                        + I18n.s(R.string.ui_it_and_live_service_titles_report_a_wrong_build_incorrec));
                 appendTrackedCount(f, gameproc, tracked, since);
                 return;
             }
             if (launcherLog.contains(LAUNCHER_SECURE_MARK)) {
-                f.add("SECURE LAUNCH: launched through the real Steam client (agent log: LaunchApp path) "
+                f.add(I18n.s(R.string.ui_secure_launch_launched_through_the_real_steam_client_age)
                         + "= YES (VAC-eligible secure launch).");
                 appendTrackedCount(f, gameproc, tracked, since);
                 return;
@@ -405,16 +408,16 @@ public final class SteamLiteLogCollector {
         }
 
         if (realSteamTracked || Boolean.TRUE.equals(orderSecure)) {
-            f.add("SECURE LAUNCH: launched through the real Steam client"
+            f.add(I18n.s(R.string.ui_secure_launch_launched_through_the_real_steam_client)
                     + (Boolean.TRUE.equals(orderSecure) ? " (steam.exe agent initialised before the game)"
-                       : " (appID " + appId + " tracked by the Steam agent)")
+                       : " (appID " + appId + I18n.s(R.string.ui_tracked_by_the_steam_agent))
                     + " = YES (VAC-eligible secure launch).");
         } else if (Boolean.FALSE.equals(orderSecure)) {
             f.add("SECURE LAUNCH: the game's render marker appeared before the steam.exe agent's — "
-                    + "possible INSECURE launch; if VAC kicks you, check the Game: order in wine_debug.log.");
+                    + I18n.s(R.string.ui_possible_insecure_launch_if_vac_kicks_you_check_the_game));
         } else if (gameproc != null || wineText != null) {
             f.add("SECURE LAUNCH: could not confirm the steam.exe agent launched the game this session "
-                    + "(no real-Steam tracking line found) — check the raw sections if VAC kicks you.");
+                    + I18n.s(R.string.ui_no_real_steam_tracking_line_found_check_the_raw_sections));
         }
 
         appendTrackedCount(f, gameproc, tracked, since);
@@ -451,7 +454,7 @@ public final class SteamLiteLogCollector {
                                                                               : " (non-VAC title: direct start is fine)") : "");
                         break;
                     case "direct_exe":
-                        fallback = o.optString("exe", "") + " — direct-exe mode";
+                        fallback = o.optString("exe", "") + I18n.s(R.string.ui_direct_exe_mode);
                         break;
                     case "game_spawned":
                         spawned = o.optString("exe", "") + (o.optBoolean("secure", false) ? " SECURE" : " INSECURE");
@@ -465,35 +468,35 @@ public final class SteamLiteLogCollector {
             } catch (Exception ignored) {}
         }
         if (!started) {
-            f.add("AGENT: the live channel opened but the agent never reported 'started' — treat the lines below as partial.");
+            f.add(I18n.s(R.string.ui_agent_the_live_channel_opened_but_the_agent_never_report));
         }
         if (loginFail != null) {
-            f.add("AUTH (agent): sign-in FAILED inside the container — " + loginFail.trim()
+            f.add(I18n.s(R.string.ui_auth_agent_sign_in_failed_inside_the_container) + loginFail.trim()
                     + ". The game did not get a Steam session; check the saved sign-in / re-auth.");
             verdict = true;
         } else if (loggedIn) {
             f.add("AUTH (agent): signed in to Steam inside the container = OK.");
         } else if (started) {
-            f.add("AUTH (agent): no sign-in result was reported (agent ended before logon completed).");
+            f.add(I18n.s(R.string.ui_auth_agent_no_sign_in_result_was_reported_agent_ended_be));
         }
         if (spawned != null) {
             boolean secure = spawned.endsWith(" SECURE");
-            f.add("SECURE LAUNCH (agent): " + (secure
+            f.add(I18n.s(R.string.ui_secure_launch_agent) + (secure
                     ? "Steam's LaunchApp started " + spawned.replace(" SECURE", "") + " = YES (VAC-eligible secure launch)."
                     : "the game (" + spawned.replace(" INSECURE", "") + ") was started WITHOUT Steam's LaunchApp = NO — "
-                      + "INSECURE launch: VAC servers will reject it and live-service titles may report a wrong build."));
+                      + I18n.s(R.string.ui_insecure_launch_vac_servers_will_reject_it_and_live_serv)));
             verdict = true;
         } else if (fallback != null) {
-            f.add("SECURE LAUNCH (agent): NO — CreateProcess fallback (" + fallback + ").");
+            f.add(I18n.s(R.string.ui_secure_launch_agent_no_createprocess_fallback) + fallback + ").");
             verdict = true;
         } else if (refused != null) {
-            f.add("SECURE LAUNCH (agent): Steam REFUSED the launch — " + refused + "; no game process was reported.");
+            f.add(I18n.s(R.string.ui_secure_launch_agent_steam_refused_the_launch) + refused + I18n.s(R.string.ui_no_game_process_was_reported));
             verdict = true;
         }
         if (refused != null && spawned != null && spawned.endsWith(" SECURE"))
-            f.add("LAUNCH (agent): LaunchApp was refused first, then Steam spawned the game late inside the grace window (benign).");
-        if (sessionLost) f.add("SESSION (agent): the in-game Steam session was LOST while the game ran.");
-        if (achievements > 0) f.add("ACHIEVEMENTS (agent): " + achievements + " unlock event(s) reported live.");
+            f.add(I18n.s(R.string.ui_launch_agent_launchapp_was_refused_first_then_steam_spaw));
+        if (sessionLost) f.add(I18n.s(R.string.ui_session_agent_the_in_game_steam_session_was_lost_while_t));
+        if (achievements > 0) f.add("ACHIEVEMENTS (agent): " + achievements + I18n.s(R.string.ui_unlock_event_s_reported_live));
         if (exited != null) f.add("EXIT (agent): game exited " + exited + ".");
         if (shutdown != null) f.add("EXIT (agent): agent shutdown reason " + shutdown + ".");
         return verdict;
@@ -597,35 +600,35 @@ public final class SteamLiteLogCollector {
             }
         }
         // AUTH (engine)
-        if (signInFail && !signInOk) f.add("AUTH (engine): an interactive sign-in FAILED — " + lastLogonFail + ".");
+        if (signInFail && !signInOk) f.add(I18n.s(R.string.ui_auth_engine_an_interactive_sign_in_failed) + lastLogonFail + ".");
         else if (signInOk) f.add("AUTH (engine): interactive sign-in = OK.");
-        if (tokenRejected) f.add("AUTH (engine): the saved sign-in was REJECTED by Steam — the user must sign in again"
+        if (tokenRejected) f.add(I18n.s(R.string.ui_auth_engine_the_saved_sign_in_was_rejected_by_steam_the)
                 + (lastLogonFail != null ? " (" + lastLogonFail + ")" : "") + ".");
-        else if (logonFail > 0) f.add("AUTH (engine): token logon failed " + logonFail + "x (transient) — last: " + lastLogonFail + ".");
-        else if (loggedOn > 0) f.add("AUTH (engine): saved-token logon succeeded (" + loggedOn + "x this process).");
-        if (rotated > 0) f.add("AUTH (engine): refresh token rotated " + rotated + "x (value never logged).");
+        else if (logonFail > 0) f.add(I18n.s(R.string.ui_auth_engine_token_logon_failed) + logonFail + "x (transient) — last: " + lastLogonFail + ".");
+        else if (loggedOn > 0) f.add(I18n.s(R.string.ui_auth_engine_saved_token_logon_succeeded) + loggedOn + I18n.s(R.string.ui_x_this_process));
+        if (rotated > 0) f.add(I18n.s(R.string.ui_auth_engine_refresh_token_rotated) + rotated + I18n.s(R.string.ui_x_value_never_logged));
         // SESSION (engine)
         if (elsewhere) f.add("SESSION (engine): the account was taken by ANOTHER client (LoggedInElsewhere / "
-                + "LogonSessionReplaced) — expected around a SteamLite game, a conflict otherwise.");
-        if (loggedOff > 0 && !elsewhere) f.add("SESSION (engine): Steam logged the app session off " + loggedOff + "x — last: " + lastLoggedOff + ".");
-        if (disconnects > 1) f.add("SESSION (engine): " + disconnects + " disconnects this process (reconnect ladder engaged).");
-        if (failures > 0) f.add("SESSION (engine): engine failures " + failures + "x — last: " + lastFailure + ".");
+                + I18n.s(R.string.ui_logonsessionreplaced_expected_around_a_steamlite_game_a));
+        if (loggedOff > 0 && !elsewhere) f.add(I18n.s(R.string.ui_session_engine_steam_logged_the_app_session_off) + loggedOff + "x — last: " + lastLoggedOff + ".");
+        if (disconnects > 1) f.add("SESSION (engine): " + disconnects + I18n.s(R.string.ui_disconnects_this_process_reconnect_ladder_engaged));
+        if (failures > 0) f.add(I18n.s(R.string.ui_session_engine_engine_failures) + failures + "x — last: " + lastFailure + ".");
         // CLOUD (engine)
-        if (cloudDl > 0 || cloudDlFail > 0) f.add("CLOUD (engine): " + cloudDl + " save file(s) downloaded"
+        if (cloudDl > 0 || cloudDlFail > 0) f.add("CLOUD (engine): " + cloudDl + I18n.s(R.string.ui_save_file_s_downloaded)
                 + (cloudDlFail > 0 ? ", " + cloudDlFail + " FAILED" : "") + ".");
-        if (cloudUl > 0 || cloudUlFail > 0) f.add("CLOUD (engine): " + cloudUl + " save file(s) uploaded"
+        if (cloudUl > 0 || cloudUlFail > 0) f.add("CLOUD (engine): " + cloudUl + I18n.s(R.string.ui_save_file_s_uploaded)
                 + (cloudUlFail > 0 ? ", " + cloudUlFail + " FAILED" : "") + ".");
-        if (cloudBatchRefused > 0) f.add("CLOUD (engine): Steam REFUSED to open an upload batch " + cloudBatchRefused + "x.");
+        if (cloudBatchRefused > 0) f.add(I18n.s(R.string.ui_cloud_engine_steam_refused_to_open_an_upload_batch) + cloudBatchRefused + "x.");
         if (cloudLaunchIntent != null && cloudLaunchIntent.contains("pending ops"))
-            f.add("CLOUD (engine): Steam reported PENDING cloud operations from another machine at launch (" + cloudLaunchIntent + ").");
+            f.add(I18n.s(R.string.ui_cloud_engine_steam_reported_pending_cloud_operations_fro) + cloudLaunchIntent + ").");
         // ACHIEVEMENTS (engine)
-        if (achvFetch > 0) f.add("ACHIEVEMENTS (engine): achievement state fetched " + achvFetch + "x from Steam.");
-        if (achvNoReply > 0) f.add("ACHIEVEMENTS (engine): GetUserStats got NO reply " + achvNoReply + "x.");
+        if (achvFetch > 0) f.add(I18n.s(R.string.ui_achievements_engine_achievement_state_fetched) + achvFetch + I18n.s(R.string.ui_x_from_steam));
+        if (achvNoReply > 0) f.add(I18n.s(R.string.ui_achievements_engine_getuserstats_got_no_reply) + achvNoReply + "x.");
         if (achvStoreOk > 0 || achvStoreFail > 0) f.add("ACHIEVEMENTS (engine): sync-back to Steam (StoreUserStats) = "
                 + (achvStoreFail > 0 ? achvStoreFail + "x FAILED" + (achvStoreOk > 0 ? ", " + achvStoreOk + "x OK" : "") : "OK") + ".");
         // DOWNLOADS (engine)
-        if (dlFailed > 0) f.add("CONTENT (engine): " + dlFailed + " download pass(es) FAILED — last: " + lastDlFail + ".");
-        else if (dlStarted > 0) f.add("CONTENT (engine): " + dlComplete + " of " + dlStarted + " download pass(es) completed this process.");
+        if (dlFailed > 0) f.add("CONTENT (engine): " + dlFailed + I18n.s(R.string.ui_download_pass_es_failed_last) + lastDlFail + ".");
+        else if (dlStarted > 0) f.add("CONTENT (engine): " + dlComplete + " of " + dlStarted + I18n.s(R.string.ui_download_pass_es_completed_this_process));
     }
 
     /** Raw section: the engine's own lines (redacted at the source) + the session-status tail. */
@@ -655,7 +658,7 @@ public final class SteamLiteLogCollector {
         if (gameproc != null) {
             int launches = countMatchesSince(gameproc, tracked, since);
             if (launches > 1)
-                f.add("SECURE LAUNCH: the game was tracked " + launches + " times this session — possible "
+                f.add(I18n.s(R.string.ui_secure_launch_the_game_was_tracked) + launches + I18n.s(R.string.ui_times_this_session_possible)
                         + "double-launch or a launcher/arch hand-off (e.g. game.exe -> game_win64.exe).");
         }
     }
@@ -664,7 +667,7 @@ public final class SteamLiteLogCollector {
         if (connection == null) return;
         boolean logonOk = matchesSince(connection, LOGON_OK, since);
         Hit logonFail = scanSince(connection, LOGON_FAIL, since);
-        if (logonOk) f.add("AUTH: logon succeeded (OK).");
+        if (logonOk) f.add(I18n.s(R.string.ui_auth_logon_succeeded_ok));
         if (logonFail.count > 0) {
             String er = firstGroup(connection, ERESULT);
             f.add("AUTH: a logon failure was logged" + (er != null ? " (EResult " + er + ")" : "")
@@ -672,7 +675,7 @@ public final class SteamLiteLogCollector {
         }
         if (matchesSince(connection, JWT_USED, since)) {
             String exp = firstGroup(connection, JWT_EXPIRY);
-            f.add("AUTH: a JWT session token was used (value scrubbed)"
+            f.add(I18n.s(R.string.ui_auth_a_jwt_session_token_was_used_value_scrubbed)
                     + (exp != null ? "; expiry " + exp : "") + ".");
         }
         Hit cmFail = scanSince(connection, CM_CONNECT_FAIL, since);
@@ -726,7 +729,7 @@ public final class SteamLiteLogCollector {
             boolean storeFail = matchesSince(stats, STORE_STATS_FAIL, since);
             f.add("ACHIEVEMENTS: stats synced to Steam (StoreUserStats) = " + (storeFail ? "FAILED" : "OK") + ".");
         } else if (unlocks > 0) {
-            f.add("ACHIEVEMENTS: no StoreUserStats call seen this session — unlocks may not have reached Steam.");
+            f.add(I18n.s(R.string.ui_achievements_no_storeuserstats_call_seen_this_session_un));
         }
     }
 
@@ -734,11 +737,11 @@ public final class SteamLiteLogCollector {
         if (cloud == null) return;
         int down = countFiles(cloud, CLOUD_DOWNLOAD, since);
         int up = countFiles(cloud, CLOUD_UPLOAD, since);
-        if (down > 0) f.add("CLOUD: " + down + " save file(s) downloaded from Steam Cloud at launch.");
-        if (up > 0) f.add("CLOUD: " + up + " save file(s) uploaded to Steam Cloud.");
+        if (down > 0) f.add("CLOUD: " + down + I18n.s(R.string.ui_save_file_s_downloaded_from_steam_cloud_at_launch));
+        if (up > 0) f.add("CLOUD: " + up + I18n.s(R.string.ui_save_file_s_uploaded_to_steam_cloud));
         if (matchesSince(cloud, CLOUD_CONFLICT, since)) {
-            f.add("CLOUD: *** CONFLICT *** Steam Cloud reported a save conflict — two devices wrote the "
-                    + "same save; resolve it before playing again to avoid losing progress.");
+            f.add(I18n.s(R.string.ui_cloud_conflict_steam_cloud_reported_a_save_conflict_two)
+                    + I18n.s(R.string.ui_same_save_resolve_it_before_playing_again_to_avoid_losin));
         } else if (matchesSince(cloud, CLOUD_FAIL, since)) {
             f.add("CLOUD: sync result = FAILED.");
         } else if (matchesSince(cloud, CLOUD_DISABLED, since)) {
@@ -753,10 +756,10 @@ public final class SteamLiteLogCollector {
         Hit surface = scan(text, SURFACE_LOST);
         Hit xbroken = scan(text, X_BROKEN);
         if (esync.count == 0 && surface.count == 0 && xbroken.count == 0) return;
-        StringBuilder b = new StringBuilder("TEARDOWN: session-end markers (usually just how a session closes) —");
+        StringBuilder b = new StringBuilder(I18n.s(R.string.ui_teardown_session_end_markers_usually_just_how_a_session));
         if (esync.count > 0) b.append(" err:esync x").append(esync.count).append(';');
         if (surface.count > 0) b.append(" VK_ERROR_SURFACE_LOST_KHR x").append(surface.count).append(';');
-        if (xbroken.count > 0) b.append(" X connection broken x").append(xbroken.count).append(';');
+        if (xbroken.count > 0) b.append(I18n.s(R.string.ui_x_connection_broken_x)).append(xbroken.count).append(';');
         f.add(b.toString());
     }
 
@@ -769,7 +772,7 @@ public final class SteamLiteLogCollector {
             return;
         }
         if (since != null)
-            out.append("(Raw sections below are trimmed to this session, since ").append(since).append(".)\n");
+            out.append(I18n.s(R.string.ui_raw_sections_below_are_trimmed_to_this_session_since)).append(since).append(".)\n");
         for (String[] pair : INCLUDED) {
             String body = redacted.get(pair[0]);
             if (body == null) continue;
@@ -961,14 +964,14 @@ public final class SteamLiteLogCollector {
         while (lk.find()) gameKernel32 = parseHex(lk.group(1));
         if (!unknownModule && (gameKernel32 < 0 || gameKernel32 == agentBase)) return null;
 
-        return "CRASH CAUSE: Steam overlay injection crash (address belongs to the agent's kernel32, not the "
+        return I18n.s(R.string.ui_crash_cause_steam_overlay_injection_crash_address_belong)
                 + "game's) — overlay injection should be disabled. Fault address 0x" + Long.toHexString(addr)
                 + " = agent kernel32 0x" + Long.toHexString(agentBase) + " + 0x"
                 + Long.toHexString(addr - agentBase)
                 + (gameKernel32 >= 0 ? "; the game's kernel32 is at 0x" + Long.toHexString(gameKernel32) : "")
                 + (unknownModule ? "; Wine: \"unknown module\" for that address in the game" : "")
                 + ". Fix: RealSteamLauncher writes system/EnableGameOverlay=0 + apps/<appid>/OverlayAppEnable=0 "
-                + "into localconfig.vdf before every RealSteam launch.";
+                + I18n.s(R.string.ui_into_localconfig_vdf_before_every_realsteam_launch);
     }
 
     /** Unsigned hex (no 0x) → long; -1 when unparsable. */

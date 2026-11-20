@@ -112,7 +112,7 @@ internal class GameDoctorSession(
                 note = "Done: ${tweak.label}. Launch the game to test it. Undo is at the top if it didn't help."
                 onApplied()
             } else {
-                note = "Couldn't change that setting."
+                note = I18n.s(R.string.ui_couldn_t_change_that_setting)
             }
             busy = false
         }
@@ -141,7 +141,7 @@ internal class GameDoctorSession(
         scope.launch {
             val ok = withContext(Dispatchers.IO) { GameDoctor.restore(ctx, shortcut) }
             busy = false
-            if (ok) onUndone() else note = "There is nothing to undo."
+            if (ok) onUndone() else note = I18n.s(R.string.ui_there_is_nothing_to_undo)
         }
     }
 
@@ -149,11 +149,11 @@ internal class GameDoctorSession(
 
     private suspend fun applyShared(pick: GameDoctor.Pick): CommunityConfigApply.ConfigApplyResult {
         val text = ConfigLibrary.fetchConfig(pick.game.id, pick.entry.file)
-            ?: return CommunityConfigApply.ConfigApplyResult(false, "Couldn't download that config. Check your connection and try again.")
+            ?: return CommunityConfigApply.ConfigApplyResult(false, I18n.s(R.string.ui_couldn_t_download_that_config_check_your_connection_and))
         val json = try {
             JSONObject(text)
         } catch (e: JSONException) {
-            return CommunityConfigApply.ConfigApplyResult(false, "That config is damaged and can't be read.")
+            return CommunityConfigApply.ConfigApplyResult(false, I18n.s(R.string.ui_that_config_is_damaged_and_can_t_be_read))
         }
         return withContext(Dispatchers.IO) {
             ensureSnapshot()
@@ -192,7 +192,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
         onClose()
     }
 
-    DeckConfigDialog(title = "Game Doctor", subtitle = shortcut.name, onDismiss = close) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_game_doctor), subtitle = shortcut.name, onDismiss = close) {
         val r = session.report
         if (r == null) {
             Row(
@@ -208,7 +208,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
         session.note?.let { DeckConfigNote(it) }
         if (session.changed) {
             DoctorRow(
-                label = I18n.s(R.string.ui_undo_all_changes), detail = "Back to how it was before the doctor",
+                label = I18n.s(R.string.ui_undo_all_changes), detail = I18n.s(R.string.ui_back_to_how_it_was_before_the_doctor),
                 icon = Icons.Filled.History,
                 disabled = if (session.busy) "Working…" else null,
             ) { session.undo { onChanged(); onClose() } }
@@ -217,8 +217,8 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
             DoctorHeading(
                 when (f.level) {
                     GameDoctor.Level.PROBLEM -> "Problem"
-                    GameDoctor.Level.WARNING -> "Heads up"
-                    GameDoctor.Level.TIP -> "Good to know"
+                    GameDoctor.Level.WARNING -> I18n.s(R.string.ui_heads_up)
+                    GameDoctor.Level.TIP -> I18n.s(R.string.ui_good_to_know)
                 },
             )
             DeckConfigNote("${f.title}. ${f.detail}", error = f.level == GameDoctor.Level.PROBLEM)
@@ -234,7 +234,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
             }
         }
         if (r.picks.isNotEmpty()) {
-            DoctorHeading("Shared configs for this game")
+            DoctorHeading(I18n.s(R.string.ui_shared_configs_for_this_game))
             r.picks.forEach { p ->
                 val parts = listOf(
                     p.entry.driver.takeIf { it.isNotBlank() }?.let { "Driver $it" },
@@ -255,7 +255,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
             }
         }
         if (r.tweaks.isNotEmpty()) {
-            DoctorHeading("Try something else")
+            DoctorHeading(I18n.s(R.string.ui_try_something_else))
             r.tweaks.forEach { t ->
                 DoctorRow(
                     label = t.label, detail = t.detail, icon = Icons.Filled.Build,

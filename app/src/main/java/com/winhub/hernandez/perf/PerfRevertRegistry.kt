@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -164,7 +167,7 @@ object PerfRevertRegistry {
         }
         if (loaded.isEmpty()) { clearPersisted(); return }
         if (!RootManager.ensureGrantedBlocking()) {
-            Log.w(TAG, "restore: root unavailable, leaving snapshot dirty for next launch")
+            Log.w(TAG, I18n.s(R.string.ui_restore_root_unavailable_leaving_snapshot_dirty_for_next))
             return
         }
         Log.d(TAG, "restore: reverting ${loaded.size} node(s) from persisted snapshot")
@@ -222,7 +225,7 @@ object PerfRevertRegistry {
                 try { revertAll() } catch (_: Throwable) {}
             }, "perf-revert-shutdown"))
         } catch (t: Throwable) {
-            Log.w(TAG, "addShutdownHook failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_addshutdownhook_failed), t)
         }
     }
 }

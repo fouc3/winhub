@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -108,7 +111,7 @@ public final class SteamAuthManager {
                 details.username       = username;
                 details.password       = password;
                 details.clientOSType   = EOSType.AndroidUnknown;
-                details.deviceFriendlyName = "Android Device";
+                details.deviceFriendlyName = I18n.s(R.string.ui_android_device);
                 details.persistentSession  = true;
                 details.authenticator  = buildAuthenticator(listener);
 
@@ -126,14 +129,14 @@ public final class SteamAuthManager {
 
             } catch (java.util.concurrent.ExecutionException e) {
                 Throwable cause = e.getCause() != null ? e.getCause() : e;
-                Log.e(TAG, "Login ExecutionException: " + SteamLogRedactor.redact(Log.getStackTraceString(cause)));
+                Log.e(TAG, I18n.s(R.string.ui_login_executionexception) + SteamLogRedactor.redact(Log.getStackTraceString(cause)));
                 String msg = cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName();
                 mainHandler.post(() -> listener.onFailure(msg));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                Log.w(TAG, "Auth interrupted");
+                Log.w(TAG, I18n.s(R.string.ui_auth_interrupted));
             } catch (Exception e) {
-                Log.e(TAG, "Login error: " + SteamLogRedactor.redact(Log.getStackTraceString(e)));
+                Log.e(TAG, I18n.s(R.string.ui_login_error) + SteamLogRedactor.redact(Log.getStackTraceString(e)));
                 String msg = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
                 mainHandler.post(() -> listener.onFailure(msg));
             }
@@ -158,7 +161,7 @@ public final class SteamAuthManager {
             rustAuthActive = false;
             BlSteamSession s = BlSteamEngine.INSTANCE.session();
             if (s != null) {
-                try { s.cancelLogin(); } catch (Throwable t) { Log.w(TAG, "cancelLogin failed", t); }
+                try { s.cancelLogin(); } catch (Throwable t) { Log.w(TAG, I18n.s(R.string.ui_cancellogin_failed), t); }
             }
         }
     }
@@ -181,18 +184,18 @@ public final class SteamAuthManager {
     private void startCredentialLoginRust(String username, String password, AuthListener listener) {
         BlSteamSession session = BlSteamEngine.INSTANCE.session();
         if (session == null || !BlSteamEngine.INSTANCE.isConnected()) {
-            mainHandler.post(() -> listener.onFailure("Not connected to Steam"));
+            mainHandler.post(() -> listener.onFailure(I18n.s(R.string.xmb_fr_disconnected_title)));
             return;
         }
         rustAuthActive = true;
-        Log.i(TAG, "credentials sign-in starting on the Rust engine");
+        Log.i(TAG, I18n.s(R.string.ui_credentials_sign_in_starting_on_the_rust_engine));
         BlSteamEngineLog.log("AUTH", "credentials sign-in started");
         try {
             session.startLoginWithCredentials(username, password, true, buildRustAuthenticator(listener),
                     result -> onRustAuthResult(result, username, listener));
         } catch (Throwable t) {
             rustAuthActive = false;
-            Log.e(TAG, "Rust credentials login could not start: " + SteamLogRedactor.redact(Log.getStackTraceString(t)));
+            Log.e(TAG, I18n.s(R.string.ui_rust_credentials_login_could_not_start) + SteamLogRedactor.redact(Log.getStackTraceString(t)));
             String msg = t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName();
             mainHandler.post(() -> listener.onFailure(msg));
         }

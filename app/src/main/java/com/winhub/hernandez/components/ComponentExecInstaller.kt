@@ -1,5 +1,8 @@
 package com.winhub.hernandez.components
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.Intent
 import androidx.preference.PreferenceManager
@@ -87,7 +90,7 @@ object ComponentExecInstaller {
     fun execBlockedReason(c: Component): String? = when {
         c.status == "needs-upstream" -> "Needs a large package that isn't mirrored yet"
         c.status == "pending-manual" -> "Source unavailable — awaiting a re-hosted file"
-        !isExecInstallable(c) -> "Uses an installer step not yet supported"
+        !isExecInstallable(c) -> I18n.s(R.string.ui_uses_an_installer_step_not_yet_supported)
         else -> null
     }
 
@@ -130,7 +133,7 @@ object ComponentExecInstaller {
     /** Begin installing an exec component from the first step. */
     fun startInstall(context: Context, container: Container, c: Component, onProgress: (Float) -> Unit): Result {
         if (!File(container.rootDir, ".wine").isDirectory)
-            return Result.Error("Container has no Wine prefix yet — launch it once first.")
+            return Result.Error(I18n.s(R.string.ui_container_has_no_wine_prefix_yet_launch_it_once_first))
         return runFrom(context, container, c.name, c.steps, 0, onProgress)
     }
 
@@ -141,7 +144,7 @@ object ComponentExecInstaller {
     fun resume(context: Context, onProgress: (Float) -> Unit = {}): Result? {
         val raw = prefs(context).getString(PREF_PLAN, null) ?: return null
         val plan = runCatching { JSONObject(raw) }.getOrNull()
-            ?: run { clearPlan(context); return Result.Error("Corrupt install plan — cleared.") }
+            ?: run { clearPlan(context); return Result.Error(I18n.s(R.string.ui_corrupt_install_plan_cleared)) }
         val containerId = plan.optInt("containerId", 0)
         val name = plan.optString("componentName")
         val cursor = plan.optInt("cursor", 0)

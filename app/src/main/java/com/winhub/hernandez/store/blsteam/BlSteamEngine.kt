@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import java.util.concurrent.CopyOnWriteArrayList
@@ -137,7 +140,7 @@ object BlSteamEngine {
             return
         }
         if (!starting.compareAndSet(false, true)) {
-            Log.i(TAG, "start ignored — already starting")
+            Log.i(TAG, I18n.s(R.string.ui_start_ignored_already_starting))
             return
         }
         listener = l
@@ -173,7 +176,7 @@ object BlSteamEngine {
         val s = session
         if (s == null) return starting.get()
         return when (s.state()) {
-            STATE_LOGGED_ON -> { Log.i(TAG, "logon skipped — already logged on"); true }
+            STATE_LOGGED_ON -> { Log.i(TAG, I18n.s(R.string.ui_logon_skipped_already_logged_on)); true }
             STATE_CONNECTED -> {
                 Log.i(TAG, "logon on the existing session")
                 queueTokenLogon(s)
@@ -187,14 +190,14 @@ object BlSteamEngine {
         BlSteamClient.ensureLoaded()
         val caPath = CaBundleExtractor.ensureBundle(app)
         if (caPath.isEmpty()) {
-            listener?.onEngineFailure("CA bundle unavailable")
+            listener?.onEngineFailure(I18n.s(R.string.ui_ca_bundle_unavailable))
             return
         }
         // Region-aware pick (Settings → Steam → "Steam connection region"; Auto = remembered
         // fastest datacenter), falling back to the engine's own directory pick inside.
         val cmUrl = com.winhub.hernandez.store.SteamRegion.pickEngineCmUrl(app, caPath)
         if (cmUrl.isEmpty()) {
-            listener?.onEngineFailure("no CM server resolved")
+            listener?.onEngineFailure(I18n.s(R.string.ui_no_cm_server_resolved))
             return
         }
         Log.i(TAG, "CM picked: $cmUrl" + (if (pendingToken.isEmpty()) " (connect-only, awaiting sign-in)" else ""))
@@ -241,7 +244,7 @@ object BlSteamEngine {
         })
         session = s
         if (!s.connect(cmUrl)) {
-            Log.w(TAG, "connect() refused by native")
+            Log.w(TAG, I18n.s(R.string.ui_connect_refused_by_native))
             teardown()
             listener?.onEngineFailure("native connect refused")
         }
@@ -296,7 +299,7 @@ object BlSteamEngine {
                     val (cell, dc) = com.winhub.hernandez.store.SteamRegion.cdnPreference(ctx)
                     s.setCdnPreference(cell, dc)
                     Log.i(TAG, "CDN preference: cell=$cell dc='${dc}'")
-                } catch (t: Throwable) { Log.w(TAG, "CDN preference failed", t) }
+                } catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_cdn_preference_failed), t) }
             }
         }
         if (state == STATE_CONNECTED) {
@@ -305,12 +308,12 @@ object BlSteamEngine {
             // we are looping, or this is a connect-only session awaiting an interactive sign-in.
             // The LoggedOn transition follows via this same observer.
             if (logonRejected) {
-                Log.w(TAG, "token rejected by Steam — not re-logging on; tearing down")
+                Log.w(TAG, I18n.s(R.string.ui_token_rejected_by_steam_not_re_logging_on_tearing_down))
                 teardownAsync("refresh token rejected")
                 return
             }
             if (pendingToken.isEmpty()) {
-                Log.i(TAG, "connected (connect-only) — waiting for an interactive sign-in")
+                Log.i(TAG, I18n.s(R.string.ui_connected_connect_only_waiting_for_an_interactive_sign_i))
             } else if (!queueTokenLogon(s)) {
                 return
             }
@@ -337,12 +340,12 @@ object BlSteamEngine {
         }
         if (storm) {
             Log.w(TAG, "logon storm guard: $MAX_LOGONS_PER_WINDOW logons in ${LOGON_WINDOW_MS / 1000}s — backing off")
-            teardownAsync("logon loop (backing off)")
+            teardownAsync(I18n.s(R.string.ui_logon_loop_backing_off))
             return false
         }
         val ok = s.logonWithRefreshToken(pendingToken, pendingUser, pendingSteamId)
         if (!ok) {
-            Log.w(TAG, "logonWithRefreshToken refused by native")
+            Log.w(TAG, I18n.s(R.string.ui_logonwithrefreshtoken_refused_by_native))
             listener?.onEngineFailure("native logon refused")
         }
         return true
@@ -360,7 +363,7 @@ object BlSteamEngine {
         val fresh = try {
             s.renewRefreshToken(pendingToken, sid, timeoutMs)
         } catch (t: Throwable) {
-            Log.w(TAG, "renewRefreshToken threw", t)
+            Log.w(TAG, I18n.s(R.string.ui_renewrefreshtoken_threw), t)
             null
         }
         if (fresh.isNullOrEmpty()) return null

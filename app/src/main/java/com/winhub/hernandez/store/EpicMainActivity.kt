@@ -110,7 +110,7 @@ class EpicMainActivity : ComponentActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated(I18n.s(R.string.ui_deprecated_in_java))
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_WEB) webReturnTick++
@@ -127,7 +127,7 @@ class EpicMainActivity : ComponentActivity() {
         if (loggedIn) {
             val creds = EpicCredentialStore.load(this)
             if (creds != null) {
-                displayName = if (!creds.displayName.isNullOrEmpty()) creds.displayName else "Epic Account"
+                displayName = if (!creds.displayName.isNullOrEmpty()) creds.displayName else I18n.s(R.string.ui_epic_account)
                 tokenMinutesLeft = (creds.expiresAt - System.currentTimeMillis()) / 60000L
             }
         }
@@ -136,7 +136,7 @@ class EpicMainActivity : ComponentActivity() {
     private fun signOut() {
         EpicCredentialStore.clear(this)
         refreshView()
-        resultBarMsg = "Signed out of Epic Games"
+        resultBarMsg = I18n.s(R.string.ui_signed_out_of_epic_games)
     }
 }
 
@@ -240,8 +240,8 @@ private fun EpicStorefrontHost(
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             StoreRailOverflow(
                 items = listOf<Triple<String, ImageVector, () -> Unit>>(
-                    Triple("Full library screen", Icons.Filled.ViewList, { ctx.startActivity(Intent(ctx, EpicGamesActivity::class.java)) }),
-                    Triple("Free games page", Icons.Filled.Redeem, { ctx.startActivity(Intent(ctx, EpicFreeGamesActivity::class.java)) }),
+                    Triple(I18n.s(R.string.ui_full_library_screen), Icons.Filled.ViewList, { ctx.startActivity(Intent(ctx, EpicGamesActivity::class.java)) }),
+                    Triple(I18n.s(R.string.ui_free_games_page), Icons.Filled.Redeem, { ctx.startActivity(Intent(ctx, EpicFreeGamesActivity::class.java)) }),
                 ),
                 onSignOut = onSignOut,
             )

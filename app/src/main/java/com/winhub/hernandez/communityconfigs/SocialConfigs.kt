@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.Container
@@ -65,7 +68,7 @@ object SocialConfigs {
             try {
                 JSONObject(raw).optString("name").takeIf { it.isNotBlank() }?.let(names::add)
             } catch (e: JSONException) {
-                Log.w(TAG, "unreadable pc_ls_CONTAINER_LIST", e)
+                Log.w(TAG, I18n.s(R.string.ui_unreadable_pc_ls_container_list), e)
             }
         }
         val downloads = RemoteSourceRepository(context).getAllDownloads()
@@ -113,7 +116,7 @@ object SocialConfigs {
         val root = try {
             JSONObject(configJson)
         } catch (e: JSONException) {
-            return ImportOutcome(false, "That config is damaged and can't be read.")
+            return ImportOutcome(false, I18n.s(R.string.ui_that_config_is_damaged_and_can_t_be_read))
         }
         val config = ConfigTranslator.translate(root)
         val sources = HashMap<String, String>()
@@ -152,7 +155,7 @@ object SocialConfigs {
         }
 
         // 2. The Cronos container.
-        onStatus("Creating container")
+        onStatus(I18n.s(R.string.ui_creating_container))
         val protonReq = config.components.firstOrNull { it.type == "Proton" }
         val container = createContainer(ctx, gameName, protonReq)
             ?: return ImportOutcome(false, "Couldn't create the container for \"$gameName\".")
@@ -166,13 +169,13 @@ object SocialConfigs {
                 ExeShortcutImporter.addToShortcuts(ctx, container, exe, gameName, null, onCoverArtReady = { coverDone.complete(Unit) })
             }
         } catch (e: java.io.IOException) {
-            Log.w(TAG, "addToShortcuts failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_addtoshortcuts_failed), e)
             return ImportOutcome(false, "Container created, but adding the game failed: ${e.message ?: "I/O error"}")
         }
         withTimeoutOrNull(COVER_WAIT_MS) { coverDone.await() }
 
         // 4. Apply the settings.
-        onStatus("Applying settings")
+        onStatus(I18n.s(R.string.ui_applying_settings))
         val result = withContext(Dispatchers.IO) {
             val shortcut = Shortcut(container, desktop)
             val r = CommunityConfigApply.apply(shortcut, config, InstalledComponents.read(ctx), container.wineVersion, isAdreno)
@@ -208,7 +211,7 @@ object SocialConfigs {
                     ?: Container(0, manager).wineVersion
                 ContainerDetailViewModel.buildFreshCreateData(ctx, name, wine, true)
             } catch (e: Exception) {
-                Log.w(TAG, "buildFreshCreateData failed", e)
+                Log.w(TAG, I18n.s(R.string.ui_buildfreshcreatedata_failed), e)
                 null
             }
         } ?: return null

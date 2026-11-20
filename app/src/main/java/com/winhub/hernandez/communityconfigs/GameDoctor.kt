@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.ActivityManager
 import android.content.Context
 import android.util.Log
@@ -66,7 +69,7 @@ object GameDoctor {
                 Level.TIP,
                 if (logs == null) "No log for this game yet" else "Nothing obviously wrong in the last run",
                 if (logs == null) "Play it once so there is something to read, then run the doctor again. Meanwhile you can try a shared config."
-                else "If it still misbehaves, try a shared config for your chip or one of the changes below, one at a time.",
+                else I18n.s(R.string.ui_if_it_still_misbehaves_try_a_shared_config_for_your_chip),
             )
         }
         return Report(logs != null, findings, picks(ctx, shortcut, library), tweaks.values.toList())
@@ -105,8 +108,8 @@ object GameDoctor {
     private val OUT_OF_MEMORY = Regex("VK_ERROR_OUT_OF_(DEVICE|HOST)_MEMORY|std::bad_alloc|cannot allocate memory|out of memory", ci)
     private val NO_DEVICE = Regex("failed to create (a )?(d3d1[01]|d3d12|vulkan)? ?device|vkCreateDevice failed|VK_ERROR_INCOMPATIBLE_DRIVER|VK_ERROR_INITIALIZATION_FAILED|no suitable vulkan", ci)
     private val MISSING_DLL = Regex("Library\\s+([\\w.\\-+]+\\.dll)[^\\n]{0,200}not found", ci)
-    private val CRASH = Regex("Unhandled exception: (page fault|unimplemented|illegal)|EXCEPTION_ACCESS_VIOLATION|c0000005", ci)
-    private val ILLEGAL_INSN = Regex("SIGILL|illegal instruction", ci)
+    private val CRASH = Regex(I18n.s(R.string.ui_unhandled_exception_page_fault_unimplemented_illegal_exc), ci)
+    private val ILLEGAL_INSN = Regex(I18n.s(R.string.ui_sigill_illegal_instruction), ci)
     private val ANTI_CHEAT = Regex("EasyAntiCheat|BattlEye|BEService|vgk\\.sys", ci)
     private val DENUVO = Regex("denuvo", ci)
 
@@ -115,17 +118,17 @@ object GameDoctor {
         fun pick(vararg keys: String) = keys.mapNotNull { t[it] }
 
         if (DEVICE_LOST.containsMatchIn(logs)) out += Finding(
-            Level.PROBLEM, "The GPU driver crashed",
+            Level.PROBLEM, I18n.s(R.string.ui_the_gpu_driver_crashed),
             "The driver lost the GPU mid-game (\"device lost\"). It usually means this driver or DXVK build doesn't suit the game on your chip, or the GPU ran out of headroom.",
             pick("fg_off", "res"),
         )
         if (OUT_OF_MEMORY.containsMatchIn(logs)) out += Finding(
-            Level.PROBLEM, "The game ran out of memory",
+            Level.PROBLEM, I18n.s(R.string.ui_the_game_ran_out_of_memory),
             "Graphics or system memory ran out. A lower resolution and no frame generation free up the most.",
             pick("fg_off", "res"),
         )
         if (NO_DEVICE.containsMatchIn(logs)) out += Finding(
-            Level.PROBLEM, "The graphics device couldn't start",
+            Level.PROBLEM, I18n.s(R.string.ui_the_graphics_device_couldn_t_start),
             "The game asked for a graphics device the current driver stack can't provide. A shared config for your chip usually carries a driver and DXVK that work.",
             pick("vulkan"),
         )
@@ -136,21 +139,21 @@ object GameDoctor {
                 "Install the matching Windows component (Visual C++, DirectX or .NET) in the game's Win Components settings, or place the DLL next to the game's exe.",
         )
         if (CRASH.containsMatchIn(logs)) out += Finding(
-            Level.PROBLEM, "The game crashed",
+            Level.PROBLEM, I18n.s(R.string.ui_the_game_crashed),
             "Wine reported an access violation. That is most often the CPU translation layer or the Windows runtime. A safer FEX preset is the usual first fix.",
             pick("fex_stability", "fex_compat"),
         )
         if (ILLEGAL_INSN.containsMatchIn(logs)) out += Finding(
-            Level.PROBLEM, "The CPU translator hit an unsupported instruction",
+            Level.PROBLEM, I18n.s(R.string.ui_the_cpu_translator_hit_an_unsupported_instruction),
             "The game used a CPU instruction the translator can't run in its current mode. The Stability or Compatibility preset trades speed for support.",
             pick("fex_stability", "fex_compat"),
         )
         if (ANTI_CHEAT.containsMatchIn(logs)) out += Finding(
-            Level.WARNING, "Anti-cheat detected",
+            Level.WARNING, I18n.s(R.string.ui_anti_cheat_detected),
             "This game ships kernel-level anti-cheat. Single-player may work, but online play won't.",
         )
         if (DENUVO.containsMatchIn(logs)) out += Finding(
-            Level.WARNING, "Denuvo protection detected",
+            Level.WARNING, I18n.s(R.string.ui_denuvo_protection_detected),
             "Denuvo titles run best with the Denuvo FEX preset.",
             pick("fex_denuvo"),
         )
@@ -185,7 +188,7 @@ object GameDoctor {
         val median = holds.sorted()[holds.size / 2]
         if (median < 60.0) return emptyList()
         return listOf(Finding(
-            Level.WARNING, "Frames queue up on the Wayland display",
+            Level.WARNING, I18n.s(R.string.ui_frames_queue_up_on_the_wayland_display),
             "In the last run each frame waited about ${median.toInt()} ms on the display layer before it was released " +
                 "(a smooth run is closer to 30-35 ms). That shows up as uneven frame pacing. The Smooth adapter profile " +
                 "paces frames through the compositor instead.",
@@ -206,7 +209,7 @@ object GameDoctor {
         )
         val dxvkVersion = dxvkVersionOf(effective(shortcut, "dxwrapperConfig") { it.getDXWrapperConfig() })
         if (!GPUInformation.isAdrenoGPU(context) && (dxvkVersion.startsWith("2.") || dxvkVersion.startsWith("3."))) out += Finding(
-            Level.WARNING, "Mali GPUs run best on DXVK 1.10.3",
+            Level.WARNING, I18n.s(R.string.ui_mali_gpus_run_best_on_dxvk_1_10_3),
             "You are on DXVK $dxvkVersion. Newer DXVK needs Vulkan features many Mali drivers lack.",
             listOfNotNull(t["dxvk_mali"]),
         )
@@ -235,7 +238,7 @@ object GameDoctor {
 
         val fg = effective(shortcut, "frameGenEngine") { it.frameGenEngine }
         if (fg.isNotBlank() && fg != "off") t["fg_off"] = Tweak(
-            "fg_off", "Turn frame generation off",
+            "fg_off", I18n.s(R.string.ui_turn_frame_generation_off),
             "Frame generation spends extra GPU time and memory.",
         ) { it.putExtra("frameGenEngine", "off") }
 
@@ -258,7 +261,7 @@ object GameDoctor {
             val containerCfg = shortcut.container?.getGraphicsDriverConfig().orEmpty()
             val profile = WaylandAdapterSettings.resolve(containerCfg, own.ifEmpty { null }, null, null).profile
             if (profile != WaylandAdapterSettings.PROFILE_SMOOTH) t["wayland_smooth"] = Tweak(
-                "wayland_smooth", "Use the Smooth Wayland adapter profile",
+                "wayland_smooth", I18n.s(R.string.ui_use_the_smooth_wayland_adapter_profile),
                 "Vsync pacing and background copy, no zero-copy. Evens out uneven frame pacing.",
             ) {
                 val base = it.getExtra("graphicsDriverConfig", "").ifEmpty {
@@ -276,20 +279,20 @@ object GameDoctor {
 
         val renderer = effective(shortcut, "renderer") { it.renderer }.lowercase()
         if (renderer.isNotBlank() && renderer != "vulkan") t["vulkan"] = Tweak(
-            "vulkan", "Use the Vulkan renderer", "The Vulkan path is the best supported one for most games.",
+            "vulkan", I18n.s(R.string.ui_use_the_vulkan_renderer), I18n.s(R.string.ui_the_vulkan_path_is_the_best_supported_one_for_most_games),
         ) { it.putExtra("renderer", "vulkan") }
 
         val emulator = effective(shortcut, "emulator") { it.getEmulator() }.lowercase()
         if (emulator.isBlank() || emulator.contains("fex")) {
             val preset = effective(shortcut, "fexcorePreset") { it.getFEXCorePreset() }
             if (preset != FEXCorePreset.STABILITY) t["fex_stability"] = Tweak(
-                "fex_stability", "Use the Stability FEX preset", "Slower, but the safest CPU translation mode.",
+                "fex_stability", I18n.s(R.string.ui_use_the_stability_fex_preset), I18n.s(R.string.ui_slower_but_the_safest_cpu_translation_mode),
             ) { it.putExtra("fexcorePreset", FEXCorePreset.STABILITY) }
             if (preset != FEXCorePreset.COMPATIBILITY) t["fex_compat"] = Tweak(
-                "fex_compat", "Use the Compatibility FEX preset", "Favours getting the game to run over speed.",
+                "fex_compat", I18n.s(R.string.ui_use_the_compatibility_fex_preset), I18n.s(R.string.ui_favours_getting_the_game_to_run_over_speed),
             ) { it.putExtra("fexcorePreset", FEXCorePreset.COMPATIBILITY) }
             if (preset != FEXCorePreset.DENUVO) t["fex_denuvo"] = Tweak(
-                "fex_denuvo", "Use the Denuvo FEX preset", "Tuned for Denuvo-protected games.",
+                "fex_denuvo", I18n.s(R.string.ui_use_the_denuvo_fex_preset), I18n.s(R.string.ui_tuned_for_denuvo_protected_games),
             ) { it.putExtra("fexcorePreset", FEXCorePreset.DENUVO) }
         }
 
@@ -298,9 +301,9 @@ object GameDoctor {
             val on = m.groupValues[2] == "1"
             t["async"] = Tweak(
                 "async",
-                if (on) "Turn DXVK async off" else "Turn DXVK async on",
+                if (on) "Turn DXVK async off" else I18n.s(R.string.ui_turn_dxvk_async_on),
                 if (on) "Fixes missing or flickering objects at the cost of shader stutter."
-                else "Compiles shaders in the background for fewer hitches.",
+                else I18n.s(R.string.ui_compiles_shaders_in_the_background_for_fewer_hitches),
             ) { it.putExtra("dxwrapperConfig", dxCfg.replace(Regex("(^|,)async=[01]"), "$1async=${if (on) 0 else 1}")) }
         }
 
@@ -322,15 +325,15 @@ object GameDoctor {
         val exclusive = if (exclusiveExtra.isNotEmpty()) exclusiveExtra == "1" || exclusiveExtra.equals("true", true)
         else container?.isExclusiveXInput ?: true
         t["input_exclusive"] = if (exclusive) Tweak(
-            "input_exclusive", "Turn exclusive input off",
+            "input_exclusive", I18n.s(R.string.ui_turn_exclusive_input_off),
             "Lets the game read controllers through every input API at once. Try it when the game ignores the pad.",
         ) { it.putExtra(DInputVisibility.EXTRA_EXCLUSIVE, "0") } else Tweak(
-            "input_exclusive", "Turn exclusive input on",
+            "input_exclusive", I18n.s(R.string.ui_turn_exclusive_input_on),
             "Hands the game one controller path only. Try it when buttons double up or the wrong device answers.",
         ) { it.putExtra(DInputVisibility.EXTRA_EXCLUSIVE, "1") }
 
         if (DInputVisibility.forGame(container, shortcut)) t["input_dinput_off"] = Tweak(
-            "input_dinput_off", "Turn DInput off",
+            "input_dinput_off", I18n.s(R.string.ui_turn_dinput_off),
             "Hides the pad from DirectInput so the game only sees it as an XInput controller.",
         ) {
             it.putExtra(DInputVisibility.EXTRA_EXCLUSIVE, "1")
@@ -339,9 +342,9 @@ object GameDoctor {
 
         val xinputOff = shortcut.getExtra("disableXinput", "0") == "1"
         t["input_xinput_off"] = if (xinputOff) Tweak(
-            "input_xinput_off", "Turn XInput on", "Gives the game its XInput controller again.",
+            "input_xinput_off", I18n.s(R.string.ui_turn_xinput_on), I18n.s(R.string.ui_gives_the_game_its_xinput_controller_again),
         ) { it.putExtra("disableXinput", null) } else Tweak(
-            "input_xinput_off", "Turn XInput off",
+            "input_xinput_off", I18n.s(R.string.ui_turn_xinput_off),
             "Hides the XInput controller. Some older games only behave with DirectInput.",
         ) { it.putExtra("disableXinput", "1") }
         return t
@@ -473,7 +476,7 @@ object GameDoctor {
     private fun noticeArray(context: Context): org.json.JSONArray = try {
         org.json.JSONArray(prefs(context).getString(PREF_NOTICES, "[]"))
     } catch (e: org.json.JSONException) {
-        Log.w(TAG, "notices unreadable, starting over", e)
+        Log.w(TAG, I18n.s(R.string.ui_notices_unreadable_starting_over), e)
         org.json.JSONArray()
     }
 

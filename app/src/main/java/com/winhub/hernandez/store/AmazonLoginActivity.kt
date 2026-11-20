@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -43,7 +46,7 @@ class AmazonLoginActivity : ComponentActivity() {
         pendingVerifier = AmazonPKCEGenerator.generateCodeVerifier()
         val challenge = AmazonPKCEGenerator.generateCodeChallenge(pendingVerifier!!)
 
-        Log.d(TAG, "AmazonLoginActivity: PKCE ready, loading auth page")
+        Log.d(TAG, I18n.s(R.string.ui_amazonloginactivity_pkce_ready_loading_auth_page))
 
         setContent {
             WinlatorTheme {
@@ -66,13 +69,13 @@ class AmazonLoginActivity : ComponentActivity() {
 
         val code = extractAuthCode(url)
         if (code == null) {
-            Log.e(TAG, "Amazon redirect missing auth code")
+            Log.e(TAG, I18n.s(R.string.ui_amazon_redirect_missing_auth_code))
             codeCaptured.set(false)
             return
         }
 
         view?.stopLoading()
-        Log.d(TAG, "Amazon auth code captured, registering device...")
+        Log.d(TAG, I18n.s(R.string.ui_amazon_auth_code_captured_registering_device))
 
         val capturedCode = code
         val capturedVerifier = pendingVerifier!!
@@ -85,10 +88,10 @@ class AmazonLoginActivity : ComponentActivity() {
             )
 
             if (result == null) {
-                Log.e(TAG, "Device registration failed")
+                Log.e(TAG, I18n.s(R.string.ui_device_registration_failed))
                 withContext(Dispatchers.Main) {
                     codeCaptured.set(false)
-                    resultBarMsg = "Amazon login failed, please try again"
+                    resultBarMsg = I18n.s(R.string.ui_amazon_login_failed_please_try_again)
                 }
                 return@launch
             }

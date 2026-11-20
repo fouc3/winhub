@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -468,7 +471,7 @@ public abstract class TarCompressorUtils {
 
                 // Skip the entire tmp directory
                 if (entryName.contains("/tmp/")) {
-                    Log.d("RestoreOp", "Skipping tmp directory: " + entryName);
+                    Log.d("RestoreOp", I18n.s(R.string.ui_skipping_tmp_directory) + entryName);
                     continue;
                 }
 
@@ -497,7 +500,7 @@ public abstract class TarCompressorUtils {
             }
             return true;
         } catch (IOException e) {
-            Log.e("RestoreOp", "Failed to extract tar file", e);
+            Log.e("RestoreOp", I18n.s(R.string.ui_failed_to_extract_tar_file), e);
             return false;
         }
     }

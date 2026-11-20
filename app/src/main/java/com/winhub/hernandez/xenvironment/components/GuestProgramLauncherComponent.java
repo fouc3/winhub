@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xenvironment.components;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -149,8 +152,8 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
             fexcoreVersion = shortcut.getExtra("fexcoreVersion", shortcut.container.getFEXCoreVersion());
         }
 
-        Log.d("GuestProgramLauncherComponent", "box64Version in use: " + wowbox64Version);
-        Log.d("GuestProgramLauncherComponent", "fexcoreVersion in use: " + fexcoreVersion);
+        Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_box64version_in_use) + wowbox64Version);
+        Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_fexcoreversion_in_use) + fexcoreVersion);
 
         if (!wowbox64Version.equals(container.getExtra("box64Version"))) {
             ContentProfile profile = contentsManager.getProfileByEntryName("wowbox64-" + wowbox64Version);
@@ -235,10 +238,10 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
                 }
             }
 
-            Log.d("GuestProgramLauncherComponent", "FEX unixlib reconcile: " + fexcoreVersion
+            Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_fex_unixlib_reconcile) + fexcoreVersion
                     + " -> " + (copied ? "copied .so" : "DLL-only, cleared"));
         } catch (Exception e) {
-            Log.e("GuestProgramLauncherComponent", "FEX unixlib reconcile failed: " + e.getMessage());
+            Log.e("GuestProgramLauncherComponent", I18n.s(R.string.ui_fex_unixlib_reconcile_failed) + e.getMessage());
         }
     }
 
@@ -306,7 +309,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
 
             process.waitFor();
         } catch (Exception e) {
-            output.append("Error running ldd: ").append(e.getMessage());
+            output.append(I18n.s(R.string.ui_error_running_ldd)).append(e.getMessage());
         }
 
         Log.d("CurlDeps", output.toString()); // Log the full dependency output
@@ -418,7 +421,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
             envVars.put("BOX64_MMAP32", "0");
 
         if (envVars.get("BOX64_MMAP32").equals("1") && !wineInfo.isArm64EC()) {
-            Log.d("GuestProgramLauncherComponent", "Disabling map memory placed");
+            Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_disabling_map_memory_placed));
             envVars.put("WRAPPER_DISABLE_PLACED", "1");
         }
 
@@ -472,7 +475,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
 
         String winePath = imageFs.getWinePath() + "/bin";
 
-        Log.d("GuestProgramLauncherComponent", "WinePath is " + winePath);
+        Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_winepath_is) + winePath);
 
         envVars.put("PATH", winePath + ":" +
                 rootDir.getPath() + "/usr/bin");
@@ -535,7 +538,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
         File fakeinputSrc = new File(nativeLibDir, "libfakeinput.so");
 
         Log.d("GuestLauncher", "nativeLibDir: " + nativeLibDir);
-        Log.d("GuestLauncher", "fakeinputSrc exists: " + fakeinputSrc.exists());
+        Log.d("GuestLauncher", I18n.s(R.string.ui_fakeinputsrc_exists) + fakeinputSrc.exists());
         Log.d("GuestLauncher", "fakeinputDest: " + fakeinputDest.getAbsolutePath());
 
         try {
@@ -553,7 +556,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
             e.printStackTrace();
         }
 
-        Log.d("GuestLauncher", "fakeinputDest exists after copy: " + fakeinputDest.exists());
+        Log.d("GuestLauncher", I18n.s(R.string.ui_fakeinputdest_exists_after_copy) + fakeinputDest.exists());
         if (fakeinputDest.exists()) {
             if (!ld_preload.isEmpty()) ld_preload += ":";
             ld_preload += fakeinputDest.getAbsolutePath();
@@ -600,11 +603,11 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
                 hermesXInputMode, hermesXInputFlags, StickPacing.envOverrides(container, shortcut));
         HermesSessionControl.writeFfMode(DInputVibration.forGame(container, shortcut));
         if (DInputVibration.envOverride(container, shortcut) != null) {
-            Log.i("GuestLauncher", "DirectInput vibration: " + DInputVibration.ENV + " in the env vars decides ("
+            Log.i("GuestLauncher", I18n.s(R.string.ui_directinput_vibration) + DInputVibration.ENV + I18n.s(R.string.ui_in_the_env_vars_decides)
                     + (DInputVibration.effective(container, shortcut) ? "on" : "off") + ")");
         }
 
-        Log.d("GuestLauncher", "Final LD_PRELOAD: " + ld_preload);
+        Log.d("GuestLauncher", I18n.s(R.string.ui_final_ld_preload) + ld_preload);
         // winewayland.so (unixlib) dlopens libwayland-client/-egl/xkbcommon/xkbregistry. These resolve
         // from imagefs/usr/lib via LD_LIBRARY_PATH exactly like winex11.so's libX11/libXext deps do
         // (proven: winex11.so has the same Termux RUNPATH yet loads fine). So NO wayland-specific
@@ -644,7 +647,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
                 extra.append(extra.length() == 0 ? "; env " : ", ").append(name);
                 if (!name.equals("SDL_GAMECONTROLLERCONFIG")) extra.append('=').append(envVars.get(name));
             }
-            Log.i("GuestLauncher", "Controller identity: " + ControllerIdentity.describe(presented)
+            Log.i("GuestLauncher", I18n.s(R.string.ui_controller_identity) + ControllerIdentity.describe(presented)
                     + " (FAKE_EVDEV_IDENTITY=" + (presented.isEmpty() ? "unset" : presented)
                     + ", from " + ControllerIdentity.source(container, shortcut) + ")" + extra);
         }
@@ -810,7 +813,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
             String overrides = withMscoreeDisabled(env.get("WINEDLLOVERRIDES"));
             env.put("WINEDLLOVERRIDES", overrides);
             Log.i(tag, "prefix update: .update-timestamp \"" + current + "\" != wine.inf mtime " + infMtime
-                    + " (" + wineInf.getPath() + "); running Wine's prefix update before the "
+                    + " (" + wineInf.getPath() + I18n.s(R.string.ui_running_wine_s_prefix_update_before_the)
                     + (waylandMode ? "Wayland" : "X11") + " session, WINEDLLOVERRIDES=" + overrides);
             long t0 = System.currentTimeMillis();
             // The step can be cancelled by stop() (Exit) through prefixUpdatePid.
@@ -827,14 +830,14 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
                 try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); break; }
             }
             if (!ProcessHelper.listRunningWineProcesses().isEmpty()) {
-                Log.w(tag, "prefix update: wine processes still alive after the prefix update; terminating them");
+                Log.w(tag, I18n.s(R.string.ui_prefix_update_wine_processes_still_alive_after_the_prefi));
                 ProcessHelper.terminateAllWineProcessesAndWait(3000, true);
             }
             String after = stamp.isFile() ? FileUtils.readString(stamp) : "";
-            Log.i(tag, "prefix update: finished in " + (System.currentTimeMillis() - t0) + " ms (wineboot exit "
+            Log.i(tag, "prefix update: finished in " + (System.currentTimeMillis() - t0) + I18n.s(R.string.ui_ms_wineboot_exit)
                     + status + "), .update-timestamp now \"" + (after == null ? "" : after.trim()) + "\"");
         } catch (Throwable t) {
-            Log.w(tag, "prefix update: the step before the session failed; launching anyway", t);
+            Log.w(tag, I18n.s(R.string.ui_prefix_update_the_step_before_the_session_failed_launchi), t);
         }
     }
 

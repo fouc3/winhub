@@ -29,7 +29,7 @@ internal object XboxManifest {
             while (true) {
                 when (parser.nextToken()) {
                     XmlPullParser.END_DOCUMENT -> break
-                    XmlPullParser.DOCDECL -> error("Xbox game manifests cannot contain a DTD.")
+                    XmlPullParser.DOCDECL -> error(I18n.s(R.string.ui_xbox_game_manifests_cannot_contain_a_dtd))
                     XmlPullParser.START_TAG -> {
                         require(++elements <= 10_000 && parser.depth <= 64) { "Xbox game manifest is too complex." }
                         if (parser.depth == 1) { require(!root && parser.name == "Game"); root = true }
@@ -68,6 +68,6 @@ internal object XboxManifest {
             require(file.canonicalPath.startsWith(folder.canonicalPath + File.separator))
             if (file.isFile) return file.relativeTo(folder).invariantSeparatorsPath
         }
-        error("The Xbox package has no supported PC launch executable.")
+        error(I18n.s(R.string.ui_the_xbox_package_has_no_supported_pc_launch_executable))
     }
 }

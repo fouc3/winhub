@@ -10,6 +10,9 @@
  */
 package com.winhub.hernandez.xserver.extensions;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import static com.winhub.hernandez.xserver.XClientRequestHandler.RESPONSE_CODE_SUCCESS;
 
 import android.util.SparseArray;
@@ -380,7 +383,7 @@ public class GLXExtension implements Extension {
         int clientStringLength = inputStream.readInt();
         String clientExtensions = inputStream.readString8(clientStringLength);
         
-        Log.d("GLXExtension", "Connected client supported OpenGL version " + majorVersion + "." + minorVersion + " ,extensions " + clientExtensions);
+        Log.d("GLXExtension", I18n.s(R.string.ui_connected_client_supported_opengl_version) + majorVersion + "." + minorVersion + " ,extensions " + clientExtensions);
     }
     
     // SetClientInfoARB (33): GL/GLX versions the client can create + its extension strings.
@@ -397,7 +400,7 @@ public class GLXExtension implements Extension {
         inputStream.readString8(glStringLength);
         String glxExtensions = inputStream.readString8(glxStringLength);
 
-        Log.d("GLXExtension", "client info: GLX " + majorVersion + "." + minorVersion + ", " + numContextVersions + " context versions, GLX extensions " + glxExtensions);
+        Log.d("GLXExtension", I18n.s(R.string.ui_client_info_glx) + majorVersion + "." + minorVersion + ", " + numContextVersions + I18n.s(R.string.ui_context_versions_glx_extensions) + glxExtensions);
     }
 
     // CreateContextAttribsARB (34), ported from Pipetto 60c291b9. With a DRI-mode Mesa the real
@@ -744,7 +747,7 @@ public class GLXExtension implements Extension {
                 client.skipRequest();
                 break;
             default:
-                Log.d("GLXExtension", "unimplemented GLX opcode " + opcode);
+                Log.d("GLXExtension", I18n.s(R.string.ui_unimplemented_glx_opcode) + opcode);
                 throw new BadImplementation();
         }
     }

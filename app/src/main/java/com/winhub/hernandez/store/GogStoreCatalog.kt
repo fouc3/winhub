@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.store.download.MediaImage
@@ -134,7 +137,7 @@ object GogStoreCatalog {
             Log.i(TAG, "rails: trending=${trending.size} new=${newest.size} deals=${deals.size} free=${free.size}")
             return@withContext result
         }
-        Log.w(TAG, "every catalog feed came back empty — falling back to the on-disk mirror")
+        Log.w(TAG, I18n.s(R.string.ui_every_catalog_feed_came_back_empty_falling_back_to_the_o))
         loadPersistedFeatured(ctx)
     }
 

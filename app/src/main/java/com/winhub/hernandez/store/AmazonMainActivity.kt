@@ -109,7 +109,7 @@ class AmazonMainActivity : ComponentActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated(I18n.s(R.string.ui_deprecated_in_java))
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_WEB) webReturnTick++
@@ -140,7 +140,7 @@ class AmazonMainActivity : ComponentActivity() {
         }
         AmazonCredentialStore.clear(this)
         refreshView()
-        resultBarMsg = "Signed out of Amazon Games"
+        resultBarMsg = I18n.s(R.string.ui_signed_out_of_amazon_games)
     }
 }
 
@@ -235,7 +235,7 @@ private fun AmazonStorefrontHost(
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             StoreRailOverflow(
                 items = listOf<Triple<String, ImageVector, () -> Unit>>(
-                    Triple("Full library screen", Icons.Filled.ViewList, { ctx.startActivity(Intent(ctx, AmazonGamesActivity::class.java)) }),
+                    Triple(I18n.s(R.string.ui_full_library_screen), Icons.Filled.ViewList, { ctx.startActivity(Intent(ctx, AmazonGamesActivity::class.java)) }),
                 ),
                 onSignOut = onSignOut,
             )

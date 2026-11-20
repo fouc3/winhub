@@ -252,9 +252,9 @@ fun UnpackArchiveScreen(
                 Text(selected.name, color = MaterialTheme.colorScheme.onBackground, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                 Spacer(Modifier.height(2.dp))
                 val typeText = when {
-                    isInno && innoClassifying -> "InnoSetup installer • checking…"
+                    isInno && innoClassifying -> I18n.s(R.string.ui_innosetup_installer_checking)
                     isInno -> buildString {
-                        append("InnoSetup installer")
+                        append(I18n.s(R.string.ui_innosetup_installer))
                         innoClass?.compression?.let { append(" • ").append(it) }
                         innoClass?.declaredSize?.let { append(", ").append(it) }
                     }
@@ -491,7 +491,7 @@ fun UnpackArchiveScreen(
             if (!running && checking) {
                 SectionCard {
                     Text(
-                        if (isInno) "Checking how this repack is compressed…" else "Checking this file…",
+                        if (isInno) "Checking how this repack is compressed…" else I18n.s(R.string.ui_checking_this_file),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp,
                     )
                     Spacer(Modifier.height(8.dp))
@@ -713,7 +713,7 @@ fun UnpackArchiveScreen(
                                 // real installer inside a container. FreeArc failures may be SREP.
                                 val freeArc = state.engine == "unarc"
                                 Text(
-                                    if (freeArc) "Couldn't decode this FreeArc repack" else "Couldn't unpack this InnoSetup repack",
+                                    if (freeArc) "Couldn't decode this FreeArc repack" else I18n.s(R.string.ui_couldn_t_unpack_this_innosetup_repack),
                                     color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold,
                                 )
                                 Spacer(Modifier.height(6.dp))

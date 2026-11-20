@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -78,7 +81,7 @@ public class WineRequestHandler {
         byte[] data = new byte[messageLength];
         inputStream.readFully(data);
         String url = new String(data, "UTF-8");
-        Log.d("WineRequestHandler", "Received request code OPEN_URL with url " + url);
+        Log.d("WineRequestHandler", I18n.s(R.string.ui_received_request_code_open_url_with_url) + url);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         context.startActivity(intent);
     }
@@ -96,7 +99,7 @@ public class WineRequestHandler {
             ClipData clipData = ClipData.newPlainText("", clipboardData);
             clpm.setPrimaryClip(clipData);
         }
-        Log.d("WineRequestHandler", "Received request code GET_WINE_CLIPBOARD with format " + format + " and size " + size);
+        Log.d("WineRequestHandler", I18n.s(R.string.ui_received_request_code_get_wine_clipboard_with_format) + format + " and size " + size);
     }
 
     private void setWineClipboard(DataInputStream inputStream, DataOutputStream outputStream) throws IOException {
@@ -111,7 +114,7 @@ public class WineRequestHandler {
         else {
             clipText = "";
         }
-        Log.d("WineRequestHandler", "Received request code SET_WINE_CLIPBOARD for clipboard " + clipText);
+        Log.d("WineRequestHandler", I18n.s(R.string.ui_received_request_code_set_wine_clipboard_for_clipboard) + clipText);
         clipText = clipText + "\0";
         byte[] dataByte = clipText.getBytes(StandardCharsets.UTF_16LE);
         int size = dataByte.length;

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -449,7 +452,7 @@ object SteamStoreCatalog {
                 delay(APPDETAILS_INTER_BATCH_MS)
             }
         } catch (t: Throwable) {
-            StorefrontLog.w(TAG, "appdetails flush aborted — releasing waiters", t)
+            StorefrontLog.w(TAG, I18n.s(R.string.ui_appdetails_flush_aborted_releasing_waiters), t)
             headerMutex.withLock {
                 headerWaiters.values.flatten().forEach { it.complete(null) }
                 headerWaiters.clear()

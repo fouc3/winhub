@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -156,7 +159,7 @@ public final class MaliPanvk {
             for (String e : HIDDEN_EXTENSIONS) if (!hidden.contains(e)) hidden.add(e);
             envVars.put("WRAPPER_EXTENSION_BLACKLIST", String.join(",", hidden));
             envVars.put("WRAPPER_DISABLE_PRESENT_WAIT", "1");
-            applied.add("hidden extensions (present_id, present_wait, dynamic_rendering)");
+            applied.add(I18n.s(R.string.ui_hidden_extensions_present_id_present_wait_dynamic_render));
         }
         String heap = validMb(cfg.get(KEY_HEAP), HEAP_MIN, HEAP_MAX);
         if (heap != null) { envVars.put("PANVK_HEAP_MB", heap); applied.add("PANVK_HEAP_MB=" + heap); }

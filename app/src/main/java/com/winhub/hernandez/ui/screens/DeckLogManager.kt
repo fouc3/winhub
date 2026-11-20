@@ -87,7 +87,7 @@ import com.winhub.hernandez.R
 private const val TAG = "DeckLogManager"
 
 private enum class LogTab(val label: String) {
-    CAPTURE("Capture"), STORAGE("Storage"), GAMES("Game logs"), TOOLS("Tools")
+    CAPTURE("Capture"), STORAGE("Storage"), GAMES(I18n.s(R.string.ui_game_logs)), TOOLS("Tools")
 }
 
 private enum class LogActionKind { PRIMARY, NEUTRAL, DANGER }
@@ -203,7 +203,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 LogTab.CAPTURE -> {
                     DeckGroup("Recording") {
                         LogSwitchRow(
-                            "Wine debug", "Slows games down. For diagnosing a problem.", wineDebug,
+                            "Wine debug", I18n.s(R.string.ui_slows_games_down_for_diagnosing_a_problem_2), wineDebug,
                             onInfo = { info = "Wine debug" to LogCopy.WINE },
                         ) { wineDebug = it; prefs.edit().putBoolean("enable_wine_debug", it).apply() }
                         if (wineDebug) {
@@ -224,26 +224,26 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         PrefSwitchRow(prefs, "enable_dxvk_logs", true, "DXVK & VKD3D",
                             "Safe to leave on. Mostly written at startup.",
                             onInfo = { info = "DXVK & VKD3D" to LogCopy.DXVK })
-                        PrefSwitchRow(prefs, ControllerLog.PREF_KEY, false, "Controller input",
+                        PrefSwitchRow(prefs, ControllerLog.PREF_KEY, false, I18n.s(R.string.ui_controller_input),
                             "For controls that don't work. Written when the game exits.",
                             onInfo = { info = "Controller input" to LogCopy.CONTROLLER })
-                        PrefSwitchRow(prefs, "enable_steamlite_logs", false, "SteamLite (Steam client)",
+                        PrefSwitchRow(prefs, "enable_steamlite_logs", false, I18n.s(R.string.ui_steamlite_steam_client),
                             "Only when a game launches through SteamLite.",
                             onInfo = { info = "SteamLite (Steam client)" to LogCopy.STEAMLITE })
                     }
                     DeckGroup("App") {
                         LogSwitchRow(
-                            "Android logcat", "WinHub's own output only.", logcat,
+                            "Android logcat", I18n.s(R.string.ui_winhub_s_own_output_only), logcat,
                             onInfo = { info = "Android logcat" to LogCopy.LOGCAT },
                         ) { logcat = it; prefs.edit().putBoolean("enable_logcat", it).apply() }
-                        PrefSwitchRow(prefs, "enable_crash_reports", true, "Crash reports",
+                        PrefSwitchRow(prefs, "enable_crash_reports", true, I18n.s(R.string.ui_crash_reports),
                             "Nothing runs until something crashes.",
                             onInfo = { info = "Crash reports" to LogCopy.CRASH })
                         // Reads Android's own record of why the process died, the only way to see a
                         // native crash without root. The toggle only auto-saves on launch.
                         PrefSwitchRow(prefs, ExitReasonReporter.PREF_AUTOSAVE, false,
                             if (ExitReasonReporter.isSupported()) "Exit reasons (auto-save on launch)"
-                            else "Exit reasons (needs Android 11+)",
+                            else I18n.s(R.string.ui_exit_reasons_needs_android_11),
                             "Records native crashes without root.",
                             enabled = ExitReasonReporter.isSupported(),
                             onInfo = { info = "Exit reasons" to LogCopy.EXIT_REASONS })
@@ -251,7 +251,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 }
 
                 LogTab.STORAGE -> {
-                    DeckGroup("Where logs go") {
+                    DeckGroup(I18n.s(R.string.ui_where_logs_go)) {
                         DeckChoiceRow(
                             label = I18n.s(R.string.ui_log_location),
                             hint = logDir?.absolutePath ?: "—",
@@ -270,12 +270,12 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                                 when (it) {
                                     "download" -> saveMode(LogLocation.MODE_DOWNLOAD)
                                     "documents" -> saveMode(LogLocation.MODE_DOCUMENTS)
-                                    else -> dirLauncher.launch(InAppFilePicker.buildDirIntent(context, "Select log folder"))
+                                    else -> dirLauncher.launch(InAppFilePicker.buildDirIntent(context, I18n.s(R.string.ui_select_log_folder)))
                                 }
                             },
                         )
                         LogSwitchRow(
-                            "Folder for each game", "Each game keeps its own folder.", perGame,
+                            "Folder for each game", I18n.s(R.string.ui_each_game_keeps_its_own_folder_2), perGame,
                             onInfo = { info = "Folder for each game" to LogCopy.PER_GAME },
                         ) { perGame = it; prefs.edit().putBoolean(LogLocation.PREF_PER_GAME, it).apply(); refreshTick++ }
                     }
@@ -286,7 +286,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             else "$keepLast launch${if (keepLast == 1) "" else "es"} per game",
                             options = listOf(0, 1, 3, 5, 10, 20, 50).map { n ->
                                 n.toString() to when (n) {
-                                    0 -> "No history"
+                                    0 -> I18n.s(R.string.ui_no_history)
                                     1 -> "1 launch"
                                     else -> "$n launches"
                                 }
@@ -312,7 +312,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         }
                     }
                     if (entries.isNotEmpty()) {
-                        DeckGroup("Biggest folders") {
+                        DeckGroup(I18n.s(R.string.ui_biggest_folders)) {
                             entries.sortedByDescending { it.totalBytes }.take(5).forEach { e ->
                                 DeckRow(if (e.isAppBucket) "App & crash logs" else e.name) {
                                     Text(
@@ -328,8 +328,8 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
 
                 LogTab.GAMES -> {
                     if (entries.isEmpty()) {
-                        DeckGroup("Game logs") {
-                            DeckRow(I18n.s(R.string.ui_no_logs_yet_2), "Turn on a log in Capture, then launch a game.") {}
+                        DeckGroup(I18n.s(R.string.ui_game_logs)) {
+                            DeckRow(I18n.s(R.string.ui_no_logs_yet_2), I18n.s(R.string.ui_turn_on_a_log_in_capture_then_launch_a_game)) {}
                         }
                     } else {
                         Spacer(Modifier.height(6.dp))
@@ -347,8 +347,8 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 }
 
                 LogTab.TOOLS -> {
-                    DeckGroup("Capture now") {
-                        DeckRow(I18n.s(R.string.ui_capture_logcat_now), "Saves WinHub's recent output to your log folder.") {
+                    DeckGroup(I18n.s(R.string.ui_capture_now)) {
+                        DeckRow(I18n.s(R.string.ui_capture_logcat_now), I18n.s(R.string.ui_saves_winhub_s_recent_output_to_your_log_folder)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Capture logcat now" to LogCopy.CAPTURE_NOW }
                                 LogAction(
@@ -367,7 +367,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                                 }
                             }
                         }
-                        DeckRow(I18n.s(R.string.ui_read_last_crash), "Why Android ended the app last time, saved with your logs.") {
+                        DeckRow(I18n.s(R.string.ui_read_last_crash), I18n.s(R.string.ui_why_android_ended_the_app_last_time_saved_with_your_logs)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Exit reasons" to LogCopy.EXIT_REASONS }
                                 LogAction(
@@ -387,22 +387,22 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             }
                         }
                     }
-                    DeckGroup("Native engines") {
+                    DeckGroup(I18n.s(R.string.ui_native_engines)) {
                         PrefSwitchRow(prefs, BlSteamEngineFlag.PREF_KEY, BlSteamEngineFlag.DEFAULT,
                             "Native Steam engine (restart required)",
                             "On: the whole Steam session runs natively. Off: legacy Java engine.",
                             onInfo = { info = "Rust Steam engine" to LogCopy.RUST_ENGINE })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_EPIC, BlStoreEngineFlag.DEFAULT,
-                            "Rust engine: Epic downloads", "Applies to the next download.",
+                            "Rust engine: Epic downloads", I18n.s(R.string.ui_applies_to_the_next_download),
                             onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_GOG, BlStoreEngineFlag.DEFAULT,
-                            "Rust engine: GOG downloads", "Applies to the next download.",
+                            "Rust engine: GOG downloads", I18n.s(R.string.ui_applies_to_the_next_download),
                             onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_AMAZON, BlStoreEngineFlag.DEFAULT,
-                            "Rust engine: Amazon downloads", "Applies to the next download.",
+                            "Rust engine: Amazon downloads", I18n.s(R.string.ui_applies_to_the_next_download),
                             onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
                         // One app-wide ceiling for the three store engines; tap cycles the tier.
-                        DeckRow(I18n.s(R.string.ui_store_download_speed), "Ceiling for the Epic, GOG and Amazon engines.") {
+                        DeckRow(I18n.s(R.string.ui_store_download_speed), I18n.s(R.string.ui_ceiling_for_the_epic_gog_and_amazon_engines)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 LogInfoDot { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }
                                 LogAction(StoreDownloadTier.label(storeDlTier), LogActionKind.NEUTRAL) {
@@ -413,7 +413,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         }
                     }
                     DeckGroup("Help") {
-                        DeckRow(I18n.s(R.string.ui_explain_the_log_types), "What each log is for and what it costs.") {
+                        DeckRow(I18n.s(R.string.ui_explain_the_log_types), I18n.s(R.string.ui_what_each_log_is_for_and_what_it_costs)) {
                             LogAction("Open", LogActionKind.NEUTRAL) { showExplainAll = true }
                         }
                     }
@@ -484,7 +484,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
         val count = remember(entry.dir) { LogInventory.deletableCount(entry) }
         DeckConfigDialog(
             title = when {
-                entry.isAppBucket -> "Delete app & crash logs?"
+                entry.isAppBucket -> I18n.s(R.string.ui_delete_app_crash_logs)
                 entry.isLooseBucket -> "Delete ${entry.name.replaceFirstChar { it.lowercase() }}?"
                 else -> "Delete ${entry.name} logs?"
             },
@@ -532,7 +532,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
             )
             Row(Modifier.fillMaxWidth().padding(top = 14.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 LogAction("Cancel", LogActionKind.NEUTRAL) { confirmClearAll = false }
-                LogAction("Delete all", LogActionKind.DANGER) {
+                LogAction(I18n.s(R.string.ui_delete_all), LogActionKind.DANGER) {
                     confirmClearAll = false
                     val targets = entries
                     scope.launch {
@@ -798,7 +798,7 @@ private fun DeckGameLogCard(
             ) {
                 Icon(
                     if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                    contentDescription = if (expanded) "Hide files" else "Show files",
+                    contentDescription = if (expanded) "Hide files" else I18n.s(R.string.ui_show_files),
                     tint = DeckPalette.onSurfaceVariant,
                 )
             }

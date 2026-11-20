@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.pm.ProviderInfo;
 import android.content.res.AssetFileDescriptor;
@@ -44,27 +47,27 @@ public class WinlatorFilesProvider extends DocumentsProvider {
         File target = null;
 
         if (!sourceParent.exists())
-            throw new FileNotFoundException("Source parent is not found: " + sourceParentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_source_parent_is_not_found) + sourceParentDocumentId);
 
         if (!source.exists())
-            throw new FileNotFoundException("Source file not found: " + sourceDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_source_file_not_found) + sourceDocumentId);
 
         if (Objects.equals(source.getParentFile(), sourceParent))
-            throw new FileNotFoundException("Source has wrong parent: " + sourceDocumentId + " " + sourceParentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_source_has_wrong_parent) + sourceDocumentId + " " + sourceParentDocumentId);
 
         if (!targetParent.exists())
-            throw new FileNotFoundException("Target file not found: " + targetParentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_target_file_not_found) + targetParentDocumentId);
 
         if (!targetParent.isDirectory())
-            throw new FileNotFoundException("Target parent is not directory: " + targetParentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_target_parent_is_not_directory) + targetParentDocumentId);
 
         target = new File(targetParentDocumentId, source.getName());
         if (target.exists())
-            throw new FileNotFoundException("Target already exist");
+            throw new FileNotFoundException(I18n.s(R.string.ui_target_already_exist));
 
         boolean ret = source.renameTo(target);
         if (!ret)
-            throw new FileNotFoundException("Failed to move: " + sourceDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_move) + sourceDocumentId);
 
         return target.getAbsolutePath();
     }
@@ -76,17 +79,17 @@ public class WinlatorFilesProvider extends DocumentsProvider {
         boolean ret;
 
         if (!parent.exists())
-            throw new FileNotFoundException("Parent is not exist: " + parentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_parent_is_not_exist) + parentDocumentId);
 
         if (!parent.isDirectory())
-            throw new FileNotFoundException("Parent is not directory: " + parentDocumentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_parent_is_not_directory) + parentDocumentId);
 
         if (!target.exists())
-            throw new FileNotFoundException("File is not found: " + documentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_file_is_not_found) + documentId);
 
         ret = target.delete();
         if (!ret)
-            throw new FileNotFoundException("Failed to delete file: " + documentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_delete_file) + documentId);
     }
 
     private static final String[] DEFAULT_ROOT_PROJECTION = new String[]{
@@ -177,10 +180,10 @@ public class WinlatorFilesProvider extends DocumentsProvider {
                 succeeded = newFile.createNewFile();
             }
             if (!succeeded) {
-                throw new FileNotFoundException("Failed to create document with id " + newFile.getPath());
+                throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_create_document_with_id) + newFile.getPath());
             }
         } catch (IOException e) {
-            throw new FileNotFoundException("Failed to create document with id " + newFile.getPath());
+            throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_create_document_with_id) + newFile.getPath());
         }
         return newFile.getPath();
     }
@@ -189,7 +192,7 @@ public class WinlatorFilesProvider extends DocumentsProvider {
     public void deleteDocument(String documentId) throws FileNotFoundException {
         File file = getFileForDocId(documentId);
         if (!file.delete()) {
-            throw new FileNotFoundException("Failed to delete document with id " + documentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_delete_document_with_id) + documentId);
         }
     }
 
@@ -265,7 +268,7 @@ public class WinlatorFilesProvider extends DocumentsProvider {
         File oldFile = new File(documentId);
 
         if (!oldFile.exists()) {
-            throw new FileNotFoundException("File not found: " + documentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_file_not_found) + documentId);
         }
 
         File parentDir = oldFile.getParentFile();
@@ -274,7 +277,7 @@ public class WinlatorFilesProvider extends DocumentsProvider {
         if (oldFile.renameTo(newFile)) {
             return newFile.getAbsolutePath();
         } else {
-            throw new FileNotFoundException("Failed to rename document with id " + documentId);
+            throw new FileNotFoundException(I18n.s(R.string.ui_failed_to_rename_document_with_id) + documentId);
         }
     }
 

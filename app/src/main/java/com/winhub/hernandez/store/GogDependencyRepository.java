@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -141,7 +144,7 @@ public final class GogDependencyRepository {
             cachedRepo = out;
             Log.d(TAG, "repository loaded: " + out.size() + " deps build_id=" + cachedBuildId);
         } catch (Exception e) {
-            Log.w(TAG, "fetchRepository failed: " + e);
+            Log.w(TAG, I18n.s(R.string.ui_fetchrepository_failed) + e);
         }
         return out;
     }
@@ -176,7 +179,7 @@ public final class GogDependencyRepository {
             }
             return installer;
         } catch (Exception e) {
-            log.add("downloadRedist exception " + entry.id + ": " + e);
+            log.add(I18n.s(R.string.ui_downloadredist_exception) + entry.id + ": " + e);
             return null;
         }
     }

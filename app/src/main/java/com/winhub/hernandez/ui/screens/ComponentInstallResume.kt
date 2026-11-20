@@ -114,7 +114,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
                             // installScript Run-Process step (EA Desktop installer) in its own session.
                             withContext(Dispatchers.IO) {
                                 try { com.winhub.hernandez.store.steamscript.InstallScriptExecutor.resumePending(context) }
-                                catch (t: Throwable) { android.util.Log.w("ComponentInstallResume", "installScript resume failed", t) }
+                                catch (t: Throwable) { android.util.Log.w("ComponentInstallResume", I18n.s(R.string.ui_installscript_resume_failed), t) }
                             }
                         }
                         is ComponentExecInstaller.Result.Error -> message = "Couldn't finish $name: ${res.message}"

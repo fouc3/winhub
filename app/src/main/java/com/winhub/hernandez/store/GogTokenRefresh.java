@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -72,13 +75,13 @@ public final class GogTokenRefresh {
             ed.putInt("bh_gog_expires_in", 3600);
             ed.apply();
 
-            Log.d(TAG, "Token refreshed OK");
+            Log.d(TAG, I18n.s(R.string.ui_token_refreshed_ok));
             return newAccessToken;
         } catch (Exception e) {
             // Do NOT pass the throwable — the token endpoint URL embeds client_secret +
             // refresh_token, and Android HttpURLConnection IOExceptions echo the URL in
             // their message/stack. Log the exception class only.
-            Log.e(TAG, "Token refresh failed: " + e.getClass().getSimpleName());
+            Log.e(TAG, I18n.s(R.string.ui_token_refresh_failed_2) + e.getClass().getSimpleName());
             return null;
         }
     }

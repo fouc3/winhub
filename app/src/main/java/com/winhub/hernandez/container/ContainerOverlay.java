@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -112,8 +115,8 @@ public final class ContainerOverlay {
         File lib = overlayLibFile(context);
         File lower = new File(container.getBasePrefix());
         if (!lib.isFile() || !lower.isDirectory()) {
-            Log.e(TAG, "Overlay unavailable for container " + container.id + " (lib=" + lib.isFile()
-                    + ", base=" + lower.isDirectory() + "), launching without the overlay");
+            Log.e(TAG, I18n.s(R.string.ui_overlay_unavailable_for_container) + container.id + " (lib=" + lib.isFile()
+                    + ", base=" + lower.isDirectory() + I18n.s(R.string.ui_launching_without_the_overlay));
             return;
         }
         ImageFs imageFs = ImageFs.find(context);
@@ -127,7 +130,7 @@ public final class ContainerOverlay {
             envVars.put(entry.getKey(), entry.getValue());
         }
         if (!debug) envVars.remove(ENV_DEBUG);
-        Log.i(TAG, "Overlay enabled for " + container.id + ": upper=" + upperPath + " lower=" + lowerPath);
+        Log.i(TAG, I18n.s(R.string.ui_overlay_enabled_for) + container.id + ": upper=" + upperPath + " lower=" + lowerPath);
     }
 
     public static boolean createThinPrefix(File baseWine, File upperWine) {
@@ -146,7 +149,7 @@ public final class ContainerOverlay {
             return ContainerFiles.markOpaque(upperWine, ContainerFiles.DOSDEVICES);
         }
         catch (IOException e) {
-            Log.w(TAG, "createThinPrefix failed for " + upperWine + ": " + e);
+            Log.w(TAG, I18n.s(R.string.ui_createthinprefix_failed_for) + upperWine + ": " + e);
             return false;
         }
     }
@@ -185,7 +188,7 @@ public final class ContainerOverlay {
             return true;
         }
         catch (IOException e) {
-            Log.w(TAG, "copyTree failed " + src + " -> " + dst + ": " + e);
+            Log.w(TAG, I18n.s(R.string.ui_copytree_failed) + src + " -> " + dst + ": " + e);
             return false;
         }
     }

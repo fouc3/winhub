@@ -188,7 +188,7 @@ private fun CatalogDetailScreen(
             onClick = { onOpenWeb(item.storeUrl, item.title) },
         ),
         gear = listOf(
-            StoreGearItem("🌐", "Open in browser", enabled = item.storeUrl.isNotBlank()) { onOpenBrowser(item.storeUrl) },
+            StoreGearItem("🌐", I18n.s(R.string.ui_open_in_browser), enabled = item.storeUrl.isNotBlank()) { onOpenBrowser(item.storeUrl) },
         ),
         infoLine = if (item.isFree) "Free claims go through the store's own checkout — you'll be signed in there."
         else "Purchases go through $storeLabel. Owned titles appear in your Library after a sync.",

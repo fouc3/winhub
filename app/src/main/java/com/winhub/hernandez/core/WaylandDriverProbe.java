@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -107,7 +110,7 @@ public final class WaylandDriverProbe {
         /** One short reason for {@link #zeroCopySafe}'s answer, for the dialog. */
         public String zeroCopyReason() {
             if (!ok) return "driver could not be checked";
-            if (!syncFdFence) return "the driver cannot export sync-file fences, so frames could tear or show early";
+            if (!syncFdFence) return I18n.s(R.string.ui_the_driver_cannot_export_sync_file_fences_so_frames_coul);
             return dmabufSyncFileIoctl ? "sync-file fences and the dma-buf sync ioctl both work"
                     : "sync-file fences work (client render fences)";
         }
@@ -205,10 +208,10 @@ public final class WaylandDriverProbe {
         }
         // The probe loads an AdrenoTools .so by path; the Mali System driver has none. Not stored, and
         // with no report the Auto profile injects nothing (WaylandAdapterSettings.resolve).
-        if (WaylandAdapter.isMaliSystem(driverId)) return failed(driverId, "the probe does not measure the System driver");
+        if (WaylandAdapter.isMaliSystem(driverId)) return failed(driverId, I18n.s(R.string.ui_the_probe_does_not_measure_the_system_driver));
         String libPath = libPath(context, driverId);
         if (libPath == null) {
-            Report r = failed(driverId, "the driver's library file is missing");
+            Report r = failed(driverId, I18n.s(R.string.ui_the_driver_s_library_file_is_missing));
             store(context, driverId, r.json);
             return r;
         }
@@ -234,7 +237,7 @@ public final class WaylandDriverProbe {
             JSONObject j;
             try { j = new JSONObject(out[0] == null ? "" : out[0]); }
             catch (Exception e) {
-                Log.w(TAG, "probe of " + driverId + " returned no usable JSON: " + out[0]);
+                Log.w(TAG, "probe of " + driverId + I18n.s(R.string.ui_returned_no_usable_json) + out[0]);
                 j = failed(driverId, "the probe returned an unreadable report").json;
             }
             r = new Report(driverId, j, false);

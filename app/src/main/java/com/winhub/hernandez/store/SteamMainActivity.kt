@@ -219,7 +219,7 @@ class SteamMainActivity : ComponentActivity() {
             StorefrontLog.i(StorefrontLog.HOST, "signed in — opening the storefront on ${startTab.value.name}")
             loggedIn.value = true
         } else {
-            StorefrontLog.i(StorefrontLog.HOST, "not signed in — handing off to SteamLoginActivity")
+            StorefrontLog.i(StorefrontLog.HOST, I18n.s(R.string.ui_not_signed_in_handing_off_to_steamloginactivity))
             launchedLogin = true
             startActivity(Intent(this, SteamLoginActivity::class.java))
         }
@@ -408,7 +408,7 @@ fun SteamStorefrontHost(
                 onDismiss = { showSignOut = false },
                 onConfirm = {
                     showSignOut = false
-                    StorefrontLog.i(StorefrontLog.HOST, "sign-out confirmed — clearing the saved session")
+                    StorefrontLog.i(StorefrontLog.HOST, I18n.s(R.string.ui_sign_out_confirmed_clearing_the_saved_session))
                     Thread { runCatching { SteamRepository.getInstance().logout() } }.start()
                     onSignedOut()
                 },
@@ -578,13 +578,13 @@ private fun RailStatusDot(status: SteamRepository.SteamStatus, onReconnect: () -
         SteamRepository.SteamStatus.CONNECTING ->
             RailStatus(MaterialTheme.colorScheme.onSurfaceVariant, "Connecting", "Steam: connecting", false)
         SteamRepository.SteamStatus.PAUSED_FOR_GAME ->
-            RailStatus(MaterialTheme.colorScheme.onSurfaceVariant, "Paused", "Steam: paused while a game holds the session", false)
+            RailStatus(MaterialTheme.colorScheme.onSurfaceVariant, "Paused", I18n.s(R.string.ui_steam_paused_while_a_game_holds_the_session), false)
         SteamRepository.SteamStatus.SIGNED_IN_ELSEWHERE ->
-            RailStatus(MaterialTheme.colorScheme.error, "Elsewhere", "Steam: signed in elsewhere — tap to reconnect", true)
+            RailStatus(MaterialTheme.colorScheme.error, "Elsewhere", I18n.s(R.string.ui_steam_signed_in_elsewhere_tap_to_reconnect), true)
         SteamRepository.SteamStatus.OFFLINE ->
-            RailStatus(MaterialTheme.colorScheme.error, "Offline", "Steam: offline — tap to reconnect", true)
+            RailStatus(MaterialTheme.colorScheme.error, "Offline", I18n.s(R.string.ui_steam_offline_tap_to_reconnect), true)
         SteamRepository.SteamStatus.SIGNED_OUT ->
-            RailStatus(MaterialTheme.colorScheme.onSurfaceVariant, "Signed out", "Steam: signed out", false)
+            RailStatus(MaterialTheme.colorScheme.onSurfaceVariant, I18n.s(R.string.ui_signed_out), I18n.s(R.string.ui_steam_signed_out), false)
     }
 
     val shape = RoundedCornerShape(10.dp)

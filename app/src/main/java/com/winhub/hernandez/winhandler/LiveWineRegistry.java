@@ -1,5 +1,8 @@
 package com.winhub.hernandez.winhandler;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -137,7 +140,7 @@ public final class LiveWineRegistry {
             finished = true;
             winHandler.removeProcessInfoListener(this);
             main.removeCallbacksAndMessages(null);
-            Log.i(TAG, "DirectInput joystick entries " + (ok ? "updated" : "NOT confirmed") + ": " + detail);
+            Log.i(TAG, I18n.s(R.string.ui_directinput_joystick_entries) + (ok ? "updated" : "NOT confirmed") + ": " + detail);
             callback.onDone(ok, detail);
         }
     }

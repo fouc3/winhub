@@ -77,7 +77,7 @@ class TvCompanionActivity : ComponentActivity() {
     private val watchdogHandler = Handler(Looper.getMainLooper())
     private val watchdog = Runnable {
         if (!sessionConfirmed) {
-            Log.i(TAG, "no session claimed the external display — closing the companion")
+            Log.i(TAG, I18n.s(R.string.ui_no_session_claimed_the_external_display_closing_the_comp))
             finishSafely()
         }
     }
@@ -123,7 +123,7 @@ class TvCompanionActivity : ComponentActivity() {
         // must not be left sitting on the handheld.
         if (sessionConfirmed && sessionDisplayId >= 0
             && ExternalDisplay.byId(this, sessionDisplayId) == null) {
-            Log.i(TAG, "display " + sessionDisplayId + " is gone — closing the companion")
+            Log.i(TAG, "display " + sessionDisplayId + I18n.s(R.string.ui_is_gone_closing_the_companion))
             finishSafely()
             return
         }
@@ -164,7 +164,7 @@ class TvCompanionActivity : ComponentActivity() {
             @Suppress("DEPRECATION")
             sessionIntent = from.getParcelableExtra<Intent>(EXTRA_SESSION_INTENT)
         } catch (t: Throwable) {
-            Log.w(TAG, "could not read the companion's extras", t)
+            Log.w(TAG, I18n.s(R.string.ui_could_not_read_the_companion_s_extras), t)
         }
         if (displayName.isEmpty()) {
             displayName = ExternalDisplay.title(ExternalDisplay.byId(this, sessionDisplayId))
@@ -310,7 +310,7 @@ class TvCompanionActivity : ComponentActivity() {
                 if (displayId < 0 || ExternalDisplay.byId(activity, displayId) == null) return false
                 activity.startActivity(Intent(intent),
                     ExternalDisplay.launchOptions(ExternalDisplay.currentDisplayId(activity)))
-                Log.i(TAG, "a game is still playing on display " + displayId + " — showing the companion")
+                Log.i(TAG, "a game is still playing on display " + displayId + I18n.s(R.string.ui_showing_the_companion))
                 return true
             } catch (t: Throwable) {
                 Log.w(TAG, "could not bring the companion back", t)
@@ -369,7 +369,7 @@ private fun TvCompanionScreen(
             )
             Spacer(Modifier.height(14.dp))
             Text(
-                if (gameName.isNotEmpty()) gameName else "Your game",
+                if (gameName.isNotEmpty()) gameName else I18n.s(R.string.ui_your_game),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 textAlign = TextAlign.Center,

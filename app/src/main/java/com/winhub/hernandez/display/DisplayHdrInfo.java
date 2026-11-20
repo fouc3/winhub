@@ -1,5 +1,8 @@
 package com.winhub.hernandez.display;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Build;
 import android.view.Display;
 
@@ -183,18 +186,18 @@ public final class DisplayHdrInfo {
     public String logLine() {
         StringBuilder sb = new StringBuilder();
         sb.append("HDR capability of \"").append(displayName).append("\" (display ").append(displayId)
-          .append(", Android API ").append(Build.VERSION.SDK_INT).append("): formats ").append(formats)
-          .append(" | luminance max ").append(nits(maxLuminance))
-          .append(", max average ").append(nits(maxAverageLuminance))
+          .append(I18n.s(R.string.ui_android_api)).append(Build.VERSION.SDK_INT).append("): formats ").append(formats)
+          .append(I18n.s(R.string.ui_luminance_max)).append(nits(maxLuminance))
+          .append(I18n.s(R.string.ui_max_average)).append(nits(maxAverageLuminance))
           .append(", min ").append(nits(minLuminance))
           .append(" | HDR/SDR headroom ");
-        if (Build.VERSION.SDK_INT < 34) sb.append("not reportable below Android 14");
+        if (Build.VERSION.SDK_INT < 34) sb.append(I18n.s(R.string.ui_not_reportable_below_android_14));
         else if (!hdrSdrRatioAvailable) sb.append("not available on this display");
         else sb.append(String.format(java.util.Locale.US, "available (ratio %.2f)", hdrSdrRatio));
         if (highestHdrSdrRatio > 0f)
-            sb.append(String.format(java.util.Locale.US, ", highest ratio %.2f", highestHdrSdrRatio))
+            sb.append(String.format(java.util.Locale.US, I18n.s(R.string.ui_highest_ratio_2f), highestHdrSdrRatio))
               .append(highestHdrSdrRatio <= 1.01f ? " (no HDR boost at all: no app can raise HDR brightness here)" : "");
-        else if (Build.VERSION.SDK_INT >= 34) sb.append(", highest ratio not reported");
+        else if (Build.VERSION.SDK_INT >= 34) sb.append(I18n.s(R.string.ui_highest_ratio_not_reported));
         sb.append(hasHdr
                 ? (supportsHdr10
                     ? " -- the display accepts HDR10 (Wayland: the HDR output setting offers it to games; see the 'color' lines)"

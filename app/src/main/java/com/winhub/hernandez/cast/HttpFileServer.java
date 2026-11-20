@@ -1,5 +1,8 @@
 package com.winhub.hernandez.cast;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import java.io.File;
@@ -136,7 +139,7 @@ public class HttpFileServer {
             os.write(body);
         } else {
             Log.i(TAG, "GET " + path + " -> 404");
-            writeHead(os, "404 Not Found", "text/plain", 0, false, 0, 0, 0);
+            writeHead(os, I18n.s(R.string.ui_n404_not_found), "text/plain", 0, false, 0, 0, 0);
         }
         os.flush();
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import java.io.File
@@ -72,7 +75,7 @@ object CaBundleExtractor {
             Log.i(TAG, "bundle ready from asset: ${out.absolutePath} (${out.length()} bytes)")
             out.absolutePath
         } catch (e: Exception) {
-            Log.e(TAG, "asset bundle extraction failed — TLS will fail", e)
+            Log.e(TAG, I18n.s(R.string.ui_asset_bundle_extraction_failed_tls_will_fail), e)
             ""
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens.contents
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.SharedPreferences
 import com.winhub.hernandez.contents.ContentsManager
@@ -50,7 +53,7 @@ class RemoteSourceRepository(private val context: Context) {
             downloadedKeys.remove("$sourceName::$componentType::$fileName")
         }
 
-        const val GPU_DRIVER_TYPE = "GPU Drivers"
+        const val GPU_DRIVER_TYPE = I18n.s(R.string.ui_gpu_drivers)
         val GPU_DRIVER_KEYWORDS = listOf("turnip", "adreno", "qualcomm", "mesa")
 
         /** Display name of the built-in Official catalog source (ContentsManager.REMOTE_PROFILES). */
@@ -313,7 +316,7 @@ class RemoteSourceRepository(private val context: Context) {
             format = SourceFormat.PACK_JSON,
             supportedTypes = listOf("dxvk", "vkd3d", "box64", "fex", "fexcore", "wine", "proton")
         ),
-        RemoteSource("Nightlies by The412Banner", "https://raw.githubusercontent.com/The412Banner/Nightlies/refs/heads/main/nightlies_components.json", SourceFormat.PACK_JSON, listOf("DXVK", "D7VK", "VKD3D", "FEXCore", "Box64", "WOWBox64")),
+        RemoteSource(I18n.s(R.string.ui_nightlies_by_the412banner), "https://raw.githubusercontent.com/The412Banner/Nightlies/refs/heads/main/nightlies_components.json", SourceFormat.PACK_JSON, listOf("DXVK", "D7VK", "VKD3D", "FEXCore", "Box64", "WOWBox64")),
     )
 
     /** Contents-settings toggle: list the Official catalog among the hub's repositories (default ON). */

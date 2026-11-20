@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
@@ -96,7 +99,7 @@ object CustomSaveVault {
         val shortcuts = try {
             ContainerManager(context).loadShortcuts()
         } catch (t: Throwable) {
-            Log.w(TAG, "listStatuses: loadShortcuts failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_liststatuses_loadshortcuts_failed), t)
             return emptyList()
         }
         return shortcuts
@@ -189,7 +192,7 @@ object CustomSaveVault {
         val f = vaultFile(shortcut)
         if (!f.isFile) {
             Handler(Looper.getMainLooper()).post {
-                onResult(GameSaveBackup.RestoreResult(false, 0, "No vault backup for this game"))
+                onResult(GameSaveBackup.RestoreResult(false, 0, I18n.s(R.string.ui_no_vault_backup_for_this_game)))
             }
             return
         }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Application
 import android.content.Context
 import android.os.Environment
@@ -184,7 +187,7 @@ class ContainersViewModel(app: Application) : AndroidViewModel(app) {
         startContentDownload(app, candidate.profile)
         val initial = ContentDownloadRegistry.get(key)
         if (initial == null) {
-            _message.value = "Couldn't start the layer download"
+            _message.value = I18n.s(R.string.ui_couldn_t_start_the_layer_download)
             return
         }
         _layerDownload.value = initial
@@ -196,7 +199,7 @@ class ContainersViewModel(app: Application) : AndroidViewModel(app) {
             if (final?.phase != ContentDownloadPhase.DONE) {
                 if (final == null) {
                     _layerDownload.value = null
-                    _message.value = "Layer download failed"
+                    _message.value = I18n.s(R.string.ui_layer_download_failed)
                 }
                 return@launch
             }

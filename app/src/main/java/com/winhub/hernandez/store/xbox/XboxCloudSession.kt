@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
@@ -36,7 +39,7 @@ internal object XboxCloudSession {
         val array = json.getJSONArray("regions")
         val regions = (0 until array.length()).map { array.getJSONObject(it) }
             .map { Region(it.getString("name"), it.getString("baseUri"), it.optBoolean("isDefault")) }
-        val default = regions.firstOrNull { it.isDefault } ?: regions.firstOrNull() ?: error("No Xbox Cloud Gaming region")
+        val default = regions.firstOrNull { it.isDefault } ?: regions.firstOrNull() ?: error(I18n.s(R.string.ui_no_xbox_cloud_gaming_region))
         val seconds = json.optLong("durationInSeconds").coerceIn(0, 24 * 3600)
         return Session(account, json.getString("gsToken"), json.getString("offering"), default.baseUri, regions,
             json.optString("userToken").takeIf { !json.isNull("userToken") && it.isNotEmpty() }, System.currentTimeMillis() + seconds * 1000).also { cached = it }

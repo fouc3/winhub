@@ -114,7 +114,7 @@ class XboxMainActivity : ComponentActivity() {
             store = Store.XBOX, id = game.id, title = game.title, imageUrl = game.heroUrl, tallImageUrl = game.posterUrl,
             tags = listOfNotNull(
                 when { game.gamePass -> if (game.pc) "PC Game Pass" else "Game Pass"; game.owned -> "Owned"; else -> null },
-                when { game.cloud && !game.pc -> "Cloud only"; game.cloud -> "Cloud"; else -> null },
+                when { game.cloud && !game.pc -> I18n.s(R.string.ui_cloud_only); game.cloud -> "Cloud"; else -> null },
             ).joinToString(" · "),
             storeUrl = game.storeUrl, developer = game.developer, description = game.description,
             extra = mapOf("access" to game.access, "installed" to installed.toString()),
@@ -235,7 +235,7 @@ fun rememberXboxLibrary(account: String, onMessage: (String) -> Unit): XboxLibra
             val cached = withContext(Dispatchers.IO) { XboxLibraryCache.read(app, account, market) }
             if (cached != null) games = cached.games
             if (cached != null && !cached.needsRefresh(force)) { syncing = false; status = ""; return@launch }
-            status = "Syncing your Xbox library…"
+            status = I18n.s(R.string.ui_syncing_your_xbox_library)
             val result = withContext(Dispatchers.IO) {
                 runCatching {
                     val response = Xodus.run(app, listOf("library", "--json", "--market", market))
@@ -375,7 +375,7 @@ private fun XboxLibraryTab(state: XboxLibraryState, wide: Boolean, onOpen: (Xbox
             state.games.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 StoreNotice(title = I18n.s(R.string.ui_no_games_found_yet),
                     body = I18n.s(R.string.ui_games_with_a_pc_version_or_that_stream_with_xbox_clou),
-                    actionLabel = "Sync now", onAction = { state.refresh(true) })
+                    actionLabel = I18n.s(R.string.ui_sync_now), onAction = { state.refresh(true) })
             }
             shown.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 StoreNotice(title = I18n.s(R.string.ui_no_matches), body = I18n.s(R.string.ui_nothing_in_your_library_matches_that_filter))
@@ -444,7 +444,7 @@ private fun XboxStoreTab(state: XboxLibraryState, wide: Boolean, onOpen: (XboxGa
         if (list != null || searching) {
             CatalogResults(results = list.orEmpty().map { XboxMainActivity.toCatalogItem(it, it.id in state.installedIds) },
                 searching = searching, query = query, wide = wide, storeLabel = "Xbox",
-                emptyBody = "No PC games match. Console-only titles are not listed.",
+                emptyBody = I18n.s(R.string.ui_no_pc_games_match_console_only_titles_are_not_listed),
                 actionFor = ::action, onOpen = ::open, onAction = ::open)
         } else LazyColumn(Modifier.fillMaxSize(), state = header.trackedListState(), contentPadding = PaddingValues(bottom = 24.dp)) {
             val owned = state.games.filter { it.id !in state.installedIds }.take(20).map { XboxMainActivity.toCatalogItem(it) }
@@ -453,12 +453,12 @@ private fun XboxStoreTab(state: XboxLibraryState, wide: Boolean, onOpen: (XboxGa
             trending.firstOrNull()?.let { hero ->
                 item(key = "hero") {
                     CatalogHeroCard(item = hero, action = action(hero), storeLabel = "Xbox", onOpen = { open(hero) },
-                        onAction = { open(hero) }, modifier = Modifier.padding(14.dp), eyebrow = "TRENDING ON PC")
+                        onAction = { open(hero) }, modifier = Modifier.padding(14.dp), eyebrow = I18n.s(R.string.ui_trending_on_pc))
                 }
             }
-            if (installed.isNotEmpty()) catalogRail("Installed", "Ready to play", installed, "Xbox", ::action, { open(it) }, { open(it) })
-            if (owned.isNotEmpty()) catalogRail("In your library", "Owned and PC Game Pass", owned, "Xbox", ::action, { open(it) }, { open(it) })
-            if (trending.size > 1) catalogRail("Trending", "Popular PC games on the Microsoft Store", trending.drop(1), "Xbox", ::action, { open(it) }, { open(it) })
+            if (installed.isNotEmpty()) catalogRail("Installed", I18n.s(R.string.ui_ready_to_play), installed, "Xbox", ::action, { open(it) }, { open(it) })
+            if (owned.isNotEmpty()) catalogRail(I18n.s(R.string.ui_in_your_library), I18n.s(R.string.ui_owned_and_pc_game_pass), owned, "Xbox", ::action, { open(it) }, { open(it) })
+            if (trending.size > 1) catalogRail("Trending", I18n.s(R.string.ui_popular_pc_games_on_the_microsoft_store), trending.drop(1), "Xbox", ::action, { open(it) }, { open(it) })
             featuredError?.let { err ->
                 item(key = "err") { StoreNotice(title = I18n.s(R.string.ui_microsoft_store_unavailable), body = err, modifier = Modifier.padding(14.dp)) }
             }
@@ -482,7 +482,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
                     color = MaterialTheme.colorScheme.onSurface)
                 Switch(checked = cloud, onCheckedChange = { cloud = it; XboxMainActivity.prefs(ctx).edit().putBoolean(XboxMainActivity.PREF_CLOUD_SAVES, it).apply() })
             }
-            Text("Off by default. Saves then stay on this device. Turning it on can overwrite your account's cloud saves; " +
+            Text(I18n.s(R.string.ui_off_by_default_saves_then_stay_on_this_device_turning_it) +
                 "use a test account first.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         StoreSection(title = I18n.s(R.string.ui_cloud_gaming)) {
@@ -493,12 +493,12 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
                 modifier = Modifier.steamFocusRing()) { Text(I18n.s(R.string.ui_cloud_gaming_settings)) }
         }
         StoreSection(title = I18n.s(R.string.about)) {
-            Text("PC games from the Microsoft Store and PC Game Pass, downloaded with your own license and run in a Wine " +
+            Text(I18n.s(R.string.ui_pc_games_from_the_microsoft_store_and_pc_game_pass_downl) +
                 "container. No console emulation; UWP/APPX apps are not supported. Microsoft may not welcome third-party " +
                 "clients; use an account you can afford to lose.", style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(6.dp))
-            Text("Backend: Xodus (GPL-3.0) with Xodus Nexus (MIT) and DroidDeck's Android adaptation (GPL-3.0). " +
+            Text(I18n.s(R.string.ui_backend_xodus_gpl_3_0_with_xodus_nexus_mit_and_droiddeck) +
                 "Cloud player: Greenlight's WebRTC client by UnknownSKL (MIT); stream settings and sharpening after " +
                 "Better xCloud by redphx (MIT). " +
                 "Diagnostics: Download/Bannerlator/xbox_diag.txt", style = MaterialTheme.typography.bodySmall,

@@ -354,7 +354,7 @@ internal fun FriendsOffState(onBack: () -> Unit, showBackButton: Boolean = true)
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Turn it on to see your friends list and their presence, and to send and receive chat " +
+                text = I18n.s(R.string.ui_turn_it_on_to_see_your_friends_list_and_their_presence_a) +
                     "messages. While it's off, no online status is shared.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -817,7 +817,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                     onClick = {
                         myCode?.let {
                             clipboard.setText(AnnotatedString(it))
-                            Toast.makeText(ctx, "Friend code copied", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(ctx, I18n.s(R.string.xmb_fr_code_copied), Toast.LENGTH_SHORT).show()
                         }
                     },
                     enabled = myCode != null,
@@ -921,7 +921,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
             val link = inviteLink
             if (link == null) {
                 Button(onClick = { generateInvite() }, enabled = !generating) {
-                    Text(if (generating) "Generating…" else "Generate invite link")
+                    Text(if (generating) "Generating…" else I18n.s(R.string.ui_generate_invite_link))
                 }
             } else {
                 Column(
@@ -943,14 +943,14 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                         Button(
                             onClick = {
                                 clipboard.setText(AnnotatedString(link))
-                                Toast.makeText(ctx, "Invite link copied", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(ctx, I18n.s(R.string.ui_invite_link_copied), Toast.LENGTH_SHORT).show()
                             },
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
                         ) { Text(I18n.s(R.string.copy)) }
                     }
                     Spacer(Modifier.height(8.dp))
                     TextButton(onClick = { generateInvite() }, enabled = !generating) {
-                        Text(if (generating) "Generating…" else "Generate new link")
+                        Text(if (generating) "Generating…" else I18n.s(R.string.ui_generate_new_link))
                     }
                 }
             }
@@ -1068,9 +1068,9 @@ private fun SearchResultRow(result: SteamUserSearch.Result, state: ResultState, 
                 overflow = TextOverflow.Ellipsis,
             )
             val sub = when (state) {
-                ResultState.FRIEND -> "Already your friend"
-                ResultState.PENDING -> "Request pending"
-                ResultState.ADD -> "Steam profile"
+                ResultState.FRIEND -> I18n.s(R.string.xmb_fr_result_friend)
+                ResultState.PENDING -> I18n.s(R.string.xmb_fr_result_pending)
+                ResultState.ADD -> I18n.s(R.string.xmb_fr_result_player)
             }
             Text(sub, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
         }
@@ -1100,7 +1100,7 @@ private fun ConnectState() {
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Not connected to Steam",
+            text = I18n.s(R.string.xmb_fr_disconnected_title),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -1488,7 +1488,7 @@ fun ChatScreen(
                 IconButton(
                     onClick = {
                         pickImage.launch(
-                            InAppFilePicker.buildIntent(ctx, InAppFilePicker.IMAGES, "Send an image"),
+                            InAppFilePicker.buildIntent(ctx, InAppFilePicker.IMAGES, I18n.s(R.string.ui_send_an_image)),
                         )
                     },
                 ) {
@@ -1521,7 +1521,7 @@ fun ChatScreen(
                             } else {
                                 val text = item?.coerceToText(ctx)?.toString()
                                 if (!text.isNullOrEmpty()) draft += text
-                                else Toast.makeText(ctx, "Clipboard is empty", Toast.LENGTH_SHORT).show()
+                                else Toast.makeText(ctx, I18n.s(R.string.ui_clipboard_is_empty), Toast.LENGTH_SHORT).show()
                             }
                         } catch (_: Throwable) {
                             Toast.makeText(ctx, "Couldn't paste", Toast.LENGTH_SHORT).show()

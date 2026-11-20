@@ -382,7 +382,7 @@ private fun DeckLibraryPane(screen: Screen, context: Context, onGameClick: (Deck
                 contentAlignment = Alignment.Center,
             ) {
                 DeckEmptyState(
-                    title = "No games yet",
+                    title = I18n.s(R.string.ui_no_games_yet),
                     body = I18n.s(R.string.ui_sign_in_to_this_store_and_sync_to_fill_its_library),
                 )
             }
@@ -572,7 +572,7 @@ private suspend fun deckFeatured(context: Context, screen: Screen): DeckStoreDat
             hero = f.hero?.let { deckCatalogBrowse(it) },
             sections = listOfNotNull(
                 f.trending.rail("Trending") { deckCatalogBrowse(it) },
-                f.newReleases.rail("New Releases") { deckCatalogBrowse(it) },
+                f.newReleases.rail(I18n.s(R.string.ui_new_releases)) { deckCatalogBrowse(it) },
                 f.deals.rail("Deals") { deckCatalogBrowse(it) },
                 f.free.rail("Free") { deckCatalogBrowse(it) },
             ),
@@ -583,10 +583,10 @@ private suspend fun deckFeatured(context: Context, screen: Screen): DeckStoreDat
         else DeckStoreData(
             hero = f.hero?.let { deckCatalogBrowse(it) },
             sections = listOfNotNull(
-                f.freeNow.rail("Free Now") { deckCatalogBrowse(it) },
-                f.onSale.rail("On Sale") { deckCatalogBrowse(it) },
-                f.newReleases.rail("New Releases") { deckCatalogBrowse(it) },
-                f.freeToPlay.rail("Free to Play") { deckCatalogBrowse(it) },
+                f.freeNow.rail(I18n.s(R.string.ui_free_now)) { deckCatalogBrowse(it) },
+                f.onSale.rail(I18n.s(R.string.ui_on_sale)) { deckCatalogBrowse(it) },
+                f.newReleases.rail(I18n.s(R.string.ui_new_releases)) { deckCatalogBrowse(it) },
+                f.freeToPlay.rail(I18n.s(R.string.ui_free_to_play)) { deckCatalogBrowse(it) },
             ),
         )
     }
@@ -595,8 +595,8 @@ private suspend fun deckFeatured(context: Context, screen: Screen): DeckStoreDat
         else DeckStoreData(
             hero = f.hero?.let { deckSteamBrowse(it) },
             sections = listOfNotNull(
-                f.newReleases.rail("New Releases") { deckSteamBrowse(it) },
-                f.topFree.rail("Top Free") { deckSteamBrowse(it) },
+                f.newReleases.rail(I18n.s(R.string.ui_new_releases)) { deckSteamBrowse(it) },
+                f.topFree.rail(I18n.s(R.string.ui_top_free)) { deckSteamBrowse(it) },
                 f.specials.rail("Specials") { deckSteamBrowse(it) },
             ),
         )
@@ -616,8 +616,8 @@ private suspend fun deckFeatured(context: Context, screen: Screen): DeckStoreDat
         DeckStoreData(
             hero = trending.firstOrNull()?.let { xboxBrowse(it) },
             sections = listOfNotNull(
-                trending.drop(1).rail("Trending on PC") { xboxBrowse(it) },
-                owned.take(20).rail("In your library") { xboxBrowse(it) },
+                trending.drop(1).rail(I18n.s(R.string.ui_trending_on_pc_2)) { xboxBrowse(it) },
+                owned.take(20).rail(I18n.s(R.string.ui_in_your_library)) { xboxBrowse(it) },
             ),
         )
     }.getOrNull() ?: DeckStoreData(null, emptyList())
@@ -1144,7 +1144,7 @@ internal fun DeckStoresScreen(
         if (!showStores) {
             Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
                 DeckPaneScroll {
-                    DeckGroup("Stores are turned off") {
+                    DeckGroup(I18n.s(R.string.ui_stores_are_turned_off)) {
                         DeckRow(
                             label = I18n.s(R.string.ui_enable_stores),
                             hint = I18n.s(R.string.ui_settings_side_menu_stores),
@@ -1383,7 +1383,7 @@ private fun DeckStoreSettingsPane(
             .padding(bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        DeckGroup("Store settings") {
+        DeckGroup(I18n.s(R.string.ui_store_settings)) {
             DeckRow(
                 label = I18n.s(R.string.ui_show_mature_content),
                 hint = "Storefront 17+/18+ titles; owned games always show",

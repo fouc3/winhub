@@ -100,13 +100,13 @@ class XboxGameDetailActivity : ComponentActivity() {
                 val secondary = if (game.cloud && game.pc && game.access.isNotEmpty()) StorePrimaryAction.Button("Stream", ::stream) else null
                 val gear = buildList {
                     if (inst == null && !downloading && game.cloud && game.access.isNotEmpty() && intent.getStringExtra(XboxCloudShortcuts.EXTRA_SHORTCUT) == null)
-                        add(StoreGearItem("➕", "Add to Games (stream now, download later)") {
+                        add(StoreGearItem("➕", I18n.s(R.string.ui_add_to_games_stream_now_download_later)) {
                             XboxCloudShortcuts.addNotInstalled(this@XboxGameDetailActivity, game) { ok, message ->
                                 addResult = com.winhub.hernandez.store.compose.AddShortcutResult(game.title, ok, message,
                                     note = if (ok) "Not installed yet: Stream it now, or Download it from its launch options." else null)
                             }
                         })
-                    if (downloading) add(StoreGearItem("🗑", "Cancel download", danger = true) { XboxDownloads.cancel(game.id) })
+                    if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true) { XboxDownloads.cancel(game.id) })
                     if (inst != null && !downloading) {
                         add(StoreGearItem("🔄", "Update / verify") { update(inst) })
                         add(StoreGearItem("🗑️", "Uninstall", danger = true, onClick = ::confirmUninstall))
@@ -168,8 +168,8 @@ class XboxGameDetailActivity : ComponentActivity() {
                         Spacer(Modifier.height(4.dp))
                         when {
                             inst != null -> StoreStatusText("Installed · ${inst.exe.substringAfterLast('/')}${if (inst.version.isNotBlank()) " · v${inst.version}" else ""}", StoreDetailState.INSTALLED)
-                            game.gamePass -> StoreStatusText(if (game.pc) "Included with PC Game Pass" else "Included with Game Pass · cloud only")
-                            game.owned -> StoreStatusText(if (game.pc) "Owned" else "Owned · cloud only")
+                            game.gamePass -> StoreStatusText(if (game.pc) "Included with PC Game Pass" else I18n.s(R.string.ui_included_with_game_pass_cloud_only))
+                            game.owned -> StoreStatusText(if (game.pc) "Owned" else I18n.s(R.string.ui_owned_cloud_only))
                             else -> StoreStatusText(I18n.s(R.string.ui_not_owned_by_this_account))
                         }
                         status?.let { Spacer(Modifier.height(2.dp)); StoreStatusText(it, StoreDetailState.FAILED) }
@@ -193,11 +193,11 @@ class XboxGameDetailActivity : ComponentActivity() {
                             Text(game.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         StoreSection(title = I18n.s(R.string.ui_how_it_runs)) {
-                            if (game.pc) Text("Install: the PC version is downloaded with your license and runs in a Wine container you pick when " +
+                            if (game.pc) Text(I18n.s(R.string.ui_install_the_pc_version_is_downloaded_with_your_license_a) +
                                 "adding it to Games. Each launch checks the license with Microsoft, so play online the first time. " +
                                 "Cloud saves are ${if (XboxMainActivity.cloudSaves(this@XboxGameDetailActivity)) "on" else "off"} (Xbox › Profile).",
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            if (game.cloud) Text("Stream: plays on Microsoft's servers with Xbox Cloud Gaming — nothing to download, " +
+                            if (game.cloud) Text(I18n.s(R.string.ui_stream_plays_on_microsoft_s_servers_with_xbox_cloud_gami) +
                                 "but it needs a steady connection and an Xbox plan that includes cloud play. The first stream may ask you to sign in once.",
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(top = if (game.pc) 6.dp else 0.dp))
@@ -240,7 +240,7 @@ class XboxGameDetailActivity : ComponentActivity() {
 
     private fun install() {
         status = null
-        busy = "Checking the PC package…"
+        busy = I18n.s(R.string.ui_checking_the_pc_package_2)
         lifecycleScope.launch {
             val choices = withContext(Dispatchers.IO) { runCatching { XboxDownloads.resolve(applicationContext, game) } }
             busy = null

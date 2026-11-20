@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -176,7 +179,7 @@ public final class SteamControllerBackend {
         if (running)
             return true;
         if (running_ != null && running_ != this) {
-            Log.i(TAG, "Taking SDL over from the previous owner");
+            Log.i(TAG, I18n.s(R.string.ui_taking_sdl_over_from_the_previous_owner));
             running_.stop();
         }
         if (!loadLibraries())
@@ -190,7 +193,7 @@ public final class SteamControllerBackend {
             SDL.setContext(activity);
             hidManager = HIDDeviceManager.acquire(activity);
         } catch (Throwable t) {
-            Log.e(TAG, "SDL Java setup failed; Steam Controller support stays off", t);
+            Log.e(TAG, I18n.s(R.string.ui_sdl_java_setup_failed_steam_controller_support_stays_off), t);
             return false;
         }
         // Without the permission SDL would request it itself from the poll thread (SDLActivity.
@@ -200,7 +203,7 @@ public final class SteamControllerBackend {
         running_ = this;
         pollThread = new Thread(() -> pollLoop(bluetooth), "SteamCtrlPoll");
         pollThread.start();
-        Log.i(TAG, "Started (bluetooth " + bluetooth + ", trackpad mouse mode " + trackpadMode + ")");
+        Log.i(TAG, "Started (bluetooth " + bluetooth + I18n.s(R.string.ui_trackpad_mouse_mode) + trackpadMode + ")");
         return true;
     }
 
@@ -215,7 +218,7 @@ public final class SteamControllerBackend {
             Thread.currentThread().interrupt();
         }
         if (pollThread.isAlive())
-            Log.w(TAG, "Poll thread still shutting SDL down after 1.5 s");
+            Log.w(TAG, I18n.s(R.string.ui_poll_thread_still_shutting_sdl_down_after_1_5_s));
         pollThread = null;
         if (running_ == this)
             running_ = null;
@@ -253,7 +256,7 @@ public final class SteamControllerBackend {
     private void pollLoop(boolean bluetooth) {
         Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
         if (!nativeInit(bluetooth)) {
-            Log.w(TAG, "SDL init failed; Steam Controller support stays off this session");
+            Log.w(TAG, I18n.s(R.string.ui_sdl_init_failed_steam_controller_support_stays_off_this));
             running = false;
             return;
         }
@@ -356,7 +359,7 @@ public final class SteamControllerBackend {
     private static ExternalController createController(int sdlId, String name, String path) {
         ExternalController controller = new ExternalController();
         if (name == null || name.isEmpty())
-            name = "Steam Controller";
+            name = I18n.s(R.string.ui_steam_controller);
         controller.setName(name);
         // Stable per controller (BLE path = "SteamController.<MAC>"), so Players-tab pins persist.
         controller.setId("sdl:" + (path != null && !path.isEmpty() ? path : name + "#" + sdlId));

@@ -1,5 +1,7 @@
 package com.winhub.hernandez.ui.deck
 
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Canvas
@@ -44,7 +46,7 @@ private fun StoreMark.logoRes(): Int? = when (this) {
  * no known store is a plain exe the user added, which runs as a Windows program.
  */
 internal fun storeMarkOfLabel(label: String): StoreMark = when (label) {
-    "Steam", "Linux", "Windows Steam" -> StoreMark.STEAM
+    "Steam", "Linux", I18n.s(R.string.ui_windows_steam) -> StoreMark.STEAM
     "Epic Games" -> StoreMark.EPIC
     "GOG" -> StoreMark.GOG
     "Amazon Games" -> StoreMark.AMAZON

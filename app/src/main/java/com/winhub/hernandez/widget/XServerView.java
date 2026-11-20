@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
@@ -58,7 +61,7 @@ public class XServerView extends FrameLayout {
                     : new SurfaceDirectRenderer(this, xServer, surfaceDirectOptions);
             // The native side can refuse to start on a device; Vulkan is the safe fallback.
             if (native3d.start()) renderer = native3d;
-            else Log.w("XServerView", rendererType + " renderer unavailable, falling back to Vulkan");
+            else Log.w("XServerView", rendererType + I18n.s(R.string.ui_renderer_unavailable_falling_back_to_vulkan));
         }
         if (renderer == null) renderer = new VulkanRenderer(this, xServer);
         final VulkanRenderer vulkan = renderer instanceof VulkanRenderer ? (VulkanRenderer) renderer : null;

@@ -387,7 +387,7 @@ object SteamFriendsStore {
                 }
                 loadHistoriesFor(selfId)
             } catch (t: Throwable) {
-                Log.w(TAG, "agentOnFriends failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_agentonfriends_failed), t)
             }
         }
     }
@@ -405,13 +405,13 @@ object SteamFriendsStore {
                 val after = friendMap[e.steamId]?.presence
                 if (before != after) Log.i(TAG, "relay persona moved a friend $before -> $after: ${agentGroupsSummary()}")
             } catch (t: Throwable) {
-                Log.w(TAG, "agentOnPersona failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_agentonpersona_failed), t)
             }
         }
     }
 
     /** Suffix on a last-known status while the relay hasn't confirmed it. */
-    private const val STALE_SUFFIX = " · last known"
+    private const val STALE_SUFFIX = I18n.s(R.string.ui_last_known)
 
     /** One-line "groups: in-game N online N away N offline N unknown N (stale N)" of the roster (diagnostics). */
     private fun agentGroupsSummary(): String {
@@ -451,7 +451,7 @@ object SteamFriendsStore {
                 friendMap[e.steamId] = SteamFriend(
                     e.steamId,
                     e.name.takeIf { it.isNotBlank() } ?: prev?.personaName ?: "",
-                    null, Presence.UNKNOWN, "Status unknown", 0, null,
+                    null, Presence.UNKNOWN, I18n.s(R.string.xmb_fr_section_unknown), 0, null,
                     prev?.avatarHash, prev?.richPresence ?: emptyMap(),
                 )
             }
@@ -489,7 +489,7 @@ object SteamFriendsStore {
                     maybeNotify(id, body)
                 }
             } catch (t: Throwable) {
-                Log.w(TAG, "agentOnChatIn failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_agentonchatin_failed), t)
             }
         }
     }
@@ -505,9 +505,9 @@ object SteamFriendsStore {
             try {
                 val list = histories[id] ?: return@execute
                 val last = synchronized(list) { list.lastOrNull { it.fromSelf } } ?: return@execute
-                replaceMessageText(id, last, last.text + "  (not sent — the in-game Steam client refused it)")
+                replaceMessageText(id, last, last.text + I18n.s(R.string.ui_not_sent_the_in_game_steam_client_refused_it))
             } catch (t: Throwable) {
-                Log.w(TAG, "agentOnChatSent failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_agentonchatsent_failed), t)
             }
         }
     }
@@ -528,7 +528,7 @@ object SteamFriendsStore {
                 }
                 if (changed) publish()
             } catch (t: Throwable) {
-                Log.w(TAG, "agentDetached cleanup failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_agentdetached_cleanup_failed), t)
             }
         }
     }
@@ -656,7 +656,7 @@ object SteamFriendsStore {
                 }
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "rustOnFriendsList failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_rustonfriendslist_failed), t)
         }
     }
 
@@ -697,7 +697,7 @@ object SteamFriendsStore {
             }
             if (changed) publish()
         } catch (t: Throwable) {
-            Log.w(TAG, "rustOnPersonaState failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_rustonpersonastate_failed), t)
         }
     }
 
@@ -712,7 +712,7 @@ object SteamFriendsStore {
             }
             publish()
         } catch (t: Throwable) {
-            Log.w(TAG, "rustOnNicknameList failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_rustonnicknamelist_failed), t)
         }
     }
 
@@ -734,7 +734,7 @@ object SteamFriendsStore {
             }
             _addFeedback.value = if (personaName.isNotBlank()) "Friend request sent to $personaName" else "Friend request sent"
         } catch (t: Throwable) {
-            Log.w(TAG, "rustOnAddFriendResponse failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_rustonaddfriendresponse_failed), t)
         }
     }
 
@@ -772,7 +772,7 @@ object SteamFriendsStore {
                     }
                 }
             } catch (t: Throwable) {
-                Log.w(TAG, "rustDrainIncomingMessages failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_rustdrainincomingmessages_failed), t)
             }
         }
     }
@@ -906,7 +906,7 @@ object SteamFriendsStore {
                 if (list.isNotEmpty()) histories[id] = list
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "loadHistories failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_loadhistories_failed), t)
         }
     }
 
@@ -935,7 +935,7 @@ object SteamFriendsStore {
             ctx.getSharedPreferences("steam_chat_history", android.content.Context.MODE_PRIVATE)
                 .edit().putString("h_$selfId", root.toString()).apply()
         } catch (t: Throwable) {
-            Log.w(TAG, "persistHistories failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_persisthistories_failed), t)
         }
     }
 
@@ -1016,21 +1016,21 @@ object SteamFriendsStore {
                 rustSession()?.let { rs ->
                     val ok = if (id64 != null && id64 > STEAMID64_BASE) rs.addFriend(id64) else rs.addFriend(0L, q)
                     _addFeedback.value = when {
-                        !ok -> "Not connected to Steam"
+                        !ok -> I18n.s(R.string.xmb_fr_disconnected_title)
                         id64 != null && id64 > STEAMID64_BASE -> "Friend request sent"
                         else -> "Looking up “$q”…"
                     }
                     return@execute
                 }
-                val sf = repo.steamFriends ?: run { _addFeedback.value = "Not connected to Steam"; return@execute }
+                val sf = repo.steamFriends ?: run { _addFeedback.value = I18n.s(R.string.xmb_fr_disconnected_title); return@execute }
                 if (id64 != null && id64 > STEAMID64_BASE) {
-                    sf.addFriend(SteamID(id64)); _addFeedback.value = "Friend request sent"
+                    sf.addFriend(SteamID(id64)); _addFeedback.value = I18n.s(R.string.ui_friend_request_sent)
                 } else {
                     sf.addFriend(q); _addFeedback.value = "Looking up “$q”…"
                 }
             } catch (t: Throwable) {
-                Log.w(TAG, "addFriend failed", t)
-                _addFeedback.value = "Couldn't send request"
+                Log.w(TAG, I18n.s(R.string.ui_addfriend_failed), t)
+                _addFeedback.value = I18n.s(R.string.ui_couldn_t_send_request)
             }
         }
     }
@@ -1048,14 +1048,14 @@ object SteamFriendsStore {
         io.execute {
             try {
                 rustSession()?.let { rs ->
-                    _addFeedback.value = if (rs.addFriend(id64)) "Friend request sent" else "Not connected to Steam"
+                    _addFeedback.value = if (rs.addFriend(id64)) "Friend request sent" else I18n.s(R.string.xmb_fr_disconnected_title)
                     return@execute
                 }
-                repo.steamFriends?.addFriend(SteamID(id64)) ?: run { _addFeedback.value = "Not connected to Steam"; return@execute }
-                _addFeedback.value = "Friend request sent"
+                repo.steamFriends?.addFriend(SteamID(id64)) ?: run { _addFeedback.value = I18n.s(R.string.xmb_fr_disconnected_title); return@execute }
+                _addFeedback.value = I18n.s(R.string.ui_friend_request_sent)
             } catch (t: Throwable) {
-                Log.w(TAG, "addFriendById failed", t)
-                _addFeedback.value = "Couldn't send request"
+                Log.w(TAG, I18n.s(R.string.ui_addfriendbyid_failed), t)
+                _addFeedback.value = I18n.s(R.string.ui_couldn_t_send_request)
             }
         }
     }
@@ -1076,7 +1076,7 @@ object SteamFriendsStore {
         publish()
         io.execute {
             try { rustSession()?.let { it.addFriend(id); return@execute }; repo.steamFriends?.addFriend(SteamID(id)) }
-            catch (t: Throwable) { Log.w(TAG, "acceptRequest failed", t) }
+            catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_acceptrequest_failed), t) }
         }
     }
 
@@ -1088,7 +1088,7 @@ object SteamFriendsStore {
             // Engine: a pending invite is declined by removing the relationship (CMsgClientRemoveFriend —
             // what the Steam client sends); the JavaSteam path keeps its ignoreFriend call.
             try { rustSession()?.let { it.removeFriend(id); return@execute }; repo.steamFriends?.ignoreFriend(SteamID(id)) }
-            catch (t: Throwable) { Log.w(TAG, "declineRequest failed", t) }
+            catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_declinerequest_failed), t) }
         }
     }
 
@@ -1098,7 +1098,7 @@ object SteamFriendsStore {
         publish()
         io.execute {
             try { rustSession()?.let { it.removeFriend(id); return@execute }; repo.steamFriends?.removeFriend(SteamID(id)) }
-            catch (t: Throwable) { Log.w(TAG, "cancelRequest failed", t) }
+            catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_cancelrequest_failed), t) }
         }
     }
 
@@ -1108,7 +1108,7 @@ object SteamFriendsStore {
         publish()
         io.execute {
             try { rustSession()?.let { it.removeFriend(id); return@execute }; repo.steamFriends?.removeFriend(SteamID(id)) }
-            catch (t: Throwable) { Log.w(TAG, "removeFriend failed", t) }
+            catch (t: Throwable) { Log.w(TAG, I18n.s(R.string.ui_removefriend_failed), t) }
         }
     }
 
@@ -1151,7 +1151,7 @@ object SteamFriendsStore {
                 io.execute { try { sf.requestFriendInfo(newlyKnown, PERSONA_INFO_FLAGS) } catch (_: Throwable) {} }
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "onFriendsList failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onfriendslist_failed), t)
         }
     }
 
@@ -1183,7 +1183,7 @@ object SteamFriendsStore {
             friendMap[id] = SteamFriend(id, name, null, presence, statusText, gameAppId, gameName, avatar)
             publish()
         } catch (t: Throwable) {
-            Log.w(TAG, "onPersonaState failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onpersonastate_failed), t)
         }
     }
 
@@ -1198,7 +1198,7 @@ object SteamFriendsStore {
             }
             publish()
         } catch (t: Throwable) {
-            Log.w(TAG, "onNicknameList failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onnicknamelist_failed), t)
         }
     }
 
@@ -1218,7 +1218,7 @@ object SteamFriendsStore {
             val sf = repo.steamFriends ?: return
             io.execute { try { sf.requestFriendInfo(sid, PERSONA_INFO_FLAGS) } catch (_: Throwable) {} }
         } catch (t: Throwable) {
-            Log.w(TAG, "onFriendAdded failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onfriendadded_failed), t)
         }
     }
 
@@ -1297,7 +1297,7 @@ object SteamFriendsStore {
                     repo.steamFriends?.sendChatMessage(SteamID(steamId), EChatEntryType.ChatMsg, body)
                 }
             } catch (t: Throwable) {
-                Log.w(TAG, "sendMessage failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_sendmessage_failed), t)
             }
         }
     }
@@ -1321,13 +1321,13 @@ object SteamFriendsStore {
             if (now - last < 3000L) return
             imageSendGuard[sig] = now
         }
-        val placeholder = ChatMessage(true, "📷 Sending image…", nowSec())
+        val placeholder = ChatMessage(true, I18n.s(R.string.ui_sending_image), nowSec())
         appendMessage(steamId, placeholder)
         io.execute {
             try {
                 val token = mintWebToken()
                 if (token == null) {
-                    replaceMessageText(steamId, placeholder, "⚠️ Couldn't send image (not signed in)")
+                    replaceMessageText(steamId, placeholder, I18n.s(R.string.ui_couldn_t_send_image_not_signed_in))
                     return@execute
                 }
                 val selfId = try { repo.steamId64 } catch (_: Throwable) { 0L }
@@ -1359,7 +1359,7 @@ object SteamFriendsStore {
                     replaceMessageText(steamId, placeholder, "⚠️ Couldn't send image$why")
                 }
             } catch (t: Throwable) {
-                Log.w(TAG, "sendImage failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_sendimage_failed), t)
                 replaceMessageText(steamId, placeholder, "⚠️ Couldn't send image (${t.javaClass.simpleName})")
             }
         }
@@ -1413,7 +1413,7 @@ object SteamFriendsStore {
             cachedWebTokenAccount = selfId
             token
         } catch (t: Throwable) {
-            Log.w(TAG, "mintWebToken failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_mintwebtoken_failed), t)
             null
         }
     }
@@ -1438,7 +1438,7 @@ object SteamFriendsStore {
                 else -> {} // ignore Entered / LeftConversation / etc.
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "onFriendMsg failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onfriendmsg_failed), t)
         }
     }
 
@@ -1466,7 +1466,7 @@ object SteamFriendsStore {
             SteamChatDebug.log("ECHO $id \"${SteamChatDebug.snip(body)}\" ts=$ts -> APPEND (no local match — this becomes a 2nd copy if it shouldn't)")
             appendMessage(id, ChatMessage(true, body, ts))
         } catch (t: Throwable) {
-            Log.w(TAG, "onFriendMsgEcho failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onfriendmsgecho_failed), t)
         }
     }
 
@@ -1486,7 +1486,7 @@ object SteamFriendsStore {
 
             mergeServerHistory(id, server)
         } catch (t: Throwable) {
-            Log.w(TAG, "onFriendMsgHistory failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_onfriendmsghistory_failed), t)
         }
     }
 
@@ -1852,7 +1852,7 @@ object SteamFriendsStore {
                 profileCache[steamId] = CachedProfile(System.currentTimeMillis(), profile)
                 profile
             } catch (t: Throwable) {
-                Log.w(TAG, "fetchProfile failed", t)
+                Log.w(TAG, I18n.s(R.string.ui_fetchprofile_failed), t)
                 // Fall back to a bare identity-only profile so the screen still renders the hero.
                 profileCache[steamId]?.profile ?: base?.let {
                     FriendProfile(
@@ -1917,7 +1917,7 @@ object SteamFriendsStore {
             val text = if (isImageBody(body)) "📷 Photo" else body
             SteamChatNotifier.notify(ctx, id, name, friend?.avatarUrl, text)
         } catch (t: Throwable) {
-            Log.w(TAG, "maybeNotify failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_maybenotify_failed), t)
         }
     }
 

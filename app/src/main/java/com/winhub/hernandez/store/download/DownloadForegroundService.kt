@@ -94,7 +94,7 @@ class DownloadForegroundService : Service() {
         super.onCreate()
         instance = this               // publish before anything can call setProgress/finish
         createNotificationChannel()
-        Log.i(TAG, "Service created")
+        Log.i(TAG, I18n.s(R.string.ui_service_created))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -113,7 +113,7 @@ class DownloadForegroundService : Service() {
 
     override fun onDestroy() {
         if (instance === this) instance = null   // only clear if we're the current live instance
-        Log.i(TAG, "Service destroyed")
+        Log.i(TAG, I18n.s(R.string.ui_service_destroyed))
         super.onDestroy()
     }
 

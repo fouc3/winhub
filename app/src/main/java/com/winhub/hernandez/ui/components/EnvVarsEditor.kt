@@ -655,7 +655,7 @@ internal fun EnvVarsEditor(
                 Text(I18n.s(R.string.ui_add_variable))
             }
             TextButton(onClick = { rawMode = !rawMode }) {
-                Text(if (rawMode) "Done" else "Edit as text")
+                Text(if (rawMode) "Done" else I18n.s(R.string.ui_edit_as_text))
             }
         }
     }

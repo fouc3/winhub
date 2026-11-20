@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xenvironment.components;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import com.winhub.hernandez.core.ProcessHelper;
@@ -46,7 +49,7 @@ public class DirectAudioRelayComponent extends EnvironmentComponent {
         stop();
         File binary = new File(environment.getContext().getApplicationInfo().nativeLibraryDir, BINARY);
         if (!binary.isFile()) {
-            Log.w(TAG, "helper missing at " + binary + "; DirectAudio will report itself unavailable");
+            Log.w(TAG, "helper missing at " + binary + I18n.s(R.string.ui_directaudio_will_report_itself_unavailable));
             return;
         }
         File parent = socketPath.getParentFile();

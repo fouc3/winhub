@@ -146,12 +146,12 @@ internal fun PresetEditorRow(
             if (isCustom) {
                 if (isFex) FEXCorePresetManager.exportPreset(context, selectedPresetId)
                 else Box64PresetManager.exportPreset(prefix, context, selectedPresetId)
-            } else AppUtils.showToast(context, "Cannot export this preset")
+            } else AppUtils.showToast(context, I18n.s(R.string.ui_cannot_export_this_preset))
         }
         PresetImportAction(
             onInApp = {
                 importInAppLauncher.launch(
-                    InAppFilePicker.buildIntent(context, emptyArray(), "Select preset")
+                    InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_preset))
                 )
             },
             onSystem = { importLauncher.launch(arrayOf("*/*")) },

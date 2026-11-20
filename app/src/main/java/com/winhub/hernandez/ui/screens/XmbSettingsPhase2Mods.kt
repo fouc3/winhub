@@ -63,8 +63,8 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val rows = mutableListOf<XmbRow>()
         rows += XmbRow.Header("hMods", I18n.s(R.string.ui_game_mods))
         if (mods.isEmpty()) {
-            rows += XmbRow.Info(I18n.s(R.string.ui_nomods), "No mods for this game", Icons.Filled.Info,
-                subtitle = "REFramework is for RE Engine games and Special K for 32 and 64-bit Windows games. " +
+            rows += XmbRow.Info(I18n.s(R.string.ui_nomods), I18n.s(R.string.ui_no_mods_for_this_game), Icons.Filled.Info,
+                subtitle = I18n.s(R.string.ui_reframework_is_for_re_engine_games_and_special_k_for_32) +
                     I18n.s(R.string.ui_this_game_s_exe_can_t_take_either))
         }
         for (mod in mods) {
@@ -82,7 +82,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             if (mod === GameMods.SPECIAL_K && on) {
                 val auto = GameMods.targetDll(mod, "", imports, machine) + " (auto)"
                 val stored = shortcut.getExtra(GameMods.EXTRA_SPECIALK_DLL) ?: ""
-                rows += XmbRow.Choice(I18n.s(R.string.ui_skdll), "Special K DLL name", Icons.Filled.Extension,
+                rows += XmbRow.Choice("skDll", I18n.s(R.string.ui_special_k_dll_name), Icons.Filled.Extension,
                     listOf(auto) + GameMods.SPECIALK_DLLS, stored.ifEmpty { auto },
                     subtitle = I18n.s(R.string.ui_name_it_loads_as_in_the_game_folder_2)) { v ->
                     p2Put(xmb, shortcut, GameMods.EXTRA_SPECIALK_DLL, if (v == auto) null else v)
@@ -92,7 +92,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
         rows += XmbRow.Header("hProg", I18n.s(R.string.ui_start_with_the_game))
         val list = StartPrograms.parse(shortcut.getExtra(StartPrograms.EXTRA, ""))
-        rows += XmbRow.Link("addProg", "Add program", Icons.Filled.Add, subtitle = START_PROGRAMS_NOTE) {
+        rows += XmbRow.Link("addProg", I18n.s(R.string.ui_add_program), Icons.Filled.Add, subtitle = START_PROGRAMS_NOTE) {
             xmbAddProgramMenu(xmb, shortcut)
         }
         list.forEachIndexed { i, e ->
@@ -145,12 +145,12 @@ private fun programRows(
     }
 
     val rows = mutableListOf<XmbRow>()
-    rows += XmbRow.Text("path", "Windows path", Icons.Filled.Apps, cur.path,
+    rows += XmbRow.Text("path", I18n.s(R.string.ui_windows_path), Icons.Filled.Apps, cur.path,
         subtitle = "e.g. F:\\Trainers\\Trainer.exe") { raw ->
         if (raw.isBlank()) xmb.toast(I18n.s(R.string.ui_enter_a_windows_path)) else replace(StartPrograms.Entry(raw.trim(), cur.delaySec))
     }
     val delays = delayOptions(cur.delaySec.toString())
-    rows += XmbRow.Choice("delay", "Wait before starting", Icons.Filled.Timer,
+    rows += XmbRow.Choice("delay", I18n.s(R.string.ui_wait_before_starting), Icons.Filled.Timer,
         delays.map { it.second }, delayLabel(cur.delaySec),
         subtitle = if (index == 0) I18n.s(R.string.ui_after_the_game_launches) else I18n.s(R.string.ui_after_the_previous_program_starts)) { v ->
         delays.firstOrNull { it.second == v }?.first?.toIntOrNull()

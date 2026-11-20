@@ -93,7 +93,7 @@ fun WatchdogSection() {
             modifier = Modifier.weight(1f)
         )
         IconButton(onClick = { showWhatsThis = true }, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Outlined.Info, "What is the Temperature Watchdog?",
+            Icon(Icons.Outlined.Info, I18n.s(R.string.ui_what_is_the_temperature_watchdog),
                 tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
         }
         Spacer(Modifier.width(4.dp))
@@ -188,7 +188,7 @@ fun WatchdogSection() {
         PerfDisclaimerDialog(
             title = I18n.s(R.string.ui_disable_thermal_safety),
             body = PerfDisclaimerCopy.WATCHDOG_OFF,
-            confirmLabel = "Turn watchdog OFF",
+            confirmLabel = I18n.s(R.string.ui_turn_watchdog_off),
             onDismiss = { showOffDisclaimer = false },
             onConfirm = { showOffDisclaimer = false; TempWatchdog.setWatchdogEnabled(false) }
         )

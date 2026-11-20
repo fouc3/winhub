@@ -217,9 +217,9 @@ private fun friendlyName(id: String): String = when (id) {
     "a" -> "A / ✕"; "b" -> "B / ○"; "x" -> "X / □"; "y" -> "Y / △"
     "lb" -> "LB / L1"; "rb" -> "RB / R1"; "lt" -> "LT / L2"; "rt" -> "RT / R2"
     "back" -> "View / Share"; "start" -> "Menu / Options"
-    "l3" -> "L-stick click"; "r3" -> "R-stick click"
+    "l3" -> I18n.s(R.string.ui_l_stick_click); "r3" -> I18n.s(R.string.ui_r_stick_click)
     "dup" -> "D-Up"; "ddown" -> "D-Down"; "dleft" -> "D-Left"; "dright" -> "D-Right"
-    "guide" -> "Guide"; "qam" -> "… (Quick Access)"; else -> id
+    "guide" -> "Guide"; "qam" -> I18n.s(R.string.ui_quick_access); else -> id
 }
 
 internal fun pressedSet(snap: ControllerTestSnapshot?): Set<String> {
@@ -314,7 +314,7 @@ fun ControllerTestPanel(
             )
             Spacer(Modifier.width(6.dp))
             Text(
-                if (live) "Live input" else "Press a button on the pad…",
+                if (live) "Live input" else I18n.s(R.string.ui_press_a_button_on_the_pad),
                 fontSize = 12.sp,
                 color = if (live) Color(0xFF57C777) else cs.onSurfaceVariant,
                 modifier = Modifier.weight(1f)

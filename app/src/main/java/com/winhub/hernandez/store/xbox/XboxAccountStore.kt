@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
@@ -89,7 +92,7 @@ internal object XboxAccountStore {
             .optString("gamertag").trim()
         require(gamertag.isNotEmpty() && gamertag.length <= 64 && gamertag.none { it.isISOControl() })
         XboxCredentials.lifecycle(app, credentialGeneration) {
-            val record = read(app) ?: error("Xbox account missing")
+            val record = read(app) ?: error(I18n.s(R.string.ui_xbox_account_missing))
             record.put("gamertag", gamertag)
             write(app, record)
         }

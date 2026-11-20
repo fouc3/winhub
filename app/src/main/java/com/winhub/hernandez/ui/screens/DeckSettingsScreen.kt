@@ -219,7 +219,7 @@ internal fun DeckSettingsScreen() {
                         musicName = com.winhub.hernandez.core.MusicPlayer.trackName()
                         musicOn = true
                     } else {
-                        AppUtils.showToast(context, "Could not load that file")
+                        AppUtils.showToast(context, I18n.s(R.string.ui_could_not_load_that_file))
                     }
                 }
             }.start()
@@ -237,7 +237,7 @@ internal fun DeckSettingsScreen() {
     // ── Frame Generation — LSFG Native (Lossless Scaling DLL) — same as SettingsScreen. ──
     val lsfgDllFile = remember { File(context.filesDir, "lsfg-vk/Lossless.dll") }
     fun lsfgDllStatusText(): String {
-        if (!(lsfgDllFile.isFile && lsfgDllFile.length() > 0)) return "Not set — LSFG Native will stay off"
+        if (!(lsfgDllFile.isFile && lsfgDllFile.length() > 0)) return I18n.s(R.string.ui_not_set_lsfg_native_will_stay_off)
         val mb = lsfgDllFile.length() / (1024 * 1024)
         return when (prefs.getString("lsfg_dll_source", null)) {
             "store"  -> "Imported from Steam store (Lossless Scaling) — $mb MB"
@@ -253,7 +253,7 @@ internal fun DeckSettingsScreen() {
         if (!lsfgShaderBuilding.compareAndSet(false, true)) return
         val main = android.os.Handler(android.os.Looper.getMainLooper())
         val appCtx = context.applicationContext
-        lsfgShaderStatus = "Preparing shaders for LSFG Native… (one-time, can take a minute)"
+        lsfgShaderStatus = I18n.s(R.string.ui_preparing_shaders_for_lsfg_native_one_time_can_take_a)
         Thread {
             val started = System.currentTimeMillis()
             val status = try { com.winhub.hernandez.core.LsfgNative.ensureCache(appCtx, false) } catch (e: Throwable) { -1 }
@@ -261,7 +261,7 @@ internal fun DeckSettingsScreen() {
             val text = when (status) {
                 com.winhub.hernandez.core.LsfgNative.STATUS_OK ->
                     if (took >= 2) "Shaders ready for LSFG Native (built in ${took}s)" else "Shaders ready for LSFG Native"
-                -1 -> "Shader preparation failed; it will be retried when a game launches"
+                -1 -> I18n.s(R.string.ui_shader_preparation_failed_it_will_be_retried_when_a_g)
                 else -> com.winhub.hernandez.core.LsfgNative.explain(status)
             }
             main.post { lsfgShaderStatus = text; lsfgShaderBuilding.set(false) }
@@ -277,7 +277,7 @@ internal fun DeckSettingsScreen() {
             lsfgDllStatus = lsfgDllStatusText()
             buildLsfgShaderCache()
         } catch (e: Exception) {
-            lsfgDllStatus = "Import failed: " + e.message
+            lsfgDllStatus = I18n.s(R.string.ui_import_failed) + e.message
         }
     }
     fun findStoreLosslessDll(): File? {
@@ -290,7 +290,7 @@ internal fun DeckSettingsScreen() {
     fun detectLosslessDllFromStore() {
         val src = findStoreLosslessDll()
         if (src == null) {
-            Toast.makeText(context, "No Steam-store Lossless Scaling found — download it from the store or import manually.", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18n.s(R.string.ui_no_steam_store_lossless_scaling_found_download_it_fro), Toast.LENGTH_LONG).show()
             return
         }
         try {
@@ -301,8 +301,8 @@ internal fun DeckSettingsScreen() {
             buildLsfgShaderCache()
             Toast.makeText(context, "Lossless.dll set from Steam store install.", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
-            lsfgDllStatus = "Detect failed: " + e.message
-            Toast.makeText(context, "Detect failed: " + e.message, Toast.LENGTH_LONG).show()
+            lsfgDllStatus = I18n.s(R.string.ui_detect_failed) + e.message
+            Toast.makeText(context, I18n.s(R.string.ui_detect_failed) + e.message, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -569,7 +569,7 @@ internal fun DeckSettingsScreen() {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     DeckButton("Install") {
                         installSFInAppLauncher.launch(
-                            InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont"),
+                            InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, I18n.s(R.string.ui_select_soundfont)),
                         )
                     }
                     DeckButton(I18n.s(R.string.remove), primary = false) {
@@ -645,7 +645,7 @@ internal fun DeckSettingsScreen() {
         DeckGroup(title = I18n.s(R.string.ui_settings_view)) { DeckViewModeRow() }
 
         // ── Game Doctor ──
-        DeckGroup(title = "Game Doctor") {
+        DeckGroup(title = I18n.s(R.string.ui_game_doctor)) {
             var doctorAuto by remember { mutableStateOf(GameDoctor.isAutoEnabled(context)) }
             DeckRow(
                 label = I18n.s(R.string.ui_auto_step_down),
@@ -895,11 +895,11 @@ internal fun DeckSettingsScreen() {
         // ── Retro library ── (landscape only, like the Home it switches on)
         if (!portraitUi) DeckGroup(title = I18n.s(R.string.retro_title)) {
             DeckRow(
-                label = "ROM folder",
+                label = I18n.s(R.string.retro_opt_folder),
                 hint = retroRoot ?: "Not chosen yet. WinHub looks in ROMs and Games when you open the retro library",
             ) {
                 DeckButton(I18n.s(R.string.ui_choose), primary = false) {
-                    retroFolderLauncher.launch(InAppFilePicker.buildDirIntent(context, "ROM folder", retroRoot))
+                    retroFolderLauncher.launch(InAppFilePicker.buildDirIntent(context, I18n.s(R.string.retro_opt_folder), retroRoot))
                 }
             }
             DeckRow(
@@ -918,10 +918,10 @@ internal fun DeckSettingsScreen() {
                     retroHidden = 0
                 }
             }
-            DeckRow(label = "Rescan library", hint = I18n.s(R.string.ui_looks_for_new_and_missing_rom_files_the_next_time_the)) {
+            DeckRow(label = I18n.s(R.string.retro_opt_rescan), hint = I18n.s(R.string.ui_looks_for_new_and_missing_rom_files_the_next_time_the)) {
                 DeckButton(I18n.s(R.string.ui_rescan), primary = false) {
                     RetroSession.scan = null
-                    Toast.makeText(context, "The retro library rescans when you open it", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_the_retro_library_rescans_when_you_open_it), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1085,7 +1085,7 @@ internal fun DeckSettingsScreen() {
             DeckRow(label = I18n.s(R.string.ui_true_mouse_control_deactivate_with_volume_down)) {
                 DeckToggle(cursorLock) { cursorLock = it; saved = false }
             }
-            DeckRow(label = "Disable Xinput (Used for Exclusive M/KB support)") {
+            DeckRow(label = I18n.s(R.string.ui_disable_xinput_used_for_exclusive_m_kb_support)) {
                 DeckToggle(xinputOff) { xinputOff = it; saved = false }
             }
             DeckRow(label = I18n.s(R.string.ui_use_dri3_extension)) {
@@ -1137,7 +1137,7 @@ internal fun DeckSettingsScreen() {
             DeckRow(label = I18n.s(R.string.ui_restore_data), hint = I18n.s(R.string.ui_restore_from_a_backup_restarts_the_app)) {
                 DeckButton(I18n.s(R.string.ui_restore), primary = false) {
                     restoreFileInAppLauncher.launch(
-                        InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, "Select backup"),
+                        InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, I18n.s(R.string.ui_select_backup)),
                     )
                 }
             }
@@ -1187,7 +1187,7 @@ internal fun DeckSettingsScreen() {
         DeckGroup(title = I18n.s(R.string.ui_release_channel)) {
             DeckRow(
                 label = I18n.s(R.string.ui_update_channel),
-                hint = if (includePre) "Preview: beta builds, newest first" else "Stable: tested releases only",
+                hint = if (includePre) "Preview: beta builds, newest first" else I18n.s(R.string.ui_stable_tested_releases_only),
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     DeckButton(I18n.s(R.string.ui_stable), primary = !includePre) { selectChannel(false) }
@@ -1205,7 +1205,7 @@ internal fun DeckSettingsScreen() {
                 }
             }
             DeckRow(
-                label = if (checkingUpdate) "Checking…" else "Check for updates",
+                label = if (checkingUpdate) "Checking…" else I18n.s(R.string.ui_check_for_updates_2),
                 hint = updateNote ?: "Installed: V ${UpdateManager.installedVersionName()}",
             ) {
                 DeckButton(I18n.s(R.string.ui_check), primary = false) { checkNow() }
@@ -1316,7 +1316,7 @@ internal fun DeckSettingsScreen() {
                     } catch (_: Exception) {
                         (context as? Activity)?.runOnUiThread {
                             isBackingUp = false
-                            AppUtils.showToast(context, "Backup failed.")
+                            AppUtils.showToast(context, I18n.s(R.string.ui_backup_failed))
                         }
                     }
                 }

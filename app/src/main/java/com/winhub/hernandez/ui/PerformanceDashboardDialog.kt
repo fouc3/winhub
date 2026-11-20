@@ -253,9 +253,9 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     ) {
                         val gpu = leadingInt(readouts["gpuMhz"])
                         val temp = leadingInt(readouts["socTemp"])
-                        Gauge(Modifier.weight(1f), "GPU clock", readouts["gpuMhz"] ?: "—", "MHz",
+                        Gauge(Modifier.weight(1f), I18n.s(R.string.ui_gpu_clock), readouts["gpuMhz"] ?: "—", "MHz",
                             frac = gpu?.let { (it / 1000f).coerceIn(0f, 1f) } ?: 0f, hot = false)
-                        Gauge(Modifier.weight(1f), "SoC temp", readouts["socTemp"] ?: "—", "°C",
+                        Gauge(Modifier.weight(1f), I18n.s(R.string.ui_soc_temp), readouts["socTemp"] ?: "—", "°C",
                             frac = temp?.let { ((it - 30f) / ((ceilingC - 30).coerceAtLeast(1))).coerceIn(0f, 1f) } ?: 0f,
                             hot = temp != null && temp >= ceilingC)
                         Gauge(Modifier.weight(1f), "Governor", readouts["governor"] ?: "—", "",
@@ -364,7 +364,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                         ToggleRowLocal(
                             "Lock GPU to max clock",
                             if (gpuEnabled) "Adreno: pinned via /dev/kgsl-3d0 — works without root."
-                            else "Needs an Adreno GPU, or root on other GPUs.",
+                            else I18n.s(R.string.ui_needs_an_adreno_gpu_or_root_on_other_gpus_2),
                             checked = toggles[gpuKey] ?: false, enabled = gpuEnabled,
                             overridden = gpuKey in overridden,
                             onInfo = { info = "Lock GPU to max clock" to "Pins the GPU to its top power level. On Adreno this uses the app-owned KGSL turbo property (no root); other GPUs use the root sysfs pin." },
@@ -378,45 +378,45 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                         Text(
                             "🔒 " + when (rootState) {
                                 RootManager.RootState.UNAVAILABLE -> "No root manager detected (Magisk / KernelSU / APatch)."
-                                else -> "Grant root above to unlock CPU governor, frequency, cores, thermal & fan."
+                                else -> I18n.s(R.string.ui_grant_root_above_to_unlock_cpu_governor_frequency_cores)
                             },
                             color = cs.onSurfaceVariant, fontSize = 12.sp,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp),
                         )
                     }
                     PerfCard {
-                        RootToggle("CPU governor → performance", PerfRootApplier.KEY_CPU_GOVERNOR,
+                        RootToggle(I18n.s(R.string.ui_cpu_governor_performance), PerfRootApplier.KEY_CPU_GOVERNOR,
                             toggles, overridden, granted, harnessProven,
                             onInfo = { info = "CPU governor → performance" to "Forces every CPU cluster onto the performance governor for the session." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CPU_GOVERNOR) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
-                        RootToggle("Lock CPU frequency to max", PerfRootApplier.KEY_CPU_FREQ_LOCK,
+                        RootToggle(I18n.s(R.string.ui_lock_cpu_frequency_to_max), PerfRootApplier.KEY_CPU_FREQ_LOCK,
                             toggles, overridden, granted, harnessProven,
                             onInfo = { info = "Lock CPU frequency to max" to "Sets scaling_min_freq = scaling_max_freq on every cluster." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CPU_FREQ_LOCK) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
-                        RootToggle("Keep all cores online", PerfRootApplier.KEY_CORES_ONLINE,
+                        RootToggle(I18n.s(R.string.ui_keep_all_cores_online), PerfRootApplier.KEY_CORES_ONLINE,
                             toggles, overridden, granted, harnessProven,
                             onInfo = { info = "Keep all cores online" to "Prevents the kernel from hot-plugging CPU cores offline." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CORES_ONLINE) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
-                        RootToggle("Disable thermal throttling", PerfRootApplier.KEY_THERMAL_DISABLE,
+                        RootToggle(I18n.s(R.string.ui_disable_thermal_throttling), PerfRootApplier.KEY_THERMAL_DISABLE,
                             toggles, overridden, granted, harnessProven,
                             danger = true,
                             onInfo = { info = "Disable thermal throttling" to "Stops the thermal engine from clamping clocks. The temperature watchdog stays armed and can revert it." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_THERMAL_DISABLE) },
-                            onEnableDanger = { pendingDanger = PendingDanger("Disable thermal throttling") { setRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } },
+                            onEnableDanger = { pendingDanger = PendingDanger(I18n.s(R.string.ui_disable_thermal_throttling)) { setRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } },
                             setRoot = { k, v -> setRoot(k, v) })
                         Divider()
-                        RootToggle("Fan to maximum", PerfRootApplier.KEY_FAN_MAX,
+                        RootToggle(I18n.s(R.string.ui_fan_to_maximum), PerfRootApplier.KEY_FAN_MAX,
                             toggles, overridden, granted, harnessProven,
                             danger = true,
                             onInfo = { info = "Fan to maximum" to "Forces active cooling to full speed for the session." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_FAN_MAX) },
-                            onEnableDanger = { pendingDanger = PendingDanger("Fan to maximum") { setRoot(PerfRootApplier.KEY_FAN_MAX, true) } },
+                            onEnableDanger = { pendingDanger = PendingDanger(I18n.s(R.string.ui_fan_to_maximum)) { setRoot(PerfRootApplier.KEY_FAN_MAX, true) } },
                             setRoot = { k, v -> setRoot(k, v) })
                     }
                     if (granted && !harnessProven) {
@@ -494,7 +494,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
         PerfDisclaimerDialog(
             title = I18n.s(R.string.ui_power_user_performance_read_first),
             body = PerfDisclaimerCopy.ROOT_RISK,
-            confirmLabel = "Grant Root",
+            confirmLabel = I18n.s(R.string.ui_grant_root),
             onConfirm = { showGrantGate = false; scope.launch { RootManager.requestGrant() } },
             onDismiss = { showGrantGate = false },
         )
@@ -635,7 +635,7 @@ private fun RootStrip(granted: Boolean, rootState: RootManager.RootState, onGran
         Spacer(Modifier.width(10.dp))
         Text(
             if (granted) "Root granted · full CPU/GPU control unlocked"
-            else "No root · no-root controls still available",
+            else I18n.s(R.string.ui_no_root_no_root_controls_still_available),
             color = cs.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.weight(1f),
         )
         if (!granted && rootState != RootManager.RootState.UNAVAILABLE) {
@@ -685,7 +685,7 @@ private fun ToggleRowLocal(
         if (enabled) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 2.dp)) {
                 Text(
-                    if (overridden) "● Per-game override" else "○ Using global default",
+                    if (overridden) "● Per-game override" else I18n.s(R.string.ui_using_global_default),
                     color = if (overridden) cs.primary else cs.onSurfaceVariant, fontSize = 10.sp,
                     modifier = Modifier.weight(1f),
                 )
@@ -712,7 +712,7 @@ private fun RootToggle(
     val enabled = granted && !gated
     ToggleRowLocal(
         label = label,
-        sub = if (danger) "Root · dangerous — auto-reverts on exit." else "Root control.",
+        sub = if (danger) "Root · dangerous — auto-reverts on exit." else I18n.s(R.string.ui_root_control),
         checked = toggles[key] ?: false, enabled = enabled,
         overridden = key in overridden, danger = danger,
         onInfo = onInfo, onReset = onReset,
@@ -856,9 +856,9 @@ fun PerformanceDashboardDialogPerGame(
                     ) {
                         val gpu = leadingInt(readouts["gpuMhz"])
                         val temp = leadingInt(readouts["socTemp"])
-                        Gauge(Modifier.weight(1f), "GPU clock", readouts["gpuMhz"] ?: "—", "MHz",
+                        Gauge(Modifier.weight(1f), I18n.s(R.string.ui_gpu_clock), readouts["gpuMhz"] ?: "—", "MHz",
                             frac = gpu?.let { (it / 1000f).coerceIn(0f, 1f) } ?: 0f, hot = false)
-                        Gauge(Modifier.weight(1f), "SoC temp", readouts["socTemp"] ?: "—", "°C",
+                        Gauge(Modifier.weight(1f), I18n.s(R.string.ui_soc_temp), readouts["socTemp"] ?: "—", "°C",
                             frac = temp?.let { ((it - 30f) / ((ceilingC - 30).coerceAtLeast(1))).coerceIn(0f, 1f) } ?: 0f,
                             hot = temp != null && temp >= ceilingC)
                         Gauge(Modifier.weight(1f), "Governor", readouts["governor"] ?: "—", "",
@@ -928,12 +928,12 @@ fun PerformanceDashboardDialogPerGame(
                         rootPresetRow(I18n.s(R.string.ui_disable_thermal_throttling), PerfRootApplier.KEY_THERMAL_DISABLE,
                             "Runtime watchdog still guards.", rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = true,
-                            arm = { pendingDanger = PendingDanger("Disable thermal throttling") { onRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } })
+                            arm = { pendingDanger = PendingDanger(I18n.s(R.string.ui_disable_thermal_throttling)) { onRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } })
                         Divider()
                         rootPresetRow(I18n.s(R.string.ui_fan_to_maximum), PerfRootApplier.KEY_FAN_MAX,
                             "Forces active cooling to full at launch.", rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = true,
-                            arm = { pendingDanger = PendingDanger("Fan to maximum") { onRoot(PerfRootApplier.KEY_FAN_MAX, true) } })
+                            arm = { pendingDanger = PendingDanger(I18n.s(R.string.ui_fan_to_maximum)) { onRoot(PerfRootApplier.KEY_FAN_MAX, true) } })
                     }
 
                     val anyOverride = sustained != globalOf("sustainedPerfMode") ||
@@ -957,7 +957,7 @@ fun PerformanceDashboardDialogPerGame(
     }
     if (showGrantGate) {
         PerfDisclaimerDialog(title = I18n.s(R.string.ui_power_user_performance_read_first), body = PerfDisclaimerCopy.ROOT_RISK,
-            confirmLabel = "Grant Root", onConfirm = { showGrantGate = false; scope.launch { RootManager.requestGrant() } },
+            confirmLabel = I18n.s(R.string.ui_grant_root), onConfirm = { showGrantGate = false; scope.launch { RootManager.requestGrant() } },
             onDismiss = { showGrantGate = false })
     }
     info?.let { (t, b) -> PerfInfoDialog(t, b) { info = null } }

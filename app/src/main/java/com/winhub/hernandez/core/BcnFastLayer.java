@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -49,14 +52,14 @@ public final class BcnFastLayer {
         if (!isPicked(cfg) || !MaliPanvk.isMaliGpu()) return null;
         if (!"1".equals(envVars.get("ENABLE_BCN_COMPUTE"))) return null; // the layer is not running this launch
         if (!ensureInstalled(context, rootDir)) {
-            Log.w(TAG, "BCn layer Fast: install failed, keeping the bundled layer");
-            return "BCn layer Fast: install failed, bundled layer kept";
+            Log.w(TAG, I18n.s(R.string.ui_bcn_layer_fast_install_failed_keeping_the_bundled_layer));
+            return I18n.s(R.string.ui_bcn_layer_fast_install_failed_bundled_layer_kept);
         }
         envVars.remove("ENABLE_BCN_COMPUTE");
         envVars.put("DISABLE_BCN_COMPUTE", "1");
         envVars.put(ENABLE_VAR, "1");
-        Log.i(TAG, "BCn layer Fast (Fcharan) active instead of the bundled leegao layer");
-        return "BCn layer: Fast (Fcharan build) instead of the bundled leegao layer";
+        Log.i(TAG, I18n.s(R.string.ui_bcn_layer_fast_fcharan_active_instead_of_the_bundled_lee));
+        return I18n.s(R.string.ui_bcn_layer_fast_fcharan_build_instead_of_the_bundled_leeg);
     }
 
     private static boolean ensureInstalled(Context context, File rootDir) {
@@ -67,7 +70,7 @@ public final class BcnFastLayer {
         boolean ok = TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, context, ASSET, rootDir);
         ok = ok && lib.isFile() && manifest.isFile();
         if (ok) FileUtils.writeString(marker, String.valueOf(VERSION));
-        Log.i(TAG, "BCn layer Fast: extracted " + ASSET + (ok ? "" : " (FAILED)"));
+        Log.i(TAG, I18n.s(R.string.ui_bcn_layer_fast_extracted) + ASSET + (ok ? "" : " (FAILED)"));
         return ok;
     }
 

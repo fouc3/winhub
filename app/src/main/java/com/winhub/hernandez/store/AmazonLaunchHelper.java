@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -56,7 +59,7 @@ public class AmazonLaunchHelper {
         }
         File dir = new File(installDir);
         if (!dir.exists()) {
-            Log.e(TAG, "Install dir does not exist: " + installDir);
+            Log.e(TAG, I18n.s(R.string.ui_install_dir_does_not_exist) + installDir);
             return null;
         }
 
@@ -107,7 +110,7 @@ public class AmazonLaunchHelper {
                 // Exe scoring heuristic
                 File chosen = choosePrimaryExe(dir, gameTitle);
                 if (chosen == null) {
-                    Log.e(TAG, "No exe found in: " + installDir);
+                    Log.e(TAG, I18n.s(R.string.ui_no_exe_found_in) + installDir);
                     return null;
                 }
                 // relative path from installDir
@@ -153,8 +156,8 @@ public class AmazonLaunchHelper {
         spec.command         = cmd.toString();
         spec.workingDir      = workDir;
         spec.exeRelativePath = resolvedRelPath;
-        Log.d(TAG, "Launch command: " + spec.command);
-        Log.d(TAG, "Working dir:    " + spec.workingDir);
+        Log.d(TAG, I18n.s(R.string.ui_launch_command) + spec.command);
+        Log.d(TAG, I18n.s(R.string.ui_working_dir) + spec.workingDir);
         return spec;
     }
 

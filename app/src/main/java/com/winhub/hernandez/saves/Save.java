@@ -1,5 +1,8 @@
 package com.winhub.hernandez.saves;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log;
 
 import com.winhub.hernandez.container.Container;
@@ -77,7 +80,7 @@ public class Save {
                 saveData.put("ContainerID", container.id);  // Ensure ContainerID is saved
             }
 
-            Log.d("Save", "Saving Data: " + saveData.toString());
+            Log.d("Save", I18n.s(R.string.ui_saving_data) + saveData.toString());
 
             Iterator<String> keys = extraData.keys();
             while (keys.hasNext()) {
@@ -86,7 +89,7 @@ public class Save {
             }
 
             FileUtils.writeString(file, saveData.toString());
-            Log.d("Save", "Data written to file: " + file.getAbsolutePath());
+            Log.d("Save", I18n.s(R.string.ui_data_written_to_file) + file.getAbsolutePath());
         } catch (JSONException e) {
             e.printStackTrace();
         }

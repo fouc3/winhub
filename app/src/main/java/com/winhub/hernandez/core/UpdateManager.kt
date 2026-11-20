@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -353,14 +356,14 @@ object UpdateManager {
     fun downloadAndInstall(activity: Activity, info: UpdateInfo, onDone: (Boolean) -> Unit) {
         val url = info.apkUrl
         if (url == null) {
-            AppUtils.showToast(activity, "No download available for this build")
+            AppUtils.showToast(activity, I18n.s(R.string.ui_no_download_available_for_this_build))
             // Fall back to the release page so the user can grab it manually.
             openReleasesPage(activity)
             onDone(false)
             return
         }
         if (!canInstallPackages(activity)) {
-            AppUtils.showToast(activity, "Allow installing apps from WinHub, then tap Update again")
+            AppUtils.showToast(activity, I18n.s(R.string.ui_allow_installing_apps_from_winhub_then_tap_update_again))
             requestInstallPermission(activity)
             onDone(false)
             return
@@ -398,7 +401,7 @@ object UpdateManager {
             fetch(smallInfo, patch.url, patchFile, patch.size, small = true) { ok ->
                 if (!ok && !interrupt.get()) Log.w(TAG, "patch download failed: ${patch.url}")
                 val rebuilt = ok && rebuild(activity, smallInfo, patch, patchFile, apk)
-                if (ok && !rebuilt && !interrupt.get()) Log.w(TAG, "small update failed, falling back to the full APK")
+                if (ok && !rebuilt && !interrupt.get()) Log.w(TAG, I18n.s(R.string.ui_small_update_failed_falling_back_to_the_full_apk))
                 patchFile.delete()
                 activity.runOnUiThread {
                     when {
@@ -452,7 +455,7 @@ object UpdateManager {
                 when {
                     interrupt.get() -> _download.value = DownloadState.Idle
                     ok -> { _download.value = DownloadState.Installing(full); install(activity, apk) }
-                    else -> _download.value = DownloadState.Failed(full, "The download did not finish. Check the connection and try again.")
+                    else -> _download.value = DownloadState.Failed(full, I18n.s(R.string.ui_the_download_did_not_finish_check_the_connection_and_try))
                 }
                 onDone(ok && !interrupt.get())
             }
@@ -519,7 +522,7 @@ object UpdateManager {
             }
             activity.startActivity(intent)
         } catch (e: Exception) {
-            AppUtils.showToast(activity, "Could not open installer")
+            AppUtils.showToast(activity, I18n.s(R.string.ui_could_not_open_installer))
             openReleasesPage(activity)
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog;
 
 import java.util.ArrayList;
@@ -79,10 +82,10 @@ public final class WaylandAdapterSettings {
     /** One line under each profile choice in the dialog. */
     public static String profileHelp(String profile) {
         switch (normalizeProfile(profile)) {
-            case PROFILE_SMOOTH: return "Even frame pacing: vsync (fifo), frames copied in the background, no zero-copy.";
-            case PROFILE_FAST: return "Lowest latency: mailbox, zero-copy with compressed buffers, client render fences.";
-            case PROFILE_COMPAT: return "Safest: vsync, every shortcut off, plain buffers, timing shim on. For games that flicker or hang.";
-            default: return "Picks from the adapter report of your driver; with no report it changes nothing.";
+            case PROFILE_SMOOTH: return I18n.s(R.string.ui_even_frame_pacing_vsync_fifo_frames_copied_in_the_backgr);
+            case PROFILE_FAST: return I18n.s(R.string.ui_lowest_latency_mailbox_zero_copy_with_compressed_buffers);
+            case PROFILE_COMPAT: return I18n.s(R.string.ui_safest_vsync_every_shortcut_off_plain_buffers_timing_shi);
+            default: return I18n.s(R.string.ui_picks_from_the_adapter_report_of_your_driver_with_no_rep);
         }
     }
 
@@ -125,7 +128,7 @@ public final class WaylandAdapterSettings {
             if (modifiers != null) parts.add("modifiers " + (modifiers ? "on" : "off"));
             if (kgslShim != null) parts.add("KGSL shim " + (kgslShim ? "on" : "off"));
             if (subgroupsOff) parts.add("subgroups off");
-            if (parts.isEmpty()) return "nothing changed (compositor and driver defaults)";
+            if (parts.isEmpty()) return I18n.s(R.string.ui_nothing_changed_compositor_and_driver_defaults);
             return String.join(" · ", parts);
         }
 

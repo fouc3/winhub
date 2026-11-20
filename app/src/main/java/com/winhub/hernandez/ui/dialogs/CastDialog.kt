@@ -65,7 +65,7 @@ fun CastDialog(state: XServerDialogState) {
             Column(modifier = Modifier.padding(16.dp)) {
                 // Title row: name + "?" help toggle + Refresh (Refresh hidden on the help screen).
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                    Text(if (showHelp) "Casting — options & tips" else "Cast to a TV (wireless)",
+                    Text(if (showHelp) "Casting — options & tips" else I18n.s(R.string.ui_cast_to_a_tv_wireless),
                         style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     if (!showHelp) {
                         if (scanning) CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
@@ -98,7 +98,7 @@ fun CastDialog(state: XServerDialogState) {
 
                 if (devices.isEmpty()) {
                     Text(
-                        text = if (scanning) "Searching…" else "No devices found. Make sure your TV is on the " +
+                        text = if (scanning) "Searching…" else I18n.s(R.string.ui_no_devices_found_make_sure_your_tv_is_on_the) +
                             "same Wi-Fi, then tap Refresh.",
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodyMedium,
@@ -136,7 +136,7 @@ fun CastDialog(state: XServerDialogState) {
                                             val label = when (status) {
                                                 XServerDialogState.CastStatus.CONNECTING -> "Connecting…"
                                                 XServerDialogState.CastStatus.CONNECTED  -> "Connected"
-                                                XServerDialogState.CastStatus.FAILED     -> "Failed to connect"
+                                                XServerDialogState.CastStatus.FAILED     -> I18n.s(R.string.ui_failed_to_connect)
                                                 else -> ""
                                             }
                                             val color = when (status) {
@@ -206,7 +206,7 @@ private fun CastHelp() {
         )
         HelpBlock(
             title = I18n.s(R.string.ui_roku_tvs),
-            body = "Roku can't run our app and can't take our stream. Use Android's built-in Screen " +
+            body = I18n.s(R.string.ui_roku_can_t_run_our_app_and_can_t_take_our_stream_use_and) +
                 "Mirroring (in Settings) with the Roku's Screen-mirroring turned on.",
             pros = listOf(I18n.s(R.string.ui_no_app_needed)),
             cons = listOf(I18n.s(R.string.ui_uses_android_s_system_screen_not_this_in_app_list), I18n.s(R.string.ui_depends_on_your_phone_s_miracast))

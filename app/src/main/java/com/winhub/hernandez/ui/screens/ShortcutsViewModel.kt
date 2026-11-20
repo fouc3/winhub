@@ -507,7 +507,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
             val soc = meta?.optString("soc", "")?.trim().orEmpty()
             val device = meta?.optString("device", "")?.trim().orEmpty()
             if (token.isEmpty()) {
-                onResult(false, "Upload failed — check your connection and try again.")
+                onResult(false, I18n.s(R.string.ui_upload_failed_check_your_connection_and_try_again))
                 return@launch
             }
 
@@ -549,7 +549,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
                 true
             }
             if (ok) onResult(true, "Shared \"${res.game}\" with the community.")
-            else onResult(false, "Upload failed — check your connection and try again.")
+            else onResult(false, I18n.s(R.string.ui_upload_failed_check_your_connection_and_try_again))
         }
     }
 
@@ -622,7 +622,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
             }
             UploadedConfigsStore.merge(getApplication(), records)
         } catch (e: Exception) {
-            Log.w("CommunityConfigs", "Upload registry restore failed", e)
+            Log.w("CommunityConfigs", I18n.s(R.string.ui_upload_registry_restore_failed), e)
         }
     }
 
@@ -1032,14 +1032,14 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
     fun importShortcut(containerIndex: Int, uri: Uri, context: Context): ImportResult {
         val containers = liveContainers()
         if (containerIndex < 0 || containerIndex >= containers.size) {
-            return ImportResult.Error("That container no longer exists. Pull to refresh and pick another.")
+            return ImportResult.Error(I18n.s(R.string.ui_that_container_no_longer_exists_pull_to_refresh_and_pick))
         }
         val container = containers[containerIndex]
 
         // file:// (in-app picker) exposes no DocumentFile metadata, so read the name off the path.
         val sourceName = (if (uri.scheme == "file") uri.path?.substringAfterLast('/')
             else DocumentFile.fromSingleUri(context, uri)?.name)
-            ?: return ImportResult.Error("Could not read picked file.")
+            ?: return ImportResult.Error(I18n.s(R.string.ui_could_not_read_picked_file))
         val ext = sourceName.substringAfterLast('.', "").lowercase()
 
         return when (ext) {
@@ -1088,7 +1088,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
                     "existing drive already covers."
             )
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to write EXE shortcut", e)
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_write_exe_shortcut), e)
             ImportResult.Error("Failed to write shortcut: ${e.message ?: e.javaClass.simpleName}")
         }
     }
@@ -1106,7 +1106,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
         return try {
             context.contentResolver.openInputStream(uri)?.use { input ->
                 FileOutputStream(dest).use { output -> input.copyTo(output) }
-            } ?: return ImportResult.Error("Could not open picked file.")
+            } ?: return ImportResult.Error(I18n.s(R.string.ui_could_not_open_picked_file))
             if (ext == "desktop") {
                 val lines = dest.readLines().map { line ->
                     if (line.startsWith("container_id:")) "container_id:${container.id}" else line
@@ -1116,7 +1116,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
             refresh()
             ImportResult.Success(dest.nameWithoutExtension)
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to import shortcut file", e)
+            Log.e(TAG, I18n.s(R.string.ui_failed_to_import_shortcut_file), e)
             ImportResult.Error("Failed to import: ${e.message ?: e.javaClass.simpleName}")
         }
     }

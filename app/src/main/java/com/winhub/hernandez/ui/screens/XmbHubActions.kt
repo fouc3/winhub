@@ -42,26 +42,26 @@ internal fun hubXmbActions(
     host: XmbGameHost,
     ops: HubXmbOps,
 ): List<XmbAction> = buildList {
-    add(XmbAction("Launch method", Icons.Filled.Layers) { ops.launchMethod() })
+    add(XmbAction(I18n.s(R.string.ui_launch_method), Icons.Filled.Layers) { ops.launchMethod() })
     if (GameSettingsStyle.isClassic(PreferenceManager.getDefaultSharedPreferences(context))) {
         add(XmbAction("Settings", Icons.Filled.Settings, "Display, graphics, controller…") { ops.openSettings() })
     } else {
         add(XmbAction("Settings", Icons.Filled.Settings, "Display, graphics, controller…", menu = { xmbSettingsMenu(it, shortcut, host) }))
     }
-    add(XmbAction("Game Doctor", Icons.Filled.Healing, "Why it won't run, and what to try", menu = { xmbGameDoctorMenu(it, shortcut) }))
-    add(XmbAction("Game Details", Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_game_doctor), Icons.Filled.Healing, I18n.s(R.string.ui_why_it_won_t_run_and_what_to_try), menu = { xmbGameDoctorMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_game_details), Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))
     if (isSteamOriginShortcut(shortcut)) {
-        add(XmbAction("Cloud Saves", Icons.Filled.CloudSync, "Steam Cloud sync — opens its own screen") { launchSaveManager(context, steamAppIdOf(shortcut)) })
+        add(XmbAction(I18n.s(R.string.ui_cloud_saves), Icons.Filled.CloudSync, I18n.s(R.string.ui_steam_cloud_sync_opens_its_own_screen)) { launchSaveManager(context, steamAppIdOf(shortcut)) })
     }
-    add(XmbAction("Search covers", Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
-    add(XmbAction("Clone to container", Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, host) }))
-    add(XmbAction("Copy to Drive C", Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
-    add(XmbAction("Change executable", Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
-    add(XmbAction("View logs", Icons.Filled.Description, menu = { xmbLogsMenu(it, shortcut) }))
-    add(XmbAction("Add to Home Screen", Icons.Filled.Home) { ops.addToHome() })
-    add(XmbAction("Properties", Icons.Filled.Info, "Times played, playtime", menu = { xmbPropertiesMenu(it, shortcut) }))
-    add(XmbAction("Container properties", Icons.Filled.Folder) { ops.containerProperties() })
-    add(XmbAction("Delete", Icons.Filled.Delete, "Asks to confirm first", danger = true, menu = { hubDeleteMenu(it, game, ops) }))
+    add(XmbAction(I18n.s(R.string.ui_search_covers), Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_clone_to_container), Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, host) }))
+    add(XmbAction(I18n.s(R.string.ui_copy_to_drive_c_2), Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_change_executable_2), Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_view_logs), Icons.Filled.Description, menu = { xmbLogsMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.add_to_home_screen), Icons.Filled.Home) { ops.addToHome() })
+    add(XmbAction("Properties", Icons.Filled.Info, I18n.s(R.string.ui_times_played_playtime), menu = { xmbPropertiesMenu(it, shortcut) }))
+    add(XmbAction(I18n.s(R.string.ui_container_properties), Icons.Filled.Folder) { ops.containerProperties() })
+    add(XmbAction("Delete", Icons.Filled.Delete, I18n.s(R.string.ui_asks_to_confirm_first), danger = true, menu = { hubDeleteMenu(it, game, ops) }))
 }
 
 private fun hubDeleteMenu(xmb: XmbScope, game: HubGame, ops: HubXmbOps): XmbMenu =

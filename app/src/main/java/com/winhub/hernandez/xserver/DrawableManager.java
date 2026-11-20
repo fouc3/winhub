@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.SparseArray;
 
 import com.winhub.hernandez.core.Callback;
@@ -17,7 +20,7 @@ public class DrawableManager extends XResourceManager implements XResourceManage
     public Drawable getDrawable(int id) {
         Drawable drawable = drawables.get(id);
         if (drawable != null && drawable.getData() == null) {
-            throw new IllegalStateException("Drawable with id " + id + " has null data when fetched.");
+            throw new IllegalStateException(I18n.s(R.string.ui_drawable_with_id) + id + " has null data when fetched.");
         }
         return drawable;
     }
@@ -30,14 +33,14 @@ public class DrawableManager extends XResourceManager implements XResourceManage
         if (id == 0) {
             Drawable drawable = new Drawable(id, width, height, visual);
             if (drawable.getData() == null) {
-                throw new IllegalStateException("Drawable with id 0 has null data at creation.");
+                throw new IllegalStateException(I18n.s(R.string.ui_drawable_with_id_0_has_null_data_at_creation));
             }
             return drawable;
         }
         if (drawables.indexOfKey(id) >= 0) return null;
         Drawable drawable = new Drawable(id, width, height, visual);
         if (drawable.getData() == null) {
-            throw new IllegalStateException("Drawable with id " + id + " has null data at creation.");
+            throw new IllegalStateException(I18n.s(R.string.ui_drawable_with_id) + id + " has null data at creation.");
         }
         drawables.put(id, drawable);
         return drawable;
@@ -46,7 +49,7 @@ public class DrawableManager extends XResourceManager implements XResourceManage
     public void removeDrawable(int id) {
         Drawable drawable = drawables.get(id);
         if (drawable == null) {
-            throw new IllegalStateException("Attempting to remove non-existent Drawable with id " + id);
+            throw new IllegalStateException(I18n.s(R.string.ui_attempting_to_remove_non_existent_drawable_with_id) + id);
         }
 
         final Texture texture = drawable.getTexture();

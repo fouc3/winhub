@@ -1,5 +1,8 @@
 package com.winhub.hernandez.xserver.extensions;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import static com.winhub.hernandez.xserver.XClientRequestHandler.RESPONSE_CODE_SUCCESS;
 
 import com.winhub.hernandez.xconnector.XInputStream;
@@ -100,7 +103,7 @@ public class MITSHMExtension implements Extension {
         if (data == null) throw new BadSHMSegment(shmseg);
 
         if (graphicsContext.getFunction() != GraphicsContext.Function.COPY) {
-            throw new UnsupportedOperationException("GC Function other than COPY is not supported.");
+            throw new UnsupportedOperationException(I18n.s(R.string.ui_gc_function_other_than_copy_is_not_supported));
         }
 
         drawable.drawImage(srcX, srcY, dstX, dstY, srcWidth, srcHeight, depth, data, totalWidth, totalHeight);

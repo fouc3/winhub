@@ -271,7 +271,7 @@ private fun LogViewerBody(entry: LogInventory.Entry, onClose: () -> Unit) {
                         color = t.sub, fontSize = 11.sp
                     )
                     IconButton(onClick = { findOpen = false; query = "" }, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Default.Close, "Close search",
+                        Icon(Icons.Default.Close, I18n.s(R.string.ui_close_search),
                             tint = t.sub, modifier = Modifier.size(15.dp))
                     }
                 }
@@ -383,7 +383,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
             }
             busy = false
             if (bundle == null) {
-                Toast.makeText(context, "Couldn't build the report.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_build_the_report), Toast.LENGTH_SHORT).show()
                 return@launch
             }
             onDismiss()
@@ -396,18 +396,18 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                         android.net.Uri.parse(LogReport.issueUrl(title, description, bundle.facts)))
                 )
             } catch (e: Exception) {
-                Toast.makeText(context, "No browser to open GitHub with.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_no_browser_to_open_github_with), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     if (LocalViewerDeck.current) {
         DeckConfigDialog(title = I18n.s(R.string.ui_report_a_problem), onDismiss = { if (!busy) onDismiss() }) {
-            DeckGroup("What happened") {
+            DeckGroup(I18n.s(R.string.ui_what_happened)) {
                 DeckTextRow(I18n.s(R.string.ui_what_went_wrong), value = title, onValueChange = { title = it })
-                DeckTextRow(I18n.s(R.string.ui_details), "Any detail that helps (optional)", value = description, onValueChange = { description = it })
+                DeckTextRow(I18n.s(R.string.ui_details), I18n.s(R.string.ui_any_detail_that_helps_optional), value = description, onValueChange = { description = it })
             }
-            DeckGroup("Will be attached") {
+            DeckGroup(I18n.s(R.string.ui_will_be_attached)) {
                 willAttach.forEach { name ->
                     DeckRow(name) {}
                 }
@@ -425,7 +425,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 DeckButton("Cancel", primary = false) { if (!busy) onDismiss() }
-                DeckButton(if (busy) "Working…" else "Continue on GitHub", primary = true) { if (!busy) submit() }
+                DeckButton(if (busy) "Working…" else I18n.s(R.string.ui_continue_on_github), primary = true) { if (!busy) submit() }
             }
         }
         return
@@ -477,7 +477,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
         },
         confirmButton = {
             TextButton(enabled = !busy, onClick = submit) {
-                Text(if (busy) "Working…" else "Continue on GitHub")
+                Text(if (busy) "Working…" else I18n.s(R.string.ui_continue_on_github))
             }
         },
         dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } }
@@ -607,9 +607,9 @@ internal fun shareLogFile(context: Context, file: File) {
             putExtra(Intent.EXTRA_SUBJECT, file.name)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        context.startActivity(Intent.createChooser(send, "Share log"))
+        context.startActivity(Intent.createChooser(send, I18n.s(R.string.ui_share_log)))
     } catch (e: Exception) {
-        Toast.makeText(context, "Couldn't share that log.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_that_log), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -617,7 +617,7 @@ internal fun shareLogFile(context: Context, file: File) {
 fun shareLogGroup(context: Context, entry: LogInventory.Entry) {
     val files = LogInventory.filesIn(entry.dir)
     if (files.isEmpty()) {
-        Toast.makeText(context, "Nothing to share yet.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_nothing_to_share_yet), Toast.LENGTH_SHORT).show()
         return
     }
     if (files.size == 1) {
@@ -639,8 +639,8 @@ fun shareLogGroup(context: Context, entry: LogInventory.Entry) {
             putExtra(Intent.EXTRA_SUBJECT, if (entry.isAppBucket) "App & crash logs" else entry.name)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        context.startActivity(Intent.createChooser(send, "Share logs"))
+        context.startActivity(Intent.createChooser(send, I18n.s(R.string.ui_share_logs)))
     } catch (e: Exception) {
-        Toast.makeText(context, "Couldn't share those logs.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_those_logs), Toast.LENGTH_SHORT).show()
     }
 }

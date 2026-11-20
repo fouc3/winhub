@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import java.net.DatagramPacket
 import java.net.DatagramSocket
@@ -65,8 +68,8 @@ object NetworkProbe {
         /** The pre-flight / Settings verdict line. */
         fun verdict(): String = when (nat) {
             Nat.OPEN_CONE -> "Open NAT — online play should work" + (maskedIp?.let { " (IP $it)" } ?: "")
-            Nat.SYMMETRIC -> "Strict NAT (symmetric) — some games' online modes won't connect"
-            Nat.UDP_BLOCKED -> "UDP blocked — online play unlikely on this network"
+            Nat.SYMMETRIC -> I18n.s(R.string.ui_strict_nat_symmetric_some_games_online_modes_won_t_conne)
+            Nat.UDP_BLOCKED -> I18n.s(R.string.ui_udp_blocked_online_play_unlikely_on_this_network)
             Nat.UNKNOWN -> "Couldn't check"
         }
 

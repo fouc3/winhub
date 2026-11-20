@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -234,12 +237,12 @@ public final class SteamDatabase extends SQLiteOpenHelper {
         db.execSQL(SQL_UNLOCKED_BRANCHES);
         db.execSQL(SQL_ACHIEVEMENTS);
         db.execSQL(SQL_DLC);
-        Log.i(TAG, "steam.db created (v" + DB_VERSION + ")");
+        Log.i(TAG, I18n.s(R.string.ui_steam_db_created_v) + DB_VERSION + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i(TAG, "Upgrading steam.db v" + oldVersion + " → v" + newVersion);
+        Log.i(TAG, I18n.s(R.string.ui_upgrading_steam_db_v) + oldVersion + " → v" + newVersion);
         // Legacy destructive path: anything older than v3 gets recreated at the latest schema
         // (onCreate builds the CURRENT DDL, which already includes the v4 real_* columns).
         if (oldVersion < 3) {
@@ -311,7 +314,7 @@ public final class SteamDatabase extends SQLiteOpenHelper {
      */
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "Downgrading steam.db v" + oldVersion + " → v" + newVersion + " — rebuilding schema (cache lost, re-syncs on login)");
+        Log.w(TAG, I18n.s(R.string.ui_downgrading_steam_db_v) + oldVersion + " → v" + newVersion + I18n.s(R.string.ui_rebuilding_schema_cache_lost_re_syncs_on_login));
         db.execSQL("DROP TABLE IF EXISTS depot_manifests");
         db.execSQL("DROP TABLE IF EXISTS steam_downloads");
         db.execSQL("DROP TABLE IF EXISTS steam_license_apps");
@@ -327,7 +330,7 @@ public final class SteamDatabase extends SQLiteOpenHelper {
     /** ALTER TABLE ... ADD COLUMN, ignoring the "duplicate column name" error so re-runs are safe. */
     private static void addColumnIfMissing(SQLiteDatabase db, String table, String column, String type) {
         try {
-            db.execSQL("ALTER TABLE " + table + " ADD COLUMN " + column + " " + type);
+            db.execSQL("ALTER TABLE " + table + I18n.s(R.string.ui_add_column) + column + " " + type);
         } catch (Exception e) {
             Log.w(TAG, "addColumn " + table + "." + column + " skipped: " + e.getMessage());
         }

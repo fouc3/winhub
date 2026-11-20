@@ -10,8 +10,8 @@ import com.winhub.hernandez.R
 internal enum class LibrarySort(val label: String) {
     NAME("Name A–Z"),
     NAME_DESC("Name Z–A"),
-    RECENT("Last played"),
-    PLAYTIME("Most played"),
+    RECENT(I18n.s(R.string.retro_portrait_last_played)),
+    PLAYTIME(I18n.s(R.string.xmb_all_sort_playtime)),
     CONTAINER("Container"),
     STORE("Store"),
 }

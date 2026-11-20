@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -43,16 +46,16 @@ public class AmazonSdkManager {
      */
     public static boolean ensureSdkFiles(Context ctx, String accessToken) {
         if (isSdkCached(ctx)) {
-            Log.d(TAG, "SDK already cached, skipping download");
+            Log.d(TAG, I18n.s(R.string.ui_sdk_already_cached_skipping_download));
             return true;
         }
 
-        Log.d(TAG, "Downloading Amazon SDK DLLs...");
+        Log.d(TAG, I18n.s(R.string.ui_downloading_amazon_sdk_dlls));
         try {
             // Step 1: Get SDK channel download spec
             String specJson = AmazonApiClient.getSdkChannelSpec(accessToken);
             if (specJson == null) {
-                Log.e(TAG, "SDK channel spec fetch failed");
+                Log.e(TAG, I18n.s(R.string.ui_sdk_channel_spec_fetch_failed));
                 return false;
             }
 
@@ -60,7 +63,7 @@ public class AmazonSdkManager {
             String downloadUrl = spec.optString("downloadUrl", "");
             String versionId   = spec.optString("versionId", "");
             if (downloadUrl.isEmpty()) {
-                Log.e(TAG, "SDK channel downloadUrl is empty");
+                Log.e(TAG, I18n.s(R.string.ui_sdk_channel_downloadurl_is_empty));
                 return false;
             }
 
@@ -68,7 +71,7 @@ public class AmazonSdkManager {
             String manifestUrl = AmazonApiClient.appendPath(downloadUrl, "manifest.proto");
             byte[] manifestBytes = AmazonApiClient.getBytes(manifestUrl, accessToken);
             if (manifestBytes == null) {
-                Log.e(TAG, "SDK manifest download failed");
+                Log.e(TAG, I18n.s(R.string.ui_sdk_manifest_download_failed));
                 return false;
             }
 
@@ -99,7 +102,7 @@ public class AmazonSdkManager {
                 destFile.getParentFile().mkdirs();
 
                 if (destFile.exists() && destFile.length() == file.size) {
-                    Log.d(TAG, "SDK file already cached: " + filename);
+                    Log.d(TAG, I18n.s(R.string.ui_sdk_file_already_cached) + filename);
                     downloaded++;
                     continue;
                 }
@@ -109,9 +112,9 @@ public class AmazonSdkManager {
 
                 if (downloadSdkFile(fileUrl, accessToken, destFile)) {
                     downloaded++;
-                    Log.d(TAG, "Downloaded SDK file: " + filename);
+                    Log.d(TAG, I18n.s(R.string.ui_downloaded_sdk_file) + filename);
                 } else {
-                    Log.e(TAG, "Failed to download SDK file: " + filename);
+                    Log.e(TAG, I18n.s(R.string.ui_failed_to_download_sdk_file) + filename);
                 }
             }
 
@@ -121,15 +124,15 @@ public class AmazonSdkManager {
                 try (FileOutputStream fos = new FileOutputStream(vf)) {
                     fos.write(versionId.getBytes(java.nio.charset.StandardCharsets.UTF_8));
                 }
-                Log.d(TAG, "SDK cached OK: " + downloaded + " file(s), version=" + versionId);
+                Log.d(TAG, I18n.s(R.string.ui_sdk_cached_ok) + downloaded + " file(s), version=" + versionId);
                 return true;
             } else {
-                Log.e(TAG, "No SDK files were downloaded");
+                Log.e(TAG, I18n.s(R.string.ui_no_sdk_files_were_downloaded));
                 return false;
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "ensureSdkFiles failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_ensuresdkfiles_failed), e);
             return false;
         }
     }
@@ -144,7 +147,7 @@ public class AmazonSdkManager {
         File sdkCacheServices = new File(ctx.getFilesDir(),
                 SDK_DIR + "/" + SDK_SERVICES_DIR);
         if (!sdkCacheServices.isDirectory()) {
-            Log.w(TAG, "SDK cache dir does not exist: " + sdkCacheServices.getAbsolutePath());
+            Log.w(TAG, I18n.s(R.string.ui_sdk_cache_dir_does_not_exist) + sdkCacheServices.getAbsolutePath());
             return;
         }
 
@@ -154,7 +157,7 @@ public class AmazonSdkManager {
         new File(prefixServices, AGSSDK_DIR).mkdirs();
 
         copyDir(sdkCacheServices, prefixServices);
-        Log.d(TAG, "SDK deployed to Wine prefix: " + prefixProgramData.getAbsolutePath());
+        Log.d(TAG, I18n.s(R.string.ui_sdk_deployed_to_wine_prefix) + prefixProgramData.getAbsolutePath());
     }
 
     // ── isSdkCached ───────────────────────────────────────────────────────────
@@ -199,7 +202,7 @@ public class AmazonSdkManager {
 
             int code = conn.getResponseCode();
             if (code < 200 || code >= 300) {
-                Log.e(TAG, "SDK file HTTP " + code + ": " + StoreLog.redactUrl(urlStr));
+                Log.e(TAG, I18n.s(R.string.ui_sdk_file_http) + code + ": " + StoreLog.redactUrl(urlStr));
                 conn.disconnect();
                 return false;
             }
@@ -213,7 +216,7 @@ public class AmazonSdkManager {
             conn.disconnect();
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "downloadSdkFile failed: " + dest.getName(), e);
+            Log.e(TAG, I18n.s(R.string.ui_downloadsdkfile_failed) + dest.getName(), e);
             return false;
         }
     }
@@ -234,7 +237,7 @@ public class AmazonSdkManager {
                 try {
                     copyFile(f, destFile);
                 } catch (IOException e) {
-                    Log.e(TAG, "SDK copyFile failed: " + f.getName(), e);
+                    Log.e(TAG, I18n.s(R.string.ui_sdk_copyfile_failed) + f.getName(), e);
                 }
             }
         }

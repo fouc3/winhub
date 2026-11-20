@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.container.Container
@@ -65,7 +68,7 @@ object EpicCloudSavePaths {
      */
     fun resolveContainer(ctx: Context, appName: String, installDir: String?): Container? {
         val shortcuts = try { ContainerManager(ctx).loadShortcuts() } catch (e: Exception) {
-            Log.w(TAG, "loadShortcuts failed", e); return null
+            Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), e); return null
         }
         return matchContainer(ctx, shortcuts, appName, installDir)
     }
@@ -147,7 +150,7 @@ object EpicCloudSavePaths {
         if (appNames.isEmpty()) return emptyList()
 
         val shortcuts: List<Shortcut> = try { ContainerManager(ctx).loadShortcuts() } catch (e: Exception) {
-            Log.w(TAG, "listStatuses: loadShortcuts failed", e); emptyList()
+            Log.w(TAG, I18n.s(R.string.ui_liststatuses_loadshortcuts_failed), e); emptyList()
         }
 
         return appNames.map { an ->
@@ -225,7 +228,7 @@ object EpicCloudSavePaths {
             }
             "userprofile" -> { val p = profileOrNull(container) ?: return null; base = p; boundary = p }
             "userdir" -> { val p = profileOrNull(container) ?: return null; base = File(p, "Documents"); boundary = p }
-            "usersavedgames" -> { val p = profileOrNull(container) ?: return null; base = File(p, "Saved Games"); boundary = p }
+            "usersavedgames" -> { val p = profileOrNull(container) ?: return null; base = File(p, I18n.s(R.string.ui_saved_games)); boundary = p }
             // Epic's {appdata} == %LOCALAPPDATA% (verified against Legendary) → AppData/Local.
             "appdata", "localappdata" -> { val p = profileOrNull(container) ?: return null; base = File(p, "AppData/Local"); boundary = p }
             "roamingappdata" -> { val p = profileOrNull(container) ?: return null; base = File(p, "AppData/Roaming"); boundary = p }

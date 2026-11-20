@@ -1,5 +1,8 @@
 package com.winhub.hernandez.saves;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -21,7 +24,7 @@ public class SaveManager {
         this.savesDir = new File(context.getFilesDir(), "saves");
         this.containerManager = new ContainerManager(context);  // Initialize ContainerManager
         if (!savesDir.exists() && !savesDir.mkdirs()) {
-            throw new RuntimeException("Failed to create saves directory: " + savesDir.getAbsolutePath());
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_create_saves_directory) + savesDir.getAbsolutePath());
         }
     }
 
@@ -37,7 +40,7 @@ public class SaveManager {
                 Save save = loadSave(file);  // Use a method to load the save with its container
                 if (save != null) {
                     saves.add(save);
-                    Log.d("SaveManager", "Loaded Save: " + save.path);
+                    Log.d("SaveManager", I18n.s(R.string.ui_loaded_save) + save.path);
                 }
             }
         }
@@ -65,7 +68,7 @@ public class SaveManager {
         ArrayList<Save> saves = getSaves();
         for (Save save : saves) {
             if (save.id == id) {
-                Log.d("SaveManager", "Save found: " + save.path);
+                Log.d("SaveManager", I18n.s(R.string.ui_save_found) + save.path);
                 return save;
             }
         }
@@ -76,7 +79,7 @@ public class SaveManager {
         int id = generateNewSaveId(); // Generate a unique ID for the new save
         File saveFile = new File(savesDir, title + ".json");
         if (saveFile.exists()) {
-            throw new IOException("Save with this name already exists");
+            throw new IOException(I18n.s(R.string.ui_save_with_this_name_already_exists));
         }
 
         try {
@@ -91,7 +94,7 @@ public class SaveManager {
 
             FileUtils.writeString(saveFile, saveData.toString());
         } catch (JSONException e) {
-            throw new IOException("Failed to create save JSON", e);
+            throw new IOException(I18n.s(R.string.ui_failed_to_create_save_json), e);
         }
     }
 
@@ -104,7 +107,7 @@ public class SaveManager {
         File newSaveFile = new File(savesDir, newTitle + ".json");
         if (!save.file.getName().equals(newSaveFile.getName())) {
             if (newSaveFile.exists()) {
-                throw new IOException("Save with this name already exists");
+                throw new IOException(I18n.s(R.string.ui_save_with_this_name_already_exists));
             }
             if (!save.file.renameTo(newSaveFile)) {
                 throw new IOException("Failed to rename save file to " + newSaveFile.getAbsolutePath());
@@ -129,7 +132,7 @@ public class SaveManager {
 
             // Ensure that the destination parent directories are created
             if (!destPath.getParentFile().exists() && !destPath.getParentFile().mkdirs()) {
-                throw new IOException("Failed to create directories for " + destPath.getAbsolutePath());
+                throw new IOException(I18n.s(R.string.ui_failed_to_create_directories_for) + destPath.getAbsolutePath());
             }
 
             // Log the paths for debugging
@@ -137,7 +140,7 @@ public class SaveManager {
 
             // Copy the files from the source path to the destination path
             if (FileUtils.copy(srcPath, destPath)) {
-                Log.d("SaveManager", "Files successfully cloned.");
+                Log.d("SaveManager", I18n.s(R.string.ui_files_successfully_cloned));
             } else {
                 throw new IOException("Failed to clone files from " + srcPath.getAbsolutePath() + " to " + destPath.getAbsolutePath());
             }
@@ -148,7 +151,7 @@ public class SaveManager {
             // Register the cloned save as a new save
             addSave(newTitle, destPath.getAbsolutePath(), newContainer);
         } else if (save.container == null) {
-            throw new IOException("Current container is null.");
+            throw new IOException(I18n.s(R.string.ui_current_container_is_null));
         }
     }
 
@@ -180,7 +183,7 @@ public class SaveManager {
 
     public void removeSave(Save save) {
         if (save.file.exists() && !save.file.delete()) {
-            throw new RuntimeException("Failed to delete save file: " + save.file.getAbsolutePath());
+            throw new RuntimeException(I18n.s(R.string.ui_failed_to_delete_save_file) + save.file.getAbsolutePath());
         }
     }
 

@@ -136,7 +136,7 @@ internal object RetroLibrary {
             o.optString("genre"), o.optString("year"), o.optString("players"),
         )
     } catch (e: JSONException) {
-        Log.w(TAG, "Unreadable game details", e)
+        Log.w(TAG, I18n.s(R.string.ui_unreadable_game_details), e)
         null
     }
 
@@ -292,7 +292,7 @@ internal object RetroLibrary {
 
     fun launch(context: Context, system: RetroSystem, game: RetroGame): RetroLaunchResult {
         val emulator = resolveEmulator(context, system) ?: return RetroLaunchResult.NoEmulator
-        if (!File(game.path).isFile) return RetroLaunchResult.Failed("The ROM file is gone")
+        if (!File(game.path).isFile) return RetroLaunchResult.Failed(I18n.s(R.string.ui_the_rom_file_is_gone))
         val result = if (emulator.packageName in RETROARCH_PACKAGES) {
             launchRetroArch(context, emulator.packageName, system, game)
         } else {
@@ -396,7 +396,7 @@ private object ArcadeNames {
                 }
             }
         } catch (e: IOException) {
-            Log.w(TAG, "Could not read the arcade title table", e)
+            Log.w(TAG, I18n.s(R.string.ui_could_not_read_the_arcade_title_table), e)
         }
         return map
     }
@@ -545,7 +545,7 @@ internal object RetroArt {
         return try {
             JSONObject(body).optJSONArray("data")?.optJSONObject(0)?.optInt("id", 0) ?: 0
         } catch (e: JSONException) {
-            Log.w(TAG, "Unreadable SteamGridDB search answer", e)
+            Log.w(TAG, I18n.s(R.string.ui_unreadable_steamgriddb_search_answer), e)
             -1
         }
     }
@@ -555,7 +555,7 @@ internal object RetroArt {
         return try {
             JSONObject(body).optJSONArray("data")?.optJSONObject(0)?.optString("url")?.takeIf { it.isNotEmpty() }
         } catch (e: JSONException) {
-            Log.w(TAG, "Unreadable SteamGridDB image answer", e)
+            Log.w(TAG, I18n.s(R.string.ui_unreadable_steamgriddb_image_answer), e)
             null
         }
     }

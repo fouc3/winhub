@@ -110,7 +110,7 @@ fun InstallProgressDialog(
                     state.phase == ContentDownloadPhase.ERROR -> state.error ?: if (state.saveOnly) "Save failed." else "Install failed."
                     state.phase == ContentDownloadPhase.DONE -> if (state.saveOnly) "Saved to My Files" else "Installed"
                     state.phase == ContentDownloadPhase.DOWNLOADING -> "Downloading ${(frac * 100).toInt()}%"
-                    state.saveOnly -> "Saving to My Files"
+                    state.saveOnly -> I18n.s(R.string.ui_saving_to_my_files)
                     else -> "Installing ${(frac * 100).toInt()}%"
                 }
                 // Cancelled reads as a neutral outcome (not the alarming error red); a finished install

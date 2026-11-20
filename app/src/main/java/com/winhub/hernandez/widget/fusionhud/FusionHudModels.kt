@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget.fusionhud
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.Locale
 
 /**
@@ -55,8 +58,9 @@ enum class FusionSize(val token: String, val label: String) {
 
         // Chip-label ids (must match the labels the config UIs build). "Clock" sits on the level 4 TIME row.
         val FPS_CHIPS = setOf("FPS", "FPS .1", "Engine")
-        val GRAPH_CHIPS = FPS_CHIPS + setOf("FPS graph", "Power", "Battery")
-        val STATS_CHIPS = GRAPH_CHIPS + setOf("GPU", "GPU temp", "CPU", "Temp", "VRAM", "RAM")
+        // chip ids, compared by identity — never translate
+        val GRAPH_CHIPS = FPS_CHIPS + setOf("FPS Graph", "Power", "Battery")
+        val STATS_CHIPS = GRAPH_CHIPS + setOf("GPU", "GPU Temp", "CPU", "Temp", "VRAM", "RAM")
         val EVERYTHING_ONLY = setOf(
             "GPU model", "0.01% low", "Per-core", "Swap", "Network", "Resolution", "Proton", "Wrapper",
             "DX ver", "Session", "Clock",

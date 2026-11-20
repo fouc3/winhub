@@ -241,10 +241,10 @@ class AmazonGamesActivity : ComponentActivity() {
             if (showProgress) setSync("Checking credentials\u2026", false)
             val creds = AmazonCredentialStore.load(this@AmazonGamesActivity)
             if (creds == null || creds.accessToken == null) {
-                setSync("Not logged in", true)
+                setSync(I18n.s(R.string.ui_not_logged_in), true)
                 enableRefresh()
                 withContext(Dispatchers.Main) {
-                    resultBarMsg = "Please log in to Amazon Games first"
+                    resultBarMsg = I18n.s(R.string.ui_please_log_in_to_amazon_games_first)
                     finish()
                 }
                 return
@@ -253,7 +253,7 @@ class AmazonGamesActivity : ComponentActivity() {
             if (showProgress) setSync("Refreshing token\u2026", false)
             val token = AmazonCredentialStore.getValidAccessToken(this@AmazonGamesActivity)
             if (token == null) {
-                setSync("Token refresh failed", true)
+                setSync(I18n.s(R.string.ui_token_refresh_failed), true)
                 enableRefresh()
                 return
             }
@@ -262,7 +262,7 @@ class AmazonGamesActivity : ComponentActivity() {
             val allEntitlements = AmazonApiClient.getEntitlements(token, creds.deviceSerial)
 
             if (allEntitlements == null || allEntitlements.isEmpty()) {
-                setSync("No games found in Amazon library", true)
+                setSync(I18n.s(R.string.ui_no_games_found_in_amazon_library), true)
                 enableRefresh()
                 return
             }
@@ -319,7 +319,7 @@ class AmazonGamesActivity : ComponentActivity() {
                 enableRefresh()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "syncLibrary error", e)
+            Log.e(TAG, I18n.s(R.string.ui_synclibrary_error), e)
             setSync("Error: ${e.message}", true)
             enableRefresh()
         }
@@ -438,7 +438,7 @@ class AmazonGamesActivity : ComponentActivity() {
             val token = AmazonCredentialStore.getValidAccessToken(this@AmazonGamesActivity)
             if (token == null) {
                 withContext(Dispatchers.Main) {
-                    resultBarMsg = "Login required"
+                    resultBarMsg = I18n.s(R.string.ui_login_required)
                 }
                 removeDownloadState(game.productId)
                 return@launch
@@ -491,9 +491,9 @@ class AmazonGamesActivity : ComponentActivity() {
             }
             if (!ok) {
                 withContext(Dispatchers.Main) {
-                    resultBarMsg = "Error: Download failed"
+                    resultBarMsg = I18n.s(R.string.ui_error_download_failed)
                 }
-                StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "Download failed")
+                StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, I18n.s(R.string.xmb_dl_status_failed))
                 removeDownloadState(game.productId)
                 return@launch
             }
@@ -503,9 +503,9 @@ class AmazonGamesActivity : ComponentActivity() {
 
             if (exeFiles.isEmpty()) {
                 withContext(Dispatchers.Main) {
-                    resultBarMsg = "Error: No executable found after install"
+                    resultBarMsg = I18n.s(R.string.ui_error_no_executable_found_after_install)
                 }
-                StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "No executable found")
+                StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, I18n.s(R.string.ui_no_executable_found))
                 removeDownloadState(game.productId)
                 return@launch
             }
@@ -588,14 +588,14 @@ class AmazonGamesActivity : ComponentActivity() {
     private fun openExePicker(game: AmazonGame) {
         val installedDir = prefs!!.getString("amazon_dir_${game.productId}", null)
         if (installedDir == null) {
-            resultBarMsg = "Install directory not found"
+            resultBarMsg = I18n.s(R.string.ui_install_directory_not_found)
             return
         }
         lifecycleScope.launch(Dispatchers.IO) {
             val dir = File(installedDir)
             if (!dir.isDirectory) {
                 withContext(Dispatchers.Main) {
-                    resultBarMsg = "Install directory not found"
+                    resultBarMsg = I18n.s(R.string.ui_install_directory_not_found)
                 }
                 return@launch
             }
@@ -666,7 +666,7 @@ class AmazonGamesActivity : ComponentActivity() {
             }
             prefs!!.edit().putString(CACHE_KEY, arr.toString()).apply()
         } catch (e: Exception) {
-            Log.e(TAG, "saveCachedGames failed", e)
+            Log.e(TAG, I18n.s(R.string.ui_savecachedgames_failed), e)
         }
     }
 
@@ -696,7 +696,7 @@ class AmazonGamesActivity : ComponentActivity() {
             }
             return games
         } catch (e: Exception) {
-            Log.e(TAG, "loadCachedGames failed", e)
+            Log.e(TAG, I18n.s(R.string.ui_loadcachedgames_failed), e)
             return null
         }
     }
@@ -1154,7 +1154,7 @@ private fun GameCard(
                 Text(
                     text = when {
                         ds != null && ds.isVisible -> "Cancel"
-                        isInstalled -> "Add to Launcher"
+                        isInstalled -> I18n.s(R.string.ui_add_to_launcher)
                         else -> "Install"
                     },
                     color = if (isCancelBtn) MaterialTheme.colorScheme.onError
@@ -1318,7 +1318,7 @@ private fun GameGridTile(
                     Text(
                         text = when {
                             ds != null && ds.isVisible -> "Cancel"
-                            isInstalled -> "Add to Launcher"
+                            isInstalled -> I18n.s(R.string.ui_add_to_launcher)
                             else -> "Install"
                         },
                         color = if (isCancelBtn) MaterialTheme.colorScheme.onError

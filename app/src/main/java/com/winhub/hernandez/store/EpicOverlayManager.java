@@ -21,6 +21,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -98,14 +101,14 @@ public final class EpicOverlayManager {
 
             String token = EpicCredentialStore.getValidAccessToken(ctx);
             if (token == null || token.isEmpty()) {
-                Log.w(TAG, "no valid Epic access token; cannot provision overlay (user not logged in)");
+                Log.w(TAG, I18n.s(R.string.ui_no_valid_epic_access_token_cannot_provision_overlay_user));
                 return false;
             }
 
             String manifestApiJson = EpicApiClient.getManifestApiJson(
                     token, OVERLAY_NAMESPACE, OVERLAY_CATALOG_ITEM, OVERLAY_APP);
             if (manifestApiJson == null) {
-                Log.w(TAG, "overlay manifest API fetch failed");
+                Log.w(TAG, I18n.s(R.string.ui_overlay_manifest_api_fetch_failed));
                 return false;
             }
 
@@ -123,7 +126,7 @@ public final class EpicOverlayManager {
             Log.i(TAG, "overlay component ready: " + dll.getAbsolutePath());
             return true;
         } catch (Throwable t) {
-            Log.w(TAG, "ensureOverlayInstalled failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_ensureoverlayinstalled_failed), t);
             return false;
         }
     }
@@ -143,7 +146,7 @@ public final class EpicOverlayManager {
             }
             Log.i(TAG, "wrote HKCU\\" + EOS_KEY + " " + OVERLAY_VALUE + "=" + OVERLAY_WIN_PATH);
         } catch (Throwable t) {
-            Log.w(TAG, "writeRegistry failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_writeregistry_failed), t);
         }
     }
 
@@ -160,7 +163,7 @@ public final class EpicOverlayManager {
                 editor.removeValue(EOS_KEY, OVERLAY_VALUE);
             }
         } catch (Throwable t) {
-            Log.w(TAG, "stripRegistry failed", t);
+            Log.w(TAG, I18n.s(R.string.ui_stripregistry_failed), t);
         }
     }
 }

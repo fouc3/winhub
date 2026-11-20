@@ -916,7 +916,7 @@ private fun ConfigUploadDialog(onDismiss: () -> Unit) {
             try {
                 ContainerManager(ctx).also { it.reloadContainers() }.loadShortcuts().sortedBy { it.name.lowercase() }
             } catch (e: Exception) {
-                Log.w(TAG, "loadShortcuts failed", e)
+                Log.w(TAG, I18n.s(R.string.ui_loadshortcuts_failed), e)
                 emptyList()
             }
         }

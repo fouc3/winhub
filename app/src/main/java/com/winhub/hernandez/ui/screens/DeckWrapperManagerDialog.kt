@@ -101,7 +101,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
     DeckConfigDialog(title = context.getString(R.string.wrapper_manager_title), onDismiss = onDismiss) {
         DeckConfigNote(context.getString(R.string.wrapper_manager_header))
 
-        DeckGroup("Bundled wrappers") {
+        DeckGroup(I18n.s(R.string.ui_bundled_wrappers)) {
             slots.forEach { slot ->
                 DeckRow(
                     label = slot.label,
@@ -124,7 +124,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
         }
 
         if (imported.isNotEmpty()) {
-            DeckGroup("Imported wrappers") {
+            DeckGroup(I18n.s(R.string.ui_imported_wrappers)) {
                 imported.forEach { imp ->
                     DeckRow(label = imp.label, hint = imp.identifier) {
                         DeckConfigChip(context.getString(R.string.wrapper_delete), selected = false) {
@@ -148,7 +148,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
     if (showCatalog) {
         WrapperCatalogPicker(
             isQualcomm = false,
-            gpuModel = "this GPU",
+            gpuModel = I18n.s(R.string.ui_this_gpu),
             onDismiss = { showCatalog = false },
             onInstalled = { refresh() },
         )

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.restore;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -45,10 +48,10 @@ public class RestoreActivity extends Activity {
                     boolean success = TarCompressorUtils.extractTar(backupFile, dataDir, (file, size) -> {
                         // Skip symbolic links pointing to critical directories
                         if (isCriticalSymbolicLink(file)) {
-                            Log.d("RestoreOp", "Skipping symbolic link: " + file.getAbsolutePath());
+                            Log.d("RestoreOp", I18n.s(R.string.ui_skipping_symbolic_link) + file.getAbsolutePath());
                             return null; // Return null to skip extraction
                         }
-                        Log.d("RestoreOp", "Extracting file: " + file.getAbsolutePath());
+                        Log.d("RestoreOp", I18n.s(R.string.ui_extracting_file) + file.getAbsolutePath());
                         return file;
                     });
 
@@ -57,13 +60,13 @@ public class RestoreActivity extends Activity {
                     if (success) {
                         onRestoreSuccess();
                     } else {
-                        throw new IOException("Extraction failed");
+                        throw new IOException(I18n.s(R.string.ui_extraction_failed));
                     }
                 } else {
-                    throw new IOException("Failed to obtain file from URI");
+                    throw new IOException(I18n.s(R.string.ui_failed_to_obtain_file_from_uri));
                 }
             } catch (Exception e) {
-                Log.e("RestoreOp", "Restore failed", e);
+                Log.e("RestoreOp", I18n.s(R.string.ui_restore_failed), e);
                 onRestoreFailed();
             }
         });
@@ -84,7 +87,7 @@ public class RestoreActivity extends Activity {
     private void onRestoreSuccess() {
         runOnUiThread(() -> {
             preloaderDialog.closeOnUiThread();
-            AppUtils.showToast(this, "Data restored successfully.");
+            AppUtils.showToast(this, I18n.s(R.string.ui_data_restored_successfully));
             finish();
             // Restart the main application after restore
             Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
@@ -97,7 +100,7 @@ public class RestoreActivity extends Activity {
     private void onRestoreFailed() {
         runOnUiThread(() -> {
             preloaderDialog.closeOnUiThread();
-            AppUtils.showToast(this, "Data restore failed.");
+            AppUtils.showToast(this, I18n.s(R.string.ui_data_restore_failed));
             finish();
         });
     }

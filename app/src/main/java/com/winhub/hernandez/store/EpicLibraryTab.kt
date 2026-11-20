@@ -72,7 +72,7 @@ fun rememberEpicLibrary(onMessage: (String) -> Unit = {}): EpicLibraryState {
     val sync: (Boolean) -> Unit = { force ->
         if (!syncing) {
             syncing = true
-            status = "Syncing library…"
+            status = I18n.s(R.string.ui_syncing_library)
             scope.launch {
                 val result = EpicLibraryRepo.sync(appCtx, force) { s -> status = s }
                 syncing = false
@@ -82,7 +82,7 @@ fun rememberEpicLibrary(onMessage: (String) -> Unit = {}): EpicLibraryState {
                         if (force) onMessage("Library updated — ${result.games.size} game${if (result.games.size == 1) "" else "s"}")
                     }
                     is EpicLibraryRepo.SyncResult.Failed -> { load(); onMessage(result.message) }
-                    EpicLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage("Session expired — please sign in to Epic again") }
+                    EpicLibraryRepo.SyncResult.NotLoggedIn -> { load(); onMessage(I18n.s(R.string.ui_session_expired_please_sign_in_to_epic_again)) }
                     EpicLibraryRepo.SyncResult.Busy, EpicLibraryRepo.SyncResult.Throttled -> load()
                 }
             }
@@ -180,7 +180,7 @@ fun EpicLibraryTab(
                 StoreNotice(
                     title = I18n.s(R.string.ui_your_epic_library_is_empty_here),
                     body = I18n.s(R.string.ui_sync_to_pull_your_games_from_epic_or_open_the_full_li),
-                    actionLabel = "Sync now",
+                    actionLabel = I18n.s(R.string.ui_sync_now),
                     onAction = { state.refresh(true) },
                 )
             }
@@ -210,7 +210,7 @@ fun EpicLibraryTab(
                         StoreNotice(
                             title = I18n.s(R.string.ui_full_library),
                             body = I18n.s(R.string.ui_need_the_list_view_or_in_list_installs_open_the_full),
-                            actionLabel = "Open full library",
+                            actionLabel = I18n.s(R.string.ui_open_full_library),
                             onAction = onOpenFullLibrary,
                         )
                     }

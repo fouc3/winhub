@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -92,7 +95,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 if (!saveDirectory.exists() || !saveDirectory.isDirectory) {
                     withContext(Dispatchers.Main) {
                         _isLoading.value = false
-                        Toast.makeText(context, "Save directory is invalid.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_save_directory_is_invalid), Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -134,13 +137,13 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                             putExtra(Intent.EXTRA_STREAM, fileUri)
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
-                        context.startActivity(Intent.createChooser(shareIntent, "Share Save Archive"))
+                        context.startActivity(Intent.createChooser(shareIntent, I18n.s(R.string.ui_share_save_archive)))
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     _isLoading.value = false
-                    Toast.makeText(context, "Failed to export save.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_failed_to_export_save), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -157,7 +160,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 if (!TarCompressorUtils.extract(TarCompressorUtils.Type.XZ, context, uri, tempDir)) {
                     withContext(Dispatchers.Main) {
                         _isLoading.value = false
-                        onDone(false, "Failed to decompress archive.")
+                        onDone(false, I18n.s(R.string.ui_failed_to_decompress_archive))
                     }
                     return@launch
                 }
@@ -166,7 +169,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 if (extractedFiles == null || extractedFiles.size != 1 || !extractedFiles[0].isDirectory) {
                     withContext(Dispatchers.Main) {
                         _isLoading.value = false
-                        onDone(false, "Unexpected archive structure.")
+                        onDone(false, I18n.s(R.string.ui_unexpected_archive_structure))
                     }
                     return@launch
                 }
@@ -176,7 +179,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 if (jsonFiles == null || jsonFiles.size != 1) {
                     withContext(Dispatchers.Main) {
                         _isLoading.value = false
-                        onDone(false, "JSON file not found in the archive.")
+                        onDone(false, I18n.s(R.string.ui_json_file_not_found_in_the_archive))
                     }
                     return@launch
                 }
@@ -198,7 +201,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 withContext(Dispatchers.Main) {
                     _isLoading.value = false
                     refresh()
-                    onDone(true, "Save imported successfully.")
+                    onDone(true, I18n.s(R.string.ui_save_imported_successfully))
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {

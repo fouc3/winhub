@@ -1,5 +1,8 @@
 package com.winhub.hernandez.cast;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.Presentation;
 import android.content.Context;
@@ -87,7 +90,7 @@ public class GameCaster {
             Log.i(TAG, "step: encoder configured " + w + "x" + h);
             inputSurface = encoder.createInputSurface();
             encoder.start();
-            Log.i(TAG, "step: encoder started + input surface");
+            Log.i(TAG, I18n.s(R.string.ui_step_encoder_started_input_surface));
 
             muxer = new MediaMuxer(outPath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
 
@@ -97,9 +100,9 @@ public class GameCaster {
                     DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY
                             | DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION);
             if (virtualDisplay == null) {
-                Log.e(TAG, "createVirtualDisplay returned null");
+                Log.e(TAG, I18n.s(R.string.ui_createvirtualdisplay_returned_null));
                 cleanup();
-                notifyState("FAILED", "Couldn't create the capture display.");
+                notifyState("FAILED", I18n.s(R.string.ui_couldn_t_create_the_capture_display));
                 return false;
             }
             Log.i(TAG, "step: virtual display created");
@@ -113,13 +116,13 @@ public class GameCaster {
             running = true;
             drainThread = new Thread(this::drainLoop, "cast-encoder-drain");
             drainThread.start();
-            notifyState("STREAMING", "Capturing the game.");
-            Log.i(TAG, "step: STREAMING notified");
+            notifyState("STREAMING", I18n.s(R.string.ui_capturing_the_game));
+            Log.i(TAG, I18n.s(R.string.ui_step_streaming_notified));
             return true;
         } catch (Throwable e) {
             Log.e(TAG, "start failed", e);
             cleanup();
-            notifyState("FAILED", "Couldn't start capture: " + e.getMessage());
+            notifyState("FAILED", I18n.s(R.string.ui_couldn_t_start_capture) + e.getMessage());
             return false;
         }
     }
@@ -159,12 +162,12 @@ public class GameCaster {
             running = true;
             drainThread = new Thread(this::drainStreamLoop, "cast-stream-drain");
             drainThread.start();
-            notifyState("STREAMING", "Streaming the game.");
+            notifyState("STREAMING", I18n.s(R.string.ui_streaming_the_game));
             return true;
         } catch (Throwable e) {
-            Log.e(TAG, "startStream failed", e);
+            Log.e(TAG, I18n.s(R.string.ui_startstream_failed), e);
             cleanup();
-            notifyState("FAILED", "Couldn't start streaming: " + e.getMessage());
+            notifyState("FAILED", I18n.s(R.string.ui_couldn_t_start_streaming) + e.getMessage());
             return false;
         }
     }

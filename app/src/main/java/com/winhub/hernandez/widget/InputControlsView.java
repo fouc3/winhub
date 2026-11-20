@@ -1,5 +1,8 @@
 package com.winhub.hernandez.widget;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -1985,7 +1988,7 @@ public class InputControlsView extends View {
                 try (InputStream is = context.getAssets().open("inputcontrols/icons/" + index + ".png")) {
                     icons[index] = BitmapFactory.decodeStream(is);
                 } catch (IOException e) {
-                    Log.e("InputControlsView", "Failed to load asset icon: " + index);
+                    Log.e("InputControlsView", I18n.s(R.string.ui_failed_to_load_asset_icon) + index);
                 }
             }
         }

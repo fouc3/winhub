@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.FileObserver
 import android.util.Log
@@ -221,7 +224,7 @@ class AchievementWatcher {
                 }
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "processChanges failed", t)
+            Log.w(TAG, I18n.s(R.string.ui_processchanges_failed), t)
         }
     }
 

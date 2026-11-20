@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import org.json.JSONObject
 import org.webrtc.DataChannel
 import org.webrtc.PeerConnection
@@ -69,7 +72,7 @@ internal class XboxNativeProtocol(
     }
 
     private fun onMessageOpen() {
-        log("message channel open, handshake")
+        log(I18n.s(R.string.ui_message_channel_open_handshake))
         send(message, JSONObject().put("type", "Handshake").put("version", "messageV1")
             .put("id", "be0bfc6d-1e83-4c8a-90ed-fa8601c5a179").put("cv", "0").toString())
     }

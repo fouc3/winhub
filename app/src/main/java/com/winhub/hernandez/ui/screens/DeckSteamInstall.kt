@@ -129,7 +129,7 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
             try {
                 val repo = SteamRepository.getInstance()
                 when {
-                    !repo.isLoggedIn -> "Steam not signed in"
+                    !repo.isLoggedIn -> I18n.s(R.string.ui_steam_not_signed_in)
                     repo.database.getGame(target.appId) == null -> "Not in your library yet."
                     else -> null
                 }
@@ -191,7 +191,7 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                 if (SteamPrefs.isLoggedIn) SteamForegroundService.start(appCtx)
                 val repo = SteamRepository.getInstance()
                 val err = when {
-                    !repo.isLoggedIn -> "Steam not signed in"
+                    !repo.isLoggedIn -> I18n.s(R.string.ui_steam_not_signed_in)
                     repo.database.getGame(target.appId) == null -> "Game not in your library yet"
                     else -> null
                 }

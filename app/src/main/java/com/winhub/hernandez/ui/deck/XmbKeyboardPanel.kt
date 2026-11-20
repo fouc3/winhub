@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.deck
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -573,11 +576,11 @@ private fun KeyLabel(cap: Cap, context: KeyContext, ink: Color) {
         Role.ACTION -> IconLabel(null, null, context.actionLabel, "R2", GlyphKind.BUMPER, glyphs, ink, context)
         Role.SHIFT -> IconLabel(Icons.Filled.ArrowUpward, "Shift", if (glyphs) "Shift" else null, "L2", GlyphKind.BUMPER, glyphs, ink, context)
         Role.SPACE -> IconLabel(Icons.Filled.SpaceBar, "Space", null, "Y", GlyphKind.Y, glyphs, ink, context)
-        Role.LEFT -> IconLabel(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "Cursor left", null, "L1", GlyphKind.BUMPER, glyphs, ink, context)
-        Role.RIGHT -> IconLabel(Icons.AutoMirrored.Filled.KeyboardArrowRight, "Cursor right", null, "R1", GlyphKind.BUMPER, glyphs, ink, context)
+        Role.LEFT -> IconLabel(Icons.AutoMirrored.Filled.KeyboardArrowLeft, I18n.s(R.string.ui_cursor_left), null, "L1", GlyphKind.BUMPER, glyphs, ink, context)
+        Role.RIGHT -> IconLabel(Icons.AutoMirrored.Filled.KeyboardArrowRight, I18n.s(R.string.ui_cursor_right), null, "R1", GlyphKind.BUMPER, glyphs, ink, context)
         Role.PASTE -> IconLabel(Icons.Filled.ContentPaste, "Paste", if (glyphs) "Paste" else null, null, GlyphKind.PLAIN, false, ink, context)
-        Role.SYSTEM -> IconLabel(Icons.Filled.Keyboard, "Android keyboard", null, null, GlyphKind.PLAIN, false, ink, context)
-        Role.CLOSE -> IconLabel(Icons.Filled.KeyboardArrowDown, "Hide keyboard", null, null, GlyphKind.PLAIN, false, ink, context)
+        Role.SYSTEM -> IconLabel(Icons.Filled.Keyboard, I18n.s(R.string.ui_android_keyboard_2), null, null, GlyphKind.PLAIN, false, ink, context)
+        Role.CLOSE -> IconLabel(Icons.Filled.KeyboardArrowDown, I18n.s(R.string.ui_hide_keyboard), null, null, GlyphKind.PLAIN, false, ink, context)
         Role.BLANK -> Unit
     }
 }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -274,8 +277,8 @@ public final class ControllerLog {
         out.append("\n===== CHECKLIST =====\n");
         List<String> rows = new ArrayList<>();
         if (slots.isEmpty()) {
-            rows.add(fail("PAD", "no controller held a player slot and the app sent no input: Android did not hand "
-                    + "WinHub a controller (check Controls › Players; is the pad connected, or set to Ignore?)"));
+            rows.add(fail("PAD", I18n.s(R.string.ui_no_controller_held_a_player_slot_and_the_app_sent_no_inp)
+                    + I18n.s(R.string.ui_winhub_a_controller_check_controls_players_is_the_pad_co)));
         }
         for (int s : slots) checklistForSlot(rows, s);
         checklistSession(rows);
@@ -330,61 +333,61 @@ public final class ControllerLog {
             rows.add(pass(p + "APP", "the app sent " + publishes + " controller updates for slot " + s));
         } else {
             rows.add(fail(p + "APP", "the app sent nothing for slot " + s
-                    + ": no input from this controller reached WinHub (or it was moved to another slot)"));
+                    + I18n.s(R.string.ui_no_input_from_this_controller_reached_winhub_or_it_was_m)));
         }
         if (failed > 0) {
             rows.add(warn(p + "APP", failed + " updates could not be written to the slot file"));
         }
 
         if (attaches > 0) {
-            rows.add(pass(p + "WINE", "Wine's controller layer opened the pad " + attaches + " time(s)"
+            rows.add(pass(p + "WINE", I18n.s(R.string.ui_wine_s_controller_layer_opened_the_pad) + attaches + " time(s)"
                     + (reattaches > 0 ? ", re-opened " + reattaches : "")
                     + (removals > 0 ? ", closed " + removals : "")
-                    + " (this path feeds DirectInput and Wine's XInput)"));
+                    + I18n.s(R.string.ui_this_path_feeds_directinput_and_wine_s_xinput)));
             if (frames > 0) {
-                rows.add(pass(p + "READ", "Wine read " + frames + " input frames from the pad"));
+                rows.add(pass(p + "READ", I18n.s(R.string.ui_wine_read) + frames + " input frames from the pad"));
             } else if (publishes > 0) {
-                rows.add(fail(p + "READ", "Wine opened the pad but read no input from it"));
+                rows.add(fail(p + "READ", I18n.s(R.string.ui_wine_opened_the_pad_but_read_no_input_from_it)));
             } else {
-                rows.add(skip(p + "READ", "nothing was sent, so nothing could be read"));
+                rows.add(skip(p + "READ", I18n.s(R.string.ui_nothing_was_sent_so_nothing_could_be_read)));
             }
         } else if (xinputDirect && xinputAttached.contains(s)) {
-            rows.add(warn(p + "WINE", "Wine's controller layer never opened the pad; Direct XInput read it, "
-                    + "so XInput games work, but DirectInput games will not see it"));
+            rows.add(warn(p + "WINE", I18n.s(R.string.ui_wine_s_controller_layer_never_opened_the_pad_direct_xinp)
+                    + I18n.s(R.string.ui_so_xinput_games_work_but_directinput_games_will_not_see)));
         } else {
             rows.add(fail(p + "WINE", "Wine's controller layer never opened the pad (no /dev/input/event" + s
-                    + " reader): DirectInput and Wine's XInput cannot see it"));
+                    + I18n.s(R.string.ui_reader_directinput_and_wine_s_xinput_cannot_see_it)));
         }
 
         if (xinputDirect) {
             if (xinputAttached.contains(s) && xinputNoController.contains(s)) {
-                rows.add(warn(p + "XINPUT", "the game called XInput, but Direct XInput found no controller on slot " + s
-                        + " when the game asked for it (it may have arrived later)"));
+                rows.add(warn(p + "XINPUT", I18n.s(R.string.ui_the_game_called_xinput_but_direct_xinput_found_no_contro) + s
+                        + I18n.s(R.string.ui_when_the_game_asked_for_it_it_may_have_arrived_later)));
             } else if (xinputAttached.contains(s)) {
-                rows.add(pass(p + "XINPUT", "the game called XInput and Direct XInput is reading this player's slot " + s));
+                rows.add(pass(p + "XINPUT", I18n.s(R.string.ui_the_game_called_xinput_and_direct_xinput_is_reading_this) + s));
             } else if (!xinputImages.isEmpty()) {
-                rows.add(warn(p + "XINPUT", "Direct XInput was loaded but never connected to slot " + s
-                        + " (the game never asked for this player, or it uses DirectInput)"));
+                rows.add(warn(p + "XINPUT", I18n.s(R.string.ui_direct_xinput_was_loaded_but_never_connected_to_slot) + s
+                        + I18n.s(R.string.ui_the_game_never_asked_for_this_player_or_it_uses_directin)));
             }
         }
 
         long ffDatagrams = stat(s, HermesWriter.STAT_READER_FF_DATAGRAMS);
         if (rumble[s] > 0) {
             long viaEngine = Math.min(ffDatagrams, rumble[s]);
-            rows.add(pass(p + "RUMBLE", rumble[s] + " rumble requests reached the app (" + viaEngine
-                    + " through Wine — DirectInput effects or Wine's XInput — and " + (rumble[s] - viaEngine)
-                    + " from Direct XInput)"));
+            rows.add(pass(p + "RUMBLE", rumble[s] + I18n.s(R.string.ui_rumble_requests_reached_the_app) + viaEngine
+                    + I18n.s(R.string.ui_through_wine_directinput_effects_or_wine_s_xinput_and) + (rumble[s] - viaEngine)
+                    + I18n.s(R.string.ui_from_direct_xinput)));
         } else {
-            rows.add(skip(p + "RUMBLE", "no rumble requests this session (the game asked for none, or vibration is off)"));
+            rows.add(skip(p + "RUMBLE", I18n.s(R.string.ui_no_rumble_requests_this_session_the_game_asked_for_none)));
         }
 
         long uploads = stat(s, HermesWriter.STAT_READER_FF_UPLOADS);
         long plays = stat(s, HermesWriter.STAT_READER_FF_PLAYS);
         if (uploads > 0 || plays > 0) {
-            rows.add(info(p + "DINPUT FF", uploads + " DirectInput effects uploaded, " + plays + " played"
+            rows.add(info(p + "DINPUT FF", uploads + I18n.s(R.string.ui_directinput_effects_uploaded) + plays + " played"
                     + (plays == 0 ? " (uploaded but never started)" : "")));
         } else if (!dinputVibration) {
-            rows.add(skip(p + "DINPUT FF", "DirectInput vibration is off"));
+            rows.add(skip(p + "DINPUT FF", I18n.s(R.string.ui_directinput_vibration_is_off)));
         }
 
         long hz = stat(s, HermesWriter.STAT_READER_AXIS_HZ);
@@ -401,26 +404,26 @@ public final class ControllerLog {
             if (!xinputImages.isEmpty()) {
                 rows.add(pass("XINPUT DLL", "Direct XInput loaded into " + String.join(", ", xinputImages)));
             } else {
-                rows.add(warn("XINPUT DLL", "Direct XInput was on but no process loaded it: the game uses DirectInput "
-                        + "only, ships its own xinput DLL (see Setup), or loads XInput late"));
+                rows.add(warn("XINPUT DLL", I18n.s(R.string.ui_direct_xinput_was_on_but_no_process_loaded_it_the_game_u)
+                        + I18n.s(R.string.ui_only_ships_its_own_xinput_dll_see_setup_or_loads_xinput)));
             }
         } else if (xinputWine) {
-            rows.add(info("XINPUT DLL", "XInput goes through Wine's own XInput (Direct XInput off for this launch)"));
+            rows.add(info("XINPUT DLL", I18n.s(R.string.ui_xinput_goes_through_wine_s_own_xinput_direct_xinput_off)));
         }
         if (xinputWine && dinputVisible) {
-            rows.add(warn("DINPUT", "XInput source is Wine and DirectInput games can see the controller: Wine's own "
-                    + "XInput then ignores the controller. Use Direct XInput, or hide the controller from DirectInput"));
+            rows.add(warn("DINPUT", I18n.s(R.string.ui_xinput_source_is_wine_and_directinput_games_can_see_the)
+                    + I18n.s(R.string.ui_xinput_then_ignores_the_controller_use_direct_xinput_or)));
         } else {
-            rows.add(info("DINPUT", "DirectInput games " + (dinputVisible ? "can" : "cannot") + " see the controller"));
+            rows.add(info("DINPUT", I18n.s(R.string.ui_directinput_games) + (dinputVisible ? "can" : "cannot") + " see the controller"));
         }
         if (reconnectsFailed > 0) {
-            rows.add(warn("LIVE", reconnectsFailed + " in-game reconnect(s) were not confirmed (see Session events)"));
+            rows.add(warn("LIVE", reconnectsFailed + I18n.s(R.string.ui_in_game_reconnect_s_were_not_confirmed_see_session_event)));
         }
     }
 
     private static String axisMode(int mode) {
         switch (mode) {
-            case 1: return "follows the game's frame rate";
+            case 1: return I18n.s(R.string.ui_follows_the_game_s_frame_rate);
             case 2: return "60/s fallback, no frame feed";
             case 3: return "fixed";
             case 4: return "unpaced";

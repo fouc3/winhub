@@ -36,7 +36,7 @@ internal fun DeckComponentStatusGroup() {
 
     DeckGroup(title = I18n.s(R.string.ui_layers_and_components)) {
         DeckRow(
-            label = if (checking) "Checking…" else "Check components",
+            label = if (checking) "Checking…" else I18n.s(R.string.ui_check_components),
             hint = I18n.s(R.string.ui_proton_graphics_driver_and_fexcore),
         ) {
             DeckButton(I18n.s(R.string.ui_check), primary = false) { if (!checking) round++ }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.contents.AdrenotoolsManager
@@ -42,7 +45,7 @@ object DriverUpdateChecker {
         val renderer: String? = try {
             GPUInformation.getRenderer(null, context)
         } catch (e: UnsatisfiedLinkError) {
-            Log.w(TAG, "GPU renderer not readable", e)
+            Log.w(TAG, I18n.s(R.string.ui_gpu_renderer_not_readable), e)
             null
         }
         val model = ADRENO.find(renderer ?: return null)?.groupValues?.get(1) ?: return null
@@ -70,7 +73,7 @@ object DriverUpdateChecker {
                 }
             }
         } catch (e: JSONException) {
-            Log.w(TAG, "Driver feed unreadable", e)
+            Log.w(TAG, I18n.s(R.string.ui_driver_feed_unreadable), e)
             return null
         }
         return out

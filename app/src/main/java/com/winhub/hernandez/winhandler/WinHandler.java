@@ -1,5 +1,8 @@
 package com.winhub.hernandez.winhandler;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -813,7 +816,7 @@ public class WinHandler {
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 vibrationServer = new LocalServerSocket("winlator_vibration");
-                Log.d("WinHandler", "Vibration listener started on abstract socket: winlator_vibration");
+                Log.d("WinHandler", I18n.s(R.string.ui_vibration_listener_started_on_abstract_socket_winlator_v));
 
                 while (vibrationRunning) {
                     LocalSocket client = vibrationServer.accept();
@@ -830,12 +833,12 @@ public class WinHandler {
                         }
                         client.close();
                     } catch (IOException e) {
-                        Log.e("WinHandler", "Vibration client error: " + e.getMessage());
+                        Log.e("WinHandler", I18n.s(R.string.ui_vibration_client_error) + e.getMessage());
                     }
                 }
             } catch (IOException e) {
                 if (vibrationRunning) {
-                    Log.e("WinHandler", "Vibration listener error: " + e.getMessage());
+                    Log.e("WinHandler", I18n.s(R.string.ui_vibration_listener_error) + e.getMessage());
                 }
             }
         });
@@ -1203,7 +1206,7 @@ public class WinHandler {
         switch (requestCode) {
             case RequestCodes.INIT: {
                 initReceived = true;
-                Log.d("WinHandlerTM", "INIT received from guest");
+                Log.d("WinHandlerTM", I18n.s(R.string.ui_init_received_from_guest));
 
                 preferences = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext());
 
@@ -1284,9 +1287,9 @@ public class WinHandler {
                 int gen = receiveData.getInt();
                 int flags = receiveData.getInt();
                 int pid = receiveData.getInt();
-                Log.i("WinHandler", "Direct XInput in pid " + pid + ": mode " + mode + " (asked " + requested + ")"
-                        + (ok ? "" : " NOT applied") + ", flags " + flags + ", control gen " + gen);
-                ControllerLog.event("Direct XInput in pid " + pid + ": mode " + HermesXInput.modeName(mode)
+                Log.i("WinHandler", I18n.s(R.string.ui_direct_xinput_in_pid) + pid + ": mode " + mode + " (asked " + requested + ")"
+                        + (ok ? "" : " NOT applied") + ", flags " + flags + I18n.s(R.string.ui_control_gen) + gen);
+                ControllerLog.event(I18n.s(R.string.ui_direct_xinput_in_pid) + pid + ": mode " + HermesXInput.modeName(mode)
                         + " (asked " + HermesXInput.modeName(requested) + ")" + (ok ? " applied" : " NOT applied"));
                 XInputStatusListener statusListener = xinputStatusListener;
                 if (statusListener != null) statusListener.onXInputStatus(requested, mode, ok, gen, pid);
@@ -1578,7 +1581,7 @@ public class WinHandler {
             if (getController(deviceId) == null)
                 return false;
             int slot = joinSharedSlot(deviceId, descriptor, oscSlot);
-            Log.d("WinHandler", "On-screen SHARE: pad " + deviceId + " joined OSC slot " + slot);
+            Log.d("WinHandler", I18n.s(R.string.ui_on_screen_share_pad) + deviceId + I18n.s(R.string.ui_joined_osc_slot) + slot);
             return slot >= 0;
         }
 
@@ -1592,8 +1595,8 @@ public class WinHandler {
         releaseSlot(OSC_DEVICE_ID);         // softRelease: frees slot 0, OSC ring stays alive
         oscYieldSlot = free;                // session-only OSC preference honored by assignSlot(OSC)
         int newOscSlot = assignSlot(OSC_DEVICE_ID);
-        Log.d("WinHandler", "On-screen YIELD: OSC moved to slot " + newOscSlot
-                + "; incoming pad " + deviceId + " will take Player 1");
+        Log.d("WinHandler", I18n.s(R.string.ui_on_screen_yield_osc_moved_to_slot) + newOscSlot
+                + I18n.s(R.string.ui_incoming_pad) + deviceId + I18n.s(R.string.ui_will_take_player_1));
         return false; // let assignConnectedDeviceIfPossible seat the pad on the now-free slot 0
     }
 
@@ -2223,7 +2226,7 @@ public class WinHandler {
                 deviceToDescriptor.put(deviceId, descriptor);
                 ensureWriterForSlot(descriptorSlot);
                 Log.d("WinHandler", "Mapped device " + deviceId + " to existing slot "
-                        + descriptorSlot + " (same physical controller: " + descriptor + ")");
+                        + descriptorSlot + I18n.s(R.string.ui_same_physical_controller) + descriptor + ")");
                 return descriptorSlot;
             }
 
@@ -2290,7 +2293,7 @@ public class WinHandler {
         }
         ensureWriterForSlot(slot);
         recomputeSharedSlots();
-        Log.d("WinHandler", "Device " + deviceId + " SHARING slot " + slot
+        Log.d("WinHandler", "Device " + deviceId + I18n.s(R.string.ui_sharing_slot) + slot
                 + (descriptor != null ? " (descriptor: " + descriptor + ")" : " (OSC)"));
         ControllerLog.slotTaken(slot, controllerLabel(deviceId) + " sharing slot " + slot);
         return slot;
@@ -2315,8 +2318,8 @@ public class WinHandler {
                 return slot;
             }
         }
-        Log.w("WinHandler", "No slots available for device " + deviceId);
-        ControllerLog.event(controllerLabel(deviceId) + " got NO slot: all four are taken");
+        Log.w("WinHandler", I18n.s(R.string.ui_no_slots_available_for_device) + deviceId);
+        ControllerLog.event(controllerLabel(deviceId) + I18n.s(R.string.ui_got_no_slot_all_four_are_taken));
         return -1;
     }
 
@@ -2371,7 +2374,7 @@ public class WinHandler {
                     return;
                 writer.destroy();
                 writers[slot] = null;
-                Log.d("WinHandler", "Slot " + slot + " unplugged: no controller holds it (on-screen pad released)");
+                Log.d("WinHandler", "Slot " + slot + I18n.s(R.string.ui_unplugged_no_controller_holds_it_on_screen_pad_released));
             }
         };
         pendingSlotUnplugs[slot] = unplug;
@@ -2438,12 +2441,12 @@ public class WinHandler {
                 @Override public long now() { return android.os.SystemClock.uptimeMillis(); }
             }, new ReconnectTarget(), new SlotReconnector.Listener() {
                 @Override public void onReconnecting(int[] slots) {
-                    Log.i("WinHandler", "Reconnecting slots " + Arrays.toString(slots));
+                    Log.i("WinHandler", I18n.s(R.string.ui_reconnecting_slots) + Arrays.toString(slots));
                     SlotReconnector.Listener l = reconnectListener;
                     if (l != null) l.onReconnecting(slots);
                 }
                 @Override public void onReconnected(boolean ok, int[] slots, int attempts) {
-                    Log.i("WinHandler", "Reconnect of slots " + Arrays.toString(slots) + (ok ? " confirmed" : " NOT confirmed")
+                    Log.i("WinHandler", I18n.s(R.string.ui_reconnect_of_slots) + Arrays.toString(slots) + (ok ? " confirmed" : " NOT confirmed")
                             + " after " + attempts + " attempt(s)");
                     ControllerLog.reconnect(Arrays.toString(slots), ok);
                     SlotReconnector.Listener l = reconnectListener;
@@ -2601,7 +2604,7 @@ public class WinHandler {
             }
             usedSlots.remove(slot);
             if (slotContributions[slot] != null) slotContributions[slot].clear();
-            Log.d("WinHandler", "Device " + deviceId + " disconnected (or OSC disabled). Slot released: " + slot);
+            Log.d("WinHandler", "Device " + deviceId + I18n.s(R.string.ui_disconnected_or_osc_disabled_slot_released) + slot);
         } else {
             Log.d("WinHandler", "Device " + deviceId + " removed but slot " + slot
                     + " still used by a sibling sub-device or shared-slot co-owner.");
@@ -2638,7 +2641,7 @@ public class WinHandler {
      */
     public int preAssignConnectedControllers() {
         if (fakeInputBasePath == null || fakeInputBasePath.isEmpty()) {
-            Log.w("WinHandler", "Skipping pre-assignment: fake input path is not set yet.");
+            Log.w("WinHandler", I18n.s(R.string.ui_skipping_pre_assignment_fake_input_path_is_not_set_yet));
             return 0;
         }
         int assignedCount = 0;
@@ -2670,7 +2673,7 @@ public class WinHandler {
             if (assignConnectedDeviceIfPossible(deviceId, "startup-scan"))
                 assignedCount++;
         }
-        Log.d("WinHandler", "Pre-assigned " + assignedCount + " controller(s) before Wine startup.");
+        Log.d("WinHandler", "Pre-assigned " + assignedCount + I18n.s(R.string.ui_controller_s_before_wine_startup));
         return assignedCount;
     }
 
@@ -2683,7 +2686,7 @@ public class WinHandler {
     public void seatOnScreenPadAtBoot() {
         onScreenBootSeated = true;
         sendGamepadState();
-        Log.d("WinHandler", "On-screen pad at boot: slot " + deviceToSlot.get(OSC_DEVICE_ID));
+        Log.d("WinHandler", I18n.s(R.string.ui_on_screen_pad_at_boot_slot) + deviceToSlot.get(OSC_DEVICE_ID));
     }
 
     /** The overlay loaded its profile's elements. After the boot seating, publish so a virtual-gamepad
@@ -2751,7 +2754,7 @@ public class WinHandler {
         manualSlotOverrides.clear();
         if (overrides != null)
             manualSlotOverrides.putAll(overrides);
-        Log.d("WinHandler", "Manual slot overrides set: " + manualSlotOverrides);
+        Log.d("WinHandler", I18n.s(R.string.ui_manual_slot_overrides_set) + manualSlotOverrides);
     }
 
     /** Copy of the current override map, for persistence. Includes overrides for devices that are
@@ -2782,7 +2785,7 @@ public class WinHandler {
                 map.put(key, obj.getInt(key));
             }
         } catch (org.json.JSONException e) {
-            Log.w("WinHandler", "Bad controllerSlotOverrides JSON: " + json, e);
+            Log.w("WinHandler", I18n.s(R.string.ui_bad_controllerslotoverrides_json) + json, e);
         }
         return map;
     }
@@ -2797,7 +2800,7 @@ public class WinHandler {
                         obj.put(e.getKey(), (int) e.getValue());
                 }
             } catch (org.json.JSONException e) {
-                Log.w("WinHandler", "Failed to serialize controllerSlotOverrides", e);
+                Log.w("WinHandler", I18n.s(R.string.ui_failed_to_serialize_controllerslotoverrides), e);
             }
         }
         return obj.toString();
@@ -2811,7 +2814,7 @@ public class WinHandler {
 
         Integer oscSlot = deviceToSlot.get(OSC_DEVICE_ID);
         Integer oscOverride = manualSlotOverrides.get(OSC_DESCRIPTOR);
-        out.add(new PlayerSlotInfo("On-screen controls", OSC_DESCRIPTOR,
+        out.add(new PlayerSlotInfo(I18n.s(R.string.ui_on_screen_controls_2), OSC_DESCRIPTOR,
                 oscSlot != null ? oscSlot : -1, false, true,
                 oscOverride != null ? oscOverride : -1));
 
@@ -2992,10 +2995,10 @@ public class WinHandler {
      */
     public void resetInputPipeline() {
         if (fakeInputBasePath == null || fakeInputBasePath.isEmpty()) {
-            Log.w("WinHandler", "resetInputPipeline: fake input path not set; nothing to rebuild.");
+            Log.w("WinHandler", I18n.s(R.string.ui_resetinputpipeline_fake_input_path_not_set_nothing_to_re));
             return;
         }
-        Log.d("WinHandler", "resetInputPipeline: rebuilding input transport in place.");
+        Log.d("WinHandler", I18n.s(R.string.ui_resetinputpipeline_rebuilding_input_transport_in_place));
 
         // 1) Tear down all writers + slot bookkeeping (overrides preserved so we re-seat the same pins).
         cancelAllPendingDeviceReleases();
@@ -3073,7 +3076,7 @@ public class WinHandler {
             // transient remove/add while all four slots are full would be dropped.
             String descriptor = descriptorOf(deviceId);
             if (descriptor == null || !descriptorToSlot.containsKey(descriptor)) {
-                Log.d("WinHandler", "Ignoring device " + deviceId + " from " + source + ": slot limit reached.");
+                Log.d("WinHandler", I18n.s(R.string.ui_ignoring_device) + deviceId + " from " + source + ": slot limit reached.");
                 return false;
             }
         }
@@ -3083,8 +3086,8 @@ public class WinHandler {
             if (!ExternalController.isGameController(device))
                 return false;
             if (isShadowedBySdl(device)) {
-                Log.d("WinHandler", "Skipping device " + deviceId + " from " + source
-                        + ": Valve pad already read through SDL.");
+                Log.d("WinHandler", I18n.s(R.string.ui_skipping_device) + deviceId + " from " + source
+                        + I18n.s(R.string.ui_valve_pad_already_read_through_sdl));
                 return false;
             }
         }
@@ -3095,7 +3098,7 @@ public class WinHandler {
         if (descriptor != null) {
             Integer override = manualSlotOverrides.get(descriptor);
             if (override != null && override == SLOT_IGNORE) {
-                Log.d("WinHandler", "Skipping device " + deviceId + " from " + source
+                Log.d("WinHandler", I18n.s(R.string.ui_skipping_device) + deviceId + " from " + source
                         + ": ignored by manual slot override.");
                 return false;
             }
@@ -3139,8 +3142,8 @@ public class WinHandler {
         };
         pendingDeviceReleases.put(deviceId, release);
         inputHandler.postDelayed(release, PHYSICAL_DISCONNECT_DEBOUNCE_MS);
-        Log.d("WinHandler", "Device " + deviceId + " removed; scheduling slot release in "
-                + PHYSICAL_DISCONNECT_DEBOUNCE_MS + "ms (debounce). Reconnect within the window keeps the slot.");
+        Log.d("WinHandler", "Device " + deviceId + I18n.s(R.string.ui_removed_scheduling_slot_release_in)
+                + PHYSICAL_DISCONNECT_DEBOUNCE_MS + I18n.s(R.string.ui_ms_debounce_reconnect_within_the_window_keeps_the_slot));
     }
 
     private void cancelPendingDeviceRelease(int deviceId) {
@@ -3158,7 +3161,7 @@ public class WinHandler {
     public void setXInputDisabled(boolean disabled) {
         this.xinputDisabled = disabled;
         this.xinputDisabledInitialized = true;
-        Log.d("WinHandler", "XInput Disabled set to: " + xinputDisabled);
+        Log.d("WinHandler", I18n.s(R.string.ui_xinput_disabled_set_to) + xinputDisabled);
     }
 
     /**
@@ -3293,7 +3296,7 @@ public class WinHandler {
             if (id == null || id < 0 || sdlPads.containsKey(id))
                 continue;
             if (isShadowedBySdl(android.view.InputDevice.getDevice(id))) {
-                Log.d("WinHandler", "Releasing Android Valve device " + id + ": SDL owns the Steam Controller.");
+                Log.d("WinHandler", I18n.s(R.string.ui_releasing_android_valve_device) + id + I18n.s(R.string.ui_sdl_owns_the_steam_controller));
                 releaseSlot(id);
             }
         }

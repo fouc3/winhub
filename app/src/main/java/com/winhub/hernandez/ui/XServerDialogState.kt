@@ -542,7 +542,7 @@ object XServerDialogState {
                 else -> ToastBadgeType.DETECTED
             }
             val kind = when {
-                r.isOnScreen -> "Virtual gamepad"
+                r.isOnScreen -> I18n.s(R.string.ui_virtual_gamepad)
                 badge == ToastBadgeType.IGNORED -> "Controller · filtered"
                 icon == ToastIconType.MOUSE -> "Pointer"
                 icon == ToastIconType.KEYBOARD -> "Keys"
@@ -567,9 +567,9 @@ object XServerDialogState {
                 if (hasShare) "PLAYER ${sharedSlot + 1} · SHARED" to "updated"
                 else "INPUT UPDATED" to "updated"
             else /* launch */ -> when {
-                hasMouseKb     -> "INPUT DETECTED"
+                hasMouseKb     -> I18n.s(R.string.ui_input_detected)
                 rows.size == 1 -> "CONTROLLER DETECTED"
-                else           -> "CONTROLLERS DETECTED"
+                else           -> I18n.s(R.string.ui_controllers_detected)
             } to "on launch"
         }
 

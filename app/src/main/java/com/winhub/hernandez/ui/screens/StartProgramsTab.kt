@@ -90,7 +90,7 @@ internal fun programName(path: String): String = path.trim().substringAfterLast(
 internal fun DeckStartProgramsTab(state: StartProgramsState) {
     var arranging by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        DeckGroup("Start with the game") {
+        DeckGroup(I18n.s(R.string.ui_start_with_the_game)) {
             DeckConfigNote(START_PROGRAMS_HINT)
             DeckRow(
                 label = I18n.s(R.string.ui_programs),

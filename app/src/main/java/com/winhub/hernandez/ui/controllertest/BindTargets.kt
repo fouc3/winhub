@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.controllertest
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.view.KeyEvent
 import com.winhub.hernandez.inputcontrols.Binding
 import com.winhub.hernandez.inputcontrols.ControlsProfile
@@ -31,23 +34,23 @@ internal val BIND_TARGETS: List<BindTarget> = listOf(
     BindTarget("rb", "RB", KeyEvent.KEYCODE_BUTTON_R1, Binding.GAMEPAD_BUTTON_R1),
     BindTarget("lt", "LT", KeyEvent.KEYCODE_BUTTON_L2, Binding.GAMEPAD_BUTTON_L2),
     BindTarget("rt", "RT", KeyEvent.KEYCODE_BUTTON_R2, Binding.GAMEPAD_BUTTON_R2),
-    BindTarget("l3", "L3 (stick click)", KeyEvent.KEYCODE_BUTTON_THUMBL, Binding.GAMEPAD_BUTTON_L3),
-    BindTarget("r3", "R3 (stick click)", KeyEvent.KEYCODE_BUTTON_THUMBR, Binding.GAMEPAD_BUTTON_R3),
+    BindTarget("l3", I18n.s(R.string.ui_l3_stick_click), KeyEvent.KEYCODE_BUTTON_THUMBL, Binding.GAMEPAD_BUTTON_L3),
+    BindTarget("r3", I18n.s(R.string.ui_r3_stick_click), KeyEvent.KEYCODE_BUTTON_THUMBR, Binding.GAMEPAD_BUTTON_R3),
     BindTarget("start", "Start", KeyEvent.KEYCODE_BUTTON_START, Binding.GAMEPAD_BUTTON_START),
     BindTarget("back", "Back", KeyEvent.KEYCODE_BUTTON_SELECT, Binding.GAMEPAD_BUTTON_SELECT),
     BindTarget("guide", "Guide", KeyEvent.KEYCODE_BUTTON_MODE, null),
-    BindTarget("dup", "D-Pad Up", KeyEvent.KEYCODE_DPAD_UP, Binding.GAMEPAD_DPAD_UP),
-    BindTarget("ddown", "D-Pad Down", KeyEvent.KEYCODE_DPAD_DOWN, Binding.GAMEPAD_DPAD_DOWN),
-    BindTarget("dleft", "D-Pad Left", KeyEvent.KEYCODE_DPAD_LEFT, Binding.GAMEPAD_DPAD_LEFT),
-    BindTarget("dright", "D-Pad Right", KeyEvent.KEYCODE_DPAD_RIGHT, Binding.GAMEPAD_DPAD_RIGHT),
-    BindTarget("lsu", "L-Stick Up", ExternalControllerBinding.AXIS_Y_NEGATIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_UP),
-    BindTarget("lsd", "L-Stick Down", ExternalControllerBinding.AXIS_Y_POSITIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_DOWN),
-    BindTarget("lsl", "L-Stick Left", ExternalControllerBinding.AXIS_X_NEGATIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_LEFT),
-    BindTarget("lsr", "L-Stick Right", ExternalControllerBinding.AXIS_X_POSITIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_RIGHT),
-    BindTarget("rsu", "R-Stick Up", ExternalControllerBinding.AXIS_RZ_NEGATIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_UP),
-    BindTarget("rsd", "R-Stick Down", ExternalControllerBinding.AXIS_RZ_POSITIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_DOWN),
-    BindTarget("rsl", "R-Stick Left", ExternalControllerBinding.AXIS_Z_NEGATIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_LEFT),
-    BindTarget("rsr", "R-Stick Right", ExternalControllerBinding.AXIS_Z_POSITIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_RIGHT),
+    BindTarget("dup", I18n.s(R.string.ui_d_pad_up), KeyEvent.KEYCODE_DPAD_UP, Binding.GAMEPAD_DPAD_UP),
+    BindTarget("ddown", I18n.s(R.string.ui_d_pad_down), KeyEvent.KEYCODE_DPAD_DOWN, Binding.GAMEPAD_DPAD_DOWN),
+    BindTarget("dleft", I18n.s(R.string.ui_d_pad_left), KeyEvent.KEYCODE_DPAD_LEFT, Binding.GAMEPAD_DPAD_LEFT),
+    BindTarget("dright", I18n.s(R.string.ui_d_pad_right), KeyEvent.KEYCODE_DPAD_RIGHT, Binding.GAMEPAD_DPAD_RIGHT),
+    BindTarget("lsu", I18n.s(R.string.ui_l_stick_up), ExternalControllerBinding.AXIS_Y_NEGATIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_UP),
+    BindTarget("lsd", I18n.s(R.string.ui_l_stick_down), ExternalControllerBinding.AXIS_Y_POSITIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_DOWN),
+    BindTarget("lsl", I18n.s(R.string.ui_l_stick_left), ExternalControllerBinding.AXIS_X_NEGATIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_LEFT),
+    BindTarget("lsr", I18n.s(R.string.ui_l_stick_right), ExternalControllerBinding.AXIS_X_POSITIVE.toInt(), Binding.GAMEPAD_LEFT_THUMB_RIGHT),
+    BindTarget("rsu", I18n.s(R.string.ui_r_stick_up), ExternalControllerBinding.AXIS_RZ_NEGATIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_UP),
+    BindTarget("rsd", I18n.s(R.string.ui_r_stick_down), ExternalControllerBinding.AXIS_RZ_POSITIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_DOWN),
+    BindTarget("rsl", I18n.s(R.string.ui_r_stick_left), ExternalControllerBinding.AXIS_Z_NEGATIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_LEFT),
+    BindTarget("rsr", I18n.s(R.string.ui_r_stick_right), ExternalControllerBinding.AXIS_Z_POSITIVE.toInt(), Binding.GAMEPAD_RIGHT_THUMB_RIGHT),
 )
 
 internal val BIND_BY_ID: Map<String, BindTarget> = BIND_TARGETS.associateBy { it.id }

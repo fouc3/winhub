@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import com.winhub.hernandez.BuildConfig
@@ -245,7 +248,7 @@ object SocialHubStore {
             _loginState.value = LoginState.AwaitingUser(
                 userCode = code.userCode,
                 verificationUri = code.verificationUri,
-                status = "Waiting for you to approve in GitHub…",
+                status = I18n.s(R.string.ui_waiting_for_you_to_approve_in_github),
             )
             val deadline = System.currentTimeMillis() + code.expiresInSeconds * 1000L
             var intervalMs = code.intervalSeconds * 1000L
@@ -256,12 +259,12 @@ object SocialHubStore {
                         _loginState.value = LoginState.AwaitingUser(
                             userCode = code.userCode,
                             verificationUri = code.verificationUri,
-                            status = "Signed in — loading your profile…",
+                            status = I18n.s(R.string.ui_signed_in_loading_your_profile),
                         )
                         val user = GitHubAuthClient.fetchUser(poll.accessToken)
                         if (user == null) {
                             _loginState.value =
-                                LoginState.Failed("GitHub accepted the code but rejected the token. Try again.")
+                                LoginState.Failed(I18n.s(R.string.ui_github_accepted_the_code_but_rejected_the_token_try_agai))
                             return@launch
                         }
                         val ctx = appContext
@@ -271,17 +274,17 @@ object SocialHubStore {
                         refresh()
                         return@launch
                     }
-                    Poll.Pending -> setLoginStatus("Waiting for you to approve in GitHub…")
+                    Poll.Pending -> setLoginStatus(I18n.s(R.string.ui_waiting_for_you_to_approve_in_github))
                     Poll.SlowDown -> {
                         intervalMs += 5_000L
-                        setLoginStatus("Still waiting — GitHub asked us to poll slower.")
+                        setLoginStatus(I18n.s(R.string.ui_still_waiting_github_asked_us_to_poll_slower))
                     }
                     Poll.Denied -> {
-                        _loginState.value = LoginState.Failed("Sign-in was cancelled in GitHub.")
+                        _loginState.value = LoginState.Failed(I18n.s(R.string.ui_sign_in_was_cancelled_in_github))
                         return@launch
                     }
                     Poll.Expired -> {
-                        _loginState.value = LoginState.Failed("The code expired. Start again.")
+                        _loginState.value = LoginState.Failed(I18n.s(R.string.ui_the_code_expired_start_again))
                         return@launch
                     }
                     is Poll.Failed -> {
@@ -290,7 +293,7 @@ object SocialHubStore {
                     }
                 }
             }
-            _loginState.value = LoginState.Failed("The code expired. Start again.")
+            _loginState.value = LoginState.Failed(I18n.s(R.string.ui_the_code_expired_start_again))
         }
     }
 
@@ -346,13 +349,13 @@ object SocialHubStore {
      * closes, with no tab switch needed.
      */
     suspend fun createPost(title: String, body: String): String? = withContext(Dispatchers.IO) {
-        mutate("Could not publish.") {
+        mutate(I18n.s(R.string.ui_could_not_publish)) {
             val json = JSONObject().put("title", title).put("body", body).toString()
             val (code, text) = postJson(ISSUES_URL, json)
             if (code in 200..299) {
                 insertPost(text)
                 null
-            } else githubError(text, code, "Could not publish.")
+            } else githubError(text, code, I18n.s(R.string.ui_could_not_publish))
         }
     }
 
@@ -362,7 +365,7 @@ object SocialHubStore {
      * Returns null on success, or a user-facing error string.
      */
     suspend fun createConfig(title: String, note: String, configJson: String): String? = withContext(Dispatchers.IO) {
-        mutate("Could not publish the config.") {
+        mutate(I18n.s(R.string.ui_could_not_publish_the_config)) {
             val json = JSONObject()
                 .put("title", title)
                 .put("body", SocialHubFormat.buildConfigBody(note, configJson))
@@ -374,10 +377,10 @@ object SocialHubStore {
                     val post = postFromJson(JSONObject(text), System.currentTimeMillis())
                     if (_configs.value.none { it.number == post.number }) _configs.value = listOf(post) + _configs.value
                 } catch (t: Throwable) {
-                    if (BuildConfig.DEBUG) Log.w(TAG, "createConfig insert", t)
+                    if (BuildConfig.DEBUG) Log.w(TAG, I18n.s(R.string.ui_createconfig_insert), t)
                 }
                 null
-            } else githubError(text, code, "Could not publish the config.")
+            } else githubError(text, code, I18n.s(R.string.ui_could_not_publish_the_config))
         }
     }
 
@@ -409,7 +412,7 @@ object SocialHubStore {
         val url = "$ISSUES_URL/$number/reactions"
         if (myReactionId == null) {
             val (code, text) = postJson(url, JSONObject().put("content", "+1").toString())
-            if (code !in 200..299) return@withContext LikeResult(githubError(text, code, "Could not like this."), null)
+            if (code !in 200..299) return@withContext LikeResult(githubError(text, code, I18n.s(R.string.ui_could_not_like_this)), null)
             val id = try {
                 JSONObject(text).optLong("id").takeIf { it > 0 }
             } catch (t: Throwable) {
@@ -437,13 +440,13 @@ object SocialHubStore {
      * Same optimistic rule as [createPost]: the created comment is appended locally.
      */
     suspend fun addComment(postNumber: Int, body: String): String? = withContext(Dispatchers.IO) {
-        mutate("Could not send your reply.") {
+        mutate(I18n.s(R.string.ui_could_not_send_your_reply)) {
             val json = JSONObject().put("body", body).toString()
             val (code, text) = postJson("$ISSUES_URL/$postNumber/comments", json)
             if (code in 200..299) {
                 insertComment(text)
                 null
-            } else githubError(text, code, "Could not send your reply.")
+            } else githubError(text, code, I18n.s(R.string.ui_could_not_send_your_reply))
         }
     }
 
@@ -453,7 +456,7 @@ object SocialHubStore {
      * Returns null on success, or a user-facing error string.
      */
     suspend fun deletePost(postNumber: Int): String? = withContext(Dispatchers.IO) {
-        mutate("Could not delete the post.") {
+        mutate(I18n.s(R.string.ui_could_not_delete_the_post)) {
             val json = JSONObject()
                 .put("body", SocialHubFormat.DELETE_MARKER)
                 .put("title", SocialHubFormat.DELETED_TITLE)
@@ -464,7 +467,7 @@ object SocialHubStore {
                 _posts.value = _posts.value.filterNot { it.number == postNumber }
                 _configs.value = _configs.value.filterNot { it.number == postNumber }
                 null
-            } else githubError(text, code, "Could not delete the post.")
+            } else githubError(text, code, I18n.s(R.string.ui_could_not_delete_the_post))
         }
     }
 
@@ -474,7 +477,7 @@ object SocialHubStore {
      * the feed already filters. Returns null on success, or a user-facing error string.
      */
     suspend fun deleteComment(commentId: Long): String? = withContext(Dispatchers.IO) {
-        mutate("Could not delete the reply.") {
+        mutate(I18n.s(R.string.ui_could_not_delete_the_reply)) {
             val url = "$API/repos/$OWNER/$REPO/issues/comments/$commentId"
             val del = Request.Builder().url(url).headers(authHeaders()).delete().build()
             val (code, text) = execute(del)
@@ -487,9 +490,9 @@ object SocialHubStore {
                 if (code2 in 200..299) {
                     removeComment(commentId)
                     null
-                } else githubError(text2, code2, "Could not delete the reply.")
+                } else githubError(text2, code2, I18n.s(R.string.ui_could_not_delete_the_reply))
             } else {
-                githubError(text, code, "Could not delete the reply.")
+                githubError(text, code, I18n.s(R.string.ui_could_not_delete_the_reply))
             }
         }
     }
@@ -530,7 +533,7 @@ object SocialHubStore {
                 }
             } catch (t: Throwable) {
                 if (BuildConfig.DEBUG) Log.w(TAG, "uploadImage", t)
-                _error.value = "Could not reach the image host."
+                _error.value = I18n.s(R.string.ui_could_not_reach_the_image_host)
                 null
             }
         }
@@ -543,7 +546,7 @@ object SocialHubStore {
         val url = "$ISSUES_URL?state=all&per_page=$PER_PAGE&sort=created&direction=desc"
         val request = Request.Builder().url(url).headers(authHeaders(token)).get().build()
         val (code, text) = execute(request)
-        if (code !in 200..299) throw IllegalStateException(githubError(text, code, "Could not load the feed."))
+        if (code !in 200..299) throw IllegalStateException(githubError(text, code, I18n.s(R.string.ui_could_not_load_the_feed)))
         val array = JSONArray(text)
         val now = System.currentTimeMillis()
         val out = ArrayList<Post>(array.length())
@@ -602,7 +605,7 @@ object SocialHubStore {
         val url = "$ISSUES_URL/$postNumber/comments?per_page=$PER_PAGE"
         val request = Request.Builder().url(url).headers(authHeaders()).get().build()
         val (code, text) = execute(request)
-        if (code !in 200..299) throw IllegalStateException(githubError(text, code, "Could not load replies."))
+        if (code !in 200..299) throw IllegalStateException(githubError(text, code, I18n.s(R.string.ui_could_not_load_replies)))
         val array = JSONArray(text)
         val now = System.currentTimeMillis()
         val out = ArrayList<Comment>(array.length())

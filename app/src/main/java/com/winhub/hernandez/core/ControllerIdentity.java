@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.container.Container;
 import com.winhub.hernandez.container.Shortcut;
 
@@ -118,7 +121,7 @@ public final class ControllerIdentity {
                     new String[]{"Xbox One S Controller", "Controller (Xbox One For Windows)"}, false),
             new Identity(XBOX_SERIES, "Xbox Series X|S", 0x045E, 0x0B12, "Xbox Series X Controller (%d)", false, true,
                     new String[]{"Xbox Series X Controller", "Controller (Xbox One For Windows)"}, false),
-            new Identity(DINPUT_PAD, "Classic DirectInput pad", 0x1209, 0x0001, "USB Gamepad (%d)", false, true,
+            new Identity(DINPUT_PAD, I18n.s(R.string.ui_classic_directinput_pad), 0x1209, 0x0001, "USB Gamepad (%d)", false, true,
                     NONE, false),
             new Identity(DS4, "PlayStation DualShock 4" + EXPERIMENTAL, 0x054C, 0x09CC, "Wireless Controller (%d)", true, true,
                     new String[]{"Wireless Controller"}, true),
@@ -126,7 +129,7 @@ public final class ControllerIdentity {
                     new String[]{"Wireless Controller"}, true),
             new Identity(SWITCH_PRO, "Nintendo Switch Pro" + EXPERIMENTAL, 0x057E, 0x2009, "Pro Controller (%d)", true, true,
                     NONE, false),
-            new Identity(JOYCON_PAIR, "Joy-Con pair (L+R)" + EXPERIMENTAL, 0x057E, 0x2008, "Nintendo Switch Combined Joy-Cons (%d)", true, true,
+            new Identity(JOYCON_PAIR, I18n.s(R.string.ui_joy_con_pair_l_r) + EXPERIMENTAL, 0x057E, 0x2008, "Nintendo Switch Combined Joy-Cons (%d)", true, true,
                     NONE, false),
             new Identity(STEAM_DECK, "Steam Deck" + EXPERIMENTAL, 0x28DE, 0x1205, "Steam Deck Controller (%d)", true, true,
                     NONE, false),

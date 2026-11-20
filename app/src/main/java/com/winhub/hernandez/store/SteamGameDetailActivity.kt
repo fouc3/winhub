@@ -166,7 +166,7 @@ private data class DlcTabEntry(
 
 /** Map the steam_dlc `kind` + ownership to the tab's delivery label. */
 private fun dlcKindTag(kind: String, owned: Boolean): String = when {
-    !owned                                 -> "Not owned"
+    !owned                                 -> I18n.s(R.string.ui_not_owned)
     kind == "depot" || kind == "app"       -> "Installs with game"
     kind == "entitlement"                  -> "Owned — no separate download"
     else                                   -> "Owned"   // owned but not yet resolved
@@ -217,7 +217,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
     private var branchCheckMessage by mutableStateOf<String?>(null)
     // One-shot guard so the manifest-true size resolve fires at most once per detail view.
     private var sizeResolveStarted = false
-    private var statusText by mutableStateOf("Not installed")
+    private var statusText by mutableStateOf(I18n.s(R.string.ui_not_installed))
     private var gameStatus by mutableStateOf(GameStatus.NOT_INSTALLED)
     private var installBtnText by mutableStateOf("Install")
     private var installAction by mutableStateOf(InstallAction.INSTALL)
@@ -655,7 +655,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 downloadProgressValue = 0
                 progressTextVisible = false
                 progressText = ""
-                statusText = "Not installed"
+                statusText = I18n.s(R.string.ui_not_installed)
                 gameStatus = GameStatus.NOT_INSTALLED
                 installBtnEnabled = true
                 installBtnText = "Install"
@@ -742,7 +742,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         sizeText = when {
             footprint > 0L && resolved -> "${fmtSize(footprint)} on disk"
             footprint > 0L             -> "~${fmtSize(footprint)} on disk"
-            else                       -> "Size unknown"
+            else                       -> I18n.s(R.string.ui_size_unknown)
         }
 
         // Download (compressed): the resolved per-depot sum is exclusion-aware; before resolve fall
@@ -766,7 +766,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         if (dlcEntries.isEmpty()) return ""
         val included = dlcEntries.filterKeys { it !in excludedDlc }.values
         return if (included.isEmpty()) "DLC: none selected"
-               else "Includes DLC: " + included.joinToString(", ")
+               else I18n.s(R.string.ui_includes_dlc) + included.joinToString(", ")
     }
 
     /** Toggle a DLC's opt-out state, persist it, and refresh the line. */
@@ -825,10 +825,10 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
             runOnUiThread {
                 branchCheckBusy = false
                 if (ok) {
-                    branchCheckMessage = "Access code accepted"
+                    branchCheckMessage = I18n.s(R.string.ui_access_code_accepted)
                     game?.let { refreshBranchState(it) }
                 } else {
-                    branchCheckMessage = "Invalid access code (or not connected to Steam)"
+                    branchCheckMessage = I18n.s(R.string.ui_invalid_access_code_or_not_connected_to_steam)
                 }
             }
         }
@@ -1020,7 +1020,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 }
             }
         } else {
-            statusText = "Not installed"
+            statusText = I18n.s(R.string.ui_not_installed)
             gameStatus = GameStatus.NOT_INSTALLED
             installBtnText = "Install"
             installAction = InstallAction.INSTALL
@@ -1057,7 +1057,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
     private fun onMoveStorageClicked() {
         val g = game ?: return
         if (MoveGameStorage.moveInProgress) {
-            uninstallResult = "A move is already running"
+            uninstallResult = I18n.s(R.string.ui_a_move_is_already_running)
             return
         }
         moveGameName = g.name.ifEmpty { "App ${g.appId}" }
@@ -1090,7 +1090,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                     uninstallResult = "${plan.gameName} moved to ${plan.to.label}"
                 }.onFailure { t ->
                     uninstallResult = when (t) {
-                        is CopyGameToDriveC.CancelledException -> "Move cancelled — nothing was changed"
+                        is CopyGameToDriveC.CancelledException -> I18n.s(R.string.ui_move_cancelled_nothing_was_changed)
                         else -> t.message ?: "The move failed — the game is still where it was"
                     }
                 }
@@ -1246,7 +1246,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         downloadProgressValue = 0
         progressTextVisible = false
         progressText = ""
-        statusText = "Not installed"
+        statusText = I18n.s(R.string.ui_not_installed)
         gameStatus = GameStatus.NOT_INSTALLED
         installBtnText = "Install"
         installAction = InstallAction.INSTALL
@@ -1281,7 +1281,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
     private fun onLaunchClicked() {
         val g = game ?: return
         if (!g.isInstalled || g.installDir.isEmpty()) {
-            uninstallResult = "Game not installed"
+            uninstallResult = I18n.s(R.string.ui_game_not_installed)
             return
         }
         val installDir = File(g.installDir)
@@ -1395,12 +1395,12 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         val g = game ?: return
         cloudBusy = true
         cloudStatus = when (move) {
-            CloudMove.DOWNLOAD  -> "Preparing download…"
-            CloudMove.UPLOAD    -> "Preparing upload…"
-            CloudMove.APPLY     -> "Applying to container…"
-            CloudMove.COLLECT   -> "Collecting from container…"
-            CloudMove.SYNC_FROM -> "Syncing from Cloud…"
-            CloudMove.SYNC_TO   -> "Syncing to Cloud…"
+            CloudMove.DOWNLOAD  -> I18n.s(R.string.ui_preparing_download)
+            CloudMove.UPLOAD    -> I18n.s(R.string.ui_preparing_upload)
+            CloudMove.APPLY     -> I18n.s(R.string.ui_applying_to_container)
+            CloudMove.COLLECT   -> I18n.s(R.string.ui_collecting_from_container)
+            CloudMove.SYNC_FROM -> I18n.s(R.string.ui_syncing_from_cloud)
+            CloudMove.SYNC_TO   -> I18n.s(R.string.ui_syncing_to_cloud)
         }
         val cb = object : SteamCloudSaveManager.Callback {
             override fun onStatus(message: String) { runOnUiThread { cloudStatus = message } }
@@ -1492,7 +1492,7 @@ private enum class DetailTab(val label: String) {
     DETAILS("Details"),
     ACHIEVEMENTS("Achievements"),
     DLC("DLC"),
-    CLOUD("Cloud saves"),
+    CLOUD(I18n.s(R.string.ui_cloud_saves_2)),
     /** Store screenshots + trailers; only in the strip once the appdetails fetch found any. */
     MEDIA("Media"),
 }
@@ -1713,14 +1713,14 @@ private fun SteamGameDetailScreen(
             GearMenuItem(pauseEmoji, pauseBtnText, enabled = pauseBtnEnabled,
                 onClick = { dismiss(); onPauseResumeClick() })
             MenuItemDivider()
-            GearMenuItem("🗑", "Cancel & delete download", danger = true, // hard delete + fresh-restart reset
+            GearMenuItem("🗑", I18n.s(R.string.ui_cancel_delete_download_2), danger = true, // hard delete + fresh-restart reset
                 onClick = { dismiss(); onCancelDeleteClick() })
             MenuItemDivider()
         }
-        GearMenuItem("🌿", "Choose branch",
+        GearMenuItem("🌿", I18n.s(R.string.ui_choose_branch),
             onClick = { dismiss(); onBranchLineClick() })
         MenuItemDivider()
-        GearMenuItem("🧩", "Manage DLC", enabled = dlcEntries.isNotEmpty(),
+        GearMenuItem("🧩", I18n.s(R.string.ui_manage_dlc), enabled = dlcEntries.isNotEmpty(),
             onClick = { dismiss(); onDlcLineClick() })
         // Storage move — only for an installed game that has somewhere to go. Hidden
         // (not greyed) otherwise, since "no SD card" isn't a state the user can act on.
@@ -1883,7 +1883,7 @@ private fun SteamGameDetailScreen(
                 if (unownedDlc.isNotEmpty()) {
                     Spacer(Modifier.height(14.dp))
                     Text(
-                        text = "Not owned",
+                        text = I18n.s(R.string.ui_not_owned),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1938,7 +1938,7 @@ private fun SteamGameDetailScreen(
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = if (!signedIn) "Sign in to Steam to sync this game's cloud saves."
-                                   else "Install this game to sync its cloud saves with your Steam Cloud.",
+                                   else I18n.s(R.string.ui_install_this_game_to_sync_its_cloud_saves_with_your_stea),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -2129,7 +2129,7 @@ private fun SteamGameDetailScreen(
             } else {
                 // Accent action button: Add to shortcuts (installed) / Retry / Install.
                 val (label, enabled, onPrimary) = when (installAction) {
-                    InstallAction.UNINSTALL -> Triple("Add to shortcuts", launchBtnEnabled, onLaunchClick)
+                    InstallAction.UNINSTALL -> Triple(I18n.s(R.string.ui_add_to_shortcuts_2), launchBtnEnabled, onLaunchClick)
                     else                    -> Triple(installBtnText, installBtnEnabled, onInstallClick) // INSTALL / RETRY / transient
                 }
                 Box(
@@ -2290,7 +2290,7 @@ private fun SteamGameDetailScreen(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "Switching branches downloads and installs that branch's build the next " +
+                    text = I18n.s(R.string.ui_switching_branches_downloads_and_installs_that_branch_s) +
                         "time you install or update this game.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -2735,7 +2735,7 @@ private fun AchievementHelpDialog(a: SteamAchievement, onDismiss: () -> Unit) {
     }
     val desc = when {
         a.description.isNotEmpty() -> a.description
-        hiddenLocked               -> "Keep playing to reveal this one."
+        hiddenLocked               -> I18n.s(R.string.ui_keep_playing_to_reveal_this_one)
         else                       -> ""
     }
     OutlinedAlertDialog(
@@ -2859,10 +2859,10 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 }
                 Spacer(Modifier.height(4.dp))
                 val desc = when {
-                    hiddenLocked                      -> "Keep playing to reveal this one."
+                    hiddenLocked                      -> I18n.s(R.string.ui_keep_playing_to_reveal_this_one)
                     selected.description.isNotEmpty() -> selected.description
                     selected.unlocked                 -> "Unlocked."
-                    else                              -> "Locked — not yet earned."
+                    else                              -> I18n.s(R.string.ui_locked_not_yet_earned)
                 }
                 Text(desc, fontSize = 12.sp, color = AchvInk2, lineHeight = 17.sp)
                 if (selected.unlocked && selected.unlockTimeSec > 0L) {
@@ -3027,14 +3027,14 @@ private fun GoldbergSection(
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = "Lets games that require Steam start without it. " +
+            text = I18n.s(R.string.ui_lets_games_that_require_steam_start_without_it) +
                 "Won't fix online-only games that can't reach their own servers.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(6.dp))
         Text(
-            text = "Please note: this is not a fix for all Steam games that require a " +
+            text = I18n.s(R.string.ui_please_note_this_is_not_a_fix_for_all_steam_games_that_r) +
                 "Steam client to run. It is not a guaranteed fix-all — use at your own risk!",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.error,
@@ -3063,7 +3063,7 @@ private fun GoldbergSection(
                     // A newer build is available — small hint above the Update button.
                     Text(
                         text = if (catalogVersion > 0) "Update available — gbe_fork v$catalogVersion"
-                            else "Update available",
+                            else I18n.s(R.string.winhub_update_available),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -3085,7 +3085,7 @@ private fun GoldbergSection(
 
         Spacer(Modifier.height(if (showDownloadButton) 12.dp else 2.dp))
         Text(
-            text = "Regular works for most games; try Experimental, then " +
+            text = I18n.s(R.string.ui_regular_works_for_most_games_try_experimental_then) +
                 "Cold Client Loader if a game still won't start.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -3178,7 +3178,7 @@ private fun CloudSavesSection(
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = "Sync this game's saves with your Steam Cloud in one step, either direction. A local " +
+            text = I18n.s(R.string.ui_sync_this_game_s_saves_with_your_steam_cloud_in_one_step) +
                 "Library you own is kept as an internal middle copy along the way.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -3214,7 +3214,7 @@ private fun CloudSavesSection(
             !containerReady -> {
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text = "Set this game up in a container first. Its saves follow whichever " +
+                    text = I18n.s(R.string.ui_set_this_game_up_in_a_container_first_its_saves_follow_w) +
                         "container you add it to — then you can sync them with the cloud here.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -3721,7 +3721,7 @@ private fun DownloadSpeedPickerDialog(
                                     if (debugLog) {
                                         Spacer(Modifier.height(6.dp))
                                         DownloadDialogWarning(
-                                            text = "⚠️ Don't post this log publicly. Share it only directly " +
+                                            text = I18n.s(R.string.ui_don_t_post_this_log_publicly_share_it_only_directly) +
                                                 "with the developer or someone you trust — unless you're " +
                                                 "debugging it yourself.",
                                         )
@@ -3757,7 +3757,7 @@ private fun DownloadSpeedPickerDialog(
                                         if (installToSd) {
                                             Spacer(Modifier.height(6.dp))
                                             DownloadDialogWarning(
-                                                text = "⚠️ The SD card is slower than internal storage. Some " +
+                                                text = I18n.s(R.string.ui_the_sd_card_is_slower_than_internal_storage_some) +
                                                     "games stall on intro movies or asset loads from the card — " +
                                                     "if that happens, open the shortcut and use \"Copy game to " +
                                                     "Drive C\" to move it onto fast internal storage.",
@@ -3875,7 +3875,7 @@ private fun DownloadSpeedPickerDialog(
                 if (debugLog) {
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        text = "⚠️ Don't post this log publicly. Share it only directly with the " +
+                        text = I18n.s(R.string.ui_don_t_post_this_log_publicly_share_it_only_directly_with) +
                             "developer or someone you trust — unless you're debugging it yourself.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error,
@@ -3916,7 +3916,7 @@ private fun DownloadSpeedPickerDialog(
                     if (installToSd) {
                         Spacer(Modifier.height(6.dp))
                         Text(
-                            text = "⚠️ The SD card is slower than internal storage. Some games stall on " +
+                            text = I18n.s(R.string.ui_the_sd_card_is_slower_than_internal_storage_some_games_s) +
                                 "intro movies or asset loads from the card — if that happens, open the " +
                                 "shortcut and use \"Copy game to Drive C\" to move it onto fast internal " +
                                 "storage.",

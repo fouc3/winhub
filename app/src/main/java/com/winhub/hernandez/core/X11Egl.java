@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -178,14 +181,14 @@ public final class X11Egl {
                 } finally {
                     FileUtils.delete(tmp);
                 }
-                Log.i(TAG, "installed X11 GL set " + version(context) + " (" + id + ") -> " + dir);
+                Log.i(TAG, I18n.s(R.string.ui_installed_x11_gl_set) + version(context) + " (" + id + ") -> " + dir);
             }
             File[] old = root.listFiles();
             if (old != null) for (File f : old) if (!f.getName().equals(id)) FileUtils.delete(f);
             cachedDir = dir.getAbsolutePath();
             return cachedDir;
         } catch (Exception e) {
-            Log.e(TAG, "could not install the X11 GL set", e);
+            Log.e(TAG, I18n.s(R.string.ui_could_not_install_the_x11_gl_set), e);
             return null;
         }
     }
@@ -197,7 +200,7 @@ public final class X11Egl {
             for (int i = 0; i < a.length(); i++) out[i] = a.getString(i);
             return out;
         } catch (Exception e) {
-            Log.w(TAG, "no bundled X11 GL set (" + ASSET_META + ")");
+            Log.w(TAG, I18n.s(R.string.ui_no_bundled_x11_gl_set) + ASSET_META + ")");
             return new String[0];
         }
     }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
@@ -243,7 +246,7 @@ public final class LogReport {
             // low-RAM device can OOM here. That must produce a report with one explanatory entry
             // in it, not take the app down — same principle as the rest of this feature, where
             // logging is never allowed to break the thing it is logging.
-            return "(could not read " + f.getName() + ": " + t + ")";
+            return I18n.s(R.string.ui_could_not_read) + f.getName() + ": " + t + ")";
         }
     }
 

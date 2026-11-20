@@ -91,7 +91,7 @@ fun SteamStoreTab(
     LaunchedEffect(reloadKey) {
         loadingFeatured = true
         featured = runCatching { SteamStoreCatalog.featured(ctx, force = reloadKey > 0) }
-            .onFailure { StorefrontLog.w(StorefrontLog.STORE, "featured() threw — store rails unavailable", it) }
+            .onFailure { StorefrontLog.w(StorefrontLog.STORE, I18n.s(R.string.ui_featured_threw_store_rails_unavailable), it) }
             .getOrNull()
         loadingFeatured = false
         val f = featured
@@ -208,7 +208,7 @@ fun SteamStoreTab(
                 ) {
                     StoreNotice(
                         title = I18n.s(R.string.ui_store_browsing_is_unavailable),
-                        body = "Steam's storefront feed didn't answer. Search still works, and " +
+                        body = I18n.s(R.string.ui_steam_s_storefront_feed_didn_t_answer_search_still_works) +
                             "everything you already own is in the Library tab.",
                         actionLabel = "Retry",
                         onAction = { reloadKey++ },
@@ -255,8 +255,8 @@ private fun StorePortrait(
             }
         }
         railItems(I18n.s(R.string.ui_what_s_new), "New & trending", data.newReleases, actionFor, onOpen, onAction)
-        railItems(I18n.s(R.string.ui_top_free_games), "Add instantly", data.topFree, actionFor, onOpen, onAction)
-        railItems(I18n.s(R.string.ui_latest_deals), "Current specials", data.specials, actionFor, onOpen, onAction)
+        railItems(I18n.s(R.string.ui_top_free_games), I18n.s(R.string.ui_add_instantly), data.topFree, actionFor, onOpen, onAction)
+        railItems(I18n.s(R.string.ui_latest_deals), I18n.s(R.string.ui_current_specials), data.specials, actionFor, onOpen, onAction)
     }
 }
 
@@ -297,7 +297,7 @@ private fun StoreLandscape(
                 }
             }
             if (data.topFree.isNotEmpty()) {
-                item(key = "free_hdr") { StoreSectionHeader("Top Free Games", "Add instantly") }
+                item(key = "free_hdr") { StoreSectionHeader(I18n.s(R.string.ui_top_free_games), I18n.s(R.string.ui_add_instantly)) }
                 items(data.topFree, key = { "free_${it.appId}" }) { g ->
                     StoreResultRow(
                         item = g,
@@ -317,7 +317,7 @@ private fun StoreLandscape(
             contentPadding = PaddingValues(bottom = 24.dp),
         ) {
             railItems(I18n.s(R.string.ui_what_s_new), "New & trending", data.newReleases, actionFor, onOpen, onAction)
-            railItems(I18n.s(R.string.ui_latest_deals), "Current specials", data.specials, actionFor, onOpen, onAction)
+            railItems(I18n.s(R.string.ui_latest_deals), I18n.s(R.string.ui_current_specials), data.specials, actionFor, onOpen, onAction)
             if (data.newReleases.isEmpty() && data.specials.isEmpty()) {
                 item(key = "browse_empty") {
                     StoreNotice(
@@ -374,7 +374,7 @@ private fun StoreSearchField(
 ) {
     if (LocalStoreXmb.current) {
         XmbSearchField(
-            query, "Search the Steam catalog…", onQueryChange, onClear, onSearch,
+            query, I18n.s(R.string.ui_search_the_steam_catalog), onQueryChange, onClear, onSearch,
             Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
         )
         return

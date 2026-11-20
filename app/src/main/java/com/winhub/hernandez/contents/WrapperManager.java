@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contents;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -237,7 +240,7 @@ public class WrapperManager {
                 copied = StreamUtils.copy(in, out);
             }
             catch (IOException e) {
-                Log.d(TAG, "scanBundledEnvKeys: copy error for " + fileName + " — " + e.getMessage());
+                Log.d(TAG, I18n.s(R.string.ui_scanbundledenvkeys_copy_error_for) + fileName + " — " + e.getMessage());
             }
             if (copied && tmp.isFile()) result = scanEnvKeys(tmp);
             if (tmp.exists()) tmp.delete();
@@ -263,7 +266,7 @@ public class WrapperManager {
             copied = StreamUtils.copy(in, out);
         }
         catch (IOException e) {
-            Log.d(TAG, "scanBundledAssetEntry: copy error for " + assetFile + " — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_scanbundledassetentry_copy_error_for) + assetFile + " — " + e.getMessage());
         }
         if (copied && tmp.isFile()) {
             keys.addAll(TarCompressorUtils.scanEntryForTokens(
@@ -282,8 +285,8 @@ public class WrapperManager {
         new Slot("wrapper-legacy.tzst",     "Wrapper (legacy)",     true,  WRAPPER_MARKER_ENTRY),
         new Slot("wrapper-leegao.tzst",     "Wrapper (leegao)",     true,  WRAPPER_MARKER_ENTRY),
         new Slot("wrapper-gamenative.tzst", "Wrapper (GameNative)", true,  WRAPPER_MARKER_ENTRY),
-        new Slot("leegao_bcn.tzst",         "BCn layer (leegao)",   false, BCN_MARKER_ENTRY),
-        new Slot("extra_libs.tzst",         "Extra libraries",      false, null),
+        new Slot("leegao_bcn.tzst",         I18n.s(R.string.ui_bcn_layer_leegao),   false, BCN_MARKER_ENTRY),
+        new Slot("extra_libs.tzst",         I18n.s(R.string.ui_extra_libraries),      false, null),
     };
 
     /** Static definition of a slot (file name + friendly label + display flag + required marker entry). */
@@ -445,7 +448,7 @@ public class WrapperManager {
                 while ((line = r.readLine()) != null) sb.append(line);
             }
             catch (IOException e) {
-                Log.d(TAG, "readSlotCatalog: read error — " + e.getMessage());
+                Log.d(TAG, I18n.s(R.string.ui_readslotcatalog_read_error) + e.getMessage());
             }
             if (sb.length() > 0) {
                 try { obj = new JSONObject(sb.toString()); }
@@ -462,7 +465,7 @@ public class WrapperManager {
             out.write(obj.toString().getBytes());
         }
         catch (IOException e) {
-            Log.d(TAG, "writeSlotCatalog: write error — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_writeslotcatalog_write_error) + e.getMessage());
         }
     }
 
@@ -576,25 +579,25 @@ public class WrapperManager {
         try (InputStream in = mContext.getContentResolver().openInputStream(src);
              OutputStream out = new FileOutputStream(tmp)) {
             if (in == null) {
-                Log.d(TAG, "installOverride: could not open source " + src);
+                Log.d(TAG, I18n.s(R.string.ui_installoverride_could_not_open_source) + src);
                 tmp.delete();
                 return false;
             }
             if (!StreamUtils.copy(in, out)) {
-                Log.d(TAG, "installOverride: copy failed for " + fileName);
+                Log.d(TAG, I18n.s(R.string.ui_installoverride_copy_failed_for) + fileName);
                 tmp.delete();
                 return false;
             }
         }
         catch (IOException | SecurityException e) {
-            Log.d(TAG, "installOverride: copy error for " + fileName + " — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_installoverride_copy_error_for) + fileName + " — " + e.getMessage());
             tmp.delete();
             return false;
         }
 
         // 2. Validate it's a readable zstd tar.
         if (!TarCompressorUtils.isValidArchive(TarCompressorUtils.Type.ZSTD, tmp)) {
-            Log.d(TAG, "installOverride: not a readable zstd tar — " + fileName);
+            Log.d(TAG, I18n.s(R.string.ui_installoverride_not_a_readable_zstd_tar) + fileName);
             tmp.delete();
             return false;
         }
@@ -611,11 +614,11 @@ public class WrapperManager {
         File dst = overrideFileFor(fileName);
         if (dst.exists()) dst.delete();
         if (!tmp.renameTo(dst)) {
-            Log.d(TAG, "installOverride: rename failed for " + fileName);
+            Log.d(TAG, I18n.s(R.string.ui_installoverride_rename_failed_for) + fileName);
             tmp.delete();
             return false;
         }
-        Log.d(TAG, "installOverride: installed override for " + fileName);
+        Log.d(TAG, I18n.s(R.string.ui_installoverride_installed_override_for) + fileName);
         return true;
     }
 
@@ -797,7 +800,7 @@ public class WrapperManager {
             }
         }
         catch (IOException | SecurityException e) {
-            Log.d(TAG, "inspectUri: copy error — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_inspecturi_copy_error) + e.getMessage());
             tmp.delete();
             return new Inspection(false, none, "Unknown", "", null);
         }
@@ -1007,7 +1010,7 @@ public class WrapperManager {
             return true;
         }
         catch (IOException e) {
-            Log.d(TAG, "writeMeta failed for " + identifier + " — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_writemeta_failed_for) + identifier + " — " + e.getMessage());
             return false;
         }
     }
@@ -1090,7 +1093,7 @@ public class WrapperManager {
         String identifier = StringUtils.parseIdentifier(label);
         if (identifier.isEmpty()) return null;
         if (isReservedIdentifier(identifier)) {
-            Log.d(TAG, "importWrapper: refused reserved identifier " + identifier);
+            Log.d(TAG, I18n.s(R.string.ui_importwrapper_refused_reserved_identifier) + identifier);
             return null;
         }
 
@@ -1126,7 +1129,7 @@ public class WrapperManager {
             }
         }
         catch (IOException | SecurityException e) {
-            Log.d(TAG, "importWrapper: copy error — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_importwrapper_copy_error) + e.getMessage());
             tmp.delete();
             return null;
         }
@@ -1134,7 +1137,7 @@ public class WrapperManager {
         // 2. Must be a readable zstd tar carrying the wrapper ICD marker (lenient match).
         if (!TarCompressorUtils.isValidArchive(TarCompressorUtils.Type.ZSTD, tmp)
                 || !TarCompressorUtils.containsEntry(TarCompressorUtils.Type.ZSTD, tmp, WRAPPER_MARKER_ENTRY)) {
-            Log.d(TAG, "importWrapper: not a valid wrapper archive");
+            Log.d(TAG, I18n.s(R.string.ui_importwrapper_not_a_valid_wrapper_archive));
             tmp.delete();
             return null;
         }
@@ -1245,7 +1248,7 @@ public class WrapperManager {
             }
         }
         catch (Exception e) {
-            Log.d(TAG, "deleteImported: cascade error — " + e.getMessage());
+            Log.d(TAG, I18n.s(R.string.ui_deleteimported_cascade_error) + e.getMessage());
         }
         File tzst = importedFileFor(identifier);
         File meta = metaFileFor(identifier);

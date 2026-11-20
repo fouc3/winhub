@@ -327,7 +327,7 @@ fun LaunchMethodSheet(
     } else null
 
     val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val rawLabel = if (notInstalled) (if (hasPc) "Download" else "Not on PC") else "Raw .exe"
+    val rawLabel = if (notInstalled) (if (hasPc) "Download" else I18n.s(R.string.ui_not_on_pc)) else "Raw .exe"
 
     CompositionLocalProvider(LocalRawLabel provides rawLabel) {
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
@@ -693,7 +693,7 @@ private fun ColumnScope.OptionsBlock(
         OptionRow(
             title = I18n.s(R.string.ui_full_details_achievements),
             badge = null,
-            subtitle = if (compact) null else "Details, achievements, DLC and cloud saves.",
+            subtitle = if (compact) null else I18n.s(R.string.ui_details_achievements_dlc_and_cloud_saves),
             accent = accent,
             compact = compact,
             onHelp = { toggleHelp(HELP_DETAILS) },
@@ -707,7 +707,7 @@ private fun ColumnScope.OptionsBlock(
         OptionRow(
             title = I18n.s(R.string.ui_controller_passthrough),
             badge = "NEW",
-            subtitle = if (compact) null else "Send the pad straight to the game. For classic games (HL2, CS:S).",
+            subtitle = if (compact) null else I18n.s(R.string.ui_send_the_pad_straight_to_the_game_for_classic_games_hl2),
             accent = accent,
             compact = compact,
             onHelp = { toggleHelp(HELP_PASS) },
@@ -717,9 +717,9 @@ private fun ColumnScope.OptionsBlock(
             title = I18n.s(R.string.ui_requires_secure_vac_launch),
             badge = "NEW",
             subtitle = if (compact) null else when (detectedVac) {
-                true -> "Detected: VAC-secured. Steam must start it (up to ~60 s wait)."
-                false -> "Detected: no VAC. Direct start after ~15 s is fine."
-                null -> "Auto-detected from Steam's app info."
+                true -> I18n.s(R.string.ui_detected_vac_secured_steam_must_start_it_up_to_60_s_wait)
+                false -> I18n.s(R.string.ui_detected_no_vac_direct_start_after_15_s_is_fine)
+                null -> I18n.s(R.string.ui_auto_detected_from_steam_s_app_info)
             },
             accent = accent,
             compact = compact,
@@ -886,7 +886,7 @@ private fun SteamLiteClientBlock(
                 val tint = if (check.required) cs.error else accent
                 val shape = RoundedCornerShape(999.dp)
                 Text(
-                    (if (check.required) "Update required" else "Update available") +
+                    (if (check.required) "Update required" else I18n.s(R.string.winhub_update_available)) +
                         " ($installed → v${check.latestVersion})",
                     style = lineStyle, color = tint, fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
@@ -1130,16 +1130,16 @@ private fun BoxScope.HelpTip(text: String?, onDismiss: () -> Unit) {
 
 private fun sourceSubline(source: GameSource, appId: Int): String = when (source) {
     GameSource.STEAM -> if (appId > 0) "Steam · App $appId" else "Steam"
-    GameSource.EPIC -> "Epic · Raw launch"
+    GameSource.EPIC -> I18n.s(R.string.ui_epic_raw_launch)
     GameSource.GOG -> "GOG · DRM-free · Raw"
     GameSource.AMAZON -> "Amazon Games · Raw"
-    GameSource.XBOX -> "Xbox · Licensed launch"
+    GameSource.XBOX -> I18n.s(R.string.ui_xbox_licensed_launch)
     GameSource.CUSTOM -> "Custom · Raw"
 }
 
 private fun methodDescription(method: LaunchMethod, source: GameSource): String = when (method) {
-    LaunchMethod.STEAMLITE -> "Real Steam — VAC servers, real achievements & cloud saves."
-    LaunchMethod.GOLDBERG -> "Offline emulator — no login, lightweight, single-player."
+    LaunchMethod.STEAMLITE -> I18n.s(R.string.ui_real_steam_vac_servers_real_achievements_cloud_saves)
+    LaunchMethod.GOLDBERG -> I18n.s(R.string.ui_offline_emulator_no_login_lightweight_single_player)
     LaunchMethod.RAW -> when (source) {
         GameSource.EPIC -> "Run the game's .exe directly."
         GameSource.GOG -> "Run the DRM-free .exe directly — no launcher."
@@ -1148,7 +1148,7 @@ private fun methodDescription(method: LaunchMethod, source: GameSource): String 
         GameSource.CUSTOM -> "Run the .exe directly."
         GameSource.STEAM -> "Run the game's .exe directly — no Steam layer."
     }
-    LaunchMethod.STREAM -> "Plays from Xbox Cloud Gaming — nothing runs here; picture, sound and controller go over the network."
+    LaunchMethod.STREAM -> I18n.s(R.string.ui_plays_from_xbox_cloud_gaming_nothing_runs_here_picture_s)
 }
 
 // ── Goldberg sub-mode selectors (shared outlined-menu style: MenuStyle.kt) ────────────────────────
@@ -1156,9 +1156,9 @@ private fun methodDescription(method: LaunchMethod, source: GameSource): String 
 private data class GbOption(val mode: GoldbergMode, val name: String, val sub: String)
 
 private val GOLDBERG_OPTIONS = listOf(
-    GbOption(GoldbergMode.REGULAR, "Regular", "Standard emulation — best compatibility"),
-    GbOption(GoldbergMode.EXPERIMENTAL, "Experimental", "Newer features — for games Regular can't run"),
-    GbOption(GoldbergMode.COLDCLIENT, "ColdClient", "Runs the game's own launcher — heaviest option"),
+    GbOption(GoldbergMode.REGULAR, "Regular", I18n.s(R.string.ui_standard_emulation_best_compatibility)),
+    GbOption(GoldbergMode.EXPERIMENTAL, "Experimental", I18n.s(R.string.ui_newer_features_for_games_regular_can_t_run)),
+    GbOption(GoldbergMode.COLDCLIENT, "ColdClient", I18n.s(R.string.ui_runs_the_game_s_own_launcher_heaviest_option)),
 )
 
 /** Portrait: label + "?" and a vertical dropdown using the shared outlined-menu card + gray dividers. */

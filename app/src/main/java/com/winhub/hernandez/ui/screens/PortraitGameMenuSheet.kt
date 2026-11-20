@@ -52,27 +52,27 @@ import com.winhub.hernandez.R
 
 /** One line saying what each game-menu row does (bannercode shows these under every row). */
 private fun menuHint(label: String): String? = when (label) {
-    "Play" -> "Starts the game with its saved launch choice."
-    "Emulator" -> "Choose the app this console's games start in."
-    "Get covers" -> "Fetch the covers and backgrounds that are missing."
-    "Remove game" -> "Takes it off the library. The ROM file stays on the device."
-    "Consoles" -> "Pick the consoles the library shows."
-    "Show removed games" -> "Brings back the games you removed."
-    "ROM folder" -> "Where your ROMs are."
-    "Rescan library" -> "Looks for new and missing ROM files."
-    "Launch method" -> "Choose how this game starts and whether to remember it."
-    "Settings" -> "Display, graphics, controls and more, for this game only."
-    "Game Doctor" -> "Finds why it won't run and offers one-tap fixes."
-    "Game details" -> "Name, Steam link, genres, year, description."
-    "Search covers" -> "Find cover art on SteamGridDB and pick one."
-    "Clone to container" -> "Copy this shortcut into another container."
-    "Copy to Drive C" -> "Copy the game folder onto the container's C: drive and repoint it."
+    "Play" -> I18n.s(R.string.ui_starts_the_game_with_its_saved_launch_choice)
+    "Emulator" -> I18n.s(R.string.ui_choose_the_app_this_console_s_games_start_in)
+    "Get covers" -> I18n.s(R.string.ui_fetch_the_covers_and_backgrounds_that_are_missing)
+    "Remove game" -> I18n.s(R.string.ui_takes_it_off_the_library_the_rom_file_stays_on_the_devic)
+    "Consoles" -> I18n.s(R.string.ui_pick_the_consoles_the_library_shows)
+    "Show removed games" -> I18n.s(R.string.ui_brings_back_the_games_you_removed)
+    "ROM folder" -> I18n.s(R.string.ui_where_your_roms_are)
+    "Rescan library" -> I18n.s(R.string.ui_looks_for_new_and_missing_rom_files)
+    "Launch method" -> I18n.s(R.string.ui_choose_how_this_game_starts_and_whether_to_remember_it)
+    "Settings" -> I18n.s(R.string.ui_display_graphics_controls_and_more_for_this_game_only)
+    "Game Doctor" -> I18n.s(R.string.ui_finds_why_it_won_t_run_and_offers_one_tap_fixes)
+    "Game details" -> I18n.s(R.string.ui_name_steam_link_genres_year_description)
+    "Search covers" -> I18n.s(R.string.ui_find_cover_art_on_steamgriddb_and_pick_one)
+    "Clone to container" -> I18n.s(R.string.ui_copy_this_shortcut_into_another_container)
+    "Copy to Drive C" -> I18n.s(R.string.ui_copy_the_game_folder_onto_the_container_s_c_drive_and_re)
     "Change executable" -> "Point the shortcut at a different .exe in the game's folder."
-    "Add to favourites" -> "Pin this game to the Favourites shelf."
-    "Remove from favourites" -> "Take this game off the Favourites shelf."
-    "Add to Home Screen" -> "Pin a launcher icon to Android's home screen."
-    "Properties" -> "Container, times played and total playtime."
-    "Delete" -> "Asks first. Only the shortcut goes; the game files stay."
+    "Add to favourites" -> I18n.s(R.string.ui_pin_this_game_to_the_favourites_shelf)
+    "Remove from favourites" -> I18n.s(R.string.ui_take_this_game_off_the_favourites_shelf)
+    "Add to Home Screen" -> I18n.s(R.string.ui_pin_a_launcher_icon_to_android_s_home_screen)
+    "Properties" -> I18n.s(R.string.ui_container_times_played_and_total_playtime)
+    "Delete" -> I18n.s(R.string.ui_asks_first_only_the_shortcut_goes_the_game_files_stay)
     else -> null
 }
 

@@ -92,7 +92,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
                                 .clickable {
                                     val ok = s.cloneToContainer(c)
                                     onClose()
-                                    Toast.makeText(context, if (ok) "Shortcut cloned." else "Failed to clone shortcut.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, if (ok) "Shortcut cloned." else I18n.s(R.string.ui_failed_to_clone_shortcut), Toast.LENGTH_SHORT).show()
                                 }
                                 .padding(vertical = 12.dp),
                         )
@@ -126,7 +126,7 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
                     out.add(bmp to full)
                 }
             } catch (e: org.json.JSONException) {
-                android.util.Log.w("HubCovers", "bad SteamGridDB response", e)
+                android.util.Log.w("HubCovers", I18n.s(R.string.ui_bad_steamgriddb_response), e)
             }
             out
         }
@@ -156,7 +156,7 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
                                         val saved = withContext(Dispatchers.IO) { saveCover(s, url) }
                                         onClose()
                                         if (saved) onSaved()
-                                        Toast.makeText(context, if (saved) "Cover saved." else "Couldn't download that cover.", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, if (saved) "Cover saved." else I18n.s(R.string.ui_couldn_t_download_that_cover), Toast.LENGTH_SHORT).show()
                                     }
                                 },
                         ) {

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -93,7 +96,7 @@ public final class SteamQrAuthManager {
 
                 AuthSessionDetails details = new AuthSessionDetails();
                 details.clientOSType       = EOSType.AndroidUnknown;
-                details.deviceFriendlyName = "Android Device";
+                details.deviceFriendlyName = I18n.s(R.string.ui_android_device);
                 details.persistentSession  = true;
                 // No IAuthenticator needed for QR — user approves on their phone.
 
@@ -122,15 +125,15 @@ public final class SteamQrAuthManager {
             } catch (java.util.concurrent.ExecutionException e) {
                 if (cancelled) return;
                 Throwable cause = e.getCause() != null ? e.getCause() : e;
-                Log.e(TAG, "QR auth ExecutionException: " + SteamLogRedactor.redact(Log.getStackTraceString(cause)));
+                Log.e(TAG, I18n.s(R.string.ui_qr_auth_executionexception) + SteamLogRedactor.redact(Log.getStackTraceString(cause)));
                 String msg = cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName();
                 mainHandler.post(() -> listener.onFailure(msg));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                Log.w(TAG, "QR auth interrupted");
+                Log.w(TAG, I18n.s(R.string.ui_qr_auth_interrupted));
             } catch (Exception e) {
                 if (cancelled) return;
-                Log.e(TAG, "QR auth error: " + SteamLogRedactor.redact(Log.getStackTraceString(e)));
+                Log.e(TAG, I18n.s(R.string.ui_qr_auth_error) + SteamLogRedactor.redact(Log.getStackTraceString(e)));
                 String msg = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
                 mainHandler.post(() -> listener.onFailure(msg));
             }
@@ -145,7 +148,7 @@ public final class SteamQrAuthManager {
             rustQrActive = false;
             BlSteamSession s = BlSteamEngine.INSTANCE.session();
             if (s != null) {
-                try { s.cancelLogin(); } catch (Throwable t) { Log.w(TAG, "cancelLogin failed", t); }
+                try { s.cancelLogin(); } catch (Throwable t) { Log.w(TAG, I18n.s(R.string.ui_cancellogin_failed), t); }
             }
         }
     }
@@ -159,13 +162,13 @@ public final class SteamQrAuthManager {
     private void startQrLoginRust(QrAuthListener listener) {
         BlSteamSession session = BlSteamEngine.INSTANCE.session();
         if (session == null || !BlSteamEngine.INSTANCE.isConnected()) {
-            mainHandler.post(() -> listener.onFailure("Not connected to Steam"));
+            mainHandler.post(() -> listener.onFailure(I18n.s(R.string.xmb_fr_disconnected_title)));
             return;
         }
         rustQrActive = true;
         final boolean[] shown = { false };
-        Log.i(TAG, "QR sign-in starting on the Rust engine");
-        BlSteamEngineLog.log("AUTH", "QR sign-in started");
+        Log.i(TAG, I18n.s(R.string.ui_qr_sign_in_starting_on_the_rust_engine));
+        BlSteamEngineLog.log("AUTH", I18n.s(R.string.ui_qr_sign_in_started));
         try {
             session.startLoginWithQr(
                     url -> {
@@ -180,7 +183,7 @@ public final class SteamQrAuthManager {
                     result -> onRustQrResult(result, listener));
         } catch (Throwable t) {
             rustQrActive = false;
-            Log.e(TAG, "Rust QR login could not start: " + SteamLogRedactor.redact(Log.getStackTraceString(t)));
+            Log.e(TAG, I18n.s(R.string.ui_rust_qr_login_could_not_start) + SteamLogRedactor.redact(Log.getStackTraceString(t)));
             String msg = t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName();
             mainHandler.post(() -> listener.onFailure(msg));
         }
@@ -203,7 +206,7 @@ public final class SteamQrAuthManager {
         }
         if (result.getHadRemoteInteraction() && result.getErrorMessage().isEmpty()) {
             // The phone scanned the code; approval still pending — the poll loop continues.
-            Log.i(TAG, "QR scanned on the phone — waiting for approval");
+            Log.i(TAG, I18n.s(R.string.ui_qr_scanned_on_the_phone_waiting_for_approval));
             return;
         }
         rustQrActive = false;
@@ -244,7 +247,7 @@ public final class SteamQrAuthManager {
                         });
                     }
                 } catch (Exception e) {
-                    Log.w(TAG, "URL watcher error: " + SteamLogRedactor.redact(Log.getStackTraceString(e)));
+                    Log.w(TAG, I18n.s(R.string.ui_url_watcher_error) + SteamLogRedactor.redact(Log.getStackTraceString(e)));
                     break;
                 }
             }

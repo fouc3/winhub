@@ -1,5 +1,8 @@
 package com.winhub.hernandez.perf.galaxy
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import java.io.File
@@ -82,10 +85,10 @@ object GalaxyPerfManager {
             driver = if (SamsungSPerfDriver.isSamsungDevice()) {
                 val samsung = SamsungSPerfDriver(context.applicationContext)
                 if (samsung.isSupported) {
-                    Log.i(TAG, "Using Samsung Galaxy Performance driver")
+                    Log.i(TAG, I18n.s(R.string.ui_using_samsung_galaxy_performance_driver))
                     samsung
                 } else {
-                    Log.i(TAG, "Samsung device without a usable Galaxy Performance SDK; feature dormant")
+                    Log.i(TAG, I18n.s(R.string.ui_samsung_device_without_a_usable_galaxy_performance_sdk_f))
                     NoOpGalaxyPerfDriver()
                 }
             } else {

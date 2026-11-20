@@ -151,7 +151,7 @@ internal fun DeckDownloadsPanel(onBack: () -> Unit) {
         }
 
         Spacer(Modifier.size(6.dp))
-        DeckGroup("Store settings") {
+        DeckGroup(I18n.s(R.string.ui_store_settings)) {
             DeckRow(
                 label = I18n.s(R.string.ui_show_mature_content),
                 hint = "Storefront 17+/18+ titles; owned games always show",

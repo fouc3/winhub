@@ -136,7 +136,7 @@ private val ContentsBlue = Color(0xFF3D9BFF)
 
 private enum class DeckContentsTab(val label: String) {
     BROWSE("Browse"),
-    FILES("My Files"),
+    FILES(I18n.s(R.string.ui_my_files)),
     INSTALLED("Installed"),
 }
 
@@ -151,7 +151,7 @@ internal val deckContentCategories = listOf(
     DeckContentCategory("DXVK", "DXVK", I18n.s(R.string.ui_direct3d_9_10_11_to_vulkan), Icons.Filled.ViewInAr),
     DeckContentCategory("D7VK", "D7VK", I18n.s(R.string.ui_direct3d_7_to_vulkan), Icons.Filled.ViewInAr),
     DeckContentCategory("VKD3D", "VKD3D", I18n.s(R.string.ui_direct3d_12_to_vulkan_vkd3d_proton), Icons.Filled.Widgets),
-    DeckContentCategory(ContentsTypes.GPU_DRIVERS, "GPU Drivers", I18n.s(R.string.ui_turnip_adreno_vulkan_drivers), Icons.Filled.Memory),
+    DeckContentCategory(ContentsTypes.GPU_DRIVERS, I18n.s(R.string.ui_gpu_drivers), I18n.s(R.string.ui_turnip_adreno_vulkan_drivers), Icons.Filled.Memory),
     DeckContentCategory("Box64", "Box64", I18n.s(R.string.ui_x86_64_userland_emulation_on_arm64), Icons.Filled.Extension),
     DeckContentCategory("WOWBox64", "WOWBox64", I18n.s(R.string.ui_x86_32_bit_emulation_on_arm64), Icons.Filled.DeveloperBoard),
     DeckContentCategory("FEXCore", "FEXCore", I18n.s(R.string.ui_x86_x86_64_backend_arm64ec), Icons.Filled.Dns),
@@ -498,11 +498,11 @@ private fun DeckContentsBrowseTab(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.weight(1f)) { DeckSearchField(query) { vm.setQuery(it) } }
             Spacer(Modifier.width(8.dp))
-            DeckIconAction(Icons.Filled.Add, "Add repository") { showAdd = true }
+            DeckIconAction(Icons.Filled.Add, I18n.s(R.string.ui_add_repository)) { showAdd = true }
             Spacer(Modifier.width(8.dp))
             DeckIconAction(Icons.Filled.FileDownload, I18n.s(R.string.ui_import_or_export_sources)) { showTransfer = true }
             Spacer(Modifier.width(8.dp))
-            DeckIconAction(Icons.Filled.Settings, "Contents settings") { showSettings = true }
+            DeckIconAction(Icons.Filled.Settings, I18n.s(R.string.ui_contents_settings)) { showSettings = true }
         }
         Spacer(Modifier.height(12.dp))
         when {
@@ -515,7 +515,7 @@ private fun DeckContentsBrowseTab(
                         color = DeckPalette.onBackground,
                         modifier = Modifier.weight(1f),
                     )
-                    DeckIconAction(Icons.Filled.Close, "Clear search") { vm.setQuery("") }
+                    DeckIconAction(Icons.Filled.Close, I18n.s(R.string.social_hub_search_clear)) { vm.setQuery("") }
                 }
                 Spacer(Modifier.height(8.dp))
                 if (searching) DeckLoading()

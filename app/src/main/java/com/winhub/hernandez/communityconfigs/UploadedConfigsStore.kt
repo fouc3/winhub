@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Environment
 import android.util.Log
@@ -107,7 +110,7 @@ object UploadedConfigsStore {
             val raw = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, null)
             if (raw.isNullOrBlank()) emptyList() else parse(JSONArray(raw))
         } catch (e: Exception) {
-            Log.w(TAG, "Uploaded-configs prefs read failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_uploaded_configs_prefs_read_failed), e)
             emptyList()
         }
 
@@ -118,7 +121,7 @@ object UploadedConfigsStore {
                 .putString(KEY, encode(records).toString())
                 .apply()
         } catch (e: Exception) {
-            Log.w(TAG, "Uploaded-configs prefs write failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_uploaded_configs_prefs_write_failed), e)
         }
     }
 
@@ -127,7 +130,7 @@ object UploadedConfigsStore {
             val file = manifestFile()
             if (file == null || !file.exists()) emptyList() else parse(JSONArray(file.readText()))
         } catch (e: Exception) {
-            Log.w(TAG, "Uploaded-configs manifest read failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_uploaded_configs_manifest_read_failed), e)
             emptyList()
         }
 
@@ -138,7 +141,7 @@ object UploadedConfigsStore {
             file.writeText(encode(records).toString(2))
             file.setReadable(true, false)
         } catch (e: Exception) {
-            Log.w(TAG, "Uploaded-configs manifest write failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_uploaded_configs_manifest_write_failed), e)
         }
     }
 

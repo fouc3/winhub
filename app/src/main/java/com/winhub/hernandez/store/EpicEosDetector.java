@@ -12,6 +12,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -116,7 +119,7 @@ public final class EpicEosDetector {
             try {
                 scan(ctx, appName, installDir);
             } catch (Throwable t) {
-                Log.w(TAG, "scanAsync failed for " + appName, t);
+                Log.w(TAG, I18n.s(R.string.ui_scanasync_failed_for) + appName, t);
             }
             if (onDone != null) {
                 try { onDone.run(); } catch (Throwable ignored) {}
@@ -169,7 +172,7 @@ public final class EpicEosDetector {
                     }
                 }
             } catch (Throwable t) {
-                Log.w(TAG, "scanShortcut walk failed for " + exePath, t);
+                Log.w(TAG, I18n.s(R.string.ui_scanshortcut_walk_failed_for) + exePath, t);
             }
             try {
                 shortcut.putExtra("eos", usesEos ? "1" : "0");

@@ -403,7 +403,7 @@ class FusionHudView(
      *  "HDR not on this screen". */
     private fun hdrLine(px: Float): List<Span> = when (hdrState) {
         FusionHdr.ON -> listOf(Span("HDR", colHdr, px))
-        FusionHdr.NO_HEADROOM -> listOf(Span("HDR", colHdr, px), Span(" (no headroom)", colBat, px))
+        FusionHdr.NO_HEADROOM -> listOf(Span("HDR", colHdr, px), Span(I18n.s(R.string.ui_no_headroom), colBat, px))
         FusionHdr.OFF -> listOf(Span(I18n.s(R.string.ui_hdr_off), colDim, px))
         FusionHdr.READY -> listOf(Span(I18n.s(R.string.ui_hdr_ready), colDim, px))
         FusionHdr.TONEMAPPED -> listOf(Span("HDR", colDim, px), Span(" tone-mapped", colBat, px))

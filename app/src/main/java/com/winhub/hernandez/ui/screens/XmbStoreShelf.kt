@@ -307,7 +307,7 @@ private fun StoreShelfCard(
                     .background(Color.Black.copy(alpha = 0.62f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(Icons.Filled.Download, contentDescription = "Not installed", tint = Color.White, modifier = Modifier.size(12.dp))
+                Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_not_installed), tint = Color.White, modifier = Modifier.size(12.dp))
             }
         }
     }
@@ -366,7 +366,7 @@ private fun StoreShelfTitle(
                 Text(
                     listOfNotNull(
                         store.label,
-                        if (g.installed) "Installed" else "Not installed",
+                        if (g.installed) "Installed" else I18n.s(R.string.ui_not_installed),
                         g.sizeBytes.takeIf { it > 0L }?.let { Formatter.formatShortFileSize(context, it) },
                     ).joinToString(" · ").uppercase(),
                     color = XMB_STEAM_MUTED, fontSize = ss.sp(10f), fontWeight = FontWeight.SemiBold, letterSpacing = 0.8.sp, maxLines = 1,

@@ -189,7 +189,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
                 cloudSaveDirText = shortenPath(selectedPath)
                 cloudSaveDirColor = 0xFFCCCCCC.toInt()
                 cloudBtnsEnabled = true
-                resultBarMsg = "Save folder set"
+                resultBarMsg = I18n.s(R.string.ui_save_folder_set)
             }
         }
     }
@@ -232,7 +232,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
         } else {
             // No manual pick — show the auto-resolved folder (GogCloudSavePaths), agreeing with the
             // Save Manager GOG tab. Resolved off-main; label updates when ready.
-            cloudSaveDirText = "No save folder set"
+            cloudSaveDirText = I18n.s(R.string.ui_no_save_folder_set)
             cloudSaveDirColor = 0xFF555577.toInt()
             refreshResolvedSaveDirLabel()
         }
@@ -490,7 +490,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
                         bytes = prefs.getLong("gog_size_$gameId", 0L),
                     )
                 } else {
-                    StoreDownloadHooks.markFailed(Store.GOG, gameId, "No executable found")
+                    StoreDownloadHooks.markFailed(Store.GOG, gameId, I18n.s(R.string.ui_no_executable_found))
                 }
                 if (!isDestroyed && !isFinishing) runOnUiThread {
                     if (isDestroyed || isFinishing) return@runOnUiThread
@@ -546,7 +546,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
      * whole install flow + progress UI; the engine's size+MD5 skip-logic makes the re-run a repair.
      */
     private fun doVerifyRepair() {
-        updateStatusText = "Verifying files…"
+        updateStatusText = I18n.s(R.string.ui_verifying_files)
         startInstall(verify = true)
     }
 
@@ -734,7 +734,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
                 withContext(Dispatchers.Main) {
                     checkUpdateEnabled = true
                     if (latest == null) {
-                        updateStatusText = "Could not reach update server."
+                        updateStatusText = I18n.s(R.string.ui_could_not_reach_update_server)
                         return@withContext
                     }
                     val stored = prefs.getString("gog_build_$gameId", null)
@@ -803,17 +803,17 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
     /** Resolve the save folder off-main (manual override or auto), then drive the transport. */
     private fun cloudSync(up: Boolean) {
         cloudBtnsEnabled = false
-        showCloudStatus("Resolving save folder…")
+        showCloudStatus(I18n.s(R.string.ui_resolving_save_folder))
         Thread {
             val dir = resolveGogSaveDir()
             if (dir == null) {
                 runOnUiThread {
-                    showCloudStatus("No save folder found for this game — add it to a container, or set one with Browse")
+                    showCloudStatus(I18n.s(R.string.ui_no_save_folder_found_for_this_game_add_it_to_a_container))
                     cloudBtnsEnabled = true
                 }
                 return@Thread
             }
-            runOnUiThread { showCloudStatus(if (up) "Preparing upload…" else "Preparing download…") }
+            runOnUiThread { showCloudStatus(if (up) "Preparing upload…" else I18n.s(R.string.ui_preparing_download)) }
             val cb = object : GogCloudSaveManager.Callback {
                 override fun onStatus(msg: String) { runOnUiThread { showCloudStatus(msg) } }
                 override fun onDone(msg: String) { runOnUiThread { showCloudStatus(msg); cloudBtnsEnabled = true } }
@@ -921,14 +921,14 @@ private fun GogGameDetailScreen(
     }
     val gear = buildList {
         // onInstall doubles as Cancel while the button label reads "Cancel" (see onInstallClicked).
-        if (downloading) add(StoreGearItem("🗑", "Cancel download", danger = true, onClick = onInstall))
+        if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstall))
         if (setExeVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExe))
-        if (copyVisible) add(StoreGearItem("📁", "Copy to Downloads", onClick = onCopy))
+        if (copyVisible) add(StoreGearItem("📁", I18n.s(R.string.ui_copy_to_downloads), onClick = onCopy))
         if (updatesInstalled) {
-            add(StoreGearItem("🔄", "Check for updates", enabled = checkUpdateEnabled, onClick = onCheckUpdate))
+            add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdateEnabled, onClick = onCheckUpdate))
             add(StoreGearItem("🩹", "Verify / repair files", enabled = checkUpdateEnabled, onClick = onVerifyRepair))
         }
-        if (prereqsVisible) add(StoreGearItem("🧰", "Install prerequisites", onClick = onInstallPrereqs))
+        if (prereqsVisible) add(StoreGearItem("🧰", I18n.s(R.string.ui_install_prerequisites), onClick = onInstallPrereqs))
         if (uninstallVisible) add(StoreGearItem("🗑️", "Uninstall", danger = true, onClick = onUninstall))
     }
     val dlcCount = remember(dlcJson) {
@@ -938,7 +938,7 @@ private fun GogGameDetailScreen(
     // "Media" is appended only once the fetch found any, so the fixed indices above stay valid.
     val mediaVisible = media?.isEmpty == false
     val tabs = buildList {
-        add("Details"); add("DLC"); add("Cloud saves")
+        add("Details"); add("DLC"); add(I18n.s(R.string.ui_cloud_saves_2))
         if (mediaVisible) add("Media")
     }
 
@@ -1126,7 +1126,7 @@ private fun GogDlcContent(
     )
     Text(
         text = if (baseInstalled) "Install a DLC to add its files to your game."
-        else "Install the game first, then you can add its DLC.",
+        else I18n.s(R.string.ui_install_the_game_first_then_you_can_add_its_dlc),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(top = 3.dp, bottom = 6.dp),
@@ -1134,7 +1134,7 @@ private fun GogDlcContent(
     for (i in 0 until arr.length()) {
         val dlc = arr.optJSONObject(i) ?: continue
         val dlcId = dlc.optString("id", "")
-        val dlcTitle = dlc.optString("title", "Unknown DLC")
+        val dlcTitle = dlc.optString("title", I18n.s(R.string.ui_unknown_dlc))
         val state = states[dlcId]
         Row(
             modifier = Modifier

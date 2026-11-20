@@ -128,7 +128,7 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
         _progress.value = 0
         _step.value = 0
         _stepLabels.value = listOf(I18n.s(R.string.ui_system_files)) + FIRST_RUN_CONTENTS.map { it.label } + extras.map { it.label }
-        _status.value = "Installing system files"
+        _status.value = I18n.s(R.string.ui_installing_system_files)
         _degraded.value = false
         _showProceed.value = false
 
@@ -204,7 +204,7 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
         _progress.value = 0
         _step.value = 0
         _stepLabels.value = DEFAULT_LABELS
-        _status.value = "Reinstalling system files"
+        _status.value = I18n.s(R.string.ui_reinstalling_system_files)
         _degraded.value = false
         _showProceed.value = false
 
@@ -214,7 +214,7 @@ class SplashViewModel(app: Application) : AndroidViewModel(app) {
             {
                 _progress.value = 100
                 _step.value = FIRST_RUN_CONTENTS.size + 1
-                _status.value = "System files reinstalled"
+                _status.value = I18n.s(R.string.ui_system_files_reinstalled)
                 _showProceed.value = true
             },
         )

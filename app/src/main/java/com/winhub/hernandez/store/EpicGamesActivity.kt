@@ -152,7 +152,7 @@ class EpicGamesActivity : ComponentActivity() {
                         // EpicCancelPolicy) — the running download coroutine acts on the choice.
                         AlertDialog.Builder(this@EpicGamesActivity)
                             .setTitle(I18n.s(R.string.ui_cancel_download))
-                            .setMessage("Keep the partial download so you can resume later, or delete " +
+                            .setMessage(I18n.s(R.string.ui_keep_the_partial_download_so_you_can_resume_later_or_del) +
                                     "all downloaded files for this game?")
                             .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                                 EpicCancelPolicy.setDeleteOnCancel(appName, false)
@@ -213,10 +213,10 @@ class EpicGamesActivity : ComponentActivity() {
             if (showProgress) setSync("Checking credentials\u2026")
             val token = EpicCredentialStore.getValidAccessToken(this)
             if (token == null) {
-                setSync("Not logged in")
+                setSync(I18n.s(R.string.ui_not_logged_in))
                 withContext(Dispatchers.Main) {
                     enableRefresh()
-                    resultBarMsg = "Please log in to Epic Games first"
+                    resultBarMsg = I18n.s(R.string.ui_please_log_in_to_epic_games_first)
                     finish()
                 }
                 return
@@ -226,7 +226,7 @@ class EpicGamesActivity : ComponentActivity() {
             val rawGames = EpicApiClient.getLibraryItems(token)
 
             if (rawGames.isNullOrEmpty()) {
-                setSync("No games found in Epic library")
+                setSync(I18n.s(R.string.ui_no_games_found_in_epic_library))
                 withContext(Dispatchers.Main) { enableRefresh() }
                 return
             }
@@ -301,7 +301,7 @@ class EpicGamesActivity : ComponentActivity() {
                 scrollVisible = true
             }
         } catch (e: Exception) {
-            Log.e(TAG, "syncLibrary error", e)
+            Log.e(TAG, I18n.s(R.string.ui_synclibrary_error), e)
             setSync("Error: ${e.message}")
             withContext(Dispatchers.Main) { enableRefresh() }
         }
@@ -425,10 +425,10 @@ class EpicGamesActivity : ComponentActivity() {
             try {
                 val token = EpicCredentialStore.getValidAccessToken(appCtx)
                 if (token == null) {
-                    StoreDownloadHooks.markFailed(Store.EPIC, appName, "Login required")
+                    StoreDownloadHooks.markFailed(Store.EPIC, appName, I18n.s(R.string.ui_login_required))
                     withContext(Dispatchers.Main) {
                         downloadStates[appName] = GameDownloadState()
-                        resultBarMsg = "Login required"
+                        resultBarMsg = I18n.s(R.string.ui_login_required)
                     }
                     return@launch
                 }
@@ -440,10 +440,10 @@ class EpicGamesActivity : ComponentActivity() {
                     token, game.namespace, game.catalogItemId, game.appName,
                 )
                 if (manifestJson == null) {
-                    StoreDownloadHooks.markFailed(Store.EPIC, appName, "Failed to fetch manifest")
+                    StoreDownloadHooks.markFailed(Store.EPIC, appName, I18n.s(R.string.ui_failed_to_fetch_manifest))
                     withContext(Dispatchers.Main) {
                         downloadStates[appName] = GameDownloadState()
-                        resultBarMsg = "Failed to fetch manifest. If this is Fortnite, it is not supported."
+                        resultBarMsg = I18n.s(R.string.ui_failed_to_fetch_manifest_if_this_is_fortnite_it_is_not_s)
                     }
                     return@launch
                 }
@@ -486,11 +486,11 @@ class EpicGamesActivity : ComponentActivity() {
                     return@launch
                 }
                 if (!ok) {
-                    StoreDownloadHooks.markFailed(Store.EPIC, appName, "Download failed")
+                    StoreDownloadHooks.markFailed(Store.EPIC, appName, I18n.s(R.string.xmb_dl_status_failed))
                     withContext(Dispatchers.Main) {
                         cancelRunnables.remove(appName)
                         downloadStates[appName] = GameDownloadState()
-                        resultBarMsg = "Download failed"
+                        resultBarMsg = I18n.s(R.string.xmb_dl_status_failed)
                     }
                     return@launch
                 }
@@ -499,11 +499,11 @@ class EpicGamesActivity : ComponentActivity() {
                 AmazonLaunchHelper.collectExe(installDir, exeFiles)
 
                 if (exeFiles.isEmpty()) {
-                    StoreDownloadHooks.markFailed(Store.EPIC, appName, "No executable found")
+                    StoreDownloadHooks.markFailed(Store.EPIC, appName, I18n.s(R.string.ui_no_executable_found))
                     withContext(Dispatchers.Main) {
                         cancelRunnables.remove(appName)
                         downloadStates[appName] = GameDownloadState()
-                        resultBarMsg = "No executable found after install"
+                        resultBarMsg = I18n.s(R.string.ui_no_executable_found_after_install)
                     }
                     return@launch
                 }
@@ -530,7 +530,7 @@ class EpicGamesActivity : ComponentActivity() {
                     downloadStates[appName] = GameDownloadState(progress = 100, installed = true)
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "startEpicDownload failed", e)
+                Log.e(TAG, I18n.s(R.string.ui_startepicdownload_failed), e)
                 if (!cancelled.get()) {
                     StoreDownloadHooks.markFailed(Store.EPIC, appName, e.message ?: "Unknown error")
                     withContext(Dispatchers.Main) {
@@ -578,7 +578,7 @@ class EpicGamesActivity : ComponentActivity() {
                 else ed.remove("epic_save_folder_${g.appName}")
             }
             ed.apply()
-        } catch (e: Exception) { Log.e(TAG, "saveCachedGames failed", e) }
+        } catch (e: Exception) { Log.e(TAG, I18n.s(R.string.ui_savecachedgames_failed), e) }
     }
 
     private fun loadCachedGames(): List<EpicGame>? {
@@ -608,7 +608,7 @@ class EpicGamesActivity : ComponentActivity() {
                 list.add(g)
             }
             list.distinctBy { it.appName }
-        } catch (e: Exception) { Log.e(TAG, "loadCachedGames failed", e); null }
+        } catch (e: Exception) { Log.e(TAG, I18n.s(R.string.ui_loadcachedgames_failed), e); null }
     }
 
     private fun formatBytes(bytes: Long): String = when {
@@ -1015,7 +1015,7 @@ private fun GameListCard(
                     Text(
                         when {
                             downloadState.isActive -> "Cancel"
-                            downloadState.installed -> "Add to Launcher"
+                            downloadState.installed -> I18n.s(R.string.ui_add_to_launcher)
                             else -> "Install"
                         },
                         color = if (downloadState.isActive) MaterialTheme.colorScheme.onError
@@ -1132,7 +1132,7 @@ private fun GameGridTile(
                     Text(
                         when {
                             downloadState.isActive -> "Cancel"
-                            downloadState.installed -> "Add to Launcher"
+                            downloadState.installed -> I18n.s(R.string.ui_add_to_launcher)
                             else -> "Install"
                         },
                         color = if (downloadState.isActive) MaterialTheme.colorScheme.onError

@@ -135,7 +135,7 @@ class UnpackService : Service() {
             ACTION_CANCEL -> {
                 cancelled = true
                 runCatching { proc?.destroy() }
-                Log.i(TAG, "Cancel requested")
+                Log.i(TAG, I18n.s(R.string.ui_cancel_requested))
                 return START_NOT_STICKY
             }
             ACTION_START -> {
@@ -153,7 +153,7 @@ class UnpackService : Service() {
                 if (archives.isEmpty() || dest == null) { stopNow(); return START_NOT_STICKY }
                 // Refuse a second concurrent job — one at a time, like the DownloadCoordinator.
                 if (UnpackManager.current.isRunning) {
-                    Log.w(TAG, "Unpack already running; ignoring start")
+                    Log.w(TAG, I18n.s(R.string.ui_unpack_already_running_ignoring_start))
                     return START_NOT_STICKY
                 }
                 startForegroundCompat(buildNotification(UnpackManager.current.copy(
@@ -202,7 +202,7 @@ class UnpackService : Service() {
                     phase = UnpackPhase.EXTRACTING,
                     archiveType = when {
                         engine == "unarc" -> "FreeArc repack"
-                        isInno -> "InnoSetup installer"
+                        isInno -> I18n.s(R.string.ui_innosetup_installer)
                         else -> info?.type
                     },
                 )
@@ -372,7 +372,7 @@ class UnpackService : Service() {
             // Unwrap a single inner .tar (a .wcp/.tzst/.tar.gz decompresses to just its .tar) so one
             // action lands the real files. 7-Zip path only; best-effort; only when the first pass won.
             if (!isInno && !cancelled && result.exitCode <= 1) {
-                UnpackManager.update { it.copy(currentFile = "Unpacking inner archive…", percent = 0) }
+                UnpackManager.update { it.copy(currentFile = I18n.s(R.string.ui_unpacking_inner_archive), percent = 0) }
                 refresh()
                 runCatching {
                     SevenZip.unwrapSingleTar(

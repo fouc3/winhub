@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.system.Os
 import android.system.OsConstants
@@ -119,7 +122,7 @@ object XboxSaveSync {
         try {
             val game = XboxInstallState.get(app, uploader.productId) ?: return dirty
             val config = File(game.folder).listFiles()?.firstOrNull { it.name.equals("MicrosoftGame.config", ignoreCase = true) }
-                ?: return dirty.also { XboxDiag.log(app, "save uploader: the game has no MicrosoftGame.config") }
+                ?: return dirty.also { XboxDiag.log(app, I18n.s(R.string.ui_save_uploader_the_game_has_no_microsoftgame_config)) }
             val relative = runCatching { uploader.imagefsRoot.canonicalFile.toPath().relativize(config.canonicalFile.toPath()) }.getOrNull()
                 ?: return dirty
             val scids = dirty.mapNotNull { it.parentFile?.parentFile?.name }.distinct()

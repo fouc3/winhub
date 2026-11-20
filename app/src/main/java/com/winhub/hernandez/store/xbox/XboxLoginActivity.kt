@@ -101,7 +101,7 @@ class XboxLoginActivity : ComponentActivity() {
                                 runOnUiThread { if (active == session && trusted(view?.url.orEmpty())) view?.evaluateJavascript(
                                     "globalThis['CloudExperienceHost.Bridge.dispatchMessage'](${JSONObject.quote(message.toString())})", null) }
                             }
-                            else -> error("Unsupported Xbox sign-in response")
+                            else -> error(I18n.s(R.string.ui_unsupported_xbox_sign_in_response))
                         }
                     }
                     check(process.process.waitFor(5, TimeUnit.SECONDS) && process.process.exitValue() == 0 && ready && latest > 0 && session == 0L)
@@ -112,7 +112,7 @@ class XboxLoginActivity : ComponentActivity() {
                 val account = Xodus.run(applicationContext, listOf("account", "--json"), credentialGeneration = accountGeneration)
                 check(account.optBoolean("stored"))
                 XboxCredentials.lifecycle(this, accountGeneration) {
-                    val record = XboxAccountStore.read(this) ?: error("Xbox credentials missing")
+                    val record = XboxAccountStore.read(this) ?: error(I18n.s(R.string.ui_xbox_credentials_missing))
                     record.put("username", account.getString("username"))
                     XboxAccountStore.write(this, record)
                 }

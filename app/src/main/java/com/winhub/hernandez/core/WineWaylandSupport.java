@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 
 import com.winhub.hernandez.container.Container;
@@ -113,7 +116,7 @@ public final class WineWaylandSupport {
      */
     public static String problem(Context context, ContentsManager contentsManager, String identifier) {
         if (identifier == null || identifier.isEmpty()) return "No Wine/Proton layer is selected.";
-        if (WineInfo.isMainWineVersion(identifier)) return "The bundled Wine cannot run Wayland; pick the Wayland Proton layer.";
+        if (WineInfo.isMainWineVersion(identifier)) return I18n.s(R.string.ui_the_bundled_wine_cannot_run_wayland_pick_the_wayland_pro);
         try {
             WineInfo info = WineInfo.fromIdentifier(context, contentsManager, identifier);
             if (info == null || info.path == null || info.path.isEmpty())
@@ -123,7 +126,7 @@ public final class WineWaylandSupport {
             if (a.isFile() || b.isFile()) return null;
             return "winewayland.so is missing in " + info.path + "/lib/wine/aarch64-unix (or x86_64-unix).";
         } catch (Exception e) {
-            return "The layer could not be read: " + e.getMessage();
+            return I18n.s(R.string.ui_the_layer_could_not_be_read) + e.getMessage();
         }
     }
 

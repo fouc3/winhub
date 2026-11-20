@@ -252,7 +252,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                         onExport = { container ->
                             vm.exportContainer(container) { path ->
                                 val msg = if (path != null) "Exported to $path"
-                                else "Export failed or already exists"
+                                else I18n.s(R.string.ui_export_failed_or_already_exists)
                                 Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                             }
                         },
@@ -271,7 +271,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
     removeGameFor?.let { item ->
         val store = item.store.isNotEmpty()
         DeckConfirmDialog(
-            title = if (store) "Uninstall game?" else "Remove game?",
+            title = if (store) "Uninstall game?" else I18n.s(R.string.ui_remove_game_2),
             message = if (store)
                 "\"${item.shortcut.name}\" and its installed files will be deleted. Its container stays."
             else
@@ -303,7 +303,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
         DeckConfirmDialog(
             title = I18n.s(R.string.ui_remove_container),
             message = "The container \"${item.container.name}\" and everything in it will be deleted.",
-            confirmLabel = "Remove Container",
+            confirmLabel = I18n.s(R.string.ui_remove_container_2),
             danger = true,
             onDismiss = { removeContainerFor = null },
             onConfirm = {
@@ -598,7 +598,7 @@ private fun DeckCronosCard(
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            DeckOutlineButton(if (store) "Uninstall Game" else "Remove Game", onRemoveGame)
+            DeckOutlineButton(if (store) "Uninstall Game" else I18n.s(R.string.ui_remove_game), onRemoveGame)
             DeckDangerButton(I18n.s(R.string.ui_remove_container_2), onRemoveContainer)
         }
     }

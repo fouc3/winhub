@@ -109,7 +109,7 @@ fun DebugDialogContent(state: XServerDialogState) {
                     TextButton(onClick = {
                         // Copy the full accumulated log (incl. BCn transfer stats) to the clipboard.
                         clipboard.setText(AnnotatedString(logLines.joinToString("\n")))
-                        Toast.makeText(context, "Log copied", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_log_copied), Toast.LENGTH_SHORT).show()
                     }) {
                         Text(I18n.s(R.string.copy))
                     }

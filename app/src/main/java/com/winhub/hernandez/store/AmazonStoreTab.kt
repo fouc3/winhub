@@ -102,7 +102,7 @@ fun AmazonStoreTab(
                     query = query.trim(),
                     wide = wide,
                     storeLabel = "Amazon",
-                    emptyBody = "Nothing in your Amazon library matched that. New Prime Gaming claims appear after a sync.",
+                    emptyBody = I18n.s(R.string.ui_nothing_in_your_amazon_library_matched_that_new_prime_ga),
                     actionFor = ::actionFor,
                     onOpen = ::open,
                     onAction = ::open,
@@ -121,7 +121,7 @@ fun AmazonStoreTab(
                         onOpen = { open(h) },
                         onAction = { open(h) },
                         modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
-                        eyebrow = if (h.id in state.installedIds) "FROM YOUR LIBRARY" else "READY TO INSTALL",
+                        eyebrow = if (h.id in state.installedIds) "FROM YOUR LIBRARY" else I18n.s(R.string.ui_ready_to_install),
                     )
                 }
             }
@@ -148,8 +148,8 @@ fun AmazonStoreTab(
                         modifier = Modifier.weight(0.58f).fillMaxHeight().focusGroup(),
                         contentPadding = PaddingValues(bottom = 24.dp),
                     ) {
-                        catalogRail("Updates available", "Newer build on Amazon", updatable, "Amazon", ::actionFor, ::open, ::open)
-                        catalogRail("Installed", "Play now", installed, "Amazon", ::actionFor, ::open, ::open)
+                        catalogRail(I18n.s(R.string.ui_updates_available), I18n.s(R.string.ui_newer_build_on_amazon), updatable, "Amazon", ::actionFor, ::open, ::open)
+                        catalogRail("Installed", I18n.s(R.string.ui_play_now), installed, "Amazon", ::actionFor, ::open, ::open)
                         if (state.games.isEmpty()) item(key = "empty") { EmptyLibraryNotice(state) }
                     }
                 }
@@ -161,9 +161,9 @@ fun AmazonStoreTab(
                 ) {
                     item(key = "prime") { prime() }
                     item(key = "hero") { heroCard() }
-                    catalogRail("Ready to install", "Owned, not installed", notInstalled, "Amazon", ::actionFor, ::open, ::open)
-                    catalogRail("Updates available", "Newer build on Amazon", updatable, "Amazon", ::actionFor, ::open, ::open)
-                    catalogRail("Installed", "Play now", installed, "Amazon", ::actionFor, ::open, ::open)
+                    catalogRail(I18n.s(R.string.ui_ready_to_install_2), I18n.s(R.string.ui_owned_not_installed), notInstalled, "Amazon", ::actionFor, ::open, ::open)
+                    catalogRail(I18n.s(R.string.ui_updates_available), I18n.s(R.string.ui_newer_build_on_amazon), updatable, "Amazon", ::actionFor, ::open, ::open)
+                    catalogRail("Installed", I18n.s(R.string.ui_play_now), installed, "Amazon", ::actionFor, ::open, ::open)
                     if (state.games.isEmpty()) item(key = "empty") { EmptyLibraryNotice(state) }
                 }
             }
@@ -179,7 +179,7 @@ private fun EmptyLibraryNotice(state: AmazonLibraryState) {
         StoreNotice(
             title = I18n.s(R.string.ui_no_amazon_games_yet),
             body = I18n.s(R.string.ui_claim_games_on_prime_gaming_and_sync_they_show_up_her),
-            actionLabel = "Sync now",
+            actionLabel = I18n.s(R.string.ui_sync_now),
             onAction = { state.refresh(true) },
         )
     }
@@ -214,7 +214,7 @@ private fun PrimeGamingCard(onOpenWeb: (url: String, title: String) -> Unit, mod
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                text = "Amazon has no browsable catalog for third-party apps. Claim titles on Prime Gaming " +
+                text = I18n.s(R.string.ui_amazon_has_no_browsable_catalog_for_third_party_apps_cla) +
                     "in the in-app browser — they land in your library here after a sync.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -222,7 +222,7 @@ private fun PrimeGamingCard(onOpenWeb: (url: String, title: String) -> Unit, mod
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(
-                    onClick = { onOpenWeb("https://gaming.amazon.com/home", "Prime Gaming") },
+                    onClick = { onOpenWeb("https://gaming.amazon.com/home", I18n.s(R.string.ui_prime_gaming_2)) },
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.weight(1f).steamFocusRing(RoundedCornerShape(8.dp)).xmbInner(group, first = true),
                 ) { Text(I18n.s(R.string.ui_claim_free_games), maxLines = 1) }

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.deck
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.text.format.DateUtils
 import com.winhub.hernandez.container.Shortcut
@@ -38,7 +41,7 @@ internal fun readPlayStats(context: Context, shortcuts: List<Shortcut>): Map<Str
 internal fun playtimeLabel(ms: Long): String {
     val minutes = ms / 60_000L
     return when {
-        ms <= 0L -> "Not played yet"
+        ms <= 0L -> I18n.s(R.string.retro_info_never)
         minutes < 60L -> "${minutes.coerceAtLeast(1L)} min played"
         else -> "${"%.1f".format(ms / 3_600_000.0)} h played"
     }

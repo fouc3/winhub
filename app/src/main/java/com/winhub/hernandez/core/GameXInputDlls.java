@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -151,7 +154,7 @@ public final class GameXInputDlls {
         synchronized (LOCK) {
             File aside = new File(file.getParentFile(), file.getName() + DISABLED_SUFFIX);
             if (aside.exists()) {
-                log.add("left " + file + " in place: " + aside.getName() + " already exists (never overwritten)");
+                log.add("left " + file + " in place: " + aside.getName() + I18n.s(R.string.ui_already_exists_never_overwritten));
                 return false;
             }
             Properties m = load(manifest);
@@ -159,7 +162,7 @@ public final class GameXInputDlls {
             try {
                 store(m, manifest);
             } catch (Exception ex) {
-                log.add("left " + file + " in place: could not record it (" + ex + ")");
+                log.add("left " + file + I18n.s(R.string.ui_in_place_could_not_record_it) + ex + ")");
                 return false;
             }
             if (!file.renameTo(aside)) {
@@ -199,13 +202,13 @@ public final class GameXInputDlls {
                 File orig = new File(original);
                 File aside = new File(m.getProperty(original));
                 if (!aside.exists()) {
-                    log.add(orig + ": nothing to put back (" + aside.getName() + " is gone)");
+                    log.add(orig + I18n.s(R.string.ui_nothing_to_put_back) + aside.getName() + I18n.s(R.string.ui_is_gone));
                 } else if (orig.exists()) {
-                    log.add(orig + " exists again; " + aside.getName() + " left beside it, untouched");
+                    log.add(orig + I18n.s(R.string.ui_exists_again) + aside.getName() + I18n.s(R.string.ui_left_beside_it_untouched));
                 } else if (aside.renameTo(orig)) {
                     log.add("put back " + orig);
                 } else {
-                    log.add("could not put back " + orig + " (still " + aside.getName() + "); retried next time");
+                    log.add("could not put back " + orig + " (still " + aside.getName() + I18n.s(R.string.ui_retried_next_time));
                     continue;
                 }
                 m.remove(original);

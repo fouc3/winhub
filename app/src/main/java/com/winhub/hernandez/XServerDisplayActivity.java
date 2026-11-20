@@ -1,5 +1,8 @@
 package com.winhub.hernandez;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import static com.winhub.hernandez.core.AppUtils.showToast;
 
 import android.Manifest;
@@ -620,7 +623,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     }
                 }
             } catch (Throwable t) {
-                Log.w("XServerDisplayActivity", "Affinity drift-check tick failed", t);
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_affinity_drift_check_tick_failed), t);
             }
             affinityReapplyHandler.postDelayed(this, AFFINITY_DRIFT_CHECK_INTERVAL_MS);
         }
@@ -1461,7 +1464,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             Window focused = xServer.windowManager.getFocusedWindow();
             if (focused != null && focused.isApplicationWindow() && !focused.isDesktopWindow()) {
                 frameRatingWindowId = focused.id;
-                Log.d("XServerDisplayActivity", "Live HUD build: binding FPS counter to focused game window " + focused.id);
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_live_hud_build_binding_fps_counter_to_focused_game_windo) + focused.id);
             }
         } catch (Exception ignore) {}
     }
@@ -1834,7 +1837,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         for (short hz : distinct) rates[i++] = hz;
         randr.setRefreshRates(rates);
 
-        Log.d("XServerDisplayActivity", "RandR advertising refresh rates " + java.util.Arrays.toString(rates));
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_randr_advertising_refresh_rates) + java.util.Arrays.toString(rates));
     }
 
     private float pickHighestRefreshRate() {
@@ -1848,7 +1851,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     	    	maxRefresh = mode.getRefreshRate();
     	}
 
-    	Log.d("XServerDisplayActivity", "Picking refresh rate " + maxRefresh);
+    	Log.d("XServerDisplayActivity", I18n.s(R.string.ui_picking_refresh_rate) + maxRefresh);
 
         return maxRefresh;
     }
@@ -1944,7 +1947,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (isTimeoutEnabled) {
                 inputControlsView.releaseActiveControls();
                 inputControlsView.setVisibility(View.GONE);
-                Log.d("XServerDisplayActivity", "Touchscreen controls hidden after timeout.");
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_touchscreen_controls_hidden_after_timeout));
             }
         };
 
@@ -2045,7 +2048,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // warn (don't block — the count can be transiently >1 during splash/child popups) when
             // the user enables it with more than one mapped application window on screen.
             if (next && countMappedAppWindows() > 1)
-                showToast(this, "Native Rendering is best with a single fullscreen window — extra windows may be hidden");
+                showToast(this, I18n.s(R.string.ui_native_rendering_is_best_with_a_single_fullscreen_window));
             // Actually drive the renderer (this was previously only flipping the UI flag, so the
             // toggle had no effect and no "Native Rendering+ Enabled" toast). Native (direct
             // scanout) only exists on the Vulkan renderer.
@@ -2467,7 +2470,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         sessionDisplayId = com.winhub.hernandez.display.ExternalDisplay.currentDisplayId(this);
         if (tvLaunchDisplayId >= 0) {
             if (onTvLaunchDisplay()) {
-                Log.i("XServerDisplayActivity", "TV: session is on display " + sessionDisplayId + ", as asked");
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_session_is_on_display) + sessionDisplayId + I18n.s(R.string.ui_as_asked));
                 // The launcher put the handheld's companion screen up before starting us; tell it the
                 // session really did land on the TV, so it stops waiting and knows where to send input
                 // back to. This is the earliest honest answer — the window's display is known before
@@ -2478,9 +2481,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // and the unplug/pause watch never arms — there is no TV to lose. The user is told once
                 // from setupUI, where the toast host is up.
                 tvLaunchDeclined = true;
-                Log.w("XServerDisplayActivity", "TV: the system declined the launch on display "
-                        + tvLaunchDisplayId + " — the game is on the handheld (display " + sessionDisplayId
-                        + "), so this session is not a TV session");
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_tv_the_system_declined_the_launch_on_display)
+                        + tvLaunchDisplayId + I18n.s(R.string.ui_the_game_is_on_the_handheld_display) + sessionDisplayId
+                        + I18n.s(R.string.ui_so_this_session_is_not_a_tv_session));
                 // The launcher put the handheld's companion screen up before starting us, and it is now
                 // describing a TV this game is not on — with the game itself about to open behind it.
                 com.winhub.hernandez.display.TvCompanionActivity.dismiss("the launch display was declined");
@@ -2494,14 +2497,14 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
         // Log shortcut_path
         String shortcutPath = getIntent().getStringExtra("shortcut_path");
-        Log.d("XServerDisplayActivity", "Shortcut Path: " + shortcutPath);
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_shortcut_path) + shortcutPath);
 
 
         // Determine container ID
         int containerId = getIntent().getIntExtra("container_id", 0);
-        Log.d("XServerDisplayActivity", "Container ID from Intent: " + containerId);
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_container_id_from_intent) + containerId);
         if (containerId == 0) {
-            Log.d("XServerDisplayActivity", "Container ID is 0, attempting to parse from .desktop file");
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_container_id_is_0_attempting_to_parse_from_desktop_file));
             // Proceed with .desktop file parsing
         }
 
@@ -2510,7 +2513,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (containerId == 0 && shortcutPath != null && !shortcutPath.isEmpty()) {
             File shortcutFile = new File(shortcutPath);
             containerId = parseContainerIdFromDesktopFile(shortcutFile);
-            Log.d("XServerDisplayActivity", "Parsed Container ID from .desktop file: " + containerId);
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_parsed_container_id_from_desktop_file) + containerId);
         }
 
         // Initialize playtime tracking
@@ -2521,23 +2524,23 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (shortcutPath != null && !shortcutPath.isEmpty()) {
             if (shortcutName == null || shortcutName.isEmpty()) {
                 shortcutName = parseShortcutNameFromDesktopFile(new File(shortcutPath));
-                Log.d("XServerDisplayActivity", "Parsed Shortcut Name from .desktop file: " + shortcutName);
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_parsed_shortcut_name_from_desktop_file) + shortcutName);
             }
         } else {
-            Log.d("XServerDisplayActivity", "No shortcut path provided, skipping shortcut parsing.");
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_no_shortcut_path_provided_skipping_shortcut_parsing));
         }
 
         // Increment play count at the start of a session
         incrementPlayCount();
 
         // Log the final container_id
-        Log.d("XServerDisplayActivity", "Final Container ID: " + containerId);
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_final_container_id) + containerId);
 
         // Retrieve the container and check if it's null
         container = containerManager.getContainerById(containerId);
 
         if (container == null) {
-            Log.e("XServerDisplayActivity", "Failed to retrieve container with ID: " + containerId);
+            Log.e("XServerDisplayActivity", I18n.s(R.string.ui_failed_to_retrieve_container_with_id) + containerId);
             finish();  // Gracefully exit the activity to avoid crashing
             return;
         }
@@ -2549,7 +2552,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // Steam cloud-save auto-triggers at launch/exit (all their DB reads threw and were caught).
         // getInstance(ctx) is idempotent + lightweight (SQLiteOpenHelper, no CM connection).
         try { SteamDatabase.getInstance(getApplicationContext()); }
-        catch (Throwable t) { Log.w("XServerDisplayActivity", "SteamDatabase init failed", t); }
+        catch (Throwable t) { Log.w("XServerDisplayActivity", I18n.s(R.string.ui_steamdatabase_init_failed), t); }
 
         // Construct the shortcut (if any) up front so per-game overrides (frame-gen engine, fps
         // limiter, renderer) can be resolved against it below; each falls back to the container value.
@@ -2574,7 +2577,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             com.winhub.hernandez.store.InGameFriendsSource.INSTANCE.arm(getApplicationContext(),
                     shortcut != null && "RealSteam".equals(shortcut.getExtra("launchMode")));
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "InGameFriendsSource arm failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_ingamefriendssource_arm_failed), t);
         }
 
         // Sync the in-game frame-generation controls. bionicFgActive = is a frame-gen layer actually
@@ -2707,7 +2710,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
         // Determine the class name for the startup workarounds
         String wmClass = shortcut != null ? shortcut.getExtra("wmClass", "") : "";
-        Log.d("XServerDisplayActivity", "Startup wmClass: " + wmClass);
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_startup_wmclass) + wmClass);
 
         firstTimeBoot = container.getExtra("appVersion").isEmpty();
 
@@ -2724,7 +2727,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             Log.w("XServerDisplayActivity", "wayland: layer " + wineVersion + " (" + wineInfo.path
                     + ") lacks winewayland.so; launching on X11");
             waylandMode = false;
-            Toast.makeText(this, "Wayland needs the Wayland Proton layer (11.0-2.1 arm64ec); launching on X11.",
+            Toast.makeText(this, I18n.s(R.string.ui_wayland_needs_the_wayland_proton_layer_11_0_2_1_arm64ec),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -2752,7 +2755,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
         // Log the entire intent to verify the extras
         Intent intent = getIntent();
-        Log.d("XServerDisplayActivity", "Intent Extras: " + intent.getExtras());
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_intent_extras) + intent.getExtras());
 
         if (shortcut != null) {
             graphicsDriver = shortcut.getExtra("graphicsDriver", container.getGraphicsDriver());
@@ -2782,7 +2785,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 double sharpnessDenoise = Double.parseDouble(shortcut.getExtra("sharpnessDenoise", "100"));
                 vkbasaltConfig = "effects=" + sharpnessEffect.toLowerCase() + ";" + "casSharpness=" + sharpnessLevel / 100 + ";" + "dlsSharpness=" + sharpnessLevel / 100  + ";" + "dlsDenoise=" + sharpnessDenoise / 100 + ";" + "enableOnLaunch=True";
             }
-            Log.d("XServerDisplayActivity", "XInput Disabled from Shortcut: " + xinputDisabledFromShortcut);
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_xinput_disabled_from_shortcut) + xinputDisabledFromShortcut);
         }
 
         // DirectAudio's winedirectaudio.drv only loads on the arm64ec Proton builds listed in
@@ -2843,7 +2846,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // be restored from a backup onto a phone that does have the sensor, and silently downgrading
         // it here would lose the user's choice for good.
         if (gyroMode == WinHandler.GYRO_MODE_ORIENTATION && gyroRotationSensor == null) {
-            Log.i("XServerGyro", "Gyro orientation mode requested but no rotation-vector sensor — running rate mode");
+            Log.i("XServerGyro", I18n.s(R.string.ui_gyro_orientation_mode_requested_but_no_rotation_vector_s));
             gyroMode = WinHandler.GYRO_MODE_RATE;
         }
         // The mouse target can't be driven by an absolute tilt (see WinHandler.sanitizeGyroMode);
@@ -2889,7 +2892,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 com.winhub.hernandez.ui.screens.LaunchSpecBuilderKt.buildLaunchSpec(shortcut, this),
                 com.winhub.hernandez.ui.screens.LaunchSpecBuilderKt.buildLaunchDetails(shortcut));
         }
-        preloaderDialog.step(1, "Preparing container…");
+        preloaderDialog.step(1, I18n.s(R.string.ui_preparing_container));
 
         // TV render resolution (v2): when launching with an external display connected, honor the TV
         // render-resolution choice (2 = 1080p, 3 = 1440p) before ScreenInfo is built. "Match TV" (0) /
@@ -2922,12 +2925,12 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         com.winhub.hernandez.display.ExternalDisplay.effectiveMode(tvDisplay,
                                 com.winhub.hernandez.display.ExternalDisplay.modeId(shortcut)));
                 if (!tvSize.isEmpty()) {
-                    Log.i("XServerDisplayActivity", "TV: matching the display's resolution — screen size "
+                    Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_matching_the_display_s_resolution_screen_size)
                             + screenSize + " -> " + tvSize);
                     screenSize = tvSize;
                 }
             } catch (Exception e) {
-                Log.w("XServerDisplayActivity", "TV: could not read the display's resolution", e);
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_tv_could_not_read_the_display_s_resolution), e);
             }
         }
 
@@ -3021,10 +3024,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
             @Override
             public void onMapWindow(Window window) {
                 // Log the class name of the mapped window
-                Log.d("XServerDisplayActivity", "onMapWindow: Detected window className: " + window.getClassName());
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_onmapwindow_detected_window_classname) + window.getClassName());
                 // A window mapped (before its content paints) — nudge the tail label so the user sees
                 // progress past the guest-boot spinner. The real dismiss is still onUpdateWindowContent.
-                if (!winStarted) preloaderDialog.enterGuest("Game window detected…");
+                if (!winStarted) preloaderDialog.enterGuest(I18n.s(R.string.ui_game_window_detected));
                 assignTaskAffinity(window);
             }
 
@@ -3110,7 +3113,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     // Every step of this stage prepares a WINE PREFIX: the display driver into its
                     // registry, its system files, install scripts, audio driver, refresh unlock, the
                     // Epic overlay.
-                    preloaderDialog.step(2, "Preparing Wine & graphics driver…");
+                    preloaderDialog.step(2, I18n.s(R.string.ui_preparing_wine_graphics_driver));
                     setWineDisplayDriver();   // BEFORE setupWineSystemFiles starts the first wineserver
                     // Controller input log (Log Manager, default off): this launch's recorder, before
                     // the controller setup below starts filling it.
@@ -3125,19 +3128,19 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     changeWineAudioDriver();
                     applyGameRefreshRateUnlock();
                     provisionEpicOverlay();
-                    stage[0] = "Preparing the Xbox game";
+                    stage[0] = I18n.s(R.string.ui_preparing_the_xbox_game);
                     prepareXboxLaunch();
-                    stage[0] = "Building environment";
+                    stage[0] = I18n.s(R.string.ui_building_environment);
                     setupXEnvironment();
                 } catch (Exception e) {
-                    Log.e("XServerDisplayActivity", "Launch setup failed at stage: " + stage[0], e);
+                    Log.e("XServerDisplayActivity", I18n.s(R.string.ui_launch_setup_failed_at_stage) + stage[0], e);
                     final String stageName = stage[0];
                     final String detail = e.getMessage();
                     final String logDir = com.winhub.hernandez.core.LogLocation.resolveLogDir(this).getAbsolutePath();
                     final boolean loggingEnabled = isLaunchLoggingEnabled();
                     runOnUiThread(() -> {
                         cancelLaunchTimers();
-                        preloaderDialog.fail(stageName, "Setup step failed", detail, logDir, loggingEnabled);
+                        preloaderDialog.fail(stageName, I18n.s(R.string.ui_setup_step_failed), detail, logDir, loggingEnabled);
                     });
                 }
             });
@@ -3279,19 +3282,19 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (warmupSeenAt == 0) { warmupSeenAt = now; return; }
             if (now - warmupSeenAt < WARMUP_WFM_SETTLE_MS) return;
             if (!startShortcutInSession()) { stopFirstLaunchWarmup("the game could not be started"); return; }
-            Log.i("XServerDisplayActivity", "first launch: container is up, started " + shortcut.path);
+            Log.i("XServerDisplayActivity", I18n.s(R.string.ui_first_launch_container_is_up_started) + shortcut.path);
             warmupPhase = 2;
             warmupPhaseStartedAt = now;
             warmupSeenAt = 0;
         } else {
             if (!names.contains(warmupGameProcess())) {
-                if (now - warmupPhaseStartedAt > WARMUP_GIVE_UP_MS) stopFirstLaunchWarmup("the game never appeared; leaving the file manager open");
+                if (now - warmupPhaseStartedAt > WARMUP_GIVE_UP_MS) stopFirstLaunchWarmup(I18n.s(R.string.ui_the_game_never_appeared_leaving_the_file_manager_open));
                 return;
             }
             if (warmupSeenAt == 0) { warmupSeenAt = now; return; }
             if (now - warmupSeenAt < WARMUP_GAME_SETTLE_MS) return;
             if (winHandler != null) winHandler.killProcess("wfm.exe");
-            stopFirstLaunchWarmup("the game is up; closed the file manager");
+            stopFirstLaunchWarmup(I18n.s(R.string.ui_the_game_is_up_closed_the_file_manager));
         }
     }
 
@@ -3321,7 +3324,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     }
                 }
             } catch (IOException | NumberFormatException e) {
-                Log.e("XServerDisplayActivity", "Error parsing container_id from .desktop file", e);
+                Log.e("XServerDisplayActivity", I18n.s(R.string.ui_error_parsing_container_id_from_desktop_file), e);
             }
         }
         return containerId;
@@ -3526,8 +3529,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // here as before — there is no onStop worth waiting for.
         if (!isInPictureInPictureMode() && onTvLaunchDisplay() && !isFinishing() && !isDestroyed()) {
             tvSuspendDeferred = true;
-            Log.i("XServerDisplayActivity", "TV: paused but still on display " + sessionDisplayId
-                    + " — leaving the game running");
+            Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_paused_but_still_on_display) + sessionDisplayId
+                    + I18n.s(R.string.ui_leaving_the_game_running));
             return;
         }
 
@@ -3750,7 +3753,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             FileUtils.writeString(confFile, toml);
         }
         catch (Exception e) {
-            Log.e("WinFG", "Failed to write win-fg conf.toml", e);
+            Log.e("WinFG", I18n.s(R.string.ui_failed_to_write_win_fg_conf_toml), e);
         }
     }
 
@@ -3782,7 +3785,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             FileUtils.writeString(confFile, toml);
         }
         catch (Exception e) {
-            Log.e("lsfg-vk", "Failed to write lsfg-vk conf.toml", e);
+            Log.e("lsfg-vk", I18n.s(R.string.ui_failed_to_write_lsfg_vk_conf_toml), e);
         }
     }
 
@@ -3838,7 +3841,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 lsfgNativeStatus = status;
                 if (status != com.winhub.hernandez.core.LsfgNative.STATUS_OK) {
-                    Log.e("XServerDisplayActivity", "LSFG Native unavailable: "
+                    Log.e("XServerDisplayActivity", I18n.s(R.string.ui_lsfg_native_unavailable)
                         + com.winhub.hernandez.core.LsfgNative.explain(status));
                     refreshNativeFgAvailability(true, 0);
                     return;
@@ -3900,7 +3903,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         com.winhub.hernandez.renderer.vulkan.VulkanRenderer vkr = vulkanRendererOrNull();
         if (vkr == null) {
             Log.w("XServerDisplayActivity",
-                "applyLsfgNative(" + multiplier + ") ignored - no Vulkan renderer");
+                "applyLsfgNative(" + multiplier + I18n.s(R.string.ui_ignored_no_vulkan_renderer));
             return;
         }
         Log.i("XServerDisplayActivity", "applyLsfgNative: multiplier=" + multiplier
@@ -3957,7 +3960,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (!lsfg && !winfg) return "";
         final String name = lsfg ? "LSFG Native" : "Win-FG Native";
         if (lsfg && lsfgNativeStatus > com.winhub.hernandez.core.LsfgNative.STATUS_OK)
-            return "LSFG Native can't start: "
+            return I18n.s(R.string.ui_lsfg_native_can_t_start)
                 + com.winhub.hernandez.core.LsfgNative.explain(lsfgNativeStatus) + ".";
         if (waylandMode) {
             // The Wayland compositor is always Vulkan (Turnip via adrenotools); the verdict comes
@@ -3966,15 +3969,15 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 case com.winhub.hernandez.renderer.vulkan.VulkanRenderer.FG_PROBLEM_DRIVER: {
                     String caps = com.winhub.hernandez.wayland.WaylandCompositor.nativeFrameGenCapsReason();
                     boolean version = caps != null && caps.contains("Vulkan version below");
-                    return name + " can't run on this Renderer Driver: "
+                    return name + I18n.s(R.string.ui_can_t_run_on_this_renderer_driver)
                         + (version ? "it needs Vulkan 1.3, which this driver doesn't provide."
                                    : "this driver is missing a feature it needs.")
-                        + " In this container's settings, set Renderer Driver to a Turnip driver,"
+                        + I18n.s(R.string.ui_in_this_container_s_settings_set_renderer_driver_to_a_tu)
                         + " then relaunch the game.";
                 }
                 case com.winhub.hernandez.renderer.vulkan.VulkanRenderer.FG_PROBLEM_START_FAILED:
-                    return name + " couldn't start in the Wayland compositor. In this container's"
-                        + " settings, try a Turnip driver under Renderer Driver, then relaunch the game.";
+                    return name + I18n.s(R.string.ui_couldn_t_start_in_the_wayland_compositor_in_this_contain)
+                        + I18n.s(R.string.ui_settings_try_a_turnip_driver_under_renderer_driver_then);
                 case com.winhub.hernandez.renderer.vulkan.VulkanRenderer.FG_PROBLEM_NONE:
                     return "";
                 default:
@@ -3983,7 +3986,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         }
         if (!"vulkan".equalsIgnoreCase(resolvedRenderer()))
             return getString(R.string.frame_generation_requires_vulkan)
-                + " Change Renderer in this container's settings, then relaunch the game.";
+                + I18n.s(R.string.ui_change_renderer_in_this_container_s_settings_then_relaun);
         com.winhub.hernandez.renderer.vulkan.VulkanRenderer vkr = vulkanRendererOrNull();
         if (vkr == null) return null;
         switch (vkr.getFrameGenProblem()) {
@@ -3995,18 +3998,18 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 boolean offerCompat = lsfg && version
                     && com.winhub.hernandez.FeatureFlags.LSFG_NATIVE_EXPERIMENTS_ENABLED
                     && container != null && !container.isLsfgVk11Compat();
-                return name + " can't run on this Renderer Driver: "
+                return name + I18n.s(R.string.ui_can_t_run_on_this_renderer_driver)
                     + (version ? "it needs Vulkan 1.3, which this driver doesn't provide."
                                : "this driver is missing a feature it needs.")
-                    + " In this container's settings, set Renderer Driver to a Turnip driver,"
+                    + I18n.s(R.string.ui_in_this_container_s_settings_set_renderer_driver_to_a_tu)
                     + (offerCompat
                         ? " or turn on \"" + getString(R.string.lsfg_vk11_compat) + "\","
                         : "")
                     + " then relaunch the game.";
             }
             case com.winhub.hernandez.renderer.vulkan.VulkanRenderer.FG_PROBLEM_START_FAILED:
-                return name + " couldn't start on this Renderer Driver. In this container's"
-                    + " settings, try a Turnip driver under Renderer Driver, then relaunch the game.";
+                return name + I18n.s(R.string.ui_couldn_t_start_on_this_renderer_driver_in_this_container)
+                    + I18n.s(R.string.ui_settings_try_a_turnip_driver_under_renderer_driver_then);
             case com.winhub.hernandez.renderer.vulkan.VulkanRenderer.FG_PROBLEM_NONE:
                 return "";
             default:
@@ -4052,7 +4055,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     private void onNativeFgFailed() {
         String reason = nativeFgProblemReason();
         if (reason == null || reason.isEmpty())
-            reason = "Frame generation couldn't start on this device.";
+            reason = I18n.s(R.string.ui_frame_generation_couldn_t_start_on_this_device);
         setNativeFgProblem(reason, true);
         XServerDrawerState s = XServerDrawerState.INSTANCE;
         s.setFrameGenMultiplier(0);
@@ -4073,7 +4076,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         com.winhub.hernandez.renderer.vulkan.VulkanRenderer vkr = vulkanRendererOrNull();
         if (vkr == null) {
             Log.w("XServerDisplayActivity",
-                "applyWinFgNative(" + multiplier + ") ignored - no Vulkan renderer");
+                "applyWinFgNative(" + multiplier + I18n.s(R.string.ui_ignored_no_vulkan_renderer));
             return;
         }
         Log.i("XServerDisplayActivity", "applyWinFgNative: multiplier=" + multiplier
@@ -4465,7 +4468,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     com.winhub.hernandez.reshade.ReshadeManager.findEffect(this, entry.name);
                 if (effect == null) {
                     // Skip-and-continue: one missing effect must not kill the rest of the chain.
-                    Log.w("VkBasalt", "ReShade loadout effect not found, skipping: " + entry.name);
+                    Log.w("VkBasalt", I18n.s(R.string.ui_reshade_loadout_effect_not_found_skipping) + entry.name);
                     continue;
                 }
 
@@ -4478,7 +4481,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     FileUtils.delete(destDir);
                     destDir.mkdirs();
                     if (!FileUtils.copy(effect.dir, destDir)) {
-                        Log.e("VkBasalt", "Failed to stage ReShade effect folder: " + effect.dir);
+                        Log.e("VkBasalt", I18n.s(R.string.ui_failed_to_stage_reshade_effect_folder) + effect.dir);
                         continue;
                     }
                 }
@@ -4512,7 +4515,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
 
             if (chain.length() == 0) {
-                Log.w("VkBasalt", "No ReShade loadout effects could be staged; skipping conf");
+                Log.w("VkBasalt", I18n.s(R.string.ui_no_reshade_loadout_effects_could_be_staged_skipping_conf));
                 return null;
             }
 
@@ -4537,10 +4540,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
             File confFile = new File(configDir, "vkBasalt.conf");
             FileUtils.writeString(confFile, sb.toString());
             String confPath = confFile.getAbsolutePath();
-            Log.d("VkBasalt", "Wrote ReShade loadout conf (" + chain + ") -> " + confPath);
+            Log.d("VkBasalt", I18n.s(R.string.ui_wrote_reshade_loadout_conf) + chain + ") -> " + confPath);
             return confPath;
         } catch (Exception e) {
-            Log.e("VkBasalt", "Failed to write ReShade vkBasalt.conf", e);
+            Log.e("VkBasalt", I18n.s(R.string.ui_failed_to_write_reshade_vkbasalt_conf), e);
             return null;
         }
     }
@@ -4877,7 +4880,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             shortcut.putExtra("envVars", sb.toString());
             shortcut.saveData();
         } catch (Throwable t) {
-            android.util.Log.w("ALSAAudio", "persistAudioToShortcut failed", t);
+            android.util.Log.w("ALSAAudio", I18n.s(R.string.ui_persistaudiotoshortcut_failed), t);
         }
     }
 
@@ -4911,7 +4914,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
             com.winhub.hernandez.alsaserver.ALSAClient.nativeSetAudioConfig(perf, adaptive, bf, mbf);
         } catch (Throwable t) {
-            android.util.Log.w("ALSAAudio", "applyAlsaAudioConfig failed", t);
+            android.util.Log.w("ALSAAudio", I18n.s(R.string.ui_applyalsaaudioconfig_failed), t);
         }
     }
 
@@ -4968,7 +4971,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             rt.delete();
             envVars.put("BANNER_AUDIO_DIRECT_RUNTIME", rt.getAbsolutePath());
         } catch (Throwable t) {
-            android.util.Log.w("DirectAudio", "applyDirectAudioConfig failed", t);
+            android.util.Log.w("DirectAudio", I18n.s(R.string.ui_applydirectaudioconfig_failed), t);
         }
     }
 
@@ -5047,7 +5050,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             FileUtils.writeString(marker, tag);
             android.util.Log.i("DirectAudio", "overlaid bundled driver v" + want + " (" + build + "/" + sdk + ") -> " + layer.getName());
         } catch (Throwable t) {
-            android.util.Log.w("DirectAudio", "driver overlay failed (keeping existing)", t);
+            android.util.Log.w("DirectAudio", I18n.s(R.string.ui_driver_overlay_failed_keeping_existing), t);
         }
     }
 
@@ -5095,7 +5098,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 os.write(sb.toString().getBytes());
             }
         } catch (Throwable t) {
-            android.util.Log.w("DirectAudio", "writeDirectAudioRuntime failed", t);
+            android.util.Log.w("DirectAudio", I18n.s(R.string.ui_writedirectaudioruntime_failed), t);
         }
     }
 
@@ -5266,7 +5269,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // Wait for the first segment (~2-4s of video) before pointing the TV at the playlist.
                 long deadline = System.currentTimeMillis() + 15000;
                 while (!seg.hasSegments() && System.currentTimeMillis() < deadline) Thread.sleep(200);
-                if (!seg.hasSegments()) { castFail("No video yet — try again."); return; }
+                if (!seg.hasSegments()) { castFail(I18n.s(R.string.ui_no_video_yet_try_again)); return; }
                 String ip = com.winhub.hernandez.cast.HttpFileServer.localIpv4();
                 if (ip == null) { castFail("Couldn't find this phone's Wi-Fi address."); return; }
                 castHttp = new com.winhub.hernandez.cast.HttpFileServer(seg);
@@ -5274,23 +5277,23 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // Cast the master (multivariant) playlist so the receiver sees the CODECS up front.
                 String url = "http://" + ip + ":" + port + "/master.m3u8";
                 android.util.Log.i("CastSession", "live url: " + url);
-                runOnUiThread(() -> XServerDialogState.INSTANCE.setCastStatusDetail("Sending to the TV…"));
+                runOnUiThread(() -> XServerDialogState.INSTANCE.setCastStatusDetail(I18n.s(R.string.ui_sending_to_the_tv)));
                 castSession = new com.winhub.hernandez.cast.CastSession(device.host,
                         new com.winhub.hernandez.cast.CastSession.Callback() {
                     @Override public void onConnected() {
-                        runOnUiThread(() -> XServerDialogState.INSTANCE.setCastStatusDetail("Loading on the TV…"));
+                        runOnUiThread(() -> XServerDialogState.INSTANCE.setCastStatusDetail(I18n.s(R.string.ui_loading_on_the_tv)));
                     }
                     @Override public void onLoaded() {
                         runOnUiThread(() -> {
                             XServerDialogState.INSTANCE.setCastStatus(XServerDialogState.CastStatus.CONNECTED);
-                            XServerDialogState.INSTANCE.setCastStatusDetail("Live on your TV (a few seconds behind).");
+                            XServerDialogState.INSTANCE.setCastStatusDetail(I18n.s(R.string.ui_live_on_your_tv_a_few_seconds_behind));
                         });
                     }
                     @Override public void onError(String message) { castFail(message); }
                 });
                 castSession.connectAndLoad(url, "application/vnd.apple.mpegurl", "LIVE");
             } catch (Exception e) {
-                castFail("Cast failed: " + e.getMessage());
+                castFail(I18n.s(R.string.ui_cast_failed) + e.getMessage());
             }
         }, "cast-start").start();
     }
@@ -5582,7 +5585,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                             com.winhub.hernandez.communityconfigs.GameDoctor.INSTANCE.autoStepDown(
                                     getApplicationContext(), shortcut, sessionStartedAt);
                         } catch (Exception e) {
-                            Log.w("XServerDisplayActivity", "Game Doctor auto step-down errored", e);
+                            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_game_doctor_auto_step_down_errored), e);
                         }
                     }
                     // Controller input log: first, because it is quick and the network steps below may be
@@ -5630,7 +5633,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         try {
                             SteamAchievementStore.flushPendingSyncBack(getApplicationContext());
                         } catch (Throwable t) {
-                            Log.w("BH_STEAM_ACHV", "flushPendingSyncBack on exit errored", t);
+                            Log.w("BH_STEAM_ACHV", I18n.s(R.string.ui_flushpendingsyncback_on_exit_errored), t);
                         }
                         // SteamLite (Steam client) logs — fold the genuine client's own logs from this
                         // container's prefix into a single shareable steamlite.txt beside wine_debug.log,
@@ -5708,7 +5711,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 try {
                     com.winhub.hernandez.store.xbox.XboxSaveSync.finish(getApplicationContext(), exeName, 25000L, saveRoot, savesSince, 30000L, uploader);
                 } catch (Throwable t) {
-                    Log.w("XServerDisplayActivity", "Xbox save sync on exit failed", t);
+                    Log.w("XServerDisplayActivity", I18n.s(R.string.ui_xbox_save_sync_on_exit_failed), t);
                 } finally {
                     try { closeXboxSession(); } catch (Throwable ignored) {}
                     handler.postAtTime(teardown, teardownAt);
@@ -5728,7 +5731,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
      * session can never be swept.
      */
     private void sweepStaleWineProcesses() {
-        Log.d("XServerDisplayActivity", "Sweeping stale wine processes from previous session");
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_sweeping_stale_wine_processes_from_previous_session));
         ProcessHelper.terminateAllWineProcessesAndWait(1500, true);
     }
 
@@ -5842,7 +5845,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     }
 
                     if (appId <= 0 || installDir.isEmpty()) {
-                        Log.w("BH_SAVE_SYNC", "auto-collect: could not resolve appId for " + execPath);
+                        Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_collect_could_not_resolve_appid_for) + execPath);
                         latch.countDown();
                         return;
                     }
@@ -5852,11 +5855,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
                             new SteamCloudSaveManager.Callback() {
                                 @Override public void onStatus(String message) {}
                                 @Override public void onDone(String summary) {
-                                    Log.i("BH_SAVE_SYNC", "auto-collect on exit (appId " + fAppId + "): " + summary);
+                                    Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_collect_on_exit_appid) + fAppId + "): " + summary);
                                     latch.countDown();
                                 }
                                 @Override public void onError(String message) {
-                                    Log.w("BH_SAVE_SYNC", "auto-collect on exit failed (appId " + fAppId + "): " + message);
+                                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_collect_on_exit_failed_appid) + fAppId + "): " + message);
                                     latch.countDown();
                                 }
                             });
@@ -5968,7 +5971,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             com.winhub.hernandez.store.steamscript.InstallScriptExecutor.applyLocalStagesForLaunch(
                     this, container, appId, exe.getAbsolutePath());
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "installScript pre-launch pass failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_installscript_pre_launch_pass_failed), t);
         }
     }
 
@@ -6043,14 +6046,14 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // — AFTER the pre-launch Steam Cloud pull and achievement seed, which still ride it.
                 armAgentWatchdog();
             } else {
-                Log.w("BH_REALSTEAM", "RealSteam prep incomplete — falling back to normal launch");
+                Log.w("BH_REALSTEAM", I18n.s(R.string.ui_realsteam_prep_incomplete_falling_back_to_normal_launch));
                 closeAgentChannel();
             }
         } catch (Throwable t) {
             // Never let a RealSteam setup failure abort the launch — fall through to the normal path.
             realSteamPlan = null;
             closeAgentChannel();
-            Log.w("BH_REALSTEAM", "RealSteam setup errored — falling back to normal launch", t);
+            Log.w("BH_REALSTEAM", I18n.s(R.string.ui_realsteam_setup_errored_falling_back_to_normal_launch), t);
         }
     }
 
@@ -6114,7 +6117,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 String chunk = new String(buf, 0, Math.max(n, 0), java.nio.charset.StandardCharsets.UTF_8);
                 if (eaAbortSeenAt == 0 && (chunk.contains("Aborting game launch") || chunk.contains("Failed to request new license"))) {
                     eaAbortSeenAt = android.os.SystemClock.uptimeMillis();
-                    Log.w("BH_REALSTEAM", "EA Desktop aborted the launch (licence refused)");
+                    Log.w("BH_REALSTEAM", I18n.s(R.string.ui_ea_desktop_aborted_the_launch_licence_refused));
                 }
                 int i = chunk.indexOf("\"OOALaunchFailure\":\"");
                 if (i >= 0) {
@@ -6136,19 +6139,19 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (reason == null) return "EA Desktop refused to license the game and did not start it.";
         String r = reason.toLowerCase();
         if (r.contains("concurrency") || r.contains("limit"))
-            return "EA's activation limit for this game was hit: too many activations in a short time, or too many "
-                    + "computers holding it (every WinHub container counts as a separate PC to EA).";
+            return I18n.s(R.string.ui_ea_s_activation_limit_for_this_game_was_hit_too_many_act)
+                    + I18n.s(R.string.ui_computers_holding_it_every_winhub_container_counts_as_a);
         if (r.contains("entitle") || r.contains("not owned") || r.contains("ownership"))
-            return "EA reports this account does not own the game.";
+            return I18n.s(R.string.ui_ea_reports_this_account_does_not_own_the_game);
         if (r.contains("offline") || r.contains("network") || r.contains("connect"))
-            return "EA Desktop could not reach EA's licence servers.";
-        return "EA Desktop refused to license the game and did not start it.";
+            return I18n.s(R.string.ui_ea_desktop_could_not_reach_ea_s_licence_servers);
+        return I18n.s(R.string.ui_ea_desktop_refused_to_license_the_game_and_did_not_start);
     }
 
     private void showEaRefusal(String reason) {
         if (eaRefusalShown) return;
         eaRefusalShown = true;
-        Log.w("BH_REALSTEAM", "EA refused the licence (" + reason + ") — showing the EA card");
+        Log.w("BH_REALSTEAM", I18n.s(R.string.ui_ea_refused_the_licence) + reason + I18n.s(R.string.ui_showing_the_ea_card));
         eaRefusalHandler.removeCallbacks(eaRefusalWatchRunnable);
         final String logDir = com.winhub.hernandez.core.LogLocation.resolveLogDir(this).getAbsolutePath();
         final boolean logging = isLaunchLoggingEnabled();
@@ -6174,7 +6177,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     exit();
                 }));
             }
-            preloaderDialog.fail("EA Desktop", "EA Desktop couldn't start " + game, detail, logDir, logging, actions);
+            preloaderDialog.fail("EA Desktop", I18n.s(R.string.ui_ea_desktop_couldn_t_start) + game, detail, logDir, logging, actions);
         });
     }
 
@@ -6189,11 +6192,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
     private final Runnable agentWatchdogRunnable = () -> {
         if (agentLoginResolved || winStarted || exiting) return;
         if (!agentConnected) {
-            Log.i(AGENT_TAG, "watchdog: agent never connected (no channel support?) — leaving the launch alone");
+            Log.i(AGENT_TAG, I18n.s(R.string.ui_watchdog_agent_never_connected_no_channel_support_leavin));
             return;
         }
         Log.w(AGENT_TAG, "watchdog: no sign-in result from the agent within " + (AGENT_LOGIN_TIMEOUT_MS / 1000) + "s");
-        showAgentFailure("Steam sign-in",
+        showAgentFailure(I18n.s(R.string.ui_steam_sign_in),
                 "Steam sign-in did not complete",
                 "The Steam client inside the container reported no sign-in result within "
                         + (AGENT_LOGIN_TIMEOUT_MS / 1000) + "s.");
@@ -6203,7 +6206,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             new com.winhub.hernandez.store.SteamAgentChannel.Listener() {
         @Override public void onAgentConnected() {
             agentConnected = true;
-            preloaderHint("Steam client started — signing in…");
+            preloaderHint(I18n.s(R.string.ui_steam_client_started_signing_in));
         }
         @Override public void onAgentDisconnected() {
             // game_exited / shutdown already said why; the Friends tab swaps to its "relay stopped" line.
@@ -6212,27 +6215,27 @@ public class XServerDisplayActivity extends AppCompatActivity {
         @Override public void onAgentEvent(String ev, org.json.JSONObject obj) {
             switch (ev) {
                 case "started":
-                    preloaderHint("Signing in to Steam…");
+                    preloaderHint(I18n.s(R.string.ui_signing_in_to_steam));
                     break;
                 case "logged_in":
                     agentLoginResolved = true;
-                    preloaderHint("Signed in to Steam — launching the game…");
+                    preloaderHint(I18n.s(R.string.ui_signed_in_to_steam_launching_the_game));
                     break;
                 case "login_failed": {
                     agentLoginResolved = true;
                     int er = obj.optInt("eresult", 0);
                     String reason = obj.optString("reason", "");
-                    showAgentFailure("Steam sign-in",
+                    showAgentFailure(I18n.s(R.string.ui_steam_sign_in),
                             "Steam rejected the sign-in" + (reason.isEmpty() ? "" : " (" + reason + ")"),
                             (er != 0 ? "EResult " + er + " — " : "")
-                                    + "The saved Steam sign-in did not work inside the container. "
-                                    + "Retry, sign in again from the Steam tab, or launch offline with Goldberg.");
+                                    + I18n.s(R.string.ui_the_saved_steam_sign_in_did_not_work_inside_the_containe)
+                                    + I18n.s(R.string.ui_retry_sign_in_again_from_the_steam_tab_or_launch_offline));
                     break;
                 }
                 case "appinfo": {
                     String st = obj.optString("state", "");
                     if ("not_installed".equals(st) || "timeout".equals(st))
-                        preloaderHint("Steam doesn't see the game as installed — launching anyway…");
+                        preloaderHint(I18n.s(R.string.ui_steam_doesn_t_see_the_game_as_installed_launching_anyway));
                     break;
                 }
                 case "launch_accepted":
@@ -6241,7 +6244,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                             : "Steam accepted the launch — starting the game…");
                     break;
                 case "launch_refused":
-                    preloaderHint("Steam refused the launch (" + obj.optString("reason", "") + ") — trying a direct start…");
+                    preloaderHint(I18n.s(R.string.ui_steam_refused_the_launch) + obj.optString("reason", "") + I18n.s(R.string.ui_trying_a_direct_start));
                     break;
                 case "insecure_fallback": {
                     agentLoginResolved = true;
@@ -6252,16 +6255,16 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     boolean vac = obj.optBoolean("vac", true);
                     agentFallbackVac = vac;
                     if (!vac) {
-                        preloaderHint("Steam couldn't start the game itself — started it directly (fine for this title)");
+                        preloaderHint(I18n.s(R.string.ui_steam_couldn_t_start_the_game_itself_started_it_directly));
                     } else if (!winStarted) {
-                        showAgentFailure("Steam launch",
+                        showAgentFailure(I18n.s(R.string.ui_steam_launch),
                                 "Steam did not start the game — insecure fallback",
-                                "Steam's LaunchApp refused (" + obj.optString("reason", "") + "). The game can still run "
-                                        + "WITHOUT Steam protection: VAC servers will reject it and live-service titles may "
-                                        + "report a wrong build. Retry, launch offline with Goldberg, or keep going insecure.",
+                                "Steam's LaunchApp refused (" + obj.optString("reason", "") + I18n.s(R.string.ui_the_game_can_still_run)
+                                        + I18n.s(R.string.ui_without_steam_protection_vac_servers_will_reject_it_and)
+                                        + I18n.s(R.string.ui_report_a_wrong_build_retry_launch_offline_with_goldberg),
                                 true);
                     } else {
-                        preloaderHint("Running WITHOUT Steam protection (insecure fallback)");
+                        preloaderHint(I18n.s(R.string.ui_running_without_steam_protection_insecure_fallback));
                     }
                     break;
                 }
@@ -6276,7 +6279,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     break;
                 case "direct_exe":
                     agentLoginResolved = true;
-                    preloaderHint("Starting the selected exe directly (no Steam launch)…");
+                    preloaderHint(I18n.s(R.string.ui_starting_the_selected_exe_directly_no_steam_launch));
                     break;
                 case "game_spawned": {
                     agentLoginResolved = true;
@@ -6291,7 +6294,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     break;
                 }
                 case "session_lost":
-                    preloaderHint("Steam session lost — online features may drop");
+                    preloaderHint(I18n.s(R.string.ui_steam_session_lost_online_features_may_drop));
                     break;
                 case "game_exited":
                 case "shutdown":
@@ -6337,11 +6340,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
             cancelLaunchTimers();
             java.util.List<com.winhub.hernandez.core.FailureAction> actions = new ArrayList<>();
             if (offerContinue) {
-                actions.add(new com.winhub.hernandez.core.FailureAction("Keep going", false,
-                        () -> { try { preloaderDialog.enterGuest("Waiting for the game to render…"); } catch (Throwable ignored) {} }));
+                actions.add(new com.winhub.hernandez.core.FailureAction(I18n.s(R.string.ui_keep_going), false,
+                        () -> { try { preloaderDialog.enterGuest(I18n.s(R.string.ui_waiting_for_the_game_to_render)); } catch (Throwable ignored) {} }));
             }
             if (sc != null && c != null) {
-                actions.add(new com.winhub.hernandez.core.FailureAction("Launch with Goldberg", false, () -> {
+                actions.add(new com.winhub.hernandez.core.FailureAction(I18n.s(R.string.ui_launch_with_goldberg), false, () -> {
                     com.winhub.hernandez.store.SteamSessionManager.INSTANCE.setPendingRelaunch(
                             getApplicationContext(), sc.file.getPath(), c.id,
                             com.winhub.hernandez.store.SteamSessionManager.RelaunchMode.GOLDBERG);
@@ -6370,7 +6373,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             SteamRepository.getInstance().suspendForRealSteam();
             realSteamSessionHeld = true;
         } catch (Throwable t) {
-            Log.w("BH_REALSTEAM", "could not suspend the app's Steam session — the game may hit "
+            Log.w("BH_REALSTEAM", I18n.s(R.string.ui_could_not_suspend_the_app_s_steam_session_the_game_may_h)
                     + "a session conflict", t);
         }
     }
@@ -6396,7 +6399,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (repo.isSuspendedForRealSteam()) return;
             SteamAppRef ref = resolveSteamAppRef();
             if (ref == null || ref.appId <= 0) {
-                Log.i("BL_STEAM_PRESENCE", "offline presence: appId unresolved — skip");
+                Log.i("BL_STEAM_PRESENCE", I18n.s(R.string.ui_offline_presence_appid_unresolved_skip));
                 return;
             }
             boolean sent = repo.setInGamePresence(ref.appId);
@@ -6414,9 +6417,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
         offlinePresenceAnnounced = false;
         try {
             SteamRepository.getInstance().clearInGamePresence();
-            Log.i("BL_STEAM_PRESENCE", "offline presence cleared (" + why + ")");
+            Log.i("BL_STEAM_PRESENCE", I18n.s(R.string.ui_offline_presence_cleared) + why + ")");
         } catch (Throwable t) {
-            Log.w("BL_STEAM_PRESENCE", "offline presence clear failed (" + why + ")", t);
+            Log.w("BL_STEAM_PRESENCE", I18n.s(R.string.ui_offline_presence_clear_failed) + why + ")", t);
         }
     }
 
@@ -6436,9 +6439,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
         realSteamSessionHeld = false;
         try {
             boolean online = SteamRepository.getInstance().resumeAfterRealSteam(awaitLoggedInMs);
-            Log.i("BH_REALSTEAM", "app Steam session released (" + why + ", loggedIn=" + online + ")");
+            Log.i("BH_REALSTEAM", I18n.s(R.string.ui_app_steam_session_released) + why + ", loggedIn=" + online + ")");
         } catch (Throwable t) {
-            Log.w("BH_REALSTEAM", "resume of the app's Steam session errored (" + why + ")", t);
+            Log.w("BH_REALSTEAM", I18n.s(R.string.ui_resume_of_the_app_s_steam_session_errored) + why + ")", t);
         }
     }
 
@@ -6456,7 +6459,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         String pathLower = execPath != null ? execPath.toLowerCase() : "";
         boolean genuineSteam = "steam".equals(storeSource) || pathLower.contains("steam_games");
         if (!genuineSteam) {
-            logResolveSteamAppRefFailure("not genuine-Steam", execPath, storeSource, taggedAppId);
+            logResolveSteamAppRefFailure(I18n.s(R.string.ui_not_genuine_steam), execPath, storeSource, taggedAppId);
             return null;
         }
 
@@ -6527,7 +6530,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 }
             }
         } catch (Throwable t) {
-            Log.w("BH_SAVE_SYNC", "resolveSteamAppRef errored", t);
+            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_resolvesteamappref_errored), t);
         }
         if (appId <= 0 || installDir.isEmpty()) {
             logResolveSteamAppRefFailure("unresolved appId/installDir", execPath, storeSource, taggedAppId);
@@ -6558,7 +6561,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     private void logResolveSteamAppRefFailure(String reason, String execPath, String storeSource, int taggedAppId) {
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("resolveSteamAppRef FAIL (").append(reason).append("): execPath=").append(execPath)
+            sb.append(I18n.s(R.string.ui_resolvesteamappref_fail)).append(reason).append("): execPath=").append(execPath)
               .append(" storeSource=").append(storeSource)
               .append(" taggedAppId=").append(taggedAppId)
               .append(" steamGamesFolder=").append(steamGamesFolderOf(execPath));
@@ -6573,7 +6576,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
             Log.i("BH_STEAM_ACHV", sb.toString());
         } catch (Throwable t) {
-            Log.w("BH_STEAM_ACHV", "resolveSteamAppRef failure-diagnostic errored", t);
+            Log.w("BH_STEAM_ACHV", I18n.s(R.string.ui_resolvesteamappref_failure_diagnostic_errored), t);
         }
     }
 
@@ -6658,7 +6661,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // We're on the exit worker thread ("BH-ExitSaveBackup") → Room query is safely off-main.
             final SteamAppRef ref = resolveSteamAppRef();
             if (ref == null) {
-                Log.i("BH_SAVE_SYNC", "auto-upload Steam: could not resolve appId — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_steam_could_not_resolve_appid_skip));
                 return;
             }
             try { if (preloaderDialog != null) preloaderDialog.hint(getString(R.string.saving_on_exit)); } catch (Throwable ignored) {}
@@ -6670,10 +6673,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     // call in this file (a @JvmStatic method is still callable this way, so this is
                     // robust whether or not the frozen method is annotated static).
                     String summary = SteamCloudSaveManager.INSTANCE.syncToCloudBlocking(appCtx, ref.appId, ref.installDir);
-                    Log.i("BH_SAVE_SYNC", "auto-upload Steam on exit (appId " + ref.appId + "): " + summary);
+                    Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_steam_on_exit_appid) + ref.appId + "): " + summary);
                     try { if (preloaderDialog != null) preloaderDialog.hint(summary); } catch (Throwable ignored) {}
                 } catch (Throwable t) {
-                    Log.w("BH_SAVE_SYNC", "auto-upload Steam on exit failed (appId " + ref.appId + ")", t);
+                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_steam_on_exit_failed_appid) + ref.appId + ")", t);
                 } finally {
                     latch.countDown();
                 }
@@ -6681,9 +6684,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
             // Network op — bounded so a stalled upload never hangs game-exit (Steam saves are small).
             if (!latch.await(20, TimeUnit.SECONDS))
-                Log.w("BH_SAVE_SYNC", "auto-upload Steam on exit timed out (20s) — proceeding with exit");
+                Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_steam_on_exit_timed_out_20s_proceeding_with));
         } catch (Throwable t) {
-            Log.w("BH_SAVE_SYNC", "auto-upload Steam on exit wrapper errored", t);
+            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_steam_on_exit_wrapper_errored), t);
         }
     }
 
@@ -6706,7 +6709,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // The SteamLite pre-flight (SteamSessionManager, run in the launch popup BEFORE this
             // activity opened) already did this pull — never repeat it over the game art.
             if (getIntent().getBooleanExtra(com.winhub.hernandez.store.SteamSessionManager.EXTRA_PREFLIGHT_DONE, false)) {
-                Log.i("BH_SAVE_SYNC", "auto-download Steam: done by the launch pre-flight — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_done_by_the_launch_pre_flight_skip));
                 return;
             }
 
@@ -6717,7 +6720,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // We're on the launch worker thread → Room query is safely off-main.
             final SteamAppRef ref = resolveSteamAppRef();
             if (ref == null) {
-                Log.i("BH_SAVE_SYNC", "auto-download Steam: could not resolve appId for " + sc.path + " — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_could_not_resolve_appid_for) + sc.path + " — skip");
                 return;
             }
 
@@ -6726,19 +6729,19 @@ public class XServerDisplayActivity extends AppCompatActivity {
             new Thread(() -> {
                 try {
                     String summary = SteamCloudSaveManager.INSTANCE.syncFromCloudNewestWins(appCtx, ref.appId, ref.installDir);
-                    Log.i("BH_SAVE_SYNC", "auto-download Steam on launch (appId " + ref.appId + "): " + summary);
+                    Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_on_launch_appid) + ref.appId + "): " + summary);
                     try { if (preloaderDialog != null) preloaderDialog.hint(summary); } catch (Throwable ignored) {}
                 } catch (Throwable t) {
-                    Log.w("BH_SAVE_SYNC", "auto-download Steam on launch failed (appId " + ref.appId + ")", t);
+                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_on_launch_failed_appid) + ref.appId + ")", t);
                 } finally {
                     latch.countDown();
                 }
             }, "BH-SteamCloudAutoDownload").start();
 
             if (!latch.await(20, TimeUnit.SECONDS))
-                Log.w("BH_SAVE_SYNC", "auto-download Steam on launch timed out (20s) — launching with local saves");
+                Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_on_launch_timed_out_20s_launching_wi));
         } catch (Throwable t) {
-            Log.w("BH_SAVE_SYNC", "auto-download Steam on launch wrapper errored", t);
+            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_steam_on_launch_wrapper_errored), t);
         }
     }
 
@@ -6828,7 +6831,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         Log.w("BH_STEAM_ACHV", "achievement schema ensure failed (appId=" + appId + ")", t);
                     }
                 } else {
-                    Log.i("BH_STEAM_ACHV", "achievement seed: Goldberg OFF for appId=" + appId + " — no seed");
+                    Log.i("BH_STEAM_ACHV", "achievement seed: Goldberg OFF for appId=" + appId + I18n.s(R.string.ui_no_seed));
                 }
             } catch (Throwable t) {
                 Log.w("BH_STEAM_ACHV", "GSE seed failed (appId=" + appId + ")", t);
@@ -6841,7 +6844,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // refreshed on every call, but the watcher (FileObserver + scheduler) is armed only once.
             if (achievementWatcherArmed) {
                 Log.i("BH_STEAM_ACHV", "seed/watch: watcher already armed (appId=" + appId
-                        + ") — seed refreshed, not re-arming");
+                        + I18n.s(R.string.ui_seed_refreshed_not_re_arming));
                 return;
             }
             if (achievementWatcher == null) achievementWatcher = new AchievementWatcher();
@@ -6851,7 +6854,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (isFinishing() || isDestroyed()) { watcher.stop(); return; }
             achievementWatcherArmed = true;
         } catch (Throwable t) {
-            Log.w("BH_STEAM_ACHV", "maybeSeedAndStartAchievementWatcher errored", t);
+            Log.w("BH_STEAM_ACHV", I18n.s(R.string.ui_maybeseedandstartachievementwatcher_errored), t);
         }
     }
 
@@ -6884,7 +6887,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             steamLiteAchievementWatcherArmed = true;
             Log.i("BH_STEAM_ACHV", "steamlite watch: armed (appId=" + appId + ")");
         } catch (Throwable t) {
-            Log.w("BH_STEAM_ACHV", "maybeStartSteamLiteAchievementWatcher errored", t);
+            Log.w("BH_STEAM_ACHV", I18n.s(R.string.ui_maybestartsteamliteachievementwatcher_errored), t);
         }
     }
 
@@ -6911,13 +6914,13 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 try {
                     CustomSaveVault.VaultResult r = CustomSaveVault.INSTANCE.snapshot(appCtx, ctn, sc);
                     if (r != null && r.getOk()) {
-                        Log.i("BH_SAVE_SYNC", "auto-vault on exit (" + sc.name + "): " + r.getFileCount() + " files");
+                        Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_vault_on_exit) + sc.name + "): " + r.getFileCount() + " files");
                     } else {
-                        Log.i("BH_SAVE_SYNC", "auto-vault on exit (" + sc.name + "): "
+                        Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_vault_on_exit) + sc.name + "): "
                                 + (r != null ? r.getError() : "null result"));
                     }
                 } catch (Throwable t) {
-                    Log.w("BH_SAVE_SYNC", "auto-vault on exit errored (" + sc.name + ")", t);
+                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_vault_on_exit_errored) + sc.name + ")", t);
                 } finally {
                     latch.countDown();
                 }
@@ -6953,7 +6956,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // Reverse-map the running shortcut's gog_games/<dir> exec path to its GOG gameId (offline).
             final String gameId = GogCloudSavePaths.INSTANCE.gameIdForExecPath(appCtx, sc.path);
             if (gameId == null) {
-                Log.i("BH_SAVE_SYNC", "auto-upload GOG: no gameId for " + sc.path + " — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_no_gameid_for) + sc.path + " — skip");
                 return;
             }
 
@@ -6964,12 +6967,12 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     // hits the network on a cloud-location cache-miss (remote-config fetch).
                     File dir = GogCloudSavePaths.INSTANCE.resolveSaveDirectory(appCtx, gameId, ctn);
                     if (dir == null) {
-                        Log.i("BH_SAVE_SYNC", "auto-upload GOG (" + gameId + "): no resolvable save dir — skip");
+                        Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog) + gameId + I18n.s(R.string.ui_no_resolvable_save_dir_skip));
                         latch.countDown();
                         return;
                     }
                     if (!dir.isDirectory()) {
-                        Log.i("BH_SAVE_SYNC", "auto-upload GOG (" + gameId + "): save dir absent (no saves yet) — skip");
+                        Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog) + gameId + I18n.s(R.string.ui_save_dir_absent_no_saves_yet_skip));
                         latch.countDown();
                         return;
                     }
@@ -6981,17 +6984,17 @@ public class XServerDisplayActivity extends AppCompatActivity {
                             try { if (preloaderDialog != null) preloaderDialog.hint(message); } catch (Throwable ignored) {}
                         }
                         @Override public void onDone(String summary) {
-                            Log.i("BH_SAVE_SYNC", "auto-upload GOG on exit (" + gameId + "): " + summary);
+                            Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_on_exit) + gameId + "): " + summary);
                             try { if (preloaderDialog != null) preloaderDialog.hint(summary); } catch (Throwable ignored) {}
                             latch.countDown();
                         }
                         @Override public void onError(String message) {
-                            Log.w("BH_SAVE_SYNC", "auto-upload GOG on exit failed (" + gameId + "): " + message);
+                            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_on_exit_failed) + gameId + "): " + message);
                             latch.countDown();
                         }
                     });
                 } catch (Throwable t) {
-                    Log.w("BH_SAVE_SYNC", "auto-upload GOG on exit errored", t);
+                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_on_exit_errored), t);
                     latch.countDown();
                 }
             }, "BH-GogCloudAutoUpload").start();
@@ -6999,9 +7002,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // Network op, so more headroom than the local copies (8s) — but still bounded so a stalled
             // upload never hangs game-exit. GOG saves are small (config + slot files), so this is ample.
             if (!latch.await(20, TimeUnit.SECONDS))
-                Log.w("BH_SAVE_SYNC", "auto-upload GOG on exit timed out (20s) — proceeding with exit");
+                Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_on_exit_timed_out_20s_proceeding_with_ex));
         } catch (Throwable t) {
-            Log.w("BH_SAVE_SYNC", "auto-upload GOG on exit wrapper errored", t);
+            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_upload_gog_on_exit_wrapper_errored), t);
         }
     }
 
@@ -7034,7 +7037,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             final Context appCtx = getApplicationContext();
             final String gameId = GogCloudSavePaths.INSTANCE.gameIdForExecPath(appCtx, sc.path);
             if (gameId == null) {
-                Log.i("BH_SAVE_SYNC", "auto-download GOG: no gameId for " + sc.path + " — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog_no_gameid_for) + sc.path + " — skip");
                 return;
             }
 
@@ -7042,7 +7045,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // worker thread, so this (network on a cloud-location cache-miss) is safely off-main.
             File dir = GogCloudSavePaths.INSTANCE.resolveSaveDirectory(appCtx, gameId, ctn);
             if (dir == null) {
-                Log.i("BH_SAVE_SYNC", "auto-download GOG (" + gameId + "): no resolvable save dir — skip");
+                Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog) + gameId + I18n.s(R.string.ui_no_resolvable_save_dir_skip));
                 return;
             }
 
@@ -7055,23 +7058,23 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     try { if (preloaderDialog != null) preloaderDialog.hint(message); } catch (Throwable ignored) {}
                 }
                 @Override public void onDone(String summary) {
-                    Log.i("BH_SAVE_SYNC", "auto-download GOG on launch (" + gameId + "): " + summary);
+                    Log.i("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog_on_launch) + gameId + "): " + summary);
                     // Show the outcome (e.g. "Already up to date (13 files)" / "Downloaded N") so a skip
                     // reads as up-to-date, not a silent "was it downloading?".
                     try { if (preloaderDialog != null) preloaderDialog.hint(summary); } catch (Throwable ignored) {}
                     latch.countDown();
                 }
                 @Override public void onError(String message) {
-                    Log.w("BH_SAVE_SYNC", "auto-download GOG on launch failed (" + gameId + "): " + message);
+                    Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog_on_launch_failed) + gameId + "): " + message);
                     latch.countDown();
                 }
             });
             // Bounded so a stalled/offline network never delays the launch indefinitely; on timeout we
             // launch with whatever local saves exist (newest-wins already protected them).
             if (!latch.await(20, TimeUnit.SECONDS))
-                Log.w("BH_SAVE_SYNC", "auto-download GOG on launch timed out (20s) — launching with local saves");
+                Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog_on_launch_timed_out_20s_launching_with));
         } catch (Throwable t) {
-            Log.w("BH_SAVE_SYNC", "auto-download GOG on launch wrapper errored", t);
+            Log.w("BH_SAVE_SYNC", I18n.s(R.string.ui_auto_download_gog_on_launch_wrapper_errored), t);
         }
     }
 
@@ -7130,9 +7133,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.parse(dir.getAbsolutePath()), "resource/folder");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(Intent.createChooser(intent, "Open log folder"));
+            startActivity(Intent.createChooser(intent, I18n.s(R.string.ui_open_log_folder)));
         } catch (Exception e) {
-            Toast.makeText(this, "Log folder: " + dir.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, I18n.s(R.string.ui_log_folder) + dir.getAbsolutePath(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -7178,9 +7181,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // (core.GameXInputDlls; the next app start or launch catches a session that never got here).
         try {
             for (String line : com.winhub.hernandez.core.GameXInputDlls.restoreAll(gameXInputManifest()))
-                Log.i("XServerDisplayActivity", "Game xinput DLL: " + line);
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_game_xinput_dll) + line);
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "game xinput DLL restore", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_game_xinput_dll_restore), t);
         }
         // Release the no-root Samsung Galaxy performance boost on game exit (no-op off Samsung).
         com.winhub.hernandez.perf.galaxy.GalaxyPerfManager.stop();
@@ -7274,8 +7277,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // instead of only pausing it, which no code in here can tell apart any earlier.
         if (tvSuspendDeferred) {
             tvSuspendDeferred = false;
-            Log.i("XServerDisplayActivity", "TV: stopped while on display " + sessionDisplayId
-                    + " — freezing the game after all");
+            Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_stopped_while_on_display) + sessionDisplayId
+                    + I18n.s(R.string.ui_freezing_the_game_after_all));
             suspendSessionForBackground();
         }
         // Belt-and-suspenders: also drop controller-test isolation on stop (see onPause).
@@ -7450,7 +7453,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // A game xinput DLL an earlier session moved aside and never put back (it ended uncleanly) goes
         // back first (core.GameXInputDlls); applyHermesXInputEnv decides this launch's.
         for (String line : com.winhub.hernandez.core.GameXInputDlls.restoreAll(gameXInputManifest()))
-            Log.i("XServerDisplayActivity", "Game xinput DLL: " + line);
+            Log.i("XServerDisplayActivity", I18n.s(R.string.ui_game_xinput_dll) + line);
         String hxinputWineRoot = null;
         try { hxinputWineRoot = imageFs.getWinePath(); } catch (Throwable ignored) {}
         hxinputSync = com.winhub.hernandez.core.HermesXInput.syncForLaunch(this, new File(imageFs.getRootDir(), ImageFs.WINEPREFIX),
@@ -7497,13 +7500,13 @@ public class XServerDisplayActivity extends AppCompatActivity {
             dinputWhy = "controller passthrough";
         } else if (com.winhub.hernandez.core.ControllerIdentity.DINPUT_PAD.equals(padIdentity)) {
             // The Classic DirectInput pad exists for DirectInput games; hidden from them it is no pad at all.
-            if (!dinputVisible) dinputWhy = "forced on by the Classic DirectInput pad identity";
+            if (!dinputVisible) dinputWhy = I18n.s(R.string.ui_forced_on_by_the_classic_directinput_pad_identity);
             dinputVisible = true;
         }
-        Log.i("XServerDisplayActivity", "DirectInput games can see the controller: "
+        Log.i("XServerDisplayActivity", I18n.s(R.string.ui_directinput_games_can_see_the_controller)
                 + (dinputVisible ? "on" : "off") + " (" + dinputWhy + ")");
-        com.winhub.hernandez.core.ControllerLog.setup("Controller type", com.winhub.hernandez.core.ControllerIdentity.describe(padIdentity));
-        com.winhub.hernandez.core.ControllerLog.setup("DirectInput games can see the controller", (dinputVisible ? "on" : "off") + " (" + dinputWhy + ")");
+        com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.ui_controller_type), com.winhub.hernandez.core.ControllerIdentity.describe(padIdentity));
+        com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.dinput_visible), (dinputVisible ? "on" : "off") + " (" + dinputWhy + ")");
         com.winhub.hernandez.core.ControllerLog.setup("winebus", (com.winhub.hernandez.core.ControllerIdentity.mapControllers(padIdentity)
                 ? "Map Controllers default (pads mapped as gamepads)" : "Map Controllers 0 (raw joystick, Classic DirectInput pad)")
                 + ", DisableHidraw 1");
@@ -7514,7 +7517,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 : (dinputWhy.startsWith("forced on by ") ? dinputWhy.substring("forced on by ".length()) : dinputWhy);
         boolean dinputForced = !dinputWhy.equals("settings");
         WineUtils.setJoystickRegistryKeys(container, dinputVisible, dinputForced, padIdentity);
-        com.winhub.hernandez.core.ControllerLog.setup("DirectInput registry",
+        com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.ui_directinput_registry),
                 com.winhub.hernandez.core.JoystickRegistry.describe(dinputVisible, dinputForced));
         WineUtils.setWinebusOptions(container, com.winhub.hernandez.core.ControllerIdentity.mapControllers(padIdentity));
 
@@ -7580,7 +7583,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // xuser symlink at launch, so this is exactly the C:\windows the guest reads wfm.exe from.
             File windowsDir = new File(container.getRootDir(), ".wine/drive_c/windows");
             if (!windowsDir.isDirectory() && !windowsDir.mkdirs()) {
-                Log.w("XServerDisplayActivity", "stageBundledFileManager: windows dir unavailable: " + windowsDir);
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_stagebundledfilemanager_windows_dir_unavailable) + windowsDir);
                 return;
             }
             File wfmFile = new File(windowsDir, "wfm.exe");
@@ -7607,7 +7610,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // renameTo won't overwrite on some Android fs layers — clear the old exe first.
             if (wfmFile.exists()) wfmFile.delete();
             if (!tmp.renameTo(wfmFile)) {
-                Log.w("XServerDisplayActivity", "stageBundledFileManager: rename into place failed");
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_stagebundledfilemanager_rename_into_place_failed));
                 tmp.delete();
                 return;
             }
@@ -7616,7 +7619,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             FileUtils.writeString(marker, BUNDLED_WFM_VERSION);
             Log.i("XServerDisplayActivity", "Staged bundled wfm.exe " + BUNDLED_WFM_VERSION + " -> " + wfmFile);
         } catch (Exception e) {
-            Log.w("XServerDisplayActivity", "stageBundledFileManager failed (continuing launch)", e);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_stagebundledfilemanager_failed_continuing_launch), e);
         }
     }
 
@@ -7686,8 +7689,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
         }
         String line = (decision != null ? decision.toString() : "fast opengl: on (wayland)")
-                + " | fps hud: " + applyGlLaunchSwitch(com.winhub.hernandez.core.FastOpenGL.FPS_HUD)
-                + " | vsync off: " + applyGlLaunchSwitch(com.winhub.hernandez.core.FastOpenGL.VSYNC_OFF);
+                + I18n.s(R.string.ui_fps_hud) + applyGlLaunchSwitch(com.winhub.hernandez.core.FastOpenGL.FPS_HUD)
+                + I18n.s(R.string.ui_vsync_off_2) + applyGlLaunchSwitch(com.winhub.hernandez.core.FastOpenGL.VSYNC_OFF);
         Log.i("XServerDisplayActivity", line + (detail != null ? " - " + detail : ""));
         if (glxLine != null) Log.i("XServerDisplayActivity", glxLine);
         if (wineDebugWriter != null) {
@@ -7707,7 +7710,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         String why = game != null ? "game" : "container";
         if (!on) return "off (" + why + ")";
         if (envVars.has(sw.envName))
-            return "on (" + why + ", " + sw.envName + "=" + envVars.get(sw.envName) + " is yours, kept)";
+            return "on (" + why + ", " + sw.envName + "=" + envVars.get(sw.envName) + I18n.s(R.string.ui_is_yours_kept);
         envVars.put(sw.envName, sw.envValue);
         return "on (" + why + ", " + sw.envName + "=" + sw.envValue + ")";
     }
@@ -7747,7 +7750,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             waylandAdapterEffective = com.winhub.hernandez.core.WaylandAdapterSettings.resolve(
                     containerCfg, shortcutCfg, effectiveUserEnv(), probe);
         } catch (Exception e) {
-            Log.e("XServerDisplayActivity", "wayland: adapter settings resolve failed; using defaults", e);
+            Log.e("XServerDisplayActivity", I18n.s(R.string.ui_wayland_adapter_settings_resolve_failed_using_defaults), e);
             waylandAdapterEffective = com.winhub.hernandez.core.WaylandAdapterSettings.resolve(null, null, null, null);
         }
         return waylandAdapterEffective;
@@ -7845,7 +7848,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 com.winhub.hernandez.core.ControllerLog.setup("Direct XInput", "off" + (sync.detail != null ? ": " + sync.detail : ""));
                 return;
             }
-            StringBuilder line = new StringBuilder("Direct XInput (HERMES) on: ")
+            StringBuilder line = new StringBuilder(I18n.s(R.string.ui_direct_xinput_hermes_on))
                     .append(sync.detail != null ? sync.detail : "dlls not installed");
             if (sync.installed) {
                 String before = envVars.has("WINEDLLOVERRIDES") ? envVars.get("WINEDLLOVERRIDES") : "";
@@ -7883,15 +7886,15 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     hxinputGameBuiltin.addAll(o.builtin);
                 }
                 line.append("; WINEDLLOVERRIDES=").append(o.value);
-                if (!o.kept.isEmpty()) line.append(" (yours kept for ").append(String.join(",", o.kept)).append(")");
+                if (!o.kept.isEmpty()) line.append(I18n.s(R.string.ui_yours_kept_for)).append(String.join(",", o.kept)).append(")");
                 for (String n : notes) line.append("; ").append(n);
             } else {
-                line.append("; no override, Wine's builtin xinput stays in use");
+                line.append(I18n.s(R.string.ui_no_override_wine_s_builtin_xinput_stays_in_use));
             }
             logSessionLine("xinput", line.toString());
-            com.winhub.hernandez.core.ControllerLog.setup("Direct XInput", line.toString());
+            com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.ui_direct_xinput), line.toString());
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "Direct XInput (HERMES) environment failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_direct_xinput_hermes_environment_failed), t);
         }
     }
 
@@ -7943,11 +7946,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (said.length() > 0) {
                 String line = "session environment: " + said + " - from \"" + d.displayName + "\" (Android reports no live "
                         + "brightness in nits; the HDR/SDR ratio lines are the live reading)";
-                Log.i("XServerDisplayActivity", "wayland HDR " + line);
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hdr) + line);
                 com.winhub.hernandez.wayland.WaylandCompositor.nativeLogColor(line);
             }
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "wayland: HDR environment failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hdr_environment_failed), t);
         }
     }
 
@@ -7973,17 +7976,17 @@ public class XServerDisplayActivity extends AppCompatActivity {
             boolean direct = sync != null && sync.installed && sync.directOn;
             boolean dinputVibration = com.winhub.hernandez.core.DInputVibration.effective(container, shortcut);
             com.winhub.hernandez.core.ControllerLog.launchChoices(direct, !direct, launchDInputVisible, dinputVibration);
-            com.winhub.hernandez.core.ControllerLog.setup("XInput source", (direct ? "Direct (HERMES)" : "Wine's XInput")
+            com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.ui_xinput_source), (direct ? "Direct (HERMES)" : "Wine's XInput")
                     + (sync != null && sync.installed && sync.switching && sync.forwardAvailable
                             ? ", in-game switching available" : ", no in-game switching"));
-            com.winhub.hernandez.core.ControllerLog.setup("DirectInput vibration", (dinputVibration ? "on" : "off")
+            com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.dinput_vibration), (dinputVibration ? "on" : "off")
                     + (com.winhub.hernandez.core.DInputVibration.envOverride(container, shortcut) != null
-                            ? " (" + com.winhub.hernandez.core.DInputVibration.ENV + " in the env vars decides)" : ""));
-            com.winhub.hernandez.core.ControllerLog.setup("Stick updates",
+                            ? " (" + com.winhub.hernandez.core.DInputVibration.ENV + I18n.s(R.string.ui_in_the_env_vars_decides_2) : ""));
+            com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.stick_pacing_label),
                     com.winhub.hernandez.core.StickPacing.forGame(container, shortcut).format()
                             + (com.winhub.hernandez.core.StickPacing.envOverrides(container, shortcut)
                                     ? " (HERMES_AXIS_* in the env vars decide)" : ""));
-            com.winhub.hernandez.core.ControllerLog.setup("Wine layer", container.getWineVersion()
+            com.winhub.hernandez.core.ControllerLog.setup(I18n.s(R.string.ui_wine_layer), container.getWineVersion()
                     + (wineInfo != null && wineInfo.isArm64EC() ? " (arm64ec)" : ""));
             if (!envVars.has("FAKE_EVDEV_LOG")) envVars.put("FAKE_EVDEV_LOG", "1");
             ProcessHelper.addDebugCallback(com.winhub.hernandez.core.ControllerLog.GUEST_LINES);
@@ -8027,12 +8030,12 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         String note = com.winhub.hernandez.core.GameMods.remove(dir, mod);
                         if (note != null) logSessionLine("mods", mod.name + " off: " + note);
                     }
-                    if (on) logSessionLine("mods", mod.name + " on, but not available for this EXE"
+                    if (on) logSessionLine("mods", mod.name + I18n.s(R.string.ui_on_but_not_available_for_this_exe)
                             + (machine == 0 ? " (EXE not readable)" : "") + ": not loaded");
                     continue;
                 }
                 if (dirs.isEmpty()) {
-                    logSessionLine("mods", mod.name + " on, but the game's folder could not be found: not loaded");
+                    logSessionLine("mods", mod.name + I18n.s(R.string.ui_on_but_the_game_s_folder_could_not_be_found_not_loaded));
                     cards.add(new com.winhub.hernandez.ui.DrawerMod(mod.id, mod.name, true, false, "", "", bits));
                     continue;
                 }
@@ -8049,7 +8052,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         source = com.winhub.hernandez.core.GameModCache.get(getFilesDir(), asset, null);
                         if (!had) line.append("downloaded; ");
                     } catch (Throwable t) {
-                        line.append("download failed (").append(t.getMessage()).append("); ");
+                        line.append(I18n.s(R.string.ui_download_failed_4)).append(t.getMessage()).append("); ");
                     }
                 }
                 com.winhub.hernandez.core.GameMods.Result r =
@@ -8064,9 +8067,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 }
                 if (mod == com.winhub.hernandez.core.GameMods.REFRAMEWORK && r.ours) {
                     try {
-                        if (com.winhub.hernandez.core.ReFramework.applyMenuStartsClosed(dir)) line.append("; menu starts closed");
+                        if (com.winhub.hernandez.core.ReFramework.applyMenuStartsClosed(dir)) line.append(I18n.s(R.string.ui_menu_starts_closed));
                     } catch (Throwable t) {
-                        line.append("; menu state not set (").append(t.getMessage()).append(")");
+                        line.append(I18n.s(R.string.ui_menu_state_not_set)).append(t.getMessage()).append(")");
                     }
                 }
                 logSessionLine("mods", line.toString());
@@ -8180,11 +8183,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
         try {
             if (winHandler == null) return;
             boolean ok = winHandler.execInFolder(program.path, "");
-            logSessionLine("mods", "Start program: " + program.path
+            logSessionLine("mods", I18n.s(R.string.ui_start_program) + program.path
                     + (ok ? "" : " (not started: the batch file could not be written)"));
         } catch (RuntimeException e) {
             Log.w("XServerDisplayActivity", "start program failed: " + program.path, e);
-            logSessionLine("mods", "Start program failed: " + program.path + " (" + e.getMessage() + ")");
+            logSessionLine("mods", I18n.s(R.string.ui_start_program_failed) + program.path + " (" + e.getMessage() + ")");
         }
     }
 
@@ -8220,7 +8223,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 EnvVars user = effectiveUserEnv();
                 if (user == null || !user.has("WRAPPER_DEVICE_NAME")) envVars.put("WRAPPER_DEVICE_NAME", gpuName);
                 if (card == null) {
-                    said.append(" is not in the GPU list, so there are no ids to spoof");
+                    said.append(I18n.s(R.string.ui_is_not_in_the_gpu_list_so_there_are_no_ids_to_spoof));
                 } else {
                     said.append(" (vendor ").append(card.vendorId >= 0 ? com.winhub.hernandez.core.GpuSpoof.pciHex(card.vendorId) : "?")
                         .append(" device ").append(card.deviceId >= 0 ? com.winhub.hernandez.core.GpuSpoof.pciHex(card.deviceId) : "?").append(')');
@@ -8233,7 +8236,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             boolean dxvk = dxwrapper != null && (dxwrapper.contains("dxvk") || dxwrapper.contains("vegas"));
             if (!dxvk) {
                 if (said.length() > 0) said.append(' ');
-                said.append("not applied: the DX wrapper isn't DXVK (WineD3D has its own GPU name setting)");
+                said.append(I18n.s(R.string.ui_not_applied_the_dx_wrapper_isn_t_dxvk_wined3d_has_its_ow));
                 logSessionLine("gpu", said.toString());
                 return;
             }
@@ -8255,14 +8258,14 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // DXVK_CONFIG_FILE is unset — the trade for a spoof that actually arrives.
                 String wrote = null, noFile = null;
                 if (com.winhub.hernandez.core.GpuSpoof.isConfigFilePath(userPath) && userFile == null) {
-                    noFile = "your config file " + userPath + " can't be read from here, so it stays in charge";
+                    noFile = "your config file " + userPath + I18n.s(R.string.ui_can_t_be_read_from_here_so_it_stays_in_charge);
                 } else if (container == null) {
                     noFile = "no container directory to write one in";
                 } else {
                     File conf = new File(container.getRootDir(), DXVK_GENERATED_CONF);
                     String path = conf.getPath();
                     if (!com.winhub.hernandez.core.GpuSpoof.envSafe(path))
-                        noFile = path + " can't go through the environment";
+                        noFile = path + I18n.s(R.string.ui_can_t_go_through_the_environment);
                     else if (!FileUtils.writeString(conf,
                             com.winhub.hernandez.core.GpuSpoof.configFileText(m.options, userPath, userFile)))
                         noFile = "couldn't write " + path;
@@ -8291,17 +8294,17 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         .append("DXVK_CONFIG (").append(String.join(", ", m.added)).append(')');
                 said.append(how.length() > 0 ? " via " : " NOT delivered: nothing could be written").append(how);
                 if (noFile != null) said.append("; no generated config file: ").append(noFile);
-                if (memMb > 0) said.append(", memory cap ").append(memMb).append(" MB (dxgi.maxDeviceMemory)");
-                if (!m.kept.isEmpty()) said.append("; yours kept: ").append(String.join(", ", m.kept));
+                if (memMb > 0) said.append(I18n.s(R.string.ui_memory_cap)).append(memMb).append(" MB (dxgi.maxDeviceMemory)");
+                if (!m.kept.isEmpty()) said.append(I18n.s(R.string.ui_yours_kept)).append(String.join(", ", m.kept));
                 // DXVK only started reading DXVK_CONFIG in 2.5 (2.4.1 ignores it outright, device-proven),
                 // so on an older one the file is the whole delivery and the environment is dead weight.
                 String dxvkVersion = dxwrapperConfig != null ? dxwrapperConfig.get("version") : null;
                 if (dxvkVersion != null && !dxvkVersion.isEmpty() && compareVersion(dxvkVersion, "2.5") < 0)
-                    said.append("; DXVK ").append(dxvkVersion).append(" ignores DXVK_CONFIG (2.5 and up read it)");
+                    said.append("; DXVK ").append(dxvkVersion).append(I18n.s(R.string.ui_ignores_dxvk_config_2_5_and_up_read_it));
             }
             logSessionLine("gpu", said.toString());
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "wayland: GPU name spoof failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_wayland_gpu_name_spoof_failed), t);
         }
     }
 
@@ -8375,7 +8378,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     d.hdrSdrRatioAvailable, d.hdrSdrRatio, android.os.Build.VERSION.SDK_INT);
             com.winhub.hernandez.wayland.WaylandCompositor.nativeSetHdrHighestRatio(d.highestHdrSdrRatio);
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "wayland: HDR display push failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hdr_display_push_failed), t);
         }
     }
 
@@ -8419,7 +8422,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 }
                 Log.i("XServerDisplayActivity", "wayland: zero-copy presentation " + (on ? "on" : "off")
                         + " applied live and saved to " + (shortcut != null ? "shortcut" : "container")
-                        + " env as the next launch's default");
+                        + I18n.s(R.string.ui_env_as_the_next_launch_s_default));
             } catch (Exception e) {
                 Log.e("XServerDisplayActivity", "wayland: zero-copy env write failed", e);
             }
@@ -8439,11 +8442,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     container.setWaylandGlSafeMode(on);
                     container.saveData();
                 }
-                Log.i("XServerDisplayActivity", "wayland: OpenGL safe mode " + (on ? "on" : "off")
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_opengl_safe_mode) + (on ? "on" : "off")
                         + " saved to " + (shortcut != null ? "shortcut" : "container")
-                        + " - applies at the next launch (GALLIUM_THREAD is read when Mesa starts)");
+                        + I18n.s(R.string.ui_applies_at_the_next_launch_gallium_thread_is_read_when_m));
             } catch (Exception e) {
-                Log.e("XServerDisplayActivity", "wayland: OpenGL safe mode write failed", e);
+                Log.e("XServerDisplayActivity", I18n.s(R.string.ui_wayland_opengl_safe_mode_write_failed), e);
             }
         };
 
@@ -8457,9 +8460,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
             try {
                 com.winhub.hernandez.wayland.WaylandCompositor.nativeSetHdrOutput(on);
             } catch (Throwable t) {
-                Log.e("XServerDisplayActivity", "wayland: live HDR output switch failed", t);
+                Log.e("XServerDisplayActivity", I18n.s(R.string.ui_wayland_live_hdr_output_switch_failed), t);
             }
-            Log.i("XServerDisplayActivity", "wayland: HDR output " + (on ? "on" : "off (tone-mapped to SDR)")
+            Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hdr_output) + (on ? "on" : "off (tone-mapped to SDR)")
                     + " for this session");
             if (fusionHud != null) fusionHud.setHdrState(hudHdrCode());
         };
@@ -8497,7 +8500,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // and not the requested id: a session the system refused to put on the TV is already running
             // on the handheld, and pulling that TV's cable must not pause it.
             if (displayId == tvLaunchDisplayId && onTvLaunchDisplay()) {
-                Log.i("XServerDisplayActivity", "TV: launch display " + displayId + " removed");
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_launch_display) + displayId + " removed");
                 onTvDisconnected();
             }
             reportHdrCapability("display removed");
@@ -8526,7 +8529,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 hdrDisplayManager.registerDisplayListener(hdrDisplayListener,
                         new android.os.Handler(getMainLooper()));
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "HDR: display listener unavailable", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_display_listener_unavailable), t);
         }
     }
 
@@ -8636,7 +8639,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             hdrRatioListener = l;
         } catch (Throwable t) {
             hdrRatioListener = null;
-            Log.w("XServerDisplayActivity", "HDR: ratio listener unavailable (sampling once a second instead)", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_ratio_listener_unavailable_sampling_once_a_second_in), t);
         }
     }
 
@@ -8684,7 +8687,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     hdrThermalListener = l;
                 }
             } catch (Throwable t) {
-                Log.w("XServerDisplayActivity", "HDR evidence: no thermal status listener", t);
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_evidence_no_thermal_status_listener), t);
             }
         }
         try {
@@ -8698,7 +8701,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE), false, hdrBrightnessObserver);
         } catch (Throwable t) {
             hdrBrightnessObserver = null;
-            Log.w("XServerDisplayActivity", "HDR evidence: no brightness observer", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_evidence_no_brightness_observer), t);
         }
         readHdrThermalHeadroom();
         pushHdrEvidence();
@@ -8744,8 +8747,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 if (!hdrScreenHeadroomMissingSaid && want > 0f) {
                     hdrScreenHeadroomMissingSaid = true;
                     com.winhub.hernandez.wayland.WaylandCompositor.nativeHdrNoteHeadroomRequest(-1f);
-                    com.winhub.hernandez.wayland.WaylandCompositor.nativeLogColor("HDR headroom request on the screen surface "
-                            + "not available (Android < 15): frames through the HDR10 swapchain rely on Android's default");
+                    com.winhub.hernandez.wayland.WaylandCompositor.nativeLogColor(I18n.s(R.string.ui_hdr_headroom_request_on_the_screen_surface)
+                            + I18n.s(R.string.ui_not_available_android_15_frames_through_the_hdr10_swapch));
                 }
                 return;
             }
@@ -8756,8 +8759,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         "requested HDR headroom %.1fx on the screen surface (HDR10 swapchain for frame generation; %s) via %s",
                         want, why, how));
             } else {
-                com.winhub.hernandez.wayland.WaylandCompositor.nativeLogColor("HDR headroom request on the screen surface "
-                        + "cleared (no preference): no HDR frames go through the swapchain any more");
+                com.winhub.hernandez.wayland.WaylandCompositor.nativeLogColor(I18n.s(R.string.ui_hdr_headroom_request_on_the_screen_surface)
+                        + I18n.s(R.string.ui_cleared_no_preference_no_hdr_frames_go_through_the_swapc));
             }
         } catch (Throwable ignored) {}
     }
@@ -8835,7 +8838,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             Log.i("XServerDisplayActivity", "HDR: " + line);
             if (waylandMode) {
                 try { com.winhub.hernandez.wayland.WaylandCompositor.nativeLogDisplay(line); }
-                catch (Throwable t) { Log.w("XServerDisplayActivity", "HDR: session-log write failed", t); }
+                catch (Throwable t) { Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_session_log_write_failed), t); }
                 if (!first) pushWaylandHdrDisplay(now); // the HDR output hears about a new display too
                 // The readouts follow the SCREEN, not the gate: once the game moves to a display with no
                 // HDR10 (the cable came out) the HUD must stop saying "HDR ready" and the drawer must
@@ -8850,7 +8853,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (!first) runOnUiThread(() ->
                     XServerDialogState.INSTANCE.setTmContainerInfo(buildTmContainerInfo()));
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "HDR: capability read failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_hdr_capability_read_failed), t);
         }
     }
 
@@ -8882,7 +8885,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 String ver = atm.getDriverVersion(driverId);
                 comp = (name == null || name.isEmpty() ? driverId : name) + (ver == null || ver.isEmpty() ? "" : " " + ver);
                 if (com.winhub.hernandez.core.WaylandAdapter.isProprietaryBlob(this, driverId))
-                    comp += " (screen on a bundled Turnip: the blob can't import frames)";
+                    comp += I18n.s(R.string.ui_screen_on_a_bundled_turnip_the_blob_can_t_import_frames);
             }
         } catch (Exception e) {
             Log.w("XServerDisplayActivity", "wayland: compositor driver name unavailable", e);
@@ -8952,7 +8955,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     });
                     return;
                 }
-                Log.d("XServerDisplayActivity", "wayland: HUD follows " + window);
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hud_follows) + window);
                 frameRatingWindowId = WAYLAND_HUD_WINDOW_ID;
                 if (gpuName != null && !gpuName.isEmpty())
                     hudGpuName = com.winhub.hernandez.core.GPUInformation.extractModelName(gpuName);
@@ -9176,8 +9179,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 // The Qualcomm blob (v819) has no dma-buf import either: same black screen as System
                 // (device-seen 2026-09-25). The pick still stands for the game's side; the compositor
                 // takes the bundled Turnip below instead.
-                Log.w("XServerDisplayActivity", "wayland: " + driverId + " is the proprietary Qualcomm driver, "
-                        + "which cannot import the game's frames; the compositor uses a bundled Turnip");
+                Log.w("XServerDisplayActivity", "wayland: " + driverId + I18n.s(R.string.ui_is_the_proprietary_qualcomm_driver)
+                        + I18n.s(R.string.ui_which_cannot_import_the_game_s_frames_the_compositor_use));
             } else if (driverId != null && !driverId.isEmpty() && !driverId.equals("System")) {
                 com.winhub.hernandez.contents.AdrenotoolsManager atm =
                         new com.winhub.hernandez.contents.AdrenotoolsManager(this);
@@ -9208,7 +9211,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         } catch (Exception ignored) {}
         if (maliSystemPick) {
             Log.w("XServerDisplayActivity", "wayland: Mali with \"System\" picked: the compositor uses the system "
-                    + "Vulkan driver (experimental; no bundled Turnip fallback)");
+                    + I18n.s(R.string.ui_vulkan_driver_experimental_no_bundled_turnip_fallback));
         }
         if (!maliSystemPick && (libraryName == null || libraryName.isEmpty())) {
             try {
@@ -9225,7 +9228,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 if (lib != null && !lib.isEmpty()) {
                     driverPath = atm.getDriverPath(candidate);
                     libraryName = lib;
-                    Log.w("XServerDisplayActivity", "wayland: no usable driver was set; falling back to bundled "
+                    Log.w("XServerDisplayActivity", I18n.s(R.string.ui_wayland_no_usable_driver_was_set_falling_back_to_bundled)
                             + candidate + " so the session is not black");
                 }
             } catch (Exception e) {
@@ -9271,7 +9274,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (waylandHdrZeroCopyForced) {
                 zeroCopy = true;
                 XServerDrawerState.INSTANCE.setWaylandZeroCopyRequested(true);
-                Log.i("XServerDisplayActivity", "wayland: HDR output requested on an HDR10 display - zero-copy on for this session");
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_hdr_output_requested_on_an_hdr10_display_zero_co));
             }
             pushWaylandHdrDisplay(hdrDisp);
             // DXVK_HDR=1 reaches the game when the user set it, or when HDR is on and the user did not
@@ -9295,7 +9298,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // Compressed (UBWC) game buffers, default on; off forces the linear-only advertisement.
             boolean ubwc = !Boolean.FALSE.equals(adapterCfg.ubwc);
             com.winhub.hernandez.wayland.WaylandCompositor.nativeSetUbwc(ubwc);
-            if (!ubwc) Log.i("XServerDisplayActivity", "wayland: compressed (UBWC) game buffers disabled");
+            if (!ubwc) Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_compressed_ubwc_game_buffers_disabled));
             // The compositor's asynchronous copy path (frames in flight; the compositor thread no longer
             // waits for its own screen blit), default on; off restores the synchronous path.
             boolean asyncCopy = !Boolean.FALSE.equals(adapterCfg.asyncCopy);
@@ -9324,7 +9327,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             String nrn = env != null ? env.get("BANNER_WAYLAND_NO_RENDER_NODE") : null;
             boolean noRenderNode = nrn != null && (nrn.equals("1") || nrn.equalsIgnoreCase("true") || nrn.equalsIgnoreCase("on"));
             com.winhub.hernandez.wayland.WaylandCompositor.nativeSetNoRenderNode(noRenderNode);
-            if (noRenderNode) Log.i("XServerDisplayActivity", "wayland: BANNER_WAYLAND_NO_RENDER_NODE - advertising no DRM device");
+            if (noRenderNode) Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_banner_wayland_no_render_node_advertising_no_drm));
         } catch (Exception e) {
             Log.e("XServerDisplayActivity", "wayland: zero-copy flag read failed", e);
         }
@@ -9595,17 +9598,17 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 wineDebugWriter.println("WINEPREFIX: " + imageFs.wineprefix);
                 wineDebugWriter.println("Container ID: " + (container != null ? container.id : "null"));
                 if (shortcut != null) {
-                    wineDebugWriter.println("Shortcut file: " + shortcut.file.getPath());
-                    wineDebugWriter.println("Shortcut path (resolved): " + shortcut.path);
+                    wineDebugWriter.println(I18n.s(R.string.ui_shortcut_file) + shortcut.file.getPath());
+                    wineDebugWriter.println(I18n.s(R.string.ui_shortcut_path_resolved) + shortcut.path);
                 } else {
-                    wineDebugWriter.println("Shortcut: null (launching Wine File Manager)");
+                    wineDebugWriter.println(I18n.s(R.string.ui_shortcut_null_launching_wine_file_manager));
                 }
                 // DX wrapper diagnostic
-                wineDebugWriter.println("--- DX Wrapper State ---");
+                wineDebugWriter.println(I18n.s(R.string.ui_dx_wrapper_state));
                 wineDebugWriter.println("dxwrapper type: " + this.dxwrapper);
                 wineDebugWriter.println("dxwrapperConfig (raw): " + (container != null ? container.getDXWrapperConfig() : "null"));
                 wineDebugWriter.println("vkd3dVersion (parsed): " + dxwrapperConfig.get("vkd3dVersion"));
-                wineDebugWriter.println("dxvk version (parsed): " + dxwrapperConfig.get("version"));
+                wineDebugWriter.println(I18n.s(R.string.ui_dxvk_version_parsed) + dxwrapperConfig.get("version"));
                 wineDebugWriter.println("ddrawrapper (parsed): " + dxwrapperConfig.get("ddrawrapper"));
                 String cachedDxwrapper = (container != null ? container.getExtra("dxwrapper") : "none");
                 wineDebugWriter.println("cached dxwrapper extra: " + cachedDxwrapper);
@@ -9617,7 +9620,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     wineDebugWriter.println("expected full string: " + expectedFull);
                     wineDebugWriter.println("extraction will run: " + (!expectedFull.equals(cachedDxwrapper)));
                 }
-                wineDebugWriter.println("--- End DX Wrapper State ---");
+                wineDebugWriter.println(I18n.s(R.string.ui_end_dx_wrapper_state));
                 wineDebugWriter.println("=== Wine output below ===");
                 // Redact HERE, not when a report is built. This file lands somewhere the user can
                 // reach and share directly (issue #70's whole point), so it has to be safe on disk
@@ -9630,10 +9633,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     }
                 };
                 ProcessHelper.addDebugCallback(wineDebugLogCallback);
-                Log.d("WineDebug", "Wine debug log → " + logFile.getAbsolutePath());
+                Log.d("WineDebug", I18n.s(R.string.ui_wine_debug_log) + logFile.getAbsolutePath());
             }
         } catch (Exception e) {
-            Log.e("WineDebug", "Failed to open wine debug log file", e);
+            Log.e("WineDebug", I18n.s(R.string.ui_failed_to_open_wine_debug_log_file), e);
         }
 
         // Clear any temporary directory
@@ -9770,9 +9773,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
             } else if (!"off".equals(resolvedFrameGenEngine())) {
                 // Stale config: FG selected on a non-Vulkan renderer — skip the layer (see note above).
-                Log.w("XServerDisplayActivity", "Frame gen (" + resolvedFrameGenEngine()
-                        + ") requested but host renderer is " + resolvedRenderer()
-                        + " — skipping FG layer (Vulkan required).");
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_frame_gen_2) + resolvedFrameGenEngine()
+                        + I18n.s(R.string.ui_requested_but_host_renderer_is) + resolvedRenderer()
+                        + I18n.s(R.string.ui_skipping_fg_layer_vulkan_required));
             }
 
             if (shortcut != null) envVars.putAll(shortcut.getExtra("envVars"));
@@ -9812,12 +9815,12 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // explicit GALLIUM_THREAD the user typed themselves still wins.
             if (waylandMode) {
                 if (!resolvedWaylandGlSafeMode()) {
-                    Log.i("XServerDisplayActivity", "wayland: OpenGL safe mode is OFF for this launch"
-                            + " - Mesa's threaded context stays on");
+                    Log.i("XServerDisplayActivity", I18n.s(R.string.ui_wayland_opengl_safe_mode_is_off_for_this_launch)
+                            + I18n.s(R.string.ui_mesa_s_threaded_context_stays_on));
                 } else if (envVars.has("GALLIUM_THREAD")) {
                     Log.i("XServerDisplayActivity", "wayland: OpenGL safe mode on, but GALLIUM_THREAD="
                             + envVars.get("GALLIUM_THREAD") + " is already set in the environment variables"
-                            + " - leaving the user's value alone");
+                            + I18n.s(R.string.ui_leaving_the_user_s_value_alone));
                 } else {
                     envVars.put("GALLIUM_THREAD", "0");
                     Log.i("XServerDisplayActivity", "wayland: OpenGL safe mode on - exporting GALLIUM_THREAD=0");
@@ -9920,7 +9923,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (realSteamEaChain && realSteamPlan != null) {
                 String clamped = com.winhub.hernandez.store.EaSupport.clampPresetForEa(fexPreset);
                 if (clamped != null && !clamped.equals(fexPreset)) {
-                    Log.i("BH_REALSTEAM", "EA launch: FEX preset " + fexPreset + " -> " + clamped + " (SMC checks must stay on)");
+                    Log.i("BH_REALSTEAM", I18n.s(R.string.ui_ea_launch_fex_preset) + fexPreset + " -> " + clamped + I18n.s(R.string.ui_smc_checks_must_stay_on));
                     fexPreset = clamped;
                 }
             }
@@ -9953,7 +9956,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (waylandMode) applyCursorAutoHide();
 
         // Create our overall XEnvironment with various components
-        preloaderDialog.step(3, "Building environment…");
+        preloaderDialog.step(3, I18n.s(R.string.ui_building_environment_2));
         environment = new XEnvironment(this, imageFs);
         environment.addComponent(
                 new SysVSharedMemoryComponent(
@@ -10079,7 +10082,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         seatOnScreenPadBeforeBoot();
         // What the guest will list at boot: one node per slot a controller holds, nothing else.
         Log.i("XServerDisplayActivity", "fake evdev nodes at boot: "
-                + java.util.Arrays.toString(devInputDir.list()) + ", slots held: " + winHandler.getUsedSlotsSnapshot());
+                + java.util.Arrays.toString(devInputDir.list()) + I18n.s(R.string.ui_slots_held) + winHandler.getUsedSlotsSnapshot());
 
         // Pre-launch: pull the freshest GOG cloud saves INTO the prefix before the guest boots, so the
         // game reads current progress (Galaxy-parity download-on-launch). We're on the launch worker
@@ -10115,7 +10118,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         announceOfflineSteamPresence();
 
         // Start all environment components (XServer, Audio, Wine, etc.)
-        preloaderDialog.step(4, "Launching Windows…");
+        preloaderDialog.step(4, I18n.s(R.string.ui_launching_windows));
         environment.startEnvironmentComponents();
         runOnUiThread(this::startLiveControllerSession);
 
@@ -10245,7 +10248,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.w("RendererDriver", "failed to apply renderer driver '" + rendererDriverId + "', staying on system", e);
+                    Log.w("RendererDriver", I18n.s(R.string.ui_failed_to_apply_renderer_driver) + rendererDriverId + I18n.s(R.string.ui_staying_on_system), e);
                 }
             }
             // Present mode (with the mailbox-while-FG override) AND the drawer's live selector seed both
@@ -10331,7 +10334,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // the TV. The re-read goes through checkSessionDisplay so a cable pulled between onCreate and
         // here (the whole container setup) takes the normal unplug path instead of being mistaken for a
         // refusal; it is a no-op when nothing moved.
-        checkSessionDisplay("UI ready");
+        checkSessionDisplay(I18n.s(R.string.ui_ui_ready));
         if (onTvLaunchDisplay()) {
             int tvModeId = com.winhub.hernandez.display.ExternalDisplay.modeId(shortcut);
             if (tvModeId > 0) {
@@ -10342,7 +10345,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     lp.preferredDisplayModeId = tvModeId;
                     getWindow().setAttributes(lp);
                 } catch (Throwable t) {
-                    Log.w("XServerDisplayActivity", "TV: output mode " + tvModeId + " refused", t);
+                    Log.w("XServerDisplayActivity", I18n.s(R.string.ui_tv_output_mode) + tvModeId + " refused", t);
                 }
             }
         } else if (tvLaunchDeclined && !tvLaunchDeclinedNotified) {
@@ -10400,10 +10403,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         applyHandheldDim(); // dim the phone when the game is on the TV (restore when back)
                         if (onExternal) {
                             XServerDialogState.INSTANCE.showInfoToast(
-                                    "GAME MOVED TO TV", "now", "Use the handheld as the controller");
+                                    "GAME MOVED TO TV", "now", I18n.s(R.string.ui_use_the_handheld_as_the_controller));
                         } else {
                             XServerDialogState.INSTANCE.showInfoToast(
-                                    "GAME ON HANDHELD", "now", "Returned to the phone screen");
+                                    "GAME ON HANDHELD", "now", I18n.s(R.string.ui_returned_to_the_phone_screen));
                         }
                     }
                 };
@@ -10497,7 +10500,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             switch (castState) {
                 case "STREAMING":
                     XServerDialogState.INSTANCE.setCastStatus(XServerDialogState.CastStatus.CONNECTED);
-                    XServerDialogState.INSTANCE.setCastStatusDetail("Capturing the game (test recording). " +
+                    XServerDialogState.INSTANCE.setCastStatusDetail(I18n.s(R.string.ui_capturing_the_game_test_recording) +
                             "TV playback is the next update — tap Disconnect to stop & save.");
                     break;
                 case "FAILED":
@@ -10513,7 +10516,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         XServerDialogState.INSTANCE.onCastConnect = (device) -> {
             XServerDialogState.INSTANCE.setCastTargetName(device.name);
             XServerDialogState.INSTANCE.setCastStatus(XServerDialogState.CastStatus.CONNECTING);
-            XServerDialogState.INSTANCE.setCastStatusDetail("Starting the live stream…");
+            XServerDialogState.INSTANCE.setCastStatusDetail(I18n.s(R.string.ui_starting_the_live_stream));
             // Step 2b: encode the game live into HLS segments, host them, and cast the live playlist.
             if (externalDisplayController != null) externalDisplayController.pauseForCast();
             castSegmenter = new com.winhub.hernandez.cast.TsSegmenter();
@@ -10880,7 +10883,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (r instanceof com.winhub.hernandez.renderer.vulkan.VulkanRenderer)
             ((com.winhub.hernandez.renderer.vulkan.VulkanRenderer) r).setNativeMode(false);
         XServerDrawerState.INSTANCE.setNativeRenderingEnabled(false); // flips the toggle UI off
-        showToast(this, "Native Rendering off — needed for post-processing");
+        showToast(this, I18n.s(R.string.ui_native_rendering_off_needed_for_post_processing));
     }
 
     /** Count mapped, real-sized top-level application windows. Native Rendering (direct scanout)
@@ -11413,7 +11416,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     }
                 }
             } catch (IOException e) {
-                Log.e("XServerDisplayActivity", "Error reading shortcut name from .desktop file", e);
+                Log.e("XServerDisplayActivity", I18n.s(R.string.ui_error_reading_shortcut_name_from_desktop_file), e);
             }
         }
         return shortcutName;
@@ -11588,7 +11591,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             touchpadView.setOnTouchListener(null); // Disable the timeout listener if not needed
         }
 
-        Log.d("XServerDisplayActivity", "Input controls simulated confirmation executed.");
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_input_controls_simulated_confirmation_executed));
 
         // #333: apply auto-hide at launch — a pad connected before/at launch should already have the
         // overlay hidden, and the pad seated on the on-screen slot (YIELD pushed above).
@@ -11601,7 +11604,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         if (isTimeoutEnabled) {
             // Show controls initially and set up touch event listeners
             inputControlsView.setVisibility(View.VISIBLE);
-            Log.d("XServerDisplayActivity", "Timeout is enabled, setting up timeout logic.");
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_timeout_is_enabled_setting_up_timeout_logic));
 
             // Attach the OnTouchListener to reset the timeout on touch events
             touchpadView.setOnTouchListener((v, event) -> {
@@ -11626,7 +11629,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             timeoutHandler.postDelayed(hideControlsRunnable, 5000); // Hide after 5 seconds of inactivity
         } else {
             // If timeout is disabled, keep the controls always visible
-            Log.d("XServerDisplayActivity", "Timeout is disabled, controls will stay visible.");
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_timeout_is_disabled_controls_will_stay_visible));
 
             inputControlsView.setVisibility(View.VISIBLE); // Ensure controls are visible
             timeoutHandler.removeCallbacks(hideControlsRunnable); // Remove any existing hide callbacks
@@ -11736,7 +11739,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         try (FileOutputStream out = new FileOutputStream(versionFile)) {
             out.write(Integer.toString(version).getBytes());
         } catch (Exception e) {
-            Log.d("XServerDisplayActivity", "Failed to write extra_libs version marker: " + e.getMessage());
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_failed_to_write_extra_libs_version_marker) + e.getMessage());
         }
     }
 
@@ -11785,8 +11788,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
         }
     }
 
-    Log.d("GraphicsDriverExtraction", "Selected Driver from Config: " + selectedDriver);
-    Log.d("GraphicsDriverExtraction", "Adrenotools DriverID: " + adrenoToolsDriverId);
+    Log.d("GraphicsDriverExtraction", I18n.s(R.string.ui_selected_driver_from_config) + selectedDriver);
+    Log.d("GraphicsDriverExtraction", I18n.s(R.string.ui_adrenotools_driverid) + adrenoToolsDriverId);
 
     File rootDir = imageFs.getRootDir();
 
@@ -11854,7 +11857,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         DXVKConfigDialog.setEnvVars(this, dxwrapperConfig, envVars, dxvkLogDir(), autoTextureLodBias());
         String version = dxwrapperConfig.get("version");
         if (version != null && version.equals("1.11.1-sarek")) {
-            Log.d("GraphicsDriverExtraction", "Disabling Wrapper PATCH_OPCONSTCOMP SPIR-V pass");
+            Log.d("GraphicsDriverExtraction", I18n.s(R.string.ui_disabling_wrapper_patch_opconstcomp_spir_v_pass));
             envVars.put("WRAPPER_NO_PATCH_OPCONSTCOMP", "1");
         }
     }
@@ -11891,16 +11894,16 @@ public class XServerDisplayActivity extends AppCompatActivity {
     File extraLibsVersionFile = new File(imageFs.getLibDir(), ".extra_libs_version");
     int installedExtraLibsVer = readExtraLibsVersion(extraLibsVersionFile);
     if (firstTimeBoot) {
-        Log.d("XServerDisplayActivity", "First time container boot, re-extracting layers and extra_libs");
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_first_time_container_boot_re_extracting_layers_and_extra));
         TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "layers" + ".tzst", rootDir);
         extractGraphicsAsset("extra_libs.tzst", rootDir);
         writeExtraLibsVersion(extraLibsVersionFile, EXTRA_LIBS_VERSION);
     }
     else if (!vkBasaltSo.exists() || installedExtraLibsVer != EXTRA_LIBS_VERSION) {
         if (!vkBasaltSo.exists())
-            Log.d("XServerDisplayActivity", "vkBasalt layer absent (pre-existing container) — re-extracting extra_libs");
+            Log.d("XServerDisplayActivity", I18n.s(R.string.ui_vkbasalt_layer_absent_pre_existing_container_re_extracti));
         else
-            Log.d("XServerDisplayActivity", "extra_libs outdated (installed=" + installedExtraLibsVer + " bundled=" + EXTRA_LIBS_VERSION + ") — re-extracting extra_libs");
+            Log.d("XServerDisplayActivity", "extra_libs outdated (installed=" + installedExtraLibsVer + " bundled=" + EXTRA_LIBS_VERSION + I18n.s(R.string.ui_re_extracting_extra_libs));
         extractGraphicsAsset("extra_libs.tzst", rootDir);
         writeExtraLibsVersion(extraLibsVersionFile, EXTRA_LIBS_VERSION);
     }
@@ -11911,7 +11914,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     // (small file) so it applies regardless of the extra_libs version gate above.
     File bcnLayerOverride = new File(getFilesDir(), "graphics_driver/leegao_bcn.tzst");
     if (bcnLayerOverride.isFile()) {
-        Log.d("GraphicsDriverExtraction", "applying user BCn layer override (leegao_bcn.tzst)");
+        Log.d("GraphicsDriverExtraction", I18n.s(R.string.ui_applying_user_bcn_layer_override_leegao_bcn_tzst));
         TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, bcnLayerOverride, rootDir);
     }
 
@@ -12138,15 +12141,15 @@ public class XServerDisplayActivity extends AppCompatActivity {
             //   to the Wine debug log. Essential for our no-Mali-device iteration: it confirms the 1.3 +
             //   ARM_PROPRIETARY override took. Format: "[WRAPPER_DIAG] driver=%s (driverID=%u) ...".
             envVars.put("WRAPPER_DIAG", "1");
-            Log.d("GraphicsDriverExtraction", "Wrapper + compat + bcn: GameNative engine (DX12) active on '"
+            Log.d("GraphicsDriverExtraction", I18n.s(R.string.ui_wrapper_compat_bcn_gamenative_engine_dx12_active_on)
                     + gnRenderer + "' — WRAPPER_SAFE_CREATE_DEVICE=1 WRAPPER_DRIVER_ID=24(ARM_PROPRIETARY)"
                     + " WRAPPER_EMULATE_BCN=3 WRAPPER_DIAG=1 (leegao bcn_layer/compat_layer left dormant)");
         } else {
-            showToast(this, "Wrapper + compat + bcn: GameNative DX12 engine needs a Valhall Mali (r32p1+)"
-                    + " GPU — it is disabled on this device (" + GPUInformation.extractModelName(gnRenderer)
-                    + "). No DX12 overrides applied.");
-            Log.w("GraphicsDriverExtraction", "GameNative DX12 engine disabled: GPU '" + gnRenderer
-                    + "' is not on the Valhall (r32p1+) allowlist — no DX12 envs emitted");
+            showToast(this, I18n.s(R.string.ui_wrapper_compat_bcn_gamenative_dx12_engine_needs_a_valhal)
+                    + I18n.s(R.string.ui_gpu_it_is_disabled_on_this_device) + GPUInformation.extractModelName(gnRenderer)
+                    + I18n.s(R.string.ui_no_dx12_overrides_applied));
+            Log.w("GraphicsDriverExtraction", I18n.s(R.string.ui_gamenative_dx12_engine_disabled_gpu) + gnRenderer
+                    + I18n.s(R.string.ui_is_not_on_the_valhall_r32p1_allowlist_no_dx12_envs_emitt));
         }
         } else {
         // ENABLE_BCN_COMPUTE is both the master switch and the loader enable-gate — always 1.
@@ -12198,11 +12201,11 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     envVars.put("COMPAT_EMULATE_SPARSE_BINDING", "1");
             }
             else {
-                showToast(this, "Wrapper + compat + bcn: the DX12 compat layer needs a Valhall Mali (r32p1+)"
-                        + " GPU — it is disabled on this device (" + GPUInformation.extractModelName(renderer)
-                        + "). BCn texture transcode is still active.");
-                Log.w("GraphicsDriverExtraction", "compat_layer disabled: GPU '" + renderer
-                        + "' is not on the Valhall (r32p1+) allowlist");
+                showToast(this, I18n.s(R.string.ui_wrapper_compat_bcn_the_dx12_compat_layer_needs_a_valhall)
+                        + I18n.s(R.string.ui_gpu_it_is_disabled_on_this_device) + GPUInformation.extractModelName(renderer)
+                        + I18n.s(R.string.ui_bcn_texture_transcode_is_still_active));
+                Log.w("GraphicsDriverExtraction", I18n.s(R.string.ui_compat_layer_disabled_gpu) + renderer
+                        + I18n.s(R.string.ui_is_not_on_the_valhall_r32p1_allowlist));
             }
         }
         } // useGamenativeEngine ? GameNative DX12 path : leegao bcn_layer/compat_layer path
@@ -12746,10 +12749,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
         String d7vkVersion = (dxwrapperConfig != null) ? dxwrapperConfig.get("d7vkVersion") : null;
         ContentProfile d7vkProfile = findD7vkProfile(d7vkVersion);
         if (d7vkProfile != null) {
-            Log.d(TAG, "Applying user-defined d7vk content profile: " + d7vkVersion);
+            Log.d(TAG, I18n.s(R.string.ui_applying_user_defined_d7vk_content_profile) + d7vkVersion);
             contentsManager.applyContent(d7vkProfile);
         } else {
-            Log.d(TAG, "Extracting bundled d7vk .tzst archive");
+            Log.d(TAG, I18n.s(R.string.ui_extracting_bundled_d7vk_tzst_archive));
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/d7vk.tzst", windowsDir, onExtractFileListener);
         }
     }
@@ -12775,7 +12778,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         File windowsDir = new File(rootDir, ImageFs.WINEPREFIX + "/drive_c/windows");
 
         if (dxwrapper.contains("dxvk")) {
-            Log.d(TAG, "Extracting DXVK wrapper files, version: " + dxwrapper);
+            Log.d(TAG, I18n.s(R.string.ui_extracting_dxvk_wrapper_files_version) + dxwrapper);
 
             String dxvkWrapper = dxwrapper.split(";")[0];
             String vkd3dWrapper = dxwrapper.split(";")[1];
@@ -12783,42 +12786,42 @@ public class XServerDisplayActivity extends AppCompatActivity {
             
             ContentProfile dxvkProfile = contentsManager.getProfileByEntryName(dxvkWrapper);
             if (dxvkProfile != null) {
-                Log.d(TAG, "Applying user-defined DXVK content profile: " + dxvkWrapper);
+                Log.d(TAG, I18n.s(R.string.ui_applying_user_defined_dxvk_content_profile) + dxvkWrapper);
                 contentsManager.applyContent(dxvkProfile);
             } else {
-                Log.d(TAG, "Extracting fallback DXVK .tzst archive: " + dxvkWrapper);
+                Log.d(TAG, I18n.s(R.string.ui_extracting_fallback_dxvk_tzst_archive) + dxvkWrapper);
                 TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "dxwrapper/" + dxvkWrapper + ".tzst", windowsDir, onExtractFileListener);
 
                 if (compareVersion(dxvkWrapper, "2.4") < 0) {
-                    Log.d(TAG, "Extracting d8vk as part of DXVK version " + dxvkWrapper);
+                    Log.d(TAG, I18n.s(R.string.ui_extracting_d8vk_as_part_of_dxvk_version) + dxvkWrapper);
                     TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "dxwrapper/d8vk-" + DefaultVersion.D8VK + ".tzst", windowsDir, onExtractFileListener);
                 }
             }
 
             boolean vkd3dOk;
             if (vkd3dWrapper.contains("None")) {
-                Log.d(TAG, "No VKD3D has been selected, restoring original d3d12");
+                Log.d(TAG, I18n.s(R.string.ui_no_vkd3d_has_been_selected_restoring_original_d3d12));
                 restoreOriginalDllFiles(new String[]{"d3d12.dll", "d3d12core.dll"});
                 vkd3dOk = true;
             } else {
                 ContentProfile vkd3dProfile = contentsManager.getProfileByEntryName(vkd3dWrapper);
                 if (vkd3dProfile != null) {
-                    Log.d(TAG, "Applying user-defined VKD3D content profile: " + vkd3dWrapper);
+                    Log.d(TAG, I18n.s(R.string.ui_applying_user_defined_vkd3d_content_profile) + vkd3dWrapper);
                     contentsManager.applyContent(vkd3dProfile);
                     vkd3dOk = true;
                 } else {
-                    Log.d(TAG, "Extracting fallback VKD3D .tzst archive: " + vkd3dWrapper);
+                    Log.d(TAG, I18n.s(R.string.ui_extracting_fallback_vkd3d_tzst_archive) + vkd3dWrapper);
                     vkd3dOk = TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "dxwrapper/" + vkd3dWrapper + ".tzst", windowsDir, onExtractFileListener);
-                    if (!vkd3dOk) Log.e(TAG, "VKD3D extraction failed: " + vkd3dWrapper);
+                    if (!vkd3dOk) Log.e(TAG, I18n.s(R.string.ui_vkd3d_extraction_failed) + vkd3dWrapper);
                 }
             }
             if (!vkd3dOk) return false;
 
-            Log.d(TAG, "Extracting nglide wrapper");
+            Log.d(TAG, I18n.s(R.string.ui_extracting_nglide_wrapper));
 TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/nglide.tzst", windowsDir, onExtractFileListener);
 
 if (ddrawrapper.contains("None")) {
-    Log.d(TAG, "No DDRaw wrapper has been selected, restoring original ddraw files");
+    Log.d(TAG, I18n.s(R.string.ui_no_ddraw_wrapper_has_been_selected_restoring_original_dd));
     restoreOriginalDllFiles(new String[]{ "ddraw.dll", "d3dimm.dll" });
 }
 else {
@@ -12827,11 +12830,11 @@ else {
     }
     // Fixed: Ensure no hidden characters (\u200b) exist before 'else if'
     else if (ddrawrapper.equals("dgvoodoo")) {
-        Log.d(TAG, "Applying dgvoodoo ddrawrapper");
+        Log.d(TAG, I18n.s(R.string.ui_applying_dgvoodoo_ddrawrapper));
         TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/dgvoodoo.tzst", windowsDir, onExtractFileListener);
     }
     else if (ddrawrapper.equals("d7vk")) {
-        Log.d(TAG, "Applying d7vk ddrawrapper");
+        Log.d(TAG, I18n.s(R.string.ui_applying_d7vk_ddrawrapper));
         // d7vk's ddraw.dll proxies unimplemented (2D/GDI) DirectDraw calls to a
         // renamed builtin ddraw_.dll (see "GetProxiedDDrawModule: Loaded ddraw_.dll").
         // Restore the genuine wine builtin, copy it aside as the proxy target, then
@@ -12844,17 +12847,17 @@ else {
         applyD7vk(windowsDir);
     }
 
-    Log.d(TAG, "Extracting ddrawrapper " + ddrawrapper);
+    Log.d(TAG, I18n.s(R.string.ui_extracting_ddrawrapper) + ddrawrapper);
     // Only extract if it wasn't already handled specifically above
     if (!ddrawrapper.equals("dgvoodoo") && !ddrawrapper.equals("d7vk")) {
         TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/" + ddrawrapper + ".tzst", windowsDir, onExtractFileListener);
     }
 }
 
-Log.d(TAG, "Finished extraction of DXVK wrapper files, version: " + dxwrapper);
+Log.d(TAG, I18n.s(R.string.ui_finished_extraction_of_dxvk_wrapper_files_version) + dxwrapper);
 return true;
 } else if (dxwrapper.contains("vegas")) {
-    Log.d(TAG, "Extracting VEGAS wrapper files: " + dxwrapper);
+    Log.d(TAG, I18n.s(R.string.ui_extracting_vegas_wrapper_files) + dxwrapper);
 
     String[] parts = dxwrapper.split(";");
     String vegasWrapper = parts[0];
@@ -12868,35 +12871,35 @@ return true;
     ContentProfile vegasProfile = contentsManager.getProfileByEntryName(vegasWrapper);
     if (vegasProfile == null) {
         String needVersion = vegasWrapper.substring("vegas-".length());
-        Log.d(TAG, "Searching VEGAS profiles for version: " + needVersion);
+        Log.d(TAG, I18n.s(R.string.ui_searching_vegas_profiles_for_version) + needVersion);
         for (ContentProfile p : contentsManager.getProfiles(ContentProfile.ContentType.CONTENT_TYPE_VEGAS)) {
             String pVer = (p.verName != null && p.verName.startsWith("vegas-"))
                     ? p.verName.substring("vegas-".length()) : p.verName;
             if (needVersion.equals(pVer)) {
                 vegasProfile = p;
-                Log.d(TAG, "Found matching VEGAS content profile: " + ContentsManager.getEntryName(p));
+                Log.d(TAG, I18n.s(R.string.ui_found_matching_vegas_content_profile) + ContentsManager.getEntryName(p));
                 break;
             }
         }
     }
     if (vegasProfile != null) {
-        Log.d(TAG, "Applying user-defined VEGAS content profile: " + vegasWrapper);
+        Log.d(TAG, I18n.s(R.string.ui_applying_user_defined_vegas_content_profile) + vegasWrapper);
         contentsManager.applyContent(vegasProfile);
     } else {
-        Log.d(TAG, "Extracting fallback VEGAS .tzst archive: " + vegasWrapper);
+        Log.d(TAG, I18n.s(R.string.ui_extracting_fallback_vegas_tzst_archive) + vegasWrapper);
         TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "dxwrapper/" + vegasWrapper + ".tzst", windowsDir, onExtractFileListener);
     }
 
     // Extract VKD3D if part of vegas+vkd3d combo
     boolean hasVkd3d = vkd3dWrapper != null && !vkd3dWrapper.isEmpty() && !vkd3dWrapper.contains("None");
     if (hasVkd3d) {
-        Log.d(TAG, "Extracting VKD3D wrapper files for VEGAS combo: " + vkd3dWrapper);
+        Log.d(TAG, I18n.s(R.string.ui_extracting_vkd3d_wrapper_files_for_vegas_combo) + vkd3dWrapper);
         ContentProfile vkd3dProfile = contentsManager.getProfileByEntryName(vkd3dWrapper);
         if (vkd3dProfile != null) {
-            Log.d(TAG, "Applying user-defined VKD3D content profile: " + vkd3dWrapper);
+            Log.d(TAG, I18n.s(R.string.ui_applying_user_defined_vkd3d_content_profile) + vkd3dWrapper);
             contentsManager.applyContent(vkd3dProfile);
         } else {
-            Log.d(TAG, "Extracting VKD3D .tzst archive: " + vkd3dWrapper);
+            Log.d(TAG, I18n.s(R.string.ui_extracting_vkd3d_tzst_archive) + vkd3dWrapper);
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "dxwrapper/" + vkd3dWrapper + ".tzst", windowsDir, onExtractFileListener);
         }
     } else {
@@ -12905,12 +12908,12 @@ return true;
     }
 
     // Extract nglide
-    Log.d(TAG, "Extracting nglide wrapper");
+    Log.d(TAG, I18n.s(R.string.ui_extracting_nglide_wrapper));
     TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/nglide.tzst", windowsDir, onExtractFileListener);
 
     // Handle ddrawrapper
     if (ddrawrapper.contains("None")) {
-        Log.d(TAG, "No DDraw wrapper selected, restoring original ddraw files");
+        Log.d(TAG, I18n.s(R.string.ui_no_ddraw_wrapper_selected_restoring_original_ddraw_files));
         restoreOriginalDllFiles(new String[]{ "ddraw.dll", "d3dimm.dll" });
     }
     else {
@@ -12918,11 +12921,11 @@ return true;
             envVars.put("CNC_DDRAW_CONFIG_FILE", "C:\\windows\\syswow64\\ddraw.ini");
         }
         else if (ddrawrapper.equals("dgvoodoo")) {
-            Log.d(TAG, "Applying dgvoodoo ddrawrapper");
+            Log.d(TAG, I18n.s(R.string.ui_applying_dgvoodoo_ddrawrapper));
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/dgvoodoo.tzst", windowsDir, onExtractFileListener);
         }
         else if (ddrawrapper.equals("d7vk")) {
-            Log.d(TAG, "Applying d7vk ddrawrapper");
+            Log.d(TAG, I18n.s(R.string.ui_applying_d7vk_ddrawrapper));
             // See site above: d7vk proxies to a renamed builtin ddraw_.dll.
             File d7vkSyswow64 = new File(windowsDir, "syswow64");
             new File(d7vkSyswow64, "ddraw_.dll").delete();
@@ -12932,16 +12935,16 @@ return true;
             applyD7vk(windowsDir);
         }
 
-        Log.d(TAG, "Extracting ddrawrapper " + ddrawrapper);
+        Log.d(TAG, I18n.s(R.string.ui_extracting_ddrawrapper) + ddrawrapper);
         if (!ddrawrapper.equals("dgvoodoo") && !ddrawrapper.equals("d7vk")) {
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "ddrawrapper/" + ddrawrapper + ".tzst", windowsDir, onExtractFileListener);
         }
     }
 
-    Log.d(TAG, "Finished extraction of VEGAS wrapper files: " + dxwrapper);
+    Log.d(TAG, I18n.s(R.string.ui_finished_extraction_of_vegas_wrapper_files) + dxwrapper);
     return true;
 } else if (dxwrapper.contains("wined3d")) {
-    Log.d(TAG, "Restoring original DLL files for wined3d.");
+    Log.d(TAG, I18n.s(R.string.ui_restoring_original_dll_files_for_wined3d));
     restoreOriginalDllFiles(dlls);
         }
         return true;
@@ -12991,7 +12994,7 @@ return true;
     }
     
     private void extractWinComponentFiles() {
-        Log.d("XServerDisplayActivity", "Extracting WinComponents");
+        Log.d("XServerDisplayActivity", I18n.s(R.string.ui_extracting_wincomponents));
         File rootDir = imageFs.getRootDir();
         File windowsDir = new File(rootDir, ImageFs.WINEPREFIX+"/drive_c/windows");
         File systemRegFile = new File(rootDir, ImageFs.WINEPREFIX+"/system.reg");
@@ -13702,7 +13705,7 @@ return true;
         });
         try {
             if (!seated.await(2, TimeUnit.SECONDS))
-                Log.w("XServerDisplayActivity", "on-screen pad not seated before boot (main thread busy)");
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_on_screen_pad_not_seated_before_boot_main_thread_busy));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -13736,17 +13739,17 @@ return true;
                 if (ok) {
                     XServerDialogState.INSTANCE.showControllerToastFor("reconnected", buildPlayerSlotRows(), null);
                 } else {
-                    XServerDialogState.INSTANCE.showInfoToast("CONTROLLER NOT BACK YET", "",
+                    XServerDialogState.INSTANCE.showInfoToast(I18n.s(R.string.ui_controller_not_back_yet), "",
                             "If the game lost the controller: Controls › Players › Reset Input, or restart the game.");
                 }
             }
 
             @Override public void onXInputApplied(boolean direct, boolean ok) {
                 if (ok) {
-                    XServerDialogState.INSTANCE.showInfoToast("XINPUT SOURCE", "applied in game",
+                    XServerDialogState.INSTANCE.showInfoToast(I18n.s(R.string.ui_xinput_source_2), "applied in game",
                             direct ? "Direct XInput (WinHub)" : "Wine's XInput");
                 } else {
-                    XServerDialogState.INSTANCE.showInfoToast("XINPUT SOURCE", "",
+                    XServerDialogState.INSTANCE.showInfoToast(I18n.s(R.string.ui_xinput_source_2), "",
                             "Wine's XInput isn't available in this game; it stays on Direct XInput.");
                 }
             }
@@ -13769,7 +13772,7 @@ return true;
         if (preferences.getBoolean(key, false)) return;
         preferences.edit().putBoolean(key, true).apply();
         XServerDialogState.INSTANCE.showInfoToast("DIRECT XINPUT", "",
-                "This game ships its own XInput DLL (" + names + "), so Wine's XInput is used for it instead of Direct XInput.");
+                "This game ships its own XInput DLL (" + names + I18n.s(R.string.ui_so_wine_s_xinput_is_used_for_it_instead_of_direct_xinput));
     }
 
     private void updateAutoHideForControllers() {
@@ -14096,7 +14099,7 @@ return true;
                 xServer.getExtension(com.winhub.hernandez.xserver.extensions.PresentExtension.MAJOR_OPCODE);
         float paced = pacedLimitWithSlack(fps);
         if (paced != fps) Log.i("XServerDisplayActivity", "fps limit " + fps + " paced at " + paced
-            + " (exact display fit under native frame gen; slack " + NATIVE_FG_FIT_SLACK + ")");
+            + I18n.s(R.string.ui_exact_display_fit_under_native_frame_gen_slack) + NATIVE_FG_FIT_SLACK + ")");
         if (pe != null) pe.setFrameRateLimit(paced);
         if (xServerView != null) {
             HostRenderer r = xServerView.getRenderer();
@@ -14434,7 +14437,7 @@ return true;
             preloaderDialog.step(2, label);
             return kotlin.Unit.INSTANCE;
         });
-        preloaderDialog.step(2, "Checking the Xbox license…");
+        preloaderDialog.step(2, I18n.s(R.string.ui_checking_the_xbox_license));
         xboxLaunch = com.winhub.hernandez.store.xbox.XboxRuntime.INSTANCE.prepare(getApplicationContext(), id,
                 java.util.UUID.randomUUID().toString(), imageFs.getRootDir(),
                 system32,
@@ -14457,15 +14460,15 @@ return true;
                 // software (no3d) wrapper yields a grey overlay. We don't force-rewrite the user's
                 // wrapper (that could break the game), but warn when it isn't a DXVK-based one.
                 if (this.dxwrapper == null || !this.dxwrapper.contains("dxvk")) {
-                    Log.w("XServerDisplayActivity", "Epic overlay ON but dxwrapper is not DXVK-based ("
-                            + this.dxwrapper + ") — overlay may render grey; DXVK is recommended");
+                    Log.w("XServerDisplayActivity", I18n.s(R.string.ui_epic_overlay_on_but_dxwrapper_is_not_dxvk_based)
+                            + this.dxwrapper + I18n.s(R.string.ui_overlay_may_render_grey_dxvk_is_recommended));
                 }
-                Log.i("XServerDisplayActivity", "Epic overlay provisioned for launch");
+                Log.i("XServerDisplayActivity", I18n.s(R.string.ui_epic_overlay_provisioned_for_launch));
             } else {
-                Log.w("XServerDisplayActivity", "Epic overlay provisioning failed; leaving registry untouched");
+                Log.w("XServerDisplayActivity", I18n.s(R.string.ui_epic_overlay_provisioning_failed_leaving_registry_untouc));
             }
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "provisionEpicOverlay failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_provisionepicoverlay_failed), t);
         }
     }
 
@@ -14481,7 +14484,7 @@ return true;
             xServer.injectKeyRelease(XKeycode.KEY_F3);
             xServer.injectKeyRelease(XKeycode.KEY_SHIFT_L);
         } catch (Throwable t) {
-            Log.w("XServerDisplayActivity", "injectEpicOverlayHotkey failed", t);
+            Log.w("XServerDisplayActivity", I18n.s(R.string.ui_injectepicoverlayhotkey_failed), t);
         }
     }
 
@@ -14659,7 +14662,7 @@ return true;
         if (slash >= 0) exe = exe.substring(slash + 1);
         if (!exe.isEmpty() && winHandler != null) winHandler.setProcessAffinity(exe, processAffinity);
         boolean restrict = Integer.bitCount(processAffinity & 0xff) < Runtime.getRuntime().availableProcessors();
-        String msg = "launch CPU affinity for " + (exe.isEmpty() ? "an unnamed program" : exe) + " (pid " + pid
+        String msg = I18n.s(R.string.ui_launch_cpu_affinity_for) + (exe.isEmpty() ? "an unnamed program" : exe) + " (pid " + pid
                 + "): mask 0x" + Integer.toHexString(processAffinity & 0xffff)
                 + (restrict ? ", kept on those cores by the drift checker" : " (every core: nothing to enforce)");
         Log.i("XServerDisplayActivity", "wayland: " + msg);
@@ -14738,8 +14741,8 @@ return true;
                     }
                 }
                 if (!on) bigCoreAffinitySnapshot.clear();
-                Log.d("XServerDisplayActivity", "Prefer big cores live re-pin (" + (on ? "ON" : "OFF")
-                        + "): " + collected.size() + " guest process(es)");
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_prefer_big_cores_live_re_pin) + (on ? "ON" : "OFF")
+                        + "): " + collected.size() + I18n.s(R.string.ui_guest_process_es));
                 winHandler.setOnGetProcessInfoListener(prev); // hand the listener back
             }
         });
@@ -14866,7 +14869,7 @@ return true;
             boolean boundToFallback = frameRatingWindowId != -1 && !mesaDrvWindowIds.contains(frameRatingWindowId);
             if (isMesaDrv && (frameRatingWindowId == -1 || boundToFallback)) {
                 frameRatingWindowId = window.id;
-                Log.d("XServerDisplayActivity", "Showing hud for Window " + window.getName());
+                Log.d("XServerDisplayActivity", I18n.s(R.string.ui_showing_hud_for_window) + window.getName());
 
                 runOnUiThread(() -> {
                     // Respect the master toggle: a binding window must not reveal the HUD while "Show
@@ -14909,10 +14912,10 @@ return true;
                 }
                 if (next != null) {
                     frameRatingWindowId = next;   // keep the HUD visible, now tracking the new window
-                    Log.d("XServerDisplayActivity", "Re-binding hud to Window id " + next);
+                    Log.d("XServerDisplayActivity", I18n.s(R.string.ui_re_binding_hud_to_window_id) + next);
                 } else {
                     frameRatingWindowId = -1;
-                    Log.d("XServerDisplayActivity", "Hiding hud for Window " + window.getName());
+                    Log.d("XServerDisplayActivity", I18n.s(R.string.ui_hiding_hud_for_window) + window.getName());
                     fpsCounter.reset();
                     runOnUiThread(() -> {
                         if (fusionHud != null) fusionHud.setVisibility(View.GONE);
@@ -14969,7 +14972,7 @@ return true;
                 }
             }
         } catch (Exception e) {
-            Log.e("XServerDisplayActivity", "Error reading windows", e);
+            Log.e("XServerDisplayActivity", I18n.s(R.string.ui_error_reading_windows), e);
         }
 
         ArrayList<XServerDialogState.ActiveWindow> windowInfoList = new ArrayList<>();
@@ -15084,8 +15087,8 @@ return true;
     private void installerReminderToast() {
         try {
             runOnUiThread(() -> android.widget.Toast.makeText(this,
-                    "Installing " + installerLabel() + "… follow the installer's prompts if it shows any. "
-                            + "This session closes by itself when it is done.",
+                    "Installing " + installerLabel() + I18n.s(R.string.ui_follow_the_installer_s_prompts_if_it_shows_any)
+                            + I18n.s(R.string.ui_this_session_closes_by_itself_when_it_is_done),
                     android.widget.Toast.LENGTH_LONG).show());
         } catch (Throwable ignored) {}
     }
@@ -15094,7 +15097,7 @@ return true;
         if (componentInstallerExe == null) return;
         // Silent installer (no window ever mapped -> overlay still up): keep its status line current.
         if (!winStarted) preloaderHint("Installing " + installerLabel()
-                + "… this can take a few minutes. Leave it running — this screen closes by itself when it is done.");
+                + I18n.s(R.string.ui_this_can_take_a_few_minutes_leave_it_running_this_screen));
         // Visible installer: repeat the reminder roughly every 45 s so a long install never looks stuck.
         if (winStarted && (++installerTicksTotal % 45) == 0) installerReminderToast();
         boolean present = false;

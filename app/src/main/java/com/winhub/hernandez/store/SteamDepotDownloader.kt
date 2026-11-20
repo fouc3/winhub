@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.PowerManager
@@ -203,7 +206,7 @@ object SteamDepotDownloader {
     val debugLogPath: String get() = debugLogFile?.absolutePath ?: "(not initialized)"
 
     internal fun initDebugLog(ctx: Context, truncate: Boolean = true,
-                              engine: String = "JavaSteam DepotDownloader (Ktor CIO)") {
+                              engine: String = I18n.s(R.string.ui_javasteam_depotdownloader_ktor_cio)) {
         try {
             val dir = ctx.getExternalFilesDir(null)
             if (dir != null) {
@@ -458,8 +461,8 @@ object SteamDepotDownloader {
         val repo = SteamRepository.getInstance()
         val steamClient = repo.steamClient
         if (steamClient == null) {
-            dlog("FAIL: SteamClient is null — not connected to Steam")
-            emitFailed(appId, "Not connected to Steam")
+            dlog(I18n.s(R.string.ui_fail_steamclient_is_null_not_connected_to_steam))
+            emitFailed(appId, I18n.s(R.string.xmb_fr_disconnected_title))
             return
         }
         dlog("SteamClient: connected=${repo.isConnected}, loggedIn=${repo.isLoggedIn}")
@@ -469,7 +472,7 @@ object SteamDepotDownloader {
         // depot download without a live session makes the manifest job time out → the user sees a
         // bogus "Unknown error". Wait for the session to come back (re-logging-on if needed).
         if (!repo.isLoggedIn) {
-            dlog("Not logged in — waiting for session (re-logging-on from saved token if available)…")
+            dlog(I18n.s(R.string.ui_not_logged_in_waiting_for_session_re_logging_on_from_sav))
             val ok = repo.ensureLoggedIn(15_000L)
             dlog("ensureLoggedIn → $ok (loggedIn=${repo.isLoggedIn})")
             if (!ok) {
@@ -477,7 +480,7 @@ object SteamDepotDownloader {
                 // record of the logon/logoff EResult (e.g. LogonSessionReplaced, InvalidPassword)
                 // is in logcat, which the user can't reach.
                 dlog("Session status at failure: ${repo.lastSessionStatus}")
-                emitFailed(appId, "Steam session not ready — sign in again or retry in a moment")
+                emitFailed(appId, I18n.s(R.string.ui_steam_session_not_ready_sign_in_again_or_retry_in_a_mome))
                 return
             }
         }
@@ -485,14 +488,14 @@ object SteamDepotDownloader {
         val licenses = repo.getLicenses()
         dlog("Licenses: ${licenses.size} entries")
         if (licenses.isEmpty()) {
-            dlog("WARNING: license list is empty — DepotDownloader may not find any depots")
+            dlog(I18n.s(R.string.ui_warning_license_list_is_empty_depotdownloader_may_not_fi))
         }
 
         val db = repo.database
         val row = db.getGame(appId)
         if (row == null) {
             dlog("FAIL: appId=$appId not found in database")
-            emitFailed(appId, "Game not found in database")
+            emitFailed(appId, I18n.s(R.string.ui_game_not_found_in_database))
             return
         }
         dlog("Game: name='${row.name}' type=${row.type} sizeBytes=${row.sizeBytes}")
@@ -685,12 +688,12 @@ object SteamDepotDownloader {
                 skipLargeFileAllocation = true,
             )
         } catch (e: Exception) {
-            dlog("FAIL: DepotDownloader constructor threw")
+            dlog(I18n.s(R.string.ui_fail_depotdownloader_constructor_threw))
             dlogError("DepotDownloader()", e)
             emitFailed(appId, "DepotDownloader init failed: ${e.message}")
             return
         }
-        dlog("DepotDownloader constructed OK")
+        dlog(I18n.s(R.string.ui_depotdownloader_constructed_ok))
         downloaderRef.set(downloader)
 
         // Captured by onDownloadFailed; the terminal decision (retry vs surface to user) is made
@@ -959,7 +962,7 @@ object SteamDepotDownloader {
                         val label = when (cn.first) {
                             DepotVerdict.COMPLETE -> "COMPLETE"
                             DepotVerdict.SHORT    -> "SHORT"
-                            DepotVerdict.DENIED   -> "DENIED (skipped — not owned on this account)"
+                            DepotVerdict.DENIED   -> I18n.s(R.string.ui_denied_skipped_not_owned_on_this_account)
                         }
                         dlog("Depot $id: $label — ${cn.second}")
                     }
@@ -976,14 +979,14 @@ object SteamDepotDownloader {
                         dlog("INCOMPLETE (per-depot manifest verify): ${shorts.size}/${checks.size} selected " +
                                 "depot(s) short — on-disk ${fmtSize(onDisk)}, manifest-true ${fmtSize(manifestSum)}. " +
                                 "SHORT: $summary")
-                        dlog("Deferring to bounded auto-resume (Layer 1) — NOT marking installed this pass.")
+                        dlog(I18n.s(R.string.ui_deferring_to_bounded_auto_resume_layer_1_not_marking_ins))
                         return   // do NOT markInstalled; the tail decides resume-vs-fail (bounded + backoff)
                     }
                     // No genuinely-short depot remains. GUARD: if NOTHING completed (every selected depot
                     // was denied), the account owns none of this game — fail honestly instead of letting
                     // "tolerate denied" turn a fully-unowned game into a false success.
                     if (complete.isEmpty()) {
-                        val msg = "Steam denied access to every depot of this game (not owned on this account?)"
+                        val msg = I18n.s(R.string.ui_steam_denied_access_to_every_depot_of_this_game_not_owne)
                         dlog("NOT OWNED: all ${checks.size} selected depot(s) denied — $msg")
                         emitFailed(appId, msg)   // marks DB/registry failed + advances the queue
                         return                    // do NOT markInstalled
@@ -1113,7 +1116,7 @@ object SteamDepotDownloader {
         downloader.add(item)
         downloader.finishAdding()
 
-        dlog("Items added, download auto-starts via getCompletion()")
+        dlog(I18n.s(R.string.ui_items_added_download_auto_starts_via_getcompletion))
 
         // Pause the background library PICS sync while THIS download owns the CM connection. A
         // full-library appinfo request (~372 apps in one shot) monopolises the shared TcpConnection
@@ -1142,13 +1145,13 @@ object SteamDepotDownloader {
             }
         }, "SteamJobTimeoutWatchdog").apply { isDaemon = true; start() }
 
-        dlog("Blocking on getCompletion().get()...")
+        dlog(I18n.s(R.string.ui_blocking_on_getcompletion_get))
         var completedNormally = false
         var retryAsResume = false
         try {
             downloader.getCompletion().get()
             completedNormally = true
-            dlog("getCompletion() returned — download finished")
+            dlog(I18n.s(R.string.ui_getcompletion_returned_download_finished))
         } catch (e: ExecutionException) {
             dlog("getCompletion() ExecutionException: ${e.cause?.message ?: e.message}")
             dlogError("ExecutionException.cause", e.cause ?: e)
@@ -1157,14 +1160,14 @@ object SteamDepotDownloader {
             Thread.currentThread().interrupt()
         } catch (e: Exception) {
             dlog("getCompletion() unexpected exception: ${e.message}")
-            dlogError("getCompletion unexpected", e)
+            dlogError(I18n.s(R.string.ui_getcompletion_unexpected), e)
         } finally {
             jobWatchdog.set(false)   // stop the AsyncJob-timeout watchdog for this download
             repo.setDownloadActive(false)   // release the CM; resumes any parked library PICS sync
             releaseDownloadWakelock()       // drop the partial wakelock on EVERY terminal path
             try { repo.refreshFgsStatus() } catch (_: Throwable) {}  // revert "Downloading … N%" → connection status
             activeDownloads.remove(appId)
-            dlog("Closing DepotDownloader")
+            dlog(I18n.s(R.string.ui_closing_depotdownloader))
             try { downloader.close() } catch (_: Exception) {}
             downloaderRef.set(null)
             if (!completedNormally) {
@@ -1211,7 +1214,7 @@ object SteamDepotDownloader {
                             dlog("finally: post-failure ${if (forceFresh) "reconnectAndRelogin" else "ensureLoggedIn"}" +
                                     " → $ok (loggedIn=${repo.isLoggedIn})")
                             if (ok && !cancelled.get() && !paused.get()) {
-                                dlog("finally: session recovered — will retry as resume")
+                                dlog(I18n.s(R.string.ui_finally_session_recovered_will_retry_as_resume))
                                 retryAsResume = true
                             }
                         }
@@ -1258,7 +1261,7 @@ object SteamDepotDownloader {
                     dlog("Auto-resume made NO forward progress (on-disk ${fmtSize(curOnDisk)} ≤ floor " +
                             "${fmtSize(resumeFloorBytes)} + ${fmtSize(MIN_RESUME_PROGRESS_BYTES)}) — a selected " +
                             "depot is unavailable (no key / dead CDN). Failing fast. SHORT: $summary")
-                    emitFailed(appId, "Download stalled — a depot delivered no new data on resume; please retry")
+                    emitFailed(appId, I18n.s(R.string.ui_download_stalled_a_depot_delivered_no_new_data_on_resume))
                 }
                 else -> {
                     val backoff = DEPOT_RESUME_BACKOFF_MS[resumeAttempt.coerceAtMost(DEPOT_RESUME_BACKOFF_MS.size - 1)]

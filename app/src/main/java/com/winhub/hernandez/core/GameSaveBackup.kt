@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
@@ -124,7 +127,7 @@ object GameSaveBackup {
         var written = 0
 
         val input = context.contentResolver.openInputStream(uri)
-            ?: return RestoreResult(false, 0, "Could not open backup file")
+            ?: return RestoreResult(false, 0, I18n.s(R.string.ui_could_not_open_backup_file))
 
         input.use { rawIn ->
             ZipInputStream(BufferedInputStream(rawIn)).use { zis ->
@@ -365,7 +368,7 @@ object GameSaveBackup {
     ): BackupResult {
         val profile = File(container.rootDir, ".wine/drive_c/users/${ImageFs.USER}")
         if (!profile.isDirectory) {
-            return BackupResult(false, null, 0, "No save profile found in this container")
+            return BackupResult(false, null, 0, I18n.s(R.string.ui_no_save_profile_found_in_this_container))
         }
 
         // The only per-layout state: the entry root prefix + which user segment to write.
@@ -419,7 +422,7 @@ object GameSaveBackup {
         // backup of anything, so it must not turn "nothing to back up" into a hollow success.
         if (count == 0) {
             outFile.delete()
-            return BackupResult(false, null, 0, "No save files to back up")
+            return BackupResult(false, null, 0, I18n.s(R.string.ui_no_save_files_to_back_up))
         }
         return BackupResult(true, outFile.absolutePath, count + identityCount, null)
     }

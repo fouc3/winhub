@@ -138,7 +138,7 @@ private val InstalledGreen = Color(0xFF37C26B)
 private val SavedBlue = Color(0xFF3D9BFF)
 
 private enum class HubTab(val label: String, val railLabel: String) {
-    DOWNLOAD("Download Components", "Download"),
+    DOWNLOAD(I18n.s(R.string.ui_download_components), "Download"),
     COMPONENT("Components", "Components"),
     INSTALLED("Installed", "Installed"),
     MY_FILES("My Files", "My Files"),
@@ -281,12 +281,12 @@ private val hubCategories = listOf(
     HubCategory("DXVK", "DXVK", "Direct3D 9 / 10 / 11 \u2192 Vulkan", Icons.Filled.ViewInAr),
     HubCategory("D7VK", "D7VK", "Direct3D 7 \u2192 Vulkan", Icons.Filled.ViewInAr),
     HubCategory("VKD3D", "VKD3D", "Direct3D 12 \u2192 Vulkan (VKD3D-Proton)", Icons.Filled.ViewInAr),
-    HubCategory(ContentsTypes.GPU_DRIVERS, "GPU Drivers", "Turnip / Adreno Vulkan drivers", Icons.Filled.Memory),
-    HubCategory("Box64", "Box64", "x86_64 userland emulation on ARM64", Icons.Filled.Extension),
-    HubCategory("WOWBox64", "WOWBox64", "x86 (32-bit) emulation on ARM64", Icons.Filled.Extension),
+    HubCategory(ContentsTypes.GPU_DRIVERS, I18n.s(R.string.ui_gpu_drivers), I18n.s(R.string.ui_turnip_adreno_vulkan_drivers), Icons.Filled.Memory),
+    HubCategory("Box64", "Box64", I18n.s(R.string.ui_x86_64_userland_emulation_on_arm64), Icons.Filled.Extension),
+    HubCategory("WOWBox64", "WOWBox64", I18n.s(R.string.ui_x86_32_bit_emulation_on_arm64), Icons.Filled.Extension),
     HubCategory("FEXCore", "FEXCore", "x86 / x86_64 backend (ARM64EC)", Icons.Filled.Extension),
-    HubCategory("Wine", "Wine", "Windows compatibility layer (runtime)", Icons.Filled.Dns),
-    HubCategory("Proton", "Proton", "Valve's Wine fork tuned for gaming", Icons.Filled.Dns),
+    HubCategory("Wine", "Wine", I18n.s(R.string.ui_windows_compatibility_layer_runtime), Icons.Filled.Dns),
+    HubCategory("Proton", "Proton", I18n.s(R.string.ui_valve_s_wine_fork_tuned_for_gaming), Icons.Filled.Dns),
 )
 
 @Composable
@@ -317,7 +317,7 @@ private fun ComponentTab(vm: ContentsHubViewModel) {
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp, vertical = 12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                 IconButton(onClick = { vm.selectCategory(null) }) {
-                    Icon(Icons.Filled.ArrowBack, "Back to categories", tint = cs.onSurface)
+                    Icon(Icons.Filled.ArrowBack, I18n.s(R.string.ui_back_to_categories), tint = cs.onSurface)
                 }
                 Text(title, style = MaterialTheme.typography.titleLarge, color = cs.onSurface,
                     modifier = Modifier.weight(1f))
@@ -472,9 +472,9 @@ private fun SourceListPane(
                 IconButton(onClick = { vm.reloadSources(); vm.refreshSelected() }) {
                     Icon(Icons.Filled.Refresh, "Refresh", tint = cs.primary)
                 }
-                IconButton(onClick = onImport) { Icon(Icons.Filled.FileDownload, "Import list", tint = cs.primary) }
+                IconButton(onClick = onImport) { Icon(Icons.Filled.FileDownload, I18n.s(R.string.ui_import_list), tint = cs.primary) }
                 IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Settings", tint = cs.primary) }
-                IconButton(onClick = onAdd) { Icon(Icons.Filled.Add, "Add repository", tint = cs.primary) }
+                IconButton(onClick = onAdd) { Icon(Icons.Filled.Add, I18n.s(R.string.ui_add_repository), tint = cs.primary) }
             }
             Spacer(Modifier.height(6.dp))
             LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
@@ -797,13 +797,13 @@ private fun SaveArchiveAction(saved: Boolean, enabled: Boolean, onClick: () -> U
             .border(1.dp, if (saved) SavedBlue.copy(alpha = 0.5f) else cs.outline, RoundedCornerShape(11.dp))
             .background(if (saved) SavedBlue.copy(alpha = 0.10f) else cs.onSurface.copy(alpha = 0.04f), RoundedCornerShape(11.dp))
             .then(if (enabled) Modifier.combinedClickable(
-                onClickLabel = "Save archive only",
-                onLongClickLabel = "Re-download archive",
+                onClickLabel = I18n.s(R.string.ui_save_archive_only),
+                onLongClickLabel = I18n.s(R.string.ui_re_download_archive),
                 onClick = onClick, onLongClick = onLongClick,
             ) else Modifier)
             .alpha(if (!enabled) 0.4f else if (saved) 0.6f else 1f),
     ) {
-        Icon(Icons.Filled.Save, "Save archive only", tint = if (saved) SavedBlue else cs.onSurface, modifier = Modifier.size(18.dp))
+        Icon(Icons.Filled.Save, I18n.s(R.string.ui_save_archive_only), tint = if (saved) SavedBlue else cs.onSurface, modifier = Modifier.size(18.dp))
     }
 }
 
@@ -879,7 +879,7 @@ private fun MyFilesTab(vm: ContentsHubViewModel) {
         // Save location lives once in Contents settings (the cog) — no duplicate bar here.
         PrimaryButton(I18n.s(R.string.ui_install_content_from_file), Icons.Filled.FolderOpen, enabled = true,
             container = cs.onSurface.copy(alpha = 0.06f), content = cs.onSurface, modifier = Modifier.fillMaxWidth()) {
-            installPicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"))
+            installPicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_content_pack)))
         }
         Spacer(Modifier.height(14.dp))
 
@@ -1037,11 +1037,11 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
 
 
     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(14.dp)) {
-        InstalledSectionHeader("GPU Drivers", Icons.Filled.ViewInAr)
+        InstalledSectionHeader(I18n.s(R.string.ui_gpu_drivers), Icons.Filled.ViewInAr)
         Spacer(Modifier.height(10.dp))
         PrimaryButton(I18n.s(R.string.ui_install_content_from_file), Icons.Filled.FolderOpen, enabled = true,
             container = cs.onSurface.copy(alpha = 0.06f), content = cs.onSurface, modifier = Modifier.fillMaxWidth()) {
-            filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"))
+            filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_content_pack)))
         }
         Spacer(Modifier.height(12.dp))
         if (drivers.isEmpty()) {
@@ -1056,9 +1056,9 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         }
 
         Spacer(Modifier.height(20.dp))
-        InstalledSectionHeader("Wayland game drivers (Linux ICD)", Icons.Filled.ViewInAr)
+        InstalledSectionHeader(I18n.s(R.string.ui_wayland_game_drivers_linux_icd), Icons.Filled.ViewInAr)
         Spacer(Modifier.height(6.dp))
-        Text("The Vulkan driver a game renders on under the Wayland display backend. Import a zip with a " +
+        Text(I18n.s(R.string.ui_the_vulkan_driver_a_game_renders_on_under_the_wayland_di) +
             "libvulkan_freedreno*.so built for Wayland/Linux (optional libdrm.so, meta.json). Android Turnip " +
             "zips (vulkan.adXXXX.so) belong under GPU Drivers above and are rejected here.",
             style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
@@ -1069,11 +1069,11 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         }
         Spacer(Modifier.height(12.dp))
         if (waylandDrivers.isEmpty()) {
-            InstalledEmpty("No Wayland game drivers imported. Containers on Wayland use the Turnips bundled in the Proton.")
+            InstalledEmpty(I18n.s(R.string.ui_no_wayland_game_drivers_imported_containers_on_wayland_u))
         } else {
             waylandDrivers.forEach { id ->
                 val ver = waylandManager.getDriverVersion(id)
-                val wsiNote = if (waylandManager.hasWaylandWsi(id)) "" else "  ·  no Wayland WSI detected"
+                val wsiNote = if (waylandManager.hasWaylandWsi(id)) "" else I18n.s(R.string.ui_no_wayland_wsi_detected)
                 InstalledRow(icon = Icons.Filled.ViewInAr, driver = true,
                     title = waylandManager.getDriverName(id),
                     subtitle = (if (ver.isEmpty()) "imported" else ver) + wsiNote,
@@ -1266,7 +1266,7 @@ private fun AddRepoDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                     label = { Text(I18n.s(R.string.ui_display_name)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(value = url, onValueChange = { url = it }, singleLine = true,
-                    label = { Text(if (isDriver) "GitHub repo (owner/repo) or JSON URL" else "URL (repo, releases API, or JSON)") },
+                    label = { Text(if (isDriver) "GitHub repo (owner/repo) or JSON URL" else I18n.s(R.string.ui_url_repo_releases_api_or_json)) },
                     modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 // GPU-driver sources persist through the shared adrenotools store (also visible in
@@ -1337,14 +1337,14 @@ private fun RepoMenuDialog(
         title = { Text(source.name, color = cs.onSurface) },
         text = {
             Column {
-                MenuRow(Icons.Filled.Apps, if (source.driverOnly) "Browse drivers" else "Browse components") { onDismiss(); vm.selectSource(source) }
+                MenuRow(Icons.Filled.Apps, if (source.driverOnly) "Browse drivers" else I18n.s(R.string.ui_browse_components)) { onDismiss(); vm.selectSource(source) }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.OpenInNew, "Open source page") {
+                MenuRow(Icons.Filled.OpenInNew, I18n.s(R.string.ui_open_source_page)) {
                     runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(vm.browseUrl(source)))) }
                     onDismiss()
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.Delete, if (source.removeIsHide) "Hide default repository" else "Remove repository",
+                MenuRow(Icons.Filled.Delete, if (source.removeIsHide) "Hide default repository" else I18n.s(R.string.ui_remove_repository),
                     tint = cs.error) { vm.removeSource(source); onDismiss() }
             }
         },
@@ -1380,22 +1380,22 @@ private fun ImportExportDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
         containerColor = cs.surfaceContainerHigh,
-        title = { Text("Import / export sources", color = cs.onSurface) },
+        title = { Text(I18n.s(R.string.ui_import_export_sources), color = cs.onSurface) },
         text = {
             Column {
-                MenuRow(Icons.Filled.FileDownload, "Import list from file…") {
+                MenuRow(Icons.Filled.FileDownload, I18n.s(R.string.ui_import_list_from_file_2)) {
                     importer.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE); type = "application/json"
                     })
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.FileUpload, "Export current list") {
+                MenuRow(Icons.Filled.FileUpload, I18n.s(R.string.ui_export_current_list)) {
                     runCatching {
                         val json = vm.exportRepoListJson()
                         val share = Intent(Intent.ACTION_SEND).apply {
                             type = "application/json"; putExtra(Intent.EXTRA_TEXT, json)
                         }
-                        context.startActivity(Intent.createChooser(share, "Export sources"))
+                        context.startActivity(Intent.createChooser(share, I18n.s(R.string.ui_export_sources)))
                     }
                     onDismiss()
                 }
@@ -1427,7 +1427,7 @@ private fun SettingsDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit, onLo
                         colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = cs.primary))
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.FolderSpecial, "Save location") { onLocation() }
+                MenuRow(Icons.Filled.FolderSpecial, I18n.s(R.string.ui_save_location)) { onLocation() }
                 Text(baseDisplay, style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant,
                     modifier = Modifier.padding(start = 36.dp))
                 Text(I18n.s(R.string.ui_save_only_archives_the_disk_icon_are_filed_by_type_in),
@@ -1443,7 +1443,7 @@ private fun SettingsDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit, onLo
                         colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = cs.primary))
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.Restore, "Restore default repositories") { vm.restoreDefaultSources(); onDismiss() }
+                MenuRow(Icons.Filled.Restore, I18n.s(R.string.ui_restore_default_repositories)) { vm.restoreDefaultSources(); onDismiss() }
             }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) } },
@@ -1478,11 +1478,11 @@ private fun LocationDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                     vm.library.setDefaultBase(); vm.refreshBase(); vm.refreshFolders(); onDismiss()
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.FolderSpecial, "App-private storage") {
+                MenuRow(Icons.Filled.FolderSpecial, I18n.s(R.string.ui_app_private_storage)) {
                     vm.library.setFileBase(vm.library.appPrivateBasePath()); vm.refreshBase(); vm.refreshFolders(); onDismiss()
                 }
                 MenuItemDivider()
-                MenuRow(Icons.Filled.FolderOpen, "Choose another folder…") {
+                MenuRow(Icons.Filled.FolderOpen, I18n.s(R.string.ui_choose_another_folder)) {
                     dirPicker.launch(
                         InAppFilePicker.buildDirIntent(
                             context,

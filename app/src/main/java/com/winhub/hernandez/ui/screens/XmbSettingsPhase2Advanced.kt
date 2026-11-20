@@ -119,7 +119,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     return XmbMenu("Advanced", Icons.Filled.Tune) body@{
         val rows = mutableListOf<XmbRow>()
         if (!d.loaded) {
-            rows += XmbRow.Info("loading", "Loading versions and presets…", Icons.Filled.Info)
+            rows += XmbRow.Info("loading", I18n.s(R.string.ui_loading_versions_and_presets), Icons.Filled.Info)
             return@body rows
         }
         val arm = d.arm64ec
@@ -147,11 +147,11 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             val fex = shortcut.p2Ex("fexcoreVersion", c.getFEXCoreVersion())
             val fexOpts = if (fex.isNotEmpty() && fex !in d.fexVersions) d.fexVersions + fex else d.fexVersions
             if (fexOpts.isNotEmpty()) {
-                rows += XmbRow.Choice(I18n.s(R.string.ui_fexversion), ctx.getString(R.string.fexcore_version), Icons.Filled.Memory, fexOpts,
+                rows += XmbRow.Choice("fexVersion", ctx.getString(R.string.fexcore_version), Icons.Filled.Memory, fexOpts,
                     if (fex.isEmpty()) fexOpts.first() else fex) { v -> p2Put(xmb, shortcut, "fexcoreVersion", v) }
             }
-            rows += XmbRow.Link("fexDownload", "Download FEXCore versions", Icons.Filled.CloudDownload) {
-                p2ContentDownloadMenu(xmb, "FEXCore downloads", ContentProfile.ContentType.CONTENT_TYPE_FEXCORE) { p2LoadAdv(xmb, c, d) }
+            rows += XmbRow.Link("fexDownload", I18n.s(R.string.ui_download_fexcore_versions), Icons.Filled.CloudDownload) {
+                p2ContentDownloadMenu(xmb, I18n.s(R.string.ui_fexcore_downloads_2), ContentProfile.ContentType.CONTENT_TYPE_FEXCORE) { p2LoadAdv(xmb, c, d) }
             }
             p2PresetRows(xmb, shortcut, d, PresetKind.FEXCORE, "FEXCore", rows)
         }
@@ -161,7 +161,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val profileLabels = p2Unique(listOf(ctx.getString(R.string.none)) + d.profiles.map { it.getName() ?: "Profile ${it.id}" })
         val cpId = shortcut.p2Ex("controlsProfile", "0").toIntOrNull() ?: 0
         val cpIdx = if (cpId == 0) 0 else d.profiles.indexOfFirst { it.id == cpId }.let { if (it >= 0) it + 1 else 0 }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_controlsprofile), "Controls profile", Icons.Filled.Gamepad, profileLabels, profileLabels[cpIdx]) { v ->
+        rows += XmbRow.Choice("controlsProfile", I18n.s(R.string.ui_controls_profile_2), Icons.Filled.Gamepad, profileLabels, profileLabels[cpIdx]) { v ->
             val idx = profileLabels.indexOf(v).coerceAtLeast(0)
             val id = if (idx == 0) 0 else d.profiles.getOrNull(idx - 1)?.id ?: 0
             p2Put(xmb, shortcut, "controlsProfile", if (id > 0) id.toString() else null)
@@ -188,7 +188,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         rows += XmbRow.Header("hSharpness", "Sharpness (VKBasalt)")
         if (sharpEntries.isNotEmpty()) {
             val fxStored = shortcut.p2Ex("sharpnessEffect", "None")
-            rows += XmbRow.Choice(I18n.s(R.string.ui_sharpeffect), "Effect", Icons.Filled.Image, sharpEntries,
+            rows += XmbRow.Choice("sharpEffect", "Effect", Icons.Filled.Image, sharpEntries,
                 sharpEntries.firstOrNull { it == fxStored } ?: sharpEntries.first()) { v -> p2Put(xmb, shortcut, "sharpnessEffect", v) }
         }
         val level = (shortcut.p2Ex("sharpnessLevel", "100").toIntOrNull() ?: 100).coerceIn(0, 100)
@@ -206,7 +206,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 shortcut.p2Ex("reshadeEffect", c.getReshadeEffect()),
             ).size
         }.getOrDefault(0)
-        rows += XmbRow.Link("reshade", "ReShade loadout", Icons.Filled.Layers,
+        rows += XmbRow.Link("reshade", I18n.s(R.string.ui_reshade_loadout), Icons.Filled.Layers,
             value = if (count == 0) "None" else "$count effect${if (count == 1) "" else "s"}",
             subtitle = if (reshade.supported()) "Effects, mode and parameters" else "Only applies to DXVK/VKD3D (Vulkan) games") { reshade.loadoutMenu() }
         rows
@@ -233,7 +233,7 @@ private fun p2PresetRows(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: PresetK
         val i = names.indexOf(v)
         if (i >= 0) p2Put(xmb, s, key, ids[i])
     }
-    rows += XmbRow.Link(if (isFex) "fexPresetEdit" else "b64PresetEdit", "Edit preset for this game", Icons.Filled.Edit,
+    rows += XmbRow.Link(if (isFex) "fexPresetEdit" else "b64PresetEdit", I18n.s(R.string.ui_edit_preset_for_this_game), Icons.Filled.Edit,
         value = if (customised) "Customised" else null, subtitle = I18n.s(R.string.ui_only_this_game_changes)) {
         p2PresetValuesMenu(xmb, s, kind, selId, names[idx])
     }
@@ -307,8 +307,8 @@ private fun p2PresetValuesMenu(xmb: XmbScope, s: Shortcut, kind: PresetKind, pre
         val customised = runCatching { PresetOverrides.isCustomised(ctx, isFex, presetId, PresetScope.SHORTCUT, c, s) }.getOrDefault(false)
         rows += XmbRow.Info("scope",
             if (customised) "Customised for this game. Reset makes it follow its container again."
-            else "Saved for this game only — no other game or container changes.", Icons.Filled.Info)
-        if (specs.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nospecs), "This preset has no editable variables", Icons.Filled.Info)
+            else I18n.s(R.string.ui_saved_for_this_game_only_no_other_game_or_container_chan), Icons.Filled.Info)
+        if (specs.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nospecs), I18n.s(R.string.ui_this_preset_has_no_editable_variables), Icons.Filled.Info)
         val vals = current()
         specs.forEach { spec ->
             val v = vals[spec.name] ?: spec.defaultValue
@@ -364,7 +364,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
         val rows = mutableListOf<XmbRow>()
         val sel = selectedId()
         val custom = sel.startsWith(if (isFex) FEXCorePreset.CUSTOM else Box64Preset.CUSTOM)
-        rows += XmbRow.Text("new", "New preset", Icons.Filled.Add, "", subtitle = "Default values; becomes this game's preset",
+        rows += XmbRow.Text("new", I18n.s(R.string.ui_new_preset), Icons.Filled.Add, "", subtitle = I18n.s(R.string.ui_default_values_becomes_this_game_s_preset),
             placeholder = I18n.s(R.string.ui_preset_name)) { name ->
             val clean = name.trim().replace(Regex("[,|]+"), "")
             if (clean.isEmpty()) xmb.toast(I18n.s(R.string.ui_enter_a_name))
@@ -379,16 +379,16 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
                 xmb.toast("Created “$clean”")
             }
         }
-        rows += XmbRow.Action("duplicate", "Duplicate selected preset", Icons.Filled.ContentCopy) {
-            xmb.confirm(XmbConfirm("Duplicate preset", ctx.getString(R.string.do_you_want_to_duplicate_this_preset), "Duplicate")) {
+        rows += XmbRow.Action("duplicate", I18n.s(R.string.ui_duplicate_selected_preset), Icons.Filled.ContentCopy) {
+            xmb.confirm(XmbConfirm(I18n.s(R.string.ui_duplicate_preset), ctx.getString(R.string.do_you_want_to_duplicate_this_preset), "Duplicate")) {
                 if (isFex) FEXCorePresetManager.duplicatePreset(ctx, sel)
                 else Box64PresetManager.duplicatePreset(prefix, ctx, sel)
                 reloadLists()
             }
         }
-        rows += XmbRow.Action("delete", "Delete selected preset", Icons.Filled.Delete, danger = true,
+        rows += XmbRow.Action("delete", I18n.s(R.string.ui_delete_selected_preset), Icons.Filled.Delete, danger = true,
             disabledReason = if (custom) null else ctx.getString(R.string.you_cannot_remove_this_preset)) {
-            xmb.confirm(XmbConfirm("Delete preset", ctx.getString(R.string.do_you_want_to_remove_this_preset), "Delete", danger = true)) {
+            xmb.confirm(XmbConfirm(I18n.s(R.string.ui_delete_preset), ctx.getString(R.string.do_you_want_to_remove_this_preset), "Delete", danger = true)) {
                 if (isFex) FEXCorePresetManager.removePreset(ctx, sel)
                 else Box64PresetManager.removePreset(prefix, ctx, sel)
                 reloadLists()
@@ -396,12 +396,12 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
                 ids().firstOrNull()?.let { p2Put(xmb, s, key, it) }
             }
         }
-        rows += XmbRow.Action("export", "Export selected preset", Icons.Filled.FileUpload,
-            disabledReason = if (custom) null else "Cannot export this preset") {
+        rows += XmbRow.Action("export", I18n.s(R.string.ui_export_selected_preset), Icons.Filled.FileUpload,
+            disabledReason = if (custom) null else I18n.s(R.string.ui_cannot_export_this_preset)) {
             if (isFex) FEXCorePresetManager.exportPreset(ctx, sel)
             else Box64PresetManager.exportPreset(prefix, ctx, sel)
         }
-        rows += XmbRow.Link("import", "Import preset", Icons.Filled.FileDownload, subtitle = I18n.s(R.string.ui_from_a_wbp_file)) {
+        rows += XmbRow.Link("import", I18n.s(R.string.ui_import_preset), Icons.Filled.FileDownload, subtitle = I18n.s(R.string.ui_from_a_wbp_file)) {
             val ext = Environment.getExternalStorageDirectory()
             val presetsDir = File(SettingsFragment.DEFAULT_WINLATOR_PATH, "Presets")
             val roots = listOf(
@@ -410,7 +410,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
                 "Internal storage" to ext,
             ).filter { it.second.isDirectory }
             val start = if (presetsDir.isDirectory) presetsDir else ext
-            xmbFileBrowserMenu(xmb, "Import preset", start, roots, { true }) { f ->
+            xmbFileBrowserMenu(xmb, I18n.s(R.string.ui_import_preset), start, roots, { true }) { f ->
                 val ok = runCatching {
                     FileInputStream(f).use { input ->
                         if (isFex) FEXCorePresetManager.importPreset(ctx, input)
@@ -419,7 +419,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
                 }.isSuccess
                 // The browser has already closed its columns: we're back on this one.
                 reloadLists()
-                xmb.toast(if (ok) "Preset imported" else "Couldn't import that file")
+                xmb.toast(if (ok) "Preset imported" else I18n.s(R.string.ui_couldn_t_import_that_file))
             }
         }
         rows
@@ -525,7 +525,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
         return XmbMenu(I18n.s(R.string.ui_reshade_loadout), Icons.Filled.Layers) body@{
             val rows = mutableListOf<XmbRow>()
             if (!loaded) {
-                rows += XmbRow.Info("loading", "Scanning effects…", Icons.Filled.Info)
+                rows += XmbRow.Info("loading", I18n.s(R.string.ui_scanning_effects), Icons.Filled.Info)
                 return@body rows
             }
             if (!supported() && st.order.isNotEmpty()) {
@@ -534,12 +534,12 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
             rows += XmbRow.Link("browse", "Browse / download effects", Icons.Filled.CloudDownload,
                 value = "${st.order.size} in loadout", subtitle = "Pick installed effects or fetch new ones") { catalogMenu() }
             if (st.order.isEmpty()) {
-                rows += XmbRow.Info("empty", "No effects in the loadout", Icons.Filled.Info)
+                rows += XmbRow.Info("empty", I18n.s(R.string.ui_no_effects_in_the_loadout), Icons.Filled.Info)
                 return@body rows
             }
             val solo = st.mode == ReshadeLoadout.MODE_SOLO
             rows += XmbRow.Choice("mode", "Mode", Icons.Filled.Tune, listOf(I18n.s(R.string.ui_solo), "Stack"), if (solo) I18n.s(R.string.ui_solo) else "Stack",
-                subtitle = if (solo) "One effect active at a time (A/B compare)" else "Layer any subset of effects") { v ->
+                subtitle = if (solo) "One effect active at a time (A/B compare)" else I18n.s(R.string.ui_layer_any_subset_of_effects_2)) { v ->
                 st.changeMode(if (v == "Stack") ReshadeLoadout.MODE_STACK else ReshadeLoadout.MODE_SOLO)
                 persist()
             }
@@ -550,8 +550,8 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                 rows += XmbRow.Link("fx:$name", name, Icons.Filled.Layers,
                     value = if (on) (if (solo) "Active" else "On") else "Off") { effectMenu(name) }
             }
-            rows += XmbRow.Action("clear", "Clear loadout", Icons.Filled.Delete, danger = true) {
-                xmb.confirm(XmbConfirm("Clear loadout", "Remove every effect from this game's ReShade loadout?", "Clear", danger = true)) {
+            rows += XmbRow.Action("clear", I18n.s(R.string.ui_clear_loadout), Icons.Filled.Delete, danger = true) {
+                xmb.confirm(XmbConfirm(I18n.s(R.string.ui_clear_loadout), I18n.s(R.string.ui_remove_every_effect_from_this_game_s_reshade_loadout), "Clear", danger = true)) {
                     st.order.toList().forEach { st.remove(it) }
                     persist()
                 }
@@ -563,7 +563,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
     fun effectMenu(name: String): XmbMenu = XmbMenu(name, Icons.Filled.Layers) body@{
         val rows = mutableListOf<XmbRow>()
         if (!st.contains(name)) {
-            rows += XmbRow.Info("gone", "Not in the loadout any more", Icons.Filled.Info)
+            rows += XmbRow.Info("gone", I18n.s(R.string.ui_not_in_the_loadout_any_more), Icons.Filled.Info)
             return@body rows
         }
         val solo = st.mode == ReshadeLoadout.MODE_SOLO
@@ -574,11 +574,11 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
         }
         val params: List<ReshadeManager.ReshadeParam> = effects.firstOrNull { it.name == name }?.params?.toList() ?: emptyList()
         if (params.isEmpty()) {
-            rows += XmbRow.Info(I18n.s(R.string.ui_noparams), "No tunable parameters.", Icons.Filled.Info)
+            rows += XmbRow.Info(I18n.s(R.string.ui_noparams), I18n.s(R.string.ui_no_tunable_parameters), Icons.Filled.Info)
         } else {
             rows += XmbRow.Header("hParams", "Parameters")
             params.forEach { p -> p2ReshadeParamRows(this@P2Reshade, name, p, rows) }
-            rows += XmbRow.Action("resetParams", "Reset parameters", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_back_to_the_effect_defaults)) {
+            rows += XmbRow.Action("resetParams", I18n.s(R.string.ui_reset_parameters), Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_back_to_the_effect_defaults)) {
                 params.forEach { p ->
                     val tmp = HashMap<String, Float>()
                     ReshadeManager.seedValues(p, null, tmp)
@@ -587,7 +587,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                 persist()
             }
         }
-        rows += XmbRow.Action("remove", "Remove from loadout", Icons.Filled.Delete, danger = true) {
+        rows += XmbRow.Action("remove", I18n.s(R.string.ui_remove_from_loadout), Icons.Filled.Delete, danger = true) {
             st.remove(name)
             persist()
             xmb.pop()
@@ -639,14 +639,14 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
         return XmbMenu(I18n.s(R.string.ui_reshade_effects), Icons.Filled.CloudDownload) body@{
             val rows = mutableListOf<XmbRow>()
             if (catLoading) {
-                rows += XmbRow.Info("loading", "Loading the effect catalog…", Icons.Filled.CloudDownload)
+                rows += XmbRow.Info("loading", I18n.s(R.string.ui_loading_the_effect_catalog), Icons.Filled.CloudDownload)
                 return@body rows
             }
             val offline = source != ReshadeCatalog.Source.NETWORK
             if (offline) {
                 rows += XmbRow.Info("offline",
                     if (source == ReshadeCatalog.Source.CACHE) "Offline — showing a cached list. Connect to download new effects."
-                    else "Offline — showing installed effects only.", Icons.Filled.Warning)
+                    else I18n.s(R.string.ui_offline_showing_installed_effects_only), Icons.Filled.Warning)
             }
             val selectedLc = st.order.map { it.lowercase() }.toSet()
             val catIds = catalog.map { it.id }.toSet()
@@ -668,13 +668,13 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                     subtitle = e.description.ifBlank { null } ?: listOf(e.author, e.category).filter { it.isNotBlank() }.joinToString(" · ").ifEmpty { null },
                     value = if (busy) "$phase ${(prog * 100).toInt()}%" else null,
                     disabledReason = when {
-                        offline -> "Connect to the internet to download effects."
+                        offline -> I18n.s(R.string.ui_connect_to_the_internet_to_download_effects)
                         downloadingId != null && !busy -> "Another download is running"
                         busy -> "Downloading…"
                         else -> null
                     }) { download(e) }
             }
-            if (inst.isEmpty() && avail.isEmpty()) rows += XmbRow.Info("none", "No effects available.", Icons.Filled.Info)
+            if (inst.isEmpty() && avail.isEmpty()) rows += XmbRow.Info("none", I18n.s(R.string.ui_no_effects_available), Icons.Filled.Info)
             rows
         }
     }

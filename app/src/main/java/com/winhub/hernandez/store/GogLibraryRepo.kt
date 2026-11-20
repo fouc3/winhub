@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
@@ -109,9 +112,9 @@ object GogLibraryRepo {
             val p = prefs(appCtx)
             val token = validToken(appCtx) ?: return@withContext SyncResult.NotLoggedIn
 
-            onStatus("Fetching game list…")
+            onStatus(I18n.s(R.string.ui_fetching_game_list))
             val gamesJson = StoreNet.get("https://embed.gog.com/user/data/games", bearer = token, userAgent = "GOG Galaxy")
-                ?: return@withContext SyncResult.Failed("Couldn't reach GOG")
+                ?: return@withContext SyncResult.Failed(I18n.s(R.string.ui_couldn_t_reach_gog))
             val ids = ArrayList<String>()
             val parsed = runCatching {
                 val owned = JSONObject(gamesJson).optJSONArray("owned")
@@ -120,7 +123,7 @@ object GogLibraryRepo {
                     if (id != "1801418160" && id != "0") ids.add(id)
                 }
             }.isSuccess
-            if (!parsed) return@withContext SyncResult.Failed("Error parsing library")
+            if (!parsed) return@withContext SyncResult.Failed(I18n.s(R.string.ui_error_parsing_library))
 
             val ownedSet = ids.toHashSet()
             val cachedList = cached(appCtx)
@@ -292,7 +295,7 @@ object GogLibraryRepo {
         try {
             var dlcTitle = prod.optJSONObject("title")?.optString("*", "").orEmpty()
             if (dlcTitle.isEmpty()) dlcTitle = prod.optString("title", "")
-            if (dlcTitle.isEmpty()) dlcTitle = "Unknown DLC"
+            if (dlcTitle.isEmpty()) dlcTitle = I18n.s(R.string.ui_unknown_dlc)
             var baseId = prod.optJSONObject("required_game")?.optString("id", "").orEmpty()
             if (baseId.isEmpty()) {
                 val reqArr = prod.optJSONArray("requiredGames")

@@ -746,17 +746,17 @@ private data class GpuInfo(val isQualcomm: Boolean, val model: String)
 private fun capLabels(caps: WrapperManager.WrapperCaps): List<String> {
     val out = ArrayList<String>()
     if (caps.hasIcd) out.add("Vulkan ICD")
-    if (caps.hasBcnLayer) out.add("BCn layer")
+    if (caps.hasBcnLayer) out.add(I18n.s(R.string.ui_bcn_layer))
     if (caps.hasCompatLayer) out.add("DX12/compat layer")
     return out
 }
 
 /** One-line "what is this" summary for the inspection page (a valid import always carries an ICD). */
 private fun importDescription(caps: WrapperManager.WrapperCaps): String = when {
-    caps.hasIcd && (caps.hasBcnLayer || caps.hasCompatLayer) -> "Vulkan ICD wrapper with extra layers"
-    caps.hasIcd -> "Vulkan ICD wrapper"
-    caps.hasBcnLayer -> "BCn layer"
-    caps.hasCompatLayer -> "DX12 compat layer"
+    caps.hasIcd && (caps.hasBcnLayer || caps.hasCompatLayer) -> I18n.s(R.string.ui_vulkan_icd_wrapper_with_extra_layers)
+    caps.hasIcd -> I18n.s(R.string.ui_vulkan_icd_wrapper)
+    caps.hasBcnLayer -> I18n.s(R.string.ui_bcn_layer)
+    caps.hasCompatLayer -> I18n.s(R.string.ui_dx12_compat_layer)
     else -> "Wrapper"
 }
 
@@ -784,7 +784,7 @@ private fun importNeeds(caps: WrapperManager.WrapperCaps, gpu: GpuInfo, version:
         out.add("Contains a DX12/compat layer → compat options (Mali-branch feature).")
     }
     if (!caps.hasBcnLayer && !caps.hasCompatLayer) {
-        out.add("Plain Vulkan ICD wrapper — no extra layer settings.")
+        out.add(I18n.s(R.string.ui_plain_vulkan_icd_wrapper_no_extra_layer_settings))
     }
     if (version == "Unknown") {
         out.add("No version.txt — version will show Unknown.")

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import com.winhub.hernandez.container.Container
 import java.io.File
@@ -53,7 +56,7 @@ object WinePath {
             container.saveData()
             Log.d(TAG, "Auto-added drive $letter: -> $mountPath (container ${container.id})")
         } catch (e: Exception) {
-            Log.w(TAG, "Drive persist failed (continuing with in-memory mapping)", e)
+            Log.w(TAG, I18n.s(R.string.ui_drive_persist_failed_continuing_with_in_memory_mapping), e)
         }
         // MUST be the full path relative to the mount. This used to return the bare file name,
         // which was only ever correct because the mount was the file's own parent folder.

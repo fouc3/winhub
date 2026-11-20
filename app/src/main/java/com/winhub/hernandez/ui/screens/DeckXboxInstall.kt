@@ -54,7 +54,7 @@ internal fun DeckXboxInstall(game: XboxGame, onBack: () -> Unit, onOpenStore: ((
     }
 
     val status = when {
-        busy -> "Checking the PC package..."
+        busy -> I18n.s(R.string.ui_checking_the_pc_package)
         downloading && entry != null -> listOf(
             if (entry.installTotal > 0) "${entry.pct}%  ·  ${formatDownloadSize((entry.installTotal - entry.installDone).coerceAtLeast(0))} to go"
             else "Downloading... ${entry.pct}%",

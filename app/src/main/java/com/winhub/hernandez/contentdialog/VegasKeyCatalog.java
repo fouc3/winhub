@@ -1,5 +1,8 @@
 package com.winhub.hernandez.contentdialog;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -111,7 +114,7 @@ public final class VegasKeyCatalog {
                 // Dash->underscore normalization only; anything else is rejected.
                 state = BuildState.valueOf(stateStr.toUpperCase(Locale.ROOT).replace('-', '_'));
             }
-            catch (IllegalArgumentException ex) { throw reject("build " + tag + ": bad state '" + stateStr + "'"); }
+            catch (IllegalArgumentException ex) { throw reject("build " + tag + I18n.s(R.string.ui_bad_state) + stateStr + "'"); }
             String assetName = e.containsKey("assetName") ? asString(e, "assetName") : null;
             String note = e.containsKey("note") ? asString(e, "note") : null;
             Set<String> keys = new LinkedHashSet<>(asStringList(e, "keys", true));
@@ -373,7 +376,7 @@ public final class VegasKeyCatalog {
     }
 
     private static String coerceString(Object o, String context) {
-        if (!(o instanceof String)) throw reject(context + ": expected string, got " + typeOf(o));
+        if (!(o instanceof String)) throw reject(context + I18n.s(R.string.ui_expected_string_got) + typeOf(o));
         return (String) o;
     }
 
@@ -527,7 +530,7 @@ public final class VegasKeyCatalog {
         }
 
         private IllegalArgumentException error(String msg) {
-            return new IllegalArgumentException("vegas_key_catalog JSON: " + msg + " at " + i);
+            return new IllegalArgumentException(I18n.s(R.string.ui_vegas_key_catalog_json) + msg + " at " + i);
         }
     }
 }

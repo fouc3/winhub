@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.container.Container;
 import com.winhub.hernandez.container.Shortcut;
 
@@ -23,7 +26,7 @@ public final class DInputVibration {
     public static final String EXTRA = "dinputVibration";
     public static final String ENV = "HERMES_DINPUT_FF";
     /** What the rows say while {@value #ENV} decides. */
-    public static final String ENV_LOCKED = "Set by " + ENV + " in the env vars.";
+    public static final String ENV_LOCKED = I18n.s(R.string.ui_set_by) + ENV + " in the env vars.";
 
     /** HermesWriter.setFfMode: unset (= on), on, off. */
     public static final int FF_MODE_UNSET = 0;

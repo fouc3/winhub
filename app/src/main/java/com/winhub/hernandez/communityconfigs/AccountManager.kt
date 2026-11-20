@@ -1,5 +1,8 @@
 package com.winhub.hernandez.communityconfigs
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.os.Environment
 import android.util.Base64
@@ -323,7 +326,7 @@ object AccountManager {
                 )
             }
         } catch (e: Exception) {
-            Log.w(TAG, "Account backup read failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_account_backup_read_failed), e)
             null
         }
 
@@ -373,7 +376,7 @@ object AccountManager {
             )
             file.setReadable(true, false)
         } catch (e: Exception) {
-            Log.w(TAG, "Account backup write failed", e)
+            Log.w(TAG, I18n.s(R.string.ui_account_backup_write_failed), e)
         }
     }
 

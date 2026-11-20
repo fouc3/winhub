@@ -1,5 +1,8 @@
 package com.winhub.hernandez
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -58,7 +61,7 @@ class BannerlatorApp : Application() {
                 androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
                     .getBoolean(com.winhub.hernandez.core.MaliPanvk.PREF_FORCE, false))
         } catch (t: Throwable) {
-            Log.w("BannerlatorApp", "force-Mali setting not read", t)
+            Log.w("BannerlatorApp", I18n.s(R.string.ui_force_mali_setting_not_read), t)
         }
 
         // Exit-reason auto-save (opt-in, off by default): if the previous process died — including a

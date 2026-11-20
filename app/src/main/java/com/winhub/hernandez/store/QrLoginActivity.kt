@@ -61,7 +61,7 @@ class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
             REACH_OK       -> "Steam servers are reachable but CM connection timed out.\nPort 27017 may be blocked \u2014 try a VPN or mobile data."
             REACH_BLOCKED  -> "Steam servers are blocked on your network.\nYou need a VPN to use Steam here."
             REACH_NO_NET   -> "No internet connection detected.\nCheck your Wi-Fi or mobile data."
-            else           -> "Connection timed out. Check your network."
+            else           -> I18n.s(R.string.ui_connection_timed_out_check_your_network)
         }
         onFailure(msg)
     }
@@ -143,7 +143,7 @@ class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
                             repo.removeListener(this)
                             connectWaitListener = null
                             mainHandler.removeCallbacks(connectTimeoutRunnable)
-                            runOnUiThread { onFailure("Disconnected from Steam.") }
+                            runOnUiThread { onFailure(I18n.s(R.string.ui_disconnected_from_steam)) }
                         }
                     }
                 }
@@ -305,7 +305,7 @@ private fun QrLoginScreen(
                 .padding(12.dp),
         ) {
             Text(
-                text = "If downloads or your session keep dropping after signing in with " +
+                text = I18n.s(R.string.ui_if_downloads_or_your_session_keep_dropping_after_signing) +
                         "QR, sign out and use the Username + Password method instead — " +
                         "it's the more reliable sign-in.",
                 style = MaterialTheme.typography.bodySmall,

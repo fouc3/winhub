@@ -216,7 +216,7 @@ fun ContentDownloadSheet(
                     refreshKey++
                     onContentChanged()
                 } else {
-                    installDialog = installDialog?.copy(phase = ContentDownloadPhase.ERROR, error = "Install failed.")
+                    installDialog = installDialog?.copy(phase = ContentDownloadPhase.ERROR, error = I18n.s(R.string.ui_install_failed))
                 }
             }
         }
@@ -322,7 +322,7 @@ fun ContentDownloadSheet(
     }
     // Install-from-file launchers (progress lives in the content-card dialog). Shared by both layouts.
     val onBrowseFiles = {
-        filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content file"))
+        filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_content_file)))
     }
     val onPickSystem = {
         filePicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -616,7 +616,7 @@ private fun DownloadContentItem(
                         }
                     }
                     val sub = when {
-                        isInUse -> "In use"
+                        isInUse -> I18n.s(R.string.retro_emulator_in_use)
                         isLocal || communityInstalled -> "Installed"
                         !profile.desc.isNullOrEmpty() -> profile.desc
                         else -> null
@@ -750,7 +750,7 @@ internal fun installContent(
                     // community inline installer writes the version to the shortcut instead of showing
                     // a misleading "install failed" on a build the user already has.
                     if (reason == ContentsManager.InstallFailedReason.ERROR_EXIST) {
-                        Log.i("CommunityConfigs", "Component already installed (ERROR_EXIST) — treating as success")
+                        Log.i("CommunityConfigs", I18n.s(R.string.ui_component_already_installed_error_exist_treating_as_succ))
                         activity.runOnUiThread { onProgress(1f, ""); onDone(true) }
                         return
                     }
@@ -1108,14 +1108,14 @@ private fun railCat(type: ContentProfile.ContentType, icon: ImageVector, role: S
 // ContentProfile for it); the right pane renders AdrenoDriverListPane when it's the selected category.
 private val RAIL_GROUPS = listOf(
     RailGroup("Compatibility", listOf(
-        railCat(ContentProfile.ContentType.CONTENT_TYPE_WINE, Icons.Filled.Extension, "Windows API layer"),
-        railCat(ContentProfile.ContentType.CONTENT_TYPE_PROTON, Icons.Filled.Bolt, "Steam Play runtime"),
+        railCat(ContentProfile.ContentType.CONTENT_TYPE_WINE, Icons.Filled.Extension, I18n.s(R.string.ui_windows_api_layer)),
+        railCat(ContentProfile.ContentType.CONTENT_TYPE_PROTON, Icons.Filled.Bolt, I18n.s(R.string.ui_steam_play_runtime)),
     )),
     RailGroup("Graphics", listOf(
         railCat(ContentProfile.ContentType.CONTENT_TYPE_DXVK, Icons.Filled.GridView, "D3D9/10/11 → Vulkan"),
         railCat(ContentProfile.ContentType.CONTENT_TYPE_VKD3D, Icons.Filled.Layers, "D3D12 → Vulkan"),
         railCat(ContentProfile.ContentType.CONTENT_TYPE_D7VK, Icons.Filled.ViewInAr, "D3D7/8 → Vulkan"),
-        RailCat("GPU Drivers", Icons.Filled.Memory, "Turnip / adrenotools", type = null),
+        RailCat(I18n.s(R.string.ui_gpu_drivers), Icons.Filled.Memory, "Turnip / adrenotools", type = null),
     )),
     RailGroup("x86 Translation", listOf(
         railCat(ContentProfile.ContentType.CONTENT_TYPE_FEXCORE, Icons.Filled.DeveloperBoard, "arm64ec x86 emu"),

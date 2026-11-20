@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.store.blsteam.BlSteamEngine
 import `in`.dragonbra.javasteam.enums.EResult
 import kotlinx.coroutines.Dispatchers
@@ -59,18 +62,18 @@ object SteamFreeLicense {
      * Suspends on [Dispatchers.IO] — the native call is a blocking CM round-trip. Never throws.
      */
     suspend fun request(appId: Int): Result = withContext(Dispatchers.IO) {
-        if (appId <= 0) return@withContext Result.Failed(appId, "That isn't a valid Steam app.")
+        if (appId <= 0) return@withContext Result.Failed(appId, I18n.s(R.string.ui_that_isn_t_a_valid_steam_app))
 
         val repo = try { SteamRepository.getInstance() } catch (t: Throwable) {
             StorefrontLog.w(TAG, "app $appId: no repository — ${t.message}")
-            return@withContext Result.Failed(appId, "Steam isn't ready yet. Try again in a moment.")
+            return@withContext Result.Failed(appId, I18n.s(R.string.ui_steam_isn_t_ready_yet_try_again_in_a_moment))
         }
 
         // Already owned? Nothing to ask for, and the library cache is the account's real license list.
         val owned = try { repo.getCachedGameRows().any { it.appId == appId } } catch (_: Throwable) { false }
         if (owned) return@withContext Result.AlreadyOwned(appId)
 
-        val notConnected = "Not connected to Steam. Reconnect from the status pill and try again."
+        val notConnected = I18n.s(R.string.ui_not_connected_to_steam_reconnect_from_the_status_pill_an)
 
         val session = try { BlSteamEngine.session() } catch (_: Throwable) { null }
         if (session == null) {
@@ -123,7 +126,7 @@ object SteamFreeLicense {
     private fun parse(appId: Int, json: String): Result {
         val o = try { JSONObject(json) } catch (t: Throwable) {
             StorefrontLog.w(TAG, "app $appId: response UNPARSEABLE (${json.length} bytes): ${t.message}")
-            return Result.Failed(appId, "Steam sent back a response we couldn't read. Try again.")
+            return Result.Failed(appId, I18n.s(R.string.ui_steam_sent_back_a_response_we_couldn_t_read_try_again))
         }
 
         val status = o.optString("status", "")
@@ -164,7 +167,7 @@ object SteamFreeLicense {
                 "Steam rejected the request for this app.",
             )
 
-            else -> Result.Failed(appId, "Couldn't add this to your library. Try again.")
+            else -> Result.Failed(appId, I18n.s(R.string.ui_couldn_t_add_this_to_your_library_try_again))
         }
     }
 

@@ -64,7 +64,7 @@ fun buildPlayerSlotEditorRows(savedJson: String): List<PlayerSlotEditorRow> {
     val seen = HashSet<String>()
 
     val oscOverride = overrides[WinHandler.OSC_DESCRIPTOR] ?: SLOT_AUTO
-    rows.add(PlayerSlotEditorRow(WinHandler.OSC_DESCRIPTOR, "On-screen controls", true, true, oscOverride))
+    rows.add(PlayerSlotEditorRow(WinHandler.OSC_DESCRIPTOR, I18n.s(R.string.ui_on_screen_controls_2), true, true, oscOverride))
     seen.add(WinHandler.OSC_DESCRIPTOR)
 
     for (controller in ExternalController.getControllers()) {
@@ -102,7 +102,7 @@ fun PlayerSlotsEditor(
                     "Applied on launch; the in-game side menu still lets you change it live."
             )
             if (rows.isEmpty()) {
-                DeckConfigNote("No controllers detected. Connect a controller to assign it, or set a pin here to apply when it's plugged in.")
+                DeckConfigNote(I18n.s(R.string.ui_no_controllers_detected_connect_a_controller_to_assign_i))
             }
             rows.forEach { row ->
                 DeckPlayerSlotRow(row) { newOverride ->
@@ -210,11 +210,11 @@ private fun slotStatusText(row: PlayerSlotEditorRow): String {
     val status = when {
         row.override == SLOT_IGNORE -> "Ignored"
         row.override >= 0 -> "Pinned to Player ${row.override + 1}"
-        else -> "Auto (assigned by launch order)"
+        else -> I18n.s(R.string.ui_auto_assigned_by_launch_order)
     }
     val suffix = when {
-        row.isOnScreen -> " · on-screen controls"
-        !row.connected -> " · not connected (saved pin)"
+        row.isOnScreen -> I18n.s(R.string.ui_on_screen_controls)
+        !row.connected -> I18n.s(R.string.ui_not_connected_saved_pin)
         else -> ""
     }
     return status + suffix

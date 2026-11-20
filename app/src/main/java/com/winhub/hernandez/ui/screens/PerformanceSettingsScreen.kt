@@ -104,15 +104,15 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
 
             // ── Non-root global defaults (always editable) ──
             PerfCard(title = I18n.s(R.string.ui_global_defaults)) {
-                PerfToggle("Sustained Performance Mode", sustained,
+                PerfToggle(I18n.s(R.string.ui_sustained_performance_mode), sustained,
                     onInfo = { info = "Sustained Performance Mode" to PerfCopy.SUSTAINED }) { PerformanceSettings.setSustainedPerfMode(it) }
-                PerfToggle("Thread Priority Boost", priority,
+                PerfToggle(I18n.s(R.string.ui_thread_priority_boost), priority,
                     onInfo = { info = "Thread Priority Boost" to PerfCopy.PRIORITY }) { PerformanceSettings.setPerfPriorityBoost(it) }
-                PerfToggle("Prefer Big Cores", bigCores,
+                PerfToggle(I18n.s(R.string.ui_prefer_big_cores), bigCores,
                     onInfo = { info = "Prefer Big Cores" to PerfCopy.BIG_CORES }) { PerformanceSettings.setPreferBigCores(it) }
                 // GPU pin lives here (not in the root card) because it now has a non-root path on
                 // Adreno. It still upgrades itself to the stronger sysfs pin when root is granted.
-                RootToggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, "Lock GPU to max clock", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, I18n.s(R.string.ui_lock_gpu_to_max_clock), granted, harnessProven,
                     onInfo = { info = "Lock GPU to max clock" to PerfCopy.GPU_CLOCK })
                 if (!granted && !PerfGpuTurbo.isSupported) {
                     Text(I18n.s(R.string.ui_lock_gpu_to_max_clock_needs_an_adreno_qualcomm_gpu_or),
@@ -122,7 +122,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
 
             // ── Root tier ──
             PerfCard(title = I18n.s(R.string.ui_root_performance_controls)) {
-                Text("Root status: " + rootStateLabel(rootState),
+                Text(I18n.s(R.string.ui_root_status) + rootStateLabel(rootState),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
 
                 when (rootState) {
@@ -141,15 +141,15 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                 }
 
                 Spacer(Modifier.height(2.dp))
-                RootToggle(PerfRootApplier.KEY_CPU_GOVERNOR, "CPU governor → performance", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_CPU_GOVERNOR, I18n.s(R.string.ui_cpu_governor_performance), granted, harnessProven,
                     onInfo = { info = "CPU governor → performance" to PerfCopy.CPU_GOV })
-                RootToggle(PerfRootApplier.KEY_CPU_FREQ_LOCK, "Lock CPU frequency to max", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_CPU_FREQ_LOCK, I18n.s(R.string.ui_lock_cpu_frequency_to_max), granted, harnessProven,
                     onInfo = { info = "Lock CPU frequency to max" to PerfCopy.CPU_FREQ })
-                RootToggle(PerfRootApplier.KEY_CORES_ONLINE, "Keep all cores online", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_CORES_ONLINE, I18n.s(R.string.ui_keep_all_cores_online), granted, harnessProven,
                     onInfo = { info = "Keep all cores online" to PerfCopy.CORES_ONLINE })
-                RootToggle(PerfRootApplier.KEY_THERMAL_DISABLE, "Disable thermal throttling", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_THERMAL_DISABLE, I18n.s(R.string.ui_disable_thermal_throttling), granted, harnessProven,
                     onInfo = { info = "Disable thermal throttling" to PerfCopy.THERMAL })
-                RootToggle(PerfRootApplier.KEY_FAN_MAX, "Fan to maximum", granted, harnessProven,
+                RootToggle(PerfRootApplier.KEY_FAN_MAX, I18n.s(R.string.ui_fan_to_maximum), granted, harnessProven,
                     onInfo = { info = "Fan to maximum" to PerfCopy.FAN })
 
                 if (granted && !harnessProven) {
@@ -184,7 +184,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
 
                 // AUTO toggle — persists like the other root defaults; fires at game launch.
-                PerfToggle("Auto deep-clean on launch", autoDeepClean, enabled = granted,
+                PerfToggle(I18n.s(R.string.ui_auto_deep_clean_on_launch), autoDeepClean, enabled = granted,
                     onInfo = { info = "Auto deep-clean on launch" to PerfCopy.AUTO_DEEP_CLEAN }) {
                     PerformanceSettings.setRootDefault(PerfRootApplier.KEY_AUTO_DEEP_CLEAN, it)
                 }
@@ -226,7 +226,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
         PerfDisclaimerDialog(
             title = I18n.s(R.string.ui_power_user_performance_read_first),
             body = PerfDisclaimerCopy.ROOT_RISK,
-            confirmLabel = "Grant Root",
+            confirmLabel = I18n.s(R.string.ui_grant_root),
             onDismiss = { showRootDisclaimer = false },
             onConfirm = {
                 showRootDisclaimer = false
@@ -253,7 +253,7 @@ private fun RootToggle(key: String, label: String, granted: Boolean, harnessProv
 private fun rootStateLabel(state: RootManager.RootState): String = when (state) {
     RootManager.RootState.UNKNOWN -> "checking…"
     RootManager.RootState.UNAVAILABLE -> "not available on this device"
-    RootManager.RootState.AVAILABLE_NOT_GRANTED -> "available (not granted)"
+    RootManager.RootState.AVAILABLE_NOT_GRANTED -> I18n.s(R.string.ui_available_not_granted)
     RootManager.RootState.GRANTED -> "granted"
     RootManager.RootState.DENIED -> "denied"
 }
@@ -310,12 +310,12 @@ private fun InfoButton(onClick: () -> Unit) {
 }
 
 private object PerfCopy {
-    const val SUSTAINED = "Keeps clock speeds steady instead of spiking and dropping, so long sessions stay smoother. Safe, no root."
-    const val PRIORITY = "Gives the game's rendering higher priority than other apps for more CPU time. Safe, no root."
-    const val BIG_CORES = "Pins the game to your fastest CPU cores instead of the efficiency cores. Safe, no root."
-    const val CPU_GOV = "Forces the CPU to run fast instead of ramping on demand. Faster, more heat and battery. (Root)"
+    const val SUSTAINED = I18n.s(R.string.ui_keeps_clock_speeds_steady_instead_of_spiking_and_droppin)
+    const val PRIORITY = I18n.s(R.string.ui_gives_the_game_s_rendering_higher_priority_than_other_ap)
+    const val BIG_CORES = I18n.s(R.string.ui_pins_the_game_to_your_fastest_cpu_cores_instead_of_the_e)
+    const val CPU_GOV = I18n.s(R.string.ui_forces_the_cpu_to_run_fast_instead_of_ramping_on_demand)
     const val CPU_FREQ = "Pins the CPU at max clock so it never slows down. Top performance, highest heat/battery. (Root)"
-    const val CORES_ONLINE = "Stops cores being put to sleep, keeping every core available. (Root)"
+    const val CORES_ONLINE = I18n.s(R.string.ui_stops_cores_being_put_to_sleep_keeping_every_core_availa)
     const val GPU_CLOCK =
         "Pins the GPU at top speed so it stops dropping clocks to save power. Smoother and more " +
         "consistent, but hotter and heavier on battery.\n\n" +
@@ -326,8 +326,8 @@ private object PerfCopy {
         "device's own heat protection still applies, and the setting is undone when you exit the game, " +
         "background the app, or it crashes.\n\n" +
         "On non-Adreno GPUs (Mali, Xclipse, PowerVR) this toggle needs root."
-    const val THERMAL = "Removes your device's built-in heat protection. ⚠️ Can overheat — the Temperature Watchdog is your only safety net with this on. (Root)"
-    const val FAN = "Runs the fan at full speed for max cooling (devices with a fan). (Root)"
+    const val THERMAL = I18n.s(R.string.ui_removes_your_device_s_built_in_heat_protection_can_overh)
+    const val FAN = I18n.s(R.string.ui_runs_the_fan_at_full_speed_for_max_cooling_devices_with)
     const val FREE_MEM_SECTION =
         "Two ways to free memory, from lightest to strongest.\n\n" +
         "Drop file caches (Tier 1)\n" +

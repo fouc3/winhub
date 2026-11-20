@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDownload
@@ -129,9 +132,9 @@ internal fun p2ContentDownloadMenu(
     return XmbMenu(title, Icons.Filled.CloudDownload, onClose = { jobs.cancel() }) {
         val rows = mutableListOf<XmbRow>()
         when {
-            loading -> rows += XmbRow.Info("loading", "Loading versions…", Icons.Filled.CloudDownload)
+            loading -> rows += XmbRow.Info("loading", I18n.s(R.string.ui_loading_versions), Icons.Filled.CloudDownload)
             profiles.isEmpty() -> rows += XmbRow.Info("none",
-                if (failed) "Couldn't read the catalog — check your connection" else "No versions available", Icons.Filled.Info)
+                if (failed) "Couldn't read the catalog — check your connection" else I18n.s(R.string.ui_no_versions_available), Icons.Filled.Info)
             else -> {
                 val local = profiles.filter { it.remoteUrl == null }
                 val remote = profiles.filter { it.remoteUrl != null }

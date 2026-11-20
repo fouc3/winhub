@@ -32,6 +32,9 @@
  */
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context;
 import android.util.Log;
 
@@ -59,7 +62,7 @@ public final class EpicGameFixes {
     private EpicGameFixes() {}
 
     /** The registry value name Bethesda titles read their install directory from. */
-    private static final String BETHESDA_INSTALLED_PATH = "Installed Path";
+    private static final String BETHESDA_INSTALLED_PATH = I18n.s(R.string.ui_installed_path);
 
     /** appName -> Bethesda registry key that needs an "Installed Path" value. */
     private static final Map<String, String> REGISTRY_INSTALLED_PATH = new HashMap<>();
@@ -102,7 +105,7 @@ public final class EpicGameFixes {
             applyRegistryInstalledPath(ctx, shortcut, appName);
             applyFolderWipes(ctx, appName);
         } catch (Throwable t) {
-            Log.w(TAG, "applyPreLaunch failed for " + appName, t);
+            Log.w(TAG, I18n.s(R.string.ui_applyprelaunch_failed_for) + appName, t);
         }
     }
 
@@ -121,9 +124,9 @@ public final class EpicGameFixes {
             String merged = mergeDllOverrides(envVars.has("WINEDLLOVERRIDES") ? envVars.get("WINEDLLOVERRIDES") : null,
                     required);
             envVars.put("WINEDLLOVERRIDES", merged);
-            Log.i(TAG, "applied WINEDLLOVERRIDES for " + appName + ": " + merged);
+            Log.i(TAG, I18n.s(R.string.ui_applied_winedlloverrides_for) + appName + ": " + merged);
         } catch (Throwable t) {
-            Log.w(TAG, "applyEnv failed for " + appName, t);
+            Log.w(TAG, I18n.s(R.string.ui_applyenv_failed_for) + appName, t);
         }
     }
 
@@ -169,7 +172,7 @@ public final class EpicGameFixes {
             String existing = editor.getStringValue(key, BETHESDA_INSTALLED_PATH, null);
             if (existing == null || existing.isEmpty()) {
                 editor.setStringValue(key, BETHESDA_INSTALLED_PATH, winInstallDir);
-                Log.i(TAG, "registry fix: set [" + key + "] \"" + BETHESDA_INSTALLED_PATH + "\"="
+                Log.i(TAG, I18n.s(R.string.ui_registry_fix_set) + key + "] \"" + BETHESDA_INSTALLED_PATH + "\"="
                         + winInstallDir + " for " + appName);
             }
         }
