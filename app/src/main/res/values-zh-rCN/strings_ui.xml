@@ -3350,7 +3350,7 @@
     <string name="ui_you_have">; 你有</string>
     <string name="ui_yours_kept">; 已保留你的：</string>
     <string name="ui_n1_min_left">剩余 &lt;1 分钟</string>
-    <string name="ui_unknown_for_v">? v 未知</string>
+    <string name="ui_unknown_for_v">\? v 未知</string>
     <string name="ui_a_file_failed_aborting_download">某文件失败 — 正在中止下载</string>
     <string name="ui_a_fresh_dedicated_container_built_just_for_this_game_one">为该游戏全新构建的专用容器 — 一个游戏一个容器。</string>
     <string name="ui_a_game_opens_straight_on_its_own_page_b_comes_back_to_ho">A 直接打开游戏自己的页面，B 返回主页。</string>

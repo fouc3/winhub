@@ -3561,7 +3561,7 @@
     <string name="ui_you_have">"; you have "</string>
     <string name="ui_yours_kept">"; yours kept: "</string>
     <string name="ui_n1_min_left">&lt;1 min left</string>
-    <string name="ui_unknown_for_v">? unknown for v</string>
+    <string name="ui_unknown_for_v">\? unknown for v</string>
     <string name="ui_a_file_failed_aborting_download">A file failed — aborting download</string>
     <string name="ui_a_fresh_dedicated_container_built_just_for_this_game_one">A fresh dedicated container built just for this game — one game, one container.</string>
     <string name="ui_a_game_opens_straight_on_its_own_page_b_comes_back_to_ho">A game opens straight on its own page, B comes back to Home.</string>
