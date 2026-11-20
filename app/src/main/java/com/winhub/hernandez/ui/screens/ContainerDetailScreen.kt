@@ -2541,7 +2541,7 @@ private fun AdvancedTab(
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        I18n.s(R.string.ui_stringresource_r_string_gyro_sensitivity_label)%.1f".format(viewModel.gyroSensitivity)}",
+                        "${stringResource(R.string.gyro_sensitivity_label)}: ${"%.1f".format(viewModel.gyroSensitivity)}",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.weight(1f)
                     )
@@ -2555,7 +2555,7 @@ private fun AdvancedTab(
                     valueRange = 0.1f..10f
                 )
                 Text(
-                    I18n.s(R.string.ui_stringresource_r_string_gyro_deadzone_label)%.2f".format(viewModel.gyroDeadzone)}",
+                    "${stringResource(R.string.gyro_deadzone_label)}: ${"%.2f".format(viewModel.gyroDeadzone)}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(
@@ -2564,7 +2564,7 @@ private fun AdvancedTab(
                     valueRange = 0f..0.5f
                 )
                 Text(
-                    I18n.s(R.string.ui_stringresource_r_string_gyro_smoothing_label)%.2f".format(viewModel.gyroSmoothing)}",
+                    "${stringResource(R.string.gyro_smoothing_label)}: ${"%.2f".format(viewModel.gyroSmoothing)}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(

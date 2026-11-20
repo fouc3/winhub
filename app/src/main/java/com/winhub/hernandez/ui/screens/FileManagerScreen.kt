@@ -1904,7 +1904,7 @@ fun FileManagerScreen(
                 val what = if (clipboardFiles.size == 1) clipboardFiles.first().name
                 else I18n.s(R.string.ui_clipboardfiles_size_items)
                 Text(
-                    "Paste $what${if (isCutOperation) " (move)" else "I18n.s(R.string.ui_here),
+                    "Paste $what${if (isCutOperation) " (move)" else ""} here",
                     color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { clipboardFiles = emptyList(); isCutOperation = false }) {

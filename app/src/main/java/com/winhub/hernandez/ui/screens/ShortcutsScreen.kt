@@ -8576,7 +8576,7 @@ internal fun ShortcutSettingsDialogScreen(
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    I18n.s(R.string.ui_stringresource_r_string_gyro_sensitivity_label)%.1f".format(gyroSensitivity)}",
+                                    "${stringResource(R.string.gyro_sensitivity_label)}: ${"%.1f".format(gyroSensitivity)}",
                                     style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.weight(1f)
                                 )
