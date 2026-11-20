@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simplified Chinese (zh-CN). Entries missing here fall back to values/. -->
+<resources>
+    <string name="xmb_fr_add">添加好友</string>
+    <string name="xmb_fr_settings">设置</string>
+    <string name="xmb_fr_section_in_game">游戏中</string>
+    <string name="xmb_fr_section_online">在线</string>
+    <string name="xmb_fr_section_away">离开</string>
+    <string name="xmb_fr_section_offline">离线</string>
+    <string name="xmb_fr_section_unknown">状态未知</string>
+    <string name="xmb_fr_section_requests">好友请求</string>
+    <string name="xmb_fr_wants_to_add">想添加你为好友</string>
+    <string name="xmb_fr_request_sent">请求已发送</string>
+    <string name="xmb_fr_accept">接受</string>
+    <string name="xmb_fr_decline">拒绝</string>
+    <string name="xmb_fr_cancel">取消</string>
+    <string name="xmb_fr_message">消息</string>
+    <string name="xmb_fr_game_page">游戏页面</string>
+    <string name="xmb_fr_profile">个人资料</string>
+    <string name="xmb_fr_remove">移除</string>
+    <string name="xmb_fr_remove_confirm">移除？请再按一次</string>
+    <string name="xmb_fr_empty_title">暂无可显示的好友</string>
+    <string name="xmb_fr_empty_sub">Steam 发送好友列表后，你的好友就会显示在这里。</string>
+    <string name="xmb_fr_signin_title">登录 Steam</string>
+    <string name="xmb_fr_signin_sub">查看谁在线、正在玩什么，并向他们发送消息。</string>
+    <string name="xmb_fr_signin_button">登录 Steam</string>
+    <string name="xmb_fr_off_title">Steam 好友功能已关闭</string>
+    <string name="xmb_fr_off_sub">开启后即可查看好友并聊天。关闭期间不会共享任何在线状态。</string>
+    <string name="xmb_fr_off_button">开启</string>
+    <string name="xmb_fr_disconnected_title">未连接 Steam</string>
+    <string name="xmb_fr_disconnected_sub">连接后即可查看好友并聊天。</string>
+    <string name="xmb_fr_connect">连接</string>
+    <string name="xmb_fr_add_title">添加好友</string>
+    <string name="xmb_fr_add_search_label">按名称搜索 Steam</string>
+    <string name="xmb_fr_add_search_hint">搜索玩家…</string>
+    <string name="xmb_fr_add_code_label">通过好友码添加</string>
+    <string name="xmb_fr_add_code_hint">输入好友码</string>
+    <string name="xmb_fr_add_my_code">你的好友代码</string>
+    <string name="xmb_fr_copy">复制</string>
+    <string name="xmb_fr_code_copied">好友代码已复制</string>
+    <string name="xmb_fr_add_button">添加</string>
+    <string name="xmb_fr_add_no_players">未找到玩家。</string>
+    <string name="xmb_fr_result_friend">已是你的好友</string>
+    <string name="xmb_fr_result_pending">请求待处理</string>
+    <string name="xmb_fr_result_player">Steam 个人资料</string>
+    <string name="xmb_fr_done">完成</string>
+    <string name="xmb_fr_close">关闭</string>
+    <string name="xmb_fr_level">等级 %1$d</string>
+    <string name="xmb_fr_stat_games">游戏</string>
+    <string name="xmb_fr_stat_hours">游戏时长</string>
+    <string name="xmb_fr_stat_two_weeks">最近两周</string>
+    <string name="xmb_fr_recent">最近玩过</string>
+    <string name="xmb_fr_hours">%1$d 小时</string>
+    <string name="xmb_fr_view_on_steam">在 Steam 中查看</string>
+    <string name="xmb_fr_profile_private">此个人资料为私密。</string>
+    <string name="xmb_fr_loading">加载中…</string>
+</resources>

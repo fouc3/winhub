@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simplified Chinese (zh-CN). Entries missing here fall back to values/. -->
+<resources>
+    <string name="steam_lib_uninstall_kept">%1$s 已从 Bannerlator 移除。其文件属于另一个 Steam 客户端，已予保留。</string>
+    <string name="xmb_all_games">所有游戏</string>
+    <string name="xmb_tab_stores">商店</string>
+    <string name="xmb_tab_downloads">下载</string>
+    <string name="xmb_tab_friends">好友</string>
+    <string name="xmb_store_no_games">暂无游戏</string>
+    <string name="xmb_hint_add_game">添加游戏</string>
+    <string name="xmb_store_card_signed_out">登录</string>
+    <string name="xmb_all_games_open">打开</string>
+    <string name="xmb_all_games_more">另有 %1$d 项</string>
+    <string name="xmb_all_back">返回</string>
+    <string name="xmb_all_view">查看</string>
+    <string name="xmb_all_sort">排序</string>
+    <string name="xmb_all_view_grid">网格</string>
+    <string name="xmb_all_view_list">列表</string>
+    <string name="xmb_all_view_big">大图封面</string>
+    <string name="xmb_all_sort_recent">最近游玩</string>
+    <string name="xmb_all_sort_name">名称 A-Z</string>
+    <string name="xmb_all_sort_name_desc">名称 Z-A</string>
+    <string name="xmb_all_sort_playtime">最常游玩</string>
+    <string name="xmb_all_sort_store">商店</string>
+    <string name="xmb_all_sort_container">容器</string>
+    <string name="xmb_tab_social">社交</string>
+</resources>
