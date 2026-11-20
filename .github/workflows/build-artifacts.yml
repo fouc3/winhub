@@ -25,3 +25,5 @@ jobs:
       # (empty otherwise). release.yml deliberately does NOT pass this, so public release
       # APKs stay free of the proprietary jar until redistribution is explicitly decided.
       GALAXY_PERF_SDK_JAR_B64: ${{ secrets.GALAXY_PERF_SDK_JAR_B64 }}
+
+# Localized build branch trigger (no functional change).
