@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:id="@+id/group_emulation" android:checkableBehavior="single">
-        <item android:title="Emulation">
+        <item android:title="@string/ui_emulation">
             <menu>
                 <item
                     android:id="@+id/main_menu_shortcuts"
@@ -23,7 +23,7 @@
     </group>
 
     <group android:id="@+id/group_tools">
-        <item android:title="Tools">
+        <item android:title="@string/ui_tools">
             <menu>
                 <item
                     android:id="@+id/main_menu_input_controls"
@@ -46,30 +46,30 @@
     </group>
 
     <group android:id="@+id/group_stores">
-        <item android:title="Game Stores">
+        <item android:title="@string/ui_game_stores">
             <menu>
                 <item
                     android:id="@+id/main_menu_gog"
                     android:icon="@drawable/icon_open"
-                    android:title="GOG" />
+                    android:title="@string/ui_gog" />
                 <item
                     android:id="@+id/main_menu_epic"
                     android:icon="@drawable/icon_open"
-                    android:title="Epic Games" />
+                    android:title="@string/ui_epic_games" />
                 <item
                     android:id="@+id/main_menu_amazon"
                     android:icon="@drawable/icon_open"
-                    android:title="Amazon Games" />
+                    android:title="@string/ui_amazon_games" />
                 <item
                     android:id="@+id/main_menu_steam"
                     android:icon="@drawable/icon_open"
-                    android:title="Steam" />
+                    android:title="@string/ui_steam" />
             </menu>
         </item>
     </group>
 
     <group android:id="@+id/group_about">
-        <item android:title="About And Support">
+        <item android:title="@string/ui_about_and_support">
             <menu>
                 <item
                     android:id="@+id/main_menu_about"

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="-force-gfx-direct" />
-    <item android:title="-force-d3d11-singlethreaded" />
-    <item android:title="-force-dx9" />
-    <item android:title="-force-d3d9" />
-    <item android:title="-force-d3d11" />
-    <item android:title="--force-gfx-direct" />
-    <item android:title="--force-d3d11-singlethreaded" />
-    <item android:title="--force-dx9" />
-    <item android:title="--force-d3d9" />
-    <item android:title="--force-d3d11" />
+    <item android:title="@string/ui_force_gfx_direct" />
+    <item android:title="@string/ui_force_d3d11_singlethreaded" />
+    <item android:title="@string/ui_force_dx9" />
+    <item android:title="@string/ui_force_d3d9" />
+    <item android:title="@string/ui_force_d3d11" />
+    <item android:title="@string/ui_force_gfx_direct_2" />
+    <item android:title="@string/ui_force_d3d11_singlethreaded_2" />
+    <item android:title="@string/ui_force_dx9_2" />
+    <item android:title="@string/ui_force_d3d9_2" />
+    <item android:title="@string/ui_force_d3d11_2" />
     <item android:title="/d3d9" />
 </menu>

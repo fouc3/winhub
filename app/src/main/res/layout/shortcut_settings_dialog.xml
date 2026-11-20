@@ -162,7 +162,7 @@
                 android:id="@+id/TVWrapperVersionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Version:"
+                android:text="@string/ui_current_version"
                 android:textStyle="bold"
                 android:paddingRight="8dp" />
 
@@ -170,7 +170,7 @@
                 android:id="@+id/TVGraphicsDriverVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="default_version"
+                android:text="@string/ui_default_version"
                 android:textColor="@android:color/holo_blue_dark" />
         </LinearLayout>
 
@@ -237,7 +237,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="64bit Emulator" />
+                android:text="@string/ui_64bit_emulator" />
             <Spinner
                 style="@style/ComboBox"
                 android:layout_width="match_parent"
@@ -564,7 +564,7 @@
                             android:id="@+id/CBExclusiveXInput"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Exclusive Input" />
+                            android:text="@string/ui_exclusive_input" />
                         <ImageView
                             android:id="@+id/BTExclusiveXInputHelp"
                             style="@style/HelpButton"
