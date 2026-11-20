@@ -1,0 +1,46 @@
+name: publish APKs as release assets
+
+# Downloads the APK artifacts of a finished build run and attaches them to a GitHub release,
+# so the APKs can be fetched without logging in (Actions artifacts require auth).
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Build run id to publish (e.g. 44747262337)'
+        required: true
+      tag:
+        description: 'Release tag to create/update (e.g. zh-1)'
+        required: true
+        default: 'zh-1'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download build artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download "${{ inputs.run_id }}" \
+            --repo "${{ github.repository }}" --dir out
+          find out -type f -name '*.apk' -print -exec du -h {} \;
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.tag }}"
+          if ! gh release view "$TAG" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release create "$TAG" --repo "${{ github.repository }}" \
+              --title "WinHub 简体中文 $TAG" \
+              --notes "简体中文汉化构建（基于 upstream 1.2）。中文界面来自 values-zh-rCN 语言包。" \
+              --prerelease
+          fi
+          find out -type f -name '*.apk' -exec gh release upload "$TAG" {} \
+            --repo "${{ github.repository }}" --clobber \;
+          gh release view "$TAG" --repo "${{ github.repository }}" --json assets \
+            --jq '.assets[] | "\(.name)\t\(.size)\t\(.url)"'
