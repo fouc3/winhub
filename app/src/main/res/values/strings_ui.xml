@@ -6716,4 +6716,8 @@
     <string name="ui_skip_menu_next_time_name">Skip this menu next time for %1$s.</string>
     <string name="ui_cores_of_cores">%1$s of %2$s cores</string>
     <string name="ui_cpu_cores_the_game_may_run_on">CPU cores the game may run on</string>
+    <string name="ui_container">Container</string>
+    <string name="ui_capture">Capture</string>
+    <string name="ui_sort_name_az">Name A–Z</string>
+    <string name="ui_sort_name_za">Name Z–A</string>
 </resources>

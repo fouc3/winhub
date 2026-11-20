@@ -6505,4 +6505,8 @@
     <string name="ui_skip_menu_next_time_name">下次为 %1$s 跳过此菜单。</string>
     <string name="ui_cores_of_cores">%1$s / %2$s 核心</string>
     <string name="ui_cpu_cores_the_game_may_run_on">游戏可以使用的 CPU 核心</string>
+    <string name="ui_container">容器</string>
+    <string name="ui_capture">捕获</string>
+    <string name="ui_sort_name_az">名称 A–Z</string>
+    <string name="ui_sort_name_za">名称 Z–A</string>
 </resources>

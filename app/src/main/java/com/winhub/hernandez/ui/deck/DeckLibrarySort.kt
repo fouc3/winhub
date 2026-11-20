@@ -7,13 +7,15 @@ import com.winhub.hernandez.R
 // How the library is ordered. The Deck filter dialog's sort chips and the XMB All Games page share this, so the two can't
 // drift; the comparisons work on plain keys, so they don't need a Shortcut.
 
-internal enum class LibrarySort(val label: String) {
-    NAME("Name A–Z"),
-    NAME_DESC("Name Z–A"),
-    RECENT(I18n.s(R.string.retro_portrait_last_played)),
-    PLAYTIME(I18n.s(R.string.xmb_all_sort_playtime)),
-    CONTAINER("Container"),
-    STORE("Store"),
+internal enum class LibrarySort(val labelRes: Int) {
+    NAME(R.string.ui_sort_name_az),
+    NAME_DESC(R.string.ui_sort_name_za),
+    RECENT(R.string.retro_portrait_last_played),
+    PLAYTIME(R.string.xmb_all_sort_playtime),
+    CONTAINER(R.string.ui_container),
+    STORE(R.string.ui_store),
+    ;
+    val label: String get() = I18n.s(labelRes)
 }
 
 /** What a sort compares for one game. Read once per game, so ordering a big library does no lookups inside the comparator. */

@@ -310,12 +310,12 @@ private fun InfoButton(onClick: () -> Unit) {
 }
 
 private object PerfCopy {
-    const val SUSTAINED = I18n.s(R.string.ui_keeps_clock_speeds_steady_instead_of_spiking_and_droppin)
-    const val PRIORITY = I18n.s(R.string.ui_gives_the_game_s_rendering_higher_priority_than_other_ap)
-    const val BIG_CORES = I18n.s(R.string.ui_pins_the_game_to_your_fastest_cpu_cores_instead_of_the_e)
-    const val CPU_GOV = I18n.s(R.string.ui_forces_the_cpu_to_run_fast_instead_of_ramping_on_demand)
+    const val SUSTAINED = "Keeps clock speeds steady instead of spiking and dropping, so long sessions stay smoother. Safe, no root."
+    const val PRIORITY = "Gives the game's rendering higher priority than other apps for more CPU time. Safe, no root."
+    const val BIG_CORES = "Pins the game to your fastest CPU cores instead of the efficiency cores. Safe, no root."
+    const val CPU_GOV = "Forces the CPU to run fast instead of ramping on demand. Faster, more heat and battery. (Root)"
     const val CPU_FREQ = "Pins the CPU at max clock so it never slows down. Top performance, highest heat/battery. (Root)"
-    const val CORES_ONLINE = I18n.s(R.string.ui_stops_cores_being_put_to_sleep_keeping_every_core_availa)
+    const val CORES_ONLINE = "Stops cores being put to sleep, keeping every core available. (Root)"
     const val GPU_CLOCK =
         "Pins the GPU at top speed so it stops dropping clocks to save power. Smoother and more " +
         "consistent, but hotter and heavier on battery.\n\n" +
@@ -326,8 +326,8 @@ private object PerfCopy {
         "device's own heat protection still applies, and the setting is undone when you exit the game, " +
         "background the app, or it crashes.\n\n" +
         "On non-Adreno GPUs (Mali, Xclipse, PowerVR) this toggle needs root."
-    const val THERMAL = I18n.s(R.string.ui_removes_your_device_s_built_in_heat_protection_can_overh)
-    const val FAN = I18n.s(R.string.ui_runs_the_fan_at_full_speed_for_max_cooling_devices_with)
+    const val THERMAL = "Removes your device's built-in heat protection. ⚠️ Can overheat — the Temperature Watchdog is your only safety net with this on. (Root)"
+    const val FAN = "Runs the fan at full speed for max cooling (devices with a fan). (Root)"
     const val FREE_MEM_SECTION =
         "Two ways to free memory, from lightest to strongest.\n\n" +
         "Drop file caches (Tier 1)\n" +

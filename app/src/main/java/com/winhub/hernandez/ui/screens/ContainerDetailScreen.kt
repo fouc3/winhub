@@ -2970,7 +2970,7 @@ internal fun withGraphicsDriverKeys(config: String, values: Map<String, String>)
  */
 internal val WAYLAND_PRESENT_MODES = listOf("mailbox", "fifo")
 
-internal const val WAYLAND_DRIVER_SETTINGS_HELP =
+internal val WAYLAND_DRIVER_SETTINGS_HELP =
     "For games that refuse to start or misbehave on an Adreno GPU. GPU name makes DirectX games (DXVK, " +
         "and D3D12 through it) see another graphics card; native Vulkan and OpenGL games still see the real " +
         "one for now. Off by default (Device). Warning: an NVIDIA name can make a game try NVAPI, DLSS or " +
@@ -3442,7 +3442,7 @@ internal fun compositorDriverUnusable(version: String, choices: List<String>, ch
 internal fun compositorDriverMaliSystem(version: String, choices: List<String>): Boolean =
     version == "System" && "System" in choices
 
-internal const val MALI_SYSTEM_DRIVER_NOTE =
+internal val MALI_SYSTEM_DRIVER_NOTE =
     "\"System\" uses your phone's own Mali Vulkan driver. Experimental on Wayland: it may show a black " +
         I18n.s(R.string.ui_screen_try_it_with_the_mali_panvk_switches_in_the_dri)
 

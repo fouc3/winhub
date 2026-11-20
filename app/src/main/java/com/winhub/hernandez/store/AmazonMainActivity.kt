@@ -109,7 +109,7 @@ class AmazonMainActivity : ComponentActivity() {
         }
     }
 
-    @Deprecated(I18n.s(R.string.ui_deprecated_in_java))
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_WEB) webReturnTick++

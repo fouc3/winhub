@@ -411,7 +411,7 @@ object SteamFriendsStore {
     }
 
     /** Suffix on a last-known status while the relay hasn't confirmed it. */
-    private const val STALE_SUFFIX = I18n.s(R.string.ui_last_known)
+    private const val STALE_SUFFIX = " · last known"
 
     /** One-line "groups: in-game N online N away N offline N unknown N (stale N)" of the roster (diagnostics). */
     private fun agentGroupsSummary(): String {

@@ -137,11 +137,14 @@ import com.winhub.hernandez.util.I18n
 private val InstalledGreen = Color(0xFF37C26B)
 private val SavedBlue = Color(0xFF3D9BFF)
 
-private enum class HubTab(val label: String, val railLabel: String) {
-    DOWNLOAD(I18n.s(R.string.ui_download_components), "Download"),
-    COMPONENT("Components", "Components"),
-    INSTALLED("Installed", "Installed"),
-    MY_FILES("My Files", "My Files"),
+private enum class HubTab(val labelRes: Int, val railLabelRes: Int) {
+    DOWNLOAD(R.string.ui_download_components, R.string.ui_download),
+    COMPONENT(R.string.ui_components, R.string.ui_components),
+    INSTALLED(R.string.ui_installed, R.string.ui_installed),
+    MY_FILES(R.string.ui_my_files, R.string.ui_my_files),
+    ;
+    val label: String get() = I18n.s(labelRes)
+    val railLabel: String get() = I18n.s(railLabelRes)
 }
 
 private fun tabIcon(t: HubTab): ImageVector = when (t) {

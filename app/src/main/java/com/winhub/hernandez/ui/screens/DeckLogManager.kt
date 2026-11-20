@@ -86,8 +86,11 @@ import com.winhub.hernandez.R
 
 private const val TAG = "DeckLogManager"
 
-private enum class LogTab(val label: String) {
-    CAPTURE("Capture"), STORAGE("Storage"), GAMES(I18n.s(R.string.ui_game_logs)), TOOLS("Tools")
+private enum class LogTab(val labelRes: Int) {
+    CAPTURE(R.string.ui_capture), STORAGE(R.string.ui_storage),
+    GAMES(R.string.ui_game_logs), TOOLS(R.string.ui_tools),
+    ;
+    val label: String get() = I18n.s(labelRes)
 }
 
 private enum class LogActionKind { PRIMARY, NEUTRAL, DANGER }

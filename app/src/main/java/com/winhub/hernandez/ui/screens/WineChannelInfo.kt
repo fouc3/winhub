@@ -21,23 +21,23 @@ import com.winhub.hernandez.R
  */
 object WineChannelInfo {
 
-    const val CAT_TRACING = I18n.s(R.string.ui_errors_and_tracing)
-    const val CAT_GRAPHICS = I18n.s(R.string.ui_direct3d_and_graphics)
+    const val CAT_TRACING = "Errors and tracing"
+    const val CAT_GRAPHICS = "Direct3D and graphics"
     const val CAT_AUDIO = "Sound"
-    const val CAT_VIDEO = I18n.s(R.string.ui_video_and_media_playback)
-    const val CAT_UI = I18n.s(R.string.ui_windows_menus_and_controls)
-    const val CAT_INPUT = I18n.s(R.string.ui_input_and_devices)
-    const val CAT_NET = I18n.s(R.string.ui_networking_and_the_internet)
-    const val CAT_FILES = I18n.s(R.string.ui_files_and_storage)
-    const val CAT_RUNTIME = I18n.s(R.string.ui_processes_threads_and_memory)
-    const val CAT_REGISTRY = I18n.s(R.string.ui_registry_and_settings)
-    const val CAT_SECURITY = I18n.s(R.string.ui_security_and_encryption)
-    const val CAT_COM = I18n.s(R.string.ui_com_scripting_and_automation)
-    const val CAT_TEXT = I18n.s(R.string.ui_fonts_and_text)
+    const val CAT_VIDEO = "Video and media playback"
+    const val CAT_UI = "Windows, menus and controls"
+    const val CAT_INPUT = "Input and devices"
+    const val CAT_NET = "Networking and the internet"
+    const val CAT_FILES = "Files and storage"
+    const val CAT_RUNTIME = "Processes, threads and memory"
+    const val CAT_REGISTRY = "Registry and settings"
+    const val CAT_SECURITY = "Security and encryption"
+    const val CAT_COM = "COM, scripting and automation"
+    const val CAT_TEXT = "Fonts and text"
     const val CAT_PRINT = "Printing"
-    const val CAT_INSTALL = I18n.s(R.string.ui_installers_and_packaging)
-    const val CAT_HOST = I18n.s(R.string.ui_the_android_side)
-    const val CAT_OTHER = I18n.s(R.string.ui_everything_else)
+    const val CAT_INSTALL = "Installers and packaging"
+    const val CAT_HOST = "The Android side"
+    const val CAT_OTHER = "Everything else"
 
     /** Order the browse dialog groups them in — most useful first, not alphabetical. */
     val CATEGORY_ORDER = listOf(

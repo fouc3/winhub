@@ -53,7 +53,7 @@ object InGameFriendsSource {
     }
 
     /** One-line note shown in place of the list once the relay has gone away. */
-    const val RELAY_STOPPED_TEXT = I18n.s(R.string.ui_friends_unavailable_steam_relay_stopped)
+    const val RELAY_STOPPED_TEXT = "Friends unavailable — Steam relay stopped"
 
     private val _state = MutableStateFlow(State(Kind.NONE))
     val state: StateFlow<State> = _state.asStateFlow()

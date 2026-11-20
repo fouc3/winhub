@@ -1488,13 +1488,17 @@ private data class ExePickerDataGame(
 )
 
 /** The detail page's top-level tabs (styled like the action buttons). Order = strip order. */
-private enum class DetailTab(val label: String) {
-    DETAILS("Details"),
-    ACHIEVEMENTS("Achievements"),
-    DLC("DLC"),
-    CLOUD(I18n.s(R.string.ui_cloud_saves_2)),
+// Resource ids, not resolved strings: calling I18n.s() inside an enum entry initializer trips a
+// Kotlin FIR compiler ICE (FirUninitializedEnumChecker). [label] resolves at read time instead.
+private enum class DetailTab(val labelRes: Int) {
+    DETAILS(R.string.ui_details),
+    ACHIEVEMENTS(R.string.ui_achievements),
+    DLC(R.string.ui_dlc),
+    CLOUD(R.string.ui_cloud_saves_2),
     /** Store screenshots + trailers; only in the strip once the appdetails fetch found any. */
-    MEDIA("Media"),
+    MEDIA(R.string.ui_media),
+    ;
+    val label: String get() = I18n.s(labelRes)
 }
 
 // ── Achievements/tab mockup palette ─────────────────────────────────────────────────────────────

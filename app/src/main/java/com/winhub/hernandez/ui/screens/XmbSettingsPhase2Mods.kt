@@ -24,7 +24,7 @@ import com.winhub.hernandez.R
 
 private const val TAG = "XmbMods"
 
-private const val START_PROGRAMS_NOTE =
+private val START_PROGRAMS_NOTE =
     "These start with the game, top to bottom. The first waits from the game launching; each next one " +
         I18n.s(R.string.ui_waits_after_the_one_before_it_starts)
 

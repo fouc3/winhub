@@ -134,10 +134,12 @@ import com.winhub.hernandez.R
 private val ContentsGreen = Color(0xFF37C26B)
 private val ContentsBlue = Color(0xFF3D9BFF)
 
-private enum class DeckContentsTab(val label: String) {
-    BROWSE("Browse"),
-    FILES(I18n.s(R.string.ui_my_files)),
-    INSTALLED("Installed"),
+private enum class DeckContentsTab(val labelRes: Int) {
+    BROWSE(R.string.ui_browse),
+    FILES(R.string.ui_my_files),
+    INSTALLED(R.string.ui_installed),
+    ;
+    val label: String get() = I18n.s(labelRes)
 }
 
 internal data class DeckContentCategory(
