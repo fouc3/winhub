@@ -403,8 +403,8 @@ fun ShortcutsScreen(
     // surfaces as a toast. Cancellable via steamUpdateHandle (the modal's Cancel button).
     fun runSteamMaintenance(s: Shortcut, verify: Boolean) {
         val appId = steamAppIdOf(s)
-        steamUpdateTitle = if (verify) "Verifying game files" else "Updating game"
-        steamUpdateLabel = if (verify) "Verifying ${s.name}…" else "Checking ${s.name} for updates…"
+        steamUpdateTitle = if (verify) I18n.s(R.string.ui_verifying_game_files) else I18n.s(R.string.ui_updating_game)
+        steamUpdateLabel = if (verify) I18n.s(R.string.ui_verifying_s_name) else I18n.s(R.string.ui_checking_s_name_for_updates)
         steamUpdateProgress = -1f
         steamUpdateFor = s
         val progress = SteamGameUpdater.ProgressCallback { frac, label ->
@@ -430,8 +430,8 @@ fun ShortcutsScreen(
     // updateNow pass). The onResult lands on the main thread (see checkForUpdate's doc).
     fun checkForUpdatesThenOffer(s: Shortcut) {
         val appId = steamAppIdOf(s)
-        steamUpdateTitle = "Checking for updates"
-        steamUpdateLabel = "Checking ${s.name}…"
+        steamUpdateTitle = I18n.s(R.string.ui_checking_for_updates)
+        steamUpdateLabel = I18n.s(R.string.ui_checking_s_name)
         steamUpdateProgress = -1f   // opens in the animated indeterminate state, never a static 0%.
         steamUpdateFor = s
         steamUpdateHandle = SteamGameUpdater.checkForUpdate(context, appId) { status ->
@@ -440,10 +440,10 @@ fun ShortcutsScreen(
             when (status.state) {
                 SteamGameUpdater.State.UP_TO_DATE -> {
                     val b = if (status.installedBuild > 0L) " (build ${status.installedBuild})" else ""
-                    Toast.makeText(context, "${s.name} is up to date$b", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_s_name_is_up_to_date_b), Toast.LENGTH_LONG).show()
                 }
                 SteamGameUpdater.State.NOT_INSTALLED ->
-                    Toast.makeText(context, "${s.name} isn't installed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_s_name_isn_t_installed), Toast.LENGTH_LONG).show()
                 SteamGameUpdater.State.UPDATE_AVAILABLE, SteamGameUpdater.State.UNKNOWN ->
                     steamUpdateOffer = s to status
             }
@@ -496,7 +496,7 @@ fun ShortcutsScreen(
     fun launchWithSteamLite(s: Shortcut) {
         if (!SteamLiteComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "SteamLite (Real Steam / VAC)"
+            componentDownloadLabel = I18n.s(R.string.ui_steamlite_real_steam_vac)
             componentDownloadProgress = 0f
             SteamLiteComponent.downloadAsync(
                 context,
@@ -717,12 +717,12 @@ fun ShortcutsScreen(
                         type = "application/json"
                         putExtra(Intent.EXTRA_STREAM, uri)
                         putExtra(Intent.EXTRA_SUBJECT, res.game)
-                        putExtra(Intent.EXTRA_TEXT, "WinHub config for ${res.game}")
+                        putExtra(Intent.EXTRA_TEXT, I18n.s(R.string.ui_winhub_config_for_res_game))
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
                     context.startActivity(Intent.createChooser(send, "Share config"))
                 } catch (e: Exception) {
-                    Toast.makeText(context, "Couldn't share the config.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_the_config), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -744,8 +744,8 @@ fun ShortcutsScreen(
                 null
             }
             withContext(Dispatchers.Main) {
-                if (ok != null) Toast.makeText(context, "Saved to $ok", Toast.LENGTH_LONG).show()
-                else Toast.makeText(context, "Couldn't save the config.", Toast.LENGTH_SHORT).show()
+                if (ok != null) Toast.makeText(context, I18n.s(R.string.ui_saved_to_ok), Toast.LENGTH_LONG).show()
+                else Toast.makeText(context, I18n.s(R.string.ui_couldn_t_save_the_config), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -817,11 +817,11 @@ fun ShortcutsScreen(
                 if (resolved) {
                     if (mc.label !in resolvedMissing) resolvedMissing.add(mc.label)
                     vm.refresh()
-                    Toast.makeText(context, "Installed and applied to \"${target.name}\".", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_installed_and_applied_to_target_name), Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
                         context,
-                        "Installed, but couldn't auto-apply — open \"Browse all versions\" to finish.",
+                        I18n.s(R.string.ui_installed_but_couldn_t_auto_apply_open_browse_all_ver),
                         Toast.LENGTH_LONG,
                     ).show()
                 }
@@ -873,14 +873,14 @@ fun ShortcutsScreen(
     // thread, posting its result on the main thread.
     fun runCustomBackup(shortcut: Shortcut, layout: GameSaveBackup.BackupLayout) {
         val name = shortcut.name
-        Toast.makeText(context, "Backing up saves for \"$name\"…", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_backing_up_saves_for_name), Toast.LENGTH_SHORT).show()
         CustomSaveVault.manualBackup(context, shortcut.container, shortcut, layout) { r ->
             if (r.wholeContainer && r.ok) {
                 Toast.makeText(context, "No per-game saves detected — backed up the whole container.", Toast.LENGTH_LONG).show()
             }
             Toast.makeText(
                 context,
-                if (r.ok) "Backed up ${r.fileCount} files → ${r.path?.substringAfterLast('/')}"
+                if (r.ok) I18n.s(R.string.ui_backed_up_r_filecount_files_r_path_substringafterlast)
                 else "Backup failed: ${r.error ?: "unknown error"}",
                 Toast.LENGTH_LONG,
             ).show()
@@ -919,7 +919,7 @@ fun ShortcutsScreen(
             folderScanSelected = found.filter { !it.alreadyAdded }.map { it.exe.absolutePath }.toSet()
             folderScanRunning = false
             if (found.isEmpty()) {
-                Toast.makeText(context, "No games found in that folder", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, I18n.s(R.string.ui_no_games_found_in_that_folder), Toast.LENGTH_LONG).show()
                 pendingImportContainerIndex = -1
             }
         }
@@ -1022,7 +1022,7 @@ fun ShortcutsScreen(
             }) {
                 Icon(
                     imageVector = if (selectionMode) Icons.Filled.Close else Icons.Filled.Checklist,
-                    contentDescription = if (selectionMode) "Cancel selection" else "Select shortcuts",
+                    contentDescription = if (selectionMode) I18n.s(R.string.ui_cancel_selection) else I18n.s(R.string.ui_select_shortcuts),
                     tint = androidx.compose.ui.graphics.Color.White,
                 )
             }
@@ -1037,10 +1037,10 @@ fun ShortcutsScreen(
                         ShortcutViewMode.XMB -> Icons.Filled.GridView
                     },
                     contentDescription = when (viewMode) {
-                        ShortcutViewMode.LIST -> "Grid view"
-                        ShortcutViewMode.GRID -> "Compact grid view"
-                        ShortcutViewMode.GRID_COMPACT -> "List view"
-                        ShortcutViewMode.XMB -> "Grid view"
+                        ShortcutViewMode.LIST -> I18n.s(R.string.ui_grid_view)
+                        ShortcutViewMode.GRID -> I18n.s(R.string.ui_compact_grid_view)
+                        ShortcutViewMode.GRID_COMPACT -> I18n.s(R.string.ui_list_view)
+                        ShortcutViewMode.XMB -> I18n.s(R.string.ui_grid_view)
                     },
                     tint = androidx.compose.ui.graphics.Color.White,
                 )
@@ -1051,8 +1051,8 @@ fun ShortcutsScreen(
                 }
                 DropdownMenu(expanded = showSortMenu, onDismissRequest = { showSortMenu = false }) {
                     val orders = listOf(
-                        ShortcutSortOrder.NAME_ASC  to "Name A→Z",
-                        ShortcutSortOrder.NAME_DESC to "Name Z→A",
+                        ShortcutSortOrder.NAME_ASC  to I18n.s(R.string.ui_name_a_z),
+                        ShortcutSortOrder.NAME_DESC to I18n.s(R.string.ui_name_z_a),
                         ShortcutSortOrder.CONTAINER to "Container",
                     )
                     orders.forEach { (order, label) ->
@@ -1094,26 +1094,26 @@ fun ShortcutsScreen(
     )
     val xmbActionsFor: (Shortcut) -> List<XmbAction> = { shortcut ->
         buildList {
-            add(XmbAction("Settings", Icons.Filled.Settings, "Display, graphics, controller…", menu = { xmbSettingsMenu(it, shortcut, xmbHost) }))
-            add(XmbAction("Game Doctor", Icons.Filled.Healing, "Why it won't run, and what to try", menu = { xmbGameDoctorMenu(it, shortcut) }))
-            add(XmbAction("Game Details", Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))
+            add(XmbAction("Settings", Icons.Filled.Settings, I18n.s(R.string.ui_display_graphics_controller), menu = { xmbSettingsMenu(it, shortcut, xmbHost) }))
+            add(XmbAction("Game Doctor", Icons.Filled.Healing, I18n.s(R.string.ui_why_it_won_t_run_and_what_to_try), menu = { xmbGameDoctorMenu(it, shortcut) }))
+            add(XmbAction("Game Details", Icons.Filled.Edit, I18n.s(R.string.ui_name_genres_year_description), menu = { xmbGameDetailsMenu(it, shortcut) }))
             if (isSteamOriginShortcut(shortcut)) {
-                add(XmbAction("Cloud Saves", Icons.Filled.CloudSync, "Steam Cloud sync — opens its own screen") { launchSaveManager(context, steamAppIdOf(shortcut)) })
+                add(XmbAction("Cloud Saves", Icons.Filled.CloudSync, I18n.s(R.string.ui_steam_cloud_sync_opens_its_own_screen)) { launchSaveManager(context, steamAppIdOf(shortcut)) })
             }
             if (isCustomShortcut(shortcut)) {
                 add(XmbAction("Back up saves", Icons.Filled.Archive, menu = { xmbBackupSavesMenu(it, shortcut) }))
                 add(XmbAction("Restore saves", Icons.Filled.Unarchive, menu = { xmbRestoreSavesMenu(it, shortcut) }))
             }
-            add(XmbAction("Community configs", Icons.Filled.Public, "Shared settings for this game", menu = { xmbCommunityConfigsMenu(it, shortcut) }))
+            add(XmbAction("Community configs", Icons.Filled.Public, I18n.s(R.string.ui_shared_settings_for_this_game), menu = { xmbCommunityConfigsMenu(it, shortcut) }))
             add(XmbAction("Scrape cover", Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
             add(XmbAction("View logs", Icons.Filled.Description, menu = { xmbLogsMenu(it, shortcut) }))
             add(XmbAction("Clone to container", Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, xmbHost) }))
             add(XmbAction("Copy to Drive C…", Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
             add(XmbAction("Change executable…", Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
-            add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, "Android's pin prompt") { addToHomeScreen(context, shortcut) })
+            add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, I18n.s(R.string.ui_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
             add(XmbAction("Export", Icons.Filled.Upload) { exportShortcut(context, shortcut) })
-            add(XmbAction("Properties", Icons.Filled.Info, "Times played, playtime", menu = { xmbPropertiesMenu(it, shortcut) }))
-            add(XmbAction("Remove", Icons.Filled.Delete, "Asks to confirm first", danger = true, menu = { xmbRemoveMenu(it, shortcut, xmbHost) }))
+            add(XmbAction("Properties", Icons.Filled.Info, I18n.s(R.string.ui_times_played_playtime), menu = { xmbPropertiesMenu(it, shortcut) }))
+            add(XmbAction("Remove", Icons.Filled.Delete, I18n.s(R.string.ui_asks_to_confirm_first), danger = true, menu = { xmbRemoveMenu(it, shortcut, xmbHost) }))
         }
     }
 
@@ -1347,7 +1347,7 @@ fun ShortcutsScreen(
                                     .removePrefix(target.folder.absolutePath)
                                     .removePrefix("/")
                                 Text(
-                                    if (rel.contains('/')) rel.substringBeforeLast('/') else "(folder root)",
+                                    if (rel.contains('/')) rel.substringBeforeLast('/') else I18n.s(R.string.ui_folder_root),
                                     color = OnSurfaceVariant,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
@@ -1402,7 +1402,7 @@ fun ShortcutsScreen(
                             ?.takeIf { it.isDirectory }
                         if (importUseSystemPicker) importFileLauncher.launch("*/*")
                         else importFileInAppLauncher.launch(
-                            InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, "Select .exe / .desktop / .lnk", driveCPath = driveC?.absolutePath)
+                            InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, I18n.s(R.string.ui_select_exe_desktop_lnk), driveCPath = driveC?.absolutePath)
                         )
                     }
                     MenuOptionCard(
@@ -1418,7 +1418,7 @@ fun ShortcutsScreen(
                             ?.let { File(it.rootDir, ".wine/drive_c") }
                             ?.takeIf { it.isDirectory }
                         importFolderLauncher.launch(
-                            InAppFilePicker.buildDirIntent(context, "Select your games folder", driveCPath = driveC?.absolutePath)
+                            InAppFilePicker.buildDirIntent(context, I18n.s(R.string.ui_select_your_games_folder), driveCPath = driveC?.absolutePath)
                         )
                     }
                 }
@@ -1472,7 +1472,7 @@ fun ShortcutsScreen(
                     val skipped = folderScanResults.size - importable.size
                     if (skipped > 0) {
                         Text(
-                            "$skipped already added",
+                            I18n.s(R.string.ui_skipped_already_added),
                             color = OnSurfaceVariant,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -1517,13 +1517,13 @@ fun ShortcutsScreen(
                             val message = if (summary.failed == 0) {
                                 "Added ${summary.added} game${if (summary.added == 1) "" else "s"}"
                             } else {
-                                "Added ${summary.added}, ${summary.failed} failed — ${summary.failures.firstOrNull().orEmpty()}"
+                                I18n.s(R.string.ui_added_summary_added_summary_failed_failed_summary_fai)
                             }
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                         }
                     },
                 ) {
-                    Text(if (folderImportRunning) "Adding…" else "Add $selectedCount")
+                    Text(if (folderImportRunning) "Adding…" else I18n.s(R.string.ui_add_selectedcount))
                 }
             },
             dismissButton = {
@@ -1656,7 +1656,7 @@ fun ShortcutsScreen(
 
                     if (steamSearchResults.isNotEmpty()) {
                         Text(
-                            "Tap a result to set the name + cover art:",
+                            I18n.s(R.string.ui_tap_a_result_to_set_the_name_cover_art),
                             color = OnSurfaceVariant,
                             fontSize = 12.sp,
                         )
@@ -1692,13 +1692,13 @@ fun ShortcutsScreen(
                                 SteamResultThumbnail(hit.appId)
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(hit.name, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                    Text("App ID: ${hit.appId}", fontSize = 11.sp, color = OnSurfaceVariant)
+                                    Text(I18n.s(R.string.ui_app_id_hit_appid), fontSize = 11.sp, color = OnSurfaceVariant)
                                 }
                             }
                         }
                     } else if (!steamSearching) {
                         Text(
-                            "Not the right game? Edit the name and tap Search Steam to pick the correct one.",
+                            I18n.s(R.string.ui_not_the_right_game_edit_the_name_and_tap_search_steam),
                             color = OnSurfaceVariant,
                             fontSize = 12.sp,
                         )
@@ -1738,13 +1738,13 @@ fun ShortcutsScreen(
                         vm.renameImportedShortcut(renameDialogContainerIndex, renameDialogName, name)
                     }
                     showRenameDialog = false
-                    Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_shortcut_imported), Toast.LENGTH_SHORT).show()
                 }) { Text(I18n.s(R.string.save)) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     showRenameDialog = false
-                    Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_shortcut_imported), Toast.LENGTH_SHORT).show()
                 }) { Text(I18n.s(R.string.ui_skip)) }
             },
         )
@@ -1755,14 +1755,14 @@ fun ShortcutsScreen(
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemove = null },
             title = { Text(I18n.s(R.string.ui_remove_shortcut)) },
-            text = { Text("Remove \"${s.name}\"?") },
+            text = { Text(I18n.s(R.string.ui_remove_s_name)) },
             confirmButton = {
                 TextButton(onClick = {
                     val ok = vm.remove(s, context)
                     confirmRemove = null
                     Toast.makeText(
                         context,
-                        if (ok) "Shortcut removed." else "Failed to remove shortcut.",
+                        if (ok) I18n.s(R.string.ui_shortcut_removed) else I18n.s(R.string.ui_failed_to_remove_shortcut),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }) { Text(I18n.s(R.string.remove)) }
@@ -1780,9 +1780,9 @@ fun ShortcutsScreen(
             title = { Text("Remove ${targets.size} shortcut${if (targets.size == 1) "" else "s"}?") },
             text = {
                 Text(
-                    if (targets.size == 1) "Remove \"${targets.first().name}\"?"
+                    if (targets.size == 1) I18n.s(R.string.ui_remove_targets_first_name)
                     else "Remove these ${targets.size} shortcuts? The games themselves are left " +
-                         "on disk — only the shortcuts go."
+                         I18n.s(R.string.ui_on_disk_only_the_shortcuts_go)
                 )
             },
             confirmButton = {
@@ -1795,7 +1795,7 @@ fun ShortcutsScreen(
                     Toast.makeText(
                         context,
                         if (ok == targets.size) "Removed $ok shortcut${if (ok == 1) "" else "s"}."
-                        else "Removed $ok of ${targets.size} — the rest could not be deleted.",
+                        else I18n.s(R.string.ui_removed_ok_of_targets_size_the_rest_could_not_be_dele),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }) { Text(I18n.s(R.string.remove), color = DangerRed) }
@@ -1829,7 +1829,7 @@ fun ShortcutsScreen(
                                     cloneTarget = null
                                     Toast.makeText(
                                         context,
-                                        if (ok) "Shortcut cloned." else "Failed to clone shortcut.",
+                                        if (ok) I18n.s(R.string.ui_shortcut_cloned) else I18n.s(R.string.ui_failed_to_clone_shortcut),
                                         Toast.LENGTH_SHORT,
                                     ).show()
                                     if (ok) vm.refresh()
@@ -1868,11 +1868,11 @@ fun ShortcutsScreen(
             onDismiss = { restoreZipUri = null },
             onSelected = { chosen ->
                 restoreZipUri = null
-                Toast.makeText(context, "Restoring saves into \"${chosen.name}\"…", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_restoring_saves_into_chosen_name), Toast.LENGTH_SHORT).show()
                 GameSaveBackup.restore(context, uri, chosen) { r ->
                     Toast.makeText(
                         context,
-                        if (r.ok) "Restored ${r.filesWritten} files to \"${chosen.name}\""
+                        if (r.ok) I18n.s(R.string.ui_restored_r_fileswritten_files_to_chosen_name)
                         else "Restore failed: ${r.error ?: "unknown error"}",
                         Toast.LENGTH_LONG,
                     ).show()
@@ -1887,7 +1887,7 @@ fun ShortcutsScreen(
         if (applied > 0) {
             Toast.makeText(
                 context,
-                "Emulator account switched to the backup's — relaunch the game",
+                I18n.s(R.string.ui_emulator_account_switched_to_the_backup_s_relau_2),
                 Toast.LENGTH_LONG,
             ).show()
         }
@@ -1962,16 +1962,16 @@ fun ShortcutsScreen(
         } else {
             OutlinedAlertDialog(
                 onDismissRequest = { logsShortcut = null },
-                title = { Text("No logs for ${s.name}") },
+                title = { Text(I18n.s(R.string.ui_no_logs_for_s_name)) },
                 text = {
                     Text(
                         if (perGameOff)
                             "Per-game log folders are turned off, so everything is written to one " +
                             "shared folder and logs can't be traced back to a single game. Turn them " +
-                            "on in Settings › Logs, then play ${s.name} once."
+                            I18n.s(R.string.ui_on_in_settings_logs_then_play_s_name_once)
                         else
                             "Nothing has been captured for ${s.name} yet. Logs are written while a " +
-                            "game runs — play it once, then check back here."
+                            I18n.s(R.string.ui_game_runs_play_it_once_then_check_back_here)
                     )
                 },
                 confirmButton = { TextButton(onClick = { logsShortcut = null }) { Text("OK") } },
@@ -1997,8 +1997,8 @@ fun ShortcutsScreen(
             title = { Text(I18n.s(R.string.ui_properties)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(if (didReset) "Number of times played: 0" else "Number of times played: $playCount")
-                    Text(if (didReset) "Playtime: 0d 00h 00m 00s" else "Playtime: $formatted")
+                    Text(if (didReset) I18n.s(R.string.ui_number_of_times_played_0) else I18n.s(R.string.ui_number_of_times_played_playcount))
+                    Text(if (didReset) I18n.s(R.string.ui_playtime_0d_00h_00m_00s) else I18n.s(R.string.ui_playtime_formatted))
                     Button(
                         onClick = {
                             playtimePrefs.edit().remove(playtimeKey).remove(playCountKey).apply()
@@ -2017,7 +2017,7 @@ fun ShortcutsScreen(
     if (sc != null) {
         OutlinedAlertDialog(
             onDismissRequest = { scrapeTarget = null },
-            title = { Text("Scrape cover for \"${sc.name}\"") },
+            title = { Text(I18n.s(R.string.ui_scrape_cover_for_sc_name)) },
             text = {
                 if (scrapeLoading) {
                     Text(I18n.s(R.string.ui_searching_steamgriddb), color = OnSurfaceVariant)
@@ -2145,7 +2145,7 @@ fun ShortcutsScreen(
                     if (uploadingConfig) {
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.width(6.dp))
-                        Text(if (uploadStarted) "Uploading…" else "Preparing…")
+                        Text(if (uploadStarted) I18n.s(R.string.ui_uploading) else I18n.s(R.string.ui_preparing))
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
@@ -2176,7 +2176,7 @@ fun ShortcutsScreen(
                 )
                 if (communitySearch.trim().length >= 2) {
                     if (communitySearchResults.isEmpty()) {
-                        Text("No games match \"$communitySearch\".", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_no_games_match_communitysearch), color = OnSurfaceVariant)
                     } else {
                         Column(
                             modifier = Modifier
@@ -2216,8 +2216,8 @@ fun ShortcutsScreen(
                     }
                 } else {
                 when {
-                    communityLoading -> Text("Matching \"${s.name}\"…", color = OnSurfaceVariant)
-                    game == null -> Text("No auto-match for \"${s.name}\" — search above to pick one.", color = OnSurfaceVariant)
+                    communityLoading -> Text(I18n.s(R.string.ui_matching_s_name), color = OnSurfaceVariant)
+                    game == null -> Text(I18n.s(R.string.ui_no_auto_match_for_s_name_search_above_to_pick_one), color = OnSurfaceVariant)
                     else -> {
                         Column(
                             modifier = Modifier
@@ -2278,12 +2278,12 @@ fun ShortcutsScreen(
                             val devWord = if (game.devices.size == 1) "device" else "devices"
                             val cfgWord = if (game.configCount == 1) "config" else "configs"
                             Text(
-                                text = "${game.configCount} $cfgWord · ${game.devices.size} $devWord",
+                                text = I18n.s(R.string.ui_game_configcount_cfgword_game_devices_size_devword),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = OnSurfaceVariant,
                             )
                             Text(
-                                text = "Your device: ${deviceHeaderLabel(DeviceIdentity.deviceModel(), result?.userHardwareLabel)}",
+                                text = I18n.s(R.string.ui_your_device_deviceheaderlabel_deviceidentity_devicemo),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = OnSurfaceVariant,
                             )
@@ -2335,7 +2335,7 @@ fun ShortcutsScreen(
                                 result?.rankedDevices.isNullOrEmpty() -> Text(I18n.s(R.string.ui_no_device_configs_listed), color = OnSurfaceVariant)
                                 else -> {
                                     Text(
-                                        "Showing device configs (vote counts unavailable offline).",
+                                        I18n.s(R.string.ui_showing_device_configs_vote_counts_unavailable_offlin),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = OnSurfaceVariant,
                                     )
@@ -2352,7 +2352,7 @@ fun ShortcutsScreen(
                                         CommunityCard(onClick = { configAction = CommunityPick.Device(game, d) to s }) {
                                             Column(modifier = Modifier.weight(1f)) {
                                                 Text(
-                                                    text = d.model.ifBlank { "Unknown device" },
+                                                    text = d.model.ifBlank { I18n.s(R.string.ui_unknown_device) },
                                                     style = MaterialTheme.typography.bodyMedium,
                                                     color = if (isMatch) MaterialTheme.colorScheme.primary else OnSurface,
                                                     maxLines = 1,
@@ -2398,7 +2398,7 @@ fun ShortcutsScreen(
                 title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
                 text = {
                     Text(
-                        "You already shared a config for \"${s.name}\". Replace it?",
+                        I18n.s(R.string.ui_you_already_shared_a_config_for_s_name_replace_it),
                         color = OnSurface,
                     )
                 },
@@ -2453,7 +2453,7 @@ fun ShortcutsScreen(
                         ) {
                             // Summary header — aggregate across every uploaded config.
                             Text(
-                                "Shared ${rows.size} config${if (rows.size == 1) "" else "s"} · ↓ ${rows.sumOf { it.downloads }} · ★ ${rows.sumOf { it.votes }}",
+                                "Shared ${rows.size} config${if (rows.size == 1) "" else "sI18n.s(R.string.ui_rows_sumof_it_downloads_rows_sumof_it_votes),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = Color(0xFFE0701C),
                             )
@@ -2490,7 +2490,7 @@ fun ShortcutsScreen(
                                                     if (!row.stillOnline) " · offline" else ""
                                                 Text(sub, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                             }
-                                            Text("★${row.votes}  ↓${row.downloads}", style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
+                                            Text(I18n.s(R.string.ui_row_votes_row_downloads), style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
                                             Icon(
                                                 if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                                                 contentDescription = if (expanded) "Collapse" else "Expand",
@@ -2499,7 +2499,7 @@ fun ShortcutsScreen(
                                         if (expanded) {
                                             Spacer(Modifier.height(8.dp))
                                             Text(
-                                                if (row.stillOnline) "● Online" else "● Removed",
+                                                if (row.stillOnline) I18n.s(R.string.ui_online) else I18n.s(R.string.ui_removed),
                                                 style = MaterialTheme.typography.labelSmall,
                                                 color = if (row.stillOnline) Color(0xFF3BA55D) else MaterialTheme.colorScheme.error,
                                             )
@@ -2507,7 +2507,7 @@ fun ShortcutsScreen(
                                             OutlinedTextField(
                                                 value = uploadDescText,
                                                 onValueChange = { if (it.length <= 500) uploadDescText = it },
-                                                label = { Text(if (uploadDescLoading) "Loading description…" else "Description") },
+                                                label = { Text(if (uploadDescLoading) I18n.s(R.string.ui_loading_description) else "Description") },
                                                 enabled = !uploadDescLoading,
                                                 modifier = Modifier.fillMaxWidth(),
                                             )
@@ -2531,7 +2531,7 @@ fun ShortcutsScreen(
                                                         vm.editMyUploadDescription(row, text) { ok ->
                                                             Toast.makeText(
                                                                 context,
-                                                                if (ok) "Description updated." else "Couldn't reach the server.",
+                                                                if (ok) I18n.s(R.string.ui_description_updated) else I18n.s(R.string.ui_couldn_t_reach_the_server_2),
                                                                 Toast.LENGTH_SHORT,
                                                             ).show()
                                                         }
@@ -2556,7 +2556,7 @@ fun ShortcutsScreen(
         OutlinedAlertDialog(
             onDismissRequest = { deleteUploadRow = null },
             title = { Text(I18n.s(R.string.ui_delete_shared_config)) },
-            text = { Text("Delete your shared config for \"${row.record.game}\"?", color = OnSurface) },
+            text = { Text(I18n.s(R.string.ui_delete_your_shared_config_for_row_record_game), color = OnSurface) },
             confirmButton = {
                 TextButton(onClick = {
                     deleteUploadRow = null
@@ -2565,7 +2565,7 @@ fun ShortcutsScreen(
                             myUploads = myUploads?.filterNot { it.record.sha == row.record.sha }
                             Toast.makeText(context, "Deleted your shared config.", Toast.LENGTH_SHORT).show()
                         } else {
-                            Toast.makeText(context, "Couldn't reach the server.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_couldn_t_reach_the_server_2), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }) { Text("Delete") }
@@ -2677,8 +2677,8 @@ fun ShortcutsScreen(
     if (!communityDialogsGated) applyPicker?.let { pick ->
         val shortcutList = vm.currentShortcuts()
         val fromLabel = when (pick) {
-            is CommunityPick.File -> pick.entry.device.ifBlank { pick.entry.soc.ifBlank { "a device" } }
-            is CommunityPick.Device -> pick.device.model.ifBlank { "a device" }
+            is CommunityPick.File -> pick.entry.device.ifBlank { pick.entry.soc.ifBlank { I18n.s(R.string.ui_a_device) } }
+            is CommunityPick.Device -> pick.device.model.ifBlank { I18n.s(R.string.ui_a_device) }
         }
         OutlinedAlertDialog(
             onDismissRequest = { applyPicker = null },
@@ -2691,7 +2691,7 @@ fun ShortcutsScreen(
                         modifier = Modifier.fillMaxWidth().heightIn(max = 380.dp).verticalScroll(rememberScrollState()),
                     ) {
                         Text(
-                            "Config from $fromLabel for \"${pick.game.name}\".",
+                            I18n.s(R.string.ui_config_from_fromlabel_for_pick_game_name),
                             style = MaterialTheme.typography.bodySmall,
                             color = OnSurfaceVariant,
                             modifier = Modifier.padding(bottom = 6.dp),
@@ -2719,7 +2719,7 @@ fun ShortcutsScreen(
         OutlinedAlertDialog(
             onDismissRequest = { applyMismatch = null },
             title = { Text(I18n.s(R.string.ui_different_game)) },
-            text = { Text("This config is for \"${pick.game.name}\" — apply to \"${sc.name}\" anyway?") },
+            text = { Text(I18n.s(R.string.ui_this_config_is_for_pick_game_name_apply_to_sc_name_an)) },
             confirmButton = {
                 TextButton(onClick = {
                     applyMismatch = null
@@ -2738,7 +2738,7 @@ fun ShortcutsScreen(
             title = { Text(I18n.s(R.string.ui_share_this_game_config)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("A config file for \"${res.game}\" is ready.", color = OnSurface)
+                    Text(I18n.s(R.string.ui_a_config_file_for_res_game_is_ready), color = OnSurface)
                     Text(res.fileName, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                 }
             },
@@ -2833,7 +2833,7 @@ fun ShortcutsScreen(
         }
         OutlinedAlertDialog(
             onDismissRequest = { applyResult = null },
-            title = { Text(if (res.ok) "Config applied" else "Couldn't apply") },
+            title = { Text(if (res.ok) I18n.s(R.string.ui_config_applied) else I18n.s(R.string.ui_couldn_t_apply)) },
             text = {
                 Column(
                     modifier = Modifier.fillMaxWidth().heightIn(max = 420.dp).verticalScroll(rememberScrollState()),
@@ -2843,7 +2843,7 @@ fun ShortcutsScreen(
                     if (res.changed.isNotEmpty()) {
                         Divider(color = DividerColor)
                         Text(I18n.s(R.string.ui_changed), style = MaterialTheme.typography.labelLarge, color = OnSurface)
-                        res.changed.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
+                        res.changed.forEach { Text(I18n.s(R.string.ui_it), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                     // Missing components — smart inline installer: exact-match confirm, or a shortlist of
                     // the closest catalog versions, with "Browse all versions" as the full-menu fallback.
@@ -2886,9 +2886,9 @@ fun ShortcutsScreen(
                                                     resolvedMissing.add("driver:" + md.wanted)
                                                 }
                                                 vm.refresh()
-                                                Toast.makeText(context, "Driver installed and applied to \"${target.name}\".", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, I18n.s(R.string.ui_driver_installed_and_applied_to_target_name), Toast.LENGTH_SHORT).show()
                                             } else {
-                                                Toast.makeText(context, "Installed, but couldn't apply the driver.", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(context, I18n.s(R.string.ui_installed_but_couldn_t_apply_the_driver), Toast.LENGTH_LONG).show()
                                             }
                                         }
                                     }
@@ -2899,7 +2899,7 @@ fun ShortcutsScreen(
                     if (res.advisories.isNotEmpty()) {
                         Divider(color = DividerColor)
                         Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelLarge, color = OnSurface)
-                        res.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
+                        res.advisories.forEach { Text(I18n.s(R.string.ui_it), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                 }
             },
@@ -2936,7 +2936,7 @@ fun ShortcutsScreen(
                                 resolvedMissing.add("driver:" + md.wanted)
                             }
                             vm.refresh()
-                            Toast.makeText(context, "Driver applied to \"${target.name}\".", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_driver_applied_to_target_name), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -2975,7 +2975,7 @@ fun ShortcutsScreen(
             text = {
                 Text(
                     "\"${s.name}\" ships EA Javelin anti-cheat, which needs a Windows kernel driver. " +
-                        "It cannot run under Wine on any Android emulator, so WinHub won't start the EA setup for it."
+                        I18n.s(R.string.ui_it_cannot_run_under_wine_on_any_android_emulator_so_w)
                 )
             },
             confirmButton = { TextButton(onClick = { eaUnsupportedFor = null }) { Text("OK") } },
@@ -2991,7 +2991,7 @@ fun ShortcutsScreen(
                         "container yet. WinHub will open one setup session (wine-mono first if the container " +
                         "lacks it) and run EA's installer — follow its prompts when it shows them. The session closes " +
                         "by itself when the installer finishes and the app comes back. Then launch the game again and " +
-                        "sign in to EA when it asks. This happens once per container."
+                        I18n.s(R.string.ui_sign_in_to_ea_when_it_asks_this_happens_once_per_cont)
                 )
             },
             confirmButton = {
@@ -3025,15 +3025,15 @@ fun ShortcutsScreen(
                             android.util.Log.w("ShortcutsScreen", "EA setup: cannot start for '${s.name}' — exe=$exe appId=$appId path='${s.path}' container=${s.container.id}")
                             Toast.makeText(
                                 context,
-                                if (exe == null) "Couldn't locate the game's install folder (${s.path})"
-                                else "Couldn't work out this game's Steam app id — re-add it from the Steam library",
+                                if (exe == null) I18n.s(R.string.ui_couldn_t_locate_the_game_s_install_folder_s_path)
+                                else I18n.s(R.string.ui_couldn_t_work_out_this_game_s_steam_app_id_re_add_it),
                                 Toast.LENGTH_LONG,
                             ).show()
                         }
                         eaSetupBusy = false
                         eaSetupFor = null
                     }
-                }) { Text(if (eaSetupBusy) "Starting…" else "Set up") }
+                }) { Text(if (eaSetupBusy) I18n.s(R.string.ui_starting_2) else I18n.s(R.string.ui_set_up)) }
             },
             dismissButton = { TextButton(enabled = !eaSetupBusy, onClick = { eaSetupFor = null }) { Text("Cancel") } },
         )
@@ -3114,7 +3114,7 @@ fun ShortcutsScreen(
         OutlinedAlertDialog(
             onDismissRequest = { /* keep up until the download finishes */ },
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            title = { Text("Downloading $componentDownloadLabel", color = MaterialTheme.colorScheme.onSurface) },
+            title = { Text(I18n.s(R.string.ui_downloading_componentdownloadlabel), color = MaterialTheme.colorScheme.onSurface) },
             text = {
                 Column {
                     LinearProgressIndicator(
@@ -3125,7 +3125,7 @@ fun ShortcutsScreen(
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "${(componentDownloadProgress.coerceIn(0f, 1f) * 100).toInt()}% — the game launches when this finishes.",
+                        I18n.s(R.string.ui_componentdownloadprogress_coercein_0f_1f_100_toint_th),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3163,7 +3163,7 @@ fun ShortcutsScreen(
                         // Prefix a live "N%" once real download progress starts; the indeterminate
                         // "checking/setup" phase (fraction < 0) shows just the phase label.
                         if (steamUpdateProgress >= 0f)
-                            "${(steamUpdateProgress.coerceIn(0f, 1f) * 100).toInt()}% — $steamUpdateLabel"
+                            I18n.s(R.string.ui_steamupdateprogress_coercein_0f_1f_100_toint_steamupd)
                         else steamUpdateLabel,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -3187,7 +3187,7 @@ fun ShortcutsScreen(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             title = {
                 Text(
-                    if (available) "Update available" else "Check online?",
+                    if (available) "Update available" else I18n.s(R.string.ui_check_online),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             },
@@ -3195,11 +3195,11 @@ fun ShortcutsScreen(
                 Text(
                     if (available) {
                         if (status.installedBuild > 0L && status.liveBuild > 0L)
-                            "${s.name}: build ${status.installedBuild} → ${status.liveBuild}. Update now?"
-                        else "A newer build of ${s.name} is available. Update now?"
+                            I18n.s(R.string.ui_s_name_build_status_installedbuild_status_livebuild_u)
+                        else I18n.s(R.string.ui_a_newer_build_of_s_name_is_available_update_now)
                     } else {
                         "Couldn't check ${s.name} from cached data. Do an online check now " +
-                            "(and update if it's behind)?"
+                            I18n.s(R.string.ui_and_update_if_it_s_behind)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -3207,7 +3207,7 @@ fun ShortcutsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateOffer = null; runSteamMaintenance(s, verify = false) }) {
-                    Text(if (available) "Update now" else "Check online", color = MaterialTheme.colorScheme.primary)
+                    Text(if (available) "Update now" else I18n.s(R.string.ui_check_online_2), color = MaterialTheme.colorScheme.primary)
                 }
             },
             dismissButton = {
@@ -3260,22 +3260,22 @@ internal fun CommunityStoreBadge(isSteam: Boolean) {
 // Map a worker account error code to a human message. Reset reads "invalid" as a bad recovery key; every
 // other flow reads it as bad credentials; unknown / "network" collapses to a connection message.
 private fun accountErrorMessage(code: String, isReset: Boolean): String = when (code) {
-    "invalid_username" -> "Usernames are 3–20 characters: letters, numbers, _ or -."
-    "username_reserved" -> "That username is reserved — pick another."
-    "weak_password" -> "Password must be at least 6 characters."
-    "username_taken" -> "That username is taken."
-    "rate_limited" -> "Too many attempts — please wait a bit and try again."
-    "invalid" -> if (isReset) "That recovery key isn't right for this username." else "Wrong username or password."
-    else -> "Couldn't reach the server. Check your connection and try again."
+    "invalid_username" -> I18n.s(R.string.ui_usernames_are_3_20_characters_letters_numbers_or)
+    "username_reserved" -> I18n.s(R.string.ui_that_username_is_reserved_pick_another)
+    "weak_password" -> I18n.s(R.string.ui_password_must_be_at_least_6_characters)
+    "username_taken" -> I18n.s(R.string.ui_that_username_is_taken)
+    "rate_limited" -> I18n.s(R.string.ui_too_many_attempts_please_wait_a_bit_and_try_again)
+    "invalid" -> if (isReset) I18n.s(R.string.ui_that_recovery_key_isn_t_right_for_this_username) else I18n.s(R.string.ui_wrong_username_or_password)
+    else -> I18n.s(R.string.ui_couldn_t_reach_the_server_check_your_connection_and_t)
 }
 
 /** Phase 3 (optional accounts) — the worker's typed avatar-upload rejections, in plain language. */
 private fun avatarErrorMessage(code: String): String = when (code) {
-    "bad_type" -> "That image type isn't supported — pick a JPEG, PNG, or WebP."
-    "bad_size" -> "That image is too large — pick a smaller one."
-    "bad_image" -> "That file isn't a valid image."
-    "not_signed_in" -> "Sign in first to set a profile picture."
-    else -> "Couldn't reach the server. Check your connection and try again."
+    "bad_type" -> I18n.s(R.string.ui_that_image_type_isn_t_supported_pick_a_jpeg_png_or_we)
+    "bad_size" -> I18n.s(R.string.ui_that_image_is_too_large_pick_a_smaller_one)
+    "bad_image" -> I18n.s(R.string.ui_that_file_isn_t_a_valid_image)
+    "not_signed_in" -> I18n.s(R.string.ui_sign_in_first_to_set_a_profile_picture)
+    else -> I18n.s(R.string.ui_couldn_t_reach_the_server_check_your_connection_and_t)
 }
 
 /**
@@ -3352,7 +3352,7 @@ internal fun MyAccountDialog(
             val bytes = withContext(Dispatchers.IO) { compressAvatar(context, uri) }
             if (bytes == null) {
                 avatarBusy = false
-                Toast.makeText(context, "Couldn't read that image.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_read_that_image), Toast.LENGTH_SHORT).show()
                 return@launch
             }
             val result = withContext(Dispatchers.IO) {
@@ -3365,7 +3365,7 @@ internal fun MyAccountDialog(
                     // displayAvatarUrl, and refresh() propagates it to the ☰ / drawer / browser 👤 too.
                     account = AccountManager.current(context)
                     AccountUiBus.refresh(context)
-                    Toast.makeText(context, "Profile picture updated.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_profile_picture_updated), Toast.LENGTH_SHORT).show()
                 }
                 is AccountManager.AccountResult.Error ->
                     Toast.makeText(context, avatarErrorMessage(result.code), Toast.LENGTH_LONG).show()
@@ -3401,7 +3401,7 @@ internal fun MyAccountDialog(
                     justCreated != null -> {
                         val data = justCreated!!
                         Text(
-                            "Account \"${data.username}\" created.",
+                            I18n.s(R.string.ui_account_data_username_created),
                             style = MaterialTheme.typography.bodyMedium,
                             color = OnSurface,
                         )
@@ -3420,14 +3420,14 @@ internal fun MyAccountDialog(
                             )
                         }
                         Text(
-                            "⚠️ Save this — it's the only way to reset your password if you forget it.",
+                            I18n.s(R.string.ui_save_this_it_s_the_only_way_to_reset_your_password_if),
                             style = MaterialTheme.typography.bodySmall,
                             color = OnSurfaceVariant,
                         )
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedButton(onClick = {
                                 clipboard.setText(AnnotatedString(data.recoveryKey))
-                                Toast.makeText(context, "Recovery key copied.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18n.s(R.string.ui_recovery_key_copied), Toast.LENGTH_SHORT).show()
                             }) {
                                 Icon(Icons.Filled.ContentCopy, null, modifier = Modifier.size(18.dp))
                                 Spacer(Modifier.width(6.dp))
@@ -3480,7 +3480,7 @@ internal fun MyAccountDialog(
                         OutlinedButton(
                             onClick = { revealRecovery = !revealRecovery },
                             modifier = Modifier.fillMaxWidth(),
-                        ) { Text(if (revealRecovery) "Hide my recovery key" else "Show my recovery key") }
+                        ) { Text(if (revealRecovery) I18n.s(R.string.ui_hide_my_recovery_key) else I18n.s(R.string.ui_show_my_recovery_key)) }
                         if (revealRecovery) {
                             val key = AccountManager.recoveryKey(context)
                             if (key != null) {
@@ -3497,13 +3497,13 @@ internal fun MyAccountDialog(
                                         Text(key, style = MaterialTheme.typography.titleMedium, color = OnSurface, modifier = Modifier.weight(1f))
                                         IconButton(onClick = {
                                             clipboard.setText(AnnotatedString(key))
-                                            Toast.makeText(context, "Recovery key copied.", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, I18n.s(R.string.ui_recovery_key_copied), Toast.LENGTH_SHORT).show()
                                         }) { Icon(Icons.Filled.ContentCopy, contentDescription = I18n.s(R.string.ui_copy_recovery_key), modifier = Modifier.size(18.dp)) }
                                     }
                                 }
                             } else {
                                 Text(
-                                    "No recovery key is saved on this device.",
+                                    I18n.s(R.string.ui_no_recovery_key_is_saved_on_this_device),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = OnSurfaceVariant,
                                 )
@@ -3530,7 +3530,7 @@ internal fun MyAccountDialog(
                     showReset -> {
                         Text(I18n.s(R.string.ui_reset_password), style = MaterialTheme.typography.labelLarge, color = orange)
                         Text(
-                            "Enter your username, your recovery key, and a new password.",
+                            I18n.s(R.string.ui_enter_your_username_your_recovery_key_and_a_new_passw),
                             style = MaterialTheme.typography.bodySmall,
                             color = OnSurfaceVariant,
                         )
@@ -3575,7 +3575,7 @@ internal fun MyAccountDialog(
                                                 AccountUiBus.refresh(context)
                                                 showReset = false
                                                 password = ""; newPassword = ""; recoveryKeyInput = ""
-                                                Toast.makeText(context, "Password reset — you're signed in.", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, I18n.s(R.string.ui_password_reset_you_re_signed_in), Toast.LENGTH_SHORT).show()
                                             }
                                             is AccountManager.AccountResult.Error ->
                                                 error = accountErrorMessage(result.code, isReset = true)
@@ -3611,7 +3611,7 @@ internal fun MyAccountDialog(
                         )
                         if (tab == 0) {
                             Text(
-                                "This is just to recover your shared configs — use a throwaway password, not one you use elsewhere.",
+                                I18n.s(R.string.ui_this_is_just_to_recover_your_shared_configs_use_a_thr),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = OnSurfaceVariant,
                             )
@@ -3645,7 +3645,7 @@ internal fun MyAccountDialog(
                                                 // Phase 4: the login already folded the account's uploads into
                                                 // the local store — refresh My uploads if that sheet is open.
                                                 onLoggedIn()
-                                                Toast.makeText(context, "Signed in.", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, I18n.s(R.string.ui_signed_in_3), Toast.LENGTH_SHORT).show()
                                             }
                                             is AccountManager.AccountResult.Error ->
                                                 error = accountErrorMessage(result.code, isReset = false)
@@ -3655,7 +3655,7 @@ internal fun MyAccountDialog(
                             },
                         ) {
                             if (busy) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                            else Text(if (tab == 0) "Create account" else "Log in")
+                            else Text(if (tab == 0) I18n.s(R.string.ui_create_account) else "Log in")
                         }
                         TextButton(
                             onClick = { showReset = true; error = null },
@@ -3715,7 +3715,7 @@ private fun SmartComponentInstallRow(
             }
             if (uri == null) {
                 busy = false
-                Toast.makeText(context, "Download failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_download_failed_2), Toast.LENGTH_SHORT).show()
                 return@launch
             }
             installing = true
@@ -3724,7 +3724,7 @@ private fun SmartComponentInstallRow(
             installContent(context, cm, uri, onProgress = { f, _ -> progress = maxOf(progress, f) }) { ok ->
                 busy = false
                 if (ok) onProfileInstalled()
-                else Toast.makeText(context, "Install failed.", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(context, I18n.s(R.string.ui_install_failed), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -3736,7 +3736,7 @@ private fun SmartComponentInstallRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                "• ${mc.label}",
+                I18n.s(R.string.ui_mc_label),
                 style = MaterialTheme.typography.bodySmall,
                 color = OnSurfaceVariant,
                 modifier = Modifier.weight(1f),
@@ -3764,7 +3764,7 @@ private fun SmartComponentInstallRow(
         if (busy) {
             val frac = progress.coerceIn(0f, 1f)
             Text(
-                if (installing) "Installing…" else "Downloading ${(frac * 100).toInt()}%…",
+                if (installing) I18n.s(R.string.ui_installing) else I18n.s(R.string.ui_downloading_frac_100_toint),
                 style = MaterialTheme.typography.labelSmall,
                 color = OnSurfaceVariant,
                 modifier = Modifier.padding(start = 10.dp, top = 2.dp),
@@ -3784,7 +3784,7 @@ private fun SmartComponentInstallRow(
             ) {
                 shortlist.closest.forEach { p ->
                     Text(
-                        "Install ${p.verName}",
+                        I18n.s(R.string.ui_install_p_vername),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
@@ -3794,7 +3794,7 @@ private fun SmartComponentInstallRow(
                     )
                 }
                 Text(
-                    "Browse all versions…",
+                    I18n.s(R.string.ui_browse_all_versions),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
@@ -3810,8 +3810,8 @@ private fun SmartComponentInstallRow(
     confirmProfile?.let { p ->
         OutlinedAlertDialog(
             onDismissRequest = { confirmProfile = null },
-            title = { Text("Install ${p.verName}?") },
-            text = { Text("Download and install ${mc.type} ${p.verName}, then apply it to this shortcut?") },
+            title = { Text(I18n.s(R.string.ui_install_p_vername_2)) },
+            text = { Text(I18n.s(R.string.ui_download_and_install_mc_type_p_vername_then_apply_it)) },
             confirmButton = { TextButton(onClick = { install(p) }) { Text("Install") } },
             dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text("Cancel") } },
         )
@@ -3888,7 +3888,7 @@ private fun SmartDriverInstallRow(
                     file.delete()
                     busy = false
                     if (driverId.isNotEmpty()) onApplied(driverId)
-                    else Toast.makeText(context, "Install failed — invalid driver package", Toast.LENGTH_LONG).show()
+                    else Toast.makeText(context, I18n.s(R.string.ui_install_failed_invalid_driver_package), Toast.LENGTH_LONG).show()
                 },
                 onFailure = { t ->
                     busy = false
@@ -3905,7 +3905,7 @@ private fun SmartDriverInstallRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                "• $label",
+                I18n.s(R.string.ui_label),
                 style = MaterialTheme.typography.bodySmall,
                 color = OnSurfaceVariant,
                 modifier = Modifier.weight(1f),
@@ -3926,7 +3926,7 @@ private fun SmartDriverInstallRow(
         if (busy) {
             val frac = (progress / 100f).coerceIn(0f, 1f)
             Text(
-                if (installing) "Installing…" else "Downloading $progress%…",
+                if (installing) I18n.s(R.string.ui_installing) else I18n.s(R.string.ui_downloading_progress),
                 style = MaterialTheme.typography.labelSmall,
                 color = OnSurfaceVariant,
                 modifier = Modifier.padding(start = 10.dp, top = 2.dp),
@@ -3948,7 +3948,7 @@ private fun SmartDriverInstallRow(
             ) {
                 sl.exactMatches.forEach { e ->
                     Text(
-                        "Install ${e.source} · ${e.displayName}",
+                        I18n.s(R.string.ui_install_e_source_e_displayname),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
@@ -3959,7 +3959,7 @@ private fun SmartDriverInstallRow(
                 }
                 sl.closest.forEach { e ->
                     Text(
-                        "Install ${e.source} · ${e.displayName}",
+                        I18n.s(R.string.ui_install_e_source_e_displayname),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
@@ -3969,7 +3969,7 @@ private fun SmartDriverInstallRow(
                     )
                 }
                 Text(
-                    "Browse all drivers…",
+                    I18n.s(R.string.ui_browse_all_drivers),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
@@ -3985,8 +3985,8 @@ private fun SmartDriverInstallRow(
     confirmEntry?.let { e ->
         OutlinedAlertDialog(
             onDismissRequest = { confirmEntry = null },
-            title = { Text("Quick install ${e.displayName}?") },
-            text = { Text("Download and install this Turnip driver from ${e.source}, then apply it to this shortcut?") },
+            title = { Text(I18n.s(R.string.ui_quick_install_e_displayname)) },
+            text = { Text(I18n.s(R.string.ui_download_and_install_this_turnip_driver_from_e_source)) },
             confirmButton = { TextButton(onClick = { install(e) }) { Text("Install") } },
             dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text("Cancel") } },
         )
@@ -4189,7 +4189,7 @@ internal fun CommunityCatalogBrowser(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        "Your device: ${deviceHeaderLabel(catalog?.deviceModel, catalog?.hardwareLabel)}",
+                        I18n.s(R.string.ui_your_device_deviceheaderlabel_catalog_devicemodel_cat),
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
@@ -4260,7 +4260,7 @@ internal fun CommunityCatalogBrowser(
             fun GameList(modifier: Modifier) {
                 if (visible.isEmpty()) {
                     Text(
-                        "No games match your filters.",
+                        I18n.s(R.string.ui_no_games_match_your_filters),
                         color = OnSurfaceVariant,
                         modifier = Modifier.padding(24.dp),
                     )
@@ -4313,13 +4313,13 @@ internal fun CommunityCatalogBrowser(
                                         catalog = fresh
                                         Toast.makeText(
                                             context,
-                                            "Community index refreshed (${fresh.games.size} games)",
+                                            I18n.s(R.string.ui_community_index_refreshed_fresh_games_size_games),
                                             Toast.LENGTH_SHORT,
                                         ).show()
                                     } else {
                                         Toast.makeText(
                                             context,
-                                            "Couldn't refresh the community index.",
+                                            I18n.s(R.string.ui_couldn_t_refresh_the_community_index),
                                             Toast.LENGTH_SHORT,
                                         ).show()
                                     }
@@ -4371,7 +4371,7 @@ internal fun CommunityCatalogBrowser(
                             onPicks = { drilledPicks = it },
                         )
                         games.isEmpty() -> Text(
-                            "No community configs available yet (offline, or the index hasn't been fetched).",
+                            I18n.s(R.string.ui_no_community_configs_available_yet_offline_or_the_ind),
                             color = OnSurfaceVariant,
                             modifier = Modifier.align(Alignment.Center).padding(24.dp),
                             textAlign = TextAlign.Center,
@@ -4506,8 +4506,8 @@ internal fun CommunityConfigEntryCard(entry: WorkerConfigEntry, isMatch: Boolean
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             if (entry.appSource == "bannerlator") BannerlatorSourceBadge()
-            Text("★ ${entry.votes}", style = MaterialTheme.typography.labelMedium, color = OnSurface)
-            Text("↓ ${entry.downloads}", style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
+            Text(I18n.s(R.string.ui_entry_votes), style = MaterialTheme.typography.labelMedium, color = OnSurface)
+            Text(I18n.s(R.string.ui_entry_downloads), style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
         }
     }
 }
@@ -4527,7 +4527,7 @@ private fun CommunityGameRow(game: CanonicalGame, onClick: () -> Unit) {
             val cfgWord = if (game.configCount == 1) "config" else "configs"
             val devWord = if (game.devices.size == 1) "device" else "devices"
             Text(
-                text = "${game.configCount} $cfgWord · ${game.devices.size} $devWord",
+                text = I18n.s(R.string.ui_game_configcount_cfgword_game_devices_size_devword),
                 style = MaterialTheme.typography.labelSmall,
                 color = OnSurfaceVariant,
             )
@@ -4545,9 +4545,9 @@ internal fun deviceHeaderLabel(model: String?, hardware: String?): String {
     val m = model?.takeIf { it.isNotBlank() }
     val hw = hardware?.takeIf { it.isNotBlank() }
     return when {
-        m != null && hw != null -> "$m · $hw"
-        m != null -> "$m · Unresolved"
-        hw != null -> "Unresolved · $hw"
+        m != null && hw != null -> I18n.s(R.string.ui_m_hw)
+        m != null -> I18n.s(R.string.ui_m_unresolved)
+        hw != null -> I18n.s(R.string.ui_unresolved_hw)
         else -> "Unresolved"
     }
 }
@@ -4608,7 +4608,7 @@ private fun CommunityDevicePanel(
             val cfgWord = if (game.configCount == 1) "config" else "configs"
             val devWord = if (game.devices.size == 1) "device" else "devices"
             Text(
-                "${game.configCount} $cfgWord · ${game.devices.size} $devWord",
+                I18n.s(R.string.ui_game_configcount_cfgword_game_devices_size_devword),
                 style = MaterialTheme.typography.bodySmall,
                 color = OnSurfaceVariant,
                 modifier = Modifier.weight(1f),
@@ -4616,7 +4616,7 @@ private fun CommunityDevicePanel(
             CommunityStoreBadge(isSteam = game.isSteam)
         }
         Text(
-            "Your device: ${deviceHeaderLabel(deviceModel, hardwareLabel)}",
+            I18n.s(R.string.ui_your_device_deviceheaderlabel_devicemodel_hardwarelab),
             style = MaterialTheme.typography.bodySmall,
             color = OnSurfaceVariant,
         )
@@ -4664,7 +4664,7 @@ private fun CommunityDevicePanel(
                 else -> {
                     // Offline fallback: per-device index rows (best-matching file resolved at apply).
                     Text(
-                        "Showing device configs (vote counts unavailable offline).",
+                        I18n.s(R.string.ui_showing_device_configs_vote_counts_unavailable_offlin),
                         style = MaterialTheme.typography.labelSmall,
                         color = OnSurfaceVariant,
                     )
@@ -4678,7 +4678,7 @@ private fun CommunityDevicePanel(
                             CommunityCard(onClick = { onPick(CommunityPick.Device(game, d)) }) {
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = d.model.ifBlank { "Unknown device" },
+                                        text = d.model.ifBlank { I18n.s(R.string.ui_unknown_device) },
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = if (isMatch) MaterialTheme.colorScheme.primary else OnSurface,
                                         maxLines = 1,
@@ -4734,7 +4734,7 @@ private fun CommunityDevicePanel(
 // and BannerHub Lite are distinct apps writing "bannerhub" / "bannerhub_lite"; ours would be "bannerlator".
 internal fun communitySourceLabel(appSource: String?): String = when (appSource?.lowercase()?.trim()) {
     "bannerhub" -> "BannerHub"
-    "bannerhub_lite" -> "BannerHub Lite"
+    "bannerhub_lite" -> I18n.s(R.string.ui_bannerhub_lite)
     "bannerlator" -> "WinHub"
     null, "" -> "BannerHub"
     else -> appSource.split('_', ' ').filter { it.isNotBlank() }
@@ -4748,23 +4748,23 @@ internal fun configSummaryLines(config: ShortcutConfig): List<Pair<String, Strin
     val out = ArrayList<Pair<String, String>>()
     config.dxwrapperConfig["version"]?.takeIf { it.isNotBlank() }?.let { out.add("DXVK" to it) }
     config.dxwrapperConfig["vkd3dVersion"]?.takeIf { it.isNotBlank() }?.let { out.add("VKD3D" to it) }
-    config.dxwrapperConfig["async"]?.let { out.add("DXVK async" to if (it == "1") "on" else "off") }
-    config.dxwrapperConfig["anisotropy"]?.takeIf { it.isNotBlank() && it != "0" }?.let { out.add("Anisotropic filtering" to "${it}x") }
-    config.dxwrapperConfig["lodBias"]?.takeIf { it.isNotBlank() && it != "0" }?.let { out.add("Texture sharpness" to it) }
-    config.graphicsDriverConfig["version"]?.takeIf { it.isNotBlank() }?.let { out.add("Turnip driver" to it) }
-    config.scalars["dxwrapper"]?.takeIf { it.isNotBlank() }?.let { out.add("DX wrapper" to it) }
+    config.dxwrapperConfig["async"]?.let { out.add(I18n.s(R.string.ui_dxvk_async) to if (it == "1") "on" else "off") }
+    config.dxwrapperConfig["anisotropy"]?.takeIf { it.isNotBlank() && it != "0" }?.let { out.add(I18n.s(R.string.ui_anisotropic_filtering_2) to "${it}x") }
+    config.dxwrapperConfig["lodBias"]?.takeIf { it.isNotBlank() && it != "0" }?.let { out.add(I18n.s(R.string.ui_texture_sharpness_2) to it) }
+    config.graphicsDriverConfig["version"]?.takeIf { it.isNotBlank() }?.let { out.add(I18n.s(R.string.ui_turnip_driver) to it) }
+    config.scalars["dxwrapper"]?.takeIf { it.isNotBlank() }?.let { out.add(I18n.s(R.string.ui_dx_wrapper) to it) }
     config.scalars["emulator"]?.let { emu ->
         val fex = config.scalars["fexcoreVersion"]
-        out.add("x86 translator" to if (emu == "fexcore" && !fex.isNullOrBlank()) "FEXCore $fex" else emu)
+        out.add(I18n.s(R.string.ui_x86_translator) to if (emu == "fexcore" && !fex.isNullOrBlank()) I18n.s(R.string.ui_fexcore_fex) else emu)
     }
-    config.scalars["audioDriver"]?.takeIf { it.isNotBlank() }?.let { out.add("Audio driver" to it) }
+    config.scalars["audioDriver"]?.takeIf { it.isNotBlank() }?.let { out.add(I18n.s(R.string.ui_audio_driver) to it) }
     config.scalars["inputType"]?.let { out.add("XInput" to if (((it.toIntOrNull() ?: 0) and WinHandler.FLAG_INPUT_TYPE_XINPUT.toInt()) != 0) "on" else "off") }
     config.scalars["screenSize"]?.takeIf { it.isNotBlank() }?.let { out.add("Resolution" to it) }
     config.scalars["renderer"]?.takeIf { it.isNotBlank() }?.let { out.add("Renderer" to it) }
-    config.scalars["execArgs"]?.takeIf { it.isNotBlank() }?.let { out.add("Launch args" to it) }
+    config.scalars["execArgs"]?.takeIf { it.isNotBlank() }?.let { out.add(I18n.s(R.string.ui_launch_args) to it) }
     // Scrub credentials/identity out before displaying — a config uploaded before the export-side scrub
     // existed can still carry a WN_STEAM_TOKEN/USERNAME/STEAMID, and the details view must not show it.
-    config.scalars["envVars"]?.let { EnvVarScrub.scrub(it) }?.takeIf { it.isNotBlank() }?.let { out.add("Env vars" to it) }
+    config.scalars["envVars"]?.let { EnvVarScrub.scrub(it) }?.takeIf { it.isNotBlank() }?.let { out.add(I18n.s(R.string.ui_env_vars_2) to it) }
     return out
 }
 
@@ -4804,8 +4804,8 @@ private fun CommunityConfigDetailDialog(
     fun Social(d: CommunityConfigDetail) {
         Divider(color = DividerColor)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Text("★ $votes", style = MaterialTheme.typography.bodyMedium, color = OnSurface)
-            Text("↓ ${d.downloads}", style = MaterialTheme.typography.bodyMedium, color = OnSurfaceVariant)
+            Text(I18n.s(R.string.ui_votes), style = MaterialTheme.typography.bodyMedium, color = OnSurface)
+            Text(I18n.s(R.string.ui_d_downloads), style = MaterialTheme.typography.bodyMedium, color = OnSurfaceVariant)
         }
         if (d.description.isNotBlank()) {
             Text(d.description, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
@@ -4823,7 +4823,7 @@ private fun CommunityConfigDetailDialog(
                             voted = true
                             votePrefs.edit().putBoolean(sha, true).apply()
                         } else {
-                            Toast.makeText(context, "Couldn't record your vote.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_couldn_t_record_your_vote_2), Toast.LENGTH_SHORT).show()
                         }
                     }
                 },
@@ -4833,7 +4833,7 @@ private fun CommunityConfigDetailDialog(
                 if (voting) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                 } else {
-                    Text(if (voted) "Voted ✓" else "Upvote")
+                    Text(if (voted) I18n.s(R.string.ui_voted) else "Upvote")
                 }
             }
         }
@@ -4875,12 +4875,12 @@ private fun CommunityConfigDetailDialog(
                                 comments = refreshed
                                 commentText = ""
                             } else {
-                                Toast.makeText(context, "Couldn't post your comment.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_post_your_comment), Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
                     enabled = commentText.isNotBlank() && !commenting,
-                ) { Text(if (commenting) "Sending…" else "Send") }
+                ) { Text(if (commenting) I18n.s(R.string.ui_sending) else "Send") }
             }
         }
     }
@@ -4905,14 +4905,14 @@ private fun CommunityConfigDetailDialog(
                 Text(hw, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
             }
             meta?.uploadedDate?.let {
-                Text("Uploaded $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
+                Text(I18n.s(R.string.ui_uploaded_it), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 CommunityStoreBadge(isSteam = game.isSteam)
                 if (meta != null) {
                     // Name the actual source project (meta.app_source distinguishes BannerHub vs
                     // BannerHub Lite vs a future Bannerlator upload), with the version appended if present.
-                    val label = "From ${communitySourceLabel(meta.appSource)}" + (meta.bhVersion?.let { " $it" } ?: "")
+                    val label = I18n.s(R.string.ui_from_communitysourcelabel_meta_appsource) + (meta.bhVersion?.let { " $it" } ?: "")
                     Surface(
                         color = SurfaceVariantColor,
                         shape = MaterialTheme.shapes.small,
@@ -4930,7 +4930,7 @@ private fun CommunityConfigDetailDialog(
             // meta.uploader → "by <username>" plus its avatar when set; an anonymous config has none →
             // "Anonymous user" with the person-icon placeholder (AccountAvatar's null fallback).
             if (meta != null) {
-                val uploaderLabel = meta.uploaderName?.let { "by $it" } ?: "Anonymous user"
+                val uploaderLabel = meta.uploaderName?.let { I18n.s(R.string.ui_by_it) } ?: I18n.s(R.string.ui_anonymous_user)
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     AccountAvatar(
                         avatarUrl = meta.uploaderAvatarUrl,
@@ -4959,7 +4959,7 @@ private fun CommunityConfigDetailDialog(
                 }
                 failed || detail == null -> {
                     Text(
-                        "Couldn't fetch this config (offline, or no matching file in the repo).",
+                        I18n.s(R.string.ui_couldn_t_fetch_this_config_offline_or_no_matching_fil),
                         color = OnSurfaceVariant,
                     )
                 }
@@ -4971,7 +4971,7 @@ private fun CommunityConfigDetailDialog(
                     } else {
                         lines.forEach { (label, value) ->
                             Text(
-                                "• $label: $value",
+                                I18n.s(R.string.ui_label_value),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = OnSurfaceVariant,
                             )
@@ -4979,7 +4979,7 @@ private fun CommunityConfigDetailDialog(
                     }
                     detail.config.advisories["wineVersion"]?.let { proton ->
                         Text(
-                            "• Proton (container-only): $proton",
+                            I18n.s(R.string.ui_proton_container_only_proton),
                             style = MaterialTheme.typography.bodySmall,
                             color = OnSurfaceVariant,
                         )
@@ -4988,26 +4988,26 @@ private fun CommunityConfigDetailDialog(
                     // Pre-apply diff — only when a target shortcut was in context.
                     detail.preview?.let { pre ->
                         Divider(color = DividerColor)
-                        Text("Changes to \"${game.name}\"", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_changes_to_game_name), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         Text(pre.message, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                         if (pre.changed.isNotEmpty()) {
                             Text(I18n.s(R.string.ui_would_change), style = MaterialTheme.typography.labelMedium, color = OnSurface)
-                            pre.changed.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
+                            pre.changed.forEach { Text(I18n.s(R.string.ui_it), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                         if (pre.missingComponents.isNotEmpty()) {
                             Text(I18n.s(R.string.ui_needs_a_component), style = MaterialTheme.typography.labelMedium, color = OnSurface)
-                            pre.missingComponents.forEach { Text("• ${it.label}", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
+                            pre.missingComponents.forEach { Text(I18n.s(R.string.ui_it_label), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                         if (pre.missingDrivers.isNotEmpty()) {
                             Text(I18n.s(R.string.ui_needs_a_gpu_driver), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.missingDrivers.forEach {
                                 val had = it.current?.let { c -> " (you have $c)" } ?: ""
-                                Text("• Turnip ${it.wanted}$had", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
+                                Text(I18n.s(R.string.ui_turnip_it_wanted_had), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                             }
                         }
                         if (pre.advisories.isNotEmpty()) {
                             Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelMedium, color = OnSurface)
-                            pre.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
+                            pre.advisories.forEach { Text(I18n.s(R.string.ui_it), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                     }
 
@@ -5708,7 +5708,7 @@ internal fun GameDetailsSheet(
             val results = SteamStoreSearch.searchByName(query)
             withContext(Dispatchers.Main) {
                 searchResults = results
-                if (results.isEmpty()) searchError = "No results found for \"$query\""
+                if (results.isEmpty()) searchError = I18n.s(R.string.ui_no_results_found_for_query)
                 searching = false
             }
         }
@@ -5893,7 +5893,7 @@ internal fun GameDetailsSheet(
                                 SteamResultThumbnail(hit.appId)
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(hit.name, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                    Text("App ID: ${hit.appId}", fontSize = 11.sp, color = OnSurfaceVariant)
+                                    Text(I18n.s(R.string.ui_app_id_hit_appid), fontSize = 11.sp, color = OnSurfaceVariant)
                                 }
                             }
                         }
@@ -6149,7 +6149,7 @@ private fun PerfEditRow(dp: SettingsDpad, id: String, label: String, checked: Bo
         Spacer(Modifier.width(8.dp))
         Text(label, fontSize = 13.sp, modifier = Modifier.weight(1f))
         if (overridden) Text(
-            "● Reset", fontSize = 11.sp, color = MaterialTheme.colorScheme.primary,
+            I18n.s(R.string.ui_reset), fontSize = 11.sp, color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable { onChange(global) }.padding(start = 8.dp)
         ) else Text(
             "default", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -6889,7 +6889,7 @@ internal fun ShortcutSettingsDialogScreen(
             val fexPresets = FEXCorePresetManager.getPresets(context)
             val profiles = InputControlsManager(context).getProfiles(true)
 
-            val midi = mutableListOf("-- ${context.getString(R.string.disabled)} --", MidiManager.DEFAULT_SF2_FILE)
+            val midi = mutableListOf(I18n.s(R.string.ui_context_getstring_r_string_disabled), MidiManager.DEFAULT_SF2_FILE)
             val sfDir = File(context.filesDir, MidiManager.SF_DIR)
             if (sfDir.exists()) sfDir.listFiles()?.forEach { midi.add(it.name) }
 
@@ -7255,7 +7255,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 // Named for what it does on each path. On a Linux entry the distinction
                                 // matters: this is the Android driver that DISPLAYS the session, while a
                                 // separate Linux driver inside the runtime is what draws it.
-                                label = if (isLinuxEntry) "Display driver (Android side)" else "Compositor driver",
+                                label = if (isLinuxEntry) I18n.s(R.string.ui_display_driver_android_side) else I18n.s(R.string.ui_compositor_driver),
                                 options = compositorChoices,
                                 selected = compositorDriverLabel(compositorVersion, compositorChoices, compositorChoicesLoaded),
                                 onSelect = { graphicsDriverConfig = withGraphicsDriverVersion(graphicsDriverConfig, it) },
@@ -7287,7 +7287,7 @@ internal fun ShortcutSettingsDialogScreen(
                     if (!effectiveWaylandShortcut && !isLinuxEntry) {
                         DpButton(dp, "gfxConfig", onActivate = { showGfxConfig = true }, modifier = Modifier.fillMaxWidth()) {
                             OutlinedButton(onClick = { showGfxConfig = true }, modifier = Modifier.fillMaxWidth()) {
-                                Text("${stringResource(R.string.graphics_driver)}: ${GraphicsDriverConfigDialog.getVersion(graphicsDriverConfig)}")
+                                Text(I18n.s(R.string.ui_stringresource_r_string_graphics_driver_graphicsdrive))
                             }
                         }
                     }
@@ -7348,7 +7348,7 @@ internal fun ShortcutSettingsDialogScreen(
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         // Display only while greyed on Wayland: the compositor is always Vulkan; the
                         // stored X11 choice is kept and returns with the X11 backend.
-                        val rendererShown = if (effectiveWaylandShortcut) "Vulkan (Wayland compositor)" else selectedRenderer
+                        val rendererShown = if (effectiveWaylandShortcut) I18n.s(R.string.ui_vulkan_wayland_compositor) else selectedRenderer
                         DpDrop(
                             dp, "renderer",
                             label = stringResource(R.string.renderer),
@@ -7449,7 +7449,7 @@ internal fun ShortcutSettingsDialogScreen(
                         val renderScaleValues = listOf("1.0", "1.25", "1.5", "2.0")
                         val renderScaleLabels = listOf("Off", "1.25x", "1.5x", "2x")
                         val rsIdx = renderScaleValues.indexOf(renderScale).coerceAtLeast(0)
-                        val rsShown = if (effectiveWaylandShortcut) "Not used on Wayland" else renderScaleLabels[rsIdx]
+                        val rsShown = if (effectiveWaylandShortcut) I18n.s(R.string.ui_not_used_on_wayland) else renderScaleLabels[rsIdx]
                         DpDrop(
                             dp, "renderScale",
                             label = I18n.s(R.string.ui_render_scale_supersampling),
@@ -7460,7 +7460,7 @@ internal fun ShortcutSettingsDialogScreen(
                         )
                         if (effectiveWaylandShortcut) {
                             Text(
-                                "Not used on Wayland: the compositor has no supersampling downscale. The stored value returns on X11.",
+                                I18n.s(R.string.ui_not_used_on_wayland_the_compositor_has_no_supersampli),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -7524,7 +7524,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     autoOn = containerFps, locked = false, onPick = pickFps)
                             }
                             com.winhub.hernandez.ui.components.OpenGLCardRow(
-                                com.winhub.hernandez.ui.components.OPENGL_VSYNC_ICON, "Vsync off", null,
+                                com.winhub.hernandez.ui.components.OPENGL_VSYNC_ICON, I18n.s(R.string.ui_vsync_off), null,
                                 focused = dp.isFocused("glVsyncOff"),
                                 modifier = Modifier.dpadBringIntoView(dp, "glVsyncOff"),
                             ) {
@@ -7639,7 +7639,7 @@ internal fun ShortcutSettingsDialogScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Force Denuvo ownership token", fontSize = 14.sp)
                                 Text(
-                                    "Force the ownership token for Denuvo games we don't auto-detect",
+                                    I18n.s(R.string.ui_force_the_ownership_token_for_denuvo_games_we_don_t_a),
                                     fontSize = 11.sp,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -7658,7 +7658,7 @@ internal fun ShortcutSettingsDialogScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Launch offline", fontSize = 14.sp)
                                 Text(
-                                    "Skip Epic sign-in for this game (no online features)",
+                                    I18n.s(R.string.ui_skip_epic_sign_in_for_this_game_no_online_features),
                                     fontSize = 11.sp,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -7681,7 +7681,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     Text(I18n.s(R.string.ui_epic_friends_overlay), fontSize = 14.sp)
                                     Text(
                                         "Experimental — in-game Epic overlay on Shift+F3 (a draggable pill " +
-                                                "can summon it too). Needs the container to allow full services.",
+                                                I18n.s(R.string.ui_can_summon_it_too_needs_the_container_to_allow_full_s),
                                         fontSize = 11.sp,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -7815,23 +7815,23 @@ internal fun ShortcutSettingsDialogScreen(
                                 "Wayland (experimental): renders through the embedded compositor " +
                                     "(winewayland). Needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
                                     ". DX wrapper (DXVK/VKD3D) settings apply as on X11. Renderer " +
-                                    "options below don't apply.",
+                                    I18n.s(R.string.ui_options_below_don_t_apply),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         } else if (!containerWaylandCapable) {
                             Text(
                                 "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
-                                    ". The selected layer does not include winewayland and its Wayland Turnip.",
+                                    I18n.s(R.string.ui_the_selected_layer_does_not_include_winewayland_and_i),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             if (waylandStoredUnusable || shortcut.container.isWaylandBackend) {
                                 Text(
                                     if (waylandStoredUnusable)
-                                        "This game was set to Force Wayland, but the container's Proton layer is not Wayland-capable: it runs on X11 and will be saved as Force X11."
+                                        I18n.s(R.string.ui_this_game_was_set_to_force_wayland_but_the_container)
                                     else
-                                        "The container is set to Wayland, but its Proton layer is not Wayland-capable: the game runs on X11.",
+                                        I18n.s(R.string.ui_the_container_is_set_to_wayland_but_its_proton_layer),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.error
                                 )
@@ -7889,11 +7889,11 @@ internal fun ShortcutSettingsDialogScreen(
                         Text(
                             when {
                                 blobPicked -> "Qualcomm's own driver cannot put Wayland frames on screen, so the screen uses a " +
-                                    "bundled Turnip automatically" + (if (waylandAdapterChoice) " and the game renders on the bundled " +
-                                    "Wayland Turnip (the adapter needs a Turnip driver here)." else ".")
-                                adapterActive -> "Used for the game (through the Wayland adapter) and for putting its frames on screen."
+                                    I18n.s(R.string.ui_bundled_turnip_automatically) + (if (waylandAdapterChoice) " and the game renders on the bundled " +
+                                    I18n.s(R.string.ui_wayland_turnip_the_adapter_needs_a_turnip_driver_here) else ".")
+                                adapterActive -> I18n.s(R.string.ui_used_for_the_game_through_the_wayland_adapter_and_for)
                                 else -> "Used by the Wayland compositor to put frames on screen; the game renders on the " +
-                                    "Wayland game driver under Advanced."
+                                    I18n.s(R.string.ui_wayland_game_driver_under_advanced)
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -7921,7 +7921,7 @@ internal fun ShortcutSettingsDialogScreen(
                             val selectedLabel = labels[values.indexOf(overrideShown).coerceAtLeast(0)]
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Text(
-                                    "Wayland game driver: $selectedLabel",
+                                    I18n.s(R.string.ui_wayland_game_driver_selectedlabel),
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -7966,7 +7966,7 @@ internal fun ShortcutSettingsDialogScreen(
                             }
                             val spoof = com.winhub.hernandez.core.GpuSpoof.gpuNameOf(graphicsDriverConfig)
                             if (com.winhub.hernandez.core.GpuSpoof.isSpoofing(spoof)) Text(
-                                "GPU name spoof: $spoof (the gear)",
+                                I18n.s(R.string.ui_gpu_name_spoof_spoof_the_gear),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -8029,7 +8029,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 stringResource(R.string.use_container_default),
                                 stringResource(R.string.in_game_refresh_locked),
                                 stringResource(R.string.max_game_refresh_rate_unlimited)) +
-                                ratesAbove60.map { "$it Hz" }
+                                ratesAbove60.map { I18n.s(R.string.ui_it_hz) }
                             val currentValue = when {
                                 unlockGameRefreshRate.isEmpty() && maxGameRefreshRate.isEmpty() -> ""
                                 unlockGameRefreshRate == "0" -> "locked"
@@ -8137,7 +8137,7 @@ internal fun ShortcutSettingsDialogScreen(
                     // dialog instead of focusing the text field.
                     Box(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                         OutlinedTextField(
-                            value = if (perfOverrideCount > 0) "$perfOverrideCount overridden" else "Global defaults",
+                            value = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else "Global defaults",
                             onValueChange = {},
                             readOnly = true,
                             label = { Text(I18n.s(R.string.performance)) },
@@ -8201,7 +8201,7 @@ internal fun ShortcutSettingsDialogScreen(
                     }
                     if (!directAudioSupported && directAudioEntry != null) {
                         Text(
-                            "DirectAudio requires Proton ${com.winhub.hernandez.core.DirectAudioSupport.SUPPORTED_LABEL}",
+                            I18n.s(R.string.ui_directaudio_requires_proton_com_winhub_hernandez_core),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 11.5.sp,
                             modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -8210,7 +8210,7 @@ internal fun ShortcutSettingsDialogScreen(
                     if (showScAudioSettings) {
                         AudioSettingsDialog(
                             initial = audioConfigFromEnv(envVarsStr, StringUtils.parseIdentifier(selectedAudioDriver)),
-                            scopeLabel = "this game",
+                            scopeLabel = I18n.s(R.string.ui_this_game_2),
                             latencyLive = true,
                             driverLabel = when (StringUtils.parseIdentifier(selectedAudioDriver)) {
                                 "alsa" -> "ALSA"; "pulseaudio" -> "PulseAudio"; "directaudio" -> "DirectAudio"
@@ -8241,7 +8241,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 envVarsStr = com.winhub.hernandez.core.DirectAudioSupport.withMicEnabled(envVarsStr, true)
                             } else {
                                 envVarsStr = com.winhub.hernandez.core.DirectAudioSupport.withMicEnabled(envVarsStr, false)
-                                Toast.makeText(micCtx, "Microphone permission denied — mic stays off.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(micCtx, I18n.s(R.string.ui_microphone_permission_denied_mic_stays_off), Toast.LENGTH_SHORT).show()
                             }
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -8269,7 +8269,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 )
                                 Text(
                                     if (micDriverActive) "Let games use the mic (DirectAudio captures input)"
-                                    else "Available on the DirectAudio driver",
+                                    else I18n.s(R.string.ui_available_on_the_directaudio_driver),
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     fontSize = 11.5.sp
                                 )
@@ -8343,8 +8343,8 @@ internal fun ShortcutSettingsDialogScreen(
                             helper = when {
                                 syncOverrideUnavailable && syncCaps != null ->
                                     com.winhub.hernandez.ui.components.syncSwitchedBackNotice(syncOverride!!, syncLayer, syncCaps!!)
-                                syncOverriding -> "$syncEffective for this game only (container: $containerSyncEffective)."
-                                else -> "Following the container: $containerSyncEffective."
+                                syncOverriding -> I18n.s(R.string.ui_synceffective_for_this_game_only_container_containers)
+                                else -> I18n.s(R.string.ui_following_the_container_containersynceffective)
                             },
                             onPick = pickSync,
                             focused = dp.isFocused("syncMode"),
@@ -8459,7 +8459,7 @@ internal fun ShortcutSettingsDialogScreen(
                         }
                         if (controllerSlotOverridesJson.isEmpty()) {
                             Text(
-                                "Inheriting the container's Player Slots. Pin a controller below to set a per-game override.",
+                                I18n.s(R.string.ui_inheriting_the_container_s_player_slots_pin_a_control),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -8576,7 +8576,7 @@ internal fun ShortcutSettingsDialogScreen(
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    "${stringResource(R.string.gyro_sensitivity_label)}: ${"%.1f".format(gyroSensitivity)}",
+                                    I18n.s(R.string.ui_stringresource_r_string_gyro_sensitivity_label)%.1f".format(gyroSensitivity)}",
                                     style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -8618,25 +8618,25 @@ internal fun ShortcutSettingsDialogScreen(
                             }
                         }
                         if (stickOverride) {
-                            Text("${stringResource(R.string.stick_left_deadzone)}: ${stickDeadzoneText(stickLeftDeadzone)}", style = MaterialTheme.typography.bodyMedium)
+                            Text(I18n.s(R.string.ui_stringresource_r_string_stick_left_deadzone_sti_2), style = MaterialTheme.typography.bodyMedium)
                             DpSlider(
                                 dp, "stickLDeadzone", value = stickLeftDeadzone, onValueChange = { stickLeftDeadzone = it },
                                 valueRange = STICK_DEADZONE_RANGE, step = 0.01f, steps = STICK_DEADZONE_STEPS,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Text("${stringResource(R.string.stick_left_sensitivity)}: ${stickSensitivityText(stickLeftSensitivity)}", style = MaterialTheme.typography.bodyMedium)
+                            Text(I18n.s(R.string.ui_stringresource_r_string_stick_left_sensitivity__2), style = MaterialTheme.typography.bodyMedium)
                             DpSlider(
                                 dp, "stickLSensitivity", value = stickLeftSensitivity, onValueChange = { stickLeftSensitivity = it },
                                 valueRange = STICK_SENSITIVITY_RANGE, step = 0.05f, steps = STICK_SENSITIVITY_STEPS,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Text("${stringResource(R.string.stick_right_deadzone)}: ${stickDeadzoneText(stickRightDeadzone)}", style = MaterialTheme.typography.bodyMedium)
+                            Text(I18n.s(R.string.ui_stringresource_r_string_stick_right_deadzone_st_2), style = MaterialTheme.typography.bodyMedium)
                             DpSlider(
                                 dp, "stickRDeadzone", value = stickRightDeadzone, onValueChange = { stickRightDeadzone = it },
                                 valueRange = STICK_DEADZONE_RANGE, step = 0.01f, steps = STICK_DEADZONE_STEPS,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Text("${stringResource(R.string.stick_right_sensitivity)}: ${stickSensitivityText(stickRightSensitivity)}", style = MaterialTheme.typography.bodyMedium)
+                            Text(I18n.s(R.string.ui_stringresource_r_string_stick_right_sensitivity_2), style = MaterialTheme.typography.bodyMedium)
                             DpSlider(
                                 dp, "stickRSensitivity", value = stickRightSensitivity, onValueChange = { stickRightSensitivity = it },
                                 valueRange = STICK_SENSITIVITY_RANGE, step = 0.05f, steps = STICK_SENSITIVITY_STEPS,
@@ -9440,7 +9440,7 @@ private fun DeckShortcutSettingsBody(
             val fexPresets = FEXCorePresetManager.getPresets(context)
             val profiles = InputControlsManager(context).getProfiles(true)
 
-            val midi = mutableListOf("-- ${context.getString(R.string.disabled)} --", MidiManager.DEFAULT_SF2_FILE)
+            val midi = mutableListOf(I18n.s(R.string.ui_context_getstring_r_string_disabled), MidiManager.DEFAULT_SF2_FILE)
             val sfDir = File(context.filesDir, MidiManager.SF_DIR)
             if (sfDir.exists()) sfDir.listFiles()?.forEach { midi.add(it.name) }
 
@@ -9714,7 +9714,7 @@ private fun DeckShortcutSettingsBody(
             Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 if (layoutPref == "rail" && xmb) {
                     XmbSettingsRail(
-                        kicker = "Shortcut settings",
+                        kicker = I18n.s(R.string.ui_shortcut_settings),
                         title = shortcut.name,
                         labels = tabTitles,
                         icons = tabTitles.map { shortcutTabIcon(it) },
@@ -9759,11 +9759,11 @@ private fun DeckShortcutSettingsBody(
                                 }
                                 DeckRow(
                                     label = "Launch method",
-                                    hint = if (!launchModeRemembered) "Ask every launch" else when (launchMode) {
-                                        "RealSteam" -> "SteamLite (real Steam client)"
-                                        "Goldberg" -> "Goldberg (offline emulator)"
-                                        "Raw" -> "Raw .exe (no Steam layer)"
-                                        else -> "Ask every launch"
+                                    hint = if (!launchModeRemembered) I18n.s(R.string.ui_ask_every_launch) else when (launchMode) {
+                                        "RealSteam" -> I18n.s(R.string.ui_steamlite_real_steam_client)
+                                        "Goldberg" -> I18n.s(R.string.ui_goldberg_offline_emulator)
+                                        "Raw" -> I18n.s(R.string.ui_raw_exe_no_steam_layer)
+                                        else -> I18n.s(R.string.ui_ask_every_launch)
                                     },
                                     configPanel = true,
                                     onConfigClick = { showLaunchMethod = true },
@@ -9797,7 +9797,7 @@ private fun DeckShortcutSettingsBody(
                                 }
                             }
                             if (isEpicShortcut) {
-                                DeckGroup("Epic Online Services") {
+                                DeckGroup(I18n.s(R.string.ui_epic_online_services)) {
                                     DeckRow("EOS auth", hint = I18n.s(R.string.ui_sign_eos_games_in_with_your_epic_account)) {
                                         DeckToggle(checked = epicEosEnabled, onChange = { epicEosEnabled = it })
                                     }
@@ -9830,10 +9830,10 @@ private fun DeckShortcutSettingsBody(
                                     DeckChoiceRow(
                                         label = I18n.s(R.string.ui_display_backend),
                                         hint = when {
-                                            effectiveWaylandShortcut -> "Wayland (experimental): renders through the embedded compositor"
-                                            waylandStoredUnusable -> "Set to Wayland, but the container's Proton layer is not Wayland-capable: runs on X11"
+                                            effectiveWaylandShortcut -> I18n.s(R.string.ui_wayland_experimental_renders_through_the_embedded_com)
+                                            waylandStoredUnusable -> I18n.s(R.string.ui_set_to_wayland_but_the_container_s_proton_layer_is_no)
                                             !containerWaylandCapable -> "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT
-                                            else -> "Runs on the X11 server"
+                                            else -> I18n.s(R.string.ui_runs_on_the_x11_server)
                                         },
                                         options = dbValues.zip(dbLabels).filter { it.first != Container.DISPLAY_BACKEND_WAYLAND || containerWaylandCapable },
                                         selected = if (waylandStoredUnusable) Container.DISPLAY_BACKEND_X11 else displayBackendOverride,
@@ -9872,7 +9872,7 @@ private fun DeckShortcutSettingsBody(
                                         stringResource(R.string.use_container_default),
                                         stringResource(R.string.in_game_refresh_locked),
                                         stringResource(R.string.max_game_refresh_rate_unlimited),
-                                    ) + ratesAbove60.map { "$it Hz" }
+                                    ) + ratesAbove60.map { I18n.s(R.string.ui_it_hz) }
                                     val currentValue = when {
                                         unlockGameRefreshRate.isEmpty() && maxGameRefreshRate.isEmpty() -> ""
                                         unlockGameRefreshRate == "0" -> "locked"
@@ -9942,7 +9942,7 @@ private fun DeckShortcutSettingsBody(
                                         com.winhub.hernandez.perf.PerfRootApplier.ROOT_KEYS.count { (rootOverrides[it] ?: false) != com.winhub.hernandez.perf.PerformanceSettings.rootDefaultValue(it) }
                                     DeckRow(
                                         label = I18n.s(R.string.performance),
-                                        hint = if (perfOverrideCount > 0) "$perfOverrideCount overridden" else "Global defaults",
+                                        hint = if (perfOverrideCount > 0) I18n.s(R.string.ui_perfoverridecount_overridden) else "Global defaults",
                                     ) {
                                         DeckButton(I18n.s(R.string.configure), primary = false) { showPerfDialog = true }
                                     }
@@ -9952,7 +9952,7 @@ private fun DeckShortcutSettingsBody(
                                 DeckChoiceRow(
                                     label = stringResource(R.string.audio_driver),
                                     hint = if (!directAudioSupported && directAudioEntry != null)
-                                        "DirectAudio requires Proton ${com.winhub.hernandez.core.DirectAudioSupport.SUPPORTED_LABEL}" else null,
+                                        I18n.s(R.string.ui_directaudio_requires_proton_com_winhub_hernandez_core) else null,
                                     options = audioDriverEntries.map { it to it },
                                     selected = selectedAudioDriver,
                                     onPick = { selectedAudioDriver = it },
@@ -9970,12 +9970,12 @@ private fun DeckShortcutSettingsBody(
                                         ActivityResultContracts.RequestPermission()
                                     ) { granted ->
                                         envVarsStr = com.winhub.hernandez.core.DirectAudioSupport.withMicEnabled(envVarsStr, granted)
-                                        if (!granted) Toast.makeText(context, "Microphone permission denied — mic stays off.", Toast.LENGTH_SHORT).show()
+                                        if (!granted) Toast.makeText(context, I18n.s(R.string.ui_microphone_permission_denied_mic_stays_off), Toast.LENGTH_SHORT).show()
                                     }
                                     DeckRow(
                                         label = I18n.s(R.string.ui_microphone),
                                         hint = if (micDriverActive) "Let games use the mic (DirectAudio captures input)"
-                                               else "Available on the DirectAudio driver",
+                                               else I18n.s(R.string.ui_available_on_the_directaudio_driver),
                                     ) {
                                         DeckToggle(checked = micOn && micDriverActive, onChange = { want ->
                                             if (micDriverActive) {
@@ -10021,10 +10021,10 @@ private fun DeckShortcutSettingsBody(
                                         hint = when {
                                             syncOverrideUnavailable && syncCaps != null ->
                                                 com.winhub.hernandez.ui.components.syncSwitchedBackNotice(syncOverride!!, syncLayer, syncCaps!!)
-                                            syncOverriding -> "$syncEffective for this game only (container: $containerSyncEffective)."
-                                            else -> "Following the container: $containerSyncEffective."
+                                            syncOverriding -> I18n.s(R.string.ui_synceffective_for_this_game_only_container_containers)
+                                            else -> I18n.s(R.string.ui_following_the_container_containersynceffective)
                                         },
-                                        options = listOf("" to "Container default ($containerSyncEffective)") +
+                                        options = listOf("" to I18n.s(R.string.ui_container_default_containersynceffective)) +
                                             com.winhub.hernandez.core.SyncMode.ALL
                                                 .filter {
                                                     it != com.winhub.hernandez.core.SyncMode.FSYNC &&
@@ -10045,8 +10045,8 @@ private fun DeckShortcutSettingsBody(
                                     DeckChoiceRow(
                                         label = stringResource(R.string.graphics_driver),
                                         hint = if (compositorDriverUnusable(waylandVersion, waylandCompositorChoices, waylandCompositorChoices.isNotEmpty()))
-                                            "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
-                                        else "Turnip the Wayland compositor (and the adapter) runs on",
+                                            I18n.s(R.string.ui_wayland_needs_a_turnip_driver_here_system_or_a_missin)
+                                        else I18n.s(R.string.ui_turnip_the_wayland_compositor_and_the_adapter_runs_on),
                                         options = waylandCompositorChoices.map { it to it },
                                         selected = compositorDriverLabel(waylandVersion, waylandCompositorChoices, waylandCompositorChoices.isNotEmpty()),
                                         onPick = { graphicsDriverConfig = withGraphicsDriverVersion(graphicsDriverConfig, it) },
@@ -10146,7 +10146,7 @@ private fun DeckShortcutSettingsBody(
                                             .let { it.contains("dxvk") || it.contains("vegas") }
                                         DeckExpandableRow(
                                             label = I18n.s(R.string.ui_dx_wrapper_config),
-                                            hint = if (wrapperIsDxvk) "DXVK / VKD3D tuning" else "WineD3D tuning",
+                                            hint = if (wrapperIsDxvk) I18n.s(R.string.ui_dxvk_vkd3d_tuning) else I18n.s(R.string.ui_wined3d_tuning),
                                             expanded = configSection == "dxWrapper",
                                             onToggle = { configSection = if (configSection == "dxWrapper") null else "dxWrapper" },
                                         ) {
@@ -10254,7 +10254,7 @@ private fun DeckShortcutSettingsBody(
                                     val containerFps = fpsSw.containerOn(shortcut.container.getExtra(fpsSw.extra))
                                     val containerVsync = vsyncSw.containerOn(shortcut.container.getExtra(vsyncSw.extra))
                                     fun glOptions(autoOn: Boolean) = listOf(
-                                        "" to "Auto (" + (if (autoOn) "On" else "Off") + ")", "1" to "On", "0" to "Off")
+                                        "" to I18n.s(R.string.ui_auto) + (if (autoOn) "On" else "Off") + ")", "1" to "On", "0" to "Off")
                                     DeckChoiceRow(
                                         label = com.winhub.hernandez.core.FastOpenGL.TITLE,
                                         hint = com.winhub.hernandez.ui.components.openGLFastNote(fastGlLocked)
@@ -10641,7 +10641,7 @@ private fun DeckShortcutSettingsBody(
     if (showScAudioSettings) {
         DeckAudioSettingsDialog(
             initial = audioConfigFromEnv(envVarsStr, StringUtils.parseIdentifier(selectedAudioDriver)),
-            scopeLabel = "this game",
+            scopeLabel = I18n.s(R.string.ui_this_game_2),
             latencyLive = true,
             driverLabel = when (StringUtils.parseIdentifier(selectedAudioDriver)) {
                 "alsa" -> "ALSA"; "pulseaudio" -> "PulseAudio"; "directaudio" -> "DirectAudio"
@@ -10836,12 +10836,12 @@ private fun DeckAdvancedTab(
         if (!isLinuxEntry) {
             DeckGroup(emulatorLabel) {
                 DeckChoiceRow(
-                    label = "$emulatorLabel Version",
+                    label = I18n.s(R.string.ui_emulatorlabel_version),
                     options = box64Versions.map { it to it },
                     selected = box64Versions.firstOrNull { it == selectedBox64Version } ?: selectedBox64Version,
                     onPick = onBox64VersionChange,
                 )
-                DeckRow("$emulatorLabel Downloads") {
+                DeckRow(I18n.s(R.string.ui_emulatorlabel_downloads)) {
                     DeckButton("Download", primary = false) { onShowBox64DownloadSheet() }
                 }
                 val presetNames = box64Presets.map { it.name }
@@ -10852,8 +10852,8 @@ private fun DeckAdvancedTab(
                     )
                 }
                 DeckChoiceRow(
-                    label = "$emulatorLabel Preset",
-                    hint = if (b64Customised) "Customised for this game" else null,
+                    label = I18n.s(R.string.ui_emulatorlabel_preset),
+                    hint = if (b64Customised) I18n.s(R.string.ui_customised_for_this_game) else null,
                     options = presetNames.indices.toList().map { it.toString() to presetNames[it] },
                     selected = selectedBox64PresetIndex.coerceIn(0, (presetNames.size - 1).coerceAtLeast(0)).toString(),
                     onPick = { onBox64PresetIndexChange(it.toIntOrNull() ?: 0) },
@@ -10894,7 +10894,7 @@ private fun DeckAdvancedTab(
                 }
                 DeckChoiceRow(
                     label = stringResource(R.string.fexcore_preset),
-                    hint = if (fexCustomised) "Customised for this game" else null,
+                    hint = if (fexCustomised) I18n.s(R.string.ui_customised_for_this_game) else null,
                     options = fexNames.indices.toList().map { it.toString() to fexNames[it] },
                     selected = selectedFexPresetIndex.coerceIn(0, (fexNames.size - 1).coerceAtLeast(0)).toString(),
                     onPick = { onFexPresetIndexChange(it.toIntOrNull() ?: 0) },
@@ -11001,11 +11001,11 @@ private fun DeckTvTab(
     val hdrOk = display != null && hdrReason == null
 
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        DeckGroup("External display") {
+        DeckGroup(I18n.s(R.string.ui_external_display)) {
             DeckRow(
-                label = if (display != null) com.winhub.hernandez.display.ExternalDisplay.title(display) else "No external display",
+                label = if (display != null) com.winhub.hernandez.display.ExternalDisplay.title(display) else I18n.s(R.string.ui_no_external_display),
                 hint = if (display != null) com.winhub.hernandez.display.ExternalDisplay.summary(display)
-                       else "Nothing is plugged in. This game is still set to launch on a TV, so the tab stays here.",
+                       else I18n.s(R.string.ui_nothing_is_plugged_in_this_game_is_still_set_to_launc),
             ) {}
             DeckRow(
                 label = I18n.s(R.string.ui_launch_this_game_on_the_tv),
@@ -11027,8 +11027,8 @@ private fun DeckTvTab(
             } else {
                 DeckRow(
                     label = I18n.s(R.string.ui_output_mode),
-                    hint = if (display != null) "This screen advertises one output mode."
-                           else "Plug a screen in to choose an output mode.",
+                    hint = if (display != null) I18n.s(R.string.ui_this_screen_advertises_one_output_mode)
+                           else I18n.s(R.string.ui_plug_a_screen_in_to_choose_an_output_mode),
                 ) {
                     Text(
                         com.winhub.hernandez.display.ExternalDisplay.modeLabel(modes.firstOrNull()).ifEmpty { "—" },
@@ -11043,14 +11043,14 @@ private fun DeckTvTab(
                     val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                         com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
                     if (tvRes.isEmpty()) com.winhub.hernandez.display.ExternalDisplay.HELP_MATCH_RES
-                    else "Render at ${tvRes.replace("x", "×")} instead of this game's ${gameScreenSize.replace("x", "×")}."
+                    else I18n.s(R.string.ui_render_at_tvres_replace)x", "×I18n.s(R.string.ui_instead_of_this_game_s_gamescreensize_replace)x", "×")}."
                 },
             ) {
                 DeckToggle(checked = tvMatchRes, onChange = onTvMatchResChange)
             }
             DeckRow(
                 label = I18n.s(R.string.ui_use_hdr_on_the_tv),
-                hint = hdrReason ?: "Automatic. This screen accepts HDR10, so HDR output switches on for this game.",
+                hint = hdrReason ?: I18n.s(R.string.ui_automatic_this_screen_accepts_hdr10_so_hdr_output_swi),
             ) {
                 Text(
                     if (hdrOk) "On" else "Off",
@@ -11101,12 +11101,12 @@ private fun ScTvTab(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             if (display != null) com.winhub.hernandez.display.ExternalDisplay.title(display)
-                            else "No external display",
+                            else I18n.s(R.string.ui_no_external_display),
                             fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
                         )
                         Text(
                             if (display != null) com.winhub.hernandez.display.ExternalDisplay.summary(display)
-                            else "Nothing is plugged in. This game is still set to launch on a TV, so the tab stays here.",
+                            else I18n.s(R.string.ui_nothing_is_plugged_in_this_game_is_still_set_to_launc),
                             fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -11173,8 +11173,8 @@ private fun ScTvTab(
         } else {
             TvSettingRow(
                 title = I18n.s(R.string.ui_output_mode),
-                subtitle = if (display != null) "This screen advertises one output mode."
-                           else "Plug a screen in to choose an output mode.",
+                subtitle = if (display != null) I18n.s(R.string.ui_this_screen_advertises_one_output_mode)
+                           else I18n.s(R.string.ui_plug_a_screen_in_to_choose_an_output_mode),
             ) {
                 Text(
                     com.winhub.hernandez.display.ExternalDisplay.modeLabel(modes.firstOrNull()).ifEmpty { "—" },
@@ -11191,8 +11191,8 @@ private fun ScTvTab(
                 val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                     com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
                 if (tvRes.isEmpty()) com.winhub.hernandez.display.ExternalDisplay.HELP_MATCH_RES
-                else "Render at ${tvRes.replace("x", "×")} instead of this game's " +
-                     "${gameScreenSize.replace("x", "×")}. More pixels costs frame rate."
+                else I18n.s(R.string.ui_render_at_tvres_replace)x", "×")} instead of this game's " +
+                     "${gameScreenSize.replace("x", "×I18n.s(R.string.ui_more_pixels_costs_frame_rate)
             },
         ) {
             DpSwitch(dp, "tvMatchRes", checked = tvMatchRes, onCheckedChange = onTvMatchResChange)
@@ -11202,7 +11202,7 @@ private fun ScTvTab(
         TvSettingRow(
             title = I18n.s(R.string.ui_use_hdr_on_the_tv),
             subtitle = hdrReason
-                ?: "Automatic. This screen accepts HDR10, so HDR output switches on for this game.",
+                ?: I18n.s(R.string.ui_automatic_this_screen_accepts_hdr10_so_hdr_output_swi),
             dimSubtitle = !hdrOk,
         ) {
             // Deliberately a bare Switch, not a DpSwitch: it is a readout, so it must not be
@@ -11411,7 +11411,7 @@ private fun ScAdvancedTab(
         SectionBox(title = emulatorLabel) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 LabeledDropdown(
-                    label = "$emulatorLabel Version",
+                    label = I18n.s(R.string.ui_emulatorlabel_version),
                     options = box64Versions,
                     selectedOption = box64Versions.firstOrNull { it == selectedBox64Version } ?: selectedBox64Version,
                     onSelect = onBox64VersionChange,
@@ -11424,7 +11424,7 @@ private fun ScAdvancedTab(
                     contentPadding = PaddingValues(0.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Icon(Icons.Default.Settings, contentDescription = "Download $emulatorLabel", tint = MaterialTheme.colorScheme.primary)
+                    Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_download_emulatorlabel), tint = MaterialTheme.colorScheme.primary)
                 }
             }
             Spacer(Modifier.height(8.dp))
@@ -11437,7 +11437,7 @@ private fun ScAdvancedTab(
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 LabeledDropdown(
-                    label = "$emulatorLabel Preset",
+                    label = I18n.s(R.string.ui_emulatorlabel_preset),
                     options = presetNames,
                     selectedOption = presetNames.getOrElse(selectedBox64PresetIndex) { "" },
                     onSelect = { opt -> onBox64PresetIndexChange(presetNames.indexOf(opt).coerceAtLeast(0)) },
@@ -11591,14 +11591,14 @@ private fun ScAdvancedTab(
                 onSelect = onSharpnessEffectChange
             )
             Spacer(Modifier.height(8.dp))
-            Text("Level: $sharpnessLevel%", style = MaterialTheme.typography.bodySmall)
+            Text(I18n.s(R.string.ui_level_sharpnesslevel), style = MaterialTheme.typography.bodySmall)
             Slider(
                 value = sharpnessLevel.toFloat(),
                 onValueChange = { onSharpnessLevelChange(it.toInt()) },
                 valueRange = 0f..100f,
                 steps = 99
             )
-            Text("Denoise: $sharpnessDenoise%", style = MaterialTheme.typography.bodySmall)
+            Text(I18n.s(R.string.ui_denoise_sharpnessdenoise), style = MaterialTheme.typography.bodySmall)
             Slider(
                 value = sharpnessDenoise.toFloat(),
                 onValueChange = { onSharpnessDenoiseChange(it.toInt()) },
@@ -11787,12 +11787,12 @@ internal fun launchOnExternalDisplay(activity: Activity, shortcut: Shortcut, int
         // NEW_TASK — or the ordinary startActivity below runs a singleTask activity with a flag no
         // normal launch sets, which is its own source of odd task/back-stack behaviour.
         // The companion went up first, so take it down: this game is about to open on the handheld.
-        com.winhub.hernandez.display.TvCompanionActivity.dismiss("the TV launch was refused")
+        com.winhub.hernandez.display.TvCompanionActivity.dismiss(I18n.s(R.string.ui_the_tv_launch_was_refused))
         intent.removeExtra(com.winhub.hernandez.display.ExternalDisplay.EXTRA_DISPLAY_ID)
         if (!callerHadNewTask) intent.removeFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         Toast.makeText(
             activity,
-            "Couldn't start this game on ${com.winhub.hernandez.display.ExternalDisplay.title(display)} — opening on the handheld instead.",
+            I18n.s(R.string.ui_couldn_t_start_this_game_on_com_winhub_hernandez_disp),
             Toast.LENGTH_LONG,
         ).show()
         false
@@ -11830,7 +11830,7 @@ internal fun exportShortcut(context: Context, shortcut: Shortcut) {
         val folderUri = Uri.parse(uriString)
         val pickedDir = DocumentFile.fromTreeUri(context, folderUri)
         if (pickedDir == null || !pickedDir.canWrite()) {
-            Toast.makeText(context, "Cannot write to the selected folder", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_cannot_write_to_the_selected_folder), Toast.LENGTH_SHORT).show()
             return
         }
         File(FileUtils.getFilePathFromUri(context, folderUri))
@@ -11839,7 +11839,7 @@ internal fun exportShortcut(context: Context, shortcut: Shortcut) {
     }
 
     if (!shortcutsDir.exists() && !shortcutsDir.mkdirs()) {
-        Toast.makeText(context, "Failed to create default directory", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18n.s(R.string.ui_failed_to_create_default_directory), Toast.LENGTH_SHORT).show()
         return
     }
 
@@ -11867,11 +11867,11 @@ internal fun exportShortcut(context: Context, shortcut: Shortcut) {
 
         Toast.makeText(
             context,
-            if (fileExists) "Shortcut updated at ${exportFile.path}" else "Shortcut exported to ${exportFile.path}",
+            if (fileExists) I18n.s(R.string.ui_shortcut_updated_at_exportfile_path) else I18n.s(R.string.ui_shortcut_exported_to_exportfile_path),
             Toast.LENGTH_LONG,
         ).show()
     } catch (_: IOException) {
-        Toast.makeText(context, "Failed to export shortcut", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, I18n.s(R.string.ui_failed_to_export_shortcut), Toast.LENGTH_LONG).show()
     }
 }
 
@@ -12079,7 +12079,7 @@ private fun XboxRuntimeRow(checked: Boolean, onChange: (Boolean) -> Unit) {
             Text(I18n.s(R.string.ui_use_the_app_xbox_runtime), fontSize = 14.sp)
             Text(
                 "This game ships Microsoft's own Xbox runtime, which needs Windows' Gaming Services. " +
-                        "Turn off only to try the game's own.",
+                        I18n.s(R.string.ui_turn_off_only_to_try_the_game_s_own),
                 fontSize = 11.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -12160,10 +12160,10 @@ internal fun CopyToDriveCCoordinator(
     // Step 1 short-circuits — fire a toast and bail before any dialog shows.
     LaunchedEffect(target) {
         if (info.onDriveC) {
-            Toast.makeText(context, "\"${target.name}\" already runs from Drive C.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_target_name_already_runs_from_drive_c), Toast.LENGTH_SHORT).show()
             onFinished()
         } else if (info.exeAndroid == null) {
-            Toast.makeText(context, "Couldn't locate this game's files on disk.", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18n.s(R.string.ui_couldn_t_locate_this_game_s_files_on_disk), Toast.LENGTH_LONG).show()
             onFinished()
         }
     }
@@ -12184,7 +12184,7 @@ internal fun CopyToDriveCCoordinator(
     // Size the source folder (background) and re-validate ancestry whenever the root changes.
     LaunchedEffect(sourceRoot) {
         validationError = if (!CopyGameToDriveC.isAncestor(sourceRoot, exeAndroid)) {
-            "That folder doesn't contain this game's .exe. Pick the folder the game runs from."
+            I18n.s(R.string.ui_that_folder_doesn_t_contain_this_game_s_exe_pick_the)
         } else null
         sourceSize = null
         val size = withContext(Dispatchers.IO) { CopyGameToDriveC.folderSize(sourceRoot) }
@@ -12226,7 +12226,7 @@ internal fun CopyToDriveCCoordinator(
                         android.util.Log.e("CopyToDriveC", "copy/repoint failed for ${target.name}", e)
                         Toast.makeText(
                             context,
-                            "Copy failed: ${e.message ?: "unknown error"}. Nothing was changed.",
+                            "Copy failed: ${e.message ?: "unknown errorI18n.s(R.string.ui_nothing_was_changed),
                             Toast.LENGTH_LONG,
                         ).show()
                     }
@@ -12239,13 +12239,13 @@ internal fun CopyToDriveCCoordinator(
     // Validate ancestry + free space, resolve a destination collision, then start.
     fun confirmAndCopy() {
         if (!CopyGameToDriveC.isAncestor(sourceRoot, exeAndroid)) {
-            validationError = "That folder doesn't contain this game's .exe. Pick the folder the game runs from."
+            validationError = I18n.s(R.string.ui_that_folder_doesn_t_contain_this_game_s_exe_pick_the)
             return
         }
         val size = sourceSize ?: return // still sizing — Copy is disabled, but guard anyway
         if (!CopyGameToDriveC.hasRoomFor(context, size)) {
             validationError = "Not enough space on Drive C. Needs ${fmt(size)} plus headroom, but only " +
-                "${fmt(CopyGameToDriveC.freeBytes(context))} is free."
+                I18n.s(R.string.ui_fmt_copygametodrivec_freebytes_context_is_free)
             return
         }
         val dest = CopyGameToDriveC.destRootFor(target.container, sourceRoot.name)
@@ -12255,7 +12255,7 @@ internal fun CopyToDriveCCoordinator(
     when (phase) {
         CopyToCPhase.CONFIRM -> OutlinedAlertDialog(
             onDismissRequest = onFinished,
-            title = { Text("Copy \"${target.name}\" to Drive C") },
+            title = { Text(I18n.s(R.string.ui_copy_target_name_to_drive_c)) },
             text = {
                 Column(
                     modifier = Modifier.heightIn(max = 460.dp).verticalScroll(rememberScrollState()),
@@ -12263,7 +12263,7 @@ internal fun CopyToDriveCCoordinator(
                 ) {
                     Text(
                         "Copies the game onto this container's C: drive (native app storage) and points " +
-                            "the shortcut there. Fixes games that stall streaming from shared storage.",
+                            I18n.s(R.string.ui_the_shortcut_there_fixes_games_that_stall_streaming_f),
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
@@ -12275,15 +12275,15 @@ internal fun CopyToDriveCCoordinator(
                     )
                     Text(
                         text = when {
-                            validationError != null -> "Size —"
-                            sourceSize == null -> "Calculating size…"
-                            else -> "Size: ${fmt(sourceSize!!)}"
+                            validationError != null -> I18n.s(R.string.ui_size)
+                            sourceSize == null -> I18n.s(R.string.ui_calculating_size)
+                            else -> I18n.s(R.string.ui_size_fmt_sourcesize)
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
                     Text(
-                        "Pick the folder that holds everything the game needs, not just the .exe.",
+                        I18n.s(R.string.ui_pick_the_folder_that_holds_everything_the_game_needs),
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
@@ -12294,7 +12294,7 @@ internal fun CopyToDriveCCoordinator(
                         val driveC = File(target.container.rootDir, ".wine/drive_c").takeIf { it.isDirectory }
                         folderPicker.launch(
                             InAppFilePicker.buildDirIntent(
-                                context, "Select the game's folder", initialDir = sourceRoot.absolutePath,
+                                context, I18n.s(R.string.ui_select_the_game_s_folder), initialDir = sourceRoot.absolutePath,
                                 driveCPath = driveC?.absolutePath,
                             )
                         )
@@ -12321,7 +12321,7 @@ internal fun CopyToDriveCCoordinator(
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
                         "A folder named \"${sourceRoot.name}\" already exists under C:\\${CopyGameToDriveC.GAMES_SUBDIR}. " +
-                            "Overwrite it, or keep both by copying to a new folder?",
+                            I18n.s(R.string.ui_overwrite_it_or_keep_both_by_copying_to_a_new_folder),
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
@@ -12356,7 +12356,7 @@ internal fun CopyToDriveCCoordinator(
                                 modifier = Modifier.fillMaxWidth(),
                             )
                             Text(
-                                "${fmt(done)} / ${fmt(total)}",
+                                I18n.s(R.string.ui_fmt_done_fmt_total),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = OnSurfaceVariant,
                             )
@@ -12382,14 +12382,14 @@ internal fun CopyToDriveCCoordinator(
 
         CopyToCPhase.DELETE_ORIGINAL -> OutlinedAlertDialog(
             onDismissRequest = {
-                Toast.makeText(context, "\"${target.name}\" now runs from Drive C.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_target_name_now_runs_from_drive_c), Toast.LENGTH_SHORT).show()
                 onFinished()
             },
             title = { Text(I18n.s(R.string.ui_copied_to_drive_c)) },
             text = {
                 Text(
                     "\"${target.name}\" now runs from Drive C. Delete the original folder to free " +
-                        "${sourceSize?.let { fmt(it) } ?: "space"}, or keep it as a backup?",
+                        "${sourceSize?.let { fmt(it) } ?: "spaceI18n.s(R.string.ui_or_keep_it_as_a_backup),
                     style = MaterialTheme.typography.bodySmall,
                     color = OnSurfaceVariant,
                 )
@@ -12446,11 +12446,11 @@ internal fun ChangeExecutableCoordinator(
             Toast.makeText(
                 context,
                 "That file isn't on a drive this container can reach. Keep the game on storage the " +
-                    "container maps (internal/SD, or its C: drive).",
+                    I18n.s(R.string.ui_container_maps_internal_sd_or_its_c_drive),
                 Toast.LENGTH_LONG,
             ).show()
         } else {
-            Toast.makeText(context, "\"${target.name}\" now launches $win", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18n.s(R.string.ui_target_name_now_launches_win), Toast.LENGTH_LONG).show()
         }
         onFinished()
     }
@@ -12492,7 +12492,7 @@ internal fun ChangeExecutableCoordinator(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
-                        "This shortcut launches with arguments:",
+                        I18n.s(R.string.ui_this_shortcut_launches_with_arguments),
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
@@ -12752,7 +12752,7 @@ private fun ScannedGameRow(
             )
             when {
                 candidate.alreadyAdded -> Text(
-                    "Already added",
+                    I18n.s(R.string.ui_already_added),
                     color = OnSurfaceVariant,
                     style = MaterialTheme.typography.labelSmall,
                 )
@@ -12760,7 +12760,7 @@ private fun ScannedGameRow(
                 // Capped at two lines: a long name like AIO-Graphics-Test-64bit.exe otherwise wraps
                 // to three and makes the cards uneven.
                 candidate.uncertain -> Text(
-                    "Check this one — ${candidate.exe.name}",
+                    I18n.s(R.string.ui_check_this_one_candidate_exe_name),
                     color = MaterialTheme.colorScheme.tertiary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -12815,7 +12815,7 @@ private class ControllerOverrides(shortcut: Shortcut) {
     }
 }
 
-private fun inheritLabel(what: String) = "Use container default ($what)"
+private fun inheritLabel(what: String) = I18n.s(R.string.ui_use_container_default_what)
 
 /** (label, stored value) pairs for an on/off setting: the container's, On, Off. */
 private fun boolOverrideOptions(containerOn: Boolean): List<Pair<String, String>> =
@@ -12826,8 +12826,8 @@ private fun identityOverrideOptions(container: Container): List<Pair<String, Str
         ControllerIdentity.wineChoices().map { it.label to it.value }
 
 private fun pacingLabel(p: StickPacing): String = when (p.mode) {
-    StickPacing.MODE_AUTO -> "Auto, up to ${p.hz} per second"
-    StickPacing.MODE_FIXED -> "Fixed, ${p.hz} per second"
+    StickPacing.MODE_AUTO -> I18n.s(R.string.ui_auto_up_to_p_hz_per_second)
+    StickPacing.MODE_FIXED -> I18n.s(R.string.ui_fixed_p_hz_per_second)
     else -> "Unpaced"
 }
 

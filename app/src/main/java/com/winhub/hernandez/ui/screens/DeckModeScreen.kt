@@ -708,24 +708,24 @@ private fun DeckModeBody() {
 
 /** The featured library: bundled SteamGridDB vertical grids under assets/covers. */
 internal val featuredCovers = listOf(
-    "Red Dead Redemption 2" to "covers/red_dead_redemption_2.jpg",
-    "Red Dead Redemption" to "covers/red_dead_redemption.jpg",
-    "Cyberpunk 2077" to "covers/cyberpunk_2077.jpg",
-    "Hogwarts Legacy" to "covers/hogwarts_legacy.jpg",
-    "High on Life" to "covers/high_on_life.jpg",
-    "High on Life 2" to "covers/high_on_life_2.jpg",
+    I18n.s(R.string.ui_red_dead_redemption_2) to "covers/red_dead_redemption_2.jpg",
+    I18n.s(R.string.ui_red_dead_redemption) to "covers/red_dead_redemption.jpg",
+    I18n.s(R.string.ui_cyberpunk_2077) to "covers/cyberpunk_2077.jpg",
+    I18n.s(R.string.ui_hogwarts_legacy) to "covers/hogwarts_legacy.jpg",
+    I18n.s(R.string.ui_high_on_life) to "covers/high_on_life.jpg",
+    I18n.s(R.string.ui_high_on_life_2) to "covers/high_on_life_2.jpg",
     "Dinkum" to "covers/dinkum.jpg",
-    "Titanfall 2" to "covers/titanfall_2.jpg",
+    I18n.s(R.string.ui_titanfall_2) to "covers/titanfall_2.jpg",
     "Terraria" to "covers/terraria.jpg",
-    "Star Wars Jedi: Fallen Order" to "covers/star_wars_jedi_fallen_order.jpg",
-    "Marvel's Spider-Man 2" to "covers/spider_man_2.jpg",
-    "Marvel's Spider-Man Remastered" to "covers/spider_man_remastered.jpg",
-    "Marvel's Spider-Man: Miles Morales" to "covers/spider_man_miles_morales.jpg",
-    "Ratchet & Clank: Rift Apart" to "covers/ratchet_and_clank_rift_apart.jpg",
-                            "Assassin's Creed IV: Black Flag" to "covers/assassins_creed_4_black_flag.jpg",
-                        "Assassin's Creed Odyssey" to "covers/assassins_creed_odyssey.jpg",
-    "Assassin's Creed Valhalla" to "covers/assassins_creed_valhalla.jpg",
-    "Assassin's Creed Mirage" to "covers/assassins_creed_mirage.jpg",
+    I18n.s(R.string.ui_star_wars_jedi_fallen_order) to "covers/star_wars_jedi_fallen_order.jpg",
+    I18n.s(R.string.ui_marvel_s_spider_man_2) to "covers/spider_man_2.jpg",
+    I18n.s(R.string.ui_marvel_s_spider_man_remastered) to "covers/spider_man_remastered.jpg",
+    I18n.s(R.string.ui_marvel_s_spider_man_miles_morales) to "covers/spider_man_miles_morales.jpg",
+    I18n.s(R.string.ui_ratchet_clank_rift_apart) to "covers/ratchet_and_clank_rift_apart.jpg",
+                            I18n.s(R.string.ui_assassin_s_creed_iv_black_flag) to "covers/assassins_creed_4_black_flag.jpg",
+                        I18n.s(R.string.ui_assassin_s_creed_odyssey) to "covers/assassins_creed_odyssey.jpg",
+    I18n.s(R.string.ui_assassin_s_creed_valhalla) to "covers/assassins_creed_valhalla.jpg",
+    I18n.s(R.string.ui_assassin_s_creed_mirage) to "covers/assassins_creed_mirage.jpg",
                 )
 
 /** Decode a bundled cover at roughly capsule resolution so the wall stays light on RAM. */
@@ -845,8 +845,8 @@ private fun DeckHome(
         val g = entry.game ?: return
         val c = containers.find { it.id == g.containerId }
         when {
-            c == null -> Toast.makeText(context, "Container not found", Toast.LENGTH_SHORT).show()
-            !File(g.shortcutPath).isFile -> Toast.makeText(context, "Shortcut not found", Toast.LENGTH_SHORT).show()
+            c == null -> Toast.makeText(context, I18n.s(R.string.ui_container_not_found), Toast.LENGTH_SHORT).show()
+            !File(g.shortcutPath).isFile -> Toast.makeText(context, I18n.s(R.string.ui_shortcut_not_found), Toast.LENGTH_SHORT).show()
             else -> shortcutSettingsFor = Shortcut(c, File(g.shortcutPath))
         }
     }
@@ -855,8 +855,8 @@ private fun DeckHome(
         val g = entry.game ?: return
         val c = containers.find { it.id == g.containerId }
         when {
-            c == null -> Toast.makeText(context, "Container not found", Toast.LENGTH_SHORT).show()
-            !File(g.shortcutPath).isFile -> Toast.makeText(context, "Shortcut not found", Toast.LENGTH_SHORT).show()
+            c == null -> Toast.makeText(context, I18n.s(R.string.ui_container_not_found), Toast.LENGTH_SHORT).show()
+            !File(g.shortcutPath).isFile -> Toast.makeText(context, I18n.s(R.string.ui_shortcut_not_found), Toast.LENGTH_SHORT).show()
             else -> gameTool = HubToolRequest(tool, Shortcut(c, File(g.shortcutPath)))
         }
     }
@@ -884,7 +884,7 @@ private fun DeckHome(
             val identity = file?.let { runCatching { GameIdentifier.identify(it) }.getOrNull() }
             withContext(Dispatchers.Main) {
                 if (file == null) {
-                    Toast.makeText(context, "Couldn't read that file", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_couldn_t_read_that_file_2), Toast.LENGTH_SHORT).show()
                 } else {
                     pending = file to (identity ?: GameIdentifier.GameIdentity())
                 }
@@ -895,7 +895,7 @@ private fun DeckHome(
     fun playEntry(entry: HubEntry) {
         val game = entry.game
         if (game == null) {
-            Toast.makeText(context, "Add this game first — use Add Games", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_add_this_game_first_use_add_games), Toast.LENGTH_SHORT).show()
             return
         }
         context.getSharedPreferences("hub_prefs", Context.MODE_PRIVATE)
@@ -916,7 +916,7 @@ private fun DeckHome(
             }.getOrNull()
             withContext(Dispatchers.Main) {
                 if (shortcut == null) {
-                    Toast.makeText(context, "That game's shortcut is missing — re-add it", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_that_game_s_shortcut_is_missing_re_add_it), Toast.LENGTH_SHORT).show()
                 } else {
                     launchRequest = shortcut
                 }
@@ -927,7 +927,7 @@ private fun DeckHome(
     fun openLaunchMethod(entry: HubEntry) {
         val game = entry.game
         if (game == null) {
-            Toast.makeText(context, "Add this game first — use Add Games", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_add_this_game_first_use_add_games), Toast.LENGTH_SHORT).show()
             return
         }
         scope.launch(Dispatchers.IO) {
@@ -940,7 +940,7 @@ private fun DeckHome(
             }.getOrNull()
             withContext(Dispatchers.Main) {
                 if (shortcut == null) {
-                    Toast.makeText(context, "That game's shortcut is missing — re-add it", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_that_game_s_shortcut_is_missing_re_add_it), Toast.LENGTH_SHORT).show()
                 } else {
                     launchMethodSteam = game.store == "Steam"
                     launchMethodFor = shortcut
@@ -971,14 +971,14 @@ private fun DeckHome(
         if (sm != null && sm.isRequestPinShortcutSupported) {
             sm.requestPinShortcut(info, null)
         } else {
-            Toast.makeText(context, "Pin shortcuts aren't supported here", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_pin_shortcuts_aren_t_supported_here), Toast.LENGTH_SHORT).show()
         }
     }
 
     fun showProperties(entry: HubEntry) {
         val g = entry.game ?: return
         propertiesFor = containers.find { it.id == g.containerId }
-        if (propertiesFor == null) Toast.makeText(context, "Container not found", Toast.LENGTH_SHORT).show()
+        if (propertiesFor == null) Toast.makeText(context, I18n.s(R.string.ui_container_not_found), Toast.LENGTH_SHORT).show()
     }
 
     fun deleteEntry(entry: HubEntry) {
@@ -992,7 +992,7 @@ private fun DeckHome(
                 entries = list
                 selected = selected.coerceIn(0, (list.size - 1).coerceAtLeast(0))
                 portraitPageOpen = false
-                Toast.makeText(context, "Removed \"${g.name}\"", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_removed_g_name), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1169,14 +1169,14 @@ private fun DeckHome(
             add("Store" to hubOriginLabel(current))
             containers.find { it.id == g.containerId }?.let { add("Container" to it.name) }
             add("Playtime" to hubPlaytimeLabel(context, current.title))
-            g.appId?.let { add("Steam AppID" to it.toString()) }
+            g.appId?.let { add(I18n.s(R.string.ui_steam_appid) to it.toString()) }
         }
     }.orEmpty()
     fun toggleFavorite() {
         val path = current?.game?.shortcutPath ?: return
         favs = if (path in favs) favs - path else favs + path
         context.getSharedPreferences("hub_prefs", Context.MODE_PRIVATE).edit().putStringSet("hub_favs", favs).apply()
-        Toast.makeText(context, if (path in favs) "Added to favourites" else "Removed from favourites", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, if (path in favs) I18n.s(R.string.ui_added_to_favourites) else I18n.s(R.string.ui_removed_from_favourites), Toast.LENGTH_SHORT).show()
     }
     val playIntro = remember { !homeIntroPlayed }
     var splash by remember { mutableStateOf(playIntro) }
@@ -1232,7 +1232,7 @@ private fun DeckHome(
                 add(DeckConsoleItem(a.label, a.icon, a.danger, a.onClick))
                 // Favourite sits after Settings (Y no longer toggles it in this style).
                 if (i == 2 && entry.game != null) {
-                    add(DeckConsoleItem(if (fav) "Remove from favourites" else "Add to favourites",
+                    add(DeckConsoleItem(if (fav) I18n.s(R.string.ui_remove_from_favourites) else I18n.s(R.string.ui_add_to_favourites),
                         if (fav) Icons.Filled.StarBorder else Icons.Filled.Star) { toggleFavorite() })
                 }
             }
@@ -1261,7 +1261,7 @@ private fun DeckHome(
                 add(
                     DeckHomeCard(
                         screen.label,
-                        if (storesSignedIn[screen] == true) "Signed in" else "Not signed in - A to sign in",
+                        if (storesSignedIn[screen] == true) "Signed in" else I18n.s(R.string.ui_not_signed_in_a_to_sign_in),
                         Icons.Filled.Storefront,
                         deckStoreBrand(screen),
                         logo = deckStoreLogo(screen),
@@ -1566,7 +1566,7 @@ private fun DeckHome(
                 )
             } else if (!portrait && storeShelf == null && visible.isEmpty() && entries.orEmpty().isNotEmpty()) {
                 Text(
-                    if (xmbStyle) "Nothing on this shelf yet - press Y on a game to favourite it" else "Nothing on this shelf yet - open a game's menu (Y) to favourite it",
+                    if (xmbStyle) I18n.s(R.string.ui_nothing_on_this_shelf_yet_press_y_on_a_game_to_favour) else I18n.s(R.string.ui_nothing_on_this_shelf_yet_open_a_game_s_menu_y_to_fav),
                     color = DeckPalette.onSurfaceVariant,
                     fontSize = 14.sp,
                     modifier = Modifier.align(Alignment.Center),
@@ -1659,7 +1659,7 @@ private fun DeckHome(
                         CircularProgressIndicator(color = DeckPalette.primary)
                         Spacer(Modifier.height(14.dp))
                         Text(
-                            "Building Cronos container\n$cronosName…",
+                            I18n.s(R.string.ui_building_cronos_container_n_cronosname),
                             color = DeckPalette.onBackground,
                             fontSize = 13.sp,
                             textAlign = TextAlign.Center,
@@ -1734,7 +1734,7 @@ private fun DeckHome(
                         s.saveData()
                         launchMethodFor = null
                         launchMethodSteam = null
-                        Toast.makeText(context, "Launch method saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_launch_method_saved), Toast.LENGTH_SHORT).show()
                     },
                 )
             }
@@ -1831,13 +1831,13 @@ private fun DeckHome(
                                 withContext(Dispatchers.Main) {
                                     if (data == null) {
                                         cronosBusy = false
-                                        Toast.makeText(context, "Cronos setup failed — couldn't build config", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, I18n.s(R.string.ui_cronos_setup_failed_couldn_t_build_config), Toast.LENGTH_SHORT).show()
                                         return@withContext
                                     }
                                     mgr.createContainerAsync(data, ContentsManager(context)) { created ->
                                         cronosBusy = false
                                         if (created == null) {
-                                            Toast.makeText(context, "Cronos setup failed — couldn't create the Wine prefix", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, I18n.s(R.string.ui_cronos_setup_failed_couldn_t_create_the_wine_prefix), Toast.LENGTH_SHORT).show()
                                             return@createContainerAsync
                                         }
                                         scope.launch(Dispatchers.IO) {
@@ -1854,13 +1854,13 @@ private fun DeckHome(
                                             containers = ContainerManager(context).also { it.reloadContainers() }.getContainers().toList()
                                             withContext(Dispatchers.Main) {
                                                 if (added == null) {
-                                                    Toast.makeText(context, "Container created, but adding the game failed", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(context, I18n.s(R.string.ui_container_created_but_adding_the_game_failed), Toast.LENGTH_SHORT).show()
                                                 } else {
                                                     val list = entries.orEmpty() + added
                                                     entries = list
                                                     deckTabs.select(0)
                                                     selected = list.lastIndex
-                                                    Toast.makeText(context, "Added \"${added.title}\" to its own Cronos container", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(context, I18n.s(R.string.ui_added_added_title_to_its_own_cronos_container), Toast.LENGTH_SHORT).show()
                                                     cronosReviewFor = created
                                                 }
                                             }
@@ -1872,7 +1872,7 @@ private fun DeckHome(
                         }
                         val container = containers.filter { !it.isCronos }.getOrNull(containerIndex)
                         if (container == null) {
-                            Toast.makeText(context, "Create a container first", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_create_a_container_first), Toast.LENGTH_SHORT).show()
                             return@HubConfirmDialog
                         }
                         scope.launch(Dispatchers.IO) {
@@ -1888,13 +1888,13 @@ private fun DeckHome(
                             }.getOrNull()
                             withContext(Dispatchers.Main) {
                                 if (added == null) {
-                                    Toast.makeText(context, "Couldn't add that game", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18n.s(R.string.ui_couldn_t_add_that_game), Toast.LENGTH_SHORT).show()
                                 } else {
                                     val list = entries.orEmpty() + added
                                     entries = list
                                     deckTabs.select(0)
                                     selected = list.lastIndex
-                                    Toast.makeText(context, "Added \"${added.title}\"", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18n.s(R.string.ui_added_added_title), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -2124,7 +2124,7 @@ private fun DeckPaneContent(
 @Composable
 private fun DeckLegend(modifier: Modifier = Modifier) {
     Text(
-        text = "A Select   B Back   L1/R1 Tabs   L2/R2 Sub-tabs   Stick / D-pad Move",
+        text = I18n.s(R.string.ui_a_select_b_back_l1_r1_tabs_l2_r2_sub_tabs_stick_d_pad),
         color = Deck.onSurfaceVariant.copy(alpha = 0.75f),
         fontSize = 10.sp,
         fontWeight = FontWeight.SemiBold,
@@ -2998,7 +2998,7 @@ private fun DeckAllGamesMosaic(covers: List<Bitmap>, total: Int, modifier: Modif
                             )
                             if (index == 3 && total > 4) {
                                 Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = 0.55f)), contentAlignment = Alignment.Center) {
-                                    Text("+${total - 3}", color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                                    Text(I18n.s(R.string.ui_total_3), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
@@ -3150,10 +3150,10 @@ private fun DeckAllGamesPage(
                 chosen?.title.orEmpty(),
                 color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
-            Text("${index + 1} / ${entries.size}", color = Deck.onSurfaceVariant, fontSize = 12.sp)
+            Text(I18n.s(R.string.ui_index_1_entries_size), color = Deck.onSurfaceVariant, fontSize = 12.sp)
         }
         Text(
-            "A  Choose      B  Back      \u25C0 \u25B6  Browse",
+            I18n.s(R.string.ui_a_choose_b_back_u25c0_u25b6_browse),
             color = Deck.onSurfaceVariant,
             fontSize = 12.sp,
             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = 12.dp),
@@ -3842,7 +3842,7 @@ private fun DeckHomeCarousel(
                                 maxLines = 1,
                             )
                             Text(
-                                if (n == 1) "1 GAME" else "$n GAMES",
+                                if (n == 1) I18n.s(R.string.ui_1_game) else I18n.s(R.string.ui_n_games),
                                 color = Deck.onSurfaceVariant,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.SemiBold,
@@ -3873,7 +3873,7 @@ private fun DeckHomeCarousel(
                             )
                             Text(
                                 hubOriginLabel(entry).uppercase() + "  ·  " +
-                                    if (playtime == "not played yet") playtime else "$playtime played",
+                                    if (playtime == "not played yet") playtime else I18n.s(R.string.ui_playtime_played),
                                 color = Deck.onSurfaceVariant,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.SemiBold,
@@ -3977,7 +3977,7 @@ private fun DeckHomeCarousel(
                     ) {
                         itemsIndexed(cards) { i, card ->
                             DeckGlassPill(
-                                label = if (i == 0) "Add a game" else card.label,
+                                label = if (i == 0) I18n.s(R.string.ui_add_a_game) else card.label,
                                 onClick = { emptySel = i; card.onClick() },
                                 icon = if (i == 0) Icons.Filled.Add else card.icon,
                                 selected = i == emptySel,
@@ -3985,19 +3985,19 @@ private fun DeckHomeCarousel(
                         }
                     }
                 } else {
-                    DeckGlassPill("Add a game", onAdd, Modifier.align(Alignment.Center))
+                    DeckGlassPill(I18n.s(R.string.ui_add_a_game), onAdd, Modifier.align(Alignment.Center))
                 }
             }
 
             Text(
                 text = when {
-                    n == 0 -> if (!loaded) "" else if (cards.size > 1) "A  Open      ◀ ▶  Choose" else "A  Add a game"
-                    mode == HomeMode.OPTIONS -> "A  Select      B  Back"
-                    mode == HomeMode.STORES -> if (cards.size > 1) "A  Open      B  Back" else "A  Add game      B  Back"
-                    allFocused -> "A  Open      ◀  Games      ↑  Add game, Stores, Social"
-                    classic -> "A  Play    ↑  Add game    Y  Menu    L2 R2  Shelves"
-                    cards.size > 1 -> "A  Options    ↑  Stores, Social, Add game    Y  Favourite    L2 R2  Shelves"
-                    else -> "A  Options    ↑  Add game    Y  Favourite    L2 R2  Shelves"
+                    n == 0 -> if (!loaded) "" else if (cards.size > 1) I18n.s(R.string.ui_a_open_choose) else I18n.s(R.string.ui_a_add_a_game)
+                    mode == HomeMode.OPTIONS -> I18n.s(R.string.ui_a_select_b_back)
+                    mode == HomeMode.STORES -> if (cards.size > 1) I18n.s(R.string.ui_a_open_b_back) else I18n.s(R.string.ui_a_add_game_b_back)
+                    allFocused -> I18n.s(R.string.ui_a_open_games_add_game_stores_social)
+                    classic -> I18n.s(R.string.ui_a_play_add_game_y_menu_l2_r2_shelves)
+                    cards.size > 1 -> I18n.s(R.string.ui_a_options_stores_social_add_game_y_favourite_l2_r2_sh)
+                    else -> I18n.s(R.string.ui_a_options_add_game_y_favourite_l2_r2_shelves)
                 },
                 color = Deck.onSurfaceVariant,
                 fontSize = 12.sp,

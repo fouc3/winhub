@@ -180,9 +180,9 @@ fun ContainerDetailScreen(
     // DRIVES is per-container (letters map to real paths), so it's dropped in "New Container Defaults"
     // mode. Content is dispatched by TITLE below (not raw index) so removing a tab never misaligns.
     val tabTitles = if (viewModel.defaultsMode)
-        listOf("GENERAL", "GRAPHICS", "ENVIROMENT", "WIN COMPONENTS", "ADVANCED")
+        listOf("GENERAL", "GRAPHICS", "ENVIROMENT", I18n.s(R.string.ui_win_components_3), "ADVANCED")
     else
-        listOf("GENERAL", "GRAPHICS", "ENVIROMENT", "DRIVES", "WIN COMPONENTS", "ADVANCED")
+        listOf("GENERAL", "GRAPHICS", "ENVIROMENT", "DRIVES", I18n.s(R.string.ui_win_components_3), "ADVANCED")
 
     Scaffold(
         floatingActionButton = {
@@ -285,7 +285,7 @@ fun ContainerDetailScreen(
                         }
                         "ENVIROMENT" -> EnvVarsTab(viewModel)
                         "DRIVES" -> DrivesTab(viewModel)
-                        "WIN COMPONENTS" -> WinComponentsTab(viewModel)
+                        I18n.s(R.string.ui_win_components_3) -> WinComponentsTab(viewModel)
                         "ADVANCED" -> Column {
                             AdvancedTab(
                                 viewModel,
@@ -505,7 +505,7 @@ private fun tabIcon(title: String): ImageVector = when (title) {
     "ENVIROMENT" -> Icons.Filled.Extension
     "GRAPHICS" -> Icons.Filled.Memory
     "DRIVES" -> Icons.Filled.Storage
-    "WIN COMPONENTS" -> Icons.Filled.Widgets
+    I18n.s(R.string.ui_win_components_3) -> Icons.Filled.Widgets
     "ADVANCED" -> Icons.Filled.Tune
     else -> Icons.Filled.Settings
 }
@@ -513,7 +513,7 @@ private fun tabIcon(title: String): ImageVector = when (title) {
 /** Abbreviates the two long tab titles so the portrait top bar stays tidy (mirrors the rail's
  *  collapsed labels). */
 private fun topTabLabel(title: String): String = when (title) {
-    "WIN COMPONENTS" -> "WIN COMP"
+    I18n.s(R.string.ui_win_components_3) -> I18n.s(R.string.ui_win_comp)
     else -> title
 }
 
@@ -941,14 +941,14 @@ private fun TopLevelFields(
                     "Wayland (experimental): games render through the embedded compositor " +
                         "(winewayland). Needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
                         ". DX wrapper (DXVK/VKD3D) settings apply as on X11. The Renderer options " +
-                        "below don't apply and are disabled.",
+                        I18n.s(R.string.ui_below_don_t_apply_and_are_disabled),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             } else if (!waylandCapable) {
                 Text(
                     "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
-                        ". The selected layer does not include winewayland.",
+                        I18n.s(R.string.ui_the_selected_layer_does_not_include_winewayland),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -957,7 +957,7 @@ private fun TopLevelFields(
                 }
                 if (viewModel.isWaylandStored) {
                     Text(
-                        "This container was saved on Wayland, but its Proton layer is no longer Wayland-capable: it runs on X11 and will be saved as X11.",
+                        I18n.s(R.string.ui_this_container_was_saved_on_wayland_but_its_proton_la),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -1036,7 +1036,7 @@ private fun TopLevelFields(
             // that is no longer available — then with a way to get one.
             when {
                 viewModel.compositorDriverSearching -> Text(
-                    "Looking for an installed Turnip that can import the game's frames…",
+                    I18n.s(R.string.ui_looking_for_an_installed_turnip_that_can_import_the_g),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1062,9 +1062,9 @@ private fun TopLevelFields(
                 }
                 viewModel.compositorDriverAutoPicked == compositorVersion -> Text(
                     if (viewModel.compositorDriverPickedFromDefaults)
-                        "Picked for you: the driver in your New Container Defaults."
+                        I18n.s(R.string.ui_picked_for_you_the_driver_in_your_new_container_defau)
                     else
-                        "Picked for you: the newest installed Turnip that can import the game's frames.",
+                        I18n.s(R.string.ui_picked_for_you_the_newest_installed_turnip_that_can_i),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1092,11 +1092,11 @@ private fun TopLevelFields(
             Text(
                 when {
                     blobPicked -> "Qualcomm's own driver cannot put Wayland frames on screen, so the screen uses a " +
-                        "bundled Turnip automatically" + (if (adapterChoice) " and the game renders on the bundled " +
-                        "Wayland Turnip (the adapter needs a Turnip driver here)." else ".")
-                    adapterActive -> "Used for the game (through the Wayland adapter) and for putting its frames on screen."
+                        I18n.s(R.string.ui_bundled_turnip_automatically) + (if (adapterChoice) " and the game renders on the bundled " +
+                        I18n.s(R.string.ui_wayland_turnip_the_adapter_needs_a_turnip_driver_here) else ".")
+                    adapterActive -> I18n.s(R.string.ui_used_for_the_game_through_the_wayland_adapter_and_for)
                     else -> "Used by the Wayland compositor to put frames on screen; the game renders on the " +
-                        "Wayland game driver under Advanced."
+                        I18n.s(R.string.ui_wayland_game_driver_under_advanced)
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1158,7 +1158,7 @@ private fun TopLevelFields(
                 }
                 val spoof = com.winhub.hernandez.core.GpuSpoof.gpuNameOf(viewModel.graphicsDriverConfig)
                 if (com.winhub.hernandez.core.GpuSpoof.isSpoofing(spoof)) Text(
-                    "GPU name spoof: $spoof (the gear)",
+                    I18n.s(R.string.ui_gpu_name_spoof_spoof_the_gear),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1245,7 +1245,7 @@ private fun TopLevelFields(
         val rendererEnabled = !viewModel.isWaylandBackend
         // Display only while greyed: the compositor is always Vulkan, so don't show the stored X11
         // choice (it is kept untouched and comes back when the backend returns to X11).
-        val rendererShown = if (rendererEnabled) viewModel.selectedRenderer else "Vulkan (Wayland compositor)"
+        val rendererShown = if (rendererEnabled) viewModel.selectedRenderer else I18n.s(R.string.ui_vulkan_wayland_compositor)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             LabeledDropdown(
                 label = stringResource(R.string.renderer),
@@ -1277,7 +1277,7 @@ private fun TopLevelFields(
             val renderScaleLabels = listOf("Off", "1.25x", "1.5x", "2x")
             val rsIdx = renderScaleValues.indexOf(viewModel.renderScale).coerceAtLeast(0)
             val rsEnabled = !viewModel.isWaylandBackend
-            val rsShown = if (rsEnabled) renderScaleLabels[rsIdx] else "Not used on Wayland"
+            val rsShown = if (rsEnabled) renderScaleLabels[rsIdx] else I18n.s(R.string.ui_not_used_on_wayland)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 LabeledDropdown(
                     label = I18n.s(R.string.ui_render_scale_supersampling),
@@ -1289,9 +1289,9 @@ private fun TopLevelFields(
                 )
                 IconButton(onClick = {
                     helpText = if (rsEnabled)
-                        "How much the game renders above the display resolution; the compositor scales it back down (supersampling). \"Off\" renders at the native display resolution."
+                        I18n.s(R.string.ui_how_much_the_game_renders_above_the_display_resolutio)
                     else
-                        "Not used on Wayland: the compositor has no supersampling downscale. The stored value returns on X11."
+                        I18n.s(R.string.ui_not_used_on_wayland_the_compositor_has_no_supersampli)
                 }) {
                     Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
@@ -1337,7 +1337,7 @@ private fun TopLevelFields(
                     Switch(checked = viewModel.glFpsHud, onCheckedChange = { viewModel.glFpsHud = it })
                 }
                 com.winhub.hernandez.ui.components.OpenGLCardRow(
-                    com.winhub.hernandez.ui.components.OPENGL_VSYNC_ICON, "Vsync off", null
+                    com.winhub.hernandez.ui.components.OPENGL_VSYNC_ICON, I18n.s(R.string.ui_vsync_off), null
                 ) {
                     Switch(checked = viewModel.glVsyncOff, onCheckedChange = { viewModel.glVsyncOff = it })
                 }
@@ -1397,7 +1397,7 @@ private fun TopLevelFields(
         }
         if (!directAudioSupported && directAudioEntry != null) {
             Text(
-                "DirectAudio requires Proton ${com.winhub.hernandez.core.DirectAudioSupport.SUPPORTED_LABEL}",
+                I18n.s(R.string.ui_directaudio_requires_proton_com_winhub_hernandez_core),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 11.5.sp,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -1406,7 +1406,7 @@ private fun TopLevelFields(
         if (showAudioSettings) {
             AudioSettingsDialog(
                 initial = audioConfigFromEnv(viewModel.envVarsStr, StringUtils.parseIdentifier(viewModel.selectedAudioDriver)),
-                scopeLabel = "this container",
+                scopeLabel = I18n.s(R.string.ui_this_container_2),
                 latencyLive = true,
                 driverLabel = when (StringUtils.parseIdentifier(viewModel.selectedAudioDriver)) {
                     "alsa" -> "ALSA"; "pulseaudio" -> "PulseAudio"; "directaudio" -> "DirectAudio"
@@ -1438,7 +1438,7 @@ private fun TopLevelFields(
                     viewModel.envVarsStr = com.winhub.hernandez.core.DirectAudioSupport.withMicEnabled(viewModel.envVarsStr, true)
                 } else {
                     viewModel.envVarsStr = com.winhub.hernandez.core.DirectAudioSupport.withMicEnabled(viewModel.envVarsStr, false)
-                    Toast.makeText(micCtx, "Microphone permission denied — mic stays off.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(micCtx, I18n.s(R.string.ui_microphone_permission_denied_mic_stays_off), Toast.LENGTH_SHORT).show()
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -1466,7 +1466,7 @@ private fun TopLevelFields(
                     )
                     Text(
                         if (micDriverActive) "Let games use the mic (DirectAudio captures input)"
-                        else "Available on the DirectAudio driver",
+                        else I18n.s(R.string.ui_available_on_the_directaudio_driver),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 11.5.sp
                     )
@@ -1719,7 +1719,7 @@ private fun TopLevelFields(
             // Wayland LSFG Native runs on the compositor's own device, which is always a modern Turnip,
             // so the mode is neither read nor needed there.
             val lsfgVk11Hint = if (fgWayland)
-                "Not used on Wayland: frame generation runs in the compositor on your Turnip driver, which does not need this compatibility mode."
+                I18n.s(R.string.ui_not_used_on_wayland_frame_generation_runs_in_the_comp)
             else stringResource(R.string.lsfg_vk11_compat_hint)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -1954,7 +1954,7 @@ private fun WineConfigTab(
                             DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                 showWallpaperMenu = false
                                 pickWallpaperInAppLauncher.launch(
-                                    InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select wallpaper")
+                                    InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, I18n.s(R.string.ui_select_wallpaper))
                                 )
                             })
                             DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
@@ -1988,7 +1988,7 @@ private fun WineConfigTab(
                 Column(Modifier.weight(1f)) {
                     Text(I18n.s(R.string.ui_run_as_administrator))
                     Text(
-                        "Disables UAC so everything runs elevated (helps installers/tools that require admin)",
+                        I18n.s(R.string.ui_disables_uac_so_everything_runs_elevated_helps_instal),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -2018,7 +2018,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
         if (viewModel.container != null) {
             SectionBox(title = I18n.s(R.string.ui_components)) {
                 Text(
-                    "Install Wine dependencies — mono, gecko, .NET, VC++ runtimes, DirectX libraries, fonts and more.",
+                    I18n.s(R.string.ui_install_wine_dependencies_mono_gecko_net_vc_runtimes),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -2124,7 +2124,7 @@ private fun DrivesTab(viewModel: ContainerDetailViewModel) {
                     dirPickerLauncher.launch(
                         InAppFilePicker.buildDirIntent(
                             context,
-                            title = "Select folder for drive ${drive.letter}:",
+                            title = I18n.s(R.string.ui_select_folder_for_drive_drive_letter),
                             initialDir = drive.path.takeIf { it.isNotBlank() && File(it).isDirectory },
                         )
                     )
@@ -2244,7 +2244,7 @@ private fun AdvancedTab(
         SectionBox(title = emulatorLabel) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 LabeledDropdown(
-                    label = "$emulatorLabel Version",
+                    label = I18n.s(R.string.ui_emulatorlabel_version),
                     options = viewModel.box64VersionEntries,
                     selectedOption = viewModel.selectedBox64Version,
                     onSelect = { viewModel.selectedBox64Version = it },
@@ -2255,7 +2255,7 @@ private fun AdvancedTab(
             Spacer(Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 LabeledDropdown(
-                    label = "$emulatorLabel Preset",
+                    label = I18n.s(R.string.ui_emulatorlabel_preset),
                     options = viewModel.box64PresetEntries,
                     selectedOption = viewModel.box64PresetEntries.getOrElse(viewModel.selectedBox64PresetIndex) { "" },
                     onSelect = { opt -> viewModel.selectedBox64PresetIndex = viewModel.box64PresetEntries.indexOf(opt).coerceAtLeast(0) },
@@ -2371,7 +2371,7 @@ private fun AdvancedTab(
             if (viewModel.vibrationMode != Container.VIBRATION_MODE_OFF) {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "${stringResource(R.string.vibration_intensity_label)}: ${viewModel.vibrationIntensity}%",
+                    I18n.s(R.string.ui_stringresource_r_string_vibration_intensity_label_vie),
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(
@@ -2388,7 +2388,7 @@ private fun AdvancedTab(
         SectionBox(title = I18n.s(R.string.ui_player_slots)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "Pin controllers to players; assign two to one player to share control.",
+                    I18n.s(R.string.ui_pin_controllers_to_players_assign_two_to_one_player_t),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
@@ -2541,7 +2541,7 @@ private fun AdvancedTab(
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        "${stringResource(R.string.gyro_sensitivity_label)}: ${"%.1f".format(viewModel.gyroSensitivity)}",
+                        I18n.s(R.string.ui_stringresource_r_string_gyro_sensitivity_label)%.1f".format(viewModel.gyroSensitivity)}",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.weight(1f)
                     )
@@ -2555,7 +2555,7 @@ private fun AdvancedTab(
                     valueRange = 0.1f..10f
                 )
                 Text(
-                    "${stringResource(R.string.gyro_deadzone_label)}: ${"%.2f".format(viewModel.gyroDeadzone)}",
+                    I18n.s(R.string.ui_stringresource_r_string_gyro_deadzone_label)%.2f".format(viewModel.gyroDeadzone)}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(
@@ -2564,7 +2564,7 @@ private fun AdvancedTab(
                     valueRange = 0f..0.5f
                 )
                 Text(
-                    "${stringResource(R.string.gyro_smoothing_label)}: ${"%.2f".format(viewModel.gyroSmoothing)}",
+                    I18n.s(R.string.ui_stringresource_r_string_gyro_smoothing_label)%.2f".format(viewModel.gyroSmoothing)}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(
@@ -2600,7 +2600,7 @@ private fun AdvancedTab(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "${stringResource(R.string.stick_left_deadzone)}: ${stickDeadzoneText(viewModel.stickLeftDeadzone)}",
+                I18n.s(R.string.ui_stringresource_r_string_stick_left_deadzone_stickdead),
                 style = MaterialTheme.typography.bodyMedium
             )
             Slider(
@@ -2610,7 +2610,7 @@ private fun AdvancedTab(
                 steps = STICK_DEADZONE_STEPS
             )
             Text(
-                "${stringResource(R.string.stick_left_sensitivity)}: ${stickSensitivityText(viewModel.stickLeftSensitivity)}",
+                I18n.s(R.string.ui_stringresource_r_string_stick_left_sensitivity_sticks),
                 style = MaterialTheme.typography.bodyMedium
             )
             Slider(
@@ -2620,7 +2620,7 @@ private fun AdvancedTab(
                 steps = STICK_SENSITIVITY_STEPS
             )
             Text(
-                "${stringResource(R.string.stick_right_deadzone)}: ${stickDeadzoneText(viewModel.stickRightDeadzone)}",
+                I18n.s(R.string.ui_stringresource_r_string_stick_right_deadzone_stickdea),
                 style = MaterialTheme.typography.bodyMedium
             )
             Slider(
@@ -2630,7 +2630,7 @@ private fun AdvancedTab(
                 steps = STICK_DEADZONE_STEPS
             )
             Text(
-                "${stringResource(R.string.stick_right_sensitivity)}: ${stickSensitivityText(viewModel.stickRightSensitivity)}",
+                I18n.s(R.string.ui_stringresource_r_string_stick_right_sensitivity_stick),
                 style = MaterialTheme.typography.bodyMedium
             )
             Slider(
@@ -2779,7 +2779,7 @@ internal fun StartupServicesToggleList(
     SectionBox(title = I18n.s(R.string.ui_custom_services)) {
         Text(
             "Custom starts with every service off — turn on only what you need. " +
-                "Disabling Wine Bus/HID can break controllers.",
+                I18n.s(R.string.ui_disabling_wine_bus_hid_can_break_controllers),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -2788,7 +2788,7 @@ internal fun StartupServicesToggleList(
             val raw = WineUtils.startupServiceRawName(entry)
             val label = WineUtils.STARTUP_SERVICE_LABELS.getOrElse(i) { raw }
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                Text("$label ($raw)", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                Text(I18n.s(R.string.ui_label_raw), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                 Switch(checked = enabled.contains(raw), onCheckedChange = { onToggle(raw, it) })
             }
             if (i < WineUtils.STARTUP_SERVICES.lastIndex) Spacer(Modifier.height(4.dp))
@@ -2975,7 +2975,7 @@ internal const val WAYLAND_DRIVER_SETTINGS_HELP =
         "and D3D12 through it) see another graphics card; native Vulkan and OpenGL games still see the real " +
         "one for now. Off by default (Device). Warning: an NVIDIA name can make a game try NVAPI, DLSS or " +
         "Reflex, and an AMD name can send it down AMD AGS paths; go back to Device if a game misbehaves. " +
-        "These are the X11 driver configuration's settings, so they follow the game across backends."
+        I18n.s(R.string.ui_these_are_the_x11_driver_configuration_s_settings_so)
 
 /**
  * The Wayland adapter settings (the gear next to "Wayland game driver"), container default and per-game
@@ -3046,7 +3046,7 @@ internal fun WaylandDriverSettingsDialog(
         probeNote = null
         if (driverId.isEmpty() || driverId == "System") {
             probe = null
-            probeNote = "No Turnip graphics driver is set, so there is nothing to check."
+            probeNote = I18n.s(R.string.ui_no_turnip_graphics_driver_is_set_so_there_is_nothing)
             return@LaunchedEffect
         }
         val cached = withContext(Dispatchers.IO) {
@@ -3064,7 +3064,7 @@ internal fun WaylandDriverSettingsDialog(
             }
         }
         probing = false
-        if (probe == null) probeNote = "The driver could not be checked."
+        if (probe == null) probeNote = I18n.s(R.string.ui_the_driver_could_not_be_checked)
     }
 
     // What the launch will apply for this draft (the dialog's one-line summary).
@@ -3102,14 +3102,14 @@ internal fun WaylandDriverSettingsDialog(
             DeckConfigChipGrid(label = I18n.s(R.string.profile), chips = profileChips)
             val selectedProfile = if (perGame) profile else com.winhub.hernandez.core.WaylandAdapterSettings.normalizeProfile(profile)
             DeckConfigNote(
-                if (perGame && profile.isEmpty()) "Use whatever the container is set to."
+                if (perGame && profile.isEmpty()) I18n.s(R.string.ui_use_whatever_the_container_is_set_to)
                 else com.winhub.hernandez.core.WaylandAdapterSettings.profileHelp(selectedProfile)
             )
             // Shown unless Smooth is already the profile in effect for this draft.
                 if (effective.profile != com.winhub.hernandez.core.WaylandAdapterSettings.PROFILE_SMOOTH) {
                     DeckConfigNote(
                         "Tip: if frames look uneven or jittery, try Smooth. It paces frames through the compositor " +
-                            "(vsync, no zero-copy), which helps when the GPU is close to maxed."
+                            I18n.s(R.string.ui_vsync_no_zero_copy_which_helps_when_the_gpu_is_close)
                     )
                 }
                 Text(
@@ -3126,9 +3126,9 @@ internal fun WaylandDriverSettingsDialog(
         DeckExpandableRow(
             label = I18n.s(R.string.ui_adapter_report),
             hint = when {
-                probing -> "Checking driver…"
-                probe?.ok == true -> "Zero-copy " + (if (probe?.zeroCopySafe() == true) "safe" else "not safe") + " on this driver"
-                else -> probeNote ?: "Not checked yet."
+                probing -> I18n.s(R.string.ui_checking_driver)
+                probe?.ok == true -> "Zero-copy " + (if (probe?.zeroCopySafe() == true) "safe" else I18n.s(R.string.ui_not_safe)) + " on this driver"
+                else -> probeNote ?: I18n.s(R.string.ui_not_checked_yet)
             },
             expanded = reportOpen,
             onToggle = { reportOpen = !reportOpen },
@@ -3153,7 +3153,7 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = stringResource(R.string.graphics_driver_present_modes),
                         help = "mailbox = newest frame, lowest latency; fifo = vsync, even pacing. Default follows the " +
-                            "profile, else the stored $storedPresent. Immediate needs tearing, which Wayland does not offer.",
+                            I18n.s(R.string.ui_profile_else_the_stored_storedpresent_immediate_needs),
                         options = listOf("" to defaultWord, "mailbox" to "mailbox", "fifo" to "fifo"),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PRESENT] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PRESENT, it) }
@@ -3161,7 +3161,7 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_asynchronous_copy),
                         help = "The compositor keeps frames in flight instead of waiting for each screen blit. Turn off if " +
-                            "frames arrive out of order or a game stutters only on Wayland.",
+                            I18n.s(R.string.ui_frames_arrive_out_of_order_or_a_game_stutters_only_on),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY, it) }
@@ -3169,7 +3169,7 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_zero_copy_presentation),
                         help = "The game's own buffer goes on screen without a copy (lowest latency, less heat). Needs " +
-                            "sync-file fences in the driver (see the report). Turn off if you see tearing or stale frames.",
+                            I18n.s(R.string.ui_sync_file_fences_in_the_driver_see_the_report_turn_of),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY, it) }
@@ -3177,15 +3177,15 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_client_render_fences),
                         help = "With zero-copy, the game's driver tells the compositor when a frame is finished. Turn off " +
-                            "only to compare; off can show half-drawn frames.",
+                            I18n.s(R.string.ui_only_to_compare_off_can_show_half_drawn_frames),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE, it) }
                     )
                     WaylandTriStateRow(
-                        label = "UBWC / compressed buffers",
+                        label = I18n.s(R.string.ui_ubwc_compressed_buffers),
                         help = "Frames travel as compressed GPU buffers (less bandwidth). Turn off if the picture shows " +
-                            "garbled blocks or stripes.",
+                            I18n.s(R.string.ui_garbled_blocks_or_stripes),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC, it) }
@@ -3193,7 +3193,7 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_drm_format_modifiers),
                         help = "Lets the game's driver and the compositor agree on buffer layouts. Off makes the game use " +
-                            "plain linear buffers (BANNER_WSI_NO_MODIFIERS=1); try it for a black screen or corrupt frames.",
+                            I18n.s(R.string.ui_plain_linear_buffers_banner_wsi_no_modifiers_1_try_it),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS, it) }
@@ -3201,7 +3201,7 @@ internal fun WaylandDriverSettingsDialog(
                     WaylandTriStateRow(
                         label = I18n.s(R.string.ui_kgsl_timing_shim),
                         help = "Works around a Turnip bug where asking \"is the GPU done?\" waits for the whole frame " +
-                            "(the report's timing bug). Default lets the adapter detect it; On forces it, Off disables it.",
+                            I18n.s(R.string.ui_the_report_s_timing_bug_default_lets_the_adapter_dete),
                         options = triState(defaultWord),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM] ?: "",
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM, it) }
@@ -3210,7 +3210,7 @@ internal fun WaylandDriverSettingsDialog(
                         label = I18n.s(R.string.ui_subgroups),
                         help = "Auto tells the game what subgroup operations your Mesa driver supports (DOOM Eternal and " +
                             "other games that need them start). Off hides them, as older adapters did; try it if a game " +
-                            "shows glitches or crashes that it did not before.",
+                            I18n.s(R.string.ui_shows_glitches_or_crashes_that_it_did_not_before),
                         options = if (perGame) listOf("" to defaultWord, "auto" to "Auto", "0" to "Off")
                                   else listOf("" to "Auto", "0" to "Off"),
                         value = adapter[com.winhub.hernandez.core.WaylandAdapterSettings.KEY_SUBGROUPS] ?: "",
@@ -3222,7 +3222,7 @@ internal fun WaylandDriverSettingsDialog(
         var driverOpen by remember { mutableStateOf(false) }
         DeckExpandableRow(
             label = I18n.s(R.string.ui_driver_settings),
-            hint = "GPU name spoof, memory cap, OneUI / HyperOS fix",
+            hint = I18n.s(R.string.ui_gpu_name_spoof_memory_cap_oneui_hyperos_fix),
             expanded = driverOpen,
             onToggle = { driverOpen = !driverOpen },
         ) {
@@ -3251,9 +3251,9 @@ internal fun WaylandDriverSettingsDialog(
                 DeckConfigChip("?", selected = false, onClick = { helpRes = R.string.help_max_device_memory })
             }
             DeckRow(
-                label = "OneUI / HyperOS Fix (UBWC flag hint)",
+                label = I18n.s(R.string.ui_oneui_hyperos_fix_ubwc_flag_hint),
                 hint = "Gives the game's Turnip FD_DEV_FEATURES=enable_tp_ubwc_flag_hint=1, for Samsung and Xiaomi " +
-                    "phones whose games show corrupt textures; leave off otherwise.",
+                    I18n.s(R.string.ui_phones_whose_games_show_corrupt_textures_leave_off_ot),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     DeckToggle(fdDevFeatures) { fdDevFeatures = it }
@@ -3271,7 +3271,7 @@ internal fun WaylandDriverSettingsDialog(
         ) {
             DeckConfigNote(WAYLAND_DRIVER_SETTINGS_HELP)
             DeckConfigNote("Env vars you type under Env vars always win over these; the switches below win over the profile.")
-            DeckGroup("What the profiles do") {
+            DeckGroup(I18n.s(R.string.ui_what_the_profiles_do)) {
                 for (p in com.winhub.hernandez.core.WaylandAdapterSettings.PROFILES) {
                     DeckRow(
                         label = com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(p),
@@ -3331,7 +3331,7 @@ internal fun WaylandAdapterReportBlock(
     onRecheck: () -> Unit,
 ) {
     @Composable fun line(name: String, value: String, bad: Boolean = false) {
-        DeckConfigNote("$name: $value", error = bad)
+        DeckConfigNote(I18n.s(R.string.ui_name_value), error = bad)
     }
     when {
         probing -> Row(
@@ -3343,8 +3343,8 @@ internal fun WaylandAdapterReportBlock(
             Text(I18n.s(R.string.ui_checking_driver_about_2_seconds), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp)
         }
         note != null -> DeckConfigNote(note)
-        report == null -> DeckConfigNote("Not checked yet.")
-        !report.ok -> line("Could not check", report.error ?: "unknown error", bad = true)
+        report == null -> DeckConfigNote(I18n.s(R.string.ui_not_checked_yet))
+        !report.ok -> line(I18n.s(R.string.ui_could_not_check), report.error ?: I18n.s(R.string.ui_unknown_error), bad = true)
         else -> {
             Text(
                 report.driverLine(),
@@ -3352,21 +3352,21 @@ internal fun WaylandAdapterReportBlock(
                 fontSize = 12.sp,
                 modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
             )
-            line("Timing bug", when (report.kgslZeroTimeoutBug) {
-                true -> "yes — the timing shim will be used"
+            line(I18n.s(R.string.ui_timing_bug), when (report.kgslZeroTimeoutBug) {
+                true -> I18n.s(R.string.ui_yes_the_timing_shim_will_be_used)
                 false -> "no"
-                null -> "not measured"
+                null -> I18n.s(R.string.ui_not_measured)
             })
-            line("Fences (sync file)", if (report.syncFdFence) "yes" else "no", bad = !report.syncFdFence)
-            line("Zero-copy safe", (if (report.zeroCopySafe()) "yes" else "no") + " — " + report.zeroCopyReason(),
+            line(I18n.s(R.string.ui_fences_sync_file), if (report.syncFdFence) "yes" else "no", bad = !report.syncFdFence)
+            line(I18n.s(R.string.ui_zero_copy_safe), (if (report.zeroCopySafe()) "yes" else "no") + " — " + report.zeroCopyReason(),
                 bad = !report.zeroCopySafe())
-            line("Compressed buffers (modifiers)", if (report.drmModifiers) "yes" else "no")
-            line("High GPU priority", when (report.highPriorityAccepted) {
+            line(I18n.s(R.string.ui_compressed_buffers_modifiers), if (report.drmModifiers) "yes" else "no")
+            line(I18n.s(R.string.ui_high_gpu_priority), when (report.highPriorityAccepted) {
                 true -> "accepted"
                 false -> "refused" + (if (report.highPriorityRefusal.isNotEmpty()) " (${report.highPriorityRefusal})" else "")
-                null -> "not offered by the driver"
+                null -> I18n.s(R.string.ui_not_offered_by_the_driver)
             })
-            DeckConfigNote("Checked in ${report.probeMs} ms" + (if (report.fromCache) " (saved result)" else ""))
+            DeckConfigNote(I18n.s(R.string.ui_checked_in_report_probems_ms) + (if (report.fromCache) " (saved result)" else ""))
         }
     }
     Box(Modifier.padding(horizontal = 14.dp, vertical = 6.dp)) {
@@ -3430,7 +3430,7 @@ internal suspend fun maliSystemChoice(): List<String> =
  */
 internal fun compositorDriverLabel(version: String, choices: List<String>, choicesLoaded: Boolean): String = when {
     version.isEmpty() || version == "System" -> "System"
-    choicesLoaded && version !in choices -> "$version (not available)"
+    choicesLoaded && version !in choices -> I18n.s(R.string.ui_version_not_available)
     else -> version
 }
 
@@ -3444,7 +3444,7 @@ internal fun compositorDriverMaliSystem(version: String, choices: List<String>):
 
 internal const val MALI_SYSTEM_DRIVER_NOTE =
     "\"System\" uses your phone's own Mali Vulkan driver. Experimental on Wayland: it may show a black " +
-        "screen. Try it with the Mali (PanVK) switches in the driver gear; if it stays black, pick a PanVK driver or use X11."
+        I18n.s(R.string.ui_screen_try_it_with_the_mali_panvk_switches_in_the_dri)
 
 /**
  * The dmabuf-import device extensions the Wayland compositor enables at vkCreateDevice
@@ -3492,10 +3492,10 @@ internal suspend fun defaultCompositorDriver(context: Context, preferred: String
                 ?.first
             val fromDefaults = usable.firstOrNull { it.first == preferred }?.first
             android.util.Log.i("CompositorDriver", "default for a Wayland form: " + when {
-                fromDefaults != null -> "$fromDefaults (the New Container Defaults driver; newest usable is $newest)"
-                newest != null -> "$newest (newest usable" +
-                    (if (preferred != null) "; New Container Defaults names $preferred, which is not usable" else "") + ")"
-                else -> "none (no installed driver can import the game's frames)"
+                fromDefaults != null -> I18n.s(R.string.ui_fromdefaults_the_new_container_defaults_driver_newest)
+                newest != null -> I18n.s(R.string.ui_newest_newest_usable) +
+                    (if (preferred != null) I18n.s(R.string.ui_new_container_defaults_names_preferred_which_is_not_u) else "") + ")"
+                else -> I18n.s(R.string.ui_none_no_installed_driver_can_import_the_game_s_frames)
             })
             fromDefaults ?: newest
         }
@@ -3510,21 +3510,21 @@ private fun compositorDriverVerdict(context: Context, mgr: AdrenotoolsManager, i
     val library = mgr.getLibraryName(id)
     val verdict = when {
         // Without its folder the native probe would silently report the SYSTEM driver's extensions.
-        !dir.isDirectory -> CompositorDriverVerdict(false, emptyList(), "not installed")
+        !dir.isDirectory -> CompositorDriverVerdict(false, emptyList(), I18n.s(R.string.ui_not_installed_2))
         vendor.contains("qualcomm", ignoreCase = true) ->
-            CompositorDriverVerdict(false, emptyList(), "proprietary $vendor driver, not a Turnip (not probed)")
+            CompositorDriverVerdict(false, emptyList(), I18n.s(R.string.ui_proprietary_vendor_driver_not_a_turnip_not_probed))
         imported && !library.startsWith("libvulkan", ignoreCase = true) ->
-            CompositorDriverVerdict(false, emptyList(), "not a Mesa build ($library, not probed)")
+            CompositorDriverVerdict(false, emptyList(), I18n.s(R.string.ui_not_a_mesa_build_library_not_probed))
         else -> {
             val exts = runCatching { GPUInformation.enumerateExtensions(id, context)?.toSet() }.getOrNull() ?: emptySet()
             val fellBack = GPUInformation.driverLoadedFellBack()
             val missing = COMPOSITOR_IMPORT_EXTENSIONS.filterNot { it in exts }
             when {
-                fellBack || exts.isEmpty() -> CompositorDriverVerdict(false, emptyList(), "does not load on this GPU")
-                missing.isNotEmpty() -> CompositorDriverVerdict(false, emptyList(), "missing ${missing.joinToString()}")
+                fellBack || exts.isEmpty() -> CompositorDriverVerdict(false, emptyList(), I18n.s(R.string.ui_does_not_load_on_this_gpu))
+                missing.isNotEmpty() -> CompositorDriverVerdict(false, emptyList(), I18n.s(R.string.ui_missing_missing_jointostring))
                 else -> {
                     val v = runCatching { GPUInformation.getVulkanVersion(id, context) }.getOrNull() ?: ""
-                    CompositorDriverVerdict(true, v.split('.').mapNotNull { it.trim().toIntOrNull() }, "imports dmabufs, Vulkan $v")
+                    CompositorDriverVerdict(true, v.split('.').mapNotNull { it.trim().toIntOrNull() }, I18n.s(R.string.ui_imports_dmabufs_vulkan_v))
                 }
             }
         }
@@ -3841,7 +3841,7 @@ internal fun GraphicsDriverConfigDialog(
             ) {
                 if (waylandCompositorNote) {
                     Text(
-                        "Only the Turnip version here applies on Wayland; the other options configure the X11 game driver.",
+                        I18n.s(R.string.ui_only_the_turnip_version_here_applies_on_wayland_the_o),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -3924,7 +3924,7 @@ internal fun GraphicsDriverConfigDialog(
                 // Adreno users understand why these options are inert for them (a real point of confusion).
                 Text(
                     (if (gpuModel.isNotEmpty()) "GPU: $gpuModel — " else "") +
-                        "BCn/compat layers apply to Mali and other non-Qualcomm GPUs",
+                        I18n.s(R.string.ui_bcn_compat_layers_apply_to_mali_and_other_non_qualcom),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -3964,7 +3964,7 @@ internal fun GraphicsDriverConfigDialog(
                     }
                     if (isQualcomm) {
                         Text(
-                            "No effect on Adreno (native BCn)",
+                            I18n.s(R.string.ui_no_effect_on_adreno_native_bcn),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -3986,7 +3986,7 @@ internal fun GraphicsDriverConfigDialog(
                     }
                     if (isQualcomm) {
                         Text(
-                            "No effect on Adreno (native BCn)",
+                            I18n.s(R.string.ui_no_effect_on_adreno_native_bcn),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -4011,7 +4011,7 @@ internal fun GraphicsDriverConfigDialog(
                         Text("Hide present-wait / dynamic-rendering extensions", modifier = Modifier.weight(1f))
                     }
                     Text(
-                        "Hides present_id, present_wait and dynamic_rendering from the game and turns on Disable present wait. Try it if a game freezes or shows a black screen on PanVK.",
+                        I18n.s(R.string.ui_hides_present_id_present_wait_and_dynamic_rendering_f),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -4022,7 +4022,7 @@ internal fun GraphicsDriverConfigDialog(
                             value = value,
                             onValueChange = { onChange(it.filter { ch -> ch.isDigit() }.take(5)) },
                             label = { Text(label) },
-                            supportingText = { Text(if (bad) "Out of range ($min to $max): not used." else hint) },
+                            supportingText = { Text(if (bad) I18n.s(R.string.ui_out_of_range_min_to_max_not_used) else hint) },
                             isError = bad,
                             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
                                 keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
@@ -4031,7 +4031,7 @@ internal fun GraphicsDriverConfigDialog(
                         )
                     }
                     MbField("PANVK_HEAP_MB", panvkHeap, com.winhub.hernandez.core.MaliPanvk.HEAP_MIN,
-                        com.winhub.hernandez.core.MaliPanvk.HEAP_MAX, "Default: a quarter of RAM, 1024 to 3072 MB.") { panvkHeap = it }
+                        com.winhub.hernandez.core.MaliPanvk.HEAP_MAX, I18n.s(R.string.ui_default_a_quarter_of_ram_1024_to_3072_mb)) { panvkHeap = it }
                     MbField("PANVK_TILER_HEAP_MB", panvkTilerHeap, com.winhub.hernandez.core.MaliPanvk.TILER_HEAP_MIN,
                         com.winhub.hernandez.core.MaliPanvk.TILER_HEAP_MAX, "Default: 512 MB.") { panvkTilerHeap = it }
                     MbField("PANVK_POLY_HEAP_MB", panvkPolyHeap, com.winhub.hernandez.core.MaliPanvk.POLY_HEAP_MIN,
@@ -4063,7 +4063,7 @@ internal fun GraphicsDriverConfigDialog(
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = fdDevFeatures, onCheckedChange = { fdDevFeatures = it })
-                    Text("OneUI / HyperOS Fix", modifier = Modifier.weight(1f))
+                    Text(I18n.s(R.string.ui_oneui_hyperos_fix), modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_oneui_hyperos_fix }) {
                         Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
@@ -4073,7 +4073,7 @@ internal fun GraphicsDriverConfigDialog(
                 // users on a STOCK driver. Tri-state maps to whether `gmem` joins TU_DEBUG at launch. ---
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Turnip GMEM",
+                    I18n.s(R.string.ui_turnip_gmem),
                     style = MaterialTheme.typography.titleSmall
                 )
                 Spacer(Modifier.height(4.dp))
@@ -4091,7 +4091,7 @@ internal fun GraphicsDriverConfigDialog(
                 Text(
                     "Auto forces GMEM tiled rendering (TU_DEBUG=gmem) only on Adreno 710/720/722; " +
                         "Force On applies it on any GPU; Force Off never applies it. Leave on Auto unless a " +
-                        "game misbehaves.",
+                        I18n.s(R.string.ui_game_misbehaves),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -4114,7 +4114,7 @@ internal fun GraphicsDriverConfigDialog(
                     Spacer(Modifier.height(4.dp))
                     Text(
                         "Expert-only Turnip debug tokens. Off by default — enable only if you know what " +
-                            "they do. These are unioned with the GMEM setting above into TU_DEBUG.",
+                            I18n.s(R.string.ui_they_do_these_are_unioned_with_the_gmem_setting_above),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -4144,7 +4144,7 @@ internal fun GraphicsDriverConfigDialog(
                             enabled = !sysmemBlockedByGmem
                         )
                         Text(
-                            "sysmem — force sysmem (bypass GMEM)",
+                            I18n.s(R.string.ui_sysmem_force_sysmem_bypass_gmem),
                             modifier = Modifier.weight(1f),
                             color = if (sysmemBlockedByGmem) MaterialTheme.colorScheme.onSurfaceVariant
                                     else Color.Unspecified
@@ -4155,7 +4155,7 @@ internal fun GraphicsDriverConfigDialog(
                     }
                     if (sysmemBlockedByGmem) {
                         Text(
-                            "Disabled — Turnip GMEM = Force On overrides sysmem.",
+                            I18n.s(R.string.ui_disabled_turnip_gmem_force_on_overrides_sysmem),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -4168,7 +4168,7 @@ internal fun GraphicsDriverConfigDialog(
                         }
                     }
                     Text(
-                        "deck_emu requires a Banners-Turnip driver (ignored on stock Turnip).",
+                        I18n.s(R.string.ui_deck_emu_requires_a_banners_turnip_driver_ignored_on),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -4201,7 +4201,7 @@ internal fun GraphicsDriverConfigDialog(
                         if (isQualcomm) {
                             Spacer(Modifier.height(4.dp))
                             Text(
-                                "No effect on Adreno (native BCn) — these apply to Mali/non-Qualcomm GPUs",
+                                I18n.s(R.string.ui_no_effect_on_adreno_native_bcn_these_apply_to_mali_no),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -4285,12 +4285,12 @@ internal fun GraphicsDriverConfigDialog(
                 if (isImported) {
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        "Detected settings (advanced) — from scanning this wrapper",
+                        I18n.s(R.string.ui_detected_settings_advanced_from_scanning_this_wrapper),
                         style = MaterialTheme.typography.titleSmall
                     )
                     Spacer(Modifier.height(2.dp))
                     Text(
-                        "Values are passed to the wrapper as-is; unknown ones are safe to leave blank.",
+                        I18n.s(R.string.ui_values_are_passed_to_the_wrapper_as_is_unknown_ones_a),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -4321,7 +4321,7 @@ internal fun GraphicsDriverConfigDialog(
                                 }
                                 WrapperSettingsDictionary.Type.SLIDER -> {
                                     val fv = current.toFloatOrNull() ?: def.default.toFloatOrNull() ?: def.min
-                                    Text("${def.label}: ${fv.toInt()}", style = MaterialTheme.typography.bodySmall)
+                                    Text(I18n.s(R.string.ui_def_label_fv_toint), style = MaterialTheme.typography.bodySmall)
                                     Slider(
                                         value = fv,
                                         onValueChange = { detectedValues[key] = it.toInt().toString() },
@@ -4504,7 +4504,7 @@ internal fun DxvkConfigDialog(
     var isProcessing by remember { mutableStateOf(false) }
 
     // Virtual "Browse…" entry in the custom-source dropdown; launches the file picker.
-    val BROWSE_CONFIG_MARKER = "Browse for file…"
+    val BROWSE_CONFIG_MARKER = I18n.s(R.string.ui_browse_for_file)
 
     val allDxvkVersions = remember { mutableStateOf(listOf<String>()) }
     val vkd3dVersions   = remember { mutableStateOf(listOf<String>()) }
@@ -4869,8 +4869,8 @@ internal fun DxvkConfigDialog(
     }
 
     fun schemaName(s: VegasKeyCatalog.Schema?): String = when (s) {
-        VegasKeyCatalog.Schema.SAREK -> "Sarek (dxvk.vegas.*)"
-        VegasKeyCatalog.Schema.STAR -> "Star Engine (vegas.*)"
+        VegasKeyCatalog.Schema.SAREK -> I18n.s(R.string.ui_sarek_dxvk_vegas)
+        VegasKeyCatalog.Schema.STAR -> I18n.s(R.string.ui_star_engine_vegas)
         null -> "unknown"
     }
 
@@ -4889,7 +4889,7 @@ internal fun DxvkConfigDialog(
                 true
             }
             if (ok) { stockEdited = true; toggleVersion++ }
-            else Toast.makeText(activity, "Failed to restore backup", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(activity, I18n.s(R.string.ui_failed_to_restore_backup), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -4907,7 +4907,7 @@ internal fun DxvkConfigDialog(
                 runCatching { java.nio.file.Files.copy(target.toPath(), bak.toPath()) }.isSuccess
             }
             if (ok) toggleVersion++
-            else Toast.makeText(activity, "Failed to create backup", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(activity, I18n.s(R.string.ui_failed_to_create_backup), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -5043,7 +5043,7 @@ internal fun DxvkConfigDialog(
                                 else target.absolutePath
                 onLivePointerChanged(finalPath)
             }
-            else Toast.makeText(activity, "Failed to update config file", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(activity, I18n.s(R.string.ui_failed_to_update_config_file), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -5119,7 +5119,7 @@ internal fun DxvkConfigDialog(
                 isProcessing = true
                 installContentFromUri(activity, uri) { success ->
                     if (success) {
-                        Toast.makeText(activity, "VEGAS version installed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, I18n.s(R.string.ui_vegas_version_installed), Toast.LENGTH_SHORT).show()
                         scope.launch {
                             withContext(Dispatchers.IO) {
                                 val cm = ContentsManager(context)
@@ -5142,7 +5142,7 @@ internal fun DxvkConfigDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isVegas) "VEGAS ${stringResource(R.string.configuration)}" else "DXVK ${stringResource(R.string.configuration)}") },
+        title = { Text(if (isVegas) I18n.s(R.string.ui_vegas_stringresource_r_string_configuration) else I18n.s(R.string.ui_dxvk_stringresource_r_string_configuration)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()) {
                 // §VEGAS version management (VEGAS mode): top section, inline action cluster
@@ -5156,10 +5156,10 @@ internal fun DxvkConfigDialog(
                 )
                 Spacer(Modifier.height(8.dp))
                 if (isVegas) {
-                    SectionLabel("VEGAS VERSION")
+                    SectionLabel(I18n.s(R.string.ui_vegas_version_2))
                     if (filteredDxvk.isEmpty()) {
                         Text(
-                            "no VEGAS build installed — download one via the sheet",
+                            I18n.s(R.string.ui_no_vegas_build_installed_download_one_via_the_sheet),
                             color = MaterialTheme.colorScheme.outline,
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -5197,17 +5197,17 @@ internal fun DxvkConfigDialog(
                                                     if (selectedDxvk !in newVersions) {
                                                         selectedDxvk = newVersions.firstOrNull() ?: selectedDxvk
                                                     }
-                                                    Toast.makeText(activity, "VEGAS version deleted", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(activity, I18n.s(R.string.ui_vegas_version_deleted), Toast.LENGTH_SHORT).show()
                                                 }
                                             } else {
                                                 withContext(Dispatchers.Main) {
-                                                    Toast.makeText(activity, "No installed VEGAS version to delete", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(activity, I18n.s(R.string.ui_no_installed_vegas_version_to_delete), Toast.LENGTH_SHORT).show()
         }
     }
 }
                                     } catch (e: Exception) {
                                         withContext(Dispatchers.Main) {
-                                            Toast.makeText(activity, "ERROR: Failed to delete — ${e.message}", Toast.LENGTH_LONG).show()
+                                            Toast.makeText(activity, I18n.s(R.string.ui_error_failed_to_delete_e_message), Toast.LENGTH_LONG).show()
                                         }
                                     } finally {
                                         withContext(Dispatchers.Main) { isProcessing = false }
@@ -5220,7 +5220,7 @@ internal fun DxvkConfigDialog(
                             Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
                         }
                         IconButton(
-                            onClick = { pickVegasLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select VEGAS package")) },
+                            onClick = { pickVegasLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_vegas_package))) },
                             enabled = !isProcessing,
                             modifier = Modifier.size(40.dp)
                         ) {
@@ -5237,11 +5237,11 @@ internal fun DxvkConfigDialog(
                     if (notesCache?.first == verKey || VegasTierPresets.BUNDLED_NOTES[verKey] != null) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             TextButton(onClick = { openReleaseNotes() }) {
-                                Text("What's new in $selectedDxvk", style = MaterialTheme.typography.bodySmall)
+                                Text(I18n.s(R.string.ui_what_s_new_in_selecteddxvk), style = MaterialTheme.typography.bodySmall)
                             }
                             val live = notesCache?.first == verKey
                             Text(
-                                if (live) "● live" else "◐ bundled",
+                                if (live) I18n.s(R.string.ui_live) else I18n.s(R.string.ui_bundled),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (live) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -5287,9 +5287,9 @@ internal fun DxvkConfigDialog(
                 }
                 LabeledDropdown(stringResource(R.string.frame_rate), framerateEntries, selectedFramerate, { selectedFramerate = it })
                 Spacer(Modifier.height(8.dp))
-                SectionLabel("TEXTURE FILTERING")
+                SectionLabel(I18n.s(R.string.ui_texture_filtering))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    LabeledDropdown("Anisotropic filtering", anisotropyLabels, selectedAnisotropy, { selectedAnisotropy = it },
+                    LabeledDropdown(I18n.s(R.string.ui_anisotropic_filtering_2), anisotropyLabels, selectedAnisotropy, { selectedAnisotropy = it },
                         modifier = Modifier.weight(1f))
                     IconButton(onClick = { textureHelpRes = R.string.help_anisotropic_filtering }) {
                         Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
@@ -5297,20 +5297,20 @@ internal fun DxvkConfigDialog(
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    LabeledDropdown("Texture sharpness", lodBiasLabels, selectedLodBias, { selectedLodBias = it },
+                    LabeledDropdown(I18n.s(R.string.ui_texture_sharpness_2), lodBiasLabels, selectedLodBias, { selectedLodBias = it },
                         modifier = Modifier.weight(1f))
                     IconButton(onClick = { textureHelpRes = R.string.help_texture_sharpness }) {
                         Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Text(
-                    "DirectX 9-11 games only. Applies the next time the game starts.",
+                    I18n.s(R.string.ui_directx_9_11_games_only_applies_the_next_time_t_2),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Spacer(Modifier.height(8.dp))
-                SectionLabel("API FEATURE LEVEL")
+                SectionLabel(I18n.s(R.string.ui_api_feature_level))
                 LabeledDropdown("", featureLevelEntries, selectedFeatureLevel, { selectedFeatureLevel = it })
                 Spacer(Modifier.height(8.dp))
                 LabeledDropdown(I18n.s(R.string.ddraw_wrapper), ddraEntries, selectedDdra, { selectedDdra = it })
@@ -5321,7 +5321,7 @@ internal fun DxvkConfigDialog(
                     Spacer(Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         LabeledDropdown(
-                            "D7VK Version", d7vkVersions.value, selectedD7vk, { selectedD7vk = it },
+                            I18n.s(R.string.ui_d7vk_version), d7vkVersions.value, selectedD7vk, { selectedD7vk = it },
                             modifier = Modifier.weight(1f)
                         )
                         ContentInstallGear(onDownloadFile = onDownloadD7vk)
@@ -5333,7 +5333,7 @@ internal fun DxvkConfigDialog(
                 // file-based source only (defaults has no file, so Apply is gated).
                 if (isVegas) {
                     Spacer(Modifier.height(8.dp))
-                    SectionLabel("PERFORMANCE TIER")
+                    SectionLabel(I18n.s(R.string.ui_performance_tier))
                     Surface(
                         shape = MaterialTheme.shapes.small,
                         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
@@ -5348,9 +5348,9 @@ internal fun DxvkConfigDialog(
                             val tierForPreview = staged
                             Text(
                                 when {
-                                    gpuModel == null -> "GPU model unreadable — tier is manual"
-                                    detectedTier != null -> "$gpuModel · auto Tier $detectedTier"
-                                    else -> "GPU: $gpuModel — no tier suggestion"
+                                    gpuModel == null -> I18n.s(R.string.ui_gpu_model_unreadable_tier_is_manual)
+                                    detectedTier != null -> I18n.s(R.string.ui_gpumodel_auto_tier_detectedtier)
+                                    else -> I18n.s(R.string.ui_gpu_gpumodel_no_tier_suggestion)
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -5374,12 +5374,12 @@ internal fun DxvkConfigDialog(
                             if (tierForPreview != null && p != null) {
                                 Spacer(Modifier.height(4.dp))
                                 Text(
-                                    "Draw threshold ${p.drawThreshold} (D3D9 ${p.drawThresholdD3D9}) · HAAE pacing ${p.haaePacing}ms · governor cap ${p.governorCap} · shader zero-init ${p.shaderZeroInit} · frame-gen ${p.frameGen}",
+                                    I18n.s(R.string.ui_draw_threshold_p_drawthreshold_d3d9_p_drawthresholdd3),
                                     style = MaterialTheme.typography.bodySmall
                                 )
                                 Spacer(Modifier.height(2.dp))
                                 Text(
-                                    "will write: vegas.forceTier = $tierForPreview",
+                                    I18n.s(R.string.ui_will_write_vegas_forcetier_tierforpreview),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -5391,7 +5391,7 @@ internal fun DxvkConfigDialog(
                                     if (useDefaults) {
                                         Spacer(Modifier.width(8.dp))
                                         Text(
-                                            "pick a config source first — defaults has no file to write to",
+                                            I18n.s(R.string.ui_pick_a_config_source_first_defaults_has_no_file_to_wr),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             modifier = Modifier.weight(1f)
@@ -5403,8 +5403,8 @@ internal fun DxvkConfigDialog(
                                 if (applied != null) {
                                     Spacer(Modifier.height(4.dp))
                                     Text(
-                                        if (applied == 0) "Applied — auto (vegas.forceTier = 0)"
-                                        else "Applied — vegas.forceTier = $applied",
+                                        if (applied == 0) I18n.s(R.string.ui_applied_auto_vegas_forcetier_0)
+                                        else I18n.s(R.string.ui_applied_vegas_forcetier_applied),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.primary
                                     )
@@ -5416,7 +5416,7 @@ internal fun DxvkConfigDialog(
                                         if (useDefaults) {
                                             Spacer(Modifier.width(8.dp))
                                             Text(
-                                                "pick a config source first",
+                                                I18n.s(R.string.ui_pick_a_config_source_first),
                                                 style = MaterialTheme.typography.bodySmall,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                                 modifier = Modifier.weight(1f)
@@ -5441,7 +5441,7 @@ internal fun DxvkConfigDialog(
                                 Text(I18n.s(R.string.ui_experimental_mali_driver), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                                 Spacer(Modifier.height(2.dp))
                                 Text(
-                                    "Pair the Mali 'Wrapper + compat + bcn' driver with the relaxed DXVK list (all DXVK versions) in the container's driver settings.",
+                                    I18n.s(R.string.ui_pair_the_mali_wrapper_compat_bcn_driver_with_the_rela),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -5457,7 +5457,7 @@ internal fun DxvkConfigDialog(
                         "New to configs? Grab a Stock config via ⬇, then pick it below. " +
                         "Want it your way? Edit anything in a stock config — changes auto-save as your own copy, the original stays untouched. " +
                         "Prefer managing files yourself? \"Custom config file\" points at any .conf (the built-in way of doing DXVK_CONFIG_FILE). " +
-                        "Heads-up: builds SILENTLY IGNORE keys they don't recognise — if an added key does nothing, it's either not supported by that build or has a typo.",
+                        I18n.s(R.string.ui_heads_up_builds_silently_ignore_keys_they_don_t_recog),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -5475,7 +5475,7 @@ internal fun DxvkConfigDialog(
                         Spacer(Modifier.height(4.dp))
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                             LabeledDropdown(
-                                "Stock config (per version)",
+                                I18n.s(R.string.ui_stock_config_per_version),
                                 stockSources.value.map { it.displayLabel() },
                                 selectedStock ?: "",
                                 { s -> selectedStock = s; selectedCustom = null; useDefaults = false },
@@ -5495,7 +5495,7 @@ internal fun DxvkConfigDialog(
                         }
                         if (stockSources.value.isEmpty()) {
                             Text(
-                                "no installed VEGAS package ships a config — install one via the sheet",
+                                I18n.s(R.string.ui_no_installed_vegas_package_ships_a_config_install_one),
                                 color = MaterialTheme.colorScheme.outline,
                                 style = MaterialTheme.typography.bodySmall
                             )
@@ -5507,9 +5507,9 @@ internal fun DxvkConfigDialog(
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 if (sidecarExists)
-                                    "Your edits live in your own copy — the stock version stays pristine."
+                                    I18n.s(R.string.ui_your_edits_live_in_your_own_copy_the_stock_version_st)
                                 else
-                                    "Read-only until the first edit — changes create your own copy.",
+                                    I18n.s(R.string.ui_read_only_until_the_first_edit_changes_create_your_ow),
                                 color = if (sidecarExists) MaterialTheme.colorScheme.primary
                                     else MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodySmall
@@ -5517,13 +5517,13 @@ internal fun DxvkConfigDialog(
                         }
                         Spacer(Modifier.height(4.dp))
                         LabeledDropdown(
-                            "Custom config file",
+                            I18n.s(R.string.ui_custom_config_file),
                             customEntries.value + BROWSE_CONFIG_MARKER,
                             selectedCustom ?: "",
                             { c ->
                                 if (c == BROWSE_CONFIG_MARKER) {
                                     pickCustomConfigLauncher.launch(
-                                        InAppFilePicker.buildIntent(context, emptyArray(), "Select config file")
+                                        InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_config_file))
                                     )
                                 } else {
                                     selectedCustom = c; selectedStock = null; useDefaults = false
@@ -5534,14 +5534,14 @@ internal fun DxvkConfigDialog(
                         if (livePath.isNotEmpty()) {
                             Spacer(Modifier.height(2.dp))
                             Text(
-                                "📍 $livePath",
+                                I18n.s(R.string.ui_livepath),
                                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
                         if (configSourceMissing) {
                             Spacer(Modifier.height(4.dp))
-                            Text("not found: $livePath", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                            Text(I18n.s(R.string.ui_not_found_livepath), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
                             // #5 ghost → one-tap remove from dropdown
                             if (selectedCustom != null) {
                                 TextButton(onClick = {
@@ -5559,9 +5559,9 @@ internal fun DxvkConfigDialog(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     if (backupsList.isEmpty())
-                                        "No backups yet — the first edit keeps a copy of the current file."
+                                        I18n.s(R.string.ui_no_backups_yet_the_first_edit_keeps_a_copy_of_the_cur)
                                     else
-                                        "Backups: ${backupsList.size} — restore a previously saved state",
+                                        I18n.s(R.string.ui_backups_backupslist_size_restore_a_previously_saved_s),
                                     style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -5592,7 +5592,7 @@ internal fun DxvkConfigDialog(
                                     k?.isForkKey(row.key) == true && !k.isGated(row.key, selectedDxvk)
                                 }
                                 Text(
-                                    "Fork features only: $shownCount of ${configRows.size} keys shown",
+                                    I18n.s(R.string.ui_fork_features_only_showncount_of_configrows_size_keys),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -5715,7 +5715,7 @@ internal fun DxvkConfigDialog(
                                     ) {
                                         Icon(
                                             Icons.Filled.Delete,
-                                            contentDescription = "Delete key ${row.key}",
+                                            contentDescription = I18n.s(R.string.ui_delete_key_row_key),
                                             tint = MaterialTheme.colorScheme.error
                                         )
                                     }
@@ -5723,7 +5723,7 @@ internal fun DxvkConfigDialog(
                                 // #10 typo inline suggestion (only for NOWHERE bucket, distance ≤2)
                                 typoFor(row.key)?.let { sug ->
                                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(start = 48.dp)) {
-                                        Text("Typo? Did you mean $sug", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.weight(1f))
+                                        Text(I18n.s(R.string.ui_typo_did_you_mean_sug), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.weight(1f))
                                         TextButton(onClick = {
                                             // Fix: write correct key with same value, then delete typo key
                                             applyValue(sug, row.value)
@@ -5778,7 +5778,7 @@ internal fun DxvkConfigDialog(
                                             }
                                         }
                                     }
-                                    Text("missing — will be added as ${row.key} = ${row.value}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(I18n.s(R.string.ui_missing_will_be_added_as_row_key_row_value), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                             }
                         }
@@ -5786,16 +5786,16 @@ internal fun DxvkConfigDialog(
                     // Knowledge footer: provenance + state of the data layer
                     Spacer(Modifier.height(6.dp))
                     val footerText = if (vegasKnowledge != null)
-                        "knowledge: fork ${vegasKnowledge.forkBuild()} · ${vegasKnowledge.generated()}"
+                        I18n.s(R.string.ui_knowledge_fork_vegasknowledge_forkbuild_vegasknowledg)
                     else
-                        "knowledge data unavailable — showing keys unclassified"
+                        I18n.s(R.string.ui_knowledge_data_unavailable_showing_keys_unclassified)
                     Text(footerText, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     val catalogFooter = when {
-                        vegasCatalog == null -> "catalog unavailable — classifier off, rows marked unverified"
-                        selectedCustom != null -> "catalog: newest ${vegasCatalog.newestTag()} · ${vegasCatalog.generatedAt()} — classifier applies to stock configs"
-                        activeStockTag == null -> "catalog: newest ${vegasCatalog.newestTag()} · ${vegasCatalog.generatedAt()} — no stock source selected"
-                        catalogBehind -> "catalog behind build — key classes unverified (newest known: ${vegasCatalog.newestTag()})"
-                        else -> "catalog: covered · newest ${vegasCatalog.newestTag()} · ${vegasCatalog.generatedAt()}"
+                        vegasCatalog == null -> I18n.s(R.string.ui_catalog_unavailable_classifier_off_rows_marked_unveri)
+                        selectedCustom != null -> I18n.s(R.string.ui_catalog_newest_vegascatalog_newesttag_vegascatalog_ge)
+                        activeStockTag == null -> I18n.s(R.string.ui_catalog_newest_vegascatalog_newesttag_vegascata_2)
+                        catalogBehind -> I18n.s(R.string.ui_catalog_behind_build_key_classes_unverified_newest_kn)
+                        else -> I18n.s(R.string.ui_catalog_covered_newest_vegascatalog_newesttag_vegasca)
                     }
                     Text(catalogFooter, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -5820,7 +5820,7 @@ internal fun DxvkConfigDialog(
                                     Text(I18n.s(R.string.ui_updated_at_build_time_assistant_side_maintenance_nche))
                                     Spacer(Modifier.height(6.dp))
                                     TextButton(onClick = { runLiveCheck() }, enabled = !liveChecking) {
-                                        Text(if (liveChecking) "Checking…" else "Check for new builds", style = MaterialTheme.typography.bodySmall)
+                                        Text(if (liveChecking) I18n.s(R.string.ui_checking) else I18n.s(R.string.ui_check_for_new_builds), style = MaterialTheme.typography.bodySmall)
                                     }
                                 }
                             },
@@ -5852,14 +5852,14 @@ internal fun DxvkConfigDialog(
                                         if (r.newerCount == 0) {
                                             Text(I18n.s(R.string.ui_no_newer_releases_found))
                                         } else {
-                                            Text("${r.newerCount} newer release(s) found" +
+                                            Text(I18n.s(R.string.ui_r_newercount_newer_release_s_found) +
                                                     (if (r.newBuildCount > 0) " — $r.newBuildCount stable" else " (all prerelease)") + ":")
                                             r.newerTags.forEach { t -> Text("· $t", style = MaterialTheme.typography.bodySmall) }
                                         }
                                         Spacer(Modifier.height(4.dp))
                                         Text(
-                                            if (r.installedFoundLive) "Your installed build is still listed upstream."
-                                            else "Your installed build is not in the current release list."
+                                            if (r.installedFoundLive) I18n.s(R.string.ui_your_installed_build_is_still_listed_upstream)
+                                            else I18n.s(R.string.ui_your_installed_build_is_not_in_the_current_release_li)
                                         )
                                         Spacer(Modifier.height(4.dp))
                                         Text(I18n.s(R.string.ui_this_check_only_reports_no_writes_no_catalog_change_d))
@@ -5873,8 +5873,8 @@ internal fun DxvkConfigDialog(
                     // "Use defaults" (no file to be edited).
                     if (stockEdited && !useDefaults) {
                         Text(
-                            if (sidecarExists) "Edited · yours now — saved to your own copy"
-                            else "Edited · saved to the live config file",
+                            if (sidecarExists) I18n.s(R.string.ui_edited_yours_now_saved_to_your_own_copy)
+                            else I18n.s(R.string.ui_edited_saved_to_the_live_config_file),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -5887,18 +5887,18 @@ internal fun DxvkConfigDialog(
                             ?: VegasTierPresets.BUNDLED_NOTES[verKey]
                         AlertDialog(
                             onDismissRequest = { showNotes = false },
-                            title = { Text("What's new — $verKey") },
+                            title = { Text(I18n.s(R.string.ui_what_s_new_verkey)) },
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                                     if (notes.isNullOrEmpty()) {
-                                        Text(if (notesLoading) "Fetching notes…" else "No release notes for this version.")
+                                        Text(if (notesLoading) I18n.s(R.string.ui_fetching_notes) else I18n.s(R.string.ui_no_release_notes_for_this_version))
                                     } else {
                                         notes.forEach { n -> Text("· $n", style = MaterialTheme.typography.bodySmall) }
                                     }
                                     Spacer(Modifier.height(6.dp))
                                     Text(
-                                        if (notesSource == "live") "Fetched from the vegas-releases feed."
-                                        else if (notesSource == "bundled") "Bundled with the app (offline)."
+                                        if (notesSource == "live") I18n.s(R.string.ui_fetched_from_the_vegas_releases_feed)
+                                        else if (notesSource == "bundled") I18n.s(R.string.ui_bundled_with_the_app_offline)
                                         else "",
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -5930,7 +5930,7 @@ internal fun DxvkConfigDialog(
                                                 modifier = Modifier.weight(1f)
                                             ) {
                                                 Text(
-                                                    "${b.name} · ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.ROOT).format(b.lastModified())}",
+                                                    I18n.s(R.string.ui_b_name_java_text_simpledateformat)yyyy-MM-dd HH:mmI18n.s(R.string.ui_java_util_locale_root_format_b_lastmodified),
                                                     style = MaterialTheme.typography.bodySmall
                                                 )
                                             }
@@ -5955,7 +5955,7 @@ internal fun DxvkConfigDialog(
                             onDismissRequest = { restoreTarget = null },
                             title = { Text(I18n.s(R.string.ui_restore_this_backup)) },
                             text = {
-                                Text("The live config file will be replaced by '${backup.name}'. The current state is backed up first — nothing is lost.")
+                                Text(I18n.s(R.string.ui_the_live_config_file_will_be_replaced_by_backup_name))
                             },
                             confirmButton = {
                                 TextButton(onClick = { restoreBackup(backup); restoreTarget = null }) { Text(I18n.s(R.string.ui_restore)) }
@@ -5996,7 +5996,7 @@ internal fun DxvkConfigDialog(
                                             onClick = { applyValue(row.key, baseline.value); customValueDraft = baseline.value },
                                             modifier = Modifier.fillMaxWidth()
                                         ) {
-                                            Text("Reset to stock (${baseline.value})", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                                            Text(I18n.s(R.string.ui_reset_to_stock_baseline_value), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                         }
                                     }
                                     Spacer(Modifier.height(4.dp))
@@ -6045,7 +6045,7 @@ internal fun DxvkConfigDialog(
                                         )
                                         Spacer(Modifier.height(8.dp))
                                         Text(
-                                            "Are you sure you want '$delKey' removed? You can get it back via Backup → Restore or Add key.",
+                                            I18n.s(R.string.ui_are_you_sure_you_want_delkey_removed_you_can_get_it_b),
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
@@ -6058,7 +6058,7 @@ internal fun DxvkConfigDialog(
                                                 onClick = {
                                                     applyDeleteKey(delKey)
                                                     pendingDeleteKey = null
-                                                    Toast.makeText(activity, "Removed $delKey — Restore to undo", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(activity, I18n.s(R.string.ui_removed_delkey_restore_to_undo), Toast.LENGTH_SHORT).show()
                                                 },
                                                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                                             ) {
@@ -6085,9 +6085,9 @@ internal fun DxvkConfigDialog(
                             title = { Text(I18n.s(R.string.ui_key_not_applicable_to_this_build_schema)) },
                             text = {
                                 Text(
-                                    "$key belongs to the ${schemaName(keyFam)} schema ($prefix…).\n\n" +
+                                    I18n.s(R.string.ui_key_belongs_to_the_schemaname_keyfam_schema_prefix_n) +
                                     "This build (${activeStockTag ?: "unknown"}) uses the ${schemaName(instFam)} schema — " +
-                                    "the option cannot be applied and would be ignored."
+                                    I18n.s(R.string.ui_the_option_cannot_be_applied_and_would_be_ignored)
                                 )
                             },
                             confirmButton = { TextButton(onClick = { pendingSchemaBlock = null }) { Text(I18n.s(R.string.ui_got_it)) } }
@@ -6201,7 +6201,7 @@ internal fun WineD3DConfigDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("WineD3D ${stringResource(R.string.configuration)}") },
+        title = { Text(I18n.s(R.string.ui_wined3d_stringresource_r_string_configuration)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()) {
                 LabeledDropdown("CSMT", csmtOptions, csmt, { csmt = it })
@@ -6359,7 +6359,7 @@ internal fun FpsCounterConfigDialog(
         "tempRedBat=$tempRedBat",
         "hudColor=$color",
         "hudOutline=$outlineValue",
-        "hudOutlineAccent=${if (outlineAccent) 1 else 0}",
+        I18n.s(R.string.ui_hudoutlineaccent_if_outlineaccent_1_else_0),
         "hudScale=$hudScale",
         "hudOpacity=$hudOpacity"
     ).joinToString(",")
@@ -6409,30 +6409,30 @@ internal fun FpsCounterConfigDialog(
                 fun show(label: String): Boolean = label in fusionChips
                 val metricChips = buildList<Triple<String, Boolean, () -> Unit>> {
                     if (show("FPS")) add(Triple("FPS", showFPS) { showFPS = !showFPS })
-                    if (show("FPS graph")) add(Triple("FPS graph", showGraph) { showGraph = !showGraph })
+                    if (show(I18n.s(R.string.ui_fps_graph))) add(Triple(I18n.s(R.string.ui_fps_graph), showGraph) { showGraph = !showGraph })
                     if (show("CPU")) add(Triple("CPU", showCPU) { showCPU = !showCPU })
                     if (show("GPU")) add(Triple("GPU", showGPU) { showGPU = !showGPU })
                     if (show("VRAM")) add(Triple("VRAM", showVram) { showVram = !showVram })
                     if (show("RAM")) add(Triple("RAM", showRAM) { showRAM = !showRAM })
                     if (show("Power")) add(Triple("Power", showPower) { showPower = !showPower })
                     if (show("Temp")) add(Triple("Temp", showTemp) { showTemp = !showTemp })
-                    if (show("GPU temp")) add(Triple("GPU temp", showGpuTemp) { showGpuTemp = !showGpuTemp })
+                    if (show(I18n.s(R.string.ui_gpu_temp))) add(Triple(I18n.s(R.string.ui_gpu_temp), showGpuTemp) { showGpuTemp = !showGpuTemp })
                     if (show("Battery")) add(Triple("Battery", showBattery) { showBattery = !showBattery })
-                    if (show("0.01% low")) add(Triple("0.01% low", showLow001) { showLow001 = !showLow001 })
-                    if (show("FPS .1")) add(Triple("FPS .1", fpsDecimal) { fpsDecimal = !fpsDecimal })
+                    if (show(I18n.s(R.string.ui_0_01_low))) add(Triple(I18n.s(R.string.ui_0_01_low), showLow001) { showLow001 = !showLow001 })
+                    if (show(I18n.s(R.string.ui_fps_1))) add(Triple(I18n.s(R.string.ui_fps_1), fpsDecimal) { fpsDecimal = !fpsDecimal })
                     if (show("Per-core")) add(Triple("Per-core", showPerCore) { showPerCore = !showPerCore })
                     if (show("Swap")) add(Triple("Swap", showSwap) { showSwap = !showSwap })
                     if (show("Network")) add(Triple("Network", showNet) { showNet = !showNet })
                     if (show("Resolution")) add(Triple("Resolution", showResolution) { showResolution = !showResolution })
                     if (show("Proton")) add(Triple("Proton", showProton) { showProton = !showProton })
                     if (show("Wrapper")) add(Triple("Wrapper", showWrapper) { showWrapper = !showWrapper })
-                    if (show("DX ver")) add(Triple("DX ver", showDxVer) { showDxVer = !showDxVer })
+                    if (show(I18n.s(R.string.ui_dx_ver))) add(Triple(I18n.s(R.string.ui_dx_ver), showDxVer) { showDxVer = !showDxVer })
                     if (show("Session")) add(Triple("Session", showSession) { showSession = !showSession })
                     if (show("Clock")) add(Triple("Clock", showClock) { showClock = !showClock })
                     if (show("Engine")) add(Triple("Engine", showEngine) { showEngine = !showEngine })
-                    if (show("GPU model")) add(Triple("GPU model", showGpuModel) { showGpuModel = !showGpuModel })
+                    if (show(I18n.s(R.string.ui_gpu_model))) add(Triple(I18n.s(R.string.ui_gpu_model), showGpuModel) { showGpuModel = !showGpuModel })
                     // Global appearance control, shown at every level.
-                    add(Triple("Lock in place", hudLocked) { hudLocked = !hudLocked })
+                    add(Triple(I18n.s(R.string.ui_lock_in_place), hudLocked) { hudLocked = !hudLocked })
                 }
                 ModeChipGrid(metricChips, perRow = 3)
 
@@ -6452,30 +6452,30 @@ internal fun FpsCounterConfigDialog(
                     }
                     Text(
                         when (bandMode) {
-                            0 -> "Temperatures use their normal color."
-                            1 -> "Thresholds read from your device's own thermal trip points, falling back to safe defaults."
-                            else -> "Set the red point per sensor; amber sits just below it."
+                            0 -> I18n.s(R.string.ui_temperatures_use_their_normal_color)
+                            1 -> I18n.s(R.string.ui_thresholds_read_from_your_device_s_own_thermal_trip_p)
+                            else -> I18n.s(R.string.ui_set_the_red_point_per_sensor_amber_sits_just_below_it)
                         },
                         style = MaterialTheme.typography.bodySmall
                     )
                     if (bandMode == 2) {
                         // Red point only; amber is derived. Always \u00B0C — thresholds never convert.
                         Spacer(Modifier.height(4.dp))
-                        Text("CPU red at: $tempRedCpu\u00B0C", style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.ui_cpu_red_at_tempredcpu_u00b0c), style = MaterialTheme.typography.bodySmall)
                         Slider(
                             value = tempRedCpu.toFloat(),
                             onValueChange = { tempRedCpu = it.toInt() },
                             valueRange = 50f..110f, steps = 59
                         )
                         if (showGpuTemp) {
-                            Text("GPU red at: $tempRedGpu\u00B0C", style = MaterialTheme.typography.bodySmall)
+                            Text(I18n.s(R.string.ui_gpu_red_at_tempredgpu_u00b0c), style = MaterialTheme.typography.bodySmall)
                             Slider(
                                 value = tempRedGpu.toFloat(),
                                 onValueChange = { tempRedGpu = it.toInt() },
                                 valueRange = 50f..110f, steps = 59
                             )
                         }
-                        Text("Battery red at: $tempRedBat\u00B0C", style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.ui_battery_red_at_tempredbat_u00b0c), style = MaterialTheme.typography.bodySmall)
                         Slider(
                             value = tempRedBat.toFloat(),
                             onValueChange = { tempRedBat = it.toInt() },
@@ -6485,7 +6485,7 @@ internal fun FpsCounterConfigDialog(
                 }
 
                 Spacer(Modifier.height(12.dp))
-                Text("HUD Scale: $hudScale%", style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_hud_scale_hudscale), style = MaterialTheme.typography.bodySmall)
                 Slider(
                     value = hudScale.toFloat(),
                     onValueChange = { hudScale = it.toInt().coerceAtLeast(50) },
@@ -6493,7 +6493,7 @@ internal fun FpsCounterConfigDialog(
                 )
 
                 Spacer(Modifier.height(4.dp))
-                Text("HUD Opacity: $hudOpacity%", style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_hud_opacity_hudopacity), style = MaterialTheme.typography.bodySmall)
                 Slider(
                     value = hudOpacity.toFloat(),
                     onValueChange = { hudOpacity = it.toInt() },
@@ -6502,7 +6502,7 @@ internal fun FpsCounterConfigDialog(
                 Spacer(Modifier.height(8.dp))
                 HudThreeStop("HUD color", listOf(I18n.s(R.string.ui_soft), I18n.s(R.string.ui_mid), I18n.s(R.string.ui_vivid)), colors.indexOf(color)) { color = colors[it] }
                 Spacer(Modifier.height(8.dp))
-                Text("HUD outline: $outlineValue", style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_hud_outline_outlinevalue), style = MaterialTheme.typography.bodySmall)
                 Slider(
                     value = outlineValue.toFloat(),
                     onValueChange = { outlineValue = it.toInt() },
@@ -6522,7 +6522,7 @@ internal fun FpsCounterConfigDialog(
                     Text(I18n.s(R.string.ui_export_hud_diagnostics))
                 }
                 Text(
-                    "Saves a sensor report (CPU/GPU/temp/VRAM…) straight to your Downloads folder.",
+                    I18n.s(R.string.ui_saves_a_sensor_report_cpu_gpu_temp_vram_straight_to_y),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -6609,17 +6609,17 @@ private fun installContentFromUri(activity: Activity, uri: Uri, onResult: (Boole
                 var phase = 0
                 override fun onFailed(reason: ContentsManager.InstallFailedReason, e: Exception?) {
                     val message = when (reason) {
-                        ContentsManager.InstallFailedReason.ERROR_NOSPACE -> "Not enough storage space"
-                        ContentsManager.InstallFailedReason.ERROR_BADTAR -> "Corrupted archive file"
-                        ContentsManager.InstallFailedReason.ERROR_NOPROFILE -> "No valid profile found in package"
-                        ContentsManager.InstallFailedReason.ERROR_BADPROFILE -> "Invalid profile in package"
-                        ContentsManager.InstallFailedReason.ERROR_MISSINGFILES -> "Missing required files in package"
-                        ContentsManager.InstallFailedReason.ERROR_EXIST -> "This version is already installed"
-                        ContentsManager.InstallFailedReason.ERROR_UNTRUSTPROFILE -> "Untrusted profile, installation blocked"
-                        ContentsManager.InstallFailedReason.ERROR_UNKNOWN -> "Unknown installation error"
+                        ContentsManager.InstallFailedReason.ERROR_NOSPACE -> I18n.s(R.string.ui_not_enough_storage_space)
+                        ContentsManager.InstallFailedReason.ERROR_BADTAR -> I18n.s(R.string.ui_corrupted_archive_file)
+                        ContentsManager.InstallFailedReason.ERROR_NOPROFILE -> I18n.s(R.string.ui_no_valid_profile_found_in_package)
+                        ContentsManager.InstallFailedReason.ERROR_BADPROFILE -> I18n.s(R.string.ui_invalid_profile_in_package)
+                        ContentsManager.InstallFailedReason.ERROR_MISSINGFILES -> I18n.s(R.string.ui_missing_required_files_in_package)
+                        ContentsManager.InstallFailedReason.ERROR_EXIST -> I18n.s(R.string.ui_this_version_is_already_installed)
+                        ContentsManager.InstallFailedReason.ERROR_UNTRUSTPROFILE -> I18n.s(R.string.ui_untrusted_profile_installation_blocked)
+                        ContentsManager.InstallFailedReason.ERROR_UNKNOWN -> I18n.s(R.string.ui_unknown_installation_error)
                     }
                     activity.runOnUiThread {
-                        Toast.makeText(activity, "ERROR: $message", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, I18n.s(R.string.ui_error_message), Toast.LENGTH_LONG).show()
                         onResult(false)
                     }
                 }
@@ -6634,7 +6634,7 @@ private fun installContentFromUri(activity: Activity, uri: Uri, onResult: (Boole
                         }
                     } catch (e: Exception) {
                         activity.runOnUiThread {
-                            Toast.makeText(activity, "ERROR: Installation error — ${e.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(activity, I18n.s(R.string.ui_error_installation_error_e_message), Toast.LENGTH_LONG).show()
                             onResult(false)
                         }
                     }
@@ -6642,7 +6642,7 @@ private fun installContentFromUri(activity: Activity, uri: Uri, onResult: (Boole
             })
         } catch (e: Exception) {
             activity.runOnUiThread {
-                Toast.makeText(activity, "ERROR: Installation error — ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, I18n.s(R.string.ui_error_installation_error_e_message), Toast.LENGTH_LONG).show()
                 onResult(false)
             }
         }
@@ -6657,7 +6657,7 @@ private fun ContentInstallGear(
     IconButton(onClick = onDownloadFile, modifier = Modifier.size(40.dp)) {
         Icon(
             Icons.Default.CloudDownload,
-            contentDescription = "Download / install",
+            contentDescription = I18n.s(R.string.ui_download_install),
             tint = MaterialTheme.colorScheme.primary,
         )
     }
@@ -6733,7 +6733,7 @@ internal fun StockConfigDownloadSheet(
         } else if (rows.isEmpty()) {
             Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                 Text(
-                    "Couldn't reach the releases feed — check connection and retry. (GitHub limit 60/h)",
+                    I18n.s(R.string.ui_couldn_t_reach_the_releases_feed_check_connecti_2),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -6759,12 +6759,12 @@ internal fun StockConfigDownloadSheet(
                                         is VegasStockConfigFetcher.ParkResult.Ok -> {
                                             activity?.let {
                                                 Toast.makeText(it,
-                                                    "Parked as ${res.parkedAs}.conf — now select \"${res.parkedAs}\" under Stock config",
+                                                    I18n.s(R.string.ui_parked_as_res_parkedas_conf_now_select_res_parkedas_u),
                                                     Toast.LENGTH_LONG).show()
                                             }
                                         }
                                         is VegasStockConfigFetcher.ParkResult.Fail ->
-                                            activity?.let { Toast.makeText(it, "Failed: ${res.reason}", Toast.LENGTH_LONG).show() }
+                                            activity?.let { Toast.makeText(it, I18n.s(R.string.ui_failed_res_reason), Toast.LENGTH_LONG).show() }
                                     }
                                 }
                             }
@@ -6782,7 +6782,7 @@ internal fun StockConfigDownloadSheet(
                             Text(rel.tag.ifEmpty { "(untagged)" }, style = MaterialTheme.typography.bodyMedium)
                             Text(
                                 buildString {
-                                    append(rel.confName ?: "no config asset")
+                                    append(rel.confName ?: I18n.s(R.string.ui_no_config_asset))
                                     if (rel.date.isNotEmpty()) append("  ·  ${rel.date}")
                                 },
                                 style = MaterialTheme.typography.bodySmall,
@@ -6800,179 +6800,179 @@ internal fun StockConfigDownloadSheet(
 // ─── VEGAS key definitions glossary ─────────────────────────────────────────────
 private val KEY_DEFINITIONS: Map<String, String> = mapOf(
     // --- environment / DXVK core ---
-    "DXVK_CONFIG_FILE" to "Native DXVK config-file path. Set automatically when a custom .conf is selected.",
-    "DXVK_FILTER_DEVICE_NAME" to "Substring filter to force or avoid a GPU by name.",
-    "DXVK_LOG_LEVEL" to "Sets DXVK log verbosity (none/info/warn/error).",
-    "GPU" to "Legacy environment hint; verify before use.",
+    "DXVK_CONFIG_FILE" to I18n.s(R.string.ui_native_dxvk_config_file_path_set_automatically_when_a),
+    "DXVK_FILTER_DEVICE_NAME" to I18n.s(R.string.ui_substring_filter_to_force_or_avoid_a_gpu_by_name),
+    "DXVK_LOG_LEVEL" to I18n.s(R.string.ui_sets_dxvk_log_verbosity_none_info_warn_error),
+    "GPU" to I18n.s(R.string.ui_legacy_environment_hint_verify_before_use),
     // --- dxvk.* core ---
-    "dxvk.enableAsync" to "Enables async shader compilation (legacy; superseded by GPL).",
-    "dxvk.gplAsyncCache" to "Caches pipeline state for fast GPU link (GPL async).",
-    "dxvk.enableStarProfile" to "Enables the Star Engine tuning profile.",
-    "dxvk.hud" to "Configures the DXVK on-screen HUD (e.g. 'devinfo,fps').",
-    "dxvk.numCompilerThreads" to "Number of threads used for shader compilation.",
-    "dxvk.tearFree" to "Enables tear-free presentation.",
-    "dxvk.latencySleep" to "Inserts a sleep to reduce input latency (experimental).",
-    "dxvk.maxFrameLatency" to "Caps the number of frames queued for presentation.",
-    "dxvk.enableDebugUtils" to "Enables Vulkan debug-utils instrumentation.",
-    "dxvk.numAsyncThreads" to "Legacy async compile thread count.",
-    "dxvk.shrinkNvidiaHvvHeap" to "Reduces NV host-visible heap usage.",
-    "dxvk.useRawSsbo" to "Uses raw SSBO bindings (compat workaround).",
+    "dxvk.enableAsync" to I18n.s(R.string.ui_enables_async_shader_compilation_legacy_superseded_by),
+    "dxvk.gplAsyncCache" to I18n.s(R.string.ui_caches_pipeline_state_for_fast_gpu_link_gpl_async),
+    "dxvk.enableStarProfile" to I18n.s(R.string.ui_enables_the_star_engine_tuning_profile),
+    "dxvk.hud" to I18n.s(R.string.ui_configures_the_dxvk_on_screen_hud_e_g_devinfo_fps),
+    "dxvk.numCompilerThreads" to I18n.s(R.string.ui_number_of_threads_used_for_shader_compilation),
+    "dxvk.tearFree" to I18n.s(R.string.ui_enables_tear_free_presentation),
+    "dxvk.latencySleep" to I18n.s(R.string.ui_inserts_a_sleep_to_reduce_input_latency_experimental),
+    "dxvk.maxFrameLatency" to I18n.s(R.string.ui_caps_the_number_of_frames_queued_for_presentation),
+    "dxvk.enableDebugUtils" to I18n.s(R.string.ui_enables_vulkan_debug_utils_instrumentation),
+    "dxvk.numAsyncThreads" to I18n.s(R.string.ui_legacy_async_compile_thread_count),
+    "dxvk.shrinkNvidiaHvvHeap" to I18n.s(R.string.ui_reduces_nv_host_visible_heap_usage),
+    "dxvk.useRawSsbo" to I18n.s(R.string.ui_uses_raw_ssbo_bindings_compat_workaround),
     // --- dxvk.vegas.* (Sarek) / vegas.* (Star) — best-effort ---
-    "dxvk.vegas.enable" to "Master switch for VEGAS / DXVK-VEGAS extensions.", // ⚠ best-effort
-    "dxvk.vegas.gpuMask" to "Restricts rendering to a subset of GPUs (mask).", // ⚠ best-effort
-    "dxvk.vegas.tbdr" to "Enables TBDR (tile-based) optimizations for Adreno.", // ⚠ best-effort
-    "dxvk.vegas.threshold" to "Sets internal VEGAS quality / skip thresholds.", // ⚠ best-effort
-    "dxvk.vegas.vramSwap" to "Controls VEGAS VRAM swap-to-storage behavior.", // ⚠ best-effort
-    "vegas.enableUpscaler" to "Enables the VEGAS upscaler.",
-    "vegas.forceTier" to "Selects a fixed VEGAS performance tier.", // ⚠ best-effort
-    "vegas.profileDraws" to "Enables VEGAS draw-call profiling.", // ⚠ best-effort
-    "vegas.telemetry" to "Enables VEGAS telemetry collection.", // ⚠ best-effort
-    "VEGAS_GAME_CONFIG" to "Selects a per-game VEGAS config profile.", // ⚠ best-effort
-    "VEGAS_THRESHOLDS" to "VEGAS internal tuning thresholds.", // ⚠ best-effort
+    "dxvk.vegas.enable" to I18n.s(R.string.ui_master_switch_for_vegas_dxvk_vegas_extensions), // ⚠ best-effort
+    "dxvk.vegas.gpuMask" to I18n.s(R.string.ui_restricts_rendering_to_a_subset_of_gpus_mask), // ⚠ best-effort
+    "dxvk.vegas.tbdr" to I18n.s(R.string.ui_enables_tbdr_tile_based_optimizations_for_adreno), // ⚠ best-effort
+    "dxvk.vegas.threshold" to I18n.s(R.string.ui_sets_internal_vegas_quality_skip_thresholds), // ⚠ best-effort
+    "dxvk.vegas.vramSwap" to I18n.s(R.string.ui_controls_vegas_vram_swap_to_storage_behavior), // ⚠ best-effort
+    "vegas.enableUpscaler" to I18n.s(R.string.ui_enables_the_vegas_upscaler),
+    "vegas.forceTier" to I18n.s(R.string.ui_selects_a_fixed_vegas_performance_tier), // ⚠ best-effort
+    "vegas.profileDraws" to I18n.s(R.string.ui_enables_vegas_draw_call_profiling), // ⚠ best-effort
+    "vegas.telemetry" to I18n.s(R.string.ui_enables_vegas_telemetry_collection), // ⚠ best-effort
+    "VEGAS_GAME_CONFIG" to I18n.s(R.string.ui_selects_a_per_game_vegas_config_profile), // ⚠ best-effort
+    "VEGAS_THRESHOLDS" to I18n.s(R.string.ui_vegas_internal_tuning_thresholds), // ⚠ best-effort
     // --- d3d11.* ---
-    "d3d11.samplerAnisotropy" to "Caps the max anisotropy for samplers.",
-    "d3d11.maxFeatureLevel" to "Caps the reported D3D feature level.",
-    "d3d11.maxTessFactor" to "Caps the tessellation factor.",
-    "d3d11.ignoreGraphicsBarriers" to "Relaxes barrier insertion (compat).",
-    "d3d11.invariantPosition" to "Forces invariant position math (strict).",
-    "d3d11.enableDepthPrePass" to "Enables a depth pre-pass.",
-    "d3d11.disableMsaa" to "Disables MSAA.",
-    "d3d11.maxImplicitDiscardSize" to "Threshold for implicit resource discards.",
-    "d3d11.relaxedBarriers" to "Relaxes resource barriers (compat).",
-    "d3d11.cachedDynamicResources" to "Caches dynamic resource uploads.",
-    "d3d11.constantBufferRangeCheck" to "Validates CB range access.",
-    "d3d11.dcSingleUseMode" to "Uses single-use deferred contexts.",
-    "d3d11.maxDynamicImageBufferSize" to "Caps dynamic image buffer size.",
-    "d3d11.zeroWorkgroupMemory" to "Zeroes workgroup memory (compat).",
+    "d3d11.samplerAnisotropy" to I18n.s(R.string.ui_caps_the_max_anisotropy_for_samplers),
+    "d3d11.maxFeatureLevel" to I18n.s(R.string.ui_caps_the_reported_d3d_feature_level),
+    "d3d11.maxTessFactor" to I18n.s(R.string.ui_caps_the_tessellation_factor),
+    "d3d11.ignoreGraphicsBarriers" to I18n.s(R.string.ui_relaxes_barrier_insertion_compat),
+    "d3d11.invariantPosition" to I18n.s(R.string.ui_forces_invariant_position_math_strict),
+    "d3d11.enableDepthPrePass" to I18n.s(R.string.ui_enables_a_depth_pre_pass),
+    "d3d11.disableMsaa" to I18n.s(R.string.ui_disables_msaa),
+    "d3d11.maxImplicitDiscardSize" to I18n.s(R.string.ui_threshold_for_implicit_resource_discards),
+    "d3d11.relaxedBarriers" to I18n.s(R.string.ui_relaxes_resource_barriers_compat),
+    "d3d11.cachedDynamicResources" to I18n.s(R.string.ui_caches_dynamic_resource_uploads),
+    "d3d11.constantBufferRangeCheck" to I18n.s(R.string.ui_validates_cb_range_access),
+    "d3d11.dcSingleUseMode" to I18n.s(R.string.ui_uses_single_use_deferred_contexts),
+    "d3d11.maxDynamicImageBufferSize" to I18n.s(R.string.ui_caps_dynamic_image_buffer_size),
+    "d3d11.zeroWorkgroupMemory" to I18n.s(R.string.ui_zeroes_workgroup_memory_compat),
     // --- d3d9.* ---
-    "d3d9.samplerAnisotropy" to "Caps anisotropy (D3D9).",
-    "d3d9.maxFrameRate" to "Caps presentation rate (D3D9).",
-    "d3d9.maxFrameLatency" to "Caps queued frames (D3D9).",
-    "d3d9.disableMsaa" to "Disables MSAA (D3D9).",
-    "d3d9.tearFree" to "Tear-free presentation (D3D9).",
-    "d3d9.invariantPosition" to "Invariant position (D3D9).",
-    "d3d9.forceAspectRatio" to "Forces a fixed aspect ratio.",
-    "d3d9.shaderModel" to "Caps the D3D9 shader model.",
-    "d3d9.enableDepthPrePass" to "Depth pre-pass (D3D9).",
-    "d3d9.enableDialogMode" to "Dialog-mode tweaks.",
-    "d3d9.evictManagedOnUnlock" to "Evicts managed textures on unlock.",
-    "d3d9.deferSurfaceCreation" to "Defers swapchain surface creation.",
-    "d3d9.customDeviceId" to "Spoofs the GPU device id.",
-    "d3d9.customVendorId" to "Spoof the GPU vendor id.",
-    "d3d9.customDeviceDesc" to "Spoofs the GPU description string.",
-    "d3d9.supportD32" to "Enables D3D9 D32 depth format support.",
-    "d3d9.supportDFFormats" to "Enables D3D9 float formats support.",
-    "d3d9.supportVCache" to "Enables D3D9 vertex-cache support.",
-    "d3d9.supportX4R4G4B4" to "Enables D3D9 X4R4G4B4 format support.",
-    "d3d9.seamlessCubes" to "Fixes cube-map seam sampling.",
-    "d3d9.strictConstantCopies" to "Stricter constant-buffer copies (compat).",
-    "d3d9.strictPow" to "Stricter pow() math (compat).",
-    "d3d9.floatEmulation" to "Controls float emulation mode.",
-    "d3d9.lenientClear" to "Lenient clear behavior.",
-    "d3d9.longMad" to "Uses long MAD (compat).",
-    "d3d9.memoryTrackTest" to "Memory-tracking test hook.",
-    "d3d9.noExplicitFrontBuffer" to "Avoids an explicit front buffer.",
-    "d3d9.numBackBuffers" to "Sets back-buffer count.",
-    "d3d9.presentInterval" to "Sets presentation interval.",
-    "d3d9.allowDiscard" to "Allows discard usage flags.",
-    "d3d9.allowDoNotWait" to "Allows do-not-wait usage flags.",
-    "d3d9.alphaTestWiggleRoom" to "Alpha-test tolerance (compat).",
-    "d3d9.cachedDynamicBuffers" to "Caches dynamic vertex/index buffers.",
-    "d3d9.forceSwapchainMSAA" to "Forces MSAA on the swapchain.",
-    "d3d9.maxAvailableMemory" to "Caps reported available memory.",
-    "d3d9.enumerateByDisplays" to "Enumerates adapters by display.",
-    "d3d9.dpiAware" to "Marks the app DPI-aware.",
+    "d3d9.samplerAnisotropy" to I18n.s(R.string.ui_caps_anisotropy_d3d9),
+    "d3d9.maxFrameRate" to I18n.s(R.string.ui_caps_presentation_rate_d3d9),
+    "d3d9.maxFrameLatency" to I18n.s(R.string.ui_caps_queued_frames_d3d9),
+    "d3d9.disableMsaa" to I18n.s(R.string.ui_disables_msaa_d3d9),
+    "d3d9.tearFree" to I18n.s(R.string.ui_tear_free_presentation_d3d9),
+    "d3d9.invariantPosition" to I18n.s(R.string.ui_invariant_position_d3d9),
+    "d3d9.forceAspectRatio" to I18n.s(R.string.ui_forces_a_fixed_aspect_ratio),
+    "d3d9.shaderModel" to I18n.s(R.string.ui_caps_the_d3d9_shader_model),
+    "d3d9.enableDepthPrePass" to I18n.s(R.string.ui_depth_pre_pass_d3d9),
+    "d3d9.enableDialogMode" to I18n.s(R.string.ui_dialog_mode_tweaks),
+    "d3d9.evictManagedOnUnlock" to I18n.s(R.string.ui_evicts_managed_textures_on_unlock),
+    "d3d9.deferSurfaceCreation" to I18n.s(R.string.ui_defers_swapchain_surface_creation),
+    "d3d9.customDeviceId" to I18n.s(R.string.ui_spoofs_the_gpu_device_id),
+    "d3d9.customVendorId" to I18n.s(R.string.ui_spoof_the_gpu_vendor_id),
+    "d3d9.customDeviceDesc" to I18n.s(R.string.ui_spoofs_the_gpu_description_string),
+    "d3d9.supportD32" to I18n.s(R.string.ui_enables_d3d9_d32_depth_format_support),
+    "d3d9.supportDFFormats" to I18n.s(R.string.ui_enables_d3d9_float_formats_support),
+    "d3d9.supportVCache" to I18n.s(R.string.ui_enables_d3d9_vertex_cache_support),
+    "d3d9.supportX4R4G4B4" to I18n.s(R.string.ui_enables_d3d9_x4r4g4b4_format_support),
+    "d3d9.seamlessCubes" to I18n.s(R.string.ui_fixes_cube_map_seam_sampling),
+    "d3d9.strictConstantCopies" to I18n.s(R.string.ui_stricter_constant_buffer_copies_compat),
+    "d3d9.strictPow" to I18n.s(R.string.ui_stricter_pow_math_compat),
+    "d3d9.floatEmulation" to I18n.s(R.string.ui_controls_float_emulation_mode),
+    "d3d9.lenientClear" to I18n.s(R.string.ui_lenient_clear_behavior),
+    "d3d9.longMad" to I18n.s(R.string.ui_uses_long_mad_compat),
+    "d3d9.memoryTrackTest" to I18n.s(R.string.ui_memory_tracking_test_hook),
+    "d3d9.noExplicitFrontBuffer" to I18n.s(R.string.ui_avoids_an_explicit_front_buffer),
+    "d3d9.numBackBuffers" to I18n.s(R.string.ui_sets_back_buffer_count),
+    "d3d9.presentInterval" to I18n.s(R.string.ui_sets_presentation_interval),
+    "d3d9.allowDiscard" to I18n.s(R.string.ui_allows_discard_usage_flags),
+    "d3d9.allowDoNotWait" to I18n.s(R.string.ui_allows_do_not_wait_usage_flags),
+    "d3d9.alphaTestWiggleRoom" to I18n.s(R.string.ui_alpha_test_tolerance_compat),
+    "d3d9.cachedDynamicBuffers" to I18n.s(R.string.ui_caches_dynamic_vertex_index_buffers),
+    "d3d9.forceSwapchainMSAA" to I18n.s(R.string.ui_forces_msaa_on_the_swapchain),
+    "d3d9.maxAvailableMemory" to I18n.s(R.string.ui_caps_reported_available_memory),
+    "d3d9.enumerateByDisplays" to I18n.s(R.string.ui_enumerates_adapters_by_display),
+    "d3d9.dpiAware" to I18n.s(R.string.ui_marks_the_app_dpi_aware),
     // --- d3d8.* ---
-    "d3d8.batching" to "D3D8-era batching tweak (compat).", // ⚠ best-effort
-    "d3d8.drefScaling" to "D3D8 depth-reference scaling (compat).", // ⚠ best-effort
-    "d3d8.forceLegacyDiscard" to "Forces legacy discard behavior.", // ⚠ best-effort
-    "d3d8.forceVsDecl" to "Forces a specific vertex declaration.", // ⚠ best-effort
-    "d3d8.placeP8InScratch" to "Places P8 textures in scratch (compat).", // ⚠ best-effort
-    "d3d8.shadowPerspectiveDivide" to "Shadow perspective-divide fix (compat).", // ⚠ best-effort
+    "d3d8.batching" to I18n.s(R.string.ui_d3d8_era_batching_tweak_compat), // ⚠ best-effort
+    "d3d8.drefScaling" to I18n.s(R.string.ui_d3d8_depth_reference_scaling_compat), // ⚠ best-effort
+    "d3d8.forceLegacyDiscard" to I18n.s(R.string.ui_forces_legacy_discard_behavior), // ⚠ best-effort
+    "d3d8.forceVsDecl" to I18n.s(R.string.ui_forces_a_specific_vertex_declaration), // ⚠ best-effort
+    "d3d8.placeP8InScratch" to I18n.s(R.string.ui_places_p8_textures_in_scratch_compat), // ⚠ best-effort
+    "d3d8.shadowPerspectiveDivide" to I18n.s(R.string.ui_shadow_perspective_divide_fix_compat), // ⚠ best-effort
     // --- dxgi.* ---
-    "dxgi.maxFrameRate" to "Caps presentation frame rate.",
-    "dxgi.maxFrameLatency" to "Caps queued frames.",
-    "dxgi.maxDeviceMemory" to "Caps reported GPU memory.",
-    "dxgi.maxSharedMemory" to "Caps reported shared memory.",
-    "dxgi.syncInterval" to "Sets vsync interval (0 = disabled).",
-    "dxgi.tearFree" to "Tear-free presentation.",
-    "dxgi.numBackBuffers" to "Sets back-buffer count.",
-    "dxgi.customDeviceId" to "Spoofs the GPU device id.",
-    "dxgi.customVendorId" to "Spoof the GPU vendor id.",
-    "dxgi.customDeviceDesc" to "Spoofs the GPU description string.",
-    "dxgi.deferSurfaceCreation" to "Defers surface creation.",
-    "dxgi.emulateUMA" to "Emulates a UMA memory model.",
-    "dxgi.enableDummyCompositionSwapchain" to "Creates a dummy composition swapchain.",
-    "dxgi.hideAmdGpu" to "Hides the AMD GPU from the app.",
-    "dxgi.hideIntelGpu" to "Hides the Intel GPU from the app.",
-    "dxgi.hideNvidiaGpu" to "Hides the Nvidia GPU from the app.",
-    "dxgi.enableHDR" to "Enables HDR output when supported by the display.",
-    "dxgi.enableUe4Workarounds" to "Enables workarounds for Unreal Engine 4 rendering quirks.",
-    "dxgi.forceRefreshRate" to "Forces a specific display refresh rate (Hz). 0 = auto.",
-    "dxgi.hideNvkGpu" to "Hides the NVK (open-source NVIDIA) GPU from the app.",
+    "dxgi.maxFrameRate" to I18n.s(R.string.ui_caps_presentation_frame_rate),
+    "dxgi.maxFrameLatency" to I18n.s(R.string.ui_caps_queued_frames),
+    "dxgi.maxDeviceMemory" to I18n.s(R.string.ui_caps_reported_gpu_memory),
+    "dxgi.maxSharedMemory" to I18n.s(R.string.ui_caps_reported_shared_memory),
+    "dxgi.syncInterval" to I18n.s(R.string.ui_sets_vsync_interval_0_disabled),
+    "dxgi.tearFree" to I18n.s(R.string.ui_tear_free_presentation),
+    "dxgi.numBackBuffers" to I18n.s(R.string.ui_sets_back_buffer_count),
+    "dxgi.customDeviceId" to I18n.s(R.string.ui_spoofs_the_gpu_device_id),
+    "dxgi.customVendorId" to I18n.s(R.string.ui_spoof_the_gpu_vendor_id),
+    "dxgi.customDeviceDesc" to I18n.s(R.string.ui_spoofs_the_gpu_description_string),
+    "dxgi.deferSurfaceCreation" to I18n.s(R.string.ui_defers_surface_creation),
+    "dxgi.emulateUMA" to I18n.s(R.string.ui_emulates_a_uma_memory_model),
+    "dxgi.enableDummyCompositionSwapchain" to I18n.s(R.string.ui_creates_a_dummy_composition_swapchain),
+    "dxgi.hideAmdGpu" to I18n.s(R.string.ui_hides_the_amd_gpu_from_the_app),
+    "dxgi.hideIntelGpu" to I18n.s(R.string.ui_hides_the_intel_gpu_from_the_app),
+    "dxgi.hideNvidiaGpu" to I18n.s(R.string.ui_hides_the_nvidia_gpu_from_the_app),
+    "dxgi.enableHDR" to I18n.s(R.string.ui_enables_hdr_output_when_supported_by_the_display),
+    "dxgi.enableUe4Workarounds" to I18n.s(R.string.ui_enables_workarounds_for_unreal_engine_4_rendering_qui),
+    "dxgi.forceRefreshRate" to I18n.s(R.string.ui_forces_a_specific_display_refresh_rate_hz_0_auto),
+    "dxgi.hideNvkGpu" to I18n.s(R.string.ui_hides_the_nvk_open_source_nvidia_gpu_from_the_app),
     // --- dxvk.* extended ---
-    "dxvk.allowFse" to "Allows fullscreen exclusive mode transitions.",
-    "dxvk.deviceFilter" to "Substring filter to restrict Vulkan device selection by name.",
-    "dxvk.disableNvLowLatency2" to "Disables the VK_NV_low_latency2 extension.",
-    "dxvk.enableDescriptorBuffer" to "Enables VK_EXT_descriptor_buffer for faster descriptor access.",
-    "dxvk.enableDescriptorHeap" to "Enables pooled descriptor heap allocation.",
-    "dxvk.enableGraphicsPipelineLibrary" to "Enables VK_EXT_graphics_pipeline_library for faster pipeline creation.",
-    "dxvk.enableImplicitResolves" to "Enables implicit MSAA/resolve transitions.",
-    "dxvk.enableMemoryDefrag" to "Enables automatic Vulkan memory defragmentation.",
-    "dxvk.enableNvRawAccessChains" to "Enables VK_NV_raw_access_chains for raw buffer access.",
-    "dxvk.enableUnifiedImageLayouts" to "Uses unified image layout tracking.",
-    "dxvk.hideIntegratedGraphics" to "Hides integrated GPUs from the app (discrete only).",
-    "dxvk.latencyTolerance" to "Latency tolerance in microseconds for sleep decisions.",
-    "dxvk.lowerSinCos" to "Uses lower-precision sin/cos for performance.",
-    "dxvk.maxFrameRate" to "Caps presentation frame rate at the DXVK layer.",
-    "dxvk.maxMemoryBudget" to "Overrides the Vulkan memory budget in MB.",
-    "dxvk.tilerMode" to "Controls TBDR tiler behavior (Adreno-specific).",
-    "dxvk.trackPipelineLifetime" to "Tracks pipeline object lifecycle for cache management.",
-    "dxvk.zeroMappedMemory" to "Zeroes memory on allocation (debug / leak detection).",
+    "dxvk.allowFse" to I18n.s(R.string.ui_allows_fullscreen_exclusive_mode_transitions),
+    "dxvk.deviceFilter" to I18n.s(R.string.ui_substring_filter_to_restrict_vulkan_device_selection),
+    "dxvk.disableNvLowLatency2" to I18n.s(R.string.ui_disables_the_vk_nv_low_latency2_extension),
+    "dxvk.enableDescriptorBuffer" to I18n.s(R.string.ui_enables_vk_ext_descriptor_buffer_for_faster_descripto),
+    "dxvk.enableDescriptorHeap" to I18n.s(R.string.ui_enables_pooled_descriptor_heap_allocation),
+    "dxvk.enableGraphicsPipelineLibrary" to I18n.s(R.string.ui_enables_vk_ext_graphics_pipeline_library_for_faster_p),
+    "dxvk.enableImplicitResolves" to I18n.s(R.string.ui_enables_implicit_msaa_resolve_transitions),
+    "dxvk.enableMemoryDefrag" to I18n.s(R.string.ui_enables_automatic_vulkan_memory_defragmentation),
+    "dxvk.enableNvRawAccessChains" to I18n.s(R.string.ui_enables_vk_nv_raw_access_chains_for_raw_buffer_access),
+    "dxvk.enableUnifiedImageLayouts" to I18n.s(R.string.ui_uses_unified_image_layout_tracking),
+    "dxvk.hideIntegratedGraphics" to I18n.s(R.string.ui_hides_integrated_gpus_from_the_app_discrete_only),
+    "dxvk.latencyTolerance" to I18n.s(R.string.ui_latency_tolerance_in_microseconds_for_sleep_decisions),
+    "dxvk.lowerSinCos" to I18n.s(R.string.ui_uses_lower_precision_sin_cos_for_performance),
+    "dxvk.maxFrameRate" to I18n.s(R.string.ui_caps_presentation_frame_rate_at_the_dxvk_layer),
+    "dxvk.maxMemoryBudget" to I18n.s(R.string.ui_overrides_the_vulkan_memory_budget_in_mb),
+    "dxvk.tilerMode" to I18n.s(R.string.ui_controls_tbdr_tiler_behavior_adreno_specific),
+    "dxvk.trackPipelineLifetime" to I18n.s(R.string.ui_tracks_pipeline_object_lifecycle_for_cache_management),
+    "dxvk.zeroMappedMemory" to I18n.s(R.string.ui_zeroes_memory_on_allocation_debug_leak_detection),
     // --- d3d11.* extended ---
-    "d3d11.clampNegativeLodBias" to "Clamps negative LOD bias to 0.",
-    "d3d11.disableDirectImageMapping" to "Disables direct image-to-host mapping.",
-    "d3d11.enableContextLock" to "Serializes D3D11 device context access (compat).",
-    "d3d11.exposeDriverCommandLists" to "Exposes driver-level command list support.",
-    "d3d11.forceComputeLdsBarriers" to "Forces barriers between compute LDS accesses.",
-    "d3d11.forceComputeUavBarriers" to "Forces barriers between compute UAV accesses.",
-    "d3d11.forceSampleRateShading" to "Forces sample-rate shading for all materials.",
-    "d3d11.relaxedGraphicsBarriers" to "Relaxes barriers on graphics pipeline resources.",
-    "d3d11.reproducibleCommandStream" to "Produces deterministic command streams (debug).",
-    "d3d11.samplerLodBias" to "Global LOD bias applied to all samplers.",
+    "d3d11.clampNegativeLodBias" to I18n.s(R.string.ui_clamps_negative_lod_bias_to_0),
+    "d3d11.disableDirectImageMapping" to I18n.s(R.string.ui_disables_direct_image_to_host_mapping),
+    "d3d11.enableContextLock" to I18n.s(R.string.ui_serializes_d3d11_device_context_access_compat),
+    "d3d11.exposeDriverCommandLists" to I18n.s(R.string.ui_exposes_driver_level_command_list_support),
+    "d3d11.forceComputeLdsBarriers" to I18n.s(R.string.ui_forces_barriers_between_compute_lds_accesses),
+    "d3d11.forceComputeUavBarriers" to I18n.s(R.string.ui_forces_barriers_between_compute_uav_accesses),
+    "d3d11.forceSampleRateShading" to I18n.s(R.string.ui_forces_sample_rate_shading_for_all_materials),
+    "d3d11.relaxedGraphicsBarriers" to I18n.s(R.string.ui_relaxes_barriers_on_graphics_pipeline_resources),
+    "d3d11.reproducibleCommandStream" to I18n.s(R.string.ui_produces_deterministic_command_streams_debug),
+    "d3d11.samplerLodBias" to I18n.s(R.string.ui_global_lod_bias_applied_to_all_samplers),
     // --- d3d8.* extended ---
-    "d3d8.scaleDref" to "Scales depth-reference values for D3D8 compat.",
+    "d3d8.scaleDref" to I18n.s(R.string.ui_scales_depth_reference_values_for_d3d8_compat),
     // --- d3d9.* extended ---
-    "d3d9.cachedWriteOnlyBuffers" to "Caches write-only buffer data in system memory.",
-    "d3d9.clampNegativeLodBias" to "Clamps negative LOD bias to 0 (D3D9).",
-    "d3d9.countLosableResources" to "Counts resources that can be evicted (memory tracking).",
-    "d3d9.deviceLocalConstantBuffers" to "Places constant buffers in device-local memory.",
-    "d3d9.deviceLossOnFocusLoss" to "Reports device loss when the app loses focus.",
-    "d3d9.disableA8RT" to "Disables A8 render-target format support.",
-    "d3d9.extraFrontbuffer" to "Allocates an extra front buffer for compat.",
-    "d3d9.forceRefreshRate" to "Forces a specific display refresh rate for D3D9 (Hz).",
-    "d3d9.forceSampleRateShading" to "Forces sample-rate shading for D3D9 materials.",
-    "d3d9.forceSamplerTypeSpecConstants" to "Uses spec constants to control sampler types.",
-    "d3d9.hideAmdGpu" to "Hides the AMD GPU from D3D9 enumeration.",
-    "d3d9.hideIntelGpu" to "Hides the Intel GPU from D3D9 enumeration.",
-    "d3d9.hideNvidiaGpu" to "Hides the NVIDIA GPU from D3D9 enumeration.",
-    "d3d9.hideNvkGpu" to "Hides the NVK GPU from D3D9 enumeration.",
-    "d3d9.ignoreDefaultBufferLockRange" to "Ignores the default lock range on buffers.",
-    "d3d9.modeCountCompatibility" to "Reports a compatible display mode count.",
-    "d3d9.reproducibleCommandStream" to "Produces deterministic D3D9 command streams (debug).",
-    "d3d9.samplerLodBias" to "Global LOD bias applied to D3D9 samplers.",
-    "d3d9.supportCubeDepthFormats" to "Enables depth format support on cube textures.",
-    "d3d9.textureMemory" to "Caps total D3D9 texture memory pool in MB.",
-    "d3d9.useD32forD24" to "Uses D32 format where D24 would be used.",
-    "d3d9.useFP16" to "Uses half-precision float where full precision is not required.",
+    "d3d9.cachedWriteOnlyBuffers" to I18n.s(R.string.ui_caches_write_only_buffer_data_in_system_memory),
+    "d3d9.clampNegativeLodBias" to I18n.s(R.string.ui_clamps_negative_lod_bias_to_0_d3d9),
+    "d3d9.countLosableResources" to I18n.s(R.string.ui_counts_resources_that_can_be_evicted_memory_tracking),
+    "d3d9.deviceLocalConstantBuffers" to I18n.s(R.string.ui_places_constant_buffers_in_device_local_memory),
+    "d3d9.deviceLossOnFocusLoss" to I18n.s(R.string.ui_reports_device_loss_when_the_app_loses_focus),
+    "d3d9.disableA8RT" to I18n.s(R.string.ui_disables_a8_render_target_format_support),
+    "d3d9.extraFrontbuffer" to I18n.s(R.string.ui_allocates_an_extra_front_buffer_for_compat),
+    "d3d9.forceRefreshRate" to I18n.s(R.string.ui_forces_a_specific_display_refresh_rate_for_d3d9_hz),
+    "d3d9.forceSampleRateShading" to I18n.s(R.string.ui_forces_sample_rate_shading_for_d3d9_materials),
+    "d3d9.forceSamplerTypeSpecConstants" to I18n.s(R.string.ui_uses_spec_constants_to_control_sampler_types),
+    "d3d9.hideAmdGpu" to I18n.s(R.string.ui_hides_the_amd_gpu_from_d3d9_enumeration),
+    "d3d9.hideIntelGpu" to I18n.s(R.string.ui_hides_the_intel_gpu_from_d3d9_enumeration),
+    "d3d9.hideNvidiaGpu" to I18n.s(R.string.ui_hides_the_nvidia_gpu_from_d3d9_enumeration),
+    "d3d9.hideNvkGpu" to I18n.s(R.string.ui_hides_the_nvk_gpu_from_d3d9_enumeration),
+    "d3d9.ignoreDefaultBufferLockRange" to I18n.s(R.string.ui_ignores_the_default_lock_range_on_buffers),
+    "d3d9.modeCountCompatibility" to I18n.s(R.string.ui_reports_a_compatible_display_mode_count),
+    "d3d9.reproducibleCommandStream" to I18n.s(R.string.ui_produces_deterministic_d3d9_command_streams_debug),
+    "d3d9.samplerLodBias" to I18n.s(R.string.ui_global_lod_bias_applied_to_d3d9_samplers),
+    "d3d9.supportCubeDepthFormats" to I18n.s(R.string.ui_enables_depth_format_support_on_cube_textures),
+    "d3d9.textureMemory" to I18n.s(R.string.ui_caps_total_d3d9_texture_memory_pool_in_mb),
+    "d3d9.useD32forD24" to I18n.s(R.string.ui_uses_d32_format_where_d24_would_be_used),
+    "d3d9.useFP16" to I18n.s(R.string.ui_uses_half_precision_float_where_full_precision_is_not),
     // --- HUD labels (VEGAS governor internal — not user-configurable) ---
     "cap" to I18n.s(R.string.ui_hud_maximum_draw_batch_size_before_forced_flush_gover),
     "draw" to I18n.s(R.string.ui_hud_draw_calls_per_millisecond_game_rendering_workloa),
     "flush" to I18n.s(R.string.ui_hud_number_of_gpu_flushes_per_frame_auto_tuned_by_gov),
-    "key" to "HUD/Sarek: Internal key identifier (not user-configurable).",
+    "key" to I18n.s(R.string.ui_hud_sarek_internal_key_identifier_not_user_configurab),
     "thr" to I18n.s(R.string.ui_hud_draw_batch_threshold_triggers_flush_when_reached),
     // --- vegas.* extended ---
-    "vegas.enableHud" to "Enables the VEGAS governor HUD overlay.",
+    "vegas.enableHud" to I18n.s(R.string.ui_enables_the_vegas_governor_hud_overlay),
 )
 
 // ─── VEGAS glossary sheet ───────────────────────────────────────────────────────
@@ -6990,10 +6990,10 @@ private fun VGlossarySheet(
     )
     val bucketLabel: (VegasKeyCatalog.Bucket) -> String = { b ->
         when (b) {
-            VegasKeyCatalog.Bucket.IN_BUILD -> "Documented by this build"
-            VegasKeyCatalog.Bucket.UPSTREAM -> "Upstream only"
-            VegasKeyCatalog.Bucket.OTHER_BUILD -> "Other build"
-            VegasKeyCatalog.Bucket.NOWHERE -> "Not in catalog"
+            VegasKeyCatalog.Bucket.IN_BUILD -> I18n.s(R.string.ui_documented_by_this_build)
+            VegasKeyCatalog.Bucket.UPSTREAM -> I18n.s(R.string.ui_upstream_only)
+            VegasKeyCatalog.Bucket.OTHER_BUILD -> I18n.s(R.string.ui_other_build)
+            VegasKeyCatalog.Bucket.NOWHERE -> I18n.s(R.string.ui_not_in_catalog)
         }
     }
     Dialog(onDismissRequest = onDismiss) {
@@ -7021,7 +7021,7 @@ private fun VGlossarySheet(
                 Text(I18n.s(R.string.ui_v_glossary), style = MaterialTheme.typography.titleLarge)
                 Text(
                     buildString {
-                        append(if (installedTag != null) "Build: $installedTag" else "No build selected")
+                        append(if (installedTag != null) I18n.s(R.string.ui_build_installedtag) else I18n.s(R.string.ui_no_build_selected))
                         append("  ·  catalog ${vegasCatalog?.generatedAt() ?: "n/a"}")
                     },
                     style = MaterialTheme.typography.bodySmall,
@@ -7030,7 +7030,7 @@ private fun VGlossarySheet(
                 if (vegasCatalog == null) {
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        "Catalog offline — provenance hidden, definitions still shown.",
+                        I18n.s(R.string.ui_catalog_offline_provenance_hidden_definitions_still_s),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )

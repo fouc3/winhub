@@ -153,7 +153,7 @@ internal fun PortraitHome(
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Text(
-                if (entries.isEmpty()) "Library" else "Library · ${entries.size}",
+                if (entries.isEmpty()) "Library" else I18n.s(R.string.ui_library_entries_size),
                 color = Deck.onSurfaceVariant,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -176,8 +176,8 @@ internal fun PortraitHome(
         if (loaded && entries.isEmpty()) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Text(
-                    if (shelf == 0) "No games yet. Tap Add game to build your library."
-                    else "Nothing on this shelf yet. Open a game's menu to favourite it.",
+                    if (shelf == 0) I18n.s(R.string.ui_no_games_yet_tap_add_game_to_build_your_library)
+                    else I18n.s(R.string.ui_nothing_on_this_shelf_yet_open_a_game_s_menu_to_favou),
                     color = Deck.onSurfaceVariant,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
@@ -375,9 +375,9 @@ internal fun PortraitHeader() {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         val hour = remember(now) { java.util.Calendar.getInstance().apply { timeInMillis = now }.get(java.util.Calendar.HOUR_OF_DAY) }
         val greeting = when {
-            hour < 12 -> "Good morning"
-            hour < 18 -> "Good afternoon"
-            else -> "Good evening"
+            hour < 12 -> I18n.s(R.string.ui_good_morning)
+            hour < 18 -> I18n.s(R.string.ui_good_afternoon)
+            else -> I18n.s(R.string.ui_good_evening)
         }
         Text(greeting, color = Deck.onBackground, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
         Text(time, color = Deck.onSurfaceVariant, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)

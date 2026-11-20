@@ -300,7 +300,7 @@ enum class FavStorage { INTERNAL, SD, CONTAINER, OTHER }
 data class FavLocation(
     val storage: FavStorage,
     val containerName: String?,   // non-null only for a container's Drive C:
-    val driveLabel: String,       // "Drive C:", "Drive Z:", "Internal", "SD card", or "Storage"
+    val driveLabel: String,       // "Drive C:", "Drive Z:", "Internal", I18n.s(R.string.ui_sd_card), or "Storage"
     val displayPath: String       // Wine drives: "C:\\...", "Z:\\..."; storage: the unix absolute path
 )
 
@@ -317,7 +317,7 @@ fun describeLocation(file: File, containers: List<Container>, imagefsDir: File):
                 storage = FavStorage.CONTAINER,
                 containerName = container.name,
                 driveLabel = "Drive C:",
-                displayPath = "C:$remainder",
+                displayPath = I18n.s(R.string.ui_c_remainder),
             )
         }
     }
@@ -330,7 +330,7 @@ fun describeLocation(file: File, containers: List<Container>, imagefsDir: File):
             storage = FavStorage.CONTAINER,
             containerName = null,
             driveLabel = "Drive Z:",
-            displayPath = "Z:$remainder",
+            displayPath = I18n.s(R.string.ui_z_remainder),
         )
     }
 
@@ -342,7 +342,7 @@ fun describeLocation(file: File, containers: List<Container>, imagefsDir: File):
     if (abs.startsWith("/storage/")) {
         val name = abs.removePrefix("/storage/").substringBefore('/')
         if (name.isNotEmpty() && name != "emulated" && name != "self") {
-            return FavLocation(FavStorage.SD, null, "SD card", abs)
+            return FavLocation(FavStorage.SD, null, I18n.s(R.string.ui_sd_card), abs)
         }
     }
 
@@ -577,23 +577,23 @@ fun FileManagerScreen(
                     File(desktopDir, "$safeName.desktop").apply {
                         writeText(
                             buildString {
-                                append("[Desktop Entry]\n")
+                                append(I18n.s(R.string.ui_desktop_entry_n))
                                 append("Name=").append(file.nameWithoutExtension).append("\n")
                                 append("Exec=wine ").append(escaped).append("\n")
                                 append("Icon=").append(safeName).append("\n")
-                                append("Type=Application\n")
-                                append("StartupWMClass=explorer\n")
+                                append(I18n.s(R.string.ui_type_application_n))
+                                append(I18n.s(R.string.ui_startupwmclass_explorer_n))
                                 append("\ncontainer_id:").append(container.id).append("\n")
-                                append("\n[Extra Data]\n")
+                                append(I18n.s(R.string.ui_n_extra_data_n))
                             }
                         )
                     }
                 }
             }.getOrElse { failure ->
                 val message = if (failure is WinePath.NoFreeDriveLetterException) {
-                    "No free drive letters left in this container — remove one you don't need in its Drives tab"
+                    I18n.s(R.string.ui_no_free_drive_letters_left_in_this_container_remove_o)
                 } else {
-                    "Couldn't prepare ${file.name} to run"
+                    I18n.s(R.string.ui_couldn_t_prepare_file_name_to_run)
                 }
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                 return@launch
@@ -610,7 +610,7 @@ fun FileManagerScreen(
         containerManager ?: return
         when {
             containers.isEmpty() ->
-                Toast.makeText(context, "No container available — create one first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_no_container_available_create_one_first), Toast.LENGTH_SHORT).show()
             containers.size == 1 -> runFileInContainer(file, containers.first())
             else -> pendingRun = file   // ask which container
         }
@@ -638,9 +638,9 @@ fun FileManagerScreen(
                 }.getOrNull()
             }
             if (name == null) {
-                Toast.makeText(context, "Couldn't add ${file.name} to Shortcuts", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_add_file_name_to_shortcuts), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Added \"$name\" to Shortcuts", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_added_name_to_shortcuts), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -649,7 +649,7 @@ fun FileManagerScreen(
         containerManager ?: return
         when {
             containers.isEmpty() ->
-                Toast.makeText(context, "No container available — create one first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18n.s(R.string.ui_no_container_available_create_one_first), Toast.LENGTH_SHORT).show()
             containers.size == 1 -> addShortcutInContainer(file, containers.first())
             else -> pendingAddShortcut = file   // ask which container
         }
@@ -662,11 +662,11 @@ fun FileManagerScreen(
         scope.launch {
             when (val o = com.winhub.hernandez.core.unpack.FastExtract.start(context, file)) {
                 is com.winhub.hernandez.core.unpack.FastExtract.Outcome.Started ->
-                    Toast.makeText(context, "Unpacking ${o.name}…", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_unpacking_o_name), Toast.LENGTH_SHORT).show()
                 com.winhub.hernandez.core.unpack.FastExtract.Outcome.Busy ->
-                    Toast.makeText(context, "Another unpack is already in progress", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_another_unpack_is_already_in_progress), Toast.LENGTH_SHORT).show()
                 is com.winhub.hernandez.core.unpack.FastExtract.Outcome.NotArchive ->
-                    Toast.makeText(context, "Not a recognized archive — nothing to unpack", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_not_a_recognized_archive_nothing_to_unpack), Toast.LENGTH_SHORT).show()
                 is com.winhub.hernandez.core.unpack.FastExtract.Outcome.OpenScreen -> {
                     o.toast?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
                     context.startActivity(
@@ -693,7 +693,7 @@ fun FileManagerScreen(
         val ext = if (dot > 0) name.substring(dot) else ""
         var i = 1
         do {
-            candidate = File(dir, "$base ($i)$ext")
+            candidate = File(dir, I18n.s(R.string.ui_base_i_ext))
             i++
         } while (candidate.exists())
         return candidate
@@ -706,7 +706,7 @@ fun FileManagerScreen(
             val ok = withContext(Dispatchers.IO) { FileUtils.delete(file) }
             isOperationRunning = false
             loadDirectory(currentDir, resetScroll = false)
-            if (!ok) Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18n.s(R.string.ui_delete_failed), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -796,8 +796,8 @@ fun FileManagerScreen(
             loadDirectory(currentDir, resetScroll = false)
 
             val message = when {
-                failed > 0 -> "$done done, $failed failed"
-                skipped > 0 -> "$done done, $skipped skipped"
+                failed > 0 -> I18n.s(R.string.ui_done_done_failed_failed)
+                skipped > 0 -> I18n.s(R.string.ui_done_done_skipped_skipped)
                 sources.size > 1 -> "$done items ${if (cut) "moved" else "copied"}"
                 else -> null
             }
@@ -808,7 +808,7 @@ fun FileManagerScreen(
     fun performRename(file: File, newName: String) {
         val target = File(file.parentFile, newName)
         if (target.exists()) {
-            Toast.makeText(context, "\"$newName\" already exists", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_newname_already_exists), Toast.LENGTH_SHORT).show()
             return
         }
         scope.launch {
@@ -817,23 +817,23 @@ fun FileManagerScreen(
             val ok = withContext(Dispatchers.IO) { file.renameTo(target) }
             isOperationRunning = false
             loadDirectory(currentDir, resetScroll = false)
-            if (!ok) Toast.makeText(context, "Rename failed", Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18n.s(R.string.ui_rename_failed), Toast.LENGTH_SHORT).show()
         }
     }
 
     fun createFolder(parent: File, name: String) {
         val target = File(parent, name)
         if (target.exists()) {
-            Toast.makeText(context, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_name_already_exists), Toast.LENGTH_SHORT).show()
             return
         }
         scope.launch {
             isOperationRunning = true
-            operationLabel = "Creating folder..."
+            operationLabel = I18n.s(R.string.ui_creating_folder)
             val ok = withContext(Dispatchers.IO) { target.mkdirs() }
             isOperationRunning = false
             loadDirectory(currentDir, resetScroll = false)
-            if (!ok) Toast.makeText(context, "Could not create folder", Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18n.s(R.string.ui_could_not_create_folder), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -963,11 +963,11 @@ fun FileManagerScreen(
                 performDelete(file)
             },
         ) {
-            DeckConfigNote("Delete \"${file.name}\" permanently?")
+            DeckConfigNote(I18n.s(R.string.ui_delete_file_name_permanently))
         } else OutlinedAlertDialog(
             onDismissRequest = { selectedEntry = null },
             title = { Text(I18n.s(R.string.ui_delete_2)) },
-            text = { Text("Delete \"${file.name}\" permanently?") },
+            text = { Text(I18n.s(R.string.ui_delete_file_name_permanently)) },
             confirmButton = {
                 TextButton(onClick = {
                     selectedEntry = null
@@ -988,14 +988,14 @@ fun FileManagerScreen(
                 isOperationRunning = true
                 var failed = 0
                 victims.forEachIndexed { i, f ->
-                    operationLabel = "Deleting ${i + 1}/${victims.size} — ${f.name}"
+                    operationLabel = I18n.s(R.string.ui_deleting_i_1_victims_size_f_name)
                     if (!withContext(Dispatchers.IO) { FileUtils.delete(f) }) failed++
                 }
                 isOperationRunning = false
                 operationJob = null
                 loadDirectory(currentDir, resetScroll = false)
                 if (failed > 0) {
-                    Toast.makeText(context, "$failed couldn't be deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_failed_couldn_t_be_deleted), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1008,8 +1008,8 @@ fun FileManagerScreen(
         ) {
             DeckConfigNote(I18n.s(R.string.ui_this_can_t_be_undone))
             // Name a few so an accidental Select-All is obvious before it's too late.
-            victims.take(5).forEach { DeckConfigNote("• ${it.name}") }
-            if (victims.size > 5) DeckConfigNote("…and ${victims.size - 5} more")
+            victims.take(5).forEach { DeckConfigNote(I18n.s(R.string.ui_it_name)) }
+            if (victims.size > 5) DeckConfigNote(I18n.s(R.string.ui_and_victims_size_5_more))
         } else OutlinedAlertDialog(
             onDismissRequest = { pendingBulkDelete = emptyList() },
             title = { Text("Delete ${victims.size} item${if (victims.size == 1) "" else "s"}?") },
@@ -1019,11 +1019,11 @@ fun FileManagerScreen(
                     Spacer(Modifier.height(6.dp))
                     // Name a few so an accidental Select-All is obvious before it's too late.
                     victims.take(5).forEach {
-                        Text("• ${it.name}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                        Text(I18n.s(R.string.ui_it_name), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                     }
                     if (victims.size > 5) {
                         Text(
-                            "…and ${victims.size - 5} more",
+                            I18n.s(R.string.ui_and_victims_size_5_more),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 12.sp,
                         )
@@ -1049,12 +1049,12 @@ fun FileManagerScreen(
             onCancel = { conflictChoice = ConflictChoice.SKIP; pendingConflict = null },
         ) else OutlinedAlertDialog(
             onDismissRequest = { pendingConflict = null },
-            title = { Text("\"${conflict.name}\" already exists") },
+            title = { Text(I18n.s(R.string.ui_conflict_name_already_exists)) },
             text = {
                 Column {
                     Text(
-                        if (isDir) "Merge adds and replaces files inside the existing folder."
-                        else "Overwrite replaces the existing file.",
+                        if (isDir) I18n.s(R.string.ui_merge_adds_and_replaces_files_inside_the_existing_fol)
+                        else I18n.s(R.string.ui_overwrite_replaces_the_existing_file),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 12.sp,
                     )
@@ -1251,7 +1251,7 @@ fun FileManagerScreen(
     val locationSections = buildList {
         add(RailSection("STORAGE", storageItems))
         if (quickItems.isNotEmpty()) add(RailSection("QUICK", quickItems))
-        if (favItems.isNotEmpty()) add(RailSection("★ FAVORITES", favItems))
+        if (favItems.isNotEmpty()) add(RailSection(I18n.s(R.string.ui_favorites_3), favItems))
     }
     if (deckMode) {
         // New Deck file manager: this screen owns every behaviour, DeckFileManagerContent only draws it.
@@ -1279,7 +1279,7 @@ fun FileManagerScreen(
                 ),
             )
             if (quickItems.isNotEmpty()) add(RailSection("QUICK", quickItems))
-            if (favItems.isNotEmpty()) add(RailSection("★ FAVORITES", favItems))
+            if (favItems.isNotEmpty()) add(RailSection(I18n.s(R.string.ui_favorites_3), favItems))
         }
         val freeSpace = remember(currentDir.absolutePath, entries) { runCatching { currentDir.usableSpace }.getOrDefault(0L) }
         val totalSpace = remember(currentDir.absolutePath, entries) { runCatching { currentDir.totalSpace }.getOrDefault(0L) }
@@ -1299,7 +1299,7 @@ fun FileManagerScreen(
             showMenuFor = null
             Toast.makeText(
                 context,
-                if (nowFav) "Added \"${file.name}\" to Favorites" else "Removed \"${file.name}\" from Favorites",
+                if (nowFav) I18n.s(R.string.ui_added_file_name_to_favorites) else I18n.s(R.string.ui_removed_file_name_from_favorites),
                 Toast.LENGTH_SHORT,
             ).show()
         }
@@ -1478,7 +1478,7 @@ fun FileManagerScreen(
                     pinCurrent = {
                         FavoritesStore.add(context, currentDir.absolutePath)
                         favTick++
-                        Toast.makeText(context, "Added \"${currentDir.name}\" to Favorites", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_added_currentdir_name_to_favorites), Toast.LENGTH_SHORT).show()
                     },
                     jumpTo = { dir ->
                         showFavorites = false
@@ -1487,7 +1487,7 @@ fun FileManagerScreen(
                     unpin = { dir ->
                         FavoritesStore.remove(context, dir.absolutePath)
                         favTick++
-                        Toast.makeText(context, "Removed \"${dir.name}\" from Favorites", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_removed_dir_name_from_favorites), Toast.LENGTH_SHORT).show()
                     },
                     refresh = { loadDirectory(currentDir, resetScroll = false) },
                     pickHere = { onPick?.invoke(currentDir) },
@@ -1652,7 +1652,7 @@ fun FileManagerScreen(
                                 } else {
                                     Toast.makeText(
                                         context,
-                                        "${drive.label} is mounted but not readable right now",
+                                        I18n.s(R.string.ui_drive_label_is_mounted_but_not_readable_right_now),
                                         Toast.LENGTH_SHORT,
                                     ).show()
                                 }
@@ -1714,7 +1714,7 @@ fun FileManagerScreen(
                 }) {
                     Icon(
                         if (gridView) Icons.Filled.ViewList else Icons.Filled.GridView,
-                        if (gridView) "List view" else "Grid view",
+                        if (gridView) I18n.s(R.string.ui_list_view) else I18n.s(R.string.ui_grid_view),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -1751,7 +1751,7 @@ fun FileManagerScreen(
                             }
                         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
                         DropdownMenuItem(
-                            text = { Text(if (compactRows) "Comfortable rows" else "Compact rows") },
+                            text = { Text(if (compactRows) I18n.s(R.string.ui_comfortable_rows) else "Compact rows") },
                             onClick = {
                                 compactRows = !compactRows
                                 browsePrefs.edit().putBoolean("fmCompactRows", compactRows).apply()
@@ -1759,7 +1759,7 @@ fun FileManagerScreen(
                             },
                         )
                         DropdownMenuItem(
-                            text = { Text(if (showHidden) "Hide hidden files" else "Show hidden files") },
+                            text = { Text(if (showHidden) I18n.s(R.string.ui_hide_hidden_files) else "Show hidden files") },
                             onClick = {
                                 showHidden = !showHidden
                                 browsePrefs.edit().putBoolean("fmShowHidden", showHidden).apply()
@@ -1777,9 +1777,9 @@ fun FileManagerScreen(
                 modifier = Modifier.deckSelfFocusStroke(RoundedCornerShape(12.dp)),
             ) {
                 if (showFavorites) {
-                    Icon(Icons.Filled.Star, "Hide favorites", tint = MaterialTheme.colorScheme.primary)
+                    Icon(Icons.Filled.Star, I18n.s(R.string.ui_hide_favorites), tint = MaterialTheme.colorScheme.primary)
                 } else {
-                    Icon(Icons.Filled.StarBorder, "Show favorites", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Icon(Icons.Filled.StarBorder, I18n.s(R.string.ui_show_favorites), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -1817,7 +1817,7 @@ fun FileManagerScreen(
                 )
                 if (freeSpace > 0) {
                     Text(
-                        "${StringUtils.formatBytes(freeSpace)} free",
+                        I18n.s(R.string.ui_stringutils_formatbytes_freespace_free),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 11.sp,
                         maxLines = 1,
@@ -1838,7 +1838,7 @@ fun FileManagerScreen(
                     .padding(horizontal = 12.dp, vertical = 6.dp),
             ) {
                 Text(
-                    "${selectedPaths.size} selected",
+                    I18n.s(R.string.ui_selectedpaths_size_selected),
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 13.sp,
                     modifier = Modifier.weight(1f),
@@ -1902,9 +1902,9 @@ fun FileManagerScreen(
                 Icon(Icons.Filled.ContentPaste, "Paste", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))
                 val what = if (clipboardFiles.size == 1) clipboardFiles.first().name
-                else "${clipboardFiles.size} items"
+                else I18n.s(R.string.ui_clipboardfiles_size_items)
                 Text(
-                    "Paste $what${if (isCutOperation) " (move)" else ""} here",
+                    "Paste $what${if (isCutOperation) " (move)" else "I18n.s(R.string.ui_here),
                     color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { clipboardFiles = emptyList(); isCutOperation = false }) {
@@ -1976,7 +1976,7 @@ fun FileManagerScreen(
                 onPinCurrent = {
                     FavoritesStore.add(context, currentDir.absolutePath)
                     favTick++
-                    Toast.makeText(context, "Added \"${currentDir.name}\" to Favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_added_currentdir_name_to_favorites), Toast.LENGTH_SHORT).show()
                 },
                 onJump = { dir ->
                     showFavorites = false
@@ -1985,7 +1985,7 @@ fun FileManagerScreen(
                 onUnpin = { dir ->
                     FavoritesStore.remove(context, dir.absolutePath)
                     favTick++
-                    Toast.makeText(context, "Removed \"${dir.name}\" from Favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_removed_dir_name_from_favorites), Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxSize(),
             )
@@ -2068,8 +2068,8 @@ fun FileManagerScreen(
                                 showMenuFor = null
                                 Toast.makeText(
                                     context,
-                                    if (nowFav) "Added \"${file.name}\" to Favorites"
-                                    else "Removed \"${file.name}\" from Favorites",
+                                    if (nowFav) I18n.s(R.string.ui_added_file_name_to_favorites)
+                                    else I18n.s(R.string.ui_removed_file_name_from_favorites),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             },
@@ -2158,8 +2158,8 @@ fun FileManagerScreen(
                                 showMenuFor = null
                                 Toast.makeText(
                                     context,
-                                    if (nowFav) "Added \"${file.name}\" to Favorites"
-                                    else "Removed \"${file.name}\" from Favorites",
+                                    if (nowFav) I18n.s(R.string.ui_added_file_name_to_favorites)
+                                    else I18n.s(R.string.ui_removed_file_name_from_favorites),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             },
@@ -2254,7 +2254,7 @@ private fun FileContextMenuItems(
     // Favorites are directories — only folders get the pin toggle.
     if (isDir) {
         DropdownMenuItem(
-            text = { Text(if (isFavorite) "Remove from Favorites" else "Add to Favorites") },
+            text = { Text(if (isFavorite) I18n.s(R.string.ui_remove_from_favorites_2) else I18n.s(R.string.ui_add_to_favorites)) },
             leadingIcon = {
                 Icon(
                     if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
@@ -2298,7 +2298,7 @@ private fun FileContextMenuItems(
     // so this reads only a few header bytes on demand — never `7zz l` per entry).
     if (isInno || com.winhub.hernandez.core.unpack.SevenZip.looksLikeArchive(file)) {
         DropdownMenuItem(
-            text = { Text(if (isInno) "Unpack / Install…" else "Unpack Archive…") },
+            text = { Text(if (isInno) I18n.s(R.string.ui_unpack_install) else I18n.s(R.string.ui_unpack_archive)) },
             leadingIcon = { Icon(Icons.Filled.Unarchive, null, tint = MaterialTheme.colorScheme.primary) },
             onClick = { onDismissMenu(); onUnpack() },
         )
@@ -2364,7 +2364,7 @@ private fun FileItemRow(
     onToggleFavorite: () -> Unit = {},
     onProperties: () -> Unit = {},
 ) {
-    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat(I18n.s(R.string.ui_yyyy_mm_dd_hh_mm), Locale.getDefault()) }
     val isDir = file.isDirectory
     val isExe = !isDir && file.name.lowercase().let { it.endsWith(".exe") || it.endsWith(".bat") || it.endsWith(".msi") || it.endsWith(".sh") }
     // Image files show a real thumbnail instead of the generic file icon (handy when picking a
@@ -2689,9 +2689,9 @@ private fun FavoriteCard(
                         }
                         else -> Text(
                             text = when (loc.storage) {
-                                FavStorage.INTERNAL -> "Internal storage"
-                                FavStorage.SD -> "SD card"
-                                FavStorage.CONTAINER -> "System files (shared)"  // Drive Z:
+                                FavStorage.INTERNAL -> I18n.s(R.string.ui_internal_storage_2)
+                                FavStorage.SD -> I18n.s(R.string.ui_sd_card)
+                                FavStorage.CONTAINER -> I18n.s(R.string.ui_system_files_shared)  // Drive Z:
                                 FavStorage.OTHER -> "Storage"
                             },
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -2891,7 +2891,7 @@ private fun FilePropertiesDialog(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat(I18n.s(R.string.ui_yyyy_mm_dd_hh_mm), Locale.getDefault()) }
     var attrs by remember(file.absolutePath) { mutableStateOf<FileAttrState?>(null) }
     // Guards against a second toggle landing while the first is still being applied off-thread.
     var busy by remember(file.absolutePath) { mutableStateOf(false) }
@@ -2918,7 +2918,7 @@ private fun FilePropertiesDialog(
                 PropertyLine(
                     "Type",
                     if (file.isDirectory) "Folder"
-                    else file.extension.uppercase().let { if (it.isBlank()) "File" else "$it file" },
+                    else file.extension.uppercase().let { if (it.isBlank()) "File" else I18n.s(R.string.ui_it_file) },
                 )
                 if (!file.isDirectory) PropertyLine("Size", StringUtils.formatBytes(file.length()))
                 PropertyLine("Modified", dateFormat.format(Date(file.lastModified())))
@@ -2943,7 +2943,7 @@ private fun FilePropertiesDialog(
                                 attrs = attrs?.copy(readOnly = want)
                                 onChanged()
                             } else {
-                                Toast.makeText(context, "Couldn't change Read-only", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_change_read_only), Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
@@ -2954,8 +2954,8 @@ private fun FilePropertiesDialog(
                 AttributeToggleRow(
                     label = "Hidden",
                     description = if (state != null && !hiddenSupported)
-                        "This storage can't store the hidden flag."
-                    else "Marks the file hidden in Windows (Wine's hidden attribute).",
+                        I18n.s(R.string.ui_this_storage_can_t_store_the_hidden_flag)
+                    else I18n.s(R.string.ui_marks_the_file_hidden_in_windows_wine_s_hidden_attrib),
                     checked = state?.hidden == true,
                     enabled = state != null && hiddenSupported && !busy,
                     onToggle = { want ->
@@ -2969,7 +2969,7 @@ private fun FilePropertiesDialog(
                             } else {
                                 // The write failed after all — disable the toggle rather than lie.
                                 attrs = attrs?.copy(hiddenSupported = false)
-                                Toast.makeText(context, "Couldn't change Hidden on this storage", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18n.s(R.string.ui_couldn_t_change_hidden_on_this_storage), Toast.LENGTH_SHORT).show()
                             }
                         }
                     },

@@ -256,7 +256,7 @@ internal fun rememberDrawerClock(): String {
             val battery = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             val level = battery?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
             val scale = battery?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-            text = if (level >= 0 && scale > 0) "$time  ·  ${level * 100 / scale}%" else time
+            text = if (level >= 0 && scale > 0) I18n.s(R.string.ui_time_level_100_scale) else time
             delay(20_000)
         }
     }
@@ -329,7 +329,7 @@ internal fun DrawerHintBar(modifier: Modifier = Modifier) {
     ) {
         DrawerHint("A", "Select")
         DrawerHint("B", "Close")
-        DrawerHint("LB RB", "Tab")
+        DrawerHint(I18n.s(R.string.ui_lb_rb), "Tab")
     }
 }
 

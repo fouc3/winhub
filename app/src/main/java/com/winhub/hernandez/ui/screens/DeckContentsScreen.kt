@@ -148,15 +148,15 @@ internal data class DeckContentCategory(
 )
 
 internal val deckContentCategories = listOf(
-    DeckContentCategory("DXVK", "DXVK", "Direct3D 9 / 10 / 11 to Vulkan", Icons.Filled.ViewInAr),
-    DeckContentCategory("D7VK", "D7VK", "Direct3D 7 to Vulkan", Icons.Filled.ViewInAr),
-    DeckContentCategory("VKD3D", "VKD3D", "Direct3D 12 to Vulkan (VKD3D-Proton)", Icons.Filled.Widgets),
-    DeckContentCategory(ContentsTypes.GPU_DRIVERS, "GPU Drivers", "Turnip / Adreno Vulkan drivers", Icons.Filled.Memory),
-    DeckContentCategory("Box64", "Box64", "x86_64 userland emulation on ARM64", Icons.Filled.Extension),
-    DeckContentCategory("WOWBox64", "WOWBox64", "x86 (32-bit) emulation on ARM64", Icons.Filled.DeveloperBoard),
-    DeckContentCategory("FEXCore", "FEXCore", "x86 / x86_64 backend (ARM64EC)", Icons.Filled.Dns),
-    DeckContentCategory("Wine", "Wine", "Windows compatibility layer (runtime)", Icons.Filled.LocalBar),
-    DeckContentCategory("Proton", "Proton", "Valve's Wine fork tuned for gaming", Icons.Filled.Science),
+    DeckContentCategory("DXVK", "DXVK", I18n.s(R.string.ui_direct3d_9_10_11_to_vulkan), Icons.Filled.ViewInAr),
+    DeckContentCategory("D7VK", "D7VK", I18n.s(R.string.ui_direct3d_7_to_vulkan), Icons.Filled.ViewInAr),
+    DeckContentCategory("VKD3D", "VKD3D", I18n.s(R.string.ui_direct3d_12_to_vulkan_vkd3d_proton), Icons.Filled.Widgets),
+    DeckContentCategory(ContentsTypes.GPU_DRIVERS, "GPU Drivers", I18n.s(R.string.ui_turnip_adreno_vulkan_drivers), Icons.Filled.Memory),
+    DeckContentCategory("Box64", "Box64", I18n.s(R.string.ui_x86_64_userland_emulation_on_arm64), Icons.Filled.Extension),
+    DeckContentCategory("WOWBox64", "WOWBox64", I18n.s(R.string.ui_x86_32_bit_emulation_on_arm64), Icons.Filled.DeveloperBoard),
+    DeckContentCategory("FEXCore", "FEXCore", I18n.s(R.string.ui_x86_x86_64_backend_arm64ec), Icons.Filled.Dns),
+    DeckContentCategory("Wine", "Wine", I18n.s(R.string.ui_windows_compatibility_layer_runtime), Icons.Filled.LocalBar),
+    DeckContentCategory("Proton", "Proton", I18n.s(R.string.ui_valve_s_wine_fork_tuned_for_gaming), Icons.Filled.Science),
 )
 
 /** Deck Mode's Contents section, rebuilt from scratch in DroidDeck's own vocabulary. */
@@ -216,12 +216,12 @@ internal fun DeckContentsScreen(vm: ContentsHubViewModel = viewModel()) {
                         color = DeckPalette.onBackground,
                     )
                     Text(
-                        text = "${installedKeys.size} installed - $archived archived",
+                        text = I18n.s(R.string.ui_installedkeys_size_installed_archived_archived),
                         fontSize = 13.sp,
                         color = DeckPalette.onSurfaceVariant,
                     )
                 }
-                DeckIconAction(Icons.Filled.Refresh, "Refresh contents") {
+                DeckIconAction(Icons.Filled.Refresh, I18n.s(R.string.ui_refresh_contents)) {
                     vm.refreshStatus()
                     vm.refreshFolders()
                     vm.reloadSources()
@@ -500,7 +500,7 @@ private fun DeckContentsBrowseTab(
             Spacer(Modifier.width(8.dp))
             DeckIconAction(Icons.Filled.Add, "Add repository") { showAdd = true }
             Spacer(Modifier.width(8.dp))
-            DeckIconAction(Icons.Filled.FileDownload, "Import or export sources") { showTransfer = true }
+            DeckIconAction(Icons.Filled.FileDownload, I18n.s(R.string.ui_import_or_export_sources)) { showTransfer = true }
             Spacer(Modifier.width(8.dp))
             DeckIconAction(Icons.Filled.Settings, "Contents settings") { showSettings = true }
         }
@@ -519,7 +519,7 @@ private fun DeckContentsBrowseTab(
                 }
                 Spacer(Modifier.height(8.dp))
                 if (searching) DeckLoading()
-                else if (results.isEmpty()) DeckEmpty("No component matches \"$query\".")
+                else if (results.isEmpty()) DeckEmpty(I18n.s(R.string.ui_no_component_matches_query))
                 else DeckDragFrame(modifier = Modifier.fillMaxSize()) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
@@ -543,21 +543,21 @@ private fun DeckContentsBrowseTab(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     DeckIconAction(
                         Icons.Filled.ArrowBack,
-                        if (repo == null) "All component families" else "Back to repositories",
+                        if (repo == null) I18n.s(R.string.ui_all_component_families) else I18n.s(R.string.ui_back_to_repositories),
                     ) {
                         if (repo == null) vm.selectCategory(null) else onRepo(null)
                     }
                     Spacer(Modifier.width(10.dp))
                     Column(Modifier.weight(1f)) {
                         Text(
-                            text = if (repo == null) title else "$title - $repo",
+                            text = if (repo == null) title else I18n.s(R.string.ui_title_repo),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
                             color = DeckPalette.onBackground,
                         )
                         Text(
                             text = if (repo == null) {
-                                "Choose a repository"
+                                I18n.s(R.string.ui_choose_a_repository)
                             } else {
                                 "${repoItems.size} release${if (repoItems.size == 1) "" else "s"}"
                             },
@@ -569,11 +569,11 @@ private fun DeckContentsBrowseTab(
                 Spacer(Modifier.height(10.dp))
                 when {
                     loading -> DeckLoading()
-                    items.isEmpty() -> DeckEmpty("No releases found for $title.")
+                    items.isEmpty() -> DeckEmpty(I18n.s(R.string.ui_no_releases_found_for_title))
                     repo == null -> {
                         val names = items.map { it.sourceName }.toSet()
                         val repos = sources.filter { it.name in names }
-                        if (repos.isEmpty()) DeckEmpty("No repository offers $title.")
+                        if (repos.isEmpty()) DeckEmpty(I18n.s(R.string.ui_no_repository_offers_title))
                         else DeckDragFrame(modifier = Modifier.fillMaxSize()) {
                             LazyColumn(
                                 modifier = Modifier.fillMaxSize(),
@@ -646,7 +646,7 @@ private fun DeckContentsBrowseTab(
 @Composable
 internal fun DeckSearchField(
     query: String,
-    hint: String = "Search every repository...",
+    hint: String = I18n.s(R.string.ui_search_every_repository),
     // Last, so existing trailing-lambda callers keep working.
     onQuery: (String) -> Unit,
 ) {
@@ -795,7 +795,7 @@ private fun DeckCatalogCard(
         val name = item.displayName.trim()
         val version = item.versionName.trim()
         if (version.isEmpty() || name == version || name.contains(version, ignoreCase = true)) name
-        else "$name $version"
+        else I18n.s(R.string.ui_name_version)
     }
 
     Column(
@@ -864,7 +864,7 @@ private fun DeckCatalogCard(
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             DeckAction(
-                text = if (installed) "Installed" else if (busy) "Working..." else "Download & Install",
+                text = if (installed) "Installed" else if (busy) "Working..." else I18n.s(R.string.ui_download_install_2),
                 primary = !installed,
                 enabled = !installed && !busy,
                 modifier = Modifier.weight(1f),
@@ -914,8 +914,8 @@ internal fun DeckMeta(icon: ImageVector, text: String) {
 @Composable
 private fun DeckDownloadStatus(state: ContentDownloadState) {
     val label = when (state.phase) {
-        ContentDownloadPhase.DOWNLOADING -> "Downloading ${(state.fraction * 100).toInt()}%"
-        ContentDownloadPhase.INSTALLING -> if (state.saveOnly) "Saving to My Files" else "Installing"
+        ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint)
+        ContentDownloadPhase.INSTALLING -> if (state.saveOnly) I18n.s(R.string.ui_saving_to_my_files) else "Installing"
         ContentDownloadPhase.DONE -> if (state.saveOnly) "Saved" else "Installed"
         ContentDownloadPhase.ERROR -> state.error ?: "Failed"
     }
@@ -1010,13 +1010,13 @@ private fun DeckSourceCard(
                 ) {
                     source.typePills.take(4).forEach { DeckBadge(it, DeckPalette.onSurfaceVariant) }
                     if (source.typePills.size > 4) {
-                        DeckBadge("+${source.typePills.size - 4}", DeckPalette.onSurfaceVariant)
+                        DeckBadge(I18n.s(R.string.ui_source_typepills_size_4), DeckPalette.onSurfaceVariant)
                     }
                 }
             }
         }
         Spacer(Modifier.width(6.dp))
-        DeckIconAction(Icons.Filled.MoreVert, "Repository options", onClick = onMenu)
+        DeckIconAction(Icons.Filled.MoreVert, I18n.s(R.string.ui_repository_options), onClick = onMenu)
     }
 }
 
@@ -1058,9 +1058,9 @@ private fun DeckContentsFilesTab(vm: ContentsHubViewModel) {
                     color = DeckPalette.onSurfaceVariant,
                 )
             }
-            DeckAction("Install from file...", primary = false) {
+            DeckAction(I18n.s(R.string.ui_install_from_file_2), primary = false) {
                 picker.launch(
-                    InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"),
+                    InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_content_pack)),
                 )
             }
         }
@@ -1108,7 +1108,7 @@ private fun DeckContentsFilesTab(vm: ContentsHubViewModel) {
     pendingDelete?.let { file ->
         DeckConfirm(
             title = I18n.s(R.string.ui_delete_archive),
-            message = "Remove \"${file.name}\" from My Files? Installed components stay installed.",
+            message = I18n.s(R.string.ui_remove_file_name_from_my_files_installed_components_s),
             confirmLabel = "Delete",
             onDismiss = { pendingDelete = null },
             onConfirm = {
@@ -1210,7 +1210,7 @@ private fun DeckSavedFolder(
                         )
                         Text(
                             text = if (file.savedOnly) {
-                                "${RemoteSourceRepository.formatFileSize(file.sizeBytes)} - saved only, not installed"
+                                I18n.s(R.string.ui_remotesourcerepository_formatfilesize_file_sizebytes)
                             } else RemoteSourceRepository.formatFileSize(file.sizeBytes),
                             fontSize = 11.sp,
                             color = if (file.savedOnly) ContentsBlue else DeckPalette.onSurfaceVariant,
@@ -1218,13 +1218,13 @@ private fun DeckSavedFolder(
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    DeckIconAction(Icons.Filled.InstallDesktop, "Install ${file.name}", DeckPalette.primary) {
+                    DeckIconAction(Icons.Filled.InstallDesktop, I18n.s(R.string.ui_install_file_name), DeckPalette.primary) {
                         onInstall(file)
                     }
                     Spacer(Modifier.width(6.dp))
-                    DeckIconAction(Icons.Filled.Share, "Share ${file.name}") { onShare(file) }
+                    DeckIconAction(Icons.Filled.Share, I18n.s(R.string.ui_share_file_name)) { onShare(file) }
                     Spacer(Modifier.width(6.dp))
-                    DeckIconAction(Icons.Filled.DeleteOutline, "Delete ${file.name}", DeckPalette.error) {
+                    DeckIconAction(Icons.Filled.DeleteOutline, I18n.s(R.string.ui_delete_file_name), DeckPalette.error) {
                         onDelete(file)
                     }
                 }
@@ -1248,7 +1248,7 @@ private fun shareDeckArchive(context: Context, file: ComponentLibrary.SavedFile)
             putExtra(Intent.EXTRA_STREAM, shareUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        context.startActivity(Intent.createChooser(intent, "Share ${file.name}"))
+        context.startActivity(Intent.createChooser(intent, I18n.s(R.string.ui_share_file_name)))
     }
 }
 
@@ -1297,14 +1297,14 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
                     color = DeckPalette.onBackground,
                 )
                 Text(
-                    text = "${drivers.size} drivers - ${components.sumOf { it.second.size }} components",
+                    text = I18n.s(R.string.ui_drivers_size_drivers_components_sumof_it_second_size),
                     fontSize = 12.sp,
                     color = DeckPalette.onSurfaceVariant,
                 )
             }
-            DeckAction("Install from file...", primary = false) {
+            DeckAction(I18n.s(R.string.ui_install_from_file_2), primary = false) {
                 picker.launch(
-                    InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select content pack"),
+                    InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_content_pack)),
                 )
             }
         }
@@ -1355,7 +1355,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
     confirmDriver?.let { id ->
         DeckConfirm(
             title = I18n.s(R.string.ui_remove_driver),
-            message = "Remove \"${manager.getDriverName(id)}\"? Games using it fall back to the next driver.",
+            message = I18n.s(R.string.ui_remove_manager_getdrivername_id_games_using_it_fall_b),
             confirmLabel = "Remove",
             onDismiss = { confirmDriver = null },
             onConfirm = {
@@ -1369,7 +1369,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
     confirmProfile?.let { profile ->
         DeckConfirm(
             title = I18n.s(R.string.ui_remove_component),
-            message = "Remove \"${profile.verName}\"? Containers using it will need another version.",
+            message = I18n.s(R.string.ui_remove_profile_vername_containers_using_it_will_need),
             confirmLabel = "Remove",
             onDismiss = { confirmProfile = null },
             onConfirm = {
@@ -1427,7 +1427,7 @@ private fun DeckInstalledRow(
                 )
             }
         }
-        DeckIconAction(Icons.Filled.DeleteOutline, "Remove $title", DeckPalette.error, onRemove)
+        DeckIconAction(Icons.Filled.DeleteOutline, I18n.s(R.string.ui_remove_title), DeckPalette.error, onRemove)
     }
 }
 
@@ -1499,7 +1499,7 @@ private fun DeckInstalledComponents(
                 ) {
                     Column(Modifier.weight(1f)) {
                         Text(
-                            text = profile.verName ?: "Unknown version",
+                            text = profile.verName ?: I18n.s(R.string.ui_unknown_version),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = DeckPalette.onBackground,
@@ -1507,14 +1507,14 @@ private fun DeckInstalledComponents(
                             overflow = TextOverflow.Ellipsis,
                         )
                         Text(
-                            text = "Code ${profile.verCode}",
+                            text = I18n.s(R.string.ui_code_profile_vercode),
                             fontSize = 11.sp,
                             color = DeckPalette.onSurfaceVariant,
                         )
                     }
                     DeckIconAction(
                         Icons.Filled.DeleteOutline,
-                        "Remove ${profile.verName}",
+                        I18n.s(R.string.ui_remove_profile_vername),
                         DeckPalette.error,
                     ) { onRemove(profile) }
                 }
@@ -1558,7 +1558,7 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
         DeckConfigNote(I18n.s(R.string.ui_paste_any_component_or_gpu_driver_source_it_joi_2))
         DeckConfigTextField(I18n.s(R.string.ui_display_name), name, { name = it })
         DeckConfigTextField(
-            label = if (isDriver) "GitHub repo (owner/repo) or JSON URL" else "URL (repo, releases API, or JSON)",
+            label = if (isDriver) I18n.s(R.string.ui_github_repo_owner_repo_or_json_url) else I18n.s(R.string.ui_url_repo_releases_api_or_json),
             value = url,
             onValueChange = { url = it },
         )
@@ -1638,7 +1638,7 @@ private fun DeckSourceMenuDialog(
 ) {
     val context = LocalContext.current
     DeckConfigDialog(title = source.name, onDismiss = onDismiss, compact = true) {
-        DeckDialogAction(Icons.Filled.OpenInNew, "Open source page") {
+        DeckDialogAction(Icons.Filled.OpenInNew, I18n.s(R.string.ui_open_source_page)) {
             runCatching {
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(vm.browseUrl(source))))
             }
@@ -1647,7 +1647,7 @@ private fun DeckSourceMenuDialog(
         DeckDialogDivider()
         DeckDialogAction(
             icon = Icons.Filled.Delete,
-            label = if (source.removeIsHide) "Hide default repository" else "Remove repository",
+            label = if (source.removeIsHide) I18n.s(R.string.ui_hide_default_repository) else I18n.s(R.string.ui_remove_repository),
             tint = DeckPalette.error,
         ) {
             vm.removeSource(source)
@@ -1705,8 +1705,8 @@ private fun DeckTransferDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) 
             }
         }
     }
-    DeckConfigDialog(title = "Import / export sources", onDismiss = onDismiss, compact = true) {
-        DeckDialogAction(Icons.Filled.FileDownload, "Import list from file...") {
+    DeckConfigDialog(title = I18n.s(R.string.ui_import_export_sources), onDismiss = onDismiss, compact = true) {
+        DeckDialogAction(Icons.Filled.FileDownload, I18n.s(R.string.ui_import_list_from_file)) {
             importer.launch(
                 Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
@@ -1715,14 +1715,14 @@ private fun DeckTransferDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) 
             )
         }
         DeckDialogDivider()
-        DeckDialogAction(Icons.Filled.FileUpload, "Export current list") {
+        DeckDialogAction(Icons.Filled.FileUpload, I18n.s(R.string.ui_export_current_list)) {
             runCatching {
                 val json = vm.exportRepoListJson()
                 val share = Intent(Intent.ACTION_SEND).apply {
                     type = "application/json"
                     putExtra(Intent.EXTRA_TEXT, json)
                 }
-                context.startActivity(Intent.createChooser(share, "Export sources"))
+                context.startActivity(Intent.createChooser(share, I18n.s(R.string.ui_export_sources)))
             }
             onDismiss()
         }
@@ -1764,7 +1764,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
                     color = DeckPalette.onBackground,
                 )
                 Text(
-                    "Save every install's download to My Files",
+                    I18n.s(R.string.ui_save_every_install_s_download_to_my_files),
                     fontSize = 11.sp,
                     color = DeckPalette.onSurfaceVariant,
                 )
@@ -1778,13 +1778,13 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    "Show Official catalog",
+                    I18n.s(R.string.ui_show_official_catalog),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = DeckPalette.onBackground,
                 )
                 Text(
-                    "Container sheets keep it either way",
+                    I18n.s(R.string.ui_container_sheets_keep_it_either_way),
                     fontSize = 11.sp,
                     color = DeckPalette.onSurfaceVariant,
                 )
@@ -1792,7 +1792,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
             DeckToggle(checked = showOfficial, onChange = { vm.setShowOfficial(it) })
         }
         DeckDialogDivider()
-        DeckDialogAction(Icons.Filled.FolderOpen, "Save location: $baseDisplay") {
+        DeckDialogAction(Icons.Filled.FolderOpen, I18n.s(R.string.ui_save_location_basedisplay)) {
             dirPicker.launch(
                 InAppFilePicker.buildDirIntent(
                     context,
@@ -1805,7 +1805,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth().padding(start = 4.dp, bottom = 6.dp),
         ) {
-            DeckAction("Default folder", primary = false) {
+            DeckAction(I18n.s(R.string.ui_default_folder), primary = false) {
                 vm.library.setDefaultBase()
                 vm.refreshBase()
                 vm.refreshFolders()
@@ -1819,7 +1819,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
             }
         }
         DeckDialogDivider()
-        DeckDialogAction(Icons.Filled.Restore, "Restore default repositories") {
+        DeckDialogAction(Icons.Filled.Restore, I18n.s(R.string.ui_restore_default_repositories)) {
             vm.restoreDefaultSources()
             onDismiss()
         }
@@ -1871,10 +1871,10 @@ private fun DeckInstallDialog(
 ) {
     DeckConfigDialog(
         title = when {
-            state.saveOnly && state.terminal -> "Archive saved"
-            state.saveOnly -> "Saving archive"
-            state.terminal -> "Component ready"
-            else -> "Installing component"
+            state.saveOnly && state.terminal -> I18n.s(R.string.ui_archive_saved)
+            state.saveOnly -> I18n.s(R.string.ui_saving_archive)
+            state.terminal -> I18n.s(R.string.ui_component_ready)
+            else -> I18n.s(R.string.ui_installing_component)
         },
         onDismiss = { if (state.terminal) onDismiss() else onCancel() },
         compact = true,
@@ -1911,9 +1911,9 @@ private fun DeckInstallDialog(
             Spacer(Modifier.height(8.dp))
         }
         val label = when (state.phase) {
-            ContentDownloadPhase.DOWNLOADING -> "Downloading ${(state.fraction * 100).toInt()}%"
-            ContentDownloadPhase.INSTALLING -> if (state.saveOnly) "Saving to My Files" else "Installing"
-            ContentDownloadPhase.DONE -> if (state.saveOnly) "Saved to My Files" else "Installed"
+            ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint)
+            ContentDownloadPhase.INSTALLING -> if (state.saveOnly) I18n.s(R.string.ui_saving_to_my_files) else "Installing"
+            ContentDownloadPhase.DONE -> if (state.saveOnly) I18n.s(R.string.ui_saved_to_my_files) else "Installed"
             ContentDownloadPhase.ERROR -> if (state.cancelled) "Cancelled" else state.error ?: "Failed"
         }
         DeckConfigNote(

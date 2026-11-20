@@ -26,7 +26,7 @@ private const val TAG = "XmbMods"
 
 private const val START_PROGRAMS_NOTE =
     "These start with the game, top to bottom. The first waits from the game launching; each next one " +
-        "waits after the one before it starts."
+        I18n.s(R.string.ui_waits_after_the_one_before_it_starts)
 
 /**
  * XMB twin of the shortcut editor's Mods tab: the mods this game's EXE can take (core.GameMods) with
@@ -53,7 +53,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     "ready"
                 } catch (e: Exception) {
                     Log.w(TAG, "download of ${mod.name} failed", e)
-                    "download failed"
+                    I18n.s(R.string.ui_download_failed)
                 }
             }
         }
@@ -61,18 +61,18 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
     return XmbMenu(I18n.s(R.string.ui_mods), Icons.Filled.Apps) {
         val rows = mutableListOf<XmbRow>()
-        rows += XmbRow.Header("hMods", "Game mods")
+        rows += XmbRow.Header("hMods", I18n.s(R.string.ui_game_mods))
         if (mods.isEmpty()) {
             rows += XmbRow.Info(I18n.s(R.string.ui_nomods), "No mods for this game", Icons.Filled.Info,
                 subtitle = "REFramework is for RE Engine games and Special K for 32 and 64-bit Windows games. " +
-                    "This game's EXE can't take either.")
+                    I18n.s(R.string.ui_this_game_s_exe_can_t_take_either))
         }
         for (mod in mods) {
             val on = shortcut.getExtra(mod.extra) == "1"
             val hint = when (status[mod.id].orEmpty()) {
-                "" -> "Downloaded the first time it is switched on"
-                "ready" -> "Downloaded and ready"
-                "download failed" -> "Download failed. Check your connection and switch it off and on to retry"
+                "" -> I18n.s(R.string.ui_downloaded_the_first_time_it_is_switched_on)
+                "ready" -> I18n.s(R.string.ui_downloaded_and_ready)
+                I18n.s(R.string.ui_download_failed) -> I18n.s(R.string.ui_download_failed_check_your_connection_and_switch_it_o)
                 else -> "Downloading…"
             }
             rows += XmbRow.Toggle("mod:${mod.id}", mod.name, Icons.Filled.Extension, on, subtitle = hint) { checked ->
@@ -90,7 +90,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             }
         }
 
-        rows += XmbRow.Header("hProg", "Start with the game")
+        rows += XmbRow.Header("hProg", I18n.s(R.string.ui_start_with_the_game))
         val list = StartPrograms.parse(shortcut.getExtra(StartPrograms.EXTRA, ""))
         rows += XmbRow.Link("addProg", "Add program", Icons.Filled.Add, subtitle = START_PROGRAMS_NOTE) {
             xmbAddProgramMenu(xmb, shortcut)
@@ -125,7 +125,7 @@ private fun xmbAddProgramMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu =
 
 /** One program: its path, the wait before it starts, its place in the order, and Remove. */
 private fun xmbProgramMenu(xmb: XmbScope, shortcut: Shortcut, index: Int): XmbMenu =
-    XmbMenu("Program ${index + 1}", Icons.Filled.Apps) {
+    XmbMenu(I18n.s(R.string.ui_program_index_1), Icons.Filled.Apps) {
         val list = StartPrograms.parse(shortcut.getExtra(StartPrograms.EXTRA, ""))
         val cur = list.getOrNull(index)
         if (cur == null) emptyList() else programRows(xmb, shortcut, list, index, cur)
@@ -152,12 +152,12 @@ private fun programRows(
     val delays = delayOptions(cur.delaySec.toString())
     rows += XmbRow.Choice("delay", "Wait before starting", Icons.Filled.Timer,
         delays.map { it.second }, delayLabel(cur.delaySec),
-        subtitle = if (index == 0) "After the game launches" else "After the previous program starts") { v ->
+        subtitle = if (index == 0) I18n.s(R.string.ui_after_the_game_launches) else I18n.s(R.string.ui_after_the_previous_program_starts)) { v ->
         delays.firstOrNull { it.second == v }?.first?.toIntOrNull()
             ?.let { replace(StartPrograms.Entry(cur.path, it)) }
     }
-    if (index > 0) rows += XmbRow.Action("up", "Move up", Icons.Filled.ArrowUpward) { reorder(index - 1) }
-    if (index < list.size - 1) rows += XmbRow.Action("down", "Move down", Icons.Filled.ArrowDownward) { reorder(index + 1) }
+    if (index > 0) rows += XmbRow.Action("up", I18n.s(R.string.ui_move_up), Icons.Filled.ArrowUpward) { reorder(index - 1) }
+    if (index < list.size - 1) rows += XmbRow.Action("down", I18n.s(R.string.ui_move_down), Icons.Filled.ArrowDownward) { reorder(index + 1) }
     rows += XmbRow.Action("remove", "Remove", Icons.Filled.Delete, danger = true) {
         saveProgramList(xmb, shortcut, list.filterIndexed { i, _ -> i != index })
         xmb.pop()

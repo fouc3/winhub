@@ -380,12 +380,12 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
     // badge survives an app restart. The DLL file itself is still the single runtime source of truth;
     // this pref is purely cosmetic provenance. Cleared when the DLL is removed.
     fun lsfgDllStatusText(): String {
-        if (!(lsfgDllFile.isFile && lsfgDllFile.length() > 0)) return "Not set — LSFG Native will stay off"
+        if (!(lsfgDllFile.isFile && lsfgDllFile.length() > 0)) return I18n.s(R.string.ui_not_set_lsfg_native_will_stay_off)
         val mb = lsfgDllFile.length() / (1024 * 1024)
         return when (prefs.getString("lsfg_dll_source", null)) {
-            "store"  -> "Imported from Steam store (Lossless Scaling) — $mb MB"
-            "manual" -> "Imported manually — $mb MB"
-            else     -> "Imported ($mb MB)"
+            "store"  -> I18n.s(R.string.ui_imported_from_steam_store_lossless_scaling_mb_mb)
+            "manual" -> I18n.s(R.string.ui_imported_manually_mb_mb)
+            else     -> I18n.s(R.string.ui_imported_mb_mb)
         }
     }
     var lsfgDllStatus by remember { mutableStateOf(lsfgDllStatusText()) }
@@ -401,7 +401,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         if (!lsfgShaderBuilding.compareAndSet(false, true)) return
         val main = android.os.Handler(android.os.Looper.getMainLooper())
         val appCtx = context.applicationContext
-        lsfgShaderStatus = "Preparing shaders for LSFG Native… (one-time, can take a minute)"
+        lsfgShaderStatus = I18n.s(R.string.ui_preparing_shaders_for_lsfg_native_one_time_can_take_a)
         Thread({
             val started = System.currentTimeMillis()
             val status = try {
@@ -410,8 +410,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             val took = (System.currentTimeMillis() - started) / 1000
             val text = when (status) {
                 com.winhub.hernandez.core.LsfgNative.STATUS_OK ->
-                    if (took >= 2) "Shaders ready for LSFG Native (built in ${took}s)" else "Shaders ready for LSFG Native"
-                -1 -> "Shader preparation failed; it will be retried when a game launches"
+                    if (took >= 2) I18n.s(R.string.ui_shaders_ready_for_lsfg_native_built_in_took_s) else I18n.s(R.string.ui_shaders_ready_for_lsfg_native)
+                -1 -> I18n.s(R.string.ui_shader_preparation_failed_it_will_be_retried_when_a_g)
                 else -> com.winhub.hernandez.core.LsfgNative.explain(status)
             }
             main.post { lsfgShaderStatus = text; lsfgShaderBuilding.set(false) }
@@ -445,7 +445,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         val src = findStoreLosslessDll()
         if (src == null) {
             Toast.makeText(context,
-                "No Steam-store Lossless Scaling found — download it from the store or import manually.",
+                I18n.s(R.string.ui_no_steam_store_lossless_scaling_found_download_it_fro),
                 Toast.LENGTH_LONG).show()
             return
         }
@@ -455,7 +455,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             prefs.edit().putString("lsfg_dll_source", "store").apply()
             lsfgDllStatus = lsfgDllStatusText()
             buildLsfgShaderCache()
-            Toast.makeText(context, "Lossless.dll set from Steam store install.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_lossless_dll_set_from_steam_store_install), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             lsfgDllStatus = "Detect failed: " + e.message
             Toast.makeText(context, "Detect failed: " + e.message, Toast.LENGTH_LONG).show()
@@ -503,12 +503,12 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                             ) { file -> !file.absolutePath.contains("imagefs/tmp/.sysvshm") }
                             (context as? Activity)?.runOnUiThread {
                                 isBackingUp = false
-                                AppUtils.showToast(context, "Backup completed: ${backupFile.path}")
+                                AppUtils.showToast(context, I18n.s(R.string.ui_backup_completed_backupfile_path))
                             }
                         } catch (_: Exception) {
                             (context as? Activity)?.runOnUiThread {
                                 isBackingUp = false
-                                AppUtils.showToast(context, "Backup failed.")
+                                AppUtils.showToast(context, I18n.s(R.string.ui_backup_failed))
                             }
                         }
                     }
@@ -552,7 +552,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             val latest = updateInfo
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "Installed: V ${UpdateManager.installedVersionName()}" +
+                    I18n.s(R.string.ui_installed_v_updatemanager_installedversionname) +
                         (latest?.let { "   ·   Latest: V ${it.versionName}" } ?: ""),
                     color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f)
                 )
@@ -576,7 +576,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     onClick = { activity?.let { UpdateManager.downloadAndInstall(it, latest) {} } },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                ) { Text("Download & install V ${latest.versionName}", color = Color.White) } // intentional: high-contrast label on green fill
+                ) { Text(I18n.s(R.string.ui_download_install_v_latest_versionname), color = Color.White) } // intentional: high-contrast label on green fill
             } else if (latest != null) {
                 Text(I18n.s(R.string.ui_you_re_up_to_date), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
             }
@@ -588,8 +588,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                             updateInfo = info
                             checkingUpdate = false
                             when {
-                                info == null -> ComposeNotifier.show(context, "Couldn't check for updates")
-                                !info.isNewer -> ComposeNotifier.show(context, "You're on the latest version")
+                                info == null -> ComposeNotifier.show(context, I18n.s(R.string.ui_couldn_t_check_for_updates))
+                                !info.isNewer -> ComposeNotifier.show(context, I18n.s(R.string.ui_you_re_on_the_latest_version))
                                 else -> {}
                             }
                         }
@@ -597,7 +597,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 },
                 enabled = !checkingUpdate,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text(if (checkingUpdate) "Checking…" else "Check for updates", color = MaterialTheme.colorScheme.onPrimary) }
+            ) { Text(if (checkingUpdate) I18n.s(R.string.ui_checking) else "Check for updates", color = MaterialTheme.colorScheme.onPrimary) }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = notifyUpdates, onCheckedChange = {
                     notifyUpdates = it
@@ -633,11 +633,11 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     steamHelp = "Steam chat notifications" to
                         "Shows an Android notification when a Steam friend messages you and their chat " +
                         "isn't open in the app. Tap it to open the chat. Off = messages still arrive, you " +
-                        "just aren't told until you open Friends."
+                        I18n.s(R.string.ui_just_aren_t_told_until_you_open_friends)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             Text(
-                "Show a notification when a Steam friend messages you while their chat isn't open.",
+                I18n.s(R.string.ui_show_a_notification_when_a_steam_friend_messages_you),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp,
                 modifier = Modifier.padding(start = 12.dp),
             )
@@ -650,14 +650,14 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Text(I18n.s(R.string.ui_show_me_as_in_game_for_offline_launches), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
-                    steamHelp = "Show me as in-game" to
+                    steamHelp = I18n.s(R.string.ui_show_me_as_in_game) to
                         "When you launch a Steam game with Goldberg or Raw, tell Steam you're playing it so " +
                         "friends see it and your playtime counts — like the real Steam client. " +
-                        "Off = launch silently. SteamLite launches always show as in-game."
+                        I18n.s(R.string.ui_off_launch_silently_steamlite_launches_always_show_as)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             Text(
-                "When a Steam game launches with Goldberg or Raw (not SteamLite), report it to Steam as the game being played — friends see it and playtime counts, like the real client. Off = launch silently.",
+                I18n.s(R.string.ui_when_a_steam_game_launches_with_goldberg_or_raw_not_s),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp,
                 modifier = Modifier.padding(start = 12.dp),
             )
@@ -672,14 +672,14 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     steamHelp = "Steam connection region" to
                         "Which Steam datacenter to connect to. Auto pings each one and keeps the fastest " +
                         "for a day, re-testing after a failed connect. Pick a specific one only if Auto " +
-                        "keeps choosing badly — the store applies it on its next connect."
+                        I18n.s(R.string.ui_keeps_choosing_badly_the_store_applies_it_on_its_next)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             Box {
                 val regionLabel = if (steamRegionMode == SteamRegion.AUTO) {
                     val r = steamRegionRemembered
-                    "Auto (nearest by ping" + (if (r != null) " — ${SteamRegion.nameOf(r.dc)} ${r.dc}, ${r.ms} ms" else "") + ")"
-                } else "${SteamRegion.nameOf(steamRegionMode)} ($steamRegionMode)"
+                    I18n.s(R.string.ui_auto_nearest_by_ping) + (if (r != null) " — ${SteamRegion.nameOf(r.dc)} ${r.dc}, ${r.ms} ms" else "") + ")"
+                } else I18n.s(R.string.ui_steamregion_nameof_steamregionmode_steamregionmode)
                 Button(onClick = { showSteamRegionDropdown = true },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                     modifier = Modifier.fillMaxWidth()) {
@@ -733,7 +733,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                         }, "steam-region-probe-ui").start()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
-                ) { Text(if (steamRegionProbing) "Testing…" else "Test regions", color = MaterialTheme.colorScheme.onSurface) }
+                ) { Text(if (steamRegionProbing) I18n.s(R.string.ui_testing) else I18n.s(R.string.ui_test_regions), color = MaterialTheme.colorScheme.onSurface) }
                 if (steamRegionProbing) CircularProgressIndicator(modifier = Modifier.size(18.dp))
                 Button(
                     enabled = !steamNetProbing,
@@ -745,18 +745,18 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                         }, "steam-net-probe-ui").start()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
-                ) { Text(if (steamNetProbing) "Testing…" else "Test network", color = MaterialTheme.colorScheme.onSurface) }
+                ) { Text(if (steamNetProbing) I18n.s(R.string.ui_testing) else I18n.s(R.string.ui_test_network), color = MaterialTheme.colorScheme.onSurface) }
                 if (steamNetProbing) CircularProgressIndicator(modifier = Modifier.size(18.dp))
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
-                    steamHelp = "Test regions / Test network" to
+                    steamHelp = I18n.s(R.string.ui_test_regions_test_network) to
                         "Test regions pings every Steam datacenter now and shows each one's response time " +
-                        "in the list above; Auto also remembers the fastest as its pick.\n\n" +
+                        I18n.s(R.string.ui_in_the_list_above_auto_also_remembers_the_fastest_as) +
                         "Test network checks how this network handles online game traffic (the same " +
                         "check the SteamLite launch shows). Steam sign-in and downloads work on any NAT; " +
                         "games with their own servers (e.g. Brawlhalla) can fail behind a strict/symmetric " +
                         "NAT such as phone hotspots or many VPNs. Fix: home Wi-Fi, a hotspot with port " +
-                        "mapping, or a VPN with port forwarding."
+                        I18n.s(R.string.ui_mapping_or_a_vpn_with_port_forwarding)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             steamNetResult?.let { net ->
@@ -772,7 +772,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Text(
                 "Which Steam datacenter to connect to for the store, downloads and the in-game Steam session. " +
                 "Auto pings each datacenter once and remembers the fastest for a day (re-tested after a failed connect). " +
-                "The store session applies it on its next connect.",
+                I18n.s(R.string.ui_the_store_session_applies_it_on_its_next_connect),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp,
                 modifier = Modifier.padding(start = 12.dp),
             )
@@ -829,13 +829,13 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 IconButton(onClick = {
                     if (selectedBox64Preset.startsWith(Box64Preset.CUSTOM)) {
                         Box64PresetManager.exportPreset("box64", context, selectedBox64Preset)
-                    } else AppUtils.showToast(context, "Cannot export this preset")
+                    } else AppUtils.showToast(context, I18n.s(R.string.ui_cannot_export_this_preset))
                 }) { Icon(Icons.Default.FileUpload, "Export", tint = MaterialTheme.colorScheme.onSurface) }
                 ImportSourceIconButton(
                     icon = Icons.Default.FileDownload,
                     contentDescription = I18n.s(R.string.preset_action_import),
                     tint = MaterialTheme.colorScheme.onSurface,
-                    onInApp = { importBox64InAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select box64 preset")) },
+                    onInApp = { importBox64InAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_box64_preset))) },
                     onSystem = { importBox64Launcher.launch(arrayOf("*/*")) },
                 )
             }
@@ -892,13 +892,13 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 IconButton(onClick = {
                     if (selectedFEXCorePreset.startsWith(FEXCorePreset.CUSTOM)) {
                         FEXCorePresetManager.exportPreset(context, selectedFEXCorePreset)
-                    } else AppUtils.showToast(context, "Cannot export this preset")
+                    } else AppUtils.showToast(context, I18n.s(R.string.ui_cannot_export_this_preset))
                 }) { Icon(Icons.Default.FileUpload, "Export", tint = MaterialTheme.colorScheme.onSurface) }
                 ImportSourceIconButton(
                     icon = Icons.Default.FileDownload,
                     contentDescription = I18n.s(R.string.preset_action_import),
                     tint = MaterialTheme.colorScheme.onSurface,
-                    onInApp = { importFEXCoreInAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select FEXCore preset")) },
+                    onInApp = { importFEXCoreInAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), I18n.s(R.string.ui_select_fexcore_preset))) },
                     onSystem = { importFEXCoreLauncher.launch(arrayOf("*/*")) },
                 )
             }
@@ -963,7 +963,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     icon = Icons.Default.Add,
                     contentDescription = "Install",
                     tint = MaterialTheme.colorScheme.onSurface,
-                    onInApp = { prepareSFInstall(); installSFInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont")) },
+                    onInApp = { prepareSFInstall(); installSFInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, I18n.s(R.string.ui_select_soundfont))) },
                     onSystem = { prepareSFInstall(); installSFLauncher.launch(arrayOf("*/*")) },
                 )
                 IconButton(onClick = {
@@ -1036,7 +1036,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel(I18n.s(R.string.ui_app_orientation))
         FieldSet {
             Text(
-                "Applies to the app's own screens only — games keep their own orientation.",
+                I18n.s(R.string.ui_applies_to_the_app_s_own_screens_only_games_keep_thei),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
             )
@@ -1061,7 +1061,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }
             }
             Text(
-                "Auto follows device rotation (default).",
+                I18n.s(R.string.ui_auto_follows_device_rotation_default),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 11.sp,
                 modifier = Modifier.padding(top = 4.dp),
@@ -1072,7 +1072,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel(I18n.s(R.string.ui_interface_scale))
         FieldSet {
             Text(
-                "Scales the app's own UI — games keep their own size.",
+                I18n.s(R.string.ui_scales_the_app_s_own_ui_games_keep_their_own_size),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
             )
@@ -1104,7 +1104,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             )
             Spacer(Modifier.height(10.dp))
             Text(
-                "How the Deck container editor arranges its categories.",
+                I18n.s(R.string.ui_how_the_deck_container_editor_arranges_its_categories),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
             )
@@ -1132,7 +1132,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel(I18n.s(R.string.ui_default_screen_on_launch))
         FieldSet {
             Text(
-                "Which screen the app opens to.",
+                I18n.s(R.string.ui_which_screen_the_app_opens_to),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
             )
@@ -1190,7 +1190,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(I18n.s(R.string.cursor_speed), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f))
-                Text("${(cursorSpeed * 100).toInt()}%", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_cursorspeed_100_toint), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
             }
             Slider(
                 value = cursorSpeed,
@@ -1227,7 +1227,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Text(
                 "Where logs are saved, which ones to record, how many past runs to keep, and what is " +
                 "on disk for each game. Two log types slow games down while enabled — the manager " +
-                "says which.",
+                I18n.s(R.string.ui_says_which),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
@@ -1286,7 +1286,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
             ) { Text(I18n.s(R.string.ui_backup_data), color = Color.White) } // intentional: high-contrast label on green fill
             Button(
-                onClick = { restoreFileInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, "Select backup")) },
+                onClick = { restoreFileInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, I18n.s(R.string.ui_select_backup))) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
             ) { Text(I18n.s(R.string.ui_restore_data), color = Color.White) } // intentional: high-contrast label on green fill
@@ -1302,7 +1302,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Text(
                 "LSFG Native needs a Lossless Scaling \"Lossless.dll\". Download Lossless Scaling from the in-app " +
                 "Steam store and tap Detect below — or import your own copy. Either way it is copied into the " +
-                "app and reused by any container whose Frame Generation engine is set to LSFG Native.",
+                I18n.s(R.string.ui_app_and_reused_by_any_container_whose_frame_generatio),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
@@ -1322,7 +1322,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
             ) { Text(I18n.s(R.string.ui_detect_from_steam_store), color = Color.White) } // intentional: high-contrast label on green fill
             Text(
-                "Manual override — pick a Lossless.dll yourself:",
+                I18n.s(R.string.ui_manual_override_pick_a_lossless_dll_yourself),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
             )
@@ -1356,7 +1356,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Text(
                 "Global performance defaults (Sustained Performance Mode, Thread Priority Boost, " +
                 "Prefer Big Cores, GPU clock lock) plus the opt-in root controls. Per-game overrides live in " +
-                "each game's settings and the in-game menu.",
+                I18n.s(R.string.ui_each_game_s_settings_and_the_in_game_menu),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
@@ -1405,7 +1405,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FloatingActionButton(
             onClick = {
                 saveSettings()
-                ComposeNotifier.show(context, "Settings saved!")
+                ComposeNotifier.show(context, I18n.s(R.string.ui_settings_saved))
                 onSaved()
             },
             containerColor = MaterialTheme.colorScheme.primary,
@@ -1493,7 +1493,7 @@ private fun ScaleSlider(
                 fontSize = 14.sp,
             )
             Text(
-                text = "${(value * 100).roundToInt()}%",
+                text = I18n.s(R.string.ui_value_100_roundtoint),
                 color = OnSurface,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
@@ -1507,7 +1507,7 @@ private fun ScaleSlider(
                 onClick = { onValueChange((value - step).coerceIn(min, max)) },
                 enabled = value > min,
             ) {
-                Icon(Icons.Filled.Remove, contentDescription = "Decrease $label", tint = OnSurface)
+                Icon(Icons.Filled.Remove, contentDescription = I18n.s(R.string.ui_decrease_label), tint = OnSurface)
             }
             Slider(
                 value = value,
@@ -1519,7 +1519,7 @@ private fun ScaleSlider(
                 onClick = { onValueChange((value + step).coerceIn(min, max)) },
                 enabled = value < max,
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Increase $label", tint = OnSurface)
+                Icon(Icons.Filled.Add, contentDescription = I18n.s(R.string.ui_increase_label), tint = OnSurface)
             }
         }
     }

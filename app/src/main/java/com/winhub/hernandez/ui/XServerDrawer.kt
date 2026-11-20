@@ -322,7 +322,7 @@ private fun XServerDrawerContent() {
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
-                        text = hint ?: if (isPaused) "Paused  ·  $clock" else clock,
+                        text = hint ?: if (isPaused) I18n.s(R.string.ui_paused_clock) else clock,
                         fontSize = 13.sp,
                         color = if (hint != null) DeckPalette.primary else DeckPalette.onSurfaceVariant,
                         maxLines = 1,
@@ -477,14 +477,14 @@ private fun AudioContent(state: XServerDrawerState) {
     Spacer(Modifier.height(2.dp))
     val engine = state.audioDriverLabel
     Text(
-        if (engine.isNotBlank()) "Engine: $engine  ·  preset: ${cfg.preset}" else "Current preset: ${cfg.preset}",
+        if (engine.isNotBlank()) I18n.s(R.string.ui_engine_engine_preset_cfg_preset) else I18n.s(R.string.ui_current_preset_cfg_preset),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 12.sp
     )
     Spacer(Modifier.height(12.dp))
     AccentButton(I18n.s(R.string.ui_presets_fine_tuning), Modifier.fillMaxWidth()) { show = true }
     Text(
-        "Balance crackle vs delay. Applies live; guest buffer needs a relaunch.",
+        I18n.s(R.string.ui_balance_crackle_vs_delay_applies_live_guest_buffer_ne),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 11.sp,
         modifier = Modifier.padding(top = 4.dp)
@@ -500,7 +500,7 @@ private fun AudioContent(state: XServerDrawerState) {
     if (show) {
         com.winhub.hernandez.ui.components.AudioSettingsDialog(
             initial = cfg,
-            scopeLabel = "live · this session",
+            scopeLabel = I18n.s(R.string.ui_live_this_session),
             latencyLive = false,
             driverLabel = engine,
             driverId = driverId,
@@ -527,11 +527,11 @@ private fun TvContent(state: XServerDrawerState) {
     val hdr by state.tvHdr.collectAsState()
 
     // ───────────── Wireless cast (screen mirroring — no app on the TV) ─────────────
-    SectionHeader("Cast to a TV (wireless)")
+    SectionHeader(I18n.s(R.string.ui_cast_to_a_tv_wireless))
     Text(
         text = "⚠ EXPERIMENTAL · VIDEO ONLY — wireless streaming is new: the picture runs a few seconds " +
             "behind, there's no TV sound yet (game audio stays on this device), and it may take a moment " +
-            "to start or need a second try.",
+            I18n.s(R.string.ui_to_start_or_need_a_second_try),
         color = MaterialTheme.colorScheme.error,
         fontSize = 11.sp,
         fontWeight = FontWeight.SemiBold,
@@ -539,7 +539,7 @@ private fun TvContent(state: XServerDrawerState) {
     )
     Text(
         text = "Stream the game's picture to a Google TV / Chromecast on your Wi-Fi — pick one in the app, " +
-            "nothing to install on the TV. Tap the “?” inside for how it works and the trade-offs.",
+            I18n.s(R.string.ui_nothing_to_install_on_the_tv_tap_the_inside_for_how_i),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 11.sp,
         modifier = Modifier.padding(bottom = 8.dp)
@@ -557,10 +557,10 @@ private fun TvContent(state: XServerDrawerState) {
     // ───────────── Wired / external display (only when one is actually connected) ─────────────
     if (tvConnected) {
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(vertical = 12.dp))
-        SectionHeader("TV / External Display")
+        SectionHeader(I18n.s(R.string.ui_tv_external_display))
 
         Text(
-            text = if (displayName.isNotBlank()) "Connected: $displayName" else "External display connected",
+            text = if (displayName.isNotBlank()) I18n.s(R.string.ui_connected_displayname) else I18n.s(R.string.ui_external_display_connected),
             color = MaterialTheme.colorScheme.onSurface,
             fontSize = 13.sp,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -570,7 +570,7 @@ private fun TvContent(state: XServerDrawerState) {
         if (modes.isNotEmpty()) {
             val labels = modes.map { it.label }
             val selectedIdx = modes.indexOfFirst { it.id == currentModeId }.let { if (it >= 0) it else 0 }
-            ReshadeDropdown("Display mode (resolution & refresh)", labels, selectedIdx) { i ->
+            ReshadeDropdown(I18n.s(R.string.ui_display_mode_resolution_refresh), labels, selectedIdx) { i ->
                 val id = modes[i].id
                 state.setTvCurrentModeId(id)
                 state.onTvModeChange?.accept(id)
@@ -580,7 +580,7 @@ private fun TvContent(state: XServerDrawerState) {
 
         if (hdr.isNotBlank()) {
             Text(
-                text = "HDR supported by display: $hdr",
+                text = I18n.s(R.string.ui_hdr_supported_by_display_hdr),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 11.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -642,7 +642,7 @@ private fun TvContent(state: XServerDrawerState) {
     Spacer(Modifier.height(8.dp))
     val overscan by state.tvOverscan.collectAsState()
     var overscanVal by remember(overscan) { mutableIntStateOf(overscan) }
-    IntSlider("Overscan / safe area", overscanVal, 0..8,
+    IntSlider(I18n.s(R.string.ui_overscan_safe_area), overscanVal, 0..8,
         onValueChange = { overscanVal = it },
         onValueChangeFinished = {
             state.setTvOverscan(overscanVal)
@@ -661,7 +661,7 @@ private fun TvContent(state: XServerDrawerState) {
         PresentModeSection(state)
     } else {
         SectionHeader("Latency")
-        Text("Latency mode (V-Sync / Low latency) is available on the Vulkan renderer.",
+        Text(I18n.s(R.string.ui_latency_mode_v_sync_low_latency_is_available_on_the_v),
             color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
             modifier = Modifier.padding(bottom = 6.dp))
     }
@@ -670,10 +670,10 @@ private fun TvContent(state: XServerDrawerState) {
     Spacer(Modifier.height(6.dp))
     val fpsLimiterEnabled by state.fpsLimiterEnabled.collectAsState()
     val fpsLimit by state.fpsLimit.collectAsState()
-    val capOptions = listOf("Off", "30 FPS", "60 FPS", "90 FPS", "120 FPS")
+    val capOptions = listOf("Off", I18n.s(R.string.ui_30_fps), I18n.s(R.string.ui_60_fps), I18n.s(R.string.ui_90_fps), I18n.s(R.string.ui_120_fps))
     val capValues = listOf(0, 30, 60, 90, 120)
     val capIdx = if (!fpsLimiterEnabled) 0 else capValues.indexOf(fpsLimit).let { if (it >= 0) it else 0 }
-    ReshadeDropdown("Frame cap", capOptions, capIdx) { i ->
+    ReshadeDropdown(I18n.s(R.string.ui_frame_cap), capOptions, capIdx) { i ->
         val v = capValues[i]
         state.setFpsLimiterEnabled(v > 0)
         if (v > 0) state.setFpsLimit(v)
@@ -691,7 +691,7 @@ private fun TvContent(state: XServerDrawerState) {
 
     // ───────────── Audio & power ─────────────
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(vertical = 12.dp))
-    SectionHeader("Audio & power")
+    SectionHeader(I18n.s(R.string.ui_audio_power))
 
     val audioOut by state.tvAudioOut.collectAsState()
     ReshadeDropdown("Audio output", listOf(I18n.s(R.string.ui_follow_system), "TV / HDMI", I18n.s(R.string.ui_handheld)), audioOut) { i ->
@@ -730,10 +730,10 @@ private fun TvContent(state: XServerDrawerState) {
     Text(I18n.s(R.string.ui_streaming), style = MaterialTheme.typography.titleSmall.copy(
         fontSize = 15.sp, fontWeight = FontWeight.Bold), color = disabledColor)
     Text("Wireless streaming to a TV without a cable (bitrate, codec, transport) is coming in a " +
-        "future update. Wired HDMI / DeX casting works today via the controls above.",
+        I18n.s(R.string.ui_future_update_wired_hdmi_dex_casting_works_today_via),
         color = disabledColor, fontSize = 11.sp, modifier = Modifier.padding(top = 4.dp))
     listOf(I18n.s(R.string.ui_bitrate), "Codec (H.264 / HEVC)", "Transport (WebRTC / DLNA)", I18n.s(R.string.ui_stream_resolution_fps)).forEach {
-        Text("• $it — requires WiFi streaming", color = disabledColor, fontSize = 11.sp,
+        Text(I18n.s(R.string.ui_it_requires_wifi_streaming), color = disabledColor, fontSize = 11.sp,
             modifier = Modifier.padding(top = 4.dp))
     }
 
@@ -1070,7 +1070,7 @@ private fun GraphicsContent(state: XServerDrawerState) {
             if (ScreenEffectLooks.LOOKS.getOrNull(selectedLook ?: -1)?.scalingMode != null) selectedLook = null
         }
 
-        ScalingModeHeader("Scaling mode", vkHeaderColor)
+        ScalingModeHeader(I18n.s(R.string.ui_scaling_mode), vkHeaderColor)
         if (waylandFxBlocked) WaylandNotYetNote()
         Spacer(Modifier.height(2.dp))
         UpscalerModeButtons(upscalerMode, vkEnabled) {
@@ -1101,7 +1101,7 @@ private fun GraphicsContent(state: XServerDrawerState) {
         }
         if (casEnabled) {
             Spacer(Modifier.height(4.dp))
-            IntSlider("CAS Sharpness", casSharpness, 0..100, { casSharpness = it; lookTouched() }, {
+            IntSlider(I18n.s(R.string.ui_cas_sharpness), casSharpness, 0..100, { casSharpness = it; lookTouched() }, {
                 XServerDialogState.setCasSharpness(casSharpness)
                 XServerDialogState.onCasApply?.invoke(casEnabled, casSharpness)
             }, enabled = vkEnabled)
@@ -1160,7 +1160,7 @@ private fun GraphicsContent(state: XServerDrawerState) {
 
     if (!vulkanSupported) {
         Text(
-            "No graphics enhancements are available without Vulkan support.",
+            I18n.s(R.string.ui_no_graphics_enhancements_are_available_without_vulkan),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = 12.sp,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
@@ -1177,7 +1177,7 @@ private fun GraphicsContent(state: XServerDrawerState) {
             state.onNativeRenderingToggle?.run()
         }
         if (isWaylandSession) {
-            HelperText("X11 direct scanout is not used on Wayland; Zero-copy presentation below is the Wayland equivalent.")
+            HelperText(I18n.s(R.string.ui_x11_direct_scanout_is_not_used_on_wayland_zero_copy_p))
         }
     }
 
@@ -1214,19 +1214,19 @@ private fun WaylandHdrOutputRow(state: XServerDrawerState) {
         state.onWaylandHdrOutputToggle?.accept(it)
     }
     HelperText("On: HDR games show real HDR on this screen. Off: the same picture tone-mapped to SDR. " +
-        "Applies immediately, for this session only; the game's own HDR setting is left alone.")
+        I18n.s(R.string.ui_applies_immediately_for_this_session_only_the_game_s))
     HelperText(
         when {
-            checked && onScreen    -> "On: HDR frames on screen now."
+            checked && onScreen    -> I18n.s(R.string.ui_on_hdr_frames_on_screen_now)
             checked && noHeadroom  -> "On, but the screen gives HDR no headroom right now: brightness at maximum, " +
-                                      "or the screen is being recorded (Android turns HDR headroom off while recording)."
-            checked && toneMapped  -> "On, but shown tone-mapped: frame generation on a screen with no HDR swapchain."
+                                      I18n.s(R.string.ui_or_the_screen_is_being_recorded_android_turns_hdr_hea)
+            checked && toneMapped  -> I18n.s(R.string.ui_on_but_shown_tone_mapped_frame_generation_on_a_screen)
             checked && !screenCapable -> "On, but this screen has no HDR10: Android tone-maps the picture for it. " +
-                                      "The game keeps the HDR it was offered until it closes."
-            checked                -> "On: no HDR frames right now (is HDR on in the game's settings?)."
-            onScreen || noHeadroom -> "Off, but these frames cannot be tone-mapped here: they stay HDR."
-            toneMapped             -> "Off: HDR frames shown tone-mapped to SDR."
-            else                   -> "Off: no HDR frames right now."
+                                      I18n.s(R.string.ui_the_game_keeps_the_hdr_it_was_offered_until_it_closes)
+            checked                -> I18n.s(R.string.ui_on_no_hdr_frames_right_now_is_hdr_on_in_the_game_s_se)
+            onScreen || noHeadroom -> I18n.s(R.string.ui_off_but_these_frames_cannot_be_tone_mapped_here_they)
+            toneMapped             -> I18n.s(R.string.ui_off_hdr_frames_shown_tone_mapped_to_sdr)
+            else                   -> I18n.s(R.string.ui_off_no_hdr_frames_right_now)
         }
     )
 }
@@ -1255,10 +1255,10 @@ private fun WaylandGlSafeModeRow(state: XServerDrawerState) {
     HelperText(
         if (checked)
             "On: stops native OpenGL games disappearing with no error. Costs a little OpenGL speed; " +
-            "DirectX games are unaffected. Saved for this game - takes effect the next time it starts."
+            I18n.s(R.string.ui_directx_games_are_unaffected_saved_for_this_game_take)
         else
             "Off: OpenGL games keep Mesa's extra draw thread (slightly faster), but a fault on it can " +
-            "close the game with no error message. Saved for this game - takes effect the next time it starts."
+            I18n.s(R.string.ui_close_the_game_with_no_error_message_saved_for_this_g)
     )
 }
 
@@ -1285,7 +1285,7 @@ private fun WaylandZeroCopyRow(state: XServerDrawerState, effectsAvailable: Bool
         state.setWaylandZeroCopyRequested(it)
         state.onWaylandZeroCopyToggle?.accept(it)
     }
-    HelperText("Fullscreen games are shown on their own display layer with no compositor copy. Applies immediately, and is kept as this game's default.")
+    HelperText(I18n.s(R.string.ui_fullscreen_games_are_shown_on_their_own_display_layer))
 
     // Polled whichever way the switch is set: the line has to be able to say "switching off" too.
     LaunchedEffect(Unit) {
@@ -1299,12 +1299,12 @@ private fun WaylandZeroCopyRow(state: XServerDrawerState, effectsAvailable: Bool
     val effectsOn = effectsAvailable && waylandCompositorEffectsOn()
     HelperText(
         when {
-            checked && effectsOn  -> "On: screen effects are drawn into the game's display layer, so it keeps hardware composition."
-            checked && !live      -> "Switching on… the game is rebuilding its swapchain on display buffers."
-            checked && frames > 0 -> "On: $frames zero-copy frames in the last 10 s"
-            checked               -> "On: frames are going straight to the display layer."
-            live                  -> "Switching off… the game's last display-layer frames are still on screen."
-            else                  -> "Off: the compositor copies each frame into its own swapchain."
+            checked && effectsOn  -> I18n.s(R.string.ui_on_screen_effects_are_drawn_into_the_game_s_display_l)
+            checked && !live      -> I18n.s(R.string.ui_switching_on_the_game_is_rebuilding_its_swapchain_on)
+            checked && frames > 0 -> I18n.s(R.string.ui_on_frames_zero_copy_frames_in_the_last_10_s)
+            checked               -> I18n.s(R.string.ui_on_frames_are_going_straight_to_the_display_layer)
+            live                  -> I18n.s(R.string.ui_switching_off_the_game_s_last_display_layer_frames_ar)
+            else                  -> I18n.s(R.string.ui_off_the_compositor_copies_each_frame_into_its_own_swa)
         }
     )
 }
@@ -1373,7 +1373,7 @@ private fun RuntimeBackendChip(state: XServerDrawerState) {
             letterSpacing = 1.4.sp
         )
         Text(
-            "${backend.arch} · ${backend.translator}",
+            I18n.s(R.string.ui_backend_arch_backend_translator),
             color = DeckPalette.onBackground,
             fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold
@@ -1434,8 +1434,8 @@ private fun FrameGenSection(state: XServerDrawerState) {
     // labeled twice. Badge shows bionic-fg / lsfg-vk depending on the container's selection.
     val engineLabel = when (engine) {
         "lsfg"        -> "lsfg-vk"
-        "lsfg-native" -> "LSFG Native"
-        "bionic"      -> if (winFgNative) "Win-FG Native" else "win-fg"
+        "lsfg-native" -> I18n.s(R.string.ui_lsfg_native)
+        "bionic"      -> if (winFgNative) I18n.s(R.string.ui_win_fg_native) else "win-fg"
         else          -> "Off"
     }
     // Green dot = engine actually multiplying frames right now. Frame gen starts at multiplier 0
@@ -1501,7 +1501,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
         if (waylandFgBlocked) WaylandNotYetNote()
         if (fgUnavailable.isNotEmpty()) {
             Text(
-                "⚠ $fgUnavailable",
+                I18n.s(R.string.ui_fgunavailable),
                 color = MaterialTheme.colorScheme.error,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -1509,7 +1509,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
             )
             if (fgUnavailableDetail.isNotEmpty()) {
                 Text(
-                    "Driver check: $fgUnavailableDetail",
+                    I18n.s(R.string.ui_driver_check_fgunavailabledetail),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     fontSize = 10.sp,
                     modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
@@ -1579,12 +1579,12 @@ private fun FrameGenSection(state: XServerDrawerState) {
             Column {
                 Spacer(Modifier.height(8.dp))
                 LabeledSlider(
-                    "Flow Scale", fgFlow, 0.2f..1.0f,
+                    I18n.s(R.string.ui_flow_scale), fgFlow, 0.2f..1.0f,
                     { fgFlow = it }, { applyFg() },
                     format = { "%.2f".format(it) }
                 )
                 Text(
-                    "Higher flow scale = smoother motion estimate, more GPU cost.",
+                    I18n.s(R.string.ui_higher_flow_scale_smoother_motion_estimate_more_gpu_c),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     fontSize = 11.sp,
                     modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -1618,7 +1618,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
             }
             Text(
                 "Height the frame-gen chain runs at (width follows the screen). Lower = far " +
-                    "cheaper on the GPU, softer picture. Panel = full resolution.",
+                    I18n.s(R.string.ui_cheaper_on_the_gpu_softer_picture_panel_full_resoluti),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 fontSize = 11.sp,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -1637,7 +1637,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
                 applyFg()
             }
             Text(
-                "Lower quality for higher FPS — helps on low-end devices.",
+                I18n.s(R.string.ui_lower_quality_for_higher_fps_helps_on_low_end_devices),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 fontSize = 11.sp,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -1647,7 +1647,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
         WaylandNotYetNote()
     } else {
         Text(
-            "Enable Frame Generation in this container's settings to tune it here.",
+            I18n.s(R.string.ui_enable_frame_generation_in_this_container_s_settings),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontSize = 11.sp,
             modifier = Modifier.padding(start = 4.dp, top = 2.dp)
@@ -1718,7 +1718,7 @@ private fun FgFitAdvice(
     ) {
         Text(
             "Screen set to ${screen.hz} Hz, the closest speed above $cap × $mult = $made. " +
-                "A few refreshes repeat a picture. For a perfect fit:",
+                I18n.s(R.string.ui_a_few_refreshes_repeat_a_picture_for_a_perfect_fit),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
             fontSize = 11.sp
         )
@@ -1726,10 +1726,10 @@ private fun FgFitAdvice(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            FgFixButton("Set Max FPS to ${pick.first} → ${pick.second} Hz", accent) { onSetCap(pick.first) }
+            FgFixButton(I18n.s(R.string.ui_set_max_fps_to_pick_first_pick_second_hz), accent) { onSetCap(pick.first) }
             if (lower != null && higher != null) {
                 Text(
-                    "or ${higher.first} → ${higher.second} Hz if the game holds it",
+                    I18n.s(R.string.ui_or_higher_first_higher_second_hz_if_the_game_holds_it),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 11.sp
                 )
@@ -1756,7 +1756,7 @@ private fun FgOverLimitWarning(
     ) {
         Text(
             "⚠ $cap × $mult = ${cap * mult}: more than your ${screen.hz} Hz screen can show. " +
-                "The extra frames pile up, so expect stutter and laggy controls.",
+                I18n.s(R.string.ui_the_extra_frames_pile_up_so_expect_stutter_and_laggy),
             color = error,
             fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold
@@ -1764,7 +1764,7 @@ private fun FgOverLimitWarning(
         if (screen.held) {
             Text(
                 "Your device is keeping the screen at ${screen.hz} Hz (WinHub asked for ${screen.asked} Hz). " +
-                    "Battery saver or your device's own refresh-rate setting may be holding it.",
+                    I18n.s(R.string.ui_battery_saver_or_your_device_s_own_refresh_rate_setti),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 fontSize = 11.sp
             )
@@ -1773,10 +1773,10 @@ private fun FgOverLimitWarning(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            FgFixButton("Set Max FPS to $fixCap", error) { onSetCap(fixCap) }
+            FgFixButton(I18n.s(R.string.ui_set_max_fps_to_fixcap), error) { onSetCap(fixCap) }
             if (fitMult != null) {
                 Text(
-                    "or pick ${fitMult}×",
+                    I18n.s(R.string.ui_or_pick_fitmult),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 11.sp
                 )
@@ -1875,7 +1875,7 @@ private fun ReshadeSection() {
 
     if (!supported || seed.isEmpty()) {
         Text(
-            "No ReShade effects selected. Add one or more in this game's settings (or the container's) to switch and tune them here.",
+            I18n.s(R.string.ui_no_reshade_effects_selected_add_one_or_more_in_this_g),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontSize = 11.sp,
             modifier = Modifier.padding(start = 4.dp, top = 6.dp)
@@ -1943,8 +1943,8 @@ private fun ReshadeSection() {
         XServerDialogState.onReshadeLivePreviewChange?.invoke(it)
     }
     Text(
-        if (livePreview) "Changes apply live; the game keeps running."
-        else "Game freezes while tuning; each change pulses briefly to preview, then re-freezes.",
+        if (livePreview) I18n.s(R.string.ui_changes_apply_live_the_game_keeps_running)
+        else I18n.s(R.string.ui_game_freezes_while_tuning_each_change_pulses_briefly),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
         fontSize = 10.sp, modifier = Modifier.padding(start = 4.dp, top = 2.dp, bottom = 2.dp)
     )
@@ -2023,8 +2023,8 @@ private fun ReshadeModeSelector(mode: String, onChange: (String) -> Unit) {
         }
     }
     Text(
-        if (mode == ReshadeLoadout.MODE_SOLO) "One effect at a time (A/B compare)."
-        else "Layer any subset of effects.",
+        if (mode == ReshadeLoadout.MODE_SOLO) I18n.s(R.string.ui_one_effect_at_a_time_a_b_compare)
+        else I18n.s(R.string.ui_layer_any_subset_of_effects),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
         fontSize = 10.sp, modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
     )
@@ -2284,7 +2284,7 @@ private fun DebandControls(enabled: Boolean = true, onUserChange: () -> Unit = {
     }
     if (debandEnabled) {
         Spacer(Modifier.height(4.dp))
-        IntSlider("Dither strength", debandStrength, 0..200,
+        IntSlider(I18n.s(R.string.ui_dither_strength), debandStrength, 0..200,
             onValueChange = { debandStrength = it },
             onValueChangeFinished = {
                 XServerDialogState.setDebandStrength(debandStrength)
@@ -2319,9 +2319,9 @@ private fun LooksRow(selected: Int?, enabled: Boolean, onPick: (Int) -> Unit) {
     ToggleChipGrid(chips, perRow = 3)
     val note = if (selected != null) {
         val look = looks[selected]
-        if (look.desc.isEmpty()) look.name else "${look.name} — ${look.desc}"
+        if (look.desc.isEmpty()) look.name else I18n.s(R.string.ui_look_name_look_desc)
     } else {
-        "Adjusted — everything below is yours. Tap a look to go back."
+        I18n.s(R.string.ui_adjusted_everything_below_is_yours_tap_a_look_to_go_b)
     }
     Text(
         note,
@@ -2386,8 +2386,8 @@ private fun ScalingModeHeader(title: String, color: Color, modifier: Modifier = 
 private fun UpscalerModeButtons(selected: Int, enabled: Boolean, onSelect: (Int) -> Unit) {
     val options = listOf(
         0 to "None", 1 to "Linear", 2 to "Nearest",
-        3 to "SGSR", 8 to "SGSR HQ", 4 to "FSR",
-        5 to "FSR (Fit)", 6 to "Sharpen", 7 to "NIS"
+        3 to "SGSR", 8 to I18n.s(R.string.ui_sgsr_hq), 4 to "FSR",
+        5 to I18n.s(R.string.ui_fsr_fit), 6 to "Sharpen", 7 to "NIS"
     )
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         options.chunked(3).forEach { row ->
@@ -2481,9 +2481,9 @@ private fun RefreshRateSlider(rates: List<Int>, selected: Int, enabled: Boolean,
     // display rate instead, kept in normal blue so it reads as a real value, not a greyed leftover.
     val showAuto = !enabled && autoRate > 0
     val rightText = when {
-        showAuto -> "$autoRate Hz"
+        showAuto -> I18n.s(R.string.ui_autorate_hz)
         stops[idx] == 0 -> "Off"
-        else -> "${stops[idx]} Hz"
+        else -> I18n.s(R.string.ui_stops_idx_hz)
     }
     Column(modifier = Modifier.padding(vertical = 4.dp)) {
         Row(
@@ -2713,7 +2713,7 @@ private fun HudContent(state: XServerDrawerState) {
         "tempRedBat=${tempRedBat.toInt()}",
         "hudColor=$color",
         "hudOutline=${outlineValue.toInt()}",
-        "hudOutlineAccent=${if (outlineAccent) 1 else 0}",
+        I18n.s(R.string.ui_hudoutlineaccent_if_outlineaccent_1_else_0),
         "hudScale=${scaleValue.toInt()}",
         "hudOpacity=${opacityValue.toInt()}",
     ).joinToString(",")
@@ -2734,19 +2734,19 @@ private fun HudContent(state: XServerDrawerState) {
         val fgMult by state.frameGenMultiplier.collectAsState()
         val displayTargetHz by state.displayTargetHz.collectAsState()
         // nativeFgLocks covers both compositor engines; name the one actually running.
-        val nativeFgName = if (fgEngine == "lsfg-native") "LSFG Native" else "Win-FG Native"
+        val nativeFgName = if (fgEngine == "lsfg-native") I18n.s(R.string.ui_lsfg_native) else I18n.s(R.string.ui_win_fg_native)
         // Locked ON while native frame gen generates - see XServerDrawerState.nativeFgLocks.
         ToggleRow(I18n.s(R.string.ui_limit_fps), limiterOn, enabled = !nativeFgLocks) { limiterOn = it; applyLimiter() }
         if (nativeFgLocks) {
             Text(
-                "Locked on while $nativeFgName is generating",
+                I18n.s(R.string.ui_locked_on_while_nativefgname_is_generating),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.55f),
                 fontSize = 10.sp
             )
         }
         if (limiterOn) {
             LabeledSlider(
-                "Max FPS", limitVal.toFloat(), 10f..200f,
+                I18n.s(R.string.ui_max_fps), limitVal.toFloat(), 10f..200f,
                 { limitVal = it.roundToInt() }, { applyLimiter() },
                 format = { "${it.roundToInt()}" }
             )
@@ -2768,11 +2768,11 @@ private fun HudContent(state: XServerDrawerState) {
                 when {
                     nativeFgLocks ->
                         "Caps the game's real frames. $nativeFgName adds its own on top, so you'll see up to " +
-                            "$limitVal × $fgMult = ${limitVal * fgMult}."
+                            I18n.s(R.string.ui_limitval_fgmult_limitval_fgmult)
                     lsfgVkMultiplying ->
-                        "Not applied while lsfg-vk is multiplying: it paces frames itself."
+                        I18n.s(R.string.ui_not_applied_while_lsfg_vk_is_multiplying_it_paces_fra)
                     else ->
-                        "Caps the game's frame rate. With LSFG Native or Win-FG Native on, you'll see Max FPS × the multiplier."
+                        I18n.s(R.string.ui_caps_the_game_s_frame_rate_with_lsfg_native_or_win_fg)
                 },
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 fontSize = 11.sp,
@@ -2814,24 +2814,24 @@ private fun HudContent(state: XServerDrawerState) {
         Text(
             when {
                 !vrrSupported ->
-                    "Unavailable — this display has a single refresh rate, so there's nothing to match."
+                    I18n.s(R.string.ui_unavailable_this_display_has_a_single_refresh_rate_so)
                 matchRefreshOn && nativeFgLocksVrr && fgAutoTurnedOn ->
                     "Auto was turned on for frame generation — the display follows Max FPS × multiplier. " +
-                        (if (fgAutoPerGame) "Turn it off if you prefer; this game will remember."
-                         else "Turn it off if you prefer (for this session).")
+                        (if (fgAutoPerGame) I18n.s(R.string.ui_turn_it_off_if_you_prefer_this_game_will_remember)
+                         else I18n.s(R.string.ui_turn_it_off_if_you_prefer_for_this_session))
                 matchRefreshOn && nativeFgLocksVrr ->
-                    "Auto is on — with frame generation running, the display follows Max FPS × multiplier."
+                    I18n.s(R.string.ui_auto_is_on_with_frame_generation_running_the_display)
                 nativeFgLocksVrr ->
                     (if (fgAutoPerGame) "Auto is off for this game while frame generation runs. "
                      else "Auto is off while frame generation runs. ") +
-                        "Turn it on to fit the screen to Max FPS × multiplier." +
+                        I18n.s(R.string.ui_turn_it_on_to_fit_the_screen_to_max_fps_multiplier) +
                         (if (manualRefreshRate > 0) " Display locked to ${manualRefreshRate} Hz." else "")
                 matchRefreshOn ->
-                    "Auto is on — the display follows your FPS."
+                    I18n.s(R.string.ui_auto_is_on_the_display_follows_your_fps)
                 manualRefreshRate > 0 ->
-                    "Display locked to ${manualRefreshRate} Hz."
+                    I18n.s(R.string.ui_display_locked_to_manualrefreshrate_hz)
                 else ->
-                    "Pick a rate to lock the display, or turn Auto on to follow your FPS."
+                    I18n.s(R.string.ui_pick_a_rate_to_lock_the_display_or_turn_auto_on_to_fo)
             },
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontSize = 11.sp,
@@ -2848,7 +2848,7 @@ private fun HudContent(state: XServerDrawerState) {
                 fusionSize = fusionLevels[it].token; apply()
             }
             Text(
-                "Four levels, like the Steam Deck overlay: 1 FPS, 2 adds the frametime graph, 3 adds GPU, CPU and memory, 4 shows everything. Tap the HUD in game to step through them.",
+                I18n.s(R.string.ui_four_levels_like_the_steam_deck_overlay_1_fps_2_adds),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f), fontSize = 11.sp,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp, bottom = 4.dp)
             )
@@ -2860,30 +2860,30 @@ private fun HudContent(state: XServerDrawerState) {
         fun show(label: String): Boolean = label in fusionChips
         val metricChips = buildList<Triple<String, Boolean, () -> Unit>> {
             if (show("FPS")) add(Triple("FPS", showFPS) { showFPS = !showFPS; apply() })
-            if (show("FPS graph")) add(Triple("FPS graph", showGraph) { showGraph = !showGraph; apply() })
+            if (show(I18n.s(R.string.ui_fps_graph))) add(Triple(I18n.s(R.string.ui_fps_graph), showGraph) { showGraph = !showGraph; apply() })
             if (show("CPU")) add(Triple("CPU", showCPU) { showCPU = !showCPU; apply() })
             if (show("GPU")) add(Triple("GPU", showGPU) { showGPU = !showGPU; apply() })
             if (show("VRAM")) add(Triple("VRAM", showVram) { showVram = !showVram; apply() })
             if (show("RAM")) add(Triple("RAM", showRAM) { showRAM = !showRAM; apply() })
             if (show("Power")) add(Triple("Power", showPower) { showPower = !showPower; apply() })
             if (show("Temp")) add(Triple("Temp", showTemp) { showTemp = !showTemp; apply() })
-            if (show("GPU temp")) add(Triple("GPU temp", showGpuTemp) { showGpuTemp = !showGpuTemp; apply() })
+            if (show(I18n.s(R.string.ui_gpu_temp))) add(Triple(I18n.s(R.string.ui_gpu_temp), showGpuTemp) { showGpuTemp = !showGpuTemp; apply() })
             if (show("Battery")) add(Triple("Battery", showBattery) { showBattery = !showBattery; apply() })
-            if (show("0.01% low")) add(Triple("0.01% low", showLow001) { showLow001 = !showLow001; apply() })
-            if (show("FPS .1")) add(Triple("FPS .1", fpsDecimal) { fpsDecimal = !fpsDecimal; apply() })
+            if (show(I18n.s(R.string.ui_0_01_low))) add(Triple(I18n.s(R.string.ui_0_01_low), showLow001) { showLow001 = !showLow001; apply() })
+            if (show(I18n.s(R.string.ui_fps_1))) add(Triple(I18n.s(R.string.ui_fps_1), fpsDecimal) { fpsDecimal = !fpsDecimal; apply() })
             if (show("Per-core")) add(Triple("Per-core", showPerCore) { showPerCore = !showPerCore; apply() })
             if (show("Swap")) add(Triple("Swap", showSwap) { showSwap = !showSwap; apply() })
             if (show("Network")) add(Triple("Network", showNet) { showNet = !showNet; apply() })
             if (show("Resolution")) add(Triple("Resolution", showResolution) { showResolution = !showResolution; apply() })
             if (show("Proton")) add(Triple("Proton", showProton) { showProton = !showProton; apply() })
             if (show("Wrapper")) add(Triple("Wrapper", showWrapper) { showWrapper = !showWrapper; apply() })
-            if (show("DX ver")) add(Triple("DX ver", showDxVer) { showDxVer = !showDxVer; apply() })
+            if (show(I18n.s(R.string.ui_dx_ver))) add(Triple(I18n.s(R.string.ui_dx_ver), showDxVer) { showDxVer = !showDxVer; apply() })
             if (show("Session")) add(Triple("Session", showSession) { showSession = !showSession; apply() })
             if (show("Clock")) add(Triple("Clock", showClock) { showClock = !showClock; apply() })
             if (show("Engine")) add(Triple("Engine", showEngine) { showEngine = !showEngine; apply() })
-            if (show("GPU model")) add(Triple("GPU model", showGpuModel) { showGpuModel = !showGpuModel; apply() })
+            if (show(I18n.s(R.string.ui_gpu_model))) add(Triple(I18n.s(R.string.ui_gpu_model), showGpuModel) { showGpuModel = !showGpuModel; apply() })
             // Global appearance control, shown at every level.
-            add(Triple("Lock in place", hudLocked) { hudLocked = !hudLocked; apply() })
+            add(Triple(I18n.s(R.string.ui_lock_in_place), hudLocked) { hudLocked = !hudLocked; apply() })
         }
 
         CollapsibleSection(I18n.s(R.string.ui_metrics), lead = "${metricChips.count { it.second }} on") {
@@ -2912,9 +2912,9 @@ private fun HudContent(state: XServerDrawerState) {
                 }
                 Text(
                     when (bandMode) {
-                        0 -> "Temperatures use their normal color."
-                        1 -> "Thresholds read from your device's own thermal trip points, falling back to safe defaults."
-                        else -> "Set the red point per sensor; amber sits just below it."
+                        0 -> I18n.s(R.string.ui_temperatures_use_their_normal_color)
+                        1 -> I18n.s(R.string.ui_thresholds_read_from_your_device_s_own_thermal_trip_p)
+                        else -> I18n.s(R.string.ui_set_the_red_point_per_sensor_amber_sits_just_below_it)
                     },
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f), fontSize = 11.sp,
                     modifier = Modifier.padding(start = 4.dp, top = 2.dp, bottom = 4.dp)
@@ -2938,7 +2938,7 @@ private fun HudContent(state: XServerDrawerState) {
                 Text(I18n.s(R.string.ui_export_hud_diagnostics))
             }
             Text(
-                "Saves a sensor report (CPU/GPU/temp/VRAM…) straight to your Downloads folder.",
+                I18n.s(R.string.ui_saves_a_sensor_report_cpu_gpu_temp_vram_straight_to_y),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f), fontSize = 11.sp,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
             )
@@ -3136,7 +3136,7 @@ private fun ControlsContent(state: XServerDrawerState) {
     var showTouchscreen by remember(initTouchscreen) { mutableStateOf(initTouchscreen) }
     var timeoutEnabled by remember(initTimeout) { mutableStateOf(initTimeout) }
     var hapticsEnabled by remember(initHaptics) { mutableStateOf(initHaptics) }
-    val allItems = listOf("-- Disabled --") + profiles
+    val allItems = listOf(I18n.s(R.string.ui_disabled)) + profiles
     var dropdownExpanded by remember { mutableStateOf(false) }
 
     when (subTab) {
@@ -3147,7 +3147,7 @@ private fun ControlsContent(state: XServerDrawerState) {
 
             ExposedDropdownMenuBox(expanded = dropdownExpanded, onExpandedChange = { dropdownExpanded = it }) {
                 OutlinedTextField(
-                    value = allItems.getOrElse(selectedIdx) { "-- Disabled --" },
+                    value = allItems.getOrElse(selectedIdx) { I18n.s(R.string.ui_disabled) },
                     onValueChange = {}, readOnly = true,
                     label = { Text(I18n.s(R.string.profile), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
@@ -3198,7 +3198,7 @@ private fun ControlsContent(state: XServerDrawerState) {
                     state.setOverlayOpacity(it)
                     state.onOverlayOpacityChange?.run()
                 },
-                format = { "${(it * 100).toInt()}%" },
+                format = { I18n.s(R.string.ui_it_100_toint) },
             )
 
             // On-screen controls icon style — Fusion (tinted pads, default) or Glass (blurred black glass).
@@ -3290,7 +3290,7 @@ private fun ControlsContent(state: XServerDrawerState) {
             if (isWaylandSession && cursorAutoHide) {
                 val initHideMs by state.cursorAutoHideMs.collectAsState()
                 var hideMs by remember(initHideMs) { mutableIntStateOf(initHideMs) }
-                IntSlider("Hide After (ms)", hideMs, 500..10000,
+                IntSlider(I18n.s(R.string.ui_hide_after_ms), hideMs, 500..10000,
                     onValueChange = { hideMs = it },
                     onValueChangeFinished = {
                         state.setCursorAutoHideMs(hideMs); state.onCursorAutoHideChange?.run()
@@ -3302,7 +3302,7 @@ private fun ControlsContent(state: XServerDrawerState) {
             if (isWaylandSession) {
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "Wayland: mouse deltas go to the compositor; a game that locks the pointer receives them as relative motion",
+                    I18n.s(R.string.ui_wayland_mouse_deltas_go_to_the_compositor_a_game_that),
                     color = LocalAccentDim.current,
                     fontSize = 11.sp,
                     lineHeight = 13.sp
@@ -3411,7 +3411,7 @@ private fun SwipeSection(state: XServerDrawerState) {
     Text(stringResource(R.string.swipe_tab), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(4.dp))
     Text(
-        "Slide a finger onto a control to press it — chain buttons and roll the d-pad without lifting.",
+        I18n.s(R.string.ui_slide_a_finger_onto_a_control_to_press_it_chain_butto),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
@@ -3438,7 +3438,7 @@ private fun SwipeSection(state: XServerDrawerState) {
 
 // How a change reaches the game: "Live" (at once), "Reconnects controller" (the pad leaves and comes
 // back with the change) or "Restart required" (the next launch).
-private enum class PadApply(val label: String) { LIVE("Live"), RECONNECT("Reconnects controller"), RESTART("Restart required") }
+private enum class PadApply(val label: String) { LIVE("Live"), RECONNECT(I18n.s(R.string.ui_reconnects_controller)), RESTART(I18n.s(R.string.ui_restart_required)) }
 
 @Composable
 private fun PadRowHeader(title: String, apply: PadApply, helpRes: Int) {
@@ -3489,7 +3489,7 @@ private fun PadSection() {
     // reads once: switching to or from it applies on the next launch.
     val choices = remember { ControllerIdentity.wineChoices() }
     val identityApply = if (pad.nextLaunchOnly.contains("identity")) PadApply.RESTART else PadApply.RECONNECT
-    PadRowHeader("Controller type", identityApply, R.string.help_controller_identity)
+    PadRowHeader(I18n.s(R.string.ui_controller_type), identityApply, R.string.help_controller_identity)
     var identityExpanded by remember { mutableStateOf(false) }
     val identityLocked = pad.identityLockedReason != null
     ExposedDropdownMenuBox(expanded = identityExpanded && !identityLocked,
@@ -3511,13 +3511,13 @@ private fun PadSection() {
         }
     }
     pad.identityLockedReason?.let { PadNote(it) }
-    if (pad.nextLaunchOnly.contains("identity")) PadNote("The Classic DirectInput pad switches in or out on the next launch.")
+    if (pad.nextLaunchOnly.contains("identity")) PadNote(I18n.s(R.string.ui_the_classic_directinput_pad_switches_in_or_out_on_the))
 
     // XInput source: Direct (HERMES) or Wine's own. Live only when the session was started with
     // in-game switching allowed (the forwarding copy is installed then).
     if (pad.xinputAvailable) {
         Spacer(Modifier.height(8.dp))
-        PadRowHeader("XInput source", if (pad.xinputSwitchable) PadApply.RECONNECT else PadApply.RESTART, R.string.help_hermes_xinput)
+        PadRowHeader(I18n.s(R.string.ui_xinput_source), if (pad.xinputSwitchable) PadApply.RECONNECT else PadApply.RESTART, R.string.help_hermes_xinput)
         ModeChipGrid(
             listOf(
                 Triple<String, Boolean, () -> Unit>("Direct", pad.xinputDirect) { if (!pad.xinputDirect) XServerDialogState.onPadXInputDirect?.invoke(true) },
@@ -3525,7 +3525,7 @@ private fun PadSection() {
             ),
             perRow = 2
         )
-        if (!pad.xinputSwitchable) PadNote("Restart to apply. Turn on \"Allow in-game switching\" to switch without restarting.")
+        if (!pad.xinputSwitchable) PadNote(I18n.s(R.string.ui_restart_to_apply_turn_on_allow_in_game_switching_to_s))
     }
 
     // DirectInput visibility.
@@ -3592,7 +3592,7 @@ private fun PadSection() {
             disabledIndices = setOfNotNull(0.takeIf { down == pacing }, 1.takeIf { up == pacing })
         )
     }
-    PadNote(if (pad.nowHz > 0) "Now: ${pad.nowHz} Hz" else "Now: no game reading the pad yet")
+    PadNote(if (pad.nowHz > 0) I18n.s(R.string.ui_now_pad_nowhz_hz) else I18n.s(R.string.ui_now_no_game_reading_the_pad_yet))
     pad.pacingLockedReason?.let { PadNote(it) }
 
     // Pending bar: changes wait for the controller to reconnect (automatically shortly after the last
@@ -3607,15 +3607,15 @@ private fun PadSection() {
                 .padding(8.dp)
         ) {
             Text(
-                if (pad.reconnecting) "Reconnecting the controller…" else "The controller reconnects to apply this.",
+                if (pad.reconnecting) I18n.s(R.string.ui_reconnecting_the_controller) else I18n.s(R.string.ui_the_controller_reconnects_to_apply_this),
                 fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface
             )
             if (!pad.reconnecting) {
                 Spacer(Modifier.height(6.dp))
                 ModeChipGrid(
                     listOf(
-                        Triple<String, Boolean, () -> Unit>("Reconnect now", true) { XServerDialogState.onPadReconnectNow?.run() },
-                        Triple<String, Boolean, () -> Unit>("Next launch", false) { XServerDialogState.onPadNextLaunch?.run() },
+                        Triple<String, Boolean, () -> Unit>(I18n.s(R.string.ui_reconnect_now), true) { XServerDialogState.onPadReconnectNow?.run() },
+                        Triple<String, Boolean, () -> Unit>(I18n.s(R.string.ui_next_launch), false) { XServerDialogState.onPadNextLaunch?.run() },
                     ),
                     perRow = 2
                 )
@@ -3623,7 +3623,7 @@ private fun PadSection() {
         }
     }
     pad.nextLaunchOnly.filter { it != "identity" && it != "xinput" }.forEach { PadNote(it) }
-    if (pad.nextLaunchOnly.contains("xinput") && pad.xinputSwitchable) PadNote("XInput source applies on the next launch.")
+    if (pad.nextLaunchOnly.contains("xinput") && pad.xinputSwitchable) PadNote(I18n.s(R.string.ui_xinput_source_applies_on_the_next_launch))
 
     Spacer(Modifier.height(8.dp))
     SaveScopeFooter()
@@ -3640,17 +3640,17 @@ private fun SaveScopeFooter() {
         Spacer(Modifier.height(4.dp))
         ModeChipGrid(
             listOf(
-                Triple<String, Boolean, () -> Unit>("This game", scope.toGame) { XServerDialogState.onControllerSaveScope?.invoke(true) },
-                Triple<String, Boolean, () -> Unit>("All games in container", !scope.toGame) { XServerDialogState.onControllerSaveScope?.invoke(false) },
+                Triple<String, Boolean, () -> Unit>(I18n.s(R.string.ui_this_game), scope.toGame) { XServerDialogState.onControllerSaveScope?.invoke(true) },
+                Triple<String, Boolean, () -> Unit>(I18n.s(R.string.ui_all_games_in_container), !scope.toGame) { XServerDialogState.onControllerSaveScope?.invoke(false) },
             ),
             perRow = 2
         )
         Spacer(Modifier.height(4.dp))
     }
     PadNote(scope.lastSaved ?: when {
-        scope.gameName == null -> "Changes are saved for every game in ${scope.containerName}."
-        scope.toGame -> "Changes are saved for ${scope.gameName} only."
-        else -> "Changes are saved for every game in ${scope.containerName}."
+        scope.gameName == null -> I18n.s(R.string.ui_changes_are_saved_for_every_game_in_scope_containerna)
+        scope.toGame -> I18n.s(R.string.ui_changes_are_saved_for_scope_gamename_only)
+        else -> I18n.s(R.string.ui_changes_are_saved_for_every_game_in_scope_containerna)
     })
 }
 
@@ -3671,7 +3671,7 @@ private fun PlayersSection() {
     Text(I18n.s(R.string.ui_player_slots), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(4.dp))
     Text(
-        "Assign each device to a player, or ignore it. Applied immediately and saved for this container.",
+        I18n.s(R.string.ui_assign_each_device_to_a_player_or_ignore_it_applied_i),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
@@ -3684,10 +3684,10 @@ private fun PlayersSection() {
         onClick = { XServerDialogState.show(XServerDialogState.ActiveDialog.CONTROLLER_TEST) },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
-    ) { Text("Physical Controller Test / Bind") }
+    ) { Text(I18n.s(R.string.ui_physical_controller_test_bind)) }
     Spacer(Modifier.height(4.dp))
     Text(
-        "Test each physical controller, remap its buttons, and confirm every input registers.",
+        I18n.s(R.string.ui_test_each_physical_controller_remap_its_buttons_and_c),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
@@ -3695,7 +3695,7 @@ private fun PlayersSection() {
 
     if (rows.isEmpty()) {
         Text(
-            "No input devices detected.",
+            I18n.s(R.string.ui_no_input_devices_detected),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -3722,7 +3722,7 @@ private fun PlayersSection() {
         shape = RoundedCornerShape(10.dp),
     ) { Text(I18n.s(R.string.ui_reset_input)) }
     Text(
-        "Re-handshake controllers & on-screen if input stops responding.",
+        I18n.s(R.string.ui_re_handshake_controllers_on_screen_if_input_stops_res),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
@@ -3739,14 +3739,14 @@ private fun PlayerSlotRowItem(row: XServerDialogState.PlayerSlotRow) {
     val options = remember {
         buildList {
             add("Auto" to XServerDialogState.SLOT_AUTO)
-            for (i in 0 until 4) add("Player ${i + 1}" to i)
+            for (i in 0 until 4) add(I18n.s(R.string.ui_player_i_1) to i)
             add("Ignore" to XServerDialogState.SLOT_IGNORE)
         }
     }
     val selectedLabel = options.firstOrNull { it.second == row.override }?.first ?: "Auto"
 
     val subtitle = when {
-        row.currentSlot >= 0 -> "Currently Player ${row.currentSlot + 1}"
+        row.currentSlot >= 0 -> I18n.s(R.string.ui_currently_player_row_currentslot_1)
         row.override == XServerDialogState.SLOT_IGNORE -> "Ignored"
         else -> "Unassigned"
     }
@@ -3815,7 +3815,7 @@ private fun TouchGestureSettings(state: XServerDrawerState) {
     Text(I18n.s(R.string.ui_touch_gestures), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(2.dp))
     Text(
-        "Drag to box-select, hold for right click. Two-finger drag scrolls the wheel.",
+        I18n.s(R.string.ui_drag_to_box_select_hold_for_right_click_two_finger_dr),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
@@ -3838,7 +3838,7 @@ private fun TouchGestureSettings(state: XServerDrawerState) {
     if (longPress) {
         val initHoldMs by state.gestureLongPressMs.collectAsState()
         var holdMs by remember(initHoldMs) { mutableIntStateOf(initHoldMs) }
-        IntSlider("Hold Delay", holdMs, 150..800,
+        IntSlider(I18n.s(R.string.ui_hold_delay), holdMs, 150..800,
             onValueChange = { holdMs = it },
             onValueChangeFinished = {
                 state.setGestureLongPressMs(holdMs); state.onGestureConfigChange?.run()
@@ -3880,7 +3880,7 @@ private fun SticksSection() {
         onValueChange = { leftDz = it },
         onValueChangeFinished = { commit(tuning.smoothEdge) },
         steps = 49,
-        format = { "${Math.round(it * 100f)}%" }
+        format = { I18n.s(R.string.ui_math_round_it_100f) }
     )
     LabeledSlider(
         label = stringResource(R.string.stick_left_sensitivity),
@@ -3898,7 +3898,7 @@ private fun SticksSection() {
         onValueChange = { rightDz = it },
         onValueChangeFinished = { commit(tuning.smoothEdge) },
         steps = 49,
-        format = { "${Math.round(it * 100f)}%" }
+        format = { I18n.s(R.string.ui_math_round_it_100f) }
     )
     LabeledSlider(
         label = stringResource(R.string.stick_right_sensitivity),
@@ -4192,7 +4192,7 @@ private fun AdvancedContent(state: XServerDrawerState) {
     AdvancedActionRow(
         "Performance",
         R.drawable.ic_sidebar_performance,
-        subtitle = "CPU / GPU clocks, thermal, memory — live gauges, root-aware.",
+        subtitle = I18n.s(R.string.ui_cpu_gpu_clocks_thermal_memory_live_gauges_root_aware),
     ) { showPerfDialog = true }
 
     if (showPerfDialog) {
@@ -4209,7 +4209,7 @@ private fun PerfOverrideLine(overridden: Boolean, onReset: () -> Unit) {
         modifier = Modifier.fillMaxWidth().padding(start = 12.dp, top = 1.dp, bottom = 6.dp)
     ) {
         Text(
-            if (overridden) "● Per-game override" else "○ Using global default",
+            if (overridden) I18n.s(R.string.ui_per_game_override) else I18n.s(R.string.ui_using_global_default),
             fontSize = 10.sp,
             color = if (overridden) accent else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
@@ -4242,7 +4242,7 @@ private fun GpuClockLockRow(state: XServerDrawerState, overridden: Set<String>) 
     }
     if (!enabled) {
         Text(
-            "🔒 Needs an Adreno GPU, or root on other GPUs.",
+            I18n.s(R.string.ui_needs_an_adreno_gpu_or_root_on_other_gpus),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 12.dp, bottom = 4.dp)
@@ -4273,13 +4273,13 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
         }
     }
 
-    SectionHeader("Root Performance")
+    SectionHeader(I18n.s(R.string.ui_root_performance))
 
     if (!granted) {
         Text(
             "🔒 " + when (rootState) {
-                RootManager.RootState.UNAVAILABLE -> "No root manager detected."
-                else -> "Grant root in App Settings → Performance to enable these."
+                RootManager.RootState.UNAVAILABLE -> I18n.s(R.string.ui_no_root_manager_detected)
+                else -> I18n.s(R.string.ui_grant_root_in_app_settings_performance_to_enable_thes)
             },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -4292,7 +4292,7 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
         val temp = readouts["socTemp"] ?: "—"
         val fan = readouts["fanRpm"] ?: "—"
         Text(
-            "Gov $gov · GPU $gpu · SoC $temp · Fan $fan",
+            I18n.s(R.string.ui_gov_gov_gpu_gpu_soc_temp_fan_fan),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 6.dp)
@@ -4307,7 +4307,7 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
 
     if (granted && !harnessProven) {
         Text(
-            "Thermal / fan locked until safety-revert is verified on this device.",
+            I18n.s(R.string.ui_thermal_fan_locked_until_safety_revert_is_verified_on),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -4423,7 +4423,7 @@ private fun TmContent() {
     Spacer(Modifier.height(8.dp))
 
     Text(
-        text = "Processes: $count",
+        text = I18n.s(R.string.ui_processes_count),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 12.sp,
     )
@@ -4519,7 +4519,7 @@ private fun TmProcessRow(proc: XServerDialogState.TmProcess) {
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = "PID ${proc.pid}  \u2022  ${proc.formattedMemory}",
+                text = I18n.s(R.string.ui_pid_proc_pid_u2022_proc_formattedmemory),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 10.sp,
             )
@@ -4627,7 +4627,7 @@ private fun ProcessorAffinityDialog(
         text = {
             Column {
                 Text(
-                    "Which processors are allowed to run \"${proc.name}\"?",
+                    I18n.s(R.string.ui_which_processors_are_allowed_to_run_proc_name),
                     fontSize = 12.5.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -4670,7 +4670,7 @@ private fun ProcessorAffinityDialog(
                                 modifier = Modifier.size(28.dp),
                             )
                             Spacer(Modifier.height(2.dp))
-                            Text("CPU$i", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                            Text(I18n.s(R.string.ui_cpu_i), fontSize = 11.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
                         }
                     }
                 }
@@ -4769,7 +4769,7 @@ private fun TmStatGrid(h: XServerDialogState.TmHeaderStats?) {
     val tiles = buildList {
         add(TmTile("CPU", h.cpuPct?.let { "$it%" } ?: "—", h.cpuTempC?.let { " $it°" } ?: "", accent))
         add(TmTile("GPU", h.gpuPct?.let { "$it%" } ?: "—", h.gpuTempC?.let { " $it°" } ?: "", accent))
-        add(TmTile("GPU CLK", h.gpuClockMhz?.let { "$it" } ?: "—", if (h.gpuClockMhz != null) "MHz" else "", onSurf))
+        add(TmTile(I18n.s(R.string.ui_gpu_clk), h.gpuClockMhz?.let { "$it" } ?: "—", if (h.gpuClockMhz != null) "MHz" else "", onSurf))
         add(TmTile("FPS", "${h.fps}", if (h.fpsMin > 0) " ·${h.fpsMin}min" else "", ok))
         add(TmTile("RAM", numOf(h.ramUsed), "/" + compact(h.ramTotal), onSurf))
         if (h.swap != null) {
@@ -4779,7 +4779,7 @@ private fun TmStatGrid(h: XServerDialogState.TmHeaderStats?) {
         }
         add(TmTile("BAT", h.batteryPct?.let { "$it%" } ?: "—",
             " " + String.format("%.1f", h.batteryWatts) + "W" + (if (h.charging) " ⚡" else ""), warn))
-        add(TmTile("BAT °C", h.batteryTempC?.let { "$it°" } ?: "—", "", onSurf))
+        add(TmTile(I18n.s(R.string.ui_bat_c), h.batteryTempC?.let { "$it°" } ?: "—", "", onSurf))
     }
 
     Column(modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
@@ -4953,13 +4953,13 @@ private fun TmContainerPanel(info: XServerDialogState.TmContainerInfo?) {
                 ContainerInfoRow("Wine", info.wine)
                 // "Display backend" row removed — hidden by request (the X11/Wayland choice is no
                 // longer surfaced anywhere in the UI); `wayland` below still drives the Renderer line.
-                ContainerInfoRow("DX wrapper", prettyDxWrapper(info.dxWrapper), accent)
+                ContainerInfoRow(I18n.s(R.string.ui_dx_wrapper), prettyDxWrapper(info.dxWrapper), accent)
                 // Wayland: the game presents through the embedded compositor's Vulkan backend, and the
                 // driver value is the "compositor: … · game: …" pair the activity resolved (wraps).
                 ContainerInfoRow(
                     "Renderer",
                     when {
-                        wayland -> "Vulkan (Wayland compositor)"
+                        wayland -> I18n.s(R.string.ui_vulkan_wayland_compositor)
                         else -> prettyRenderer(info.renderer)
                     },
                     accent,
@@ -5062,13 +5062,13 @@ private fun ModCard(mod: DrawerMod, onClick: () -> Unit) {
                 val tag = when {
                     mod.loaded -> mod.version
                     !mod.on -> "Off"
-                    else -> "Not loaded"
+                    else -> I18n.s(R.string.ui_not_loaded)
                 }
                 if (tag.isNotEmpty()) ModTag(tag)
             }
             if (mod.loaded) {
                 Text(
-                    if (mod.bits.isEmpty()) mod.file else "${mod.file} \u00b7 ${mod.bits}",
+                    if (mod.bits.isEmpty()) mod.file else I18n.s(R.string.ui_mod_file_u00b7_mod_bits),
                     color = DeckPalette.onSurfaceVariant,
                     fontSize = 11.sp,
                     modifier = Modifier.padding(top = 2.dp),

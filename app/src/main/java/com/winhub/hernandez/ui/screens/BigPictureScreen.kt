@@ -255,7 +255,7 @@ fun BigPictureScreen(navController: NavController) {
     fun launchWithSteamLite(s: Shortcut) {
         if (!SteamLiteComponent.isInstalled(context)) {
             componentDownloadFor = s
-            componentDownloadLabel = "SteamLite (Real Steam / VAC)"
+            componentDownloadLabel = I18n.s(R.string.ui_steamlite_real_steam_vac)
             componentDownloadProgress = 0f
             SteamLiteComponent.downloadAsync(
                 context,
@@ -288,8 +288,8 @@ fun BigPictureScreen(navController: NavController) {
     // Cancellable via steamUpdateHandle.
     fun runSteamMaintenance(s: Shortcut, verify: Boolean) {
         val appId = steamAppIdOf(s)
-        steamUpdateTitle = if (verify) "Verifying game files" else "Updating game"
-        steamUpdateLabel = if (verify) "Verifying ${s.name}…" else "Checking ${s.name} for updates…"
+        steamUpdateTitle = if (verify) I18n.s(R.string.ui_verifying_game_files) else I18n.s(R.string.ui_updating_game)
+        steamUpdateLabel = if (verify) I18n.s(R.string.ui_verifying_s_name) else I18n.s(R.string.ui_checking_s_name_for_updates)
         steamUpdateProgress = -1f
         steamUpdateFor = s
         val progress = SteamGameUpdater.ProgressCallback { frac, label ->
@@ -312,8 +312,8 @@ fun BigPictureScreen(navController: NavController) {
     // [Update now] / [Check online] hands off to runSteamMaintenance. onResult lands on the main thread.
     fun checkForUpdatesThenOffer(s: Shortcut) {
         val appId = steamAppIdOf(s)
-        steamUpdateTitle = "Checking for updates"
-        steamUpdateLabel = "Checking ${s.name}…"
+        steamUpdateTitle = I18n.s(R.string.ui_checking_for_updates)
+        steamUpdateLabel = I18n.s(R.string.ui_checking_s_name)
         steamUpdateProgress = -1f   // opens in the animated indeterminate state, never a static 0%.
         steamUpdateFor = s
         steamUpdateHandle = SteamGameUpdater.checkForUpdate(context, appId) { status ->
@@ -322,10 +322,10 @@ fun BigPictureScreen(navController: NavController) {
             when (status.state) {
                 SteamGameUpdater.State.UP_TO_DATE -> {
                     val b = if (status.installedBuild > 0L) " (build ${status.installedBuild})" else ""
-                    Toast.makeText(context, "${s.name} is up to date$b", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_s_name_is_up_to_date_b), Toast.LENGTH_LONG).show()
                 }
                 SteamGameUpdater.State.NOT_INSTALLED ->
-                    Toast.makeText(context, "${s.name} isn't installed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_s_name_isn_t_installed), Toast.LENGTH_LONG).show()
                 SteamGameUpdater.State.UPDATE_AVAILABLE, SteamGameUpdater.State.UNKNOWN ->
                     steamUpdateOffer = s to status
             }
@@ -665,7 +665,7 @@ fun BigPictureScreen(navController: NavController) {
                         "Driver" to it.driverLabel,
                         "DXVK" to it.dxvkVersion,
                         "VKD3D" to it.vkd3dVersion,
-                        "Frame Gen" to it.frameGenLabel,
+                        I18n.s(R.string.ui_frame_gen) to it.frameGenLabel,
                         "x86" to it.backendLabel,
                     ).filter { p -> p.second.isNotBlank() }
                 }.orEmpty()
@@ -699,7 +699,7 @@ fun BigPictureScreen(navController: NavController) {
                                 Spacer(Modifier.height(4.dp))
                                 val stats = playtimeStats(context, selected?.name ?: "")
                                 Text(
-                                    "Played ${stats.first}×  ·  ${stats.second}",
+                                    I18n.s(R.string.ui_played_stats_first_stats_second),
                                     color = Color.White.copy(alpha = 0.85f),
                                     fontSize = 13.sp,
                                 )
@@ -911,12 +911,12 @@ fun BigPictureScreen(navController: NavController) {
     communityApplyResult?.let { res ->
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { communityApplyResult = null },
-            title = { Text(if (res.ok) "Config applied" else "Couldn't apply") },
+            title = { Text(if (res.ok) I18n.s(R.string.ui_config_applied) else I18n.s(R.string.ui_couldn_t_apply)) },
             text = {
                 Column {
                     Text(res.message, color = Color.White.copy(alpha = 0.85f))
                     if (res.ok) Text(
-                        "Applied to \"${selected?.name.orEmpty()}\".",
+                        I18n.s(R.string.ui_applied_to_selected_name_orempty),
                         color = Color.White.copy(alpha = 0.55f),
                         fontSize = 12.sp,
                     )
@@ -937,13 +937,13 @@ fun BigPictureScreen(navController: NavController) {
                         Spacer(Modifier.height(6.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                "Needs GPU driver ${md.wanted}",
+                                I18n.s(R.string.ui_needs_gpu_driver_md_wanted),
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
                             com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text("Install") }
                         }
                     }
-                    res.advisories.forEach { Text("• $it", color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp) }
+                    res.advisories.forEach { Text(I18n.s(R.string.ui_it), color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp) }
                 }
             },
             confirmButton = {
@@ -1049,7 +1049,7 @@ fun BigPictureScreen(navController: NavController) {
         OutlinedAlertDialog(
             onDismissRequest = { /* keep up until the download finishes */ },
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            title = { Text("Downloading $componentDownloadLabel", color = MaterialTheme.colorScheme.onSurface) },
+            title = { Text(I18n.s(R.string.ui_downloading_componentdownloadlabel), color = MaterialTheme.colorScheme.onSurface) },
             text = {
                 Column {
                     LinearProgressIndicator(
@@ -1060,7 +1060,7 @@ fun BigPictureScreen(navController: NavController) {
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "${(componentDownloadProgress.coerceIn(0f, 1f) * 100).toInt()}% — the game launches when this finishes.",
+                        I18n.s(R.string.ui_componentdownloadprogress_coercein_0f_1f_100_toint_th),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1098,7 +1098,7 @@ fun BigPictureScreen(navController: NavController) {
                         // Prefix a live "N%" once real download progress starts; the indeterminate
                         // "checking/setup" phase (fraction < 0) shows just the phase label.
                         if (steamUpdateProgress >= 0f)
-                            "${(steamUpdateProgress.coerceIn(0f, 1f) * 100).toInt()}% — $steamUpdateLabel"
+                            I18n.s(R.string.ui_steamupdateprogress_coercein_0f_1f_100_toint_steamupd)
                         else steamUpdateLabel,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -1120,15 +1120,15 @@ fun BigPictureScreen(navController: NavController) {
         val available = status.state == SteamGameUpdater.State.UPDATE_AVAILABLE
         val title = if (available) {
             if (status.installedBuild > 0L && status.liveBuild > 0L)
-                "Update available — build ${status.installedBuild} → ${status.liveBuild}"
-            else "Update available for ${s.name}"
+                I18n.s(R.string.ui_update_available_build_status_installedbuild_status_l)
+            else I18n.s(R.string.ui_update_available_for_s_name)
         } else {
-            "Couldn't check ${s.name} from cached data — check online?"
+            I18n.s(R.string.ui_couldn_t_check_s_name_from_cached_data_check_online)
         }
         BpSheetScaffold(
             title = title,
             rows = listOf(
-                BpRow(Icons.Filled.Download, if (available) "Update now" else "Check online") {
+                BpRow(Icons.Filled.Download, if (available) "Update now" else I18n.s(R.string.ui_check_online_2)) {
                     steamUpdateOffer = null
                     runSteamMaintenance(s, verify = false)
                 },
@@ -1247,19 +1247,19 @@ private fun GameOptionsSheet(
     // captures the launcher; the Remove-cover row only appears when there's a custom cover to remove.
     val doctor = LocalGameDoctor.current
     val rows = buildList {
-        add(BpRow(Icons.Filled.Edit, "Edit shortcut", onEditShortcut))
-        add(BpRow(Icons.Filled.Tune, "Container settings", onContainerSettings))
+        add(BpRow(Icons.Filled.Edit, I18n.s(R.string.ui_edit_shortcut), onEditShortcut))
+        add(BpRow(Icons.Filled.Tune, I18n.s(R.string.ui_container_settings), onContainerSettings))
         doctor?.let { open -> add(BpRow(Icons.Filled.Healing, "Game Doctor") { onDismiss(); open(shortcut) }) }
         add(BpRow(Icons.Filled.Public, "Community configs", onCommunityConfigs))
-        add(BpRow(Icons.Filled.Image, "Change cover art") {
+        add(BpRow(Icons.Filled.Image, I18n.s(R.string.ui_change_cover_art)) {
             coverPicker.launch(
                 com.winhub.hernandez.util.InAppFilePicker.buildIntent(
-                    context, com.winhub.hernandez.util.InAppFilePicker.IMAGES, "Select cover art"
+                    context, com.winhub.hernandez.util.InAppFilePicker.IMAGES, I18n.s(R.string.ui_select_cover_art)
                 )
             )
         })
         if (!shortcut.customCoverArtPath.isNullOrEmpty()) {
-            add(BpRow(Icons.Filled.Delete, "Remove cover art") { onRemoveCover(); onDismiss() })
+            add(BpRow(Icons.Filled.Delete, I18n.s(R.string.ui_remove_cover_art)) { onRemoveCover(); onDismiss() })
         }
     }
     BpSheetScaffold(title = shortcut.name, rows = rows, onDismiss = onDismiss)
@@ -1275,7 +1275,7 @@ private fun ToolsSheet(
     BpSheetScaffold(
         title = I18n.s(R.string.ui_tools),
         rows = listOf(
-            BpRow(Icons.Filled.FolderOpen, "File Manager", onFileManager),
+            BpRow(Icons.Filled.FolderOpen, I18n.s(R.string.ui_file_manager), onFileManager),
             BpRow(Icons.Filled.Layers, "Manage Wrappers", onWrappers),
             BpRow(Icons.Filled.Download, "Downloads", onDownloads),
         ),
@@ -1293,8 +1293,8 @@ private fun PowerSheet(
     BpSheetScaffold(
         title = I18n.s(R.string.ui_power),
         rows = listOf(
-            BpRow(Icons.Filled.ExitToApp, "Exit Big Picture", onExit),
-            BpRow(Icons.Filled.PowerSettingsNew, "Turn off Big Picture mode", onTurnOff),
+            BpRow(Icons.Filled.ExitToApp, I18n.s(R.string.ui_exit_big_picture), onExit),
+            BpRow(Icons.Filled.PowerSettingsNew, I18n.s(R.string.ui_turn_off_big_picture_mode), onTurnOff),
             BpRow(Icons.Filled.Close, "Quit", onQuit),
         ),
         onDismiss = onDismiss,
@@ -1416,12 +1416,12 @@ private fun GameCommunitySheet(
                             type = "application/json"
                             putExtra(Intent.EXTRA_STREAM, uri)
                             putExtra(Intent.EXTRA_SUBJECT, res.game)
-                            putExtra(Intent.EXTRA_TEXT, "WinHub config for ${res.game}")
+                            putExtra(Intent.EXTRA_TEXT, I18n.s(R.string.ui_winhub_config_for_res_game))
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
                         context.startActivity(Intent.createChooser(send, "Share config"))
                     } catch (e: Exception) {
-                        Toast.makeText(context, "Couldn't share the config.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_couldn_t_share_the_config), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -1544,7 +1544,7 @@ private fun GameCommunitySheet(
                     if (uploading) {
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.width(6.dp))
-                        Text(if (uploadStarted) "Uploading…" else "Preparing…")
+                        Text(if (uploadStarted) I18n.s(R.string.ui_uploading) else I18n.s(R.string.ui_preparing))
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
@@ -1581,7 +1581,7 @@ private fun GameCommunitySheet(
                 // Search results (touch-select) replace the match list while a query is active.
                 searching -> {
                     if (searchResults.isEmpty()) {
-                        Text("No games match \"$search\".", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_no_games_match_search), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     } else {
                         searchResults.forEach { cg ->
                             CommunityCard(onClick = {
@@ -1604,8 +1604,8 @@ private fun GameCommunitySheet(
                         }
                     }
                 }
-                matchLoading -> Text("Matching \"${shortcut.name}\"…", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                game == null -> Text("No auto-match for \"${shortcut.name}\" — search above to pick one.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                matchLoading -> Text(I18n.s(R.string.ui_matching_shortcut_name), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                game == null -> Text(I18n.s(R.string.ui_no_auto_match_for_shortcut_name_search_above_to_pick), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 else -> {
                     // Genuine tie (e.g. "Dragon Age" → Inquisition vs Veilguard): offer the alternatives
                     // so the user picks the right game instead of silently trusting the top candidate.
@@ -1651,8 +1651,8 @@ private fun GameCommunitySheet(
                     }
                     val devWord = if (game.devices.size == 1) "device" else "devices"
                     val cfgWord = if (game.configCount == 1) "config" else "configs"
-                    Text("${game.configCount} $cfgWord · ${game.devices.size} $devWord", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
-                    Text("Your device: ${deviceHeaderLabel(DeviceIdentity.deviceModel(), match?.userHardwareLabel)}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_game_configcount_cfgword_game_devices_size_devword), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_your_device_deviceheaderlabel_deviceidentity_de_2), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                     Spacer(Modifier.height(6.dp))
                     FilterChip(
                         selected = matchesMine,
@@ -1677,7 +1677,7 @@ private fun GameCommunitySheet(
                                     CommunityCard(onClick = { onApply(c.pick) }) {
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
-                                                device.model.ifBlank { "Unknown device" },
+                                                device.model.ifBlank { I18n.s(R.string.ui_unknown_device) },
                                                 color = if (c.isMatch) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
@@ -1712,7 +1712,7 @@ private fun GameCommunitySheet(
         androidx.compose.material3.AlertDialog(
             onDismissRequest = dismissReplace,
             title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
-            text = { Text("You've already shared a config for \"${existing.game}\". Replace it with this one?") },
+            text = { Text(I18n.s(R.string.ui_you_ve_already_shared_a_config_for_existing_game_repl)) },
             confirmButton = { TextButton(onClick = { replacePrompt = null; proceed() }) { Text(I18n.s(R.string.ui_replace)) } },
             dismissButton = { TextButton(onClick = dismissReplace) { Text("Cancel") } },
         )
