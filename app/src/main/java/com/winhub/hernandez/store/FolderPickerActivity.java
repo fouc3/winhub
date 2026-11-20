@@ -22,9 +22,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.winhub.hernandez.util.I18n
-import com.winhub.hernandez.R
-
+import com.winhub.hernandez.util.I18n;
+import com.winhub.hernandez.R;
 /**
  * In-app folder picker for cloud save directory selection.
  *

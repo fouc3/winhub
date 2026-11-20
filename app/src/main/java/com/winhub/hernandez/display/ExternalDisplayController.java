@@ -19,9 +19,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import com.winhub.hernandez.util.I18n
-import com.winhub.hernandez.R
-
+import com.winhub.hernandez.util.I18n;
+import com.winhub.hernandez.R;
 /**
  * "Version A" external-display mode — game on the TV, handheld as the controller.
  *

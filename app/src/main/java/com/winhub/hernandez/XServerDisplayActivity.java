@@ -174,8 +174,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.sherlock.com.sun.media.sound.SF2Soundbank;
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.util.I18n;
 public class XServerDisplayActivity extends AppCompatActivity {
     public static String NOTIFICATION_CHANNEL_ID = "Winlator";
     public static int NOTIFICATION_ID = 9004;

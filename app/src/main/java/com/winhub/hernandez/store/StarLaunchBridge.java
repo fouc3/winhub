@@ -31,8 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import com.winhub.hernandez.util.I18n
-
+import com.winhub.hernandez.util.I18n;
 /**
  * Launch bridge for store integrations (GOG / Epic / Amazon).
  *
