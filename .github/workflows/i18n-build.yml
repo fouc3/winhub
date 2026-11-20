@@ -1,0 +1,24 @@
+name: i18n build (artifacts only)
+
+# Fork-local entry point for the zh-CN localization branch. It exists so this fork has its own
+# registered workflow file (fork workflow registration needs a file the parent repo does not have)
+# and reuses the upstream reusable build unchanged, so the APK is produced exactly the way
+# upstream produces it.
+on:
+  workflow_dispatch:
+    inputs:
+      release_number:
+        description: 'Label for APK file names'
+        required: true
+        default: 'zh'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build.yml
+    with:
+      release_number: ${{ inputs.release_number }}
+    secrets:
+      GALAXY_PERF_SDK_JAR_B64: ${{ secrets.GALAXY_PERF_SDK_JAR_B64 }}
