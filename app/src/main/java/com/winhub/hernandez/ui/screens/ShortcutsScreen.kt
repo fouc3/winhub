@@ -2453,7 +2453,7 @@ fun ShortcutsScreen(
                         ) {
                             // Summary header — aggregate across every uploaded config.
                             Text(
-                                "Shared ${rows.size} config${if (rows.size == 1) "" else "sI18n.s(R.string.ui_rows_sumof_it_downloads_rows_sumof_it_votes),
+                                I18n.s(R.string.ui_shared_configs_summary, rows.size, rows.sumOf { it.downloads }, rows.sumOf { it.votes }),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = Color(0xFFE0701C),
                             )
@@ -11043,7 +11043,7 @@ private fun DeckTvTab(
                     val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                         com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
                     if (tvRes.isEmpty()) com.winhub.hernandez.display.ExternalDisplay.HELP_MATCH_RES
-                    else I18n.s(R.string.ui_render_at_tvres_replace)x", "×I18n.s(R.string.ui_instead_of_this_game_s_gamescreensize_replace)x", "×")}."
+                    else I18n.s(R.string.ui_render_at_res_instead, tvRes.replace("x", "×"), gameScreenSize.replace("x", "×"))
                 },
             ) {
                 DeckToggle(checked = tvMatchRes, onChange = onTvMatchResChange)
@@ -11191,8 +11191,7 @@ private fun ScTvTab(
                 val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                     com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
                 if (tvRes.isEmpty()) com.winhub.hernandez.display.ExternalDisplay.HELP_MATCH_RES
-                else I18n.s(R.string.ui_render_at_tvres_replace)x", "×")} instead of this game's " +
-                     "${gameScreenSize.replace("x", "×I18n.s(R.string.ui_more_pixels_costs_frame_rate)
+                else I18n.s(R.string.ui_render_at_res_instead_fps, tvRes.replace("x", "×"), gameScreenSize.replace("x", "×"))
             },
         ) {
             DpSwitch(dp, "tvMatchRes", checked = tvMatchRes, onCheckedChange = onTvMatchResChange)
@@ -12226,7 +12225,7 @@ internal fun CopyToDriveCCoordinator(
                         android.util.Log.e("CopyToDriveC", "copy/repoint failed for ${target.name}", e)
                         Toast.makeText(
                             context,
-                            "Copy failed: ${e.message ?: "unknown errorI18n.s(R.string.ui_nothing_was_changed),
+                            "Copy failed: ${e.message ?: "unknown error"}. Nothing was changed.",
                             Toast.LENGTH_LONG,
                         ).show()
                     }
@@ -12389,7 +12388,7 @@ internal fun CopyToDriveCCoordinator(
             text = {
                 Text(
                     "\"${target.name}\" now runs from Drive C. Delete the original folder to free " +
-                        "${sourceSize?.let { fmt(it) } ?: "spaceI18n.s(R.string.ui_or_keep_it_as_a_backup),
+                        "${sourceSize?.let { fmt(it) } ?: "space"}, or keep it as a backup?",
                     style = MaterialTheme.typography.bodySmall,
                     color = OnSurfaceVariant,
                 )

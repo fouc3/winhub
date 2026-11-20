@@ -3354,4 +3354,8 @@
     <string name="ui_motion_aim">Motion aim</string>
     <string name="ui_enable_motion_aim">Enable motion aim</string>
     <string name="ui_pick_the_custom_preset_to_change_this">Pick the Custom preset to change this</string>
+    <string name="ui_live_apply">Live</string>
+    <string name="ui_shared_configs_summary">Shared %1$d configs · ↓ %2$d · ★ %3$d</string>
+    <string name="ui_render_at_res_instead">Render at %1$s instead of this game's %2$s.</string>
+    <string name="ui_render_at_res_instead_fps">Render at %1$s instead of this game's %2$s. More pixels costs frame rate.</string>
 </resources>

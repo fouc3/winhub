@@ -959,7 +959,7 @@ private fun xmbMyUploadsMenu(xmb: XmbScope): XmbMenu {
                 add(
                     XmbRow.Info(
                         "summary",
-                        "Shared ${list.size} config${if (list.size == 1) "" else "sI18n.s(R.string.ui_list_sumof_it_downloads_list_sumof_it_votes),
+                        I18n.s(R.string.ui_shared_configs_summary, list.size, list.sumOf { it.downloads }, list.sumOf { it.votes }),
                         Icons.Filled.CloudUpload,
                     )
                 )

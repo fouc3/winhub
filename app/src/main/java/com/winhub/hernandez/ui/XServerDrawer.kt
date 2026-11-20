@@ -3438,7 +3438,14 @@ private fun SwipeSection(state: XServerDrawerState) {
 
 // How a change reaches the game: "Live" (at once), "Reconnects controller" (the pad leaves and comes
 // back with the change) or "Restart required" (the next launch).
-private enum class PadApply(val label: String) { LIVE("Live"), RECONNECT(I18n.s(R.string.ui_reconnects_controller)), RESTART(I18n.s(R.string.ui_restart_required)) }
+// Enum entries must NOT call I18n.s(): resolving a resource inside an enum entry initializer
+// trips a Kotlin FIR compiler ICE (FirUninitializedEnumChecker ClassCastException). Entries carry
+// the resource id and the label is resolved at the call site instead.
+private enum class PadApply(val labelRes: Int) {
+    LIVE(R.string.ui_live_apply),
+    RECONNECT(R.string.ui_reconnects_controller),
+    RESTART(R.string.ui_restart_required),
+}
 
 @Composable
 private fun PadRowHeader(title: String, apply: PadApply, helpRes: Int) {
@@ -3447,7 +3454,7 @@ private fun PadRowHeader(title: String, apply: PadApply, helpRes: Int) {
         Text(title, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f))
         Text(
-            apply.label,
+            I18n.s(apply.labelRes),
             fontSize = 10.sp,
             fontWeight = FontWeight.Medium,
             color = if (apply == PadApply.RESTART) MaterialTheme.colorScheme.error else LocalAccentDim.current,

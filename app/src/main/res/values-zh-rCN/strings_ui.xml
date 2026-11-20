@@ -3143,4 +3143,8 @@
     <string name="ui_motion_aim">体感瞄准</string>
     <string name="ui_enable_motion_aim">启用体感瞄准</string>
     <string name="ui_pick_the_custom_preset_to_change_this">选择“自定义”预设即可更改此项</string>
+    <string name="ui_live_apply">实时</string>
+    <string name="ui_shared_configs_summary">已分享 %1$d 份配置 · ↓ %2$d · ★ %3$d</string>
+    <string name="ui_render_at_res_instead">以 %1$s 渲染，而不是本游戏的 %2$s。</string>
+    <string name="ui_render_at_res_instead_fps">以 %1$s 渲染，而不是本游戏的 %2$s。像素越多越吃帧率。</string>
 </resources>

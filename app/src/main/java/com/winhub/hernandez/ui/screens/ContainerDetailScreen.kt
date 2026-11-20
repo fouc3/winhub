@@ -5930,7 +5930,7 @@ internal fun DxvkConfigDialog(
                                                 modifier = Modifier.weight(1f)
                                             ) {
                                                 Text(
-                                                    I18n.s(R.string.ui_b_name_java_text_simpledateformat)yyyy-MM-dd HH:mmI18n.s(R.string.ui_java_util_locale_root_format_b_lastmodified),
+                                                    "${b.name} · ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.ROOT).format(b.lastModified())}",
                                                     style = MaterialTheme.typography.bodySmall
                                                 )
                                             }

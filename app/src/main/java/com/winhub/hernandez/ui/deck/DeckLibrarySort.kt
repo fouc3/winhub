@@ -32,7 +32,9 @@ internal class GameSortKey(
 }
 
 // The Stores tab's order, then the entries no store owns. The labels are the ones storeLabelOf returns.
-private val STORE_ORDER = listOf(I18n.s(R.string.ui_windows_steam), "Steam", "Epic Games", "GOG", I18n.s(R.string.ui_amazon_games), I18n.s(R.string.ui_xbox), "Android", I18n.s(R.string.ui_linux), I18n.s(R.string.ui_added_by_me))
+// These MUST match the English labels storeLabelOf() returns (DeckStore.label / "Added by me"):
+// storeRank() looks a label up here, so translating either side breaks the Stores ordering.
+private val STORE_ORDER = listOf("Windows Steam", "Steam", "Epic Games", "GOG", "Amazon Games", "Xbox", "Android", "Linux", "Added by me")
 
 /** Where a [storeLabelOf] label sorts; a label nobody knows goes last. */
 internal fun storeRank(label: String): Int = STORE_ORDER.indexOf(label).let { if (it < 0) STORE_ORDER.size else it }
