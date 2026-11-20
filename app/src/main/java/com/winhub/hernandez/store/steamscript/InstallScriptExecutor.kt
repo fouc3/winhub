@@ -12,6 +12,7 @@ import com.winhub.hernandez.core.WinePath
 import com.winhub.hernandez.core.WineRegistryEditor
 import java.io.File
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Runs a Steam game's `installScript.vdf` recipe inside a Wine container — the install-time step the

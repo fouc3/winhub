@@ -5,6 +5,7 @@ import android.util.Log
 import com.winhub.hernandez.container.ContainerManager
 import java.util.Locale
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Resolves the Epic manifest "install tags" to download for a game, based on the container's

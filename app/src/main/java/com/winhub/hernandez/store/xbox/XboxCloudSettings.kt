@@ -5,6 +5,7 @@ import androidx.preference.PreferenceManager
 import com.winhub.hernandez.core.KeyValueSet
 import org.json.JSONObject
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Xbox Cloud Gaming player settings (global). Stream-start settings (resolution, region, language, codec,

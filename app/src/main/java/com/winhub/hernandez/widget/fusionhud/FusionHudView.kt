@@ -33,6 +33,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Fusion HUD, the in-game performance overlay. One look modelled on MangoHud's Steam Deck overlay: a dark

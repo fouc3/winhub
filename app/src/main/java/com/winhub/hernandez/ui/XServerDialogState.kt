@@ -5,6 +5,7 @@ import com.winhub.hernandez.inputcontrols.StickShaper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 object XServerDialogState {
 

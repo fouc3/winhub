@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.preference.PreferenceManager
 import com.winhub.hernandez.container.Shortcut
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** What only Home can do for a game: its own launch-method, settings, pin, container and delete flows. */
 internal class HubXmbOps(

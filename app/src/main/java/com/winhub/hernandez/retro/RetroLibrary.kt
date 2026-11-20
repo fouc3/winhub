@@ -16,6 +16,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.zip.GZIPInputStream
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val TAG = "RetroLibrary"
 

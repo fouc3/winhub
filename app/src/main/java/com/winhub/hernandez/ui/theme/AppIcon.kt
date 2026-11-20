@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.preference.PreferenceManager
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The launcher icon: the default is the four blue circles, and each theme has the same icon with its own colour for the circles. Android

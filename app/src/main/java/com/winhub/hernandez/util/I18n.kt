@@ -3,6 +3,7 @@ package com.winhub.hernandez.util
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.StringRes
+import com.winhub.hernandez.R
 
 /**
  * Localization entry point that works without a Context.

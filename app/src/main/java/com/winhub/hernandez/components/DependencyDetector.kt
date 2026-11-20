@@ -3,6 +3,7 @@ package com.winhub.hernandez.components
 import java.io.File
 import java.util.Locale
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Best-effort detection of the Windows redistributables a game bundles, by scanning its install

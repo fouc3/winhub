@@ -2,6 +2,7 @@ package com.winhub.hernandez.ui.screens.adrenodownload
 
 import android.content.Context
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * One feed within a driver source. A source can chain several feeds; [RemoteDriverRepository.fetchEntries]

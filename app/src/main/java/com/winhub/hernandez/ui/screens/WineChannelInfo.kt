@@ -1,6 +1,7 @@
 package com.winhub.hernandez.ui.screens
 
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Plain-English reference for Wine's debug channels, used by the Log Manager's "Browse all" dialog.

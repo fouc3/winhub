@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The GOG **Profile** tab, fed by one [GogUserData] fetch. GOG friends are a Galaxy-only roster with

@@ -1,5 +1,7 @@
 package com.winhub.hernandez.ui
 
+import com.winhub.hernandez.R
+
 /**
  * Display labels for the "Emulator" picker (the x86 -> ARM translator).
  *

@@ -3,6 +3,7 @@ package com.winhub.hernandez.store.xbox
 import java.io.File
 import org.xmlpull.v1.XmlPullParser
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** MicrosoftGame.config reader (ported from DroidDeck, GPL-3.0): identity, related products and the PC launch executable. */
 internal object XboxManifest {

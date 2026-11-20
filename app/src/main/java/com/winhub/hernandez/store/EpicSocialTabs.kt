@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** The Epic **Profile** tab, fed by one [EpicUserData] fetch. No Friends tab: the roster is empty for
  *  most accounts, so the count and a short list live here instead. */

@@ -4,6 +4,7 @@ import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.xenvironment.ImageFs
 import java.io.File
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Resolves installScript path tokens and Steam registry hive/WOW64 roots to concrete locations for a

@@ -2,6 +2,7 @@ package com.winhub.hernandez.ui.deck
 
 import com.winhub.hernandez.container.Shortcut
 import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // How the library is ordered. The Deck filter dialog's sort chips and the XMB All Games page share this, so the two can't
 // drift; the comparisons work on plain keys, so they don't need a Shortcut.
