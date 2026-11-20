@@ -30,6 +30,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Centered "Frame generation changed — Resume" card, shown while the guest is frozen and the game
 // surface is torn down after an in-game frame-gen change. Tapping Resume fires onFgResetResume, which
@@ -95,7 +97,7 @@ private fun FgResetCard(onResume: () -> Unit) {
             Button(onClick = onResume) {
                 Icon(Icons.Filled.PlayArrow, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
-                Text("Resume", fontWeight = FontWeight.SemiBold)
+                Text(I18n.s(R.string.xmb_dl_act_resume), fontWeight = FontWeight.SemiBold)
             }
         }
     }

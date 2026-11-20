@@ -52,6 +52,8 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import androidx.lifecycle.lifecycleScope
 import java.net.URL
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private data class FreeGameEntry(
     val title: String,
@@ -306,14 +308,14 @@ private fun EpicFreeGamesScreen(
                 modifier = Modifier.height(40.dp),
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 16.sp) }
             Text(
-                text = "Free Games",
+                text = I18n.s(R.string.ui_free_games),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = StoreStyle.accent(Store.EPIC), // Epic brand blue (store identity)
                 modifier = Modifier.weight(1f).padding(start = 12.dp),
             )
             Text(
-                text = "EPIC",
+                text = I18n.s(R.string.ui_epic),
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,

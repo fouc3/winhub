@@ -135,6 +135,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import com.winhub.hernandez.util.I18n
 
 // Serializes all native adrenotools probing (isDriverSupported + enumerateExtensions) off the
 // main thread. Serial = no concurrent AdrenoTools hooks (old SIGSEGV); off-main = no ANR.
@@ -213,7 +214,7 @@ fun ContainerDetailScreen(
                 else
                     MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Default.Check, contentDescription = "Confirm")
+                Icon(Icons.Default.Check, contentDescription = I18n.s(R.string.ui_confirm))
             }
         }
     ) { padding ->
@@ -664,7 +665,7 @@ internal fun VulkanSettingsDialog(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.renderer_native), Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_renderer_native }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                     Switch(checked = nativeRender, onCheckedChange = { nativeRender = it })
                 }
@@ -688,7 +689,7 @@ internal fun VulkanSettingsDialog(
                         modifier = (if (nativeRender) Modifier.alpha(0.5f) else Modifier).weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.renderer_present_mode_help_content }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 // FG temporarily forces Mailbox; caption the field so FIFO-while-FG-selected isn't confusing.
@@ -723,7 +724,7 @@ internal fun VulkanSettingsDialog(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_renderer_driver }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
 
@@ -749,7 +750,7 @@ internal fun VulkanSettingsDialog(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_renderer_colors }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
             }
@@ -831,7 +832,7 @@ private fun TopLevelFields(
                 modifier = Modifier.weight(1f)
             )
             IconButton(onClick = { helpRes = R.string.help_screen_size }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
         if (viewModel.selectedScreenSize.equals("custom", ignoreCase = true)) {
@@ -864,7 +865,7 @@ private fun TopLevelFields(
             val archLabels = listOf("x86-64", "arm64ec")
             val archIdx = archValues.indexOf(viewModel.defaultsArch).coerceAtLeast(0)
             LabeledDropdown(
-                label = "Architecture",
+                label = I18n.s(R.string.ui_architecture),
                 options = archLabels,
                 selectedOption = archLabels[archIdx],
                 onSelect = { viewModel.selectDefaultsArch(archValues[archLabels.indexOf(it)]) }
@@ -881,7 +882,7 @@ private fun TopLevelFields(
                 )
                 ContentInstallGear(onDownloadFile = onShowWineDownloadSheet)
                 IconButton(onClick = { helpRes = R.string.help_wine_version }) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
             }
             // Sync (esync / ntsync / fsync / wineserver) belongs to the layer, so it sits right under
@@ -923,7 +924,7 @@ private fun TopLevelFields(
             }
             val selIdx = if (viewModel.isWaylandBackend) 1 else 0
             LabeledDropdown(
-                label = "Display backend",
+                label = I18n.s(R.string.ui_display_backend),
                 options = backendLabels,
                 selectedOption = backendLabels[selIdx],
                 disabledOptions = if (waylandCapable) emptySet() else setOf(backendLabels[1]),
@@ -1012,7 +1013,7 @@ private fun TopLevelFields(
                 )
             }
             IconButton(onClick = { helpRes = R.string.help_graphics_driver }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
             // Wrappers are X11 game-driver shims and driver configuration is X11 tuning (its only
             // live field, the Turnip version, is the Compositor driver dropdown), so both entry
@@ -1056,7 +1057,7 @@ private fun TopLevelFields(
                     TextButton(onClick = { showDriverDownload = true }) {
                         Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Download a Turnip driver")
+                        Text(I18n.s(R.string.ui_download_a_turnip_driver))
                     }
                 }
                 viewModel.compositorDriverAutoPicked == compositorVersion -> Text(
@@ -1127,7 +1128,7 @@ private fun TopLevelFields(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { showWaylandDriverSettings = true }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Wayland adapter settings")
+                        Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_wayland_adapter_settings))
                     }
                 }
                 TextButton(onClick = { advancedToggled = !advancedOpen }, modifier = Modifier.fillMaxWidth()) {
@@ -1143,7 +1144,7 @@ private fun TopLevelFields(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     LabeledDropdown(
-                        label = "Wayland game driver",
+                        label = I18n.s(R.string.ui_wayland_game_driver),
                         options = labels,
                         selectedOption = labels[values.indexOf(shown)],
                         onSelect = { viewModel.waylandGameDriver = values[labels.indexOf(it)] },
@@ -1255,7 +1256,7 @@ private fun TopLevelFields(
                 modifier = Modifier.weight(1f)
             )
             IconButton(onClick = { helpRes = R.string.help_renderer }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
             if (rendererEnabled && viewModel.selectedRenderer == "Vulkan") {
                 IconButton(onClick = onShowVulkanConfig) {
@@ -1279,7 +1280,7 @@ private fun TopLevelFields(
             val rsShown = if (rsEnabled) renderScaleLabels[rsIdx] else "Not used on Wayland"
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 LabeledDropdown(
-                    label = "Render scale (supersampling)",
+                    label = I18n.s(R.string.ui_render_scale_supersampling),
                     options = if (rsEnabled) renderScaleLabels else listOf(rsShown),
                     selectedOption = rsShown,
                     onSelect = { viewModel.renderScale = renderScaleValues[renderScaleLabels.indexOf(it)] },
@@ -1292,7 +1293,7 @@ private fun TopLevelFields(
                     else
                         "Not used on Wayland: the compositor has no supersampling downscale. The stored value returns on X11."
                 }) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
             }
         }
@@ -1354,7 +1355,7 @@ private fun TopLevelFields(
                 onCheckedChange = { viewModel.autoCloseOnExit = it }
             )
             Spacer(Modifier.width(8.dp))
-            Text("Close when game exits")
+            Text(I18n.s(R.string.ui_close_when_game_exits))
         }
         Spacer(Modifier.height(8.dp))
 
@@ -1387,11 +1388,11 @@ private fun TopLevelFields(
             val audioId = StringUtils.parseIdentifier(viewModel.selectedAudioDriver)
             if (audioId == "pulseaudio" || audioId == "alsa" || audioId == "directaudio") {
                 IconButton(onClick = { showAudioSettings = true }) {
-                    Icon(Icons.Default.Settings, contentDescription = "Audio settings", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_audio_settings_2), modifier = Modifier.size(18.dp))
                 }
             }
             IconButton(onClick = { helpRes = R.string.help_audio_driver }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
         if (!directAudioSupported && directAudioEntry != null) {
@@ -1479,7 +1480,7 @@ private fun TopLevelFields(
         // StringUtils.parseIdentifier() persists as "box64". See EmulatorLabels.
         if (viewModel.isArm64EC) {
             LabeledDropdown(
-                label = "Emulator",
+                label = I18n.s(R.string.retro_opt_emulator),
                 options = EmulatorLabels.options(viewModel.emulatorEntries, true),
                 selectedOption = EmulatorLabels.display(viewModel.selectedEmulator, true),
                 enabled = viewModel.emulatorEnabled,
@@ -1612,7 +1613,7 @@ private fun TopLevelFields(
                 modifier = (if (!fgVulkan) Modifier.alpha(0.5f) else Modifier).weight(1f)
             )
             IconButton(onClick = { helpText = fgHelp }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
         if (!fgVulkan) {
@@ -1684,7 +1685,7 @@ private fun TopLevelFields(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpText = capHint }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 if (viewModel.fgCaptureSelection.equals("custom", ignoreCase = true)) {
@@ -1732,7 +1733,7 @@ private fun TopLevelFields(
                 Spacer(Modifier.width(8.dp))
                 Text(stringResource(R.string.lsfg_vk11_compat), modifier = Modifier.weight(1f))
                 IconButton(onClick = { helpText = lsfgVk11Hint }) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
             }
         }
@@ -1789,7 +1790,7 @@ private fun TopLevelFields(
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.fps_limiter), modifier = Modifier.weight(1f))
             IconButton(onClick = { helpText = fpsHelp }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
 
@@ -1809,7 +1810,7 @@ private fun TopLevelFields(
             OutlinedTextField(
                 value = viewModel.lcAll,
                 onValueChange = { viewModel.lcAll = it },
-                label = { Text("LC_ALL") },
+                label = { Text(I18n.s(R.string.lc_all)) },
                 modifier = Modifier.weight(1f)
             )
             var showLcMenu by remember { mutableStateOf(false) }
@@ -1838,7 +1839,7 @@ private fun WineConfigTab(
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
 
         // Desktop section
-        SectionBox(title = "Desktop") {
+        SectionBox(title = I18n.s(R.string.desktop)) {
             LabeledDropdown(
                 label = stringResource(R.string.theme),
                 options = listOf("Light", "Dark"),
@@ -1856,7 +1857,7 @@ private fun WineConfigTab(
             if (viewModel.desktopBgTypeIndex == WineThemeManager.BackgroundType.COLOR.ordinal) {
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Background Color", modifier = Modifier.weight(1f))
+                    Text(I18n.s(R.string.ui_background_color), modifier = Modifier.weight(1f))
                     AndroidView(
                         factory = { ctx ->
                             ColorPickerView(ctx).also { cpv ->
@@ -1926,14 +1927,14 @@ private fun WineConfigTab(
 
                 Spacer(Modifier.height(8.dp))
                 LabeledDropdown(
-                    label = "Apply wallpaper to",
+                    label = I18n.s(R.string.ui_apply_wallpaper_to),
                     options = scopeOptions,
                     selectedOption = scopeOptions.getOrElse(viewModel.desktopWallpaperScopeIndex) { scopeOptions[0] },
                     onSelect = { opt -> viewModel.desktopWallpaperScopeIndex = scopeOptions.indexOf(opt).coerceAtLeast(0) }
                 )
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Wallpaper Image", modifier = Modifier.weight(1f))
+                    Text(I18n.s(R.string.ui_wallpaper_image), modifier = Modifier.weight(1f))
                     preview?.let { img ->
                         Image(
                             bitmap = img,
@@ -1950,13 +1951,13 @@ private fun WineConfigTab(
                             Text(if (preview != null) "Change" else "Browse")
                         }
                         DropdownMenu(expanded = showWallpaperMenu, onDismissRequest = { showWallpaperMenu = false }) {
-                            DropdownMenuItem(text = { Text("Browse files") }, onClick = {
+                            DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                 showWallpaperMenu = false
                                 pickWallpaperInAppLauncher.launch(
                                     InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select wallpaper")
                                 )
                             })
-                            DropdownMenuItem(text = { Text("Pick via system…") }, onClick = {
+                            DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
                                 showWallpaperMenu = false
                                 pickWallpaperLauncher.launch("image/*")
                             })
@@ -1967,7 +1968,7 @@ private fun WineConfigTab(
         }
 
         // DirectInput section
-        SectionBox(title = "DirectInput") {
+        SectionBox(title = I18n.s(R.string.ui_directinput)) {
             // Mouse warp (DirectInput's SetCursorPos re-centring) works on both backends: on Wayland
             // the compositor implements pointer constraints, which is what winewayland's SetCursorPos
             // goes through (lock + position hint + unlock).
@@ -1982,10 +1983,10 @@ private fun WineConfigTab(
         // System section — "Run as administrator" (default ON) toggles UAC in the prefix. Backed by
         // EnableLUA in .wine/system.reg (source of truth): the VM reads it on load and writes it on
         // save/create (mirrors the DirectInput mouse-warp registry idiom above).
-        SectionBox(title = "System") {
+        SectionBox(title = I18n.s(R.string.system)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text("Run as administrator")
+                    Text(I18n.s(R.string.ui_run_as_administrator))
                     Text(
                         "Disables UAC so everything runs elevated (helps installers/tools that require admin)",
                         style = MaterialTheme.typography.bodySmall,
@@ -2015,7 +2016,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         // Components installer (only for an existing container with a Wine prefix).
         if (viewModel.container != null) {
-            SectionBox(title = "Components") {
+            SectionBox(title = I18n.s(R.string.ui_components)) {
                 Text(
                     "Install Wine dependencies — mono, gecko, .NET, VC++ runtimes, DirectX libraries, fonts and more.",
                     style = MaterialTheme.typography.bodySmall,
@@ -2025,12 +2026,12 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
                 OutlinedButton(onClick = { showComponentsSheet = true }, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Default.CloudDownload, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Browse & install components")
+                    Text(I18n.s(R.string.ui_browse_install_components))
                 }
             }
         }
         if (directxItems.isNotEmpty()) {
-            SectionBox(title = "DirectX") {
+            SectionBox(title = I18n.s(R.string.directx)) {
                 directxItems.forEach { comp ->
                     WinComponentRow(comp) { idx ->
                         val i = viewModel.winComponents.indexOfFirst { it.key == comp.key }
@@ -2040,7 +2041,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
             }
         }
         if (generalItems.isNotEmpty()) {
-            SectionBox(title = "General") {
+            SectionBox(title = I18n.s(R.string.general)) {
                 generalItems.forEach { comp ->
                     WinComponentRow(comp) { idx ->
                         val i = viewModel.winComponents.indexOfFirst { it.key == comp.key }
@@ -2181,7 +2182,7 @@ private fun DriveRow(
             onValueChange = onPathChange,
             modifier = Modifier.weight(1f),
             singleLine = true,
-            label = { Text("Path") }
+            label = { Text(I18n.s(R.string.ui_path)) }
         )
         IconButton(onClick = onBrowse) {
             Icon(Icons.Default.FolderOpen, contentDescription = null)
@@ -2276,7 +2277,7 @@ private fun AdvancedTab(
 
         // FEXCore section (arm64ec only)
         if (viewModel.isArm64EC) {
-            SectionBox(title = "FEXCore") {
+            SectionBox(title = I18n.s(R.string.fexcore_config)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     LabeledDropdown(
                         label = stringResource(R.string.fexcore_version),
@@ -2286,7 +2287,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_fexcore_version }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                     ContentInstallGear(onDownloadFile = onShowFexCoreDownloadSheet)
                 }
@@ -2300,7 +2301,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_fexcore_preset }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                     if (fexPresetCustomised) PresetCustomBadge()
                 }
@@ -2331,7 +2332,7 @@ private fun AdvancedTab(
                 Spacer(Modifier.width(8.dp))
                 Text(stringResource(R.string.dinput_visible), modifier = Modifier.weight(1f))
                 IconButton(onClick = { helpRes = R.string.help_dinput_visible }) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
             }
             Spacer(Modifier.height(8.dp))
@@ -2384,7 +2385,7 @@ private fun AdvancedTab(
         // Player Slots section — manual controller->player-slot pins that the launch pre-assignment
         // applies. Same JSON schema and editor the in-game "Players" drawer tab uses, but here it's a
         // saved default (applied on next launch), not a live reassignment.
-        SectionBox(title = "Player Slots") {
+        SectionBox(title = I18n.s(R.string.ui_player_slots)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     "Pin controllers to players; assign two to one player to share control.",
@@ -2393,13 +2394,13 @@ private fun AdvancedTab(
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(onClick = { helpRes = R.string.help_player_slots }) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                 }
             }
             // On-screen priority: what happens to the on-screen pad when a physical pad connects mid-game.
             val onScreenModeLabels = listOf("Keep on-screen player", "Yield Player 1 to pad", "Share the player")
             LabeledDropdown(
-                label = "On-screen priority",
+                label = I18n.s(R.string.ui_on_screen_priority),
                 options = onScreenModeLabels,
                 selectedOption = onScreenModeLabels.getOrElse(viewModel.onScreenControllerMode) { onScreenModeLabels[0] },
                 onSelect = { viewModel.onScreenControllerMode = onScreenModeLabels.indexOf(it).coerceAtLeast(0) },
@@ -2414,7 +2415,7 @@ private fun AdvancedTab(
                     onCheckedChange = { viewModel.autoHideControlsOnPad = it }
                 )
                 Spacer(Modifier.width(8.dp))
-                Text("Hide on-screen controls when a controller connects")
+                Text(I18n.s(R.string.ui_hide_on_screen_controls_when_a_controller_connects))
             }
             Spacer(Modifier.height(8.dp))
             PlayerSlotsEditor(
@@ -2463,7 +2464,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_gyro_mode }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -2488,7 +2489,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_gyro_target }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 val gyroActivatorLabels = listOf(
@@ -2510,7 +2511,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_gyro_activator }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 // Hold vs Toggle for that button. Pointless with "Always On" (no button to latch), so
@@ -2533,7 +2534,7 @@ private fun AdvancedTab(
                             modifier = Modifier.weight(1f)
                         )
                         IconButton(onClick = { helpRes = R.string.help_gyro_activation_mode }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                 }
@@ -2545,7 +2546,7 @@ private fun AdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_gyro_sensitivity }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Slider(
@@ -2674,7 +2675,7 @@ private fun AdvancedTab(
                 modifier = Modifier.weight(1f)
             )
             IconButton(onClick = { helpRes = R.string.help_startup_selection }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
 
@@ -2743,7 +2744,7 @@ private fun XRTab(viewModel: ContainerDetailViewModel) {
         )
 
         // Controller button mappings
-        SectionBox(title = "Controller Mapping") {
+        SectionBox(title = I18n.s(R.string.ui_controller_mapping)) {
             viewModel.xrMappingLabels.forEachIndexed { i, label ->
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     Text(label, modifier = Modifier.weight(1f))
@@ -2775,7 +2776,7 @@ internal fun StartupServicesToggleList(
     enabled: Set<String>,
     onToggle: (rawName: String, on: Boolean) -> Unit
 ) {
-    SectionBox(title = "Custom Services") {
+    SectionBox(title = I18n.s(R.string.ui_custom_services)) {
         Text(
             "Custom starts with every service off — turn on only what you need. " +
                 "Disabling Wine Bus/HID can break controllers.",
@@ -3086,7 +3087,7 @@ internal fun WaylandDriverSettingsDialog(
     val mali = remember(initialConfig) { if (isMali) MaliPanvkSettingsState(context, cfg) else null }
     var advancedOpen by remember { mutableStateOf(adapterKeys.any { it != profileKey && !(adapter[it] ?: "").isEmpty() }) }
 
-    DeckConfigDialog(title = "Wayland adapter settings", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_wayland_adapter_settings), onDismiss = onDismiss) {
         // ── Profile ────────────────────────────────────────────────────────────────────────
         DeckGroup("Profile") {
                 val profileChips = ArrayList<Triple<String, Boolean, () -> Unit>>()
@@ -3098,7 +3099,7 @@ internal fun WaylandDriverSettingsDialog(
                 val isSelected = if (perGame) profile == p else com.winhub.hernandez.core.WaylandAdapterSettings.normalizeProfile(profile) == p
                 profileChips.add(Triple(com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(p), isSelected, { setKey(profileKey, value) }))
             }
-            DeckConfigChipGrid(label = "Profile", chips = profileChips)
+            DeckConfigChipGrid(label = I18n.s(R.string.profile), chips = profileChips)
             val selectedProfile = if (perGame) profile else com.winhub.hernandez.core.WaylandAdapterSettings.normalizeProfile(profile)
             DeckConfigNote(
                 if (perGame && profile.isEmpty()) "Use whatever the container is set to."
@@ -3123,7 +3124,7 @@ internal fun WaylandDriverSettingsDialog(
         // ── Adapter report ─────────────────────────────────────────────────────────────────
         var reportOpen by remember { mutableStateOf(false) }
         DeckExpandableRow(
-            label = "Adapter report",
+            label = I18n.s(R.string.ui_adapter_report),
             hint = when {
                 probing -> "Checking driver…"
                 probe?.ok == true -> "Zero-copy " + (if (probe?.zeroCopySafe() == true) "safe" else "not safe") + " on this driver"
@@ -3144,7 +3145,7 @@ internal fun WaylandDriverSettingsDialog(
 
         // ── Advanced ───────────────────────────────────────────────────────────────────────
         DeckExpandableRow(
-            label = "Advanced: single switches",
+            label = I18n.s(R.string.ui_advanced_single_switches),
             expanded = advancedOpen,
             onToggle = { advancedOpen = !advancedOpen },
         ) {
@@ -3158,7 +3159,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PRESENT, it) }
                     )
                     WaylandTriStateRow(
-                        label = "Asynchronous copy",
+                        label = I18n.s(R.string.ui_asynchronous_copy),
                         help = "The compositor keeps frames in flight instead of waiting for each screen blit. Turn off if " +
                             "frames arrive out of order or a game stutters only on Wayland.",
                         options = triState(defaultWord),
@@ -3166,7 +3167,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY, it) }
                     )
                     WaylandTriStateRow(
-                        label = "Zero-copy presentation",
+                        label = I18n.s(R.string.ui_zero_copy_presentation),
                         help = "The game's own buffer goes on screen without a copy (lowest latency, less heat). Needs " +
                             "sync-file fences in the driver (see the report). Turn off if you see tearing or stale frames.",
                         options = triState(defaultWord),
@@ -3174,7 +3175,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY, it) }
                     )
                     WaylandTriStateRow(
-                        label = "Client render fences",
+                        label = I18n.s(R.string.ui_client_render_fences),
                         help = "With zero-copy, the game's driver tells the compositor when a frame is finished. Turn off " +
                             "only to compare; off can show half-drawn frames.",
                         options = triState(defaultWord),
@@ -3190,7 +3191,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC, it) }
                     )
                     WaylandTriStateRow(
-                        label = "DRM format modifiers",
+                        label = I18n.s(R.string.ui_drm_format_modifiers),
                         help = "Lets the game's driver and the compositor agree on buffer layouts. Off makes the game use " +
                             "plain linear buffers (BANNER_WSI_NO_MODIFIERS=1); try it for a black screen or corrupt frames.",
                         options = triState(defaultWord),
@@ -3198,7 +3199,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS, it) }
                     )
                     WaylandTriStateRow(
-                        label = "KGSL timing shim",
+                        label = I18n.s(R.string.ui_kgsl_timing_shim),
                         help = "Works around a Turnip bug where asking \"is the GPU done?\" waits for the whole frame " +
                             "(the report's timing bug). Default lets the adapter detect it; On forces it, Off disables it.",
                         options = triState(defaultWord),
@@ -3206,7 +3207,7 @@ internal fun WaylandDriverSettingsDialog(
                         onChange = { setKey(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM, it) }
                     )
                     WaylandTriStateRow(
-                        label = "Subgroups",
+                        label = I18n.s(R.string.ui_subgroups),
                         help = "Auto tells the game what subgroup operations your Mesa driver supports (DOOM Eternal and " +
                             "other games that need them start). Off hides them, as older adapters did; try it if a game " +
                             "shows glitches or crashes that it did not before.",
@@ -3220,7 +3221,7 @@ internal fun WaylandDriverSettingsDialog(
         // ── Per-game driver settings ───────────────────────────────────────────────────────
         var driverOpen by remember { mutableStateOf(false) }
         DeckExpandableRow(
-            label = "Driver settings",
+            label = I18n.s(R.string.ui_driver_settings),
             hint = "GPU name spoof, memory cap, OneUI / HyperOS fix",
             expanded = driverOpen,
             onToggle = { driverOpen = !driverOpen },
@@ -3241,7 +3242,7 @@ internal fun WaylandDriverSettingsDialog(
                 Box(Modifier.weight(1f)) {
                     DeckChoiceRow(
                         label = stringResource(R.string.graphics_driver_max_device_memory),
-                        hint = "What DirectX games are told the GPU's memory is (DXVK's dxgi.maxDeviceMemory).",
+                        hint = I18n.s(R.string.ui_what_directx_games_are_told_the_gpu_memory_is_dxvk_dx),
                         options = deviceMemoryEntries.map { it to it },
                         selected = memoryEntry,
                         onPick = { memoryEntry = it },
@@ -3264,7 +3265,7 @@ internal fun WaylandDriverSettingsDialog(
 
         var aboutOpen by remember { mutableStateOf(false) }
         DeckExpandableRow(
-            label = "About these settings",
+            label = I18n.s(R.string.ui_about_these_settings),
             expanded = aboutOpen,
             onToggle = { aboutOpen = !aboutOpen },
         ) {
@@ -3339,7 +3340,7 @@ internal fun WaylandAdapterReportBlock(
         ) {
             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp, color = DeckPalette.primary)
             Spacer(Modifier.width(8.dp))
-            Text("Checking driver… about 2 seconds", color = DeckPalette.onSurfaceVariant, fontSize = 12.sp)
+            Text(I18n.s(R.string.ui_checking_driver_about_2_seconds), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp)
         }
         note != null -> DeckConfigNote(note)
         report == null -> DeckConfigNote("Not checked yet.")
@@ -3369,7 +3370,7 @@ internal fun WaylandAdapterReportBlock(
         }
     }
     Box(Modifier.padding(horizontal = 14.dp, vertical = 6.dp)) {
-        DeckButton("Re-check", primary = false, onClick = { if (!probing) onRecheck() })
+        DeckButton(I18n.s(R.string.ui_re_check), primary = false, onClick = { if (!probing) onRecheck() })
     }
 }
 
@@ -3849,14 +3850,14 @@ internal fun GraphicsDriverConfigDialog(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_vulkan_version), vulkanVersions, vulkanVersion, { vulkanVersion = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_vulkan_version }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_version), driverVersions, version, { version = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_graphics_driver_version }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -3864,13 +3865,13 @@ internal fun GraphicsDriverConfigDialog(
                     Checkbox(checked = showAllDrivers, onCheckedChange = { showAllDrivers = it })
                     Text(stringResource(R.string.graphics_driver_show_incompatible), modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_show_incompatible_drivers }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 if (isCustomDriver) {
                     Text(
-                        text = "Custom Qualcomm (Adreno) driver — its extensions load when a game starts, so none are listed here. That's expected, not an error: the driver is applied in-game, where your HUD will show it's active.",
+                        text = I18n.s(R.string.ui_custom_qualcomm_adreno_driver_its_extensions_load_whe),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(start = 4.dp, end = 4.dp)
@@ -3885,7 +3886,7 @@ internal fun GraphicsDriverConfigDialog(
                             Text(stringResource(R.string.graphics_driver_available_extensions) + " ($enabled/${allExtensions.size})")
                         }
                         IconButton(onClick = { helpRes = R.string.help_available_extensions }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                 }
@@ -3893,28 +3894,28 @@ internal fun GraphicsDriverConfigDialog(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.gpu_name), gpuNames, gpuName, { gpuName = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_gpu_name }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_max_device_memory), deviceMemoryEntries, selectedMemoryEntry, { selectedMemoryEntry = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_max_device_memory }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_present_modes), presentModeEntries, presentMode, { presentMode = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_wrapper_present_modes }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_resource_type), resourceTypeEntries, resourceType, { resourceType = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_resource_type }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -3931,21 +3932,21 @@ internal fun GraphicsDriverConfigDialog(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_bcn_emulation), bcnEmulationEntries, bcnEmulation, { bcnEmulation = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_bcn_emulation }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_bcn_emulation_type), bcnTypeEntries, bcnEmulationType, { bcnEmulationType = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_bcn_emulation_type }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     LabeledDropdown(stringResource(R.string.graphics_driver_bcn_emulation_cache), bcnCacheEntries, bcnEmulationCache, { bcnEmulationCache = it }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_bcn_emulation_cache }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -3958,7 +3959,7 @@ internal fun GraphicsDriverConfigDialog(
                         Checkbox(checked = bcnEmulationAstc, onCheckedChange = { bcnEmulationAstc = it })
                         Text(stringResource(R.string.graphics_driver_bcn_emulation_astc), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_bcn_transcode_astc }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     if (isQualcomm) {
@@ -3980,7 +3981,7 @@ internal fun GraphicsDriverConfigDialog(
                         Checkbox(checked = bcnTranscodeAstc, onCheckedChange = { bcnTranscodeAstc = it })
                         Text(stringResource(R.string.bcn_layer_transcode_astc), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_bcn_transcode_astc }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     if (isQualcomm) {
@@ -3999,12 +4000,12 @@ internal fun GraphicsDriverConfigDialog(
                         Checkbox(checked = bcnLayerFast, onCheckedChange = { bcnLayerFast = it })
                         Text(stringResource(R.string.bcn_layer_fast), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_bcn_layer_fast }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                 }
                 if (isMaliGpu) {
-                    Text("Mali (PanVK) driver", style = MaterialTheme.typography.titleSmall)
+                    Text(I18n.s(R.string.ui_mali_panvk_driver), style = MaterialTheme.typography.titleSmall)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = maliHideExts, onCheckedChange = { maliHideExts = it })
                         Text("Hide present-wait / dynamic-rendering extensions", modifier = Modifier.weight(1f))
@@ -4043,28 +4044,28 @@ internal fun GraphicsDriverConfigDialog(
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = panvkTrace, onCheckedChange = { panvkTrace = it })
-                        Text("PANVK_TRACE (driver tracing)", modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.mali_panvk_trace), modifier = Modifier.weight(1f))
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = syncFrame, onCheckedChange = { syncFrame = it })
                     Text(stringResource(R.string.graphics_driver_sync_frame), modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_sync_every_frame }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = disablePresentWait, onCheckedChange = { disablePresentWait = it })
                     Text(stringResource(R.string.graphics_driver_disable_present_wait), modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_disable_present_wait }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = fdDevFeatures, onCheckedChange = { fdDevFeatures = it })
                     Text("OneUI / HyperOS Fix", modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_oneui_hyperos_fix }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
 
@@ -4084,7 +4085,7 @@ internal fun GraphicsDriverConfigDialog(
                         turnipGmem = gmemValues[gmemLabels.indexOf(picked).coerceAtLeast(0)]
                     }, modifier = Modifier.weight(1f))
                     IconButton(onClick = { helpRes = R.string.help_turnip_gmem }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Text(
@@ -4120,16 +4121,16 @@ internal fun GraphicsDriverConfigDialog(
                     Spacer(Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = turnipForceCb, onCheckedChange = { turnipForceCb = it })
-                        Text("forcecb — force concurrent binning", modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.ui_forcecb_force_concurrent_binning), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_turnip_concurrent_binning }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = turnipNoCb, onCheckedChange = { turnipNoCb = it })
-                        Text("nocb — disable concurrent binning", modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.ui_nocb_disable_concurrent_binning), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_turnip_concurrent_binning }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     // sysmem is the direct opposite of gmem and Turnip lets it defeat gmem, so when
@@ -4149,7 +4150,7 @@ internal fun GraphicsDriverConfigDialog(
                                     else Color.Unspecified
                         )
                         IconButton(onClick = { helpRes = R.string.help_turnip_sysmem }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     if (sysmemBlockedByGmem) {
@@ -4161,9 +4162,9 @@ internal fun GraphicsDriverConfigDialog(
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = turnipDeckEmu, onCheckedChange = { turnipDeckEmu = it })
-                        Text("deck_emu — advertise as SteamDeck", modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.ui_deck_emu_advertise_as_steamdeck), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = R.string.help_turnip_deck_emu }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     Text(
@@ -4425,7 +4426,7 @@ internal fun ExtensionPickerDialog(
         title = { Text(stringResource(R.string.graphics_driver_available_extensions)) },
         text = {
             if (extensions.isEmpty()) {
-                Text("No extensions available for this driver.")
+                Text(I18n.s(R.string.ui_no_extensions_available_for_this_driver))
             } else {
                 androidx.compose.foundation.lazy.LazyColumn {
                     items(extensions) { ext ->
@@ -5216,14 +5217,14 @@ internal fun DxvkConfigDialog(
                             enabled = !isProcessing,
                             modifier = Modifier.size(40.dp)
                         ) {
-                            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
+                            Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.preset_action_delete), tint = MaterialTheme.colorScheme.error)
                         }
                         IconButton(
                             onClick = { pickVegasLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select VEGAS package")) },
                             enabled = !isProcessing,
                             modifier = Modifier.size(40.dp)
                         ) {
-                            Icon(Icons.Default.FolderOpen, contentDescription = "Install from file", tint = MaterialTheme.colorScheme.primary)
+                            Icon(Icons.Default.FolderOpen, contentDescription = I18n.s(R.string.ui_install_from_file), tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                     if (isProcessing) {
@@ -5273,14 +5274,14 @@ internal fun DxvkConfigDialog(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Switch(checked = asyncEnabled, onCheckedChange = { asyncEnabled = it })
                         Spacer(Modifier.width(8.dp))
-                        Text("Async")
+                        Text(I18n.s(R.string.ui_async))
                     }
                 }
                 if (dxvkType == DXVKConfigDialog.DXVK_TYPE_GPLASYNC) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Switch(checked = asyncCacheEnabled, onCheckedChange = { asyncCacheEnabled = it })
                         Spacer(Modifier.width(8.dp))
-                        Text("Async Cache")
+                        Text(I18n.s(R.string.ui_async_cache))
                     }
                     Spacer(Modifier.height(8.dp))
                 }
@@ -5291,7 +5292,7 @@ internal fun DxvkConfigDialog(
                     LabeledDropdown("Anisotropic filtering", anisotropyLabels, selectedAnisotropy, { selectedAnisotropy = it },
                         modifier = Modifier.weight(1f))
                     IconButton(onClick = { textureHelpRes = R.string.help_anisotropic_filtering }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -5299,7 +5300,7 @@ internal fun DxvkConfigDialog(
                     LabeledDropdown("Texture sharpness", lodBiasLabels, selectedLodBias, { selectedLodBias = it },
                         modifier = Modifier.weight(1f))
                     IconButton(onClick = { textureHelpRes = R.string.help_texture_sharpness }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                 }
                 Text(
@@ -5386,7 +5387,7 @@ internal fun DxvkConfigDialog(
                                     TextButton(
                                         enabled = !useDefaults,
                                         onClick = { applyValue("vegas.forceTier", tierForPreview.toString()); tierChoice = null }
-                                    ) { Text("Apply tier", style = MaterialTheme.typography.bodySmall) }
+                                    ) { Text(I18n.s(R.string.ui_apply_tier), style = MaterialTheme.typography.bodySmall) }
                                     if (useDefaults) {
                                         Spacer(Modifier.width(8.dp))
                                         Text(
@@ -5411,7 +5412,7 @@ internal fun DxvkConfigDialog(
                                         TextButton(
                                             enabled = !useDefaults,
                                             onClick = { applyValue("vegas.forceTier", "0"); tierChoice = null }
-                                        ) { Text("Reset to auto", style = MaterialTheme.typography.bodySmall) }
+                                        ) { Text(I18n.s(R.string.ui_reset_to_auto), style = MaterialTheme.typography.bodySmall) }
                                         if (useDefaults) {
                                             Spacer(Modifier.width(8.dp))
                                             Text(
@@ -5437,7 +5438,7 @@ internal fun DxvkConfigDialog(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(10.dp)) {
-                                Text("Experimental — Mali driver", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                                Text(I18n.s(R.string.ui_experimental_mali_driver), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                                 Spacer(Modifier.height(2.dp))
                                 Text(
                                     "Pair the Mali 'Wrapper + compat + bcn' driver with the relaxed DXVK list (all DXVK versions) in the container's driver settings.",
@@ -5465,7 +5466,7 @@ internal fun DxvkConfigDialog(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Switch(checked = useDefaults, onCheckedChange = { useDefaults = it }, modifier = Modifier.height(32.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Use defaults (no config file)", style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.ui_use_defaults_no_config_file), style = MaterialTheme.typography.bodySmall)
                     }
                     if (!useDefaults) {
                         // Option B: the selected path IS the live file — no adoption banner,
@@ -5486,7 +5487,7 @@ internal fun DxvkConfigDialog(
                                 IconButton(onClick = onOpenConfigDownload) {
                                     Icon(
                                         Icons.Filled.Download,
-                                        contentDescription = "Download stock configs",
+                                        contentDescription = I18n.s(R.string.ui_download_stock_configs),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
@@ -5547,7 +5548,7 @@ internal fun DxvkConfigDialog(
                                     customEntries.value = customEntries.value.filter { it != selectedCustom }
                                     selectedCustom = null
                                     if (selectedStock == null) useDefaults = true
-                                }) { Text("Remove from list", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
+                                }) { Text(I18n.s(R.string.ui_remove_from_list), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
                             }
                         }
                         // Option B backups: .bak-* beside the CURRENT live file. Always visible
@@ -5568,11 +5569,11 @@ internal fun DxvkConfigDialog(
                                 // snapshot taken by the user, never overwritten automatically.
                                 if (liveFile != null && liveFile.isFile) {
                                     TextButton(onClick = { manualBackup() }) {
-                                        Text("Backup now", style = MaterialTheme.typography.bodySmall)
+                                        Text(I18n.s(R.string.ui_backup_now), style = MaterialTheme.typography.bodySmall)
                                     }
                                 }
                                 if (backupsList.isNotEmpty()) {
-                                    TextButton(onClick = { showBackups = true }) { Text("Restore…", style = MaterialTheme.typography.bodySmall) }
+                                    TextButton(onClick = { showBackups = true }) { Text(I18n.s(R.string.ui_restore_2), style = MaterialTheme.typography.bodySmall) }
                                 }
                             }
                         }
@@ -5581,7 +5582,7 @@ internal fun DxvkConfigDialog(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Switch(checked = forkFilter, onCheckedChange = { forkFilter = it; forkFilterPrefs.edit().putBoolean("forkFilter", it).apply() }, modifier = Modifier.height(32.dp))
                                 Spacer(Modifier.width(6.dp))
-                                Text("Fork-feature filter", style = MaterialTheme.typography.bodySmall)
+                                Text(I18n.s(R.string.ui_fork_feature_filter), style = MaterialTheme.typography.bodySmall)
                             }
                             if (forkFilter) {
                                 // Combined semantics: fork-only view AND unavailable
@@ -5601,7 +5602,7 @@ internal fun DxvkConfigDialog(
                                 TextButton(onClick = { showAddKey = true; addKeyDraft = ""; addValueDraft = "" }) {
                                     Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                                     Spacer(Modifier.width(4.dp))
-                                    Text("Add key", style = MaterialTheme.typography.bodySmall)
+                                    Text(I18n.s(R.string.ui_add_key), style = MaterialTheme.typography.bodySmall)
                                 }
                             }
                             Spacer(Modifier.height(2.dp))
@@ -5728,7 +5729,7 @@ internal fun DxvkConfigDialog(
                                             applyValue(sug, row.value)
                                             // delete old typo after a short delay so sidecar write settles
                                             scope.launch { kotlinx.coroutines.delay(300); applyDeleteKey(row.key) }
-                                        }) { Text("Fix", style = MaterialTheme.typography.bodySmall) }
+                                        }) { Text(I18n.s(R.string.ui_fix), style = MaterialTheme.typography.bodySmall) }
                                     }
                                 }
                                 Text(badge, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
@@ -5737,7 +5738,7 @@ internal fun DxvkConfigDialog(
                             // active config — #4 fix: Add button not inverted Switch OFF.
                             if (selectedStock != null && pendingRows.isNotEmpty()) {
                                 Spacer(Modifier.height(8.dp))
-                                Text("New in this baseline — tap Add to insert", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                                Text(I18n.s(R.string.ui_new_in_this_baseline_tap_add_to_insert), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                 pendingRows.forEach { row ->
                                     val gated = vegasKnowledge != null && vegasKnowledge.isGated(row.key, selectedDxvk)
                                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
@@ -5745,7 +5746,7 @@ internal fun DxvkConfigDialog(
                                             enabled = !gated,
                                             onClick = { applyToggle(row.key, row.value, true) },
                                             modifier = Modifier.height(32.dp)
-                                        ) { Text("Add", style = MaterialTheme.typography.bodySmall) }
+                                        ) { Text(I18n.s(R.string.add), style = MaterialTheme.typography.bodySmall) }
                                         Spacer(Modifier.width(6.dp))
                                         Text(
                                             row.key,
@@ -5799,14 +5800,14 @@ internal fun DxvkConfigDialog(
                     Text(catalogFooter, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = { showKeyDocSheet = true }) {
-                            Icon(Icons.Filled.Book, contentDescription = "Config key reference", tint = MaterialTheme.colorScheme.primary)
+                            Icon(Icons.Filled.Book, contentDescription = I18n.s(R.string.ui_config_key_reference), tint = MaterialTheme.colorScheme.primary)
                         }
-                        TextButton(onClick = { showCatalogDialog = true }) { Text("Check catalog", style = MaterialTheme.typography.bodySmall) }
+                        TextButton(onClick = { showCatalogDialog = true }) { Text(I18n.s(R.string.ui_check_catalog), style = MaterialTheme.typography.bodySmall) }
                     }
                     if (showCatalogDialog) {
                         AlertDialog(
                             onDismissRequest = { showCatalogDialog = false },
-                            title = { Text("VEGAS key catalog") },
+                            title = { Text(I18n.s(R.string.ui_vegas_key_catalog)) },
                             text = {
                                 Column {
                                     Text("generated ${vegasCatalog?.generatedAt() ?: "n/a"} · upstream ${vegasCatalog?.upstreamSource() ?: "n/a"} (${vegasCatalog?.upstreamFetchedAt() ?: "n/a"})")
@@ -5816,7 +5817,7 @@ internal fun DxvkConfigDialog(
                                         Text("$t — ${st?.name?.lowercase()?.replace('_', '-') ?: "?"}")
                                     }
                                     Spacer(Modifier.height(4.dp))
-                                    Text("Updated at build time (assistant-side maintenance).\nCheck for new builds")
+                                    Text(I18n.s(R.string.ui_updated_at_build_time_assistant_side_maintenance_nche))
                                     Spacer(Modifier.height(6.dp))
                                     TextButton(onClick = { runLiveCheck() }, enabled = !liveChecking) {
                                         Text(if (liveChecking) "Checking…" else "Check for new builds", style = MaterialTheme.typography.bodySmall)
@@ -5838,18 +5839,18 @@ internal fun DxvkConfigDialog(
                     liveReport?.let { r ->
                         AlertDialog(
                             onDismissRequest = { liveReport = null },
-                            title = { Text("VEGAS new-build check") },
+                            title = { Text(I18n.s(R.string.ui_vegas_new_build_check)) },
                             text = {
                                 Column {
                                     if (!r.feedOk) {
-                                        Text("Could not reach the release feed (network or API failure).")
+                                        Text(I18n.s(R.string.ui_could_not_reach_the_release_feed_network_or_api_failu))
                                         Spacer(Modifier.height(4.dp))
-                                        Text("The bundled catalog is unchanged; keys for unknown builds stay 'unverified'.")
+                                        Text(I18n.s(R.string.ui_bundled_catalog_is_unchanged_keys_for_unknown_builds))
                                     } else {
                                         Text("Catalog newest: ${r.catalogNewestTag ?: "?"} (${r.catalogNewestAt.ifEmpty { "?" }}).")
                                         Spacer(Modifier.height(4.dp))
                                         if (r.newerCount == 0) {
-                                            Text("No newer releases found.")
+                                            Text(I18n.s(R.string.ui_no_newer_releases_found))
                                         } else {
                                             Text("${r.newerCount} newer release(s) found" +
                                                     (if (r.newBuildCount > 0) " — $r.newBuildCount stable" else " (all prerelease)") + ":")
@@ -5861,7 +5862,7 @@ internal fun DxvkConfigDialog(
                                             else "Your installed build is not in the current release list."
                                         )
                                         Spacer(Modifier.height(4.dp))
-                                        Text("This check only reports — no writes, no catalog change. Download and classification still use the existing flows; the catalog asset updates at build time.")
+                                        Text(I18n.s(R.string.ui_this_check_only_reports_no_writes_no_catalog_change_d))
                                     }
                                 }
                             },
@@ -5913,11 +5914,11 @@ internal fun DxvkConfigDialog(
                     if (showBackups) {
                         AlertDialog(
                             onDismissRequest = { showBackups = false },
-                            title = { Text("Restore a backup") },
+                            title = { Text(I18n.s(R.string.ui_restore_a_backup)) },
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                                     if (backupsList.isEmpty()) {
-                                        Text("No backups yet — they appear after the first edit to this config file.")
+                                        Text(I18n.s(R.string.ui_no_backups_yet_they_appear_after_the_first_edit_to_th))
                                     }
                                     backupsList.forEach { b ->
                                         Row(
@@ -5938,7 +5939,7 @@ internal fun DxvkConfigDialog(
                                             }) {
                                                 Icon(
                                                     Icons.Filled.Delete,
-                                                    contentDescription = "Delete backup",
+                                                    contentDescription = I18n.s(R.string.ui_delete_backup),
                                                     tint = MaterialTheme.colorScheme.error
                                                 )
                                             }
@@ -5946,18 +5947,18 @@ internal fun DxvkConfigDialog(
                                     }
                                 }
                             },
-                            confirmButton = { TextButton(onClick = { showBackups = false }) { Text("Close") } }
+                            confirmButton = { TextButton(onClick = { showBackups = false }) { Text(I18n.s(R.string.wrapper_manager_close)) } }
                         )
                     }
                     restoreTarget?.let { backup ->
                         AlertDialog(
                             onDismissRequest = { restoreTarget = null },
-                            title = { Text("Restore this backup?") },
+                            title = { Text(I18n.s(R.string.ui_restore_this_backup)) },
                             text = {
                                 Text("The live config file will be replaced by '${backup.name}'. The current state is backed up first — nothing is lost.")
                             },
                             confirmButton = {
-                                TextButton(onClick = { restoreBackup(backup); restoreTarget = null }) { Text("Restore") }
+                                TextButton(onClick = { restoreBackup(backup); restoreTarget = null }) { Text(I18n.s(R.string.ui_restore)) }
                             },
                             dismissButton = { TextButton(onClick = { restoreTarget = null }) { Text(stringResource(android.R.string.cancel)) } }
                         )
@@ -5971,7 +5972,7 @@ internal fun DxvkConfigDialog(
                             onDismissRequest = { valuePickerRow = null },
                             title = { Text(row.key) },
                             confirmButton = {
-                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text("Done") }
+                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) }
                             },
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -6002,7 +6003,7 @@ internal fun DxvkConfigDialog(
                                     OutlinedTextField(
                                         value = customValueDraft,
                                         onValueChange = { customValueDraft = it },
-                                        label = { Text("Custom value") },
+                                        label = { Text(I18n.s(R.string.ui_custom_value)) },
                                         singleLine = true,
                                         modifier = Modifier.fillMaxWidth()
                                     )
@@ -6010,7 +6011,7 @@ internal fun DxvkConfigDialog(
                                         TextButton(
                                             enabled = customValueDraft.isNotBlank(),
                                             onClick = { applyValue(row.key, customValueDraft.trim()) }
-                                        ) { Text("Apply") }
+                                        ) { Text(I18n.s(R.string.ui_apply_2)) }
                                     }
                                 }
                             },
@@ -6051,7 +6052,7 @@ internal fun DxvkConfigDialog(
                                         Spacer(Modifier.height(16.dp))
                                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                             TextButton(onClick = { pendingDeleteKey = null }) {
-                                                Text("Cancel")
+                                                Text(I18n.s(R.string.cancel))
                                             }
                                             Button(
                                                 onClick = {
@@ -6061,7 +6062,7 @@ internal fun DxvkConfigDialog(
                                                 },
                                                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                                             ) {
-                                                Text("Remove")
+                                                Text(I18n.s(R.string.remove))
                                             }
                                         }
                                     }
@@ -6081,7 +6082,7 @@ internal fun DxvkConfigDialog(
                         }
                         AlertDialog(
                             onDismissRequest = { pendingSchemaBlock = null },
-                            title = { Text("Key not applicable to this build's schema") },
+                            title = { Text(I18n.s(R.string.ui_key_not_applicable_to_this_build_schema)) },
                             text = {
                                 Text(
                                     "$key belongs to the ${schemaName(keyFam)} schema ($prefix…).\n\n" +
@@ -6089,7 +6090,7 @@ internal fun DxvkConfigDialog(
                                     "the option cannot be applied and would be ignored."
                                 )
                             },
-                            confirmButton = { TextButton(onClick = { pendingSchemaBlock = null }) { Text("Got it") } }
+                            confirmButton = { TextButton(onClick = { pendingSchemaBlock = null }) { Text(I18n.s(R.string.ui_got_it)) } }
                         )
                     }
                     // (+) add-key dialog: freeform key/value appended to the live file.
@@ -6099,18 +6100,18 @@ internal fun DxvkConfigDialog(
                         val keyValid = VegasKeyKnowledge.isValidConfigKey(addKeyDraft.trim())
                         AlertDialog(
                             onDismissRequest = { showAddKey = false },
-                            title = { Text("Add config entry") },
+                            title = { Text(I18n.s(R.string.ui_add_config_entry)) },
                             text = {
                                 Column {
                                     OutlinedTextField(
                                         value = addKeyDraft,
                                         onValueChange = { addKeyDraft = it },
-                                        label = { Text("Key (e.g. dxvk.maxFrameLatency)") },
+                                        label = { Text(I18n.s(R.string.ui_key_e_g_dxvk_maxframelatency)) },
                                         singleLine = true,
                                         isError = addKeyDraft.isNotBlank() && !keyValid,
                                         supportingText = {
                                             if (addKeyDraft.isNotBlank() && !keyValid) {
-                                                Text("Not a valid config key — use a dotted name or ENV_STYLE caps")
+                                                Text(I18n.s(R.string.ui_not_a_valid_config_key_use_a_dotted_name_or_env_style))
                                             }
                                         },
                                         modifier = Modifier.fillMaxWidth()
@@ -6119,7 +6120,7 @@ internal fun DxvkConfigDialog(
                                     OutlinedTextField(
                                         value = addValueDraft,
                                         onValueChange = { addValueDraft = it },
-                                        label = { Text("Value") },
+                                        label = { Text(I18n.s(R.string.value)) },
                                         singleLine = true,
                                         modifier = Modifier.fillMaxWidth()
                                     )
@@ -6132,7 +6133,7 @@ internal fun DxvkConfigDialog(
                                         applyAddKey(addKeyDraft.trim(), addValueDraft.trim())
                                         showAddKey = false
                                     }
-                                ) { Text("Add") }
+                                ) { Text(I18n.s(R.string.add)) }
                             },
                             dismissButton = { TextButton(onClick = { showAddKey = false }) { Text(stringResource(android.R.string.cancel)) } }
                         )
@@ -6365,7 +6366,7 @@ internal fun FpsCounterConfigDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("FPS Counter Settings") },
+        title = { Text(I18n.s(R.string.ui_fps_counter_settings)) },
         text = {
             Column(
                 modifier = Modifier
@@ -6379,7 +6380,7 @@ internal fun FpsCounterConfigDialog(
                         onCheckedChange = { hudEnabled = it }
                     )
                     Spacer(Modifier.width(8.dp))
-                    Text("Show HUD")
+                    Text(I18n.s(R.string.ui_show_hud))
                 }
                 Spacer(Modifier.height(12.dp))
                 HudThreeStop(
@@ -6400,7 +6401,7 @@ internal fun FpsCounterConfigDialog(
 
                 // Compact multi-select metric chips (filled = on) in a wrap layout,
                 // so ~13 metrics fit in a few rows instead of stacked Switch rows.
-                Text("Metrics", style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_metrics), style = MaterialTheme.typography.bodySmall)
                 Spacer(Modifier.height(4.dp))
                 // Build the chips the SELECTED LEVEL draws (single source of truth in
                 // FusionSize.supportedChips()), then chunk into an aligned 3-wide grid so hidden chips
@@ -6518,7 +6519,7 @@ internal fun FpsCounterConfigDialog(
                 ) {
                     Icon(Icons.Filled.Share, null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("Export HUD diagnostics")
+                    Text(I18n.s(R.string.ui_export_hud_diagnostics))
                 }
                 Text(
                     "Saves a sensor report (CPU/GPU/temp/VRAM…) straight to your Downloads folder.",
@@ -6717,7 +6718,7 @@ internal fun StockConfigDownloadSheet(
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-            Text("Stock configs", style = MaterialTheme.typography.titleMedium)
+            Text(I18n.s(R.string.ui_stock_configs), style = MaterialTheme.typography.titleMedium)
             Text(
                 "Tap a version to fetch its config. Builds without a shipped config show none.",
                 style = MaterialTheme.typography.bodySmall,
@@ -6737,7 +6738,7 @@ internal fun StockConfigDownloadSheet(
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(Modifier.height(8.dp))
-                TextButton(onClick = { retryKey++ }) { Text("Retry") }
+                TextButton(onClick = { retryKey++ }) { Text(I18n.s(R.string.ui_retry)) }
             }
         } else {
             androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
@@ -7017,7 +7018,7 @@ private fun VGlossarySheet(
             elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
-                Text("V-Glossary", style = MaterialTheme.typography.titleLarge)
+                Text(I18n.s(R.string.ui_v_glossary), style = MaterialTheme.typography.titleLarge)
                 Text(
                     buildString {
                         append(if (installedTag != null) "Build: $installedTag" else "No build selected")

@@ -71,6 +71,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
 
 class AmazonGameDetailActivity : ComponentActivity() {
 
@@ -711,7 +712,7 @@ class AmazonGameDetailActivity : ComponentActivity() {
 
         // Themed (StoreAlertDialogDark) so it matches the dark app instead of a white light dialog.
         android.app.AlertDialog.Builder(this, R.style.StoreAlertDialogDark)
-            .setTitle("Select game executable")
+            .setTitle(I18n.s(R.string.ui_select_game_executable))
             .setItems(labels) { _, which ->
                 lifecycleScope.launch(Dispatchers.IO) {
                     onSelected(candidates[which])
@@ -866,7 +867,7 @@ private fun AmazonGameDetailScreen(
                     }
                 }
                 Spacer(Modifier.height(8.dp))
-                StoreSection(title = "Updates") {
+                StoreSection(title = I18n.s(R.string.ui_updates)) {
                     AmazonUpdatesContent(
                         updateStatusText = updateStatusText,
                         checkUpdatesEnabled = checkUpdatesEnabled,
@@ -878,7 +879,7 @@ private fun AmazonGameDetailScreen(
             }
 
             1 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
-                StoreSection(title = "DLC") {
+                StoreSection(title = I18n.s(R.string.ui_dlc)) {
                     AmazonDlcContent(
                         dlcJson = dlcJson,
                         onDlcInstall = onDlcInstall,
@@ -917,14 +918,14 @@ private fun AmazonUpdatesContent(
     Spacer(Modifier.height(8.dp))
     if (updateBtnVisible) {
         StoreActionButton(
-            text = "Update Now",
+            text = I18n.s(R.string.ui_update_now_2),
             onClick = onUpdateNowClick,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
     }
     StoreActionButton(
-        text = "Check for Updates",
+        text = I18n.s(R.string.ui_check_for_updates),
         onClick = onCheckUpdatesClick,
         modifier = Modifier.fillMaxWidth(),
         enabled = checkUpdatesEnabled,

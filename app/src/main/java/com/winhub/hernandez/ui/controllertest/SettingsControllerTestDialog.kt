@@ -44,6 +44,8 @@ import androidx.compose.ui.window.DialogWindowProvider
 import com.winhub.hernandez.inputcontrols.ControlsProfile
 import com.winhub.hernandez.inputcontrols.ExternalController
 import kotlin.math.min
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // At-rest (Settings → Input Controls) Controller Test + Bind. TEST mode = the shared ControllerTestPanel
@@ -136,7 +138,7 @@ fun SettingsControllerTestDialog(
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                         TestBindToggle(bindMode) { bindMode = it }
                         Spacer(Modifier.weight(1f))
-                        TextButton(onClick = onDismiss) { Text("Close") }
+                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close)) }
                     }
                     Spacer(Modifier.height(8.dp))
                     if (bindMode) {
@@ -155,7 +157,7 @@ fun SettingsControllerTestDialog(
                     } else {
                         ControllerTestPanel(
                             snapshot = snap,
-                            title = "Test your controller",
+                            title = I18n.s(R.string.ui_test_your_controller),
                             subtitle = snap?.deviceName?.takeIf { it.isNotEmpty() } ?: (padName ?: "Press any button on your controller"),
                             resetKey = Unit,
                             manualArt = manualArt,

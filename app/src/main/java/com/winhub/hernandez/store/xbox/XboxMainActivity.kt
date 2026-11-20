@@ -87,6 +87,8 @@ import com.winhub.hernandez.store.DeckStoreTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Xbox / PC Game Pass section: the same Store / Library / Profile shell as GOG, Epic and Amazon
@@ -192,7 +194,7 @@ class XboxMainActivity : ComponentActivity() {
                 XboxCloudSession.clear()
             }
             XboxDiag.log(app, "signed out")
-            runOnUiThread { account = null; message = "Signed out of Xbox. Installed games stay installed." }
+            runOnUiThread { account = null; message = I18n.s(R.string.ui_signed_out_of_xbox_installed_games_stay_installed) }
         }.start()
     }
 }
@@ -309,19 +311,19 @@ private fun XboxStorefrontHost(
         railStatusSlot = { StoreAvatar(emptyList(), shownName, 36.dp) },
         actions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             IconButton(onClick = { ctx.startActivity(XboxCloudActivity.intent(ctx)) }, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.Filled.Cloud, contentDescription = "Xbox Cloud Gaming", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Cloud, contentDescription = I18n.s(R.string.ui_xbox_cloud_gaming), tint = MaterialTheme.colorScheme.primary)
             }
             IconButton(onClick = onSignOut, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign out", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = I18n.s(R.string.social_hub_sign_out), tint = MaterialTheme.colorScheme.primary)
             }
         },
         railActions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             StoreRailOverflow(items = listOf(Triple("Xbox Cloud Gaming", Icons.Filled.Cloud) { ctx.startActivity(XboxCloudActivity.intent(ctx)) }), onSignOut = onSignOut)
@@ -352,7 +354,7 @@ private fun XboxLibraryTab(state: XboxLibraryState, wide: Boolean, onOpen: (Xbox
     Column(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         val header = rememberXmbHeader()
         header.Header {
-            CatalogSearchField(query = query, placeholder = "Search your Xbox library…", onQueryChange = { query = it },
+            CatalogSearchField(query = query, placeholder = I18n.s(R.string.ui_search_your_xbox_library), onQueryChange = { query = it },
                 onClear = { query = ""; focusManager.clearFocus() }, onSearch = { focusManager.clearFocus() })
             Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 2.dp), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -368,15 +370,15 @@ private fun XboxLibraryTab(state: XboxLibraryState, wide: Boolean, onOpen: (Xbox
         val downloads by DownloadRegistry.entries.collectAsState()
         when {
             state.games.isEmpty() && state.syncing -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                StoreNotice(title = "Syncing your library", body = "Fetching the games your account owns or has through Game Pass…")
+                StoreNotice(title = I18n.s(R.string.ui_syncing_your_library), body = I18n.s(R.string.ui_fetching_the_games_your_account_owns_or_has_through_g))
             }
             state.games.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                StoreNotice(title = "No games found yet",
-                    body = "Games with a PC version, or that stream with Xbox Cloud Gaming, are listed.",
+                StoreNotice(title = I18n.s(R.string.ui_no_games_found_yet),
+                    body = I18n.s(R.string.ui_games_with_a_pc_version_or_that_stream_with_xbox_clou),
                     actionLabel = "Sync now", onAction = { state.refresh(true) })
             }
             shown.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                StoreNotice(title = "No matches", body = "Nothing in your library matches that filter.")
+                StoreNotice(title = I18n.s(R.string.ui_no_matches), body = I18n.s(R.string.ui_nothing_in_your_library_matches_that_filter))
             }
             else -> LazyVerticalGrid(
                 state = header.trackedGridState(),
@@ -423,7 +425,7 @@ private fun XboxStoreTab(state: XboxLibraryState, wide: Boolean, onOpen: (XboxGa
     Column(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         val header = rememberXmbHeader()
         header.Header {
-            CatalogSearchField(query = query, placeholder = "Search PC games on the Microsoft Store…",
+            CatalogSearchField(query = query, placeholder = I18n.s(R.string.ui_search_pc_games_on_the_microsoft_store),
                 onQueryChange = { query = it; if (it.isBlank()) results = null },
                 onClear = { query = ""; results = null; focusManager.clearFocus() },
                 onSearch = {
@@ -458,7 +460,7 @@ private fun XboxStoreTab(state: XboxLibraryState, wide: Boolean, onOpen: (XboxGa
             if (owned.isNotEmpty()) catalogRail("In your library", "Owned and PC Game Pass", owned, "Xbox", ::action, { open(it) }, { open(it) })
             if (trending.size > 1) catalogRail("Trending", "Popular PC games on the Microsoft Store", trending.drop(1), "Xbox", ::action, { open(it) }, { open(it) })
             featuredError?.let { err ->
-                item(key = "err") { StoreNotice(title = "Microsoft Store unavailable", body = err, modifier = Modifier.padding(14.dp)) }
+                item(key = "err") { StoreNotice(title = I18n.s(R.string.ui_microsoft_store_unavailable), body = err, modifier = Modifier.padding(14.dp)) }
             }
         }
     }
@@ -469,28 +471,28 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
     val ctx = LocalContext.current
     var cloud by remember { mutableStateOf(XboxMainActivity.cloudSaves(ctx)) }
     Column(modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState()).padding(top = 12.dp)) {
-        StoreSection(title = "Account") {
+        StoreSection(title = I18n.s(R.string.ui_account)) {
             Text(account, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
             Text("${state.games.size} PC games · ${state.games.count { it.gamePass }} through PC Game Pass · ${state.installedIds.size} installed",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        StoreSection(title = "Cloud saves (experimental)") {
+        StoreSection(title = I18n.s(R.string.ui_cloud_saves_experimental)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Sync game saves with Xbox cloud", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium,
+                Text(I18n.s(R.string.ui_sync_game_saves_with_xbox_cloud), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface)
                 Switch(checked = cloud, onCheckedChange = { cloud = it; XboxMainActivity.prefs(ctx).edit().putBoolean(XboxMainActivity.PREF_CLOUD_SAVES, it).apply() })
             }
             Text("Off by default. Saves then stay on this device. Turning it on can overwrite your account's cloud saves; " +
                 "use a test account first.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        StoreSection(title = "Cloud gaming") {
-            Text("Resolution, region, bitrate, picture effects, stats and sound for streamed games.",
+        StoreSection(title = I18n.s(R.string.ui_cloud_gaming)) {
+            Text(I18n.s(R.string.ui_resolution_region_bitrate_picture_effects_stats_and_s),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(6.dp))
             OutlinedButton(onClick = { ctx.startActivity(android.content.Intent(ctx, XboxCloudSettingsActivity::class.java)) },
-                modifier = Modifier.steamFocusRing()) { Text("Cloud gaming settings") }
+                modifier = Modifier.steamFocusRing()) { Text(I18n.s(R.string.ui_cloud_gaming_settings)) }
         }
-        StoreSection(title = "About") {
+        StoreSection(title = I18n.s(R.string.about)) {
             Text("PC games from the Microsoft Store and PC Game Pass, downloaded with your own license and run in a Wine " +
                 "container. No console emulation; UWP/APPX apps are not supported. Microsoft may not welcome third-party " +
                 "clients; use an account you can afford to lose.", style = MaterialTheme.typography.bodySmall,
@@ -509,20 +511,20 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
 private fun XboxLoginScreen(backendReady: Boolean, message: String?, onLoginClick: () -> Unit) {
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
         Column(Modifier.fillMaxWidth().padding(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Xbox", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_xbox), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
-            Text("Sign in with your Microsoft account to download the PC games you own or have through PC Game Pass.",
+            Text(I18n.s(R.string.ui_sign_in_with_your_microsoft_account_to_download_the_p),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             Spacer(Modifier.height(8.dp))
-            Text("Experimental. Use an account you can afford to lose.", style = MaterialTheme.typography.bodySmall,
+            Text(I18n.s(R.string.ui_experimental_use_an_account_you_can_afford_to_lose), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center)
             message?.let { Spacer(Modifier.height(8.dp)); Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface, textAlign = TextAlign.Center) }
             Spacer(Modifier.height(24.dp))
             Button(onClick = onLoginClick, enabled = backendReady, shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.height(48.dp).steamFocusRing(RoundedCornerShape(8.dp))) { Text("Sign in with Microsoft") }
+                modifier = Modifier.height(48.dp).steamFocusRing(RoundedCornerShape(8.dp))) { Text(I18n.s(R.string.ui_sign_in_with_microsoft)) }
             if (!backendReady) {
                 Spacer(Modifier.height(8.dp))
-                Text("The Xbox backend is missing from this build.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                Text(I18n.s(R.string.ui_xbox_backend_is_missing_from_this_build), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
             }
         }
     }

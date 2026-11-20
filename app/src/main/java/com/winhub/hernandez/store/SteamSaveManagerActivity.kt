@@ -113,6 +113,8 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Central Steam Save Manager — one screen listing every game that has cloud saves or a local
@@ -460,13 +462,13 @@ internal fun SaveManagerScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.social_hub_configs_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
             }
             Text(
-                text = "Save Manager",
+                text = I18n.s(R.string.ui_save_manager),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
@@ -555,7 +557,7 @@ internal fun SaveManagerScreen(
         Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (!deckMode) CollapsibleRail(
                 state = railState,
-                title = "Save Manager",
+                title = I18n.s(R.string.ui_save_manager),
                 sections = listOf(
                     RailSection(
                         header = null,
@@ -584,8 +586,8 @@ internal fun SaveManagerScreen(
             Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
                 if (deckMode && sectionLayout == "pages" && pagesCategoryOpen) {
                     DeckRow(
-                        label = "← All categories",
-                        hint = "Back to the category list",
+                        label = I18n.s(R.string.ui_all_categories),
+                        hint = I18n.s(R.string.ui_back_to_the_category_list),
                         onConfigClick = { pagesCategoryOpen = false },
                         control = {},
                     )
@@ -673,7 +675,7 @@ internal fun SaveManagerScreen(
                         statuses.isEmpty() -> {
                             Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                                 Text(
-                                    text = "Nothing to sync yet.\nDownload a game's cloud save from its detail page to start.",
+                                    text = I18n.s(R.string.ui_nothing_to_sync_yet_ndownload_a_game_cloud_save_from),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -760,51 +762,51 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
 
     Column(modifier = modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp)) {
         SettingsToggleRow(
-            title = "Steam games: auto-collect on exit",
-            subtitle = "Snapshot Steam-library saves to your local Library when a game exits.",
+            title = I18n.s(R.string.ui_steam_games_auto_collect_on_exit),
+            subtitle = I18n.s(R.string.ui_snapshot_steam_library_saves_to_your_local_library_wh),
             checked = steamOn,
             // Don't flip/write here — route through the confirm (OFF) / info (ON) prompt.
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.STEAM, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "Steam games: auto-upload to cloud on exit",
-            subtitle = "Push Steam-library saves to Steam Cloud when a game exits (only after you accept the third-party cloud disclaimer; never deletes anything from the cloud).",
+            title = I18n.s(R.string.ui_steam_games_auto_upload_to_cloud_on_exit),
+            subtitle = I18n.s(R.string.ui_push_steam_library_saves_to_steam_cloud_when_a_game_e),
             checked = steamUpOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.STEAM_UP, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "Steam games: auto-download from cloud on launch",
-            subtitle = "Pull the latest Steam Cloud saves into the game before it starts (newest-wins — never overwrites a newer local save).",
+            title = I18n.s(R.string.ui_steam_games_auto_download_from_cloud_on_launch),
+            subtitle = I18n.s(R.string.ui_pull_the_latest_steam_cloud_saves_into_the_game_befor),
             checked = steamDlOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.STEAM_DL, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "GOG games: auto-upload to cloud on exit",
-            subtitle = "Push GOG-library saves to GOG cloud when a game exits (newest-wins — never overwrites a newer cloud save).",
+            title = I18n.s(R.string.ui_gog_games_auto_upload_to_cloud_on_exit),
+            subtitle = I18n.s(R.string.ui_push_gog_library_saves_to_gog_cloud_when_a_game_exits),
             checked = gogOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.GOG, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "GOG games: auto-download from cloud on launch",
-            subtitle = "Pull the latest GOG cloud saves into the game before it starts (newest-wins — never overwrites a newer local save).",
+            title = I18n.s(R.string.ui_gog_games_auto_download_from_cloud_on_launch),
+            subtitle = I18n.s(R.string.ui_pull_the_latest_gog_cloud_saves_into_the_game_before),
             checked = gogDlOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.GOG_DL, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "Custom games: auto-back up on exit",
-            subtitle = "Snapshot custom-import saves to the local vault when a game exits.",
+            title = I18n.s(R.string.ui_custom_games_auto_back_up_on_exit),
+            subtitle = I18n.s(R.string.ui_snapshot_custom_import_saves_to_the_local_vault_when),
             checked = customOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.CUSTOM, it) },
         )
         Spacer(Modifier.height(16.dp))
         SettingsToggleRow(
-            title = "Steam achievements: sync unlocks to your Steam profile",
-            subtitle = "When ON, achievements you unlock in-game are written back to your REAL Steam account. Off by default — unlocks otherwise stay local to this device.",
+            title = I18n.s(R.string.ui_steam_achievements_sync_unlocks_to_your_steam_profile),
+            subtitle = I18n.s(R.string.ui_when_on_achievements_you_unlock_in_game_are_written_b),
             checked = achvSyncOn,
             onCheckedChange = { pendingToggle = TogglePrompt(ToggleKind.ACHV_SYNC, it) },
         )
@@ -819,7 +821,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                 if (prompt.newValue) {
                     OutlinedAlertDialog(
                         onDismissRequest = { pendingToggle = null },
-                        title = { Text("Sync achievements to Steam?") },
+                        title = { Text(I18n.s(R.string.ui_sync_achievements_to_steam)) },
                         text = {
                             Text(
                                 "Turning this ON writes achievements you unlock in-game back to your REAL " +
@@ -833,10 +835,10 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                                 SteamPrefs.setAchievementSyncBackEnabled(context, true)
                                 achvSyncOn = true
                                 pendingToggle = null
-                            }) { Text("Turn on") }
+                            }) { Text(I18n.s(R.string.xmb_fr_off_button)) }
                         },
                         dismissButton = {
-                            TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
+                            TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.cancel)) }
                         },
                     )
                 } else {
@@ -846,7 +848,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                     }
                     OutlinedAlertDialog(
                         onDismissRequest = { pendingToggle = null },
-                        title = { Text("Achievement sync off") },
+                        title = { Text(I18n.s(R.string.ui_achievement_sync_off)) },
                         text = {
                             Text(
                                 "In-game achievement unlocks will stay local to this device and won't be " +
@@ -886,7 +888,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                 // OFF → warning confirm. Write + flip only on Continue; Cancel leaves the switch ON.
                 OutlinedAlertDialog(
                     onDismissRequest = { pendingToggle = null },
-                    title = { Text("Turn off auto-backup?") },
+                    title = { Text(I18n.s(R.string.ui_turn_off_auto_backup)) },
                     text = {
                         Text(
                             when (prompt.kind) {
@@ -920,10 +922,10 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         )
                     },
                     confirmButton = {
-                        TextButton(onClick = { commit(false); pendingToggle = null }) { Text("Continue") }
+                        TextButton(onClick = { commit(false); pendingToggle = null }) { Text(I18n.s(R.string._continue)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
+                        TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.cancel)) }
                     },
                 )
             } else {
@@ -931,7 +933,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                 LaunchedEffect(prompt) { commit(true) }
                 OutlinedAlertDialog(
                     onDismissRequest = { pendingToggle = null },
-                    title = { Text("Auto-backup on") },
+                    title = { Text(I18n.s(R.string.ui_auto_backup_on)) },
                     text = {
                         Text(
                             when (prompt.kind) {
@@ -1113,7 +1115,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
     backupFor?.let { s ->
         OutlinedAlertDialog(
             onDismissRequest = { backupFor = null },
-            title = { Text("Backup format") },
+            title = { Text(I18n.s(R.string.save_backup_format_title)) },
             text = {
                 Column {
                     Text(
@@ -1128,7 +1130,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                             .clickable { backupFor = null; runBackup(s, GameSaveBackup.BackupLayout.WINLATOR) }
                             .padding(vertical = 8.dp),
                     ) {
-                        Text("Winlator-native .zip", color = MaterialTheme.colorScheme.primary)
+                        Text(I18n.s(R.string.save_backup_format_winlator), color = MaterialTheme.colorScheme.primary)
                         Text("Sibling Winlator / WinNative builds", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                     Column(
@@ -1137,13 +1139,13 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                             .clickable { backupFor = null; runBackup(s, GameSaveBackup.BackupLayout.GAMEHUB) }
                             .padding(vertical = 8.dp),
                     ) {
-                        Text("GameHub-compatible .zip", color = MaterialTheme.colorScheme.primary)
-                        Text("GameHub, Proton-based tools (default)", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.save_backup_format_gamehub), color = MaterialTheme.colorScheme.primary)
+                        Text(I18n.s(R.string.save_backup_format_gamehub_sub), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { backupFor = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { backupFor = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1169,7 +1171,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
     restoreChooser?.let { s ->
         OutlinedAlertDialog(
             onDismissRequest = { restoreChooser = null },
-            title = { Text("Restore saves") },
+            title = { Text(I18n.s(R.string.ui_restore_saves)) },
             text = {
                 Column {
                     if (s.hasBackup) {
@@ -1179,7 +1181,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                                 .clickable { restoreChooser = null; restoreFor = s }
                                 .padding(vertical = 8.dp),
                         ) {
-                            Text("Restore latest backup", color = MaterialTheme.colorScheme.primary)
+                            Text(I18n.s(R.string.ui_restore_latest_backup), color = MaterialTheme.colorScheme.primary)
                             Text("Backed up ${relTime(s.lastBackupMillis)}", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                         }
                     }
@@ -1193,13 +1195,13 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                             }
                             .padding(vertical = 8.dp),
                     ) {
-                        Text("Restore from a file…", color = MaterialTheme.colorScheme.primary)
-                        Text("Browse for a GameHub or WinHub save .zip", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                        Text(I18n.s(R.string.ui_restore_from_a_file), color = MaterialTheme.colorScheme.primary)
+                        Text(I18n.s(R.string.ui_browse_for_a_gamehub_or_winhub_save_zip), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1302,10 +1304,10 @@ private fun CustomSaveRow(
             )
         } else {
             Column(horizontalAlignment = Alignment.End) {
-                TextButton(onClick = onBackup) { Text("Back up") }
+                TextButton(onClick = onBackup) { Text(I18n.s(R.string.ui_back_up)) }
                 // Restore is always available: latest vault snapshot if present, else browse for a
                 // GameHub/Bannerlator save file (the chooser decides).
-                TextButton(onClick = onRestore) { Text("Restore") }
+                TextButton(onClick = onRestore) { Text(I18n.s(R.string.ui_restore)) }
             }
         }
     }
@@ -1384,7 +1386,7 @@ private fun EpicSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMessa
             }
             rows.isEmpty() -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "No installed Epic games found.\nInstall a game from the Epic store, then sync its cloud saves here.",
+                    text = I18n.s(R.string.ui_no_installed_epic_games_found_ninstall_a_game_from_th),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -1505,7 +1507,7 @@ private fun EpicSaveRow(
             // buttons so a refresh can light them up).
             Icon(
                 imageVector = Icons.Filled.CloudOff,
-                contentDescription = "No cloud-save support",
+                contentDescription = I18n.s(R.string.ui_no_cloud_save_support),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f),
                 modifier = Modifier.size(24.dp),
             )
@@ -1515,14 +1517,14 @@ private fun EpicSaveRow(
                 IconButton(onClick = onDownload, enabled = actionsEnabled) {
                     Icon(
                         imageVector = Icons.Filled.CloudDownload,
-                        contentDescription = "Download from Epic Cloud",
+                        contentDescription = I18n.s(R.string.ui_download_from_epic_cloud),
                         tint = if (actionsEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                     )
                 }
                 IconButton(onClick = onUpload, enabled = actionsEnabled) {
                     Icon(
                         imageVector = Icons.Filled.CloudUpload,
-                        contentDescription = "Upload to Epic Cloud",
+                        contentDescription = I18n.s(R.string.ui_upload_to_epic_cloud),
                         tint = if (actionsEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                     )
                 }
@@ -1674,7 +1676,7 @@ private fun GogSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMessag
             }
             rows.isEmpty() -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "No installed GOG games found.\nInstall a game from the GOG store, then sync its cloud saves here.",
+                    text = I18n.s(R.string.ui_no_installed_gog_games_found_ninstall_a_game_from_the),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -1809,14 +1811,14 @@ private fun GogSaveRow(
                 IconButton(onClick = onDownload, enabled = actionsEnabled) {
                     Icon(
                         imageVector = Icons.Filled.CloudDownload,
-                        contentDescription = "Download from GOG Cloud",
+                        contentDescription = I18n.s(R.string.ui_download_from_gog_cloud),
                         tint = if (actionsEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                     )
                 }
                 IconButton(onClick = onUpload, enabled = actionsEnabled) {
                     Icon(
                         imageVector = Icons.Filled.CloudUpload,
-                        contentDescription = "Upload to GOG Cloud",
+                        contentDescription = I18n.s(R.string.ui_upload_to_gog_cloud),
                         tint = if (actionsEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                     )
                 }
@@ -1912,7 +1914,7 @@ private fun SaveStatusRow(
                 // Can't sync without a container — tell the user how to enable it (tap-through opens
                 // the detail page where they can set it up).
                 Text(
-                    text = "Add this game to a container first to sync.",
+                    text = I18n.s(R.string.ui_add_this_game_to_a_container_first_to_sync),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,
@@ -1942,14 +1944,14 @@ private fun SaveStatusRow(
             IconButton(onClick = onSyncFrom, enabled = syncFromEnabled) {
                 Icon(
                     imageVector = Icons.Filled.CloudDownload,
-                    contentDescription = "Sync from Cloud",
+                    contentDescription = I18n.s(R.string.ui_sync_from_cloud_2),
                     tint = if (syncFromEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                 )
             }
             IconButton(onClick = onSyncTo, enabled = actionsEnabled) {
                 Icon(
                     imageVector = Icons.Filled.CloudUpload,
-                    contentDescription = "Sync to Cloud",
+                    contentDescription = I18n.s(R.string.ui_sync_to_cloud_2),
                     tint = if (actionsEnabled) MaterialTheme.colorScheme.primary else disabledTint,
                 )
             }

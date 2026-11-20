@@ -74,6 +74,8 @@ import org.json.JSONObject
 import androidx.lifecycle.lifecycleScope
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class EpicGamesActivity : ComponentActivity() {
     data class GameDownloadState(
@@ -149,22 +151,22 @@ class EpicGamesActivity : ComponentActivity() {
                         // Same keep/delete dialog as the detail page + Download Manager (synced via
                         // EpicCancelPolicy) — the running download coroutine acts on the choice.
                         AlertDialog.Builder(this@EpicGamesActivity)
-                            .setTitle("Cancel download?")
+                            .setTitle(I18n.s(R.string.ui_cancel_download))
                             .setMessage("Keep the partial download so you can resume later, or delete " +
                                     "all downloaded files for this game?")
-                            .setPositiveButton("Keep files") { _, _ ->
+                            .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                                 EpicCancelPolicy.setDeleteOnCancel(appName, false)
                                 cancelRunnables[appName]?.run()
                                 cancelRunnables.remove(appName)
                                 downloadStates[appName] = GameDownloadState()
                             }
-                            .setNegativeButton("Delete files") { _, _ ->
+                            .setNegativeButton(I18n.s(R.string.ui_delete_files)) { _, _ ->
                                 EpicCancelPolicy.setDeleteOnCancel(appName, true)
                                 cancelRunnables[appName]?.run()
                                 cancelRunnables.remove(appName)
                                 downloadStates[appName] = GameDownloadState()
                             }
-                            .setNeutralButton("Keep downloading", null)
+                            .setNeutralButton(I18n.s(R.string.ui_keep_downloading), null)
                             .show()
                     },
                     onAddToLauncher = { game ->
@@ -347,7 +349,7 @@ class EpicGamesActivity : ComponentActivity() {
 
             addView(TextView(this@EpicGamesActivity).apply {
                 id = android.R.id.text1
-                text = "Download size:  Fetching\u2026"
+                text = I18n.s(R.string.ui_download_size_fetching_u2026)
                 setTextColor(0xFFCCCCCC.toInt())
                 textSize = 14f
             })
@@ -362,8 +364,8 @@ class EpicGamesActivity : ComponentActivity() {
         val dialog = AlertDialog.Builder(this)
             .setTitle("Install ${game.title}?")
             .setView(content)
-            .setPositiveButton("Install", null)
-            .setNegativeButton("Cancel", null)
+            .setPositiveButton(I18n.s(R.string.ui_install), null)
+            .setNegativeButton(I18n.s(R.string.cancel), null)
             .create()
         dialog.show()
 
@@ -656,7 +658,7 @@ private fun EpicGamesScreen(
                 modifier = Modifier.height(40.dp),
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             Text(
-                text = "Epic Games",
+                text = I18n.s(R.string.ui_epic_games),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -675,14 +677,14 @@ private fun EpicGamesScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.height(40.dp),
-            ) { Text("\u21ba", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
+            ) { Text(I18n.s(R.string.ui_u21ba_2), color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             Spacer(Modifier.width(4.dp))
             Button(
                 onClick = onFreeGames,
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.height(40.dp),
-            ) { Text("FREE", color = MaterialTheme.colorScheme.onPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold) }
+            ) { Text(I18n.s(R.string.ui_free), color = MaterialTheme.colorScheme.onPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold) }
             // ⬇ cross-store Download Manager (global active-count badge).
             DownloadsButton()
         }
@@ -691,7 +693,7 @@ private fun EpicGamesScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = onSearchChange,
-                placeholder = { Text("Search games\u2026", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text(I18n.s(R.string.ui_search_games_u2026), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 singleLine = true,
                 modifier = fieldModifier,
                 keyboardActions = xmbDoneActions(stopEditing),
@@ -846,7 +848,7 @@ internal fun EosBadge() {
             .background(Color(0xFF1A73E8))
             .padding(horizontal = 5.dp, vertical = 1.dp),
     ) {
-        Text("EOS", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(I18n.s(R.string.ui_eos), fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color.White)
     }
 }
 
@@ -863,7 +865,7 @@ internal fun EpicBadge() {
             .background(Color(0xFF2A2A2A))
             .padding(horizontal = 5.dp, vertical = 1.dp),
     ) {
-        Text("EPIC", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(I18n.s(R.string.ui_epic), fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color.White)
     }
 }
 
@@ -975,7 +977,7 @@ private fun GameListCard(
                 }
                 if (downloadState.installed) {
                     Text(
-                        text = "\u2713 Installed",
+                        text = I18n.s(R.string.ui_u2713_installed),
                         fontSize = 10.sp,
                         color = Color(0xFF4CAF50), // semantic installed-green
                         modifier = Modifier.padding(top = 4.dp),

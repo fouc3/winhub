@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @Composable
 fun ActiveWindowsDialog(state: XServerDialogState) {
@@ -52,12 +54,12 @@ fun ActiveWindowsDialog(state: XServerDialogState) {
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Active Windows", style = MaterialTheme.typography.titleMedium)
+                Text(I18n.s(R.string.active_windows), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(12.dp))
 
                 if (windows.isEmpty()) {
                     Text(
-                        text = "No windows open",
+                        text = I18n.s(R.string.ui_no_windows_open),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 16.dp)
@@ -82,7 +84,7 @@ fun ActiveWindowsDialog(state: XServerDialogState) {
 
                 Spacer(Modifier.height(8.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = { state.dismiss() }) { Text("Close") }
+                    TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.wrapper_manager_close)) }
                 }
             }
         }

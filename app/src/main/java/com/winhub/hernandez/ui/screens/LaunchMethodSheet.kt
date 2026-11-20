@@ -88,6 +88,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ── Where a shortcut comes from (drives which launch methods the popup offers) ────────────────────
 private enum class GameSource { STEAM, EPIC, GOG, AMAZON, XBOX, CUSTOM }
@@ -689,7 +691,7 @@ private fun ColumnScope.OptionsBlock(
 ) {
     if (hasDetails) {
         OptionRow(
-            title = "Full details & achievements",
+            title = I18n.s(R.string.ui_full_details_achievements),
             badge = null,
             subtitle = if (compact) null else "Details, achievements, DLC and cloud saves.",
             accent = accent,
@@ -697,13 +699,13 @@ private fun ColumnScope.OptionsBlock(
             onHelp = { toggleHelp(HELP_DETAILS) },
             onRowClick = openDetails,
             trailing = {
-                Icon(Icons.Filled.ChevronRight, contentDescription = "Open details", tint = accent, modifier = Modifier.size(20.dp))
+                Icon(Icons.Filled.ChevronRight, contentDescription = I18n.s(R.string.ui_open_details), tint = accent, modifier = Modifier.size(20.dp))
             },
         )
     }
     if (isSteam) {
         OptionRow(
-            title = "Controller passthrough",
+            title = I18n.s(R.string.ui_controller_passthrough),
             badge = "NEW",
             subtitle = if (compact) null else "Send the pad straight to the game. For classic games (HL2, CS:S).",
             accent = accent,
@@ -712,7 +714,7 @@ private fun ColumnScope.OptionsBlock(
             trailing = { PillSwitch(passthrough, accent, onPassthrough) },
         )
         OptionRow(
-            title = "Requires secure (VAC) launch",
+            title = I18n.s(R.string.ui_requires_secure_vac_launch),
             badge = "NEW",
             subtitle = if (compact) null else when (detectedVac) {
                 true -> "Detected: VAC-secured. Steam must start it (up to ~60 s wait)."
@@ -726,7 +728,7 @@ private fun ColumnScope.OptionsBlock(
         )
     }
     OptionRow(
-        title = "Remember my choice",
+        title = I18n.s(R.string.ui_remember_my_choice),
         badge = null,
         subtitle = if (compact) null else "Skip this popup next time for ${shortcut.name}.",
         accent = accent,
@@ -829,7 +831,7 @@ private fun FooterRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TextButton(onClick = onDismiss) {
-            Text("Cancel", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
+            Text(I18n.s(R.string.cancel), style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
         }
         Spacer(Modifier.weight(1f))
         Button(
@@ -874,7 +876,7 @@ private fun SteamLiteClientBlock(
                 modifier = Modifier.weight(1f),
             )
             ui.note != null -> Text(ui.note, style = lineStyle, color = cs.error, modifier = Modifier.weight(1f))
-            check == null -> Text("Checking for SteamLite updates…", style = lineStyle, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
+            check == null -> Text(I18n.s(R.string.ui_checking_for_steamlite_updates), style = lineStyle, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
             !check.checked -> Text(
                 "Couldn't check for SteamLite updates — using installed $installed",
                 style = lineStyle, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f),
@@ -1065,7 +1067,7 @@ private fun CloseButton(onDismiss: () -> Unit, size: androidx.compose.ui.unit.Dp
         Modifier.size(size).clip(RoundedCornerShape(8.dp)).border(1.dp, cs.outline, RoundedCornerShape(8.dp)).clickable(onClick = onDismiss),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(Icons.Filled.Close, contentDescription = "Close", tint = cs.onSurfaceVariant, modifier = Modifier.size(size * 0.55f))
+        Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = cs.onSurfaceVariant, modifier = Modifier.size(size * 0.55f))
     }
 }
 

@@ -70,6 +70,8 @@ import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.ui.screens.DeckPalette
 import com.winhub.hernandez.ui.screens.DeckSound
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Building blocks of the in-game menu's console look: a glass panel, controller focus, tiles, a tab
 // rail, the Quick page and the button-hint bar. The tabs' own controls live in XServerDrawer.kt.
@@ -79,7 +81,7 @@ import kotlinx.coroutines.delay
 internal fun Modifier.consoleFocus(shape: Shape, lift: Float = 1f, onFocus: (Boolean) -> Unit = {}): Modifier {
     var focused by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
-    val scale by animateFloatAsState(if (focused) lift else 1f, tween(150), label = "consoleFocus")
+    val scale by animateFloatAsState(if (focused) lift else 1f, tween(150), label = I18n.s(R.string.ui_consolefocus))
     return this
         .onFocusChanged {
             // A soft tick as the cursor lands on something new, like the Deck's menus.
@@ -283,7 +285,7 @@ internal fun DrawerQuickPage(onOpen: (TabType) -> Unit) {
                 row.forEach { c -> QuickCardView(c, Modifier.weight(1f)) { onOpen(c.tab) } }
             }
         }
-        Text("Pick a card to open its settings.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_pick_a_card_to_open_its_settings), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
     }
 }
 

@@ -26,6 +26,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-Deck Xbox install. Drives the real [XboxDownloads] engine (resolve the PC package, then the
@@ -62,14 +64,14 @@ internal fun DeckXboxInstall(game: XboxGame, onBack: () -> Unit, onOpenStore: ((
     }
 
     choices?.let { list ->
-        DeckConfigDialog(title = "Choose the PC package", subtitle = game.title, onDismiss = { choices = null }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_choose_the_pc_package), subtitle = game.title, onDismiss = { choices = null }) {
             list.forEach { c ->
                 DeckButton(c.label, primary = false, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
                     choices = null
                     XboxDownloads.start(appCtx, game, c.contentId)
                 }
             }
-            DeckButton("Cancel", primary = false, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { choices = null }
+            DeckButton(I18n.s(R.string.cancel), primary = false, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { choices = null }
         }
     }
 

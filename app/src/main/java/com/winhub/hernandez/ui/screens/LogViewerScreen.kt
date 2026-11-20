@@ -66,6 +66,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.RandomAccessFile
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Reads one log file inside the Log Manager: pick a file from the chips, follow it live while a
@@ -168,7 +170,7 @@ private fun LogViewerBody(entry: LogInventory.Entry, onClose: () -> Unit) {
             }
 
             if (files.isEmpty()) {
-                Text("This folder has no log files right now.",
+                Text(I18n.s(R.string.ui_this_folder_has_no_log_files_right_now),
                     color = t.sub, fontSize = 12.sp,
                     modifier = Modifier.padding(top = 12.dp))
                 return@Column
@@ -256,7 +258,7 @@ private fun LogViewerBody(entry: LogInventory.Entry, onClose: () -> Unit) {
                             // rather than emitted as a sibling.
                             Box {
                                 if (query.isEmpty()) {
-                                    Text("Find in this log…",
+                                    Text(I18n.s(R.string.ui_find_in_this_log),
                                         color = t.sub, fontSize = 13.sp)
                                 }
                                 inner()
@@ -400,7 +402,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
     }
 
     if (LocalViewerDeck.current) {
-        DeckConfigDialog(title = "Report a problem", onDismiss = { if (!busy) onDismiss() }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_report_a_problem), onDismiss = { if (!busy) onDismiss() }) {
             DeckGroup("What happened") {
                 DeckTextRow("What went wrong?", value = title, onValueChange = { title = it })
                 DeckTextRow("Details", "Any detail that helps (optional)", value = description, onValueChange = { description = it })
@@ -422,7 +424,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton("Cancel", primary = false) { if (!busy) onDismiss() }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { if (!busy) onDismiss() }
                 DeckButton(if (busy) "Working…" else "Continue on GitHub", primary = true) { if (!busy) submit() }
             }
         }
@@ -431,13 +433,13 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
 
     OutlinedAlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text("Report a problem") },
+        title = { Text(I18n.s(R.string.ui_report_a_problem)) },
         text = {
             Column(modifier = Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState())) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("What went wrong?") },
+                    label = { Text(I18n.s(R.string.ui_what_went_wrong)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -445,12 +447,12 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Any detail that helps (optional)") },
+                    label = { Text(I18n.s(R.string.ui_any_detail_that_helps_optional)) },
                     minLines = 3,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(10.dp))
-                Text("Will be attached", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
+                Text(I18n.s(R.string.ui_will_be_attached), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
                 willAttach.forEach {
                     Text("• $it", color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
                 }
@@ -459,7 +461,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                     modifier = Modifier.fillMaxWidth().clickable { includeApp = !includeApp }
                 ) {
                     Checkbox(checked = includeApp, onCheckedChange = { includeApp = it })
-                    Text("Also app logcat and crash reports",
+                    Text(I18n.s(R.string.ui_also_app_logcat_and_crash_reports),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
                 }
                 Text(
@@ -478,7 +480,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 Text(if (busy) "Working…" else "Continue on GitHub")
             }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } }
     )
 }
 

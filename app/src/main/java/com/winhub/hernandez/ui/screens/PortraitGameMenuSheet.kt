@@ -47,6 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.runtime.withFrameNanos
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** One line saying what each game-menu row does (bannercode shows these under every row). */
 private fun menuHint(label: String): String? = when (label) {
@@ -118,7 +120,7 @@ internal fun PortraitGameMenuSheet(
                     .padding(horizontal = 20.dp, vertical = 18.dp),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Game menu", color = Deck.onBackground, fontWeight = FontWeight.Bold, fontSize = 22.sp, modifier = Modifier.weight(1f))
+                    Text(I18n.s(R.string.ui_game_menu), color = Deck.onBackground, fontWeight = FontWeight.Bold, fontSize = 22.sp, modifier = Modifier.weight(1f))
                     val closeSource = remember { MutableInteractionSource() }
                     val closeFocused by closeSource.collectIsFocusedAsState()
                     val closeShape = RoundedCornerShape(14.dp)
@@ -130,7 +132,7 @@ internal fun PortraitGameMenuSheet(
                             .border(if (closeFocused) 2.dp else 0.dp, if (closeFocused) Deck.primary else Color.Transparent, closeShape)
                             .clickable(interactionSource = closeSource, indication = null, onClick = onDismiss),
                     ) {
-                        Icon(Icons.Filled.Close, contentDescription = "Close", tint = Deck.onBackground)
+                        Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = Deck.onBackground)
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 14.dp)) {

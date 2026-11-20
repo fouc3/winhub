@@ -17,6 +17,8 @@ import java.net.URL
 import java.util.ArrayDeque
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Posts Steam friend-chat messages to the system shade, as a chat-style heads-up notification per
@@ -193,7 +195,7 @@ object SteamChatNotifier {
                     "Steam Messages",
                     NotificationManager.IMPORTANCE_HIGH,
                 ).apply {
-                    description = "Chat messages from your Steam friends (sound + heads-up)"
+                    description = I18n.s(R.string.ui_chat_messages_from_your_steam_friends_sound_heads_up)
                     setShowBadge(true)
                 }
                 nm.createNotificationChannel(alert)
@@ -204,7 +206,7 @@ object SteamChatNotifier {
                     "Steam Messages (silent)",
                     NotificationManager.IMPORTANCE_LOW,
                 ).apply {
-                    description = "Chat messages from your Steam friends (no sound)"
+                    description = I18n.s(R.string.ui_chat_messages_from_your_steam_friends_no_sound)
                     setShowBadge(true)
                     setSound(null, null)
                     enableVibration(false)

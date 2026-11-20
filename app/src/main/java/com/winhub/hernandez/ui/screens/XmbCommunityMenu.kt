@@ -69,6 +69,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Community configs as XMB columns — the per-game sheet (communityConfigsFor) without pop-ups:
@@ -181,7 +183,7 @@ private object XmbCommunityData {
         val fetched = CommunityConfigFetcher.fetchForFile(ref.workerGame, ref.filename, ref.ns)
             ?: return CommunityConfigApply.ConfigApplyResult(
                 ok = false,
-                message = "Couldn't fetch that config (offline, or it's no longer in the repo).",
+                message = I18n.s(R.string.ui_couldn_t_fetch_that_config_offline_or_it_no_longer_in),
             )
         return applyConfig(context, shortcut, fetched.json)
     }
@@ -201,7 +203,7 @@ private object XmbCommunityData {
     fun importFile(context: Context, file: File, target: Shortcut): CommunityConfigApply.ConfigApplyResult = try {
         val text = runCatching { file.readText() }.getOrNull()
         if (text == null) {
-            CommunityConfigApply.ConfigApplyResult(ok = false, message = "Couldn't read that file.")
+            CommunityConfigApply.ConfigApplyResult(ok = false, message = I18n.s(R.string.ui_couldn_t_read_that_file))
         } else {
             applyConfig(context, target, JSONObject(text))
         }
@@ -459,19 +461,19 @@ internal fun xmbCommunityConfigsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu
     fun rowsNow(): List<XmbRow> {
         val rows = ArrayList<XmbRow>()
         // Local export / import + online sharing for THIS game — the sheet's buttons, same order.
-        rows += XmbRow.Action(key = "share", label = "Share config", icon = Icons.Filled.Share, disabledReason = if (exporting) "Preparing…" else null) { exportConfig() }
-        rows += XmbRow.Link(key = "import", label = "Import", icon = Icons.Filled.FileUpload) { importBrowser() }
+        rows += XmbRow.Action(key = "share", label = I18n.s(R.string.ui_share_config), icon = Icons.Filled.Share, disabledReason = if (exporting) "Preparing…" else null) { exportConfig() }
+        rows += XmbRow.Link(key = "import", label = I18n.s(R.string.preset_action_import), icon = Icons.Filled.FileUpload) { importBrowser() }
         val upLabel = when {
             !uploading -> "Upload to community"
             uploadStarted -> "Uploading…"
             else -> "Preparing…"
         }
         rows += XmbRow.Action(key = "upload", label = upLabel, icon = Icons.Filled.CloudUpload, disabledReason = if (uploading) upLabel else null) { startUpload() }
-        rows += XmbRow.Link(key = "myuploads", label = "My uploads", icon = Icons.Filled.AccountCircle) { xmbMyUploadsMenu(xmb) }
-        rows += XmbRow.Text(key = "search", label = "Search all games", icon = Icons.Filled.Search, value = search, placeholder = "Game name") { runSearch(it) }
+        rows += XmbRow.Link(key = "myuploads", label = I18n.s(R.string.ui_my_uploads), icon = Icons.Filled.AccountCircle) { xmbMyUploadsMenu(xmb) }
+        rows += XmbRow.Text(key = "search", label = I18n.s(R.string.ui_search_all_games), icon = Icons.Filled.Search, value = search, placeholder = I18n.s(R.string.ui_game_name)) { runSearch(it) }
 
         if (search.trim().length >= 2) {
-            rows += XmbRow.Action(key = "clearsearch", label = "Clear search", icon = Icons.Filled.Close) {
+            rows += XmbRow.Action(key = "clearsearch", label = I18n.s(R.string.social_hub_search_clear), icon = Icons.Filled.Close) {
                 runSearch("")
                 menu.selKey = "search"
             }
@@ -518,7 +520,7 @@ internal fun xmbCommunityConfigsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu
         val uGpu = r.userGpu
         val hwKnown = uSoc != null || uGpu != null
         rows += XmbRow.Toggle(
-            key = "mine", label = "Matches my device", icon = Icons.Filled.Memory, value = matchesMine,
+            key = "mine", label = I18n.s(R.string.social_hub_configs_matches_device), icon = Icons.Filled.Memory, value = matchesMine,
             disabledReason = if (hwKnown) null else "Couldn't detect your device's chip",
         ) { matchesMine = it }
         rows += XmbRow.Header("configs", "Configs")
@@ -571,7 +573,7 @@ internal fun xmbCommunityConfigsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu
     }
 
     menu = XmbMenu(
-        title = "Community configs",
+        title = I18n.s(R.string.ui_community_configs_2),
         icon = Icons.Filled.Public,
         initialKey = K_MATCHING,
         onClose = { jobs.forEach { it.cancel() } },
@@ -669,7 +671,7 @@ private fun xmbCommunityDetailMenu(xmb: XmbScope, s: Shortcut, pick: CommunityPi
     }
 
     return XmbMenu(
-        title = "Config details",
+        title = I18n.s(R.string.ui_config_details),
         icon = Icons.Filled.Tune,
         initialKey = "apply",
         onClose = { me.isOpen = false; job.cancel() },
@@ -804,7 +806,7 @@ private fun xmbCommunityApplyMenu(
     }
 
     return XmbMenu(
-        title = "Apply config",
+        title = I18n.s(R.string.ui_apply_config),
         icon = Icons.Filled.Download,
         initialKey = "busy",
         onClose = { me.isOpen = false; reloadIfNeeded() },
@@ -819,7 +821,7 @@ private fun xmbCommunityApplyMenu(
             buildList<XmbRow> {
                 add(XmbRow.Header("title", if (r.ok) "Config applied" else "Couldn't apply"))
                 add(
-                    XmbRow.Action(key = "done", label = "Done", icon = Icons.Filled.Check) {
+                    XmbRow.Action(key = "done", label = I18n.s(R.string.wrapper_catalog_close), icon = Icons.Filled.Check) {
                         val reload = reloadPending
                         reloadPending = false
                         me.close(xmb)
@@ -908,10 +910,10 @@ private fun xmbCommunityExportMenu(xmb: XmbScope, res: ShortcutExporter.ExportRe
         }
     }
 
-    return XmbMenu(title = "Share config", icon = Icons.Filled.Share, initialKey = "save", onClose = { me.isOpen = false }) {
+    return XmbMenu(title = I18n.s(R.string.ui_share_config), icon = Icons.Filled.Share, initialKey = "save", onClose = { me.isOpen = false }) {
         listOf<XmbRow>(
-            XmbRow.Action(key = "save", label = "Save to Downloads", icon = Icons.Filled.Download) { saveToDownloads() },
-            XmbRow.External(key = "share", label = "Share", icon = Icons.Filled.Share) { share() },
+            XmbRow.Action(key = "save", label = I18n.s(R.string.ui_save_to_downloads), icon = Icons.Filled.Download) { saveToDownloads() },
+            XmbRow.External(key = "share", label = I18n.s(R.string.share), icon = Icons.Filled.Share) { share() },
             XmbRow.Info("ready", "A config file for \"${res.game}\" is ready.", Icons.Filled.Description),
             XmbRow.Info("file", res.fileName, Icons.Filled.InsertDriveFile),
         )
@@ -925,15 +927,15 @@ private fun xmbCommunityExportMenu(xmb: XmbScope, res: ShortcutExporter.ExportRe
 private fun xmbReplaceUploadMenu(xmb: XmbScope, gameName: String, gate: CompletableDeferred<Boolean>): XmbMenu {
     val me = XmbOpen()
     return XmbMenu(
-        title = "Upload",
+        title = I18n.s(R.string.social_hub_configs_upload),
         icon = Icons.Filled.CloudUpload,
         initialKey = "cancel",
         onClose = { me.isOpen = false; gate.complete(false) },
     ) {
         listOf<XmbRow>(
             XmbRow.Header("title", "Replace your shared config?"),
-            XmbRow.Action(key = "cancel", label = "Cancel", icon = Icons.Filled.Close) { me.close(xmb) },
-            XmbRow.Action(key = "replace", label = "Replace", icon = Icons.Filled.CloudUpload) {
+            XmbRow.Action(key = "cancel", label = I18n.s(R.string.cancel), icon = Icons.Filled.Close) { me.close(xmb) },
+            XmbRow.Action(key = "replace", label = I18n.s(R.string.ui_replace), icon = Icons.Filled.CloudUpload) {
                 gate.complete(true)
                 me.close(xmb)
             },
@@ -948,7 +950,7 @@ private fun xmbMyUploadsMenu(xmb: XmbScope): XmbMenu {
     val job = xmb.scope.launch {
         uploads = withContext(Dispatchers.IO) { runCatching { XmbCommunityData.myUploads(ctx.applicationContext) }.getOrDefault(emptyList()) }
     }
-    return XmbMenu(title = "My uploads", icon = Icons.Filled.AccountCircle, initialKey = "loading", onClose = { job.cancel() }) {
+    return XmbMenu(title = I18n.s(R.string.ui_my_uploads), icon = Icons.Filled.AccountCircle, initialKey = "loading", onClose = { job.cancel() }) {
         val list = uploads
         when {
             list == null -> listOf(XmbRow.Info("loading", "Loading…", Icons.Filled.HourglassEmpty))
@@ -1003,7 +1005,7 @@ private fun xmbMyUploadMenu(xmb: XmbScope, row: MyUploadRow, onDeleted: (String)
     fun delete() {
         xmb.confirm(
             XmbConfirm(
-                title = "Delete shared config?",
+                title = I18n.s(R.string.ui_delete_shared_config),
                 message = "Delete your shared config for \"${row.record.game}\"?",
                 okLabel = "Delete",
                 danger = true,
@@ -1037,11 +1039,11 @@ private fun xmbMyUploadMenu(xmb: XmbScope, row: MyUploadRow, onDeleted: (String)
             XmbRow.Info("status", if (row.stillOnline) "● Online" else "● Removed", if (row.stillOnline) Icons.Filled.CheckCircle else Icons.Filled.CloudOff),
             XmbRow.Info("stats", "★ ${row.votes}   ↓ ${row.downloads}", Icons.Filled.ThumbUp),
             XmbRow.Text(
-                key = "desc", label = "Description", icon = Icons.Filled.Edit, value = desc,
+                key = "desc", label = I18n.s(R.string.description), icon = Icons.Filled.Edit, value = desc,
                 subtitle = "${desc.length}/500",
                 disabledReason = busy ?: if (descLoading) "Loading description…" else null,
             ) { saveDescription(it) },
-            XmbRow.Action(key = "delete", label = "Delete", icon = Icons.Filled.Delete, danger = true, disabledReason = busy) { delete() },
+            XmbRow.Action(key = "delete", label = I18n.s(R.string.preset_action_delete), icon = Icons.Filled.Delete, danger = true, disabledReason = busy) { delete() },
         )
     }
 }

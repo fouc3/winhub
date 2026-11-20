@@ -119,6 +119,7 @@ import com.winhub.hernandez.R
 import com.winhub.hernandez.ui.Screen
 import com.winhub.hernandez.ui.deck.StoreStyle
 import com.winhub.hernandez.ui.theme.AppThemeState
+import com.winhub.hernandez.util.I18n
 
 /**
  * Deck Mode's Stores section — a redesign of the store experience in DroidDeck's language, backed
@@ -358,7 +359,7 @@ private fun DeckLibraryPane(screen: Screen, context: Context, onGameClick: (Deck
     Column(modifier = Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "LIBRARY",
+                text = I18n.s(R.string.ui_library),
                 color = Deck.primary,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -381,8 +382,8 @@ private fun DeckLibraryPane(screen: Screen, context: Context, onGameClick: (Deck
                 contentAlignment = Alignment.Center,
             ) {
                 DeckEmptyState(
-                    title = "No games yet",
-                    body = "Sign in to this store and sync to fill its library.",
+                    title = I18n.s(R.string.ui_no_games_yet),
+                    body = I18n.s(R.string.ui_sign_in_to_this_store_and_sync_to_fill_its_library),
                 )
             }
             else -> DeckDragFrame(modifier = Modifier.fillMaxSize()) {
@@ -484,7 +485,7 @@ private fun DeckFeaturedOnSteam(context: Context, onCard: (DeckBrowseItem) -> Un
     if (items.isEmpty()) return
     Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 4.dp)) {
         Text(
-            text = "Featured on Steam",
+            text = I18n.s(R.string.ui_featured_on_steam),
             color = Deck.onBackground,
             fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold,
@@ -651,7 +652,7 @@ private fun DeckStoreFront(
     )
     if (store.hero == null && store.sections.isEmpty()) {
         DeckEmptyState(
-            title = "Nothing featured yet",
+            title = I18n.s(R.string.ui_nothing_featured_yet),
             body = "Open ${tile.screen.label} once to refresh its storefront.",
         )
         return
@@ -724,7 +725,7 @@ private fun DeckHeroCarousel(items: List<DeckBrowseItem>, onCard: (DeckBrowseIte
             targetState = index.coerceIn(0, items.lastIndex),
             animationSpec = tween(450),
             modifier = Modifier.matchParentSize(),
-            label = "heroFade",
+            label = I18n.s(R.string.ui_herofade),
         ) { i ->
             val item = items[i]
             Box(Modifier.fillMaxSize()) {
@@ -780,7 +781,7 @@ private fun DeckHeroCarousel(items: List<DeckBrowseItem>, onCard: (DeckBrowseIte
                     .background(Deck.primary)
                     .padding(horizontal = 16.dp, vertical = 7.dp),
             ) {
-                Text("View", color = Deck.onPrimary, fontSize = 13.sp, fontWeight = FontWeight.Black)
+                Text(I18n.s(R.string.xmb_all_view), color = Deck.onPrimary, fontSize = 13.sp, fontWeight = FontWeight.Black)
             }
             if (items.size > 1) {
                 Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
@@ -1099,7 +1100,7 @@ internal fun DeckStoresScreen(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Stores",
+                    text = I18n.s(R.string.xmb_tab_stores),
                     color = Deck.onBackground,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Black,
@@ -1124,7 +1125,7 @@ internal fun DeckStoresScreen(
             ) {
                 Icon(
                     Icons.Filled.Download,
-                    contentDescription = "Downloads",
+                    contentDescription = I18n.s(R.string.xmb_tab_downloads),
                     tint = if (activeDownloads > 0) Deck.primary else Deck.onSurfaceVariant,
                     modifier = Modifier.size(17.dp),
                 )
@@ -1145,8 +1146,8 @@ internal fun DeckStoresScreen(
                 DeckPaneScroll {
                     DeckGroup("Stores are turned off") {
                         DeckRow(
-                            label = "Enable Stores",
-                            hint = "Settings › Side Menu › Stores",
+                            label = I18n.s(R.string.ui_enable_stores),
+                            hint = I18n.s(R.string.ui_settings_side_menu_stores),
                             control = { DeckToggle(false) { } },
                         )
                     }
@@ -1325,7 +1326,7 @@ private fun DeckSignInCard(tile: DeckStoreTile, context: Context) {
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(Modifier.height(6.dp))
-            DeckButton("Sign in", primary = true) { launchDeckLogin(context, tile.screen) }
+            DeckButton(I18n.s(R.string.xmb_store_card_signed_out), primary = true) { launchDeckLogin(context, tile.screen) }
         }
     }
 }
@@ -1384,13 +1385,13 @@ private fun DeckStoreSettingsPane(
     ) {
         DeckGroup("Store settings") {
             DeckRow(
-                label = "Show mature content",
+                label = I18n.s(R.string.ui_show_mature_content),
                 hint = "Storefront 17+/18+ titles; owned games always show",
                 control = { DeckToggle(showMature, onShowMatureChange) },
             )
             DeckChoiceRow(
-                label = "Download speed",
-                hint = "Ceiling the next store download may ramp to",
+                label = I18n.s(R.string.ui_download_speed),
+                hint = I18n.s(R.string.ui_ceiling_the_next_store_download_may_ramp_to),
                 options = StoreDownloadTier.ALL.map { t -> t.toString() to StoreDownloadTier.label(t) },
                 selected = dlTier.toString(),
                 onPick = { v ->
@@ -1403,9 +1404,9 @@ private fun DeckStoreSettingsPane(
         }
         DeckGroup("Queue") {
             DeckRow(
-                label = "Downloads",
+                label = I18n.s(R.string.xmb_tab_downloads),
                 hint = if (activeDownloads > 0) "$activeDownloads active" else "Nothing downloading",
-                control = { DeckButton("Open", primary = false) { onOpenDownloads() } },
+                control = { DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { onOpenDownloads() } },
             )
         }
     }

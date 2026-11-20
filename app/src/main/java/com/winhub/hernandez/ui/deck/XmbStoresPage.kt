@@ -48,6 +48,7 @@ import com.winhub.hernandez.ui.screens.xmbStoreRows
 import com.winhub.hernandez.ui.screens.xmbStoresGrid
 import com.winhub.hernandez.ui.screens.xmbStoresMove
 import com.winhub.hernandez.ui.simple.storeLogo
+import com.winhub.hernandez.util.I18n
 
 /** The card under the cursor is drawn this many times its size (the Steam Home's cards lift the same way, a touch less than its covers). */
 private const val XMB_STORES_FOCUS_SCALE = 1.04f
@@ -135,7 +136,7 @@ private fun XmbStoreCard(
     val (logoRes, colors, whiteLogo) = storeLogo(store)
     val shape = RoundedCornerShape(4.dp)
     val src = remember { MutableInteractionSource() }
-    val scale by animateFloatAsState(if (focused) XMB_STORES_FOCUS_SCALE else 1f, tween(140), label = "xmbStoreCard")
+    val scale by animateFloatAsState(if (focused) XMB_STORES_FOCUS_SCALE else 1f, tween(140), label = I18n.s(R.string.ui_xmbstorecard))
     Box(
         modifier
             .zIndex(if (focused) 1f else 0f)

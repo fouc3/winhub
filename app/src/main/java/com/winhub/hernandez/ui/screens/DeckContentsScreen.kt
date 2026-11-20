@@ -128,6 +128,8 @@ import com.winhub.hernandez.ui.screens.contents.ContentsTypes
 import com.winhub.hernandez.ui.screens.contents.HubSource
 import com.winhub.hernandez.ui.screens.contents.RemoteSourceRepository
 import com.winhub.hernandez.util.InAppFilePicker
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private val ContentsGreen = Color(0xFF37C26B)
 private val ContentsBlue = Color(0xFF3D9BFF)
@@ -208,7 +210,7 @@ internal fun DeckContentsScreen(vm: ContentsHubViewModel = viewModel()) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = "Contents",
+                        text = I18n.s(R.string.contents),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = DeckPalette.onBackground,
@@ -275,8 +277,8 @@ internal fun DeckContentsScreen(vm: ContentsHubViewModel = viewModel()) {
                     Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
                         if (layout == "pages" && pagesCategoryOpen) {
                             DeckRow(
-                                label = "← All categories",
-                                hint = "Back to the category list",
+                                label = I18n.s(R.string.ui_all_categories),
+                                hint = I18n.s(R.string.ui_back_to_the_category_list),
                                 onConfigClick = { pagesCategoryOpen = false },
                                 control = {},
                             )
@@ -308,7 +310,7 @@ internal fun DeckContentsScreen(vm: ContentsHubViewModel = viewModel()) {
                                     )
                             },
                             modifier = Modifier.weight(1f).fillMaxWidth().focusRequester(tabContentFocus).focusGroup(),
-                            label = "contentsTab",
+                            label = I18n.s(R.string.ui_contentstab),
                         ) { which ->
                             when (which) {
                                 0 -> DeckContentsBrowseTab(vm, browseRepo) { browseRepo = it }
@@ -467,7 +469,7 @@ private fun DeckEmpty(text: String) {
 @Composable
 private fun DeckLoading() {
     Box(Modifier.fillMaxWidth().padding(vertical = 34.dp), contentAlignment = Alignment.Center) {
-        Text("Loading...", fontSize = 13.sp, color = DeckPalette.onSurfaceVariant)
+        Text(I18n.s(R.string.ui_loading), fontSize = 13.sp, color = DeckPalette.onSurfaceVariant)
     }
 }
 
@@ -709,7 +711,7 @@ internal fun DeckSearchField(
                         ) {
                             Icon(
                                 Icons.Filled.Close,
-                                contentDescription = "Clear search",
+                                contentDescription = I18n.s(R.string.social_hub_search_clear),
                                 tint = DeckPalette.onSurfaceVariant,
                                 modifier = Modifier.size(16.dp),
                             )
@@ -1045,13 +1047,13 @@ private fun DeckContentsFilesTab(vm: ContentsHubViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "My Files",
+                    text = I18n.s(R.string.ui_my_files),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,
                 )
                 Text(
-                    text = "Kept archives, filed by type. Install offline, share, or delete.",
+                    text = I18n.s(R.string.ui_kept_archives_filed_by_type_install_offline_share_or),
                     fontSize = 12.sp,
                     color = DeckPalette.onSurfaceVariant,
                 )
@@ -1105,7 +1107,7 @@ private fun DeckContentsFilesTab(vm: ContentsHubViewModel) {
 
     pendingDelete?.let { file ->
         DeckConfirm(
-            title = "Delete archive?",
+            title = I18n.s(R.string.ui_delete_archive),
             message = "Remove \"${file.name}\" from My Files? Installed components stay installed.",
             confirmLabel = "Delete",
             onDismiss = { pendingDelete = null },
@@ -1289,7 +1291,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "Installed",
+                    text = I18n.s(R.string.wrapper_installed),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,
@@ -1352,7 +1354,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
 
     confirmDriver?.let { id ->
         DeckConfirm(
-            title = "Remove driver?",
+            title = I18n.s(R.string.ui_remove_driver),
             message = "Remove \"${manager.getDriverName(id)}\"? Games using it fall back to the next driver.",
             confirmLabel = "Remove",
             onDismiss = { confirmDriver = null },
@@ -1366,7 +1368,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
     }
     confirmProfile?.let { profile ->
         DeckConfirm(
-            title = "Remove component?",
+            title = I18n.s(R.string.ui_remove_component),
             message = "Remove \"${profile.verName}\"? Containers using it will need another version.",
             confirmLabel = "Remove",
             onDismiss = { confirmProfile = null },
@@ -1552,7 +1554,7 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
     var isDriver by remember { mutableStateOf(false) }
     var format by remember { mutableStateOf(RemoteSourceRepository.SourceFormat.WCP_JSON) }
 
-    DeckConfigDialog(title = "Add repository", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_add_repository), onDismiss = onDismiss) {
         DeckConfigNote("Paste any component or GPU-driver source. It joins the list like a built-in.")
         DeckConfigTextField("Display name", name, { name = it })
         DeckConfigTextField(
@@ -1593,7 +1595,7 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
             DeckAction("Cancel", primary = false) { onDismiss() }
             Spacer(Modifier.width(8.dp))
             DeckAction(
-                text = "Add source",
+                text = I18n.s(R.string.ui_add_source),
                 primary = true,
                 enabled = name.isNotBlank() && url.isNotBlank(),
             ) {
@@ -1749,7 +1751,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
         }
     }
 
-    DeckConfigDialog(title = "Contents settings", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_contents_settings), onDismiss = onDismiss) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp),
@@ -1794,7 +1796,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
             dirPicker.launch(
                 InAppFilePicker.buildDirIntent(
                     context,
-                    title = "Select save folder",
+                    title = I18n.s(R.string.ui_select_save_folder),
                     initialDir = vm.library.currentFileBasePath(),
                 ),
             )

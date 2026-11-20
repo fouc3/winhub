@@ -45,6 +45,8 @@ import com.winhub.hernandez.core.AppOrientation
 import com.winhub.hernandez.store.download.DownloadRegistry
 import com.winhub.hernandez.store.download.DownloadsButton
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The GOG section's host — flipped from a login card + "View Game Library" button to a
@@ -208,22 +210,22 @@ private fun GogStorefrontHost(
         },
         actions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             IconButton(
                 onClick = { ctx.startActivity(Intent(ctx, GogGamesActivity::class.java)) },
                 modifier = Modifier.steamFocusRing(),
             ) {
-                Icon(Icons.Filled.ViewList, contentDescription = "Full library screen", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.ViewList, contentDescription = I18n.s(R.string.ui_full_library_screen), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton()
             IconButton(onClick = onSignOut, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign out", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = I18n.s(R.string.social_hub_sign_out), tint = MaterialTheme.colorScheme.primary)
             }
         },
         railActions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             StoreRailOverflow(
@@ -281,7 +283,7 @@ fun StoreRailOverflow(
     var expanded by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { expanded = true }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "More actions", tint = MaterialTheme.colorScheme.primary)
+            Icon(Icons.Filled.MoreVert, contentDescription = I18n.s(R.string.wrapper_more_actions), tint = MaterialTheme.colorScheme.primary)
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             items.forEach { (label, icon, action) ->
@@ -293,7 +295,7 @@ fun StoreRailOverflow(
             }
             if (items.isNotEmpty()) HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
             DropdownMenuItem(
-                text = { Text("Sign out", color = MaterialTheme.colorScheme.error) },
+                text = { Text(I18n.s(R.string.social_hub_sign_out), color = MaterialTheme.colorScheme.error) },
                 leadingIcon = {
                     Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = null, tint = MaterialTheme.colorScheme.error)
                 },
@@ -333,7 +335,7 @@ private fun GogLoginScreen(onLoginClick: () -> Unit) {
                 onClick = onLoginClick,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.steamFocusRing(RoundedCornerShape(8.dp)),
-            ) { Text("Login with GOG") }
+            ) { Text(I18n.s(R.string.ui_login_with_gog)) }
         }
     }
 }

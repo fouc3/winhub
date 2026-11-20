@@ -52,6 +52,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /*
  * Game Doctor, shared by every place that can show it: the XMB column (XmbGameDoctor.kt) and the
@@ -190,7 +192,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
         onClose()
     }
 
-    DeckConfigDialog(title = "Game Doctor", subtitle = shortcut.name, onDismiss = close) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_game_doctor), subtitle = shortcut.name, onDismiss = close) {
         val r = session.report
         if (r == null) {
             Row(
@@ -199,14 +201,14 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
             ) {
                 CircularProgressIndicator(Modifier.size(26.dp), color = DeckPalette.primary, strokeWidth = 3.dp)
                 Spacer(Modifier.width(12.dp))
-                Text("Reading the last run, settings and shared configs…", color = DeckPalette.onSurfaceVariant, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_reading_the_last_run_settings_and_shared_configs), color = DeckPalette.onSurfaceVariant, fontSize = 14.sp)
             }
             return@DeckConfigDialog
         }
         session.note?.let { DeckConfigNote(it) }
         if (session.changed) {
             DoctorRow(
-                label = "Undo all changes", detail = "Back to how it was before the doctor",
+                label = I18n.s(R.string.ui_undo_all_changes), detail = "Back to how it was before the doctor",
                 icon = Icons.Filled.History,
                 disabled = if (session.busy) "Working…" else null,
             ) { session.undo { onChanged(); onClose() } }

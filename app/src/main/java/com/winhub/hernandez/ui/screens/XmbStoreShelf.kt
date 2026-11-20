@@ -83,6 +83,8 @@ import kotlinx.coroutines.withContext
 import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The Steam-style Home's store shelves (L2 / R2 past Favourites): the covers row of the Home, with one store's whole owned library
 // on it, installed games first. A opens that game's page in its store (and only that page: B comes back to this row), Down opens
@@ -230,7 +232,7 @@ internal fun XmbStoreShelfHome(
 @Composable
 private fun StoreShelfBackdrop(art: String?, fadeFrom: Float) {
     Box(Modifier.fillMaxSize()) {
-        Crossfade(targetState = art, animationSpec = tween(600), label = "storeShelfArt") { url ->
+        Crossfade(targetState = art, animationSpec = tween(600), label = I18n.s(R.string.ui_storeshelfart)) { url ->
             if (url != null) {
                 AsyncImage(
                     model = url,
@@ -305,7 +307,7 @@ private fun StoreShelfCard(
                     .background(Color.Black.copy(alpha = 0.62f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(Icons.Filled.Download, contentDescription = "Not installed", tint = Color.White, modifier = Modifier.size(12.dp))
+                Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_not_installed), tint = Color.White, modifier = Modifier.size(12.dp))
             }
         }
     }
@@ -343,7 +345,7 @@ private fun StoreShelfTitle(
         targetState = game,
         contentKey = { it.title },
         transitionSpec = { xmbTitleTransition() },
-        label = "storeShelfTitle",
+        label = I18n.s(R.string.ui_storeshelftitle),
         modifier = Modifier
             .offset(0.dp, sl.titleY.dp - ss.dp(XMB_STEAM_TITLE_NUDGE))
             .width(sl.titleW.dp)

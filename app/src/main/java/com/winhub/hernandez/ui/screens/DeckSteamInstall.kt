@@ -46,6 +46,8 @@ import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** What a Deck Steam card hands to [DeckSteamInstall]: the app plus display strings. */
 internal data class DeckSteamTarget(val appId: Int, val title: String, val art: String?)
@@ -251,15 +253,15 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                     .padding(18.dp),
             ) {
                 Text(
-                    text = "Install options",
+                    text = I18n.s(R.string.ui_install_options),
                     color = Deck.onBackground,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Black,
                 )
                 Spacer(Modifier.size(10.dp))
                 DeckChoiceRow(
-                    label = "Download speed",
-                    hint = "Ceiling the download may ramp to",
+                    label = I18n.s(R.string.ui_download_speed),
+                    hint = I18n.s(R.string.ui_ceiling_the_download_may_ramp_to),
                     options = StoreDownloadTier.ALL.map { t -> t.toString() to StoreDownloadTier.label(t) },
                     selected = speedTier.toString(),
                     onPick = { v -> v.toIntOrNull()?.let { speedTier = it } },
@@ -267,15 +269,15 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                 val sd = sdTarget
                 if (sd != null) {
                     DeckRow(
-                        label = "Install to SD card",
+                        label = I18n.s(R.string.ui_install_to_sd_card),
                         hint = "${sd.label} - ${SteamSdInstall.fmtBytes(sd.freeBytes)} free",
                         control = { DeckToggle(sdEnabled) { sdEnabled = it } },
                     )
                 }
                 Spacer(Modifier.size(14.dp))
-                DeckButton("Install", primary = true) { start() }
+                DeckButton(I18n.s(R.string.ui_install), primary = true) { start() }
                 Spacer(Modifier.size(8.dp))
-                DeckButton("Cancel", primary = false) { pickerOpen = false }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { pickerOpen = false }
             }
         }
     }

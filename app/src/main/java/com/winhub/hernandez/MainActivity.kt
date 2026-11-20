@@ -96,6 +96,7 @@ import com.winhub.hernandez.ui.theme.AppThemeState
 import com.winhub.hernandez.ui.theme.WinlatorTheme
 import kotlinx.coroutines.launch
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 class MainActivity : AppCompatActivity() {
 
@@ -954,7 +955,7 @@ private fun AppShell(
 private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("All Files Access Required") },
+        title = { Text(I18n.s(R.string.ui_all_files_access_required)) },
         text = {
             Text(
                 "In order to grant access to additional storage devices such as USB storage, " +
@@ -962,7 +963,7 @@ private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
             )
         },
         confirmButton = { TextButton(onClick = onConfirm) { Text("OK") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 
@@ -984,10 +985,10 @@ private fun UpdateBanner(versionName: String, onUpdate: () -> Unit, onDismiss: (
             modifier = Modifier.weight(1f),
         )
         TextButton(onClick = onUpdate) {
-            Text("Update", color = ink, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.wrapper_update), color = ink, fontWeight = FontWeight.Bold)
         }
         TextButton(onClick = onDismiss) {
-            Text("Skip", color = ink)
+            Text(I18n.s(R.string.ui_skip), color = ink)
         }
     }
 }
@@ -1024,7 +1025,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                         .padding(horizontal = 8.dp)
                 )
                 Text(
-                    text = "WinHub",
+                    text = I18n.s(R.string.app_name),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
@@ -1045,7 +1046,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                             containerColor = androidx.compose.ui.graphics.Color(0xFF4CAF50)
                         ),
                         modifier = androidx.compose.ui.Modifier.fillMaxWidth()
-                    ) { Text("Update now", color = androidx.compose.ui.graphics.Color.White) }
+                    ) { Text(I18n.s(R.string.ui_update_now), color = androidx.compose.ui.graphics.Color.White) }
                 }
 
                 Spacer(androidx.compose.ui.Modifier.height(4.dp))
@@ -1053,7 +1054,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 Spacer(androidx.compose.ui.Modifier.height(4.dp))
 
                 // Powered by
-                AboutSection(title = "Powered By") {
+                AboutSection(title = I18n.s(R.string.ui_powered_by)) {
                     AboutRow("Wine",    "Windows compatibility layer")
                     AboutRow("Box64",   "x86_64 emulation on ARM")
                     AboutRow("FEX-Emu", "Fast x86 emulator")
@@ -1065,7 +1066,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 Spacer(androidx.compose.ui.Modifier.height(4.dp))
 
                 // Credits
-                AboutSection(title = "Credits") {
+                AboutSection(title = I18n.s(R.string.ui_credits)) {
                     AboutRow("brunodev85",      "Winlator — original project")
                     AboutRow("MishaMixXx",      "Winlator Bionic")
                     AboutRow("The412Banner",    "WinHub")
@@ -1078,7 +1079,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 TextButton(
                     onClick = onDismiss,
                     modifier = androidx.compose.ui.Modifier.fillMaxWidth()
-                ) { Text("Close") }
+                ) { Text(I18n.s(R.string.wrapper_manager_close)) }
             }
         }
     }

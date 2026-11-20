@@ -255,6 +255,7 @@ import com.winhub.hernandez.ui.theme.AppThemeState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 /**
  * The Deck shell palette. Delegates to [DeckPalette] (which is backed by the live theme preset),
@@ -1162,7 +1163,7 @@ private fun DeckHome(
         homeLifecycle.lifecycle.addObserver(observer)
         onDispose { homeLifecycle.lifecycle.removeObserver(observer) }
     }
-    val homeFade by animateFloatAsState(if (xmbNested) 0f else 1f, tween(260), label = "homeFade")
+    val homeFade by animateFloatAsState(if (xmbNested) 0f else 1f, tween(260), label = I18n.s(R.string.ui_homefade))
     val details = current?.game?.let { g ->
         buildList {
             add("Store" to hubOriginLabel(current))
@@ -1368,7 +1369,7 @@ private fun DeckHome(
             if (!portrait && !steamStyle) {
                 // On the All Games card the wall is made of the library's own covers.
                 val libraryWall = allFocused && libraryCovers.isNotEmpty()
-                Crossfade(targetState = libraryWall, animationSpec = tween(500), label = "homeWall") { own ->
+                Crossfade(targetState = libraryWall, animationSpec = tween(500), label = I18n.s(R.string.ui_homewall)) { own ->
                     DeckCapsuleWall(
                         covers = if (own) libraryCovers else wallCovers,
                         driftMs = if (own || covers.isNotEmpty()) 40_000 else 75_000,
@@ -1377,7 +1378,7 @@ private fun DeckHome(
             }
             if (!portrait) {
                 // The backdrop follows the focused game: its cover, blurred, crossfading as the selection moves.
-                Crossfade(targetState = if (allFocused) null else current?.bitmap, animationSpec = tween(600), label = "homeBackdrop") { bmp ->
+                Crossfade(targetState = if (allFocused) null else current?.bitmap, animationSpec = tween(600), label = I18n.s(R.string.ui_homebackdrop)) { bmp ->
                     if (bmp != null) {
                         Image(
                             bitmap = remember(bmp) { bmp.asImageBitmap() },
@@ -1390,7 +1391,7 @@ private fun DeckHome(
                 val coverTint = remember(current?.bitmap) {
                     current?.bitmap?.let { b -> Color(Bitmap.createScaledBitmap(b, 1, 1, true).getPixel(0, 0)) }
                 }
-                val tint by animateColorAsState(coverTint ?: Deck.primary, tween(600), label = "homeTint")
+                val tint by animateColorAsState(coverTint ?: Deck.primary, tween(600), label = I18n.s(R.string.ui_hometint))
                 Box(
                     Modifier.fillMaxSize().drawBehind {
                         val c = Offset(size.width * 0.2f, size.height * 0.3f)
@@ -1939,7 +1940,7 @@ private fun DeckWordmark() {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
-            text = "Win",
+            text = I18n.s(R.string.ui_win),
             color = Deck.onBackground,
             fontSize = 40.sp,
             fontWeight = FontWeight.Black,
@@ -1947,7 +1948,7 @@ private fun DeckWordmark() {
             maxLines = 1,
         )
         Text(
-            text = "Hub",
+            text = I18n.s(R.string.ui_hub),
             color = Deck.primary,
             fontSize = 40.sp,
             fontWeight = FontWeight.Black,
@@ -2015,7 +2016,7 @@ private fun SocialXmbEntry() {
         modifier = Modifier.fillMaxSize(),
     ) {
         DeckEmptyState("Social Hub", "Feed, configs and profile open as a full-screen XMB page.")
-        DeckButton("Open Social Hub") { context.startActivity(Intent(context, SocialHubActivity::class.java)) }
+        DeckButton(I18n.s(R.string.ui_open_social_hub)) { context.startActivity(Intent(context, SocialHubActivity::class.java)) }
     }
 }
 
@@ -2053,7 +2054,7 @@ private fun DeckPaneContent(
                 )
         },
         modifier = Modifier.fillMaxSize(),
-        label = "deckSection",
+        label = I18n.s(R.string.ui_decksection),
     ) { currentSection ->
         val glassPage = glassLook && !portrait && currentSection != "home"
         val body: @Composable () -> Unit = {
@@ -2077,7 +2078,7 @@ private fun DeckPaneContent(
                         )
                 },
                 modifier = Modifier.fillMaxSize(),
-                label = "deckDetail",
+                label = I18n.s(R.string.ui_deckdetail),
             ) { detailId ->
                 if (detailId != null) {
                     // Per-id key: the screen's remembered sections/focus must not survive a
@@ -2521,12 +2522,12 @@ private fun DeckRailItem(
             else -> Color.Transparent
         },
         animationSpec = tween(260, easing = DeckEase),
-        label = "railTint",
+        label = I18n.s(R.string.ui_railtint),
     )
     val line by animateColorAsState(
         targetValue = if (current || focused) Deck.primary else Color.Transparent,
         animationSpec = tween(220, easing = DeckEase),
-        label = "railLine",
+        label = I18n.s(R.string.ui_railline),
     )
     Box(
         contentAlignment = Alignment.Center,
@@ -2764,7 +2765,7 @@ private fun DeckIntro(onDone: () -> Unit) {
             )
         }
         Text(
-            text = "Tap to skip",
+            text = I18n.s(R.string.ui_tap_to_skip),
             color = Color.White.copy(alpha = 0.55f),
             fontSize = 13.sp,
             modifier = Modifier
@@ -2803,11 +2804,11 @@ private fun DeckStatusStrip(modifier: Modifier = Modifier) {
     Row(modifier, horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
         if (active > 0) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.Download, contentDescription = "Downloads", tint = Deck.primary, modifier = Modifier.size(16.dp))
+                Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.xmb_tab_downloads), tint = Deck.primary, modifier = Modifier.size(16.dp))
                 Text("$active", color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
         }
-        if (pad) Icon(Icons.Filled.SportsEsports, contentDescription = "Controller connected", tint = Deck.onSurfaceVariant, modifier = Modifier.size(16.dp))
+        if (pad) Icon(Icons.Filled.SportsEsports, contentDescription = I18n.s(R.string.ui_controller_connected), tint = Deck.onSurfaceVariant, modifier = Modifier.size(16.dp))
         if (battery >= 0) Text("$battery%", color = Deck.onSurfaceVariant, fontSize = 12.sp)
         Text(clock, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
     }
@@ -3144,7 +3145,7 @@ private fun DeckAllGamesPage(
         }
         val chosen = entries.getOrNull(index)
         Column(Modifier.align(Alignment.BottomStart).padding(start = 28.dp, bottom = 40.dp, end = 28.dp)) {
-            Text("ALL GAMES", color = accent, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.6.sp)
+            Text(I18n.s(R.string.ui_all_games), color = accent, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.6.sp)
             Text(
                 chosen?.title.orEmpty(),
                 color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,
@@ -3806,7 +3807,7 @@ private fun DeckHomeCarousel(
                 AnimatedContent(
                     targetState = if (allFocused && slots > n) n else selected.coerceIn(0, n - 1),
                     transitionSpec = { (fadeIn(tween(220)) + slideInVertically(tween(220)) { it / 6 }) togetherWith fadeOut(tween(90)) },
-                    label = "homeGameTitle",
+                    label = I18n.s(R.string.ui_homegametitle),
                     modifier = Modifier
                         .offset {
                             if (xl) {
@@ -3887,7 +3888,7 @@ private fun DeckHomeCarousel(
                 AnimatedContent(
                     targetState = cSel,
                     transitionSpec = { (fadeIn(tween(220)) + slideInVertically(tween(220)) { it / 6 }) togetherWith fadeOut(tween(90)) },
-                    label = "homeCardTitle",
+                    label = I18n.s(R.string.ui_homecardtitle),
                     modifier = Modifier
                         .offset {
                             IntOffset(

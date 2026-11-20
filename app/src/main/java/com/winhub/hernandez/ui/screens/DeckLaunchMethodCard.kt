@@ -49,6 +49,7 @@ import com.winhub.hernandez.ui.deck.deckShape
 import com.winhub.hernandez.ui.deck.xmbPanel
 import com.winhub.hernandez.ui.deck.xmbPopCard
 import com.winhub.hernandez.ui.deck.xmbPopFill
+import com.winhub.hernandez.util.I18n
 
 // The Deck launch menu in landscape: the methods on the left, then what the picked one is and its own settings, then the options
 // every method shares with Cancel / Launch. On the XMB glass in the Glass look, plain Deck surfaces in the Material look.
@@ -129,7 +130,7 @@ internal fun DeckLaunchLandscapeCard(
                     Text(gameName, color = cs.onSurface, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(heading, color = cs.onSurfaceVariant, fontSize = 13.sp)
                 }
-                Text("A Select    B Back", color = cs.onSurfaceVariant, fontSize = 13.sp)
+                Text(I18n.s(R.string.ui_select_b_back), color = cs.onSurfaceVariant, fontSize = 13.sp)
             }
             HorizontalDivider(color = cs.outline.copy(alpha = 0.5f))
             Row(Modifier.weight(1f).fillMaxWidth()) {
@@ -158,7 +159,7 @@ internal fun DeckLaunchLandscapeCard(
                                 )
                             },
                             trailing = {
-                                if (selected) Icon(Icons.Filled.Check, contentDescription = "Selected", tint = accent, modifier = Modifier.size(18.dp))
+                                if (selected) Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_selected), tint = accent, modifier = Modifier.size(18.dp))
                             },
                         )
                     }
@@ -195,7 +196,7 @@ internal fun DeckLaunchLandscapeCard(
                 ) {
                     LaunchLabel("Options")
                     LaunchChoiceRow(
-                        title = "Remember my choice",
+                        title = I18n.s(R.string.ui_remember_my_choice),
                         subtitle = "Skip this menu next time for $gameName.",
                         selected = rememberChoice,
                         accent = accent,
@@ -213,7 +214,7 @@ internal fun DeckLaunchLandscapeCard(
                             .clickable(onClick = onDismiss),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text("Cancel", color = cs.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                        Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }

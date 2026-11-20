@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * DroidDeck's motion vocabulary, reused so the storefront animates exactly like the launcher:
@@ -70,17 +72,17 @@ internal fun Modifier.deckTileFocus(interactionSource: InteractionSource): Modif
     val scale by animateFloatAsState(
         targetValue = if (pressed) 0.97f else if (hot) 1.04f else 1f,
         animationSpec = DeckMotion.sp(0.55f, Spring.StiffnessMedium),
-        label = "deckTileScale",
+        label = I18n.s(R.string.ui_decktilescale),
     )
     val lift by animateFloatAsState(
         targetValue = if (hot) -5f else 0f,
         animationSpec = DeckMotion.sp(0.6f),
-        label = "deckTileLift",
+        label = I18n.s(R.string.ui_decktilelift),
     )
     val elev by animateFloatAsState(
         targetValue = if (hot) 18f else 2f,
         animationSpec = DeckMotion.tw(300),
-        label = "deckTileElev",
+        label = I18n.s(R.string.ui_decktileelev),
     )
     return graphicsLayer {
         scaleX = scale
@@ -100,6 +102,6 @@ internal fun DeckRise(index: Int, modifier: Modifier = Modifier, content: @Compo
             slideInVertically(DeckMotion.tw(450, index * 60)) { it / 3 },
         exit = fadeOut(DeckMotion.tw(120)),
         modifier = modifier,
-        label = "deckRise",
+        label = I18n.s(R.string.ui_deckrise),
     ) { content() }
 }

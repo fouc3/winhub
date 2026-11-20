@@ -142,6 +142,7 @@ import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
 
 /**
  * Games-tab XMB layout (PS3 cross media bar). Games run along a horizontal bar and the focused
@@ -385,7 +386,7 @@ internal fun SteamXmbView(
         onDispose { if (deckActions.xmbAddGameHint.value === run) deckActions.xmbAddGameHint.value = null }
     }
     // 1 = centred (no options), 0 = the options layout.
-    val cT by animateFloatAsState(if (centered) 1f else 0f, tween(300), label = "xmbCentred")
+    val cT by animateFloatAsState(if (centered) 1f else 0f, tween(300), label = I18n.s(R.string.ui_xmbcentred))
     // True once the options have glided in most of the way: until then their rows take no touches. Derived, so the glide does not
     // recompose this view every frame.
     val optsLive by remember { derivedStateOf { cT < 0.5f } }
@@ -680,7 +681,7 @@ internal fun SteamXmbView(
                     Text(clock, color = Color(0xFFDDDDDD), fontSize = 12.sp * hs, fontWeight = FontWeight.Light)
                 }
 
-                val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = "xmbRootAlpha")
+                val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = I18n.s(R.string.ui_xmbrootalpha))
                 // Everything that belongs to the options layout fades out while centred. A lambda, read in the graphics layers, so
                 // the fade doesn't recompose this view every frame.
                 val optsA = { 1f - cT }
@@ -762,7 +763,7 @@ internal fun SteamXmbView(
                     targetState = focused,
                     contentKey = { it?.file?.path ?: XMB_ALL_PATH },
                     transitionSpec = { xmbTitleTransition() },
-                    label = "xmbTitle",
+                    label = I18n.s(R.string.ui_xmbtitle),
                     modifier = Modifier.offset(m.titleX.dp, m.titleY.dp).width(m.titleW.coerceAtLeast(80f).dp),
                 ) { s ->
                     if (s == null) {
@@ -817,9 +818,9 @@ internal fun SteamXmbView(
                         key(a.label) {
                             val d = i - actIdx
                             val vis = d in 0 until nVis
-                            val y by animateFloatAsState(d * rowH + if (d > 0) m.extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = "xmbRowY")
+                            val y by animateFloatAsState(d * rowH + if (d > 0) m.extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = I18n.s(R.string.ui_xmbrowy))
                             // The Steam home shows every row that fits at full strength (the unselected ones are dimmer by their text colour); the rest fade with distance.
-                            val a2 by animateFloatAsState(if (!vis) 0f else if (d == 0 || steam) 1f else max(0.35f, 1f - d * 0.13f), tween(220), label = "xmbRowA")
+                            val a2 by animateFloatAsState(if (!vis) 0f else if (d == 0 || steam) 1f else max(0.35f, 1f - d * 0.13f), tween(220), label = I18n.s(R.string.ui_xmbrowa))
                             val src = remember { MutableInteractionSource() }
                             XmbActionRow(
                                 action = a, selected = d == 0, accent = accent, iconBox = m.iconBox,
@@ -1172,7 +1173,7 @@ internal fun XmbHomeBackdrop(picture: Any?) {
     val nativeBlur = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     Box(Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxSize().background(Color.Black))
-        Crossfade(targetState = picture, animationSpec = tween(600), label = "xmbBackdrop") { pic ->
+        Crossfade(targetState = picture, animationSpec = tween(600), label = I18n.s(R.string.ui_xmbbackdrop)) { pic ->
             when (pic) {
                 is Bitmap -> XmbBackdropBitmap(pic, nativeBlur, XMB_BACKDROP_BLUR, XMB_BACKDROP_SOFT_DIV)
                 is XmbWallPicture -> DeckCapsuleWall(pic.covers, driftMs = 40_000)

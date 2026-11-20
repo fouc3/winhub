@@ -81,6 +81,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val TAG = "DeckLogManager"
 
@@ -174,7 +176,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
     }
 
     DeckConfigDialog(
-        title = "Log Manager",
+        title = I18n.s(R.string.ui_log_manager),
         subtitle = "Saving to " + (logDir?.absolutePath ?: "—"),
         onDismiss = onClose,
     ) {
@@ -251,7 +253,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 LogTab.STORAGE -> {
                     DeckGroup("Where logs go") {
                         DeckChoiceRow(
-                            label = "Log location",
+                            label = I18n.s(R.string.ui_log_location),
                             hint = logDir?.absolutePath ?: "—",
                             options = listOf(
                                 "documents" to "Documents",
@@ -279,7 +281,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     }
                     DeckGroup("Housekeeping") {
                         DeckChoiceRow(
-                            label = "Keep last",
+                            label = I18n.s(R.string.ui_keep_last),
                             hint = if (keepLast == 0) "No history. Each run replaces the last."
                             else "$keepLast launch${if (keepLast == 1) "" else "es"} per game",
                             options = listOf(0, 1, 3, 5, 10, 20, 50).map { n ->
@@ -519,7 +521,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
 
     if (confirmClearAll) {
         val count = remember(refreshTick) { entries.sumOf { LogInventory.deletableCount(it) } }
-        DeckConfigDialog(title = "Clear all logs?", onDismiss = { confirmClearAll = false }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_clear_all_logs), onDismiss = { confirmClearAll = false }, compact = true) {
             Text(
                 "Deletes $count log file${if (count == 1) "" else "s"} across ${entries.size} " +
                     "folder${if (entries.size == 1) "" else "s"}, including kept history.\n\n" +
@@ -553,7 +555,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
     }
     info?.let { (title, body) -> PerfInfoDialog(title = title, body = body, onDismiss = { info = null }) }
     if (showExplainAll) {
-        PerfInfoDialog(title = "What each log is for", body = LogCopy.explainAll(), onDismiss = { showExplainAll = false })
+        PerfInfoDialog(title = I18n.s(R.string.ui_what_each_log_is_for), body = LogCopy.explainAll(), onDismiss = { showExplainAll = false })
     }
 }
 
@@ -572,7 +574,7 @@ private fun StorageMeter(entries: List<LogInventory.Entry>) {
     )
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Text("Storage used", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            Text(I18n.s(R.string.ui_storage_used), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.weight(1f))
             Text(
                 LogInventory.humanBytes(total) + " · ${entries.size} " + if (entries.size == 1) "folder" else "folders",
                 color = DeckPalette.onBackground,

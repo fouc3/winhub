@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.core.ComponentUpdates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Updater page's second half: Proton, GPU driver and FEXCore, each with what is installed, what the
@@ -32,12 +34,12 @@ internal fun DeckComponentStatusGroup() {
         checking = false
     }
 
-    DeckGroup(title = "Layers and components") {
+    DeckGroup(title = I18n.s(R.string.ui_layers_and_components)) {
         DeckRow(
             label = if (checking) "Checking…" else "Check components",
-            hint = "Proton, graphics driver and FEXCore",
+            hint = I18n.s(R.string.ui_proton_graphics_driver_and_fexcore),
         ) {
-            DeckButton("Check", primary = false) { if (!checking) round++ }
+            DeckButton(I18n.s(R.string.ui_check), primary = false) { if (!checking) round++ }
         }
         rows.forEach { row ->
             DeckRow(
@@ -50,7 +52,7 @@ internal fun DeckComponentStatusGroup() {
                     offer != null ->
                         DeckButton(if (row.current == "Not installed") "Install" else "Update", primary = true) { updating = offer }
                     row.latest != null ->
-                        Text("Up to date", color = DeckPalette.good, fontSize = 14.sp)
+                        Text(I18n.s(R.string.ui_up_to_date), color = DeckPalette.good, fontSize = 14.sp)
                     else -> Text("", fontSize = 14.sp)
                 }
             }

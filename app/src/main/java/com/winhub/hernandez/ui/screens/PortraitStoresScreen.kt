@@ -36,6 +36,8 @@ import com.winhub.hernandez.store.GogMainActivity
 import com.winhub.hernandez.store.SteamMainActivity
 import com.winhub.hernandez.ui.Screen
 import com.winhub.hernandez.store.xbox.XboxMainActivity
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private class PortraitStore(val name: String, val blurb: String, val screen: Screen, val activity: Class<*>)
 
@@ -61,7 +63,7 @@ internal fun PortraitStoresScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Stores", color = Deck.onBackground, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+        Text(I18n.s(R.string.xmb_tab_stores), color = Deck.onBackground, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         portraitStores.forEach { store ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,

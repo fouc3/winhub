@@ -16,6 +16,8 @@ import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Microsoft sign-in for the Xbox store (ported from DroidDeck, GPL-3.0). It drives
@@ -38,13 +40,13 @@ class XboxLoginActivity : ComponentActivity() {
         runCatching { WebView.setDataDirectorySuffix(WEBVIEW_SUFFIX) }
         super.onCreate(savedInstanceState)
         host = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(Color.BLACK) }
-        status = TextView(this).apply { setTextColor(Color.WHITE); text = "Preparing Microsoft sign-in…"; setPadding(24, 16, 24, 16) }
+        status = TextView(this).apply { setTextColor(Color.WHITE); text = I18n.s(R.string.ui_preparing_microsoft_sign_in); setPadding(24, 16, 24, 16) }
         host.addView(status)
-        host.addView(Button(this).apply { text = "Close"; setOnClickListener { finish() } })
+        host.addView(Button(this).apply { text = I18n.s(R.string.wrapper_manager_close); setOnClickListener { finish() } })
         setContentView(host)
         if (android.os.Build.VERSION.SDK_INT < 28 || !WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER) ||
             !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            status.text = "Update Android System WebView to sign in to Xbox."
+            status.text = I18n.s(R.string.ui_update_android_system_webview_to_sign_in_to_xbox)
             return
         }
         CookieManager.getInstance().removeAllCookies { android.webkit.WebStorage.getInstance().deleteAllData(); begin() }
@@ -85,7 +87,7 @@ class XboxLoginActivity : ComponentActivity() {
                             "close" -> {
                                 check(frame.getLong("session") == session)
                                 session = 0L
-                                runOnUiThread { disposeView(); status.text = "Completing Microsoft sign-in…" }
+                                runOnUiThread { disposeView(); status.text = I18n.s(R.string.ui_completing_microsoft_sign_in) }
                             }
                             "context" -> {
                                 check(frame.getLong("session") == session)
@@ -120,7 +122,7 @@ class XboxLoginActivity : ComponentActivity() {
             } catch (e: Exception) {
                 child = null
                 XboxDiag.log(applicationContext, "sign-in failed: ${e.javaClass.simpleName}")
-                if (!closed) runOnUiThread { disposeView(); status.text = "Microsoft sign-in did not complete. Close this window and try again." }
+                if (!closed) runOnUiThread { disposeView(); status.text = I18n.s(R.string.ui_microsoft_sign_in_did_not_complete_close_this_window) }
             }
         }, "xbox-login").start()
     }
@@ -149,7 +151,7 @@ class XboxLoginActivity : ComponentActivity() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean = !trusted(request.url.toString())
             override fun onPageFinished(view: WebView, url: String) {
                 if (!trusted(url)) { finish(); return }
-                status.text = "Microsoft sign-in"
+                status.text = I18n.s(R.string.ui_microsoft_sign_in)
                 val uri = Uri.parse(url)
                 if (uri.host == "login.live.com" && uri.path == "/ppsecure/post.srf") {
                     view.evaluateJavascript("JSON.stringify(globalThis.ServerData ?? null)") { raw ->

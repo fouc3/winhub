@@ -21,6 +21,7 @@ import com.winhub.hernandez.R
 import com.winhub.hernandez.contents.WrapperManager
 import com.winhub.hernandez.core.StringUtils
 import com.winhub.hernandez.util.InAppFilePicker
+import com.winhub.hernandez.util.I18n
 
 /**
  * Deck-native wrapper manager, replacing the classic [WrapperManagerDialog] inside the Deck shortcut
@@ -138,8 +139,8 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            DeckButton("Import wrapper", primary = true) { browse(null, true) }
-            DeckButton("Download", primary = false) { showCatalog = true }
+            DeckButton(I18n.s(R.string.ui_import_wrapper), primary = true) { browse(null, true) }
+            DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { showCatalog = true }
             DeckButton(context.getString(R.string.wrapper_reset_all), primary = false) { confirmResetAll = true }
         }
     }
@@ -173,8 +174,8 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton("Cancel", primary = false) { pendingImportUri = null; pendingInspection = null }
-                DeckButton("Import", primary = true) {
+                DeckButton(I18n.s(R.string.cancel), primary = false) { pendingImportUri = null; pendingInspection = null }
+                DeckButton(I18n.s(R.string.preset_action_import), primary = true) {
                     val name = importNameDraft.trim()
                     val id = StringUtils.parseIdentifier(name)
                     when {
@@ -209,7 +210,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton("Cancel", primary = false) { deleteTarget = null }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { deleteTarget = null }
                 DeckButton(context.getString(R.string.wrapper_delete), primary = true) {
                     manager.deleteImported(toDelete.identifier)
                     deleteTarget = null
@@ -230,7 +231,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton("Cancel", primary = false) { confirmResetAll = false }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { confirmResetAll = false }
                 DeckButton(context.getString(R.string.wrapper_reset_all), primary = true) {
                     manager.resetAll()
                     confirmResetAll = false

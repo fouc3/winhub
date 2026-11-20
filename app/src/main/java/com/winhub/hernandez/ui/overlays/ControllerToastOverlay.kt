@@ -57,6 +57,8 @@ import com.winhub.hernandez.ui.XServerDialogState.ControllerToastRow
 import com.winhub.hernandez.ui.XServerDialogState.ToastBadgeType
 import com.winhub.hernandez.ui.XServerDialogState.ToastIconType
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ---------------------------------------------------------------------------------------------------
 // P5b — Controller-status toast. A small, app-themed card that fades into the TOP-RIGHT of the
@@ -329,7 +331,7 @@ private fun DeviceRow(row: ControllerToastRow) {
                 if (row.isNew) {
                     Spacer(Modifier.width(6.dp))
                     Text(
-                        text = "NEW",
+                        text = I18n.s(R.string.ui_new),
                         color = accent,
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,

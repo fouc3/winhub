@@ -27,6 +27,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ── Performance (PerformanceDashboardDialogPerGame) ─────────────────────────────────────────────────
 // Per-game overrides of the App Settings > Performance defaults, stored override-when-different exactly
@@ -125,14 +127,14 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
 
         rows += XmbRow.Header("hNow", "This device now")
-        rows += XmbRow.Info("gpuClock", "GPU clock", Icons.Filled.Memory, readouts["gpuMhz"] ?: "…")
-        rows += XmbRow.Info("socTemp", "SoC temp", Icons.Filled.Speed, readouts["socTemp"] ?: "…")
+        rows += XmbRow.Info(I18n.s(R.string.ui_gpuclock), "GPU clock", Icons.Filled.Memory, readouts["gpuMhz"] ?: "…")
+        rows += XmbRow.Info(I18n.s(R.string.ui_soctemp), "SoC temp", Icons.Filled.Speed, readouts["socTemp"] ?: "…")
         rows += XmbRow.Info("governor", "Governor", Icons.Filled.Tune, readouts["governor"] ?: "…")
 
         rows += XmbRow.Header("hProfile", "Power profile")
         val profOpts = if (profile == null) listOf("Custom") + P2_PROFILES else P2_PROFILES
         rows += XmbRow.Choice("profile", "Power profile", Icons.Filled.Speed, profOpts, profile ?: "Custom",
-            subtitle = "Sets the toggles below in one go", disabledOptions = setOf("Custom")) { v -> applyProfile(v) }
+            subtitle = I18n.s(R.string.ui_sets_the_toggles_below_in_one_go), disabledOptions = setOf("Custom")) { v -> applyProfile(v) }
 
         rows += XmbRow.Header("hQuick", "Quick controls · no root")
         toggle("sustainedPerfMode", "Sustained Performance Mode", "Holds a stable clock to avoid thermal throttling")
@@ -141,10 +143,10 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         toggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, "Lock GPU to max clock", "Adreno: no-root KGSL turbo; sysfs pin with root")
 
         rows += XmbRow.Header("hRoot", "Root & danger")
-        rows += XmbRow.Info("rootState", if (granted) "Root granted" else "Saved for this game · applied at launch when root is available",
+        rows += XmbRow.Info(I18n.s(R.string.ui_rootstate), if (granted) "Root granted" else "Saved for this game · applied at launch when root is available",
             if (granted) Icons.Filled.Info else Icons.Filled.Warning)
         if (!granted) {
-            rows += XmbRow.Action("grantRoot", "Grant root", Icons.Filled.Warning, subtitle = "Power-user controls — read the warning first") {
+            rows += XmbRow.Action("grantRoot", "Grant root", Icons.Filled.Warning, subtitle = I18n.s(R.string.ui_power_user_controls_read_the_warning_first)) {
                 xmb.confirm(XmbConfirm("Power-user performance", "Use at your own risk — these controls write system files and can overheat or damage the device.", "Grant Root", danger = true)) {
                     xmb.scope.launch {
                         RootManager.requestGrant()
@@ -161,7 +163,7 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
         val anyOverride = P2_PERF_KEYS.any { p2PerfValue(shortcut, it) != p2PerfGlobal(it) }
         if (anyOverride) {
-            rows += XmbRow.Action("resetAll", "Reset all to global", Icons.Filled.RestartAlt, subtitle = "This game follows App Settings again") {
+            rows += XmbRow.Action("resetAll", "Reset all to global", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_this_game_follows_app_settings_again)) {
                 profile = null
                 write(P2_PERF_KEYS.map { it to p2PerfGlobal(it) })
             }
@@ -208,13 +210,13 @@ internal fun xmbPlayerSlotsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         if (json.isEmpty()) {
             rows += XmbRow.Info("inherit", "Inheriting the container's Player Slots. Pin a controller below to set a per-game override.", Icons.Filled.Info)
         } else {
-            rows += XmbRow.Action("useDefault", "Use container default", Icons.Filled.RestartAlt, subtitle = "Drop this game's pins") {
+            rows += XmbRow.Action("useDefault", "Use container default", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_drop_this_game_pins)) {
                 p2Put(xmb, shortcut, "controllerSlotOverrides", null)
                 slotRows = build()
             }
         }
         rows += XmbRow.Info("about", "Pin a controller (or the on-screen pad) to a player slot. Applied on launch.", Icons.Filled.Info)
-        rows += XmbRow.Action("refresh", "Refresh controllers", Icons.Filled.Refresh, subtitle = "Re-scan connected pads") { slotRows = build() }
+        rows += XmbRow.Action("refresh", "Refresh controllers", Icons.Filled.Refresh, subtitle = I18n.s(R.string.ui_re_scan_connected_pads)) { slotRows = build() }
         if (slotRows.isEmpty()) {
             rows += XmbRow.Info("none", "No controllers detected. Connect one to assign it.", Icons.Filled.Info)
         }

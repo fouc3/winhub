@@ -16,6 +16,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Reusable ⬇ toolbar action for a store header. Shows a live count badge of active
@@ -47,7 +49,7 @@ fun DownloadsButton(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 imageVector = Icons.Filled.Download,
-                contentDescription = "Downloads & Library",
+                contentDescription = I18n.s(R.string.ui_downloads_library),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }

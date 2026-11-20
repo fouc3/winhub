@@ -30,6 +30,8 @@ import com.winhub.hernandez.ui.theme.Divider as DividerColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Browse + install Wine dependency components (mono, gecko, dotnet, vcredist, d3dx, …) into a
@@ -123,24 +125,24 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
                 )
             },
             confirmButton = {
-                TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text("Continue") }
+                TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text(I18n.s(R.string._continue)) }
             },
-            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState,
         containerColor = cs.surface, contentColor = cs.onSurface) {
         Column(Modifier.fillMaxWidth().fillMaxHeight(0.92f).padding(bottom = 12.dp)) {
-            Text("Components", style = MaterialTheme.typography.titleLarge,
+            Text(I18n.s(R.string.ui_components), style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 4.dp))
-            Text("Install Wine dependencies into this container",
+            Text(I18n.s(R.string.ui_install_wine_dependencies_into_this_container),
                 style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 8.dp))
             OutlinedTextField(
                 value = query, onValueChange = { query = it },
                 singleLine = true,
-                placeholder = { Text("Search components") },
+                placeholder = { Text(I18n.s(R.string.ui_search_components)) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             )
             Spacer(Modifier.height(8.dp))
@@ -151,7 +153,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
                     CircularProgressIndicator(color = cs.primary)
                 }
                 loadError -> Box(Modifier.fillMaxWidth().padding(28.dp), contentAlignment = Alignment.Center) {
-                    Text("Couldn't load the component catalog.", color = cs.onSurfaceVariant)
+                    Text(I18n.s(R.string.ui_couldn_t_load_the_component_catalog), color = cs.onSurfaceVariant)
                 }
                 else -> {
                     // Name → component, for routing a base install to its file-drop `_dll` variant below.
@@ -214,7 +216,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
                 }
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.End) {
-                TextButton(onClick = onDismiss) { Text("Close", color = cs.primary) }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) }
             }
         }
     }
@@ -253,10 +255,10 @@ private fun ComponentRow(
             }
             when {
                 isInstalling -> CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
+                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
                     tint = installedBlue, modifier = Modifier.size(22.dp))
                 installable -> IconButton(onClick = onInstall, enabled = enabled) {
-                    Icon(Icons.Filled.Download, contentDescription = "Install", tint = cs.primary)
+                    Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install), tint = cs.primary)
                 }
                 else -> Box(
                     Modifier.background(cs.surfaceContainerHigh, RoundedCornerShape(6.dp))

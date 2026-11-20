@@ -35,6 +35,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ── Win Components (ScWinComponentsTab + RecommendedComponentsSection) ─────────────────────────────
 
@@ -165,7 +167,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val rows = mutableListOf<XmbRow>()
 
         if (recLoading) {
-            rows += XmbRow.Info("recLoading", "Looking for recommended components…", Icons.Filled.Search)
+            rows += XmbRow.Info(I18n.s(R.string.ui_recloading), "Looking for recommended components…", Icons.Filled.Search)
         } else if (recs.isNotEmpty()) {
             // BUNDLED = redist installers the game ships; SHIPPED = loose runtime DLLs (optional).
             val bundled = recs.filter { it.kind == DependencyDetector.Kind.BUNDLED }
@@ -216,7 +218,7 @@ internal fun xmbWinComponentsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             rows += XmbRow.Header("hGeneral", "General")
             general.forEach { addChoice(it) }
         }
-        if (all.isEmpty()) rows += XmbRow.Info("noComponents", "No Windows components configured", Icons.Filled.Info)
+        if (all.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nocomponents), "No Windows components configured", Icons.Filled.Info)
         rows
     }
 }
@@ -346,14 +348,14 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
         foundDlls.forEach { dll ->
             rows += XmbRow.Toggle("dll:$dll", "$dll.dll", Icons.Filled.Extension, DllOverrides.isEnabled(overrides, dll),
-                subtitle = "Found in the game folder") { on ->
+                subtitle = I18n.s(R.string.ui_found_in_the_game_folder)) { on ->
                 val cur = overridesNow()
                 env.putVar(DllOverrides.VAR, if (on) DllOverrides.enable(cur, dll) else DllOverrides.disable(cur, dllBaseline, dll))
             }
         }
 
         rows += XmbRow.Header("hVars", "Environment variables")
-        if (list.isEmpty()) rows += XmbRow.Info("noVars", "No environment variables set", Icons.Filled.Info)
+        if (list.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_novars), "No environment variables set", Icons.Filled.Info)
         val seen = HashMap<String, Int>()
         list.forEach { r ->
             val occ = seen[r.name] ?: 0
@@ -363,7 +365,7 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 value = r.value.ifEmpty { "(empty)" },
             ) { p2EnvVarMenu(env, r.name, occ) }
         }
-        rows += XmbRow.Link("add", "Add variable", Icons.Filled.Add, subtitle = "Pick a known variable or type your own") { p2EnvAddMenu(env) }
+        rows += XmbRow.Link("add", "Add variable", Icons.Filled.Add, subtitle = I18n.s(R.string.ui_pick_a_known_variable_or_type_your_own)) { p2EnvAddMenu(env) }
         val malformed = env.raw().split(" ").filter { it.isNotBlank() && it.indexOf('=') <= 0 }
         rows += XmbRow.Text(
             "raw", "Edit as text", Icons.Filled.ShortText, env.raw(),
@@ -400,11 +402,11 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
                 val presets = p2Unique(known?.options.orEmpty())
                 val opts = if (cur.isNotEmpty() && cur !in presets) presets + cur else presets
                 if (opts.isNotEmpty()) {
-                    rows += XmbRow.Choice("preset", "Value", Icons.Filled.Tune, opts, cur, subtitle = "Presets — or type any value below") { v ->
+                    rows += XmbRow.Choice("preset", "Value", Icons.Filled.Tune, opts, cur, subtitle = I18n.s(R.string.ui_presets_or_type_any_value_below)) { v ->
                         env.setAt(name, occ, v)
                     }
                 }
-                rows += XmbRow.Text("custom", "Custom value", Icons.Filled.Edit, cur, subtitle = "Kept exactly as typed (no spaces)") { v ->
+                rows += XmbRow.Text("custom", "Custom value", Icons.Filled.Edit, cur, subtitle = I18n.s(R.string.ui_kept_exactly_as_typed_no_spaces)) { v ->
                     env.setAt(name, occ, v)
                 }
             }
@@ -420,7 +422,7 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
             }
             EnvVarType.NUMBER, EnvVarType.TEXT -> {
                 rows += XmbRow.Text("value", "Value", Icons.Filled.Edit, cur, numeric = type == EnvVarType.NUMBER,
-                    subtitle = "Spaces are dropped — variables are separated by spaces") { v -> env.setAt(name, occ, v) }
+                    subtitle = I18n.s(R.string.ui_spaces_are_dropped_variables_are_separated_by_spaces)) { v -> env.setAt(name, occ, v) }
             }
         }
         env.help(name)?.let { rows.add(XmbRow.Info("help", it, Icons.Filled.Info)) }
@@ -446,7 +448,7 @@ private fun p2EnvAddMenu(env: P2Env): XmbMenu {
         val rows = mutableListOf<XmbRow>()
         val existing = env.rows().map { it.name }.toSet()
         rows += XmbRow.Text("name", "Name", Icons.Filled.Add, "", subtitle = "Type NAME or NAME=VALUE",
-            placeholder = "e.g. DXVK_FRAME_RATE") { raw ->
+            placeholder = I18n.s(R.string.ui_e_g_dxvk_frame_rate)) { raw ->
             val cleaned = raw.trim().replace(" ", "")
             val eq = cleaned.indexOf('=')
             val name = if (eq >= 0) cleaned.substring(0, eq) else cleaned

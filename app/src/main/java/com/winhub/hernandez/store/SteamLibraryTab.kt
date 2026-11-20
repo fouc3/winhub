@@ -74,6 +74,7 @@ import com.winhub.hernandez.store.compose.AddToShortcutsRequest
 import com.winhub.hernandez.store.compose.DeckAddToShortcuts
 import com.winhub.hernandez.store.compose.openShortcutsScreen
 import com.winhub.hernandez.ui.screens.OutlinedAlertDialog
+import com.winhub.hernandez.util.I18n
 
 /**
  * The **Library** tab: the owned-games grid, moved here out of [SteamGamesActivity] so the tab host
@@ -240,11 +241,11 @@ fun rememberSteamLibrary(): SteamLibraryState {
                     steamStatus = runCatching { SteamRepository.SteamStatus.valueOf(name) }
                         .getOrDefault(steamStatus)
                 }
-                event == "Disconnected" -> statusText = "Disconnected — reconnecting…"
+                event == "Disconnected" -> statusText = I18n.s(R.string.ui_disconnected_reconnecting)
                 event == "Connected" -> {
                     val r = runCatching { SteamRepository.getInstance() }.getOrNull()
                     if (games.isEmpty() && r?.isLoggedIn == true) {
-                        statusText = "Reconnected — syncing library…"
+                        statusText = I18n.s(R.string.ui_reconnected_syncing_library)
                         r.syncLibrary()
                     }
                 }
@@ -417,7 +418,7 @@ fun SteamLibraryTab(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             when {
                 state.games.isEmpty() && !state.isLoading -> StoreNotice(
-                    title = "No games yet",
+                    title = I18n.s(R.string.ui_no_games_yet),
                     body = "Nothing in this account's Steam library has synced yet. Pull a fresh sync " +
                         "with Refresh, or add a free game from the Store tab.",
                     actionLabel = "Refresh",
@@ -584,7 +585,7 @@ private fun LibraryCapsuleCard(
                     modifier = Modifier.fillMaxWidth().steamFocusRing(RoundedCornerShape(7.dp)),
                     shape = RoundedCornerShape(7.dp),
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                ) { Text("Play", style = MaterialTheme.typography.labelSmall, maxLines = 1) }
+                ) { Text(I18n.s(R.string.retro_opt_play), style = MaterialTheme.typography.labelSmall, maxLines = 1) }
             } else {
                 StoreActionButton(
                     action = StoreAction.Download,
@@ -698,7 +699,7 @@ private fun LibraryDetailBody(
                 }
                 if (game.isInstalled) {
                     Text(
-                        text = "● Installed",
+                        text = I18n.s(R.string.ui_installed),
                         style = MaterialTheme.typography.bodySmall,
                         color = Color(0xFF4CAF50), // semantic installed-green (unchanged)
                         modifier = Modifier.padding(top = 2.dp),
@@ -728,7 +729,7 @@ private fun LibraryDetailBody(
                             ),
                             modifier = Modifier.height(32.dp).steamFocusRing(RoundedCornerShape(8.dp)).xmbInner(),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                        ) { Text("Uninstall", style = MaterialTheme.typography.labelSmall) }
+                        ) { Text(I18n.s(R.string.xmb_dl_act_uninstall), style = MaterialTheme.typography.labelSmall) }
                     }
                 }
             }
@@ -799,10 +800,10 @@ internal fun fmtLibrarySize(bytes: Long): String = when {
 internal fun SteamSignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Sign out of Steam?") },
-        text = { Text("Your saved login will be removed. You will need to sign in again.") },
-        confirmButton = { TextButton(onClick = onConfirm) { Text("Sign Out") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        title = { Text(I18n.s(R.string.ui_sign_out_of_steam)) },
+        text = { Text(I18n.s(R.string.ui_your_saved_login_will_be_removed_you_will_need_to_sig)) },
+        confirmButton = { TextButton(onClick = onConfirm) { Text(I18n.s(R.string.ui_sign_out)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 

@@ -32,6 +32,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import android.widget.Toast
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @Composable
 fun DebugDialogContent(state: XServerDialogState) {
@@ -62,7 +64,7 @@ fun DebugDialogContent(state: XServerDialogState) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Logs",
+                    text = I18n.s(R.string.logs),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
@@ -88,7 +90,7 @@ fun DebugDialogContent(state: XServerDialogState) {
                     if (logLines.isEmpty()) {
                         item {
                             Text(
-                                text = "No log output yet.",
+                                text = I18n.s(R.string.ui_no_log_output_yet),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(8.dp)
@@ -109,17 +111,17 @@ fun DebugDialogContent(state: XServerDialogState) {
                         clipboard.setText(AnnotatedString(logLines.joinToString("\n")))
                         Toast.makeText(context, "Log copied", Toast.LENGTH_SHORT).show()
                     }) {
-                        Text("Copy")
+                        Text(I18n.s(R.string.copy))
                     }
                     TextButton(onClick = { state.clearLog() }) {
-                        Text("Clear")
+                        Text(I18n.s(R.string.clear))
                     }
                     TextButton(onClick = { state.setLogPaused(!logPaused) }) {
                         Text(if (logPaused) "Resume" else "Pause")
                     }
                     Spacer(Modifier.weight(1f))
                     TextButton(onClick = { state.dismiss() }) {
-                        Text("Close")
+                        Text(I18n.s(R.string.wrapper_manager_close))
                     }
                 }
             }

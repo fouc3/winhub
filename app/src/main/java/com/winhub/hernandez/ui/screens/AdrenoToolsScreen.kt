@@ -43,6 +43,7 @@ import com.winhub.hernandez.R
 import com.winhub.hernandez.contents.AdrenotoolsManager
 import com.winhub.hernandez.ui.screens.adrenodownload.AdrenoDriverDownloadSheet
 import com.winhub.hernandez.util.InAppFilePicker
+import com.winhub.hernandez.util.I18n
 
 @Composable
 fun AdrenoToolsScreen() {
@@ -93,13 +94,13 @@ fun AdrenoToolsScreen() {
             ) {
                 Icon(Icons.Filled.FolderOpen, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.size(8.dp))
-                Text("Install GPU driver")
+                Text(I18n.s(R.string.ui_install_gpu_driver))
             }
             Spacer(modifier = Modifier.width(8.dp))
             IconButton(onClick = { showDownloadSheet = true }) {
                 Icon(
                     imageVector = Icons.Filled.CloudDownload,
-                    contentDescription = "Download GPU drivers from online sources",
+                    contentDescription = I18n.s(R.string.ui_download_gpu_drivers_from_online_sources),
                     tint = cs.primary,
                 )
             }
@@ -109,7 +110,7 @@ fun AdrenoToolsScreen() {
 
         if (drivers.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No GPU drivers installed.", color = cs.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_no_gpu_drivers_installed), color = cs.onSurfaceVariant)
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -135,7 +136,7 @@ fun AdrenoToolsScreen() {
                 TextButton(onClick = {
                     confirmInstallPrompt = false
                     filePicker.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.DRIVER, "Select GPU driver"))
-                }) { Text("Browse files") }
+                }) { Text(I18n.s(R.string.browse_files)) }
             },
             dismissButton = {
                 Row {
@@ -146,7 +147,7 @@ fun AdrenoToolsScreen() {
                             type = "*/*"
                         }
                         filePicker.launch(intent)
-                    }) { Text("Pick via system…") }
+                    }) { Text(I18n.s(R.string.pick_via_system)) }
                     TextButton(onClick = { confirmInstallPrompt = false }) {
                         Text(context.getString(android.R.string.cancel))
                     }
@@ -159,7 +160,7 @@ fun AdrenoToolsScreen() {
     confirmRemoveIndex?.let { idx ->
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemoveIndex = null },
-            title = { Text("Remove driver?") },
+            title = { Text(I18n.s(R.string.ui_remove_driver)) },
             text = { Text("Remove \"${manager.getDriverName(drivers[idx])}\"?") },
             confirmButton = {
                 TextButton(onClick = {
@@ -167,10 +168,10 @@ fun AdrenoToolsScreen() {
                     manager.removeDriver(id)
                     drivers = drivers.toMutableList().also { it.removeAt(idx) }
                     confirmRemoveIndex = null
-                }) { Text("Remove") }
+                }) { Text(I18n.s(R.string.remove)) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmRemoveIndex = null }) { Text("Cancel") }
+                TextButton(onClick = { confirmRemoveIndex = null }) { Text(I18n.s(R.string.cancel)) }
             },
         )
     }
@@ -213,7 +214,7 @@ private fun DriverItem(
             Text(text = version, style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
         }
         IconButton(onClick = onRemove) {
-            Icon(Icons.Filled.Delete, contentDescription = "Remove", tint = cs.onSurfaceVariant)
+            Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = cs.onSurfaceVariant)
         }
     }
 }

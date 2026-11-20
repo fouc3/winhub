@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.ui.theme.Divider
 import com.winhub.hernandez.ui.theme.OnSurface
 import com.winhub.hernandez.ui.theme.OnSurfaceVariant
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Shared HSV color picker (preview swatch + hue/saturation/brightness gradient sliders + hex input).
 // Extracted from AppearanceScreen so it can be reused by the app theme picker, the in-game drawer's
@@ -77,14 +79,14 @@ fun ColorPicker(initialColor: Color, onColorChanged: (Color) -> Unit) {
                     .border(1.dp, Divider, CircleShape)
             )
             Column {
-                Text("Preview", color = OnSurfaceVariant, fontSize = 12.sp)
+                Text(I18n.s(R.string.ui_preview), color = OnSurfaceVariant, fontSize = 12.sp)
                 Text(hexInput, color = OnSurface, fontFamily = FontFamily.Monospace, fontSize = 14.sp)
             }
         }
 
         // Hue slider
         SliderRow(
-            label = "Hue",
+            label = I18n.s(R.string.ui_hue),
             value = hue,
             valueRange = 0f..360f,
             trackBrush = Brush.horizontalGradient(
@@ -97,7 +99,7 @@ fun ColorPicker(initialColor: Color, onColorChanged: (Color) -> Unit) {
 
         // Saturation slider
         SliderRow(
-            label = "Saturation",
+            label = I18n.s(R.string.ui_saturation),
             value = saturation,
             valueRange = 0f..1f,
             trackBrush = Brush.horizontalGradient(
@@ -111,7 +113,7 @@ fun ColorPicker(initialColor: Color, onColorChanged: (Color) -> Unit) {
 
         // Brightness slider
         SliderRow(
-            label = "Brightness",
+            label = I18n.s(R.string.brightness),
             value = value,
             valueRange = 0f..1f,
             trackBrush = Brush.horizontalGradient(
@@ -142,11 +144,11 @@ fun ColorPicker(initialColor: Color, onColorChanged: (Color) -> Unit) {
                     hexError = clean.length > 6
                 }
             },
-            label = { Text("Hex color (#RRGGBB)") },
+            label = { Text(I18n.s(R.string.ui_hex_color_rrggbb)) },
             isError = hexError,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            supportingText = if (hexError) {{ Text("Enter a valid 6-digit hex color") }} else null
+            supportingText = if (hexError) {{ Text(I18n.s(R.string.ui_enter_a_valid_6_digit_hex_color)) }} else null
         )
     }
 }

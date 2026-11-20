@@ -122,6 +122,8 @@ import kotlin.math.roundToInt
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * One page row at a time (Storage sub-tabs, container editor tabs) binds itself here, so the Deck
@@ -739,7 +741,7 @@ internal fun DeckRow(
             ) {
                 Icon(
                     imageVector = Icons.Filled.ChevronRight,
-                    contentDescription = "Has a config panel",
+                    contentDescription = I18n.s(R.string.ui_has_a_config_panel),
                     tint = DeckPalette.secondary,
                     modifier = Modifier.size(18.dp),
                 )
@@ -768,7 +770,7 @@ internal fun DeckExpandableRow(
     control: @Composable () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val rotation by animateFloatAsState(if (expanded) 90f else 0f, label = "deckExpandChevron")
+    val rotation by animateFloatAsState(if (expanded) 90f else 0f, label = I18n.s(R.string.ui_deckexpandchevron))
     val dragKey = remember { Any() }
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -837,7 +839,7 @@ internal fun DeckExpandableRow(
 /** DroidDeck's on/off switch: a 52×30 pill track with a 22dp knob. */
 @Composable
 internal fun DeckToggle(checked: Boolean, onChange: (Boolean) -> Unit) {
-    val knob by animateFloatAsState(if (checked) 1f else 0f, label = "deckToggle")
+    val knob by animateFloatAsState(if (checked) 1f else 0f, label = I18n.s(R.string.ui_decktoggle))
     val track = if (checked) DeckPalette.secondary else deckInsetFill()
     Box(
         contentAlignment = Alignment.Center,
@@ -872,7 +874,7 @@ internal fun DeckToggle(checked: Boolean, onChange: (Boolean) -> Unit) {
 /** DroidDeck's value chip: the current value in a pill with a caret that flips when open. */
 @Composable
 internal fun DeckValueChip(text: String, open: Boolean, onClick: () -> Unit) {
-    val rot by animateFloatAsState(if (open) 180f else 0f, label = "deckCaret")
+    val rot by animateFloatAsState(if (open) 180f else 0f, label = I18n.s(R.string.ui_deckcaret))
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -1267,7 +1269,7 @@ private fun DeckStretchyTab(
     val ink by animateColorAsState(
         if (active) DeckPalette.primary else DeckPalette.onSurfaceVariant,
         tween(190, easing = DeckEase),
-        label = "deckTabInk",
+        label = I18n.s(R.string.ui_decktabink),
     )
     Box(
         contentAlignment = Alignment.Center,

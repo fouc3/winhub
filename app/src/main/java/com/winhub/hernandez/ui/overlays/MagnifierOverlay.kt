@@ -32,6 +32,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.winhub.hernandez.ui.XServerDialogState
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @Composable
 fun MagnifierOverlay(state: XServerDialogState) {
@@ -85,7 +87,7 @@ fun MagnifierOverlay(state: XServerDialogState) {
                 }
         ) {
             Text(
-                text = "Magnifier",
+                text = I18n.s(R.string.magnifier),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

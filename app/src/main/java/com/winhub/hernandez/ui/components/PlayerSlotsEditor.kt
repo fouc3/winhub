@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.inputcontrols.ExternalController
 import com.winhub.hernandez.winhandler.WinHandler
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ───── Out-of-game Player Slots editor — shared by the Container editor and the per-game Shortcut editor ─────
 // Mirrors the in-game "Players" sub-tab (XServerDrawer.PlayerSlotRowItem) but writes a SAVED preference
@@ -179,7 +181,7 @@ private fun PlayerSlotEditorRowItem(row: PlayerSlotEditorRow, onChange: (Int) ->
             OutlinedTextField(
                 value = selectedLabel,
                 onValueChange = {}, readOnly = true,
-                label = { Text("Slot", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                label = { Text(I18n.s(R.string.ui_slot), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier.fillMaxWidth().menuAnchor(),
                 singleLine = true,

@@ -1,6 +1,8 @@
 package com.winhub.hernandez.core
 
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Steam account identity a cracked game's emulator keeps INSIDE the Wine prefix.
@@ -43,7 +45,7 @@ object EmuAccountIdentity {
     val EMULATORS = listOf(
         // FLT ("FairLight") — one file, one line, no newline. Regenerated random when absent.
         Emu(
-            label = "FLT",
+            label = I18n.s(R.string.ui_flt),
             root = "AppData/Roaming/FLT",
             idFiles = listOf("steam_id.txt"),
         ),
@@ -51,7 +53,7 @@ object EmuAccountIdentity {
         // holds per-appid save data and achievements for OTHER games, which a per-game backup has no
         // business dragging in.
         Emu(
-            label = "Goldberg",
+            label = I18n.s(R.string.ui_goldberg),
             root = "AppData/Roaming/GSE Saves/settings",
             idFiles = listOf("force_account_steamid.txt", "user_steam_id.txt", "configs.user.ini"),
             iniKey = "account_steamid",

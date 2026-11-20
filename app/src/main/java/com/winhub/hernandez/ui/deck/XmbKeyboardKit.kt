@@ -32,6 +32,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.winhub.hernandez.R
 import kotlin.math.min
+import com.winhub.hernandez.util.I18n
 
 // What the XMB keyboard borrows from the Deck style: its type, density, focus ring and glyph kinds.
 
@@ -66,7 +67,7 @@ internal fun Modifier.deckFocusRing(
     onFocused: (() -> Unit)? = null,
 ): Modifier {
     var focused by remember { mutableStateOf(false) }
-    val scale by animateFloatAsState(if (focused) scaleTo else 1f, label = "deckFocusScale")
+    val scale by animateFloatAsState(if (focused) scaleTo else 1f, label = I18n.s(R.string.ui_deckfocusscale))
     val accent = MaterialTheme.colorScheme.primary
     return this
         .onFocusChanged {

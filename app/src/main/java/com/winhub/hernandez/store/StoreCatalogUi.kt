@@ -74,6 +74,8 @@ import com.winhub.hernandez.ui.deck.xmbGlassCard
 import com.winhub.hernandez.ui.theme.StoreDiscountBg
 import com.winhub.hernandez.ui.theme.StoreDiscountInk
 import com.winhub.hernandez.ui.theme.StoreFreeGreen
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Store-AGNOSTIC storefront pieces: the catalog item model plus the card / row / hero / price-row /
@@ -224,7 +226,7 @@ internal fun CatalogItem.xmbRating(): String? =
 fun CatalogPriceRow(item: CatalogItem, modifier: Modifier = Modifier) {
     when {
         item.isFree -> Text(
-            text = "Free",
+            text = I18n.s(R.string.ui_free_2),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = StoreFreeGreen,
@@ -300,7 +302,7 @@ fun CatalogActionButton(
         ) {
             Icon(Icons.Filled.Redeem, contentDescription = null, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
-            Text("Get for free", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_get_for_free), style = style, maxLines = 1)
         }
 
         CatalogAction.Working -> Button(
@@ -316,7 +318,7 @@ fun CatalogActionButton(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Spacer(Modifier.width(6.dp))
-            Text("Working…", style = style, maxLines = 1)
+            Text(I18n.s(R.string.social_hub_configs_working), style = style, maxLines = 1)
         }
 
         is CatalogAction.Open -> Button(
@@ -760,7 +762,7 @@ fun CatalogResults(
                 contentAlignment = Alignment.Center,
             ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
 
-            rows.isEmpty() -> StoreNotice(title = "No matches", body = emptyBody)
+            rows.isEmpty() -> StoreNotice(title = I18n.s(R.string.ui_no_matches), body = emptyBody)
 
             // XMB home: the results as a grid of portrait covers.
             LocalStoreXmb.current -> LazyVerticalGrid(
@@ -857,7 +859,7 @@ fun CatalogSearchField(
                 IconButton(onClick = onClear, modifier = Modifier.steamFocusRing(RoundedCornerShape(20.dp))) {
                     Icon(
                         Icons.Filled.Close,
-                        contentDescription = "Clear search",
+                        contentDescription = I18n.s(R.string.social_hub_search_clear),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

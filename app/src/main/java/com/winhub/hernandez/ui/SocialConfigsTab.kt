@@ -103,6 +103,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 private const val TAG = "SocialConfigsTab"
 
@@ -251,8 +252,8 @@ internal fun SocialHubScreen(deck: Boolean = false, onExit: (() -> Unit)? = null
                 Column(Modifier.weight(1f).fillMaxHeight()) {
                     if (layout == "pages") {
                         DeckRow(
-                            label = "← All categories",
-                            hint = "Back to the category list",
+                            label = I18n.s(R.string.ui_all_categories),
+                            hint = I18n.s(R.string.ui_back_to_the_category_list),
                             onConfigClick = { pagesOpen = false },
                             control = {},
                         )

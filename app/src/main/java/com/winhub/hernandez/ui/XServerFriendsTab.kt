@@ -67,6 +67,8 @@ import com.winhub.hernandez.store.SteamFriendsStore
 import com.winhub.hernandez.store.dotColor
 import com.winhub.hernandez.ui.theme.LocalAccentDim
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ───── Friends tab (in-game drawer) ─────
 // Steam friends + 1:1 text chat while the game keeps running underneath. Renders straight off
@@ -123,7 +125,7 @@ internal fun FriendsTabButton(isSelected: Boolean, unread: Boolean, onClick: () 
         }
         Icon(
             imageVector = Icons.Filled.People,
-            contentDescription = "Friends",
+            contentDescription = I18n.s(R.string.xmb_tab_friends),
             tint = tintColor,
             modifier = Modifier.size(22.dp),
         )
@@ -190,7 +192,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
         if (showHelp) {
             AlertDialog(
                 onDismissRequest = { showHelp = false },
-                title = { Text("Friends") },
+                title = { Text(I18n.s(R.string.xmb_tab_friends)) },
                 text = { Text(HELP_TEXT) },
                 confirmButton = { TextButton(onClick = { showHelp = false }) { Text("OK") } },
             )
@@ -321,7 +323,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
             IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back to friends",
+                    contentDescription = I18n.s(R.string.ui_back_to_friends),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
@@ -349,7 +351,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (messages.isEmpty()) {
                 Text(
-                    text = "No messages yet. Say hello!",
+                    text = I18n.s(R.string.ui_no_messages_yet_say_hello),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center),
@@ -384,7 +386,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
                 value = draft,
                 onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Message", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text(I18n.s(R.string.xmb_fr_message), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 maxLines = 3,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { send() }),
@@ -393,7 +395,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
             IconButton(onClick = send, enabled = draft.isNotBlank()) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Send",
+                    contentDescription = I18n.s(R.string.social_hub_send),
                     tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onSurfaceVariant,
                 )

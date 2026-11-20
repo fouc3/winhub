@@ -59,6 +59,8 @@ import com.winhub.hernandez.store.GameFacts
 import com.winhub.hernandez.store.SteamStoreSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Portrait game page (ported from bannercode's DeckGamePage banner layout): the art as a banner
@@ -142,7 +144,7 @@ internal fun PortraitGamePage(
                     .border(if (backFocused) 2.dp else 1.dp, if (backFocused) Deck.primary else Color(0x55FFFFFF), backShape)
                     .clickable(interactionSource = backSource, indication = null, onClick = onBack),
             ) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.Filled.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back), tint = Color.White)
             }
         }
 
@@ -200,7 +202,7 @@ internal fun PortraitGamePage(
                         .border(1.dp, Deck.line, shape)
                         .padding(16.dp),
                 ) {
-                    Text("ABOUT THIS GAME", color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.4.sp)
+                    Text(I18n.s(R.string.retro_portrait_about), color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.4.sp)
                     Spacer(Modifier.height(6.dp))
                     Text(GameFacts.cleanText(raw), color = Deck.onSurfaceVariant, fontSize = 14.sp, lineHeight = 20.sp)
                 }

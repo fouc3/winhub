@@ -26,6 +26,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Xbox Cloud Gaming: Microsoft's web player (xbox.com/play) in a full-screen WebView. It runs in the Xbox
@@ -152,10 +154,10 @@ class XboxCloudActivity : ComponentActivity() {
     private fun confirmLeave() {
         if (leaving?.isShowing == true) return
         leaving = android.app.AlertDialog.Builder(this, com.winhub.hernandez.R.style.StoreAlertDialogDark)
-            .setTitle("Leave Xbox Cloud Gaming?")
-            .setMessage("The stream ends when you leave.")
-            .setPositiveButton("Leave") { _, _ -> finish() }
-            .setNegativeButton("Stay", null)
+            .setTitle(I18n.s(R.string.ui_leave_xbox_cloud_gaming))
+            .setMessage(I18n.s(R.string.ui_stream_ends_when_you_leave))
+            .setPositiveButton(I18n.s(R.string.ui_leave)) { _, _ -> finish() }
+            .setNegativeButton(I18n.s(R.string.ui_stay), null)
             .show()
     }
 

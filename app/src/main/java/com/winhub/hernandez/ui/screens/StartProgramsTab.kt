@@ -32,6 +32,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.core.StartPrograms
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** One program of the Mods tab: a Windows path and the seconds to wait before starting it. */
 internal class StartProgramItem(path: String, delay: String) {
@@ -91,12 +93,12 @@ internal fun DeckStartProgramsTab(state: StartProgramsState) {
         DeckGroup("Start with the game") {
             DeckConfigNote(START_PROGRAMS_HINT)
             DeckRow(
-                label = "Programs",
+                label = I18n.s(R.string.ui_programs),
                 hint = if (state.items.isEmpty()) "None yet." else "${state.items.size} to start",
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (state.items.isNotEmpty()) DeckButton("Arrange", primary = false) { arranging = true }
-                    DeckButton("Add", primary = true) { state.add() }
+                    if (state.items.isNotEmpty()) DeckButton(I18n.s(R.string.ui_arrange), primary = false) { arranging = true }
+                    DeckButton(I18n.s(R.string.add), primary = true) { state.add() }
                 }
             }
         }
@@ -109,7 +111,7 @@ internal fun DeckStartProgramsTab(state: StartProgramsState) {
                         onValueChange = { item.path = it },
                     )
                     DeckChoiceRow(
-                        label = "Wait before starting",
+                        label = I18n.s(R.string.ui_wait_before_starting),
                         hint = if (index == 0) "After the game launches." else "After the previous program starts.",
                         options = delayOptions(item.delay),
                         selected = item.delay.toIntOrNull()?.toString() ?: "0",
@@ -131,7 +133,7 @@ private fun StartProgramsOrderDialog(state: StartProgramsState, onDismiss: () ->
     var picked by remember { mutableStateOf<Int?>(null) }
     // The last program was removed: nothing left to arrange.
     LaunchedEffect(state.items.size) { if (state.items.isEmpty()) onDismiss() }
-    DeckConfigDialog(title = "Program order", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_program_order), onDismiss = onDismiss) {
         DeckConfigNote(
             if (picked == null) "Tap a program to pick it up."
             else "Tap where it should go, or press Up / Down. Tap it again to drop it.",
@@ -173,8 +175,8 @@ private fun StartProgramsOrderDialog(state: StartProgramsState, onDismiss: () ->
             modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
         ) {
             val from = picked
-            if (from != null) DeckButton("Remove", primary = false) { state.remove(from); picked = null }
-            DeckButton("Done", primary = true, onClick = onDismiss)
+            if (from != null) DeckButton(I18n.s(R.string.remove), primary = false) { state.remove(from); picked = null }
+            DeckButton(I18n.s(R.string.wrapper_catalog_close), primary = true, onClick = onDismiss)
         }
     }
 }

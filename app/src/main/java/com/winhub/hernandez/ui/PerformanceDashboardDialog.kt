@@ -67,6 +67,8 @@ import com.winhub.hernandez.ui.screens.WatchdogSection
 import com.winhub.hernandez.ui.theme.DangerRed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-game "Performance" dashboard — the single dialog that REPLACES the old inline toggle stack that
@@ -206,7 +208,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     ) { Text("⚡", fontSize = 17.sp) }
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
-                        Text("Performance", color = cs.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Text(I18n.s(R.string.performance), color = cs.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                         Text(
                             "Applies live to this session · auto-reverts on exit",
                             color = cs.onSurfaceVariant, fontSize = 11.sp,
@@ -226,7 +228,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 ) {
-                    Text("Panel opacity", color = cs.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_panel_opacity), color = cs.onSurfaceVariant, fontSize = 12.sp)
                     Slider(
                         value = opacity,
                         onValueChange = { PerformanceSettings.setDialogOpacity(it) },
@@ -286,7 +288,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
                         ) {
                             Column(Modifier.weight(1f)) {
-                                Text("Enable Galaxy Performance", color = cs.onSurface, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                                Text(I18n.s(R.string.ui_enable_galaxy_performance), color = cs.onSurface, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                                 Text(
                                     "No-root CPU/GPU/RAM control via Samsung's SDK. Off by default; saved per game.",
                                     color = cs.onSurfaceVariant, fontSize = 11.sp,
@@ -490,7 +492,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
     }
     if (showGrantGate) {
         PerfDisclaimerDialog(
-            title = "Power-user performance — read first",
+            title = I18n.s(R.string.ui_power_user_performance_read_first),
             body = PerfDisclaimerCopy.ROOT_RISK,
             confirmLabel = "Grant Root",
             onConfirm = { showGrantGate = false; scope.launch { RootManager.requestGrant() } },
@@ -502,7 +504,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
     if (showGalaxyOffPrompt) {
         AlertDialog(
             onDismissRequest = { showGalaxyOffPrompt = false },
-            title = { Text("Let Galaxy control performance?") },
+            title = { Text(I18n.s(R.string.ui_let_galaxy_control_performance)) },
             text = {
                 Text(
                     "Galaxy Performance and the Power profile above both drive the CPU/GPU clocks, " +
@@ -514,11 +516,11 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
             },
             confirmButton = {
                 TextButton(onClick = { applyProfile("Off"); showGalaxyOffPrompt = false }) {
-                    Text("Set Power profile to Off")
+                    Text(I18n.s(R.string.ui_set_power_profile_to_off))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showGalaxyOffPrompt = false }) { Text("Keep both") }
+                TextButton(onClick = { showGalaxyOffPrompt = false }) { Text(I18n.s(R.string.ui_keep_both)) }
             },
         )
     }
@@ -688,7 +690,7 @@ private fun ToggleRowLocal(
                     modifier = Modifier.weight(1f),
                 )
                 if (overridden) {
-                    Text("Reset to global", color = cs.primary, fontSize = 10.sp,
+                    Text(I18n.s(R.string.ui_reset_to_global), color = cs.primary, fontSize = 10.sp,
                         modifier = Modifier.clickable { onReset() })
                 }
             }
@@ -734,7 +736,7 @@ private fun ActionRowLocal(label: String, sub: String, onClick: () -> Unit) {
         Box(
             Modifier.clip(RoundedCornerShape(9.dp)).background(cs.primary)
                 .padding(horizontal = 13.dp, vertical = 7.dp),
-        ) { Text("Run", color = cs.onPrimary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold) }
+        ) { Text(I18n.s(R.string.run), color = cs.onPrimary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold) }
     }
 }
 
@@ -834,8 +836,8 @@ fun PerformanceDashboardDialogPerGame(
                     ) { Text("⚡", fontSize = 17.sp) }
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
-                        Text("Performance", color = cs.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                        Text("Per-game preset · saved on OK · honored at launch",
+                        Text(I18n.s(R.string.performance), color = cs.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Text(I18n.s(R.string.ui_per_game_preset_saved_on_ok_honored_at_launch),
                             color = cs.onSurfaceVariant, fontSize = 11.sp)
                     }
                     Box(
@@ -907,7 +909,7 @@ fun PerformanceDashboardDialogPerGame(
 
                     // Root & danger — settable as presets regardless of the current grant.
                     SectionHead("Root & danger")
-                    Text("Saved for this game · applied at launch when root is available.",
+                    Text(I18n.s(R.string.ui_saved_for_this_game_applied_at_launch_when_root_is_av),
                         color = cs.onSurfaceVariant, fontSize = 11.sp,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp))
                     PerfCard {
@@ -939,7 +941,7 @@ fun PerformanceDashboardDialogPerGame(
                         bigCores != globalOf("preferBigCores") ||
                         PerfRootApplier.ROOT_KEYS.any { rootValue(it) != globalOf(it) }
                     if (anyOverride) {
-                        Text("↺ Reset all performance toggles to global", color = cs.primary, fontSize = 13.sp,
+                        Text(I18n.s(R.string.ui_reset_all_performance_toggles_to_global), color = cs.primary, fontSize = 13.sp,
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
                                 .clip(RoundedCornerShape(10.dp)).clickable { onResetAll() }
                                 .padding(horizontal = 12.dp, vertical = 8.dp))
@@ -954,7 +956,7 @@ fun PerformanceDashboardDialogPerGame(
             onConfirm = { pd.enable(); pendingDanger = null }, onDismiss = { pendingDanger = null })
     }
     if (showGrantGate) {
-        PerfDisclaimerDialog(title = "Power-user performance — read first", body = PerfDisclaimerCopy.ROOT_RISK,
+        PerfDisclaimerDialog(title = I18n.s(R.string.ui_power_user_performance_read_first), body = PerfDisclaimerCopy.ROOT_RISK,
             confirmLabel = "Grant Root", onConfirm = { showGrantGate = false; scope.launch { RootManager.requestGrant() } },
             onDismiss = { showGrantGate = false })
     }

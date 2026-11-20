@@ -43,6 +43,8 @@ import com.winhub.hernandez.core.AppOrientation
 import com.winhub.hernandez.store.download.DownloadRegistry
 import com.winhub.hernandez.store.download.DownloadsButton
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Epic section's host — flipped from a login card + "View Game Library" button to a
@@ -218,22 +220,22 @@ private fun EpicStorefrontHost(
         railStatusSlot = { StoreAvatar(emptyList(), displayName.ifBlank { "E" }, 36.dp) },
         actions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             IconButton(
                 onClick = { ctx.startActivity(Intent(ctx, EpicGamesActivity::class.java)) },
                 modifier = Modifier.steamFocusRing(),
             ) {
-                Icon(Icons.Filled.ViewList, contentDescription = "Full library screen", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.ViewList, contentDescription = I18n.s(R.string.ui_full_library_screen), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton()
             IconButton(onClick = onSignOut, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign out", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = I18n.s(R.string.social_hub_sign_out), tint = MaterialTheme.colorScheme.primary)
             }
         },
         railActions = {
             IconButton(onClick = { library.refresh(true) }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Sync library", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_sync_library), tint = MaterialTheme.colorScheme.primary)
             }
             DownloadsButton(Modifier.xmbRailStop(ring = true))
             StoreRailOverflow(
@@ -312,7 +314,7 @@ private fun EpicLoginScreen(onLoginClick: () -> Unit) {
                 onClick = onLoginClick,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.height(48.dp).steamFocusRing(RoundedCornerShape(8.dp)),
-            ) { Text("Login with Epic Games") }
+            ) { Text(I18n.s(R.string.ui_login_with_epic_games)) }
         }
     }
 }

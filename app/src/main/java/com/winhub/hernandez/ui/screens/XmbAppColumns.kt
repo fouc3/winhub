@@ -17,13 +17,15 @@ import com.winhub.hernandez.ui.Screen
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** XMB column for the container list: one row per container, loaded on open. */
 internal fun xmbContainersMenu(xmb: XmbScope, onEdit: (Int?) -> Unit): XmbMenu {
     val state = mutableStateOf<List<Container>>(emptyList())
     var loading = false
     return XmbMenu(
-        title = "Containers",
+        title = I18n.s(R.string.containers),
         icon = Icons.Filled.Folder,
         rows = {
             if (!loading) {
@@ -51,7 +53,7 @@ internal fun xmbContainersMenu(xmb: XmbScope, onEdit: (Int?) -> Unit): XmbMenu {
                     xmbContainerMenu(id = container.id, name = container.name, onEdit = onEdit)
                 }
             }
-            out += XmbRow.Action(key = "new", label = "New container", icon = Icons.Filled.Folder) {
+            out += XmbRow.Action(key = "new", label = I18n.s(R.string.ui_new_container), icon = Icons.Filled.Folder) {
                 xs.pop()
                 onEdit(null)
             }
@@ -68,7 +70,7 @@ private fun xmbContainerMenu(id: Int, name: String, onEdit: (Int?) -> Unit): Xmb
         val xs = this
         arrayListOf<XmbRow>(
             XmbRow.Header(key = "name", label = name),
-            XmbRow.Action(key = "edit", label = "Edit container", icon = Icons.Filled.Settings) {
+            XmbRow.Action(key = "edit", label = I18n.s(R.string.ui_edit_container), icon = Icons.Filled.Settings) {
                 xs.pop()
                 onEdit(id)
             },
@@ -84,13 +86,13 @@ internal fun xmbFileManagerMenu(dir: File): XmbMenu = XmbMenu(
         val out = ArrayList<XmbRow>()
         out += XmbRow.Header(key = "path", label = dir.absolutePath)
         dir.parentFile?.let { parent ->
-            out += XmbRow.Link(key = "up", label = "Up one level", icon = Icons.Filled.Folder) {
+            out += XmbRow.Link(key = "up", label = I18n.s(R.string.ui_up_one_level), icon = Icons.Filled.Folder) {
                 xmbFileManagerMenu(parent)
             }
         }
         val entries = dir.listFiles()
         if (entries.isNullOrEmpty()) {
-            out += XmbRow.Header(key = "empty", label = "Empty folder")
+            out += XmbRow.Header(key = "empty", label = I18n.s(R.string.ui_empty_folder))
         } else {
             entries
                 .sortedWith(compareByDescending<File> { it.isDirectory }.thenBy { it.name.lowercase() })
@@ -117,15 +119,15 @@ internal fun xmbFileManagerMenu(dir: File): XmbMenu = XmbMenu(
 internal fun xmbSettingsMenu(xmb: XmbScope): XmbMenu {
     val prefs = PreferenceManager.getDefaultSharedPreferences(xmb.context)
     return XmbMenu(
-        title = "Settings",
+        title = I18n.s(R.string.settings),
         icon = Icons.Filled.Settings,
         rows = {
             val xs = this
             val out = ArrayList<XmbRow>()
-            out += XmbRow.Header(key = "app", label = "App")
+            out += XmbRow.Header(key = "app", label = I18n.s(R.string.ui_app))
             out += XmbRow.Toggle(
                 key = "dark_mode",
-                label = "Dark mode",
+                label = I18n.s(R.string.ui_dark_mode),
                 icon = Icons.Filled.Settings,
                 value = prefs.getBoolean("dark_mode", false),
             ) { enabled ->
@@ -134,15 +136,15 @@ internal fun xmbSettingsMenu(xmb: XmbScope): XmbMenu {
             }
             out += XmbRow.Toggle(
                 key = "enable_big_picture_mode",
-                label = "Big Picture mode",
+                label = I18n.s(R.string.ui_big_picture_mode_2),
                 icon = Icons.Filled.Settings,
                 value = prefs.getBoolean("enable_big_picture_mode", false),
             ) { enabled ->
                 prefs.edit().putBoolean("enable_big_picture_mode", enabled).apply()
                 saved()
             }
-            out += XmbRow.Header(key = "more", label = "More")
-            out += XmbRow.Link(key = "all", label = "All settings", icon = Icons.Filled.Settings) {
+            out += XmbRow.Header(key = "more", label = I18n.s(R.string.ui_more))
+            out += XmbRow.Link(key = "all", label = I18n.s(R.string.ui_all_settings), icon = Icons.Filled.Settings) {
                 screenMenu(Screen.Settings) { SettingsScreen(onSaved = { xs.pop() }) }
             }
             out
@@ -156,7 +158,7 @@ internal fun xmbGraphicsMenu(xmb: XmbScope): XmbMenu {
     val slots = mutableStateOf<List<WrapperManager.WrapperSlot>>(emptyList())
     var loading = false
     return XmbMenu(
-        title = "Graphics",
+        title = I18n.s(R.string.ui_graphics),
         icon = Icons.Filled.Memory,
         rows = {
             if (!loading) {
@@ -174,19 +176,19 @@ internal fun xmbGraphicsMenu(xmb: XmbScope): XmbMenu {
                 }
             }
             val out = ArrayList<XmbRow>()
-            out += XmbRow.Header(key = "gpu", label = "GPU drivers")
+            out += XmbRow.Header(key = "gpu", label = I18n.s(R.string.ui_gpu_drivers_2))
             val installed = drivers.value
             if (installed.isEmpty()) {
-                out += XmbRow.Header(key = "gpuempty", label = "No drivers installed")
+                out += XmbRow.Header(key = "gpuempty", label = I18n.s(R.string.ui_no_drivers_installed))
             } else {
                 installed.forEachIndexed { index, label ->
                     out += XmbRow.Info(key = "d$index", label = label, icon = Icons.Filled.Memory)
                 }
             }
-            out += XmbRow.Header(key = "wrappers", label = "Wrappers")
+            out += XmbRow.Header(key = "wrappers", label = I18n.s(R.string.ui_wrappers))
             val wrapperSlots = slots.value
             if (wrapperSlots.isEmpty()) {
-                out += XmbRow.Header(key = "wrempty", label = "No wrappers installed")
+                out += XmbRow.Header(key = "wrempty", label = I18n.s(R.string.ui_no_wrappers_installed))
             } else {
                 wrapperSlots.forEachIndexed { index, slot ->
                     out += XmbRow.Info(

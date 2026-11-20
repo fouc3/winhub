@@ -10,6 +10,8 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import com.winhub.hernandez.store.download.DownloadRegistry
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Foreground service that keeps the Steam CM connection alive while downloading
@@ -171,7 +173,7 @@ class SteamForegroundService : Service() {
             "Steam Connection",
             NotificationManager.IMPORTANCE_LOW,
         ).apply {
-            description = "Keeps Steam connection alive while browsing or downloading games"
+            description = I18n.s(R.string.ui_keeps_steam_connection_alive_while_browsing_or_downlo)
             setShowBadge(false)
         }
         nm.createNotificationChannel(ch)

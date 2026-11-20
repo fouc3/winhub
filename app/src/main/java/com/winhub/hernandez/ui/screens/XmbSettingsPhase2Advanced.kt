@@ -56,6 +56,7 @@ import org.json.JSONArray
 import java.io.File
 import java.io.FileInputStream
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
 
 // ── Advanced (ScAdvancedTab) ────────────────────────────────────────────────────────────────────────
 
@@ -146,7 +147,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             val fex = shortcut.p2Ex("fexcoreVersion", c.getFEXCoreVersion())
             val fexOpts = if (fex.isNotEmpty() && fex !in d.fexVersions) d.fexVersions + fex else d.fexVersions
             if (fexOpts.isNotEmpty()) {
-                rows += XmbRow.Choice("fexVersion", ctx.getString(R.string.fexcore_version), Icons.Filled.Memory, fexOpts,
+                rows += XmbRow.Choice(I18n.s(R.string.ui_fexversion), ctx.getString(R.string.fexcore_version), Icons.Filled.Memory, fexOpts,
                     if (fex.isEmpty()) fexOpts.first() else fex) { v -> p2Put(xmb, shortcut, "fexcoreVersion", v) }
             }
             rows += XmbRow.Link("fexDownload", "Download FEXCore versions", Icons.Filled.CloudDownload) {
@@ -160,7 +161,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val profileLabels = p2Unique(listOf(ctx.getString(R.string.none)) + d.profiles.map { it.getName() ?: "Profile ${it.id}" })
         val cpId = shortcut.p2Ex("controlsProfile", "0").toIntOrNull() ?: 0
         val cpIdx = if (cpId == 0) 0 else d.profiles.indexOfFirst { it.id == cpId }.let { if (it >= 0) it + 1 else 0 }
-        rows += XmbRow.Choice("controlsProfile", "Controls profile", Icons.Filled.Gamepad, profileLabels, profileLabels[cpIdx]) { v ->
+        rows += XmbRow.Choice(I18n.s(R.string.ui_controlsprofile), "Controls profile", Icons.Filled.Gamepad, profileLabels, profileLabels[cpIdx]) { v ->
             val idx = profileLabels.indexOf(v).coerceAtLeast(0)
             val id = if (idx == 0) 0 else d.profiles.getOrNull(idx - 1)?.id ?: 0
             p2Put(xmb, shortcut, "controlsProfile", if (id > 0) id.toString() else null)
@@ -175,7 +176,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             if (stIdx == Container.STARTUP_SELECTION_CUSTOM.toInt()) {
                 val on = WineUtils.parseStartupServicesCsv(shortcut.p2Ex("startupServices", c.startupServices)).size
                 rows += XmbRow.Link("services", "Custom services", Icons.Filled.Checklist, value = "$on on",
-                    subtitle = "Pick which Wine services start") { p2ServicesMenu(xmb, shortcut) }
+                    subtitle = I18n.s(R.string.ui_pick_which_wine_services_start)) { p2ServicesMenu(xmb, shortcut) }
             }
         }
         val cores = Runtime.getRuntime().availableProcessors()
@@ -187,7 +188,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         rows += XmbRow.Header("hSharpness", "Sharpness (VKBasalt)")
         if (sharpEntries.isNotEmpty()) {
             val fxStored = shortcut.p2Ex("sharpnessEffect", "None")
-            rows += XmbRow.Choice("sharpEffect", "Effect", Icons.Filled.Image, sharpEntries,
+            rows += XmbRow.Choice(I18n.s(R.string.ui_sharpeffect), "Effect", Icons.Filled.Image, sharpEntries,
                 sharpEntries.firstOrNull { it == fxStored } ?: sharpEntries.first()) { v -> p2Put(xmb, shortcut, "sharpnessEffect", v) }
         }
         val level = (shortcut.p2Ex("sharpnessLevel", "100").toIntOrNull() ?: 100).coerceIn(0, 100)
@@ -233,11 +234,11 @@ private fun p2PresetRows(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: PresetK
         if (i >= 0) p2Put(xmb, s, key, ids[i])
     }
     rows += XmbRow.Link(if (isFex) "fexPresetEdit" else "b64PresetEdit", "Edit preset for this game", Icons.Filled.Edit,
-        value = if (customised) "Customised" else null, subtitle = "Only this game changes") {
+        value = if (customised) "Customised" else null, subtitle = I18n.s(R.string.ui_only_this_game_changes)) {
         p2PresetValuesMenu(xmb, s, kind, selId, names[idx])
     }
     rows += XmbRow.Link(if (isFex) "fexPresetManage" else "b64PresetManage", "Manage $emu presets", Icons.Filled.ListAlt,
-        subtitle = "New, duplicate, delete, export, import") {
+        subtitle = I18n.s(R.string.ui_new_duplicate_delete_export_import)) {
         p2PresetManageMenu(xmb, s, d, kind)
     }
 }
@@ -307,7 +308,7 @@ private fun p2PresetValuesMenu(xmb: XmbScope, s: Shortcut, kind: PresetKind, pre
         rows += XmbRow.Info("scope",
             if (customised) "Customised for this game. Reset makes it follow its container again."
             else "Saved for this game only — no other game or container changes.", Icons.Filled.Info)
-        if (specs.isEmpty()) rows += XmbRow.Info("noSpecs", "This preset has no editable variables", Icons.Filled.Info)
+        if (specs.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nospecs), "This preset has no editable variables", Icons.Filled.Info)
         val vals = current()
         specs.forEach { spec ->
             val v = vals[spec.name] ?: spec.defaultValue
@@ -331,7 +332,7 @@ private fun p2PresetValuesMenu(xmb: XmbScope, s: Shortcut, kind: PresetKind, pre
             }
         }
         if (customised) {
-            rows += XmbRow.Action("reset", "Reset", Icons.Filled.RestartAlt, subtitle = "Follow the container's values again", danger = true) {
+            rows += XmbRow.Action("reset", "Reset", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_follow_the_container_values_again), danger = true) {
                 PresetOverrides.clearLocal(isFex, PresetScope.SHORTCUT, c, s)
                 xmb.saved()
                 xmb.refresh()
@@ -364,7 +365,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
         val sel = selectedId()
         val custom = sel.startsWith(if (isFex) FEXCorePreset.CUSTOM else Box64Preset.CUSTOM)
         rows += XmbRow.Text("new", "New preset", Icons.Filled.Add, "", subtitle = "Default values; becomes this game's preset",
-            placeholder = "Preset name") { name ->
+            placeholder = I18n.s(R.string.ui_preset_name)) { name ->
             val clean = name.trim().replace(Regex("[,|]+"), "")
             if (clean.isEmpty()) xmb.toast("Enter a name")
             else {
@@ -400,7 +401,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
             if (isFex) FEXCorePresetManager.exportPreset(ctx, sel)
             else Box64PresetManager.exportPreset(prefix, ctx, sel)
         }
-        rows += XmbRow.Link("import", "Import preset", Icons.Filled.FileDownload, subtitle = "From a .wbp file") {
+        rows += XmbRow.Link("import", "Import preset", Icons.Filled.FileDownload, subtitle = I18n.s(R.string.ui_from_a_wbp_file)) {
             val ext = Environment.getExternalStorageDirectory()
             val presetsDir = File(SettingsFragment.DEFAULT_WINLATOR_PATH, "Presets")
             val roots = listOf(
@@ -573,11 +574,11 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
         }
         val params: List<ReshadeManager.ReshadeParam> = effects.firstOrNull { it.name == name }?.params?.toList() ?: emptyList()
         if (params.isEmpty()) {
-            rows += XmbRow.Info("noParams", "No tunable parameters.", Icons.Filled.Info)
+            rows += XmbRow.Info(I18n.s(R.string.ui_noparams), "No tunable parameters.", Icons.Filled.Info)
         } else {
             rows += XmbRow.Header("hParams", "Parameters")
             params.forEach { p -> p2ReshadeParamRows(this@P2Reshade, name, p, rows) }
-            rows += XmbRow.Action("resetParams", "Reset parameters", Icons.Filled.RestartAlt, subtitle = "Back to the effect's defaults") {
+            rows += XmbRow.Action("resetParams", "Reset parameters", Icons.Filled.RestartAlt, subtitle = I18n.s(R.string.ui_back_to_the_effect_defaults)) {
                 params.forEach { p ->
                     val tmp = HashMap<String, Float>()
                     ReshadeManager.seedValues(p, null, tmp)

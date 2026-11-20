@@ -129,6 +129,7 @@ import com.winhub.hernandez.ui.deck.xmbPageFrost
 import com.winhub.hernandez.ui.deck.xmbRailItem
 import com.winhub.hernandez.ui.theme.LocalAccentDim
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
 
 // The store screens in the Deck interface's XMB-home mode: edge to edge in an even frame, a slim rail, a compact search
 // field that types only on A, and portrait covers that pop when focused. Everything here is used only while
@@ -795,7 +796,7 @@ internal fun XmbSearchField(
         }
         if (query.isNotEmpty()) {
             Icon(
-                Icons.Filled.Close, contentDescription = "Clear search", tint = cs.onSurfaceVariant,
+                Icons.Filled.Close, contentDescription = I18n.s(R.string.social_hub_search_clear), tint = cs.onSurfaceVariant,
                 modifier = Modifier
                     .size(s.dp(26f))
                     .clip(RoundedCornerShape(50))

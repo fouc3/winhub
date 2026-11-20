@@ -82,6 +82,8 @@ import java.net.URL
 import java.net.URLEncoder
 import java.util.concurrent.Executors
 import java.util.function.Consumer
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class GogGamesActivity : ComponentActivity() {
 
@@ -683,7 +685,7 @@ class GogGamesActivity : ComponentActivity() {
 
     private fun startDownload(game: GogGame) {
         val dlState = GameDownloadState(
-            buttonText = "Cancel",
+            buttonText = I18n.s(R.string.cancel),
             buttonColor = 0xFFCC3333.toInt(),
             progressVisible = true,
             progress = 0,
@@ -737,7 +739,7 @@ class GogGamesActivity : ComponentActivity() {
                         progress = 100,
                         status = "Installed",
                         isInstalled = true,
-                        buttonText = "Add Game",
+                        buttonText = I18n.s(R.string.xmb_hint_add_game),
                         buttonColor = 0xFF0055FF.toInt(),
                         progressVisible = true,
                     )
@@ -986,7 +988,7 @@ private fun GogGamesScreen(
                 modifier = Modifier.height(40.dp),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp),
-            ) { Text("\u21ba", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
+            ) { Text(I18n.s(R.string.ui_u21ba_2), color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             // \u2b07 cross-store Download Manager (global active-count badge).
             DownloadsButton()
         }
@@ -996,7 +998,7 @@ private fun GogGamesScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = onSearchChange,
-                placeholder = { Text("Search games\u2026", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text(I18n.s(R.string.ui_search_games_u2026), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = { onSearchChange(searchQuery); stopEditing() }),
@@ -1044,7 +1046,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
+                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameListCard(
@@ -1074,7 +1076,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
+                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameGridTile(
@@ -1093,7 +1095,7 @@ private fun GogGamesScreen(
                 }
             } else if (!scrollVisible && !isSyncing) {
                 Text(
-                    text = "Your GOG library is empty",
+                    text = I18n.s(R.string.ui_your_gog_library_is_empty),
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center).padding(24.dp),
@@ -1449,7 +1451,7 @@ private fun ExePickerDialogGog(
 ) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select game executable") },
+        title = { Text(I18n.s(R.string.ui_select_game_executable)) },
         text = {
             Column(
                 modifier = Modifier
@@ -1504,7 +1506,7 @@ private fun InstallConfirmDialog(
                 if (notEnoughSpace) {
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "\u26A0 Not enough space",
+                        text = I18n.s(R.string.ui_u26a0_not_enough_space),
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.error,
                     )
@@ -1516,10 +1518,10 @@ private fun InstallConfirmDialog(
             TextButton(
                 onClick = onConfirm,
                 enabled = canInstall,
-            ) { Text("Install", color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
+            ) { Text(I18n.s(R.string.ui_install), color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
     )
 }
@@ -1551,7 +1553,7 @@ private fun DetailDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
     )
 }

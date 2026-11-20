@@ -100,6 +100,7 @@ import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 /** A game installed in its own dedicated (Cronos) container. */
 private data class DeckCronosItem(
@@ -172,7 +173,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                 .padding(horizontal = 22.dp, vertical = 18.dp),
         ) {
             Text(
-                text = "Storage",
+                text = I18n.s(R.string.ui_storage),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
@@ -218,7 +219,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                         )
                 },
                 modifier = bodyModifier.focusGroup(),
-                label = "storageTab",
+                label = I18n.s(R.string.ui_storagetab),
             ) { which ->
                 if (which == 0) {
                     DeckCronosTab(
@@ -300,7 +301,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
 
     removeContainerFor?.let { item ->
         DeckConfirmDialog(
-            title = "Remove container?",
+            title = I18n.s(R.string.ui_remove_container),
             message = "The container \"${item.container.name}\" and everything in it will be deleted.",
             confirmLabel = "Remove Container",
             danger = true,
@@ -332,7 +333,7 @@ private fun DeckCronosTab(
             CircularProgressIndicator(color = DeckPalette.primary)
         }
         games.isEmpty() -> Text(
-            text = "No Cronos games yet. Add one game per container from Home and it will show here.",
+            text = I18n.s(R.string.ui_no_cronos_games_yet_add_one_game_per_container_from_h),
             fontSize = 14.sp,
             color = DeckPalette.onSurfaceVariant,
             modifier = Modifier.padding(top = 12.dp),
@@ -394,7 +395,7 @@ private fun DeckStorageContainersTab(
                     )
                     Spacer(Modifier.width(6.dp))
                     Text(
-                        text = "New",
+                        text = I18n.s(R.string.ui_new_2),
                         color = DeckPalette.onPrimary,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -410,7 +411,7 @@ private fun DeckStorageContainersTab(
                     .padding(horizontal = 16.dp),
             ) {
                 Text(
-                    text = "Defaults",
+                    text = I18n.s(R.string.ui_defaults),
                     color = DeckPalette.onBackground,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -421,7 +422,7 @@ private fun DeckStorageContainersTab(
 
         if (containers.isEmpty()) {
             Text(
-                text = "No containers yet.",
+                text = I18n.s(R.string.ui_no_containers_yet),
                 fontSize = 15.sp,
                 color = DeckPalette.onSurfaceVariant,
                 modifier = Modifier.padding(top = 24.dp),
@@ -669,7 +670,7 @@ private fun DeckConfirmDialog(
                 .fillMaxWidth()
                 .padding(top = 10.dp),
         ) {
-            DeckButton("Cancel", primary = false) { onDismiss() }
+            DeckButton(I18n.s(R.string.cancel), primary = false) { onDismiss() }
             Spacer(Modifier.width(8.dp))
             if (danger) DeckDangerButton(confirmLabel, onConfirm)
             else DeckButton(confirmLabel) { onConfirm() }
@@ -894,7 +895,7 @@ private fun DeckContainerCard(
         ) {
             Icon(
                 imageVector = Icons.Filled.PlayArrow,
-                contentDescription = "Run",
+                contentDescription = I18n.s(R.string.run),
                 tint = DeckPalette.onPrimary,
                 modifier = Modifier.size(24.dp),
             )
@@ -912,7 +913,7 @@ private fun DeckContainerCard(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
-                    contentDescription = "Actions",
+                    contentDescription = I18n.s(R.string.ui_actions),
                     tint = DeckPalette.onSurfaceVariant,
                     modifier = Modifier.size(22.dp),
                 )
@@ -1027,7 +1028,7 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Properties",
+                    text = I18n.s(R.string.ui_properties),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,
@@ -1093,7 +1094,7 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
                     )
                 }
                 Text(
-                    text = "Estimated used space",
+                    text = I18n.s(R.string.ui_estimated_used_space),
                     fontSize = 11.sp,
                     color = DeckPalette.onSurfaceVariant,
                     modifier = Modifier.padding(top = 6.dp),
@@ -1105,14 +1106,14 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    DeckButton("Clear Cache", primary = false) {
+                    DeckButton(I18n.s(R.string.clear_cache), primary = false) {
                         FileUtils.clear(File(container.rootDir, ".cache"))
                         container.putExtra("desktopTheme", null)
                         container.saveData()
                         cacheEpoch++
                     }
                     Spacer(Modifier.weight(1f))
-                    DeckButton("Close", primary = true) { onDismiss() }
+                    DeckButton(I18n.s(R.string.wrapper_manager_close), primary = true) { onDismiss() }
                 }
             }
         }

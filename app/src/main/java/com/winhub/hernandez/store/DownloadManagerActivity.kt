@@ -78,6 +78,8 @@ import com.winhub.hernandez.store.download.formatEta
 import com.winhub.hernandez.ui.theme.LocalAccentDim
 import com.winhub.hernandez.ui.theme.WinlatorTheme
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Phase 3 — the cross-store Download Manager screen. A thin Compose consumer of the
@@ -349,18 +351,18 @@ class DownloadManagerActivity : ComponentActivity() {
     private fun cancelEntry(entry: DownloadEntry) {
         if (entry.store == Store.EPIC) {
             AlertDialog.Builder(this)
-                .setTitle("Cancel download?")
+                .setTitle(I18n.s(R.string.ui_cancel_download))
                 .setMessage("Keep the partial download so you can resume later, or delete all " +
                         "downloaded files for this game?")
-                .setPositiveButton("Keep files") { _, _ ->
+                .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                     EpicCancelPolicy.setDeleteOnCancel(entry.id, false)
                     entry.cancel?.invoke()
                 }
-                .setNegativeButton("Delete files") { _, _ ->
+                .setNegativeButton(I18n.s(R.string.ui_delete_files)) { _, _ ->
                     EpicCancelPolicy.setDeleteOnCancel(entry.id, true)
                     entry.cancel?.invoke()
                 }
-                .setNeutralButton("Keep downloading", null)
+                .setNeutralButton(I18n.s(R.string.ui_keep_downloading), null)
                 .show()
         } else {
             entry.cancel?.invoke()
@@ -397,17 +399,17 @@ private fun DownloadManagerScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text("Downloads & Library") },
+                title = { Text(I18n.s(R.string.ui_downloads_library)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = I18n.s(R.string.social_hub_configs_back),
                         )
                     }
                 },
                 actions = {
-                    TextButton(onClick = onClear) { Text("Clear ✓") }
+                    TextButton(onClick = onClear) { Text(I18n.s(R.string.ui_clear)) }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
@@ -425,7 +427,7 @@ private fun DownloadManagerScreen(
         ) {
             if (entries.isEmpty()) {
                 Text(
-                    text = "No downloads or installed games yet.",
+                    text = I18n.s(R.string.ui_no_downloads_or_installed_games_yet),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center).padding(24.dp),
@@ -549,13 +551,13 @@ private fun DownloadCard(
                         // entry.updateAvailable gets the same marker.
                         if (entry.updateAvailable) {
                             Text(
-                                text = "● Installed — Update available",
+                                text = I18n.s(R.string.ui_installed_update_available),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = UPDATE_AMBER,
                             )
                         } else {
                             Text(
-                                text = "● Installed",
+                                text = I18n.s(R.string.ui_installed),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = INSTALLED_GREEN,
                             )
@@ -567,7 +569,7 @@ private fun DownloadCard(
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.height(32.dp),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                            ) { Text("Launch", style = MaterialTheme.typography.labelSmall) }
+                            ) { Text(I18n.s(R.string.ui_launch), style = MaterialTheme.typography.labelSmall) }
                             OutlinedButton(
                                 onClick = { onUninstall(entry) },
                                 shape = RoundedCornerShape(8.dp),
@@ -576,7 +578,7 @@ private fun DownloadCard(
                                 ),
                                 modifier = Modifier.height(32.dp),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                            ) { Text("Uninstall", style = MaterialTheme.typography.labelSmall) }
+                            ) { Text(I18n.s(R.string.xmb_dl_act_uninstall), style = MaterialTheme.typography.labelSmall) }
                         }
                     }
 
@@ -594,12 +596,12 @@ private fun DownloadCard(
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier.height(32.dp),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                        ) { Text("Dismiss", style = MaterialTheme.typography.labelSmall) }
+                        ) { Text(I18n.s(R.string.xmb_dl_act_dismiss), style = MaterialTheme.typography.labelSmall) }
                     }
 
                     DownloadState.CANCELLED -> {
                         Text(
-                            text = "Cancelled",
+                            text = I18n.s(R.string.xmb_dl_status_cancelled),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -609,7 +611,7 @@ private fun DownloadCard(
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier.height(32.dp),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                        ) { Text("Dismiss", style = MaterialTheme.typography.labelSmall) }
+                        ) { Text(I18n.s(R.string.xmb_dl_act_dismiss), style = MaterialTheme.typography.labelSmall) }
                     }
                 }
             }
@@ -688,7 +690,7 @@ private fun ActiveContent(
             ),
             modifier = Modifier.height(32.dp),
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-        ) { Text("✕ Cancel", style = MaterialTheme.typography.labelSmall) }
+        ) { Text(I18n.s(R.string.ui_cancel), style = MaterialTheme.typography.labelSmall) }
 
         if (entry.supportsPause) {
             Button(
@@ -778,13 +780,13 @@ private fun QueuedCard(
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier.height(32.dp),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                        ) { Text("Start next", style = MaterialTheme.typography.labelSmall) }
+                        ) { Text(I18n.s(R.string.xmb_dl_act_start_next), style = MaterialTheme.typography.labelSmall) }
                         OutlinedButton(
                             onClick = { onMoveUp(entry) },
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier.height(32.dp),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                        ) { Text("↑ Up", style = MaterialTheme.typography.labelSmall) }
+                        ) { Text(I18n.s(R.string.ui_up), style = MaterialTheme.typography.labelSmall) }
                     }
                     OutlinedButton(
                         onClick = { onCancel(entry) },
@@ -794,7 +796,7 @@ private fun QueuedCard(
                         ),
                         modifier = Modifier.height(32.dp),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                    ) { Text("✕ Cancel", style = MaterialTheme.typography.labelSmall) }
+                    ) { Text(I18n.s(R.string.ui_cancel), style = MaterialTheme.typography.labelSmall) }
                 }
             }
         }

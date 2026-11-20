@@ -79,6 +79,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class AmazonGamesActivity : ComponentActivity() {
 
@@ -530,7 +532,7 @@ class AmazonGamesActivity : ComponentActivity() {
         val idx = downloadStates.indexOfFirst { it.first == productId }
         if (idx >= 0) {
             downloadStates[idx] = productId to DownloadState(
-                progress = 100, statusText = "Installed",
+                progress = 100, statusText = I18n.s(R.string.wrapper_installed),
                 isVisible = false, isComplete = true,
             )
         }
@@ -801,7 +803,7 @@ private fun AmazonGamesScreen(
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
 
             Text(
-                text = "Amazon Games",
+                text = I18n.s(R.string.ui_amazon_games),
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
@@ -833,7 +835,7 @@ private fun AmazonGamesScreen(
                 modifier = Modifier.height(40.dp),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
-            ) { Text("\u21BA", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
+            ) { Text(I18n.s(R.string.ui_u21ba), color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
 
             // \u2B07 cross-store Download Manager (global active-count badge), trailing the
             // header actions like Steam's list header.
@@ -845,7 +847,7 @@ private fun AmazonGamesScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = onSearchChange,
-                placeholder = { Text("Search games\u2026", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text(I18n.s(R.string.ui_search_games_u2026), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 singleLine = true,
                 modifier = fieldModifier,
                 keyboardActions = xmbDoneActions(stopEditing),
@@ -1114,7 +1116,7 @@ private fun GameCard(
                 }
                 if (ds.isCancelling) {
                     Text(
-                        text = "Cancelling\u2026",
+                        text = I18n.s(R.string.ui_cancelling_u2026),
                         fontSize = 11.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 2.dp),
@@ -1389,10 +1391,10 @@ private fun InstallConfirmDialog(
             }
         },
         confirmButton = {
-            Button(onClick = onConfirm) { Text("Install") }
+            Button(onClick = onConfirm) { Text(I18n.s(R.string.ui_install)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
         },
     )
 }
@@ -1437,14 +1439,14 @@ private fun GameDetailDialog(
                     Button(
                         onClick = onSetExe,
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-                    ) { Text("Set .exe\u2026", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                    ) { Text(I18n.s(R.string.ui_set_exe_u2026), color = MaterialTheme.colorScheme.onSurfaceVariant) }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close)) } },
         dismissButton = {
             if (installedDir != null) {
-                TextButton(onClick = onUninstall) { Text("Uninstall") }
+                TextButton(onClick = onUninstall) { Text(I18n.s(R.string.xmb_dl_act_uninstall)) }
             }
         },
     )
@@ -1460,7 +1462,7 @@ private fun ExePickerDialog(
 ) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select game executable") },
+        title = { Text(I18n.s(R.string.ui_select_game_executable)) },
         text = {
             Column(
                 modifier = Modifier

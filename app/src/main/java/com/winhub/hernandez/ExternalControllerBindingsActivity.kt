@@ -56,6 +56,7 @@ import com.winhub.hernandez.math.Mathf
 import com.winhub.hernandez.ui.AppTopBar
 import com.winhub.hernandez.ui.screens.LabeledDropdown
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
 
 /**
  * Lets the user map physical-controller inputs to keyboard/mouse/gamepad bindings.
@@ -355,7 +356,7 @@ class ExternalControllerBindingsActivity : ComponentActivity() {
                     ) {
                         // Binding TYPE dropdown.
                         LabeledDropdown(
-                            label = "Type",
+                            label = I18n.s(R.string.type),
                             options = typeEntries,
                             selectedOption = typeEntries.getOrElse(typeIndex) { typeEntries.first() },
                             onSelect = { label ->
@@ -376,7 +377,7 @@ class ExternalControllerBindingsActivity : ComponentActivity() {
                         )
                         // Binding VALUE dropdown (entries depend on the selected type).
                         LabeledDropdown(
-                            label = "Binding",
+                            label = I18n.s(R.string.binding),
                             options = valueLabels,
                             selectedOption = if (valueLabel in valueLabels) valueLabel
                                              else valueLabels.firstOrNull() ?: "",
@@ -403,7 +404,7 @@ class ExternalControllerBindingsActivity : ComponentActivity() {
                 }) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
-                        contentDescription = "Remove binding",
+                        contentDescription = I18n.s(R.string.ui_remove_binding),
                         tint = MaterialTheme.colorScheme.error,
                     )
                 }

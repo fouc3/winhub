@@ -132,6 +132,7 @@ import com.winhub.hernandez.util.InAppFilePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 private val InstalledGreen = Color(0xFF37C26B)
 private val SavedBlue = Color(0xFF3D9BFF)
@@ -297,7 +298,7 @@ private fun ComponentTab(vm: ContentsHubViewModel) {
 
     if (categoryType == null) {
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp)) {
-            Text("Components", style = MaterialTheme.typography.titleLarge, color = cs.onSurface)
+            Text(I18n.s(R.string.ui_components), style = MaterialTheme.typography.titleLarge, color = cs.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(
                 "Browse every component family across all repositories",
@@ -451,12 +452,12 @@ private fun SourceListPane(
             value = query,
             onValueChange = { vm.setQuery(it) },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Search all repositories…") },
+            placeholder = { Text(I18n.s(R.string.ui_search_all_repositories)) },
             leadingIcon = { Icon(Icons.Filled.Search, null, tint = cs.onSurfaceVariant) },
             trailingIcon = {
                 if (query.isNotEmpty()) {
                     IconButton(onClick = { vm.setQuery("") }) {
-                        Icon(Icons.Filled.Close, contentDescription = "Clear search", tint = cs.onSurfaceVariant)
+                        Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.social_hub_search_clear), tint = cs.onSurfaceVariant)
                     }
                 }
             },
@@ -466,7 +467,7 @@ private fun SourceListPane(
 
         if (query.isBlank() || !showInlineResults) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                Text("Select Online Repository", style = MaterialTheme.typography.titleMedium,
+                Text(I18n.s(R.string.ui_select_online_repository), style = MaterialTheme.typography.titleMedium,
                     color = cs.onSurface, modifier = Modifier.weight(1f))
                 IconButton(onClick = { vm.reloadSources(); vm.refreshSelected() }) {
                     Icon(Icons.Filled.Refresh, "Refresh", tint = cs.primary)
@@ -594,9 +595,9 @@ private fun EmptyDetailPlaceholder() {
         verticalArrangement = Arrangement.Center) {
         Icon(Icons.Filled.Apps, null, tint = cs.outline, modifier = Modifier.size(56.dp))
         Spacer(Modifier.height(12.dp))
-        Text("Pick a repository", style = MaterialTheme.typography.titleMedium, color = cs.onSurfaceVariant)
+        Text(I18n.s(R.string.ui_pick_a_repository), style = MaterialTheme.typography.titleMedium, color = cs.onSurfaceVariant)
         Spacer(Modifier.height(6.dp))
-        Text("Choose a source from the list to browse and download its components.",
+        Text(I18n.s(R.string.ui_choose_a_source_from_the_list_to_browse_and_download),
             style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
     }
 }
@@ -646,7 +647,7 @@ private fun RepoDetail(vm: ContentsHubViewModel, showBack: Boolean) {
         when {
             loading -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = cs.primary) }
             items.isEmpty() -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text("No components available.", color = cs.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_no_components_available), color = cs.onSurfaceVariant)
             }
             else -> {
                 val shown = if (filter == "All") items else items.filter { it.type == filter }
@@ -884,7 +885,7 @@ private fun MyFilesTab(vm: ContentsHubViewModel) {
 
         if (folders.isEmpty()) {
             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text("No saved archives yet.\nUse the disk icon on a component to save its archive here, or enable “Keep raw archive” before installing.",
+                Text(I18n.s(R.string.ui_no_saved_archives_yet_nuse_the_disk_icon_on_a_compone),
                     color = cs.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
             }
         } else {
@@ -1104,14 +1105,14 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemoveDriver = null },
             containerColor = cs.surfaceContainerHigh,
-            title = { Text("Remove driver?", color = cs.onSurface) },
+            title = { Text(I18n.s(R.string.ui_remove_driver), color = cs.onSurface) },
             text = { Text("Remove \"${manager.getDriverName(id)}\"?", color = cs.onSurface) },
             confirmButton = {
                 TextButton(onClick = {
                     manager.removeDriver(id); confirmRemoveDriver = null; refreshKey++; vm.refreshStatus()
-                }) { Text("Remove", color = cs.primary) }
+                }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveDriver = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveDriver = null }) { Text(I18n.s(R.string.cancel), color = cs.primary) } },
         )
     }
 
@@ -1122,14 +1123,14 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemoveWaylandDriver = null },
             containerColor = cs.surfaceContainerHigh,
-            title = { Text("Remove Wayland game driver?", color = cs.onSurface) },
+            title = { Text(I18n.s(R.string.ui_remove_wayland_game_driver), color = cs.onSurface) },
             text = { Text("Remove \"${waylandManager.getDriverName(id)}\"? Containers using it switch to Auto.", color = cs.onSurface) },
             confirmButton = {
                 TextButton(onClick = {
                     waylandManager.removeDriver(id); confirmRemoveWaylandDriver = null; refreshKey++
-                }) { Text("Remove", color = cs.primary) }
+                }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveWaylandDriver = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveWaylandDriver = null }) { Text(I18n.s(R.string.cancel), color = cs.primary) } },
         )
     }
 
@@ -1138,15 +1139,15 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemoveProfile = null },
             containerColor = cs.surfaceContainerHigh,
-            title = { Text("Remove component?", color = cs.onSurface) },
+            title = { Text(I18n.s(R.string.ui_remove_component), color = cs.onSurface) },
             text = { Text("Remove \"${profile.verName}\"?", color = cs.onSurface) },
             confirmButton = {
                 TextButton(onClick = {
                     val cm = ContentsManager(context); cm.removeContent(profile); cm.syncContents()
                     confirmRemoveProfile = null; refreshKey++; vm.refreshStatus()
-                }) { Text("Remove", color = cs.primary) }
+                }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text(I18n.s(R.string.cancel), color = cs.primary) } },
         )
     }
 }
@@ -1255,14 +1256,14 @@ private fun AddRepoDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
         containerColor = cs.surfaceContainerHigh,
-        title = { Text("Add repository", color = cs.onSurface) },
+        title = { Text(I18n.s(R.string.ui_add_repository), color = cs.onSurface) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Text("Paste any component or GPU-driver source — it joins the list like a built-in.",
+                Text(I18n.s(R.string.ui_paste_any_component_or_gpu_driver_source_it_joins_the),
                     style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                 Spacer(Modifier.height(12.dp))
                 OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true,
-                    label = { Text("Display name") }, modifier = Modifier.fillMaxWidth())
+                    label = { Text(I18n.s(R.string.ui_display_name)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(value = url, onValueChange = { url = it }, singleLine = true,
                     label = { Text(if (isDriver) "GitHub repo (owner/repo) or JSON URL" else "URL (repo, releases API, or JSON)") },
@@ -1272,15 +1273,15 @@ private fun AddRepoDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                 // the AdrenoTools screen); component sources use the Contents source store.
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("GPU driver source", style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
-                        Text("Shared with the AdrenoTools screen", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_gpu_driver_source), style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
+                        Text(I18n.s(R.string.ui_shared_with_the_adrenotools_screen), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                     }
                     Switch(checked = isDriver, onCheckedChange = { isDriver = it },
                         colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = cs.primary))
                 }
                 if (!isDriver) {
                     Spacer(Modifier.height(8.dp))
-                    Text("Source format", style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant)
+                    Text(I18n.s(R.string.ui_source_format), style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant)
                     Box {
                         TextButton(onClick = { formatMenu = true }) { Text(format.name.replace('_', ' '), color = cs.primary) }
                         androidx.compose.material3.DropdownMenu(expanded = formatMenu, onDismissRequest = { formatMenu = false },
@@ -1307,9 +1308,9 @@ private fun AddRepoDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                     }
                     onDismiss()
                 }
-            }) { Text("Add source", color = cs.primary) }
+            }) { Text(I18n.s(R.string.ui_add_source), color = cs.primary) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel", color = cs.primary) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.primary) } },
     )
 }
 
@@ -1347,7 +1348,7 @@ private fun RepoMenuDialog(
                     tint = cs.error) { vm.removeSource(source); onDismiss() }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close", color = cs.primary) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) } },
     )
 }
 
@@ -1400,7 +1401,7 @@ private fun ImportExportDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) 
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close", color = cs.primary) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) } },
     )
 }
 
@@ -1413,14 +1414,14 @@ private fun SettingsDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit, onLo
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
         containerColor = cs.surfaceContainerHigh,
-        title = { Text("Contents settings", color = cs.onSurface) },
+        title = { Text(I18n.s(R.string.ui_contents_settings), color = cs.onSurface) },
         text = {
             // Scrolls so the taller body still fits a landscape phone (dialog height is capped there).
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Keep raw archive by default", style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
-                        Text("Save every install's download to My Files", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_keep_raw_archive_by_default), style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
+                        Text(I18n.s(R.string.ui_save_every_install_download_to_my_files), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                     }
                     Switch(checked = keepRaw, onCheckedChange = { vm.setKeepRaw(it) },
                         colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = cs.primary))
@@ -1429,14 +1430,14 @@ private fun SettingsDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit, onLo
                 MenuRow(Icons.Filled.FolderSpecial, "Save location") { onLocation() }
                 Text(baseDisplay, style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant,
                     modifier = Modifier.padding(start = 36.dp))
-                Text("Save-only archives (the disk icon) are filed by type in this folder too.",
+                Text(I18n.s(R.string.ui_save_only_archives_the_disk_icon_are_filed_by_type_in),
                     style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                     modifier = Modifier.padding(start = 36.dp, top = 2.dp))
                 MenuItemDivider()
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Show Official catalog in repositories", style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
-                        Text("Off hides it here; container and shortcut sheets keep it", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_show_official_catalog_in_repositories), style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
+                        Text(I18n.s(R.string.ui_off_hides_it_here_container_and_shortcut_sheets_keep), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                     }
                     Switch(checked = showOfficial, onCheckedChange = { vm.setShowOfficial(it) },
                         colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = cs.primary))
@@ -1445,7 +1446,7 @@ private fun SettingsDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit, onLo
                 MenuRow(Icons.Filled.Restore, "Restore default repositories") { vm.restoreDefaultSources(); onDismiss() }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close", color = cs.primary) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) } },
     )
 }
 
@@ -1467,7 +1468,7 @@ private fun LocationDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
         containerColor = cs.surfaceContainerHigh,
-        title = { Text("Component save location", color = cs.onSurface) },
+        title = { Text(I18n.s(R.string.ui_component_save_location), color = cs.onSurface) },
         text = {
             Column {
                 Text("Raw archives are filed under <folder>/components/<type>/ — next to WinHub's logs and saves.",
@@ -1485,13 +1486,13 @@ private fun LocationDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                     dirPicker.launch(
                         InAppFilePicker.buildDirIntent(
                             context,
-                            title = "Select save folder",
+                            title = I18n.s(R.string.ui_select_save_folder),
                             initialDir = vm.library.currentFileBasePath(),
                         ),
                     )
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close", color = cs.primary) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary) } },
     )
 }

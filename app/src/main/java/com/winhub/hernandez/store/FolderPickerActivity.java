@@ -22,6 +22,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-app folder picker for cloud save directory selection.
@@ -89,7 +91,7 @@ public class FolderPickerActivity extends Activity {
         header.setPadding(dp(12), dp(10), dp(12), dp(10));
 
         TextView titleTV = new TextView(this);
-        titleTV.setText("Select Folder");
+        titleTV.setText(I18n.s(R.string.ui_select_folder));
         titleTV.setTextColor(0xFFFFFFFF);
         titleTV.setTextSize(16f);
         titleTV.setTypeface(null, Typeface.BOLD);
@@ -97,7 +99,7 @@ public class FolderPickerActivity extends Activity {
 
         // Root location spinner
         TextView locationLabel = new TextView(this);
-        locationLabel.setText("Location:");
+        locationLabel.setText(I18n.s(R.string.ui_location));
         locationLabel.setTextColor(0xFF8888AA);
         locationLabel.setTextSize(11f);
         LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(-2, -2);
@@ -228,16 +230,16 @@ public class FolderPickerActivity extends Activity {
 
     private void showNewFolderDialog() {
         EditText input = new EditText(this);
-        input.setHint("Folder name");
+        input.setHint(I18n.s(R.string.ui_folder_name));
         input.setSingleLine(true);
         LinearLayout.LayoutParams inputLp = new LinearLayout.LayoutParams(-1, -2);
         inputLp.setMargins(dp(20), dp(8), dp(20), dp(8));
         input.setLayoutParams(inputLp);
 
         new AlertDialog.Builder(this)
-            .setTitle("New Folder")
+            .setTitle(I18n.s(R.string.ui_new_folder))
             .setView(input)
-            .setPositiveButton("Create", (d, w) -> {
+            .setPositiveButton(I18n.s(R.string.create), (d, w) -> {
                 String name = input.getText().toString().trim();
                 if (name.isEmpty()) {
                     showThemedMessage("Enter a folder name");
@@ -258,7 +260,7 @@ public class FolderPickerActivity extends Activity {
                     showThemedMessage("Failed to create folder");
                 }
             })
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(I18n.s(R.string.cancel), null)
             .show();
     }
 

@@ -55,6 +55,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 internal class DeckConsoleItem(
     val label: String,
@@ -80,7 +82,7 @@ internal fun DeckConsoleGameMenu(
 ) {
     var shown by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { shown = true }
-    val appear by animateFloatAsState(if (shown) 1f else 0f, tween(180), label = "consoleMenuAppear")
+    val appear by animateFloatAsState(if (shown) 1f else 0f, tween(180), label = I18n.s(R.string.ui_consolemenuappear))
     var sel by remember { mutableIntStateOf(0) }
     val soundGate = remember { KeyRepeatGate() }
     val root = remember { FocusRequester() }
@@ -193,7 +195,7 @@ internal fun DeckConsoleGameMenu(
 
 @Composable
 private fun DeckConsoleRow(item: DeckConsoleItem, focused: Boolean, onTap: () -> Unit) {
-    val scale by animateFloatAsState(if (focused) 1.04f else 1f, tween(150), label = "consoleRowScale")
+    val scale by animateFloatAsState(if (focused) 1.04f else 1f, tween(150), label = I18n.s(R.string.ui_consolerowscale))
     val accent = if (item.danger) DeckPalette.error else DeckPalette.primary
     val content = when {
         focused && item.danger -> Color.Black

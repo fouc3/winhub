@@ -54,6 +54,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck-native component download sheet. Draws with the Deck widget kit (DeckConfigDialog / buttons /
@@ -153,7 +155,7 @@ internal fun DeckContentDownloadSheet(
             profiles.isEmpty() -> {
                 DeckConfigNote("No components available — check your connection and retry.", error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton("Retry", primary = false) { refreshKey++ }
+                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { refreshKey++ }
                 }
             }
             else -> profiles.forEach { profile ->
@@ -172,19 +174,19 @@ internal fun DeckContentDownloadSheet(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            DeckButton("Install from file", primary = false) {
+            DeckButton(I18n.s(R.string.ui_install_from_file), primary = false) {
                 filePicker.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select component archive"))
             }
             Spacer(Modifier.width(8.dp))
-            DeckButton("Close") { onDismiss() }
+            DeckButton(I18n.s(R.string.wrapper_manager_close)) { onDismiss() }
         }
     }
 
     removeTarget?.let { profile ->
-        DeckConfigDialog(title = "Remove component?", onDismiss = { removeTarget = null }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_remove_component), onDismiss = { removeTarget = null }, compact = true) {
             DeckConfigNote("Remove \"${profile.verName}\" from this device?")
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Remove", primary = true) {
+                DeckButton(I18n.s(R.string.remove), primary = true) {
                     scope.launch {
                         withContext(Dispatchers.IO) { cm.removeContent(profile) }
                         removeTarget = null
@@ -246,10 +248,10 @@ private fun DeckDownloadRow(
                     fontSize = 12.sp,
                 )
                 local || done -> IconButton(onClick = onRemove) {
-                    Icon(Icons.Filled.Delete, contentDescription = "Remove", tint = DeckPalette.error)
+                    Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = DeckPalette.error)
                 }
                 else -> IconButton(onClick = onDownload) {
-                    Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = DeckPalette.primary)
+                    Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = DeckPalette.primary)
                 }
             }
         }
@@ -317,7 +319,7 @@ internal fun DeckStockConfigSheet(
         }
     }
 
-    DeckConfigDialog(title = "VEGAS stock configs", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_vegas_stock_configs), onDismiss = onDismiss) {
         DeckConfigNote("Tap a version to fetch its config. Builds without a shipped config show none.")
         when {
             loading -> {
@@ -331,7 +333,7 @@ internal fun DeckStockConfigSheet(
             rows.isEmpty() -> {
                 DeckConfigNote("Couldn't reach the releases feed — check connection and retry.", error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton("Retry", primary = false) { retryKey++ }
+                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { retryKey++ }
                 }
             }
             else -> rows.forEach { rel ->
@@ -392,7 +394,7 @@ internal fun DeckStockConfigSheet(
         }
         Spacer(Modifier.height(10.dp))
         Row(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.End) {
-            DeckButton("Close") { onDismiss() }
+            DeckButton(I18n.s(R.string.wrapper_manager_close)) { onDismiss() }
         }
     }
 }

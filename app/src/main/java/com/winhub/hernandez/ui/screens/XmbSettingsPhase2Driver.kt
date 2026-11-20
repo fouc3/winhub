@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
+import com.winhub.hernandez.util.I18n
 
 // ── Graphics driver configuration (GraphicsDriverConfigDialog, ContainerDetailScreen.kt) ───────────
 // The dialog keeps the whole "graphicsDriverConfig" string in its own state and rebuilds it on OK. Here
@@ -300,36 +301,36 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 probe(v)
             }
         } else {
-            rows += XmbRow.Info("noDrivers", "No compatible drivers found — turn on Show incompatible drivers", Icons.Filled.Warning)
+            rows += XmbRow.Info(I18n.s(R.string.ui_nodrivers), "No compatible drivers found — turn on Show incompatible drivers", Icons.Filled.Warning)
         }
         rows += XmbRow.Toggle("showAll", ctx.getString(R.string.graphics_driver_show_incompatible), Icons.Filled.Visibility, showAllDrivers,
-            subtitle = "Lists drivers this GPU may not run") { on -> showAllDrivers = on; ready = false; loadDrivers() }
+            subtitle = I18n.s(R.string.ui_lists_drivers_this_gpu_may_not_run)) { on -> showAllDrivers = on; ready = false; loadDrivers() }
         if (isCustomDriver) {
-            rows += XmbRow.Info("customDriver", "Custom Qualcomm (Adreno) driver — its extensions load when a game starts, so none are listed here.", Icons.Filled.Info)
+            rows += XmbRow.Info(I18n.s(R.string.ui_customdriver), "Custom Qualcomm (Adreno) driver — its extensions load when a game starts, so none are listed here.", Icons.Filled.Info)
         } else if (allExtensions.isNotEmpty()) {
             val enabled = allExtensions.count { it !in cfg.blacklisted }
             rows += XmbRow.Link("extensions", ctx.getString(R.string.graphics_driver_available_extensions), Icons.Filled.Extension,
                 value = "$enabled/${allExtensions.size}", subtitle = "Hide extensions from games") { p2ExtensionsMenu(xmb, { allExtensions }, { rawCfg() }, { ch -> write(ch) }) }
         }
-        rows += XmbRow.Choice("gpuName", ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_gpuname), ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard,
             uniq(gpuNames, cfg.gpuName), cfg.gpuName) { v -> write { it.gpuName = v } }
         if (memEntries.isNotEmpty()) {
             rows += XmbRow.Choice("memory", ctx.getString(R.string.graphics_driver_max_device_memory), Icons.Filled.Memory,
                 memEntries, memLabel(cfg.maxDeviceMemory)) { v -> write { it.maxDeviceMemory = StringUtils.parseNumber(v) } }
         }
-        rows += XmbRow.Choice("presentMode", ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_presentmode), ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
             uniq(presentModes, cfg.presentMode), cfg.presentMode) { v -> write { it.presentMode = v } }
-        rows += XmbRow.Choice("resourceType", ctx.getString(R.string.graphics_driver_resource_type), Icons.Filled.Memory,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_resourcetype), ctx.getString(R.string.graphics_driver_resource_type), Icons.Filled.Memory,
             uniq(resourceTypes, cfg.resourceType), cfg.resourceType) { v -> write { it.resourceType = v } }
 
         rows += XmbRow.Header("hBcn", "BCn textures")
         rows += XmbRow.Info("gpuNote", (if (gpuModel.isNotEmpty()) "GPU: $gpuModel — " else "") +
             "BCn/compat layers apply to Mali and other non-Qualcomm GPUs", Icons.Filled.Info)
-        rows += XmbRow.Choice("bcnEmulation", ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_bcnemulation), ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
             uniq(bcnEmulations, cfg.bcnEmulation), cfg.bcnEmulation) { v -> write { it.bcnEmulation = v } }
-        rows += XmbRow.Choice("bcnType", ctx.getString(R.string.graphics_driver_bcn_emulation_type), Icons.Filled.Layers,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_bcntype), ctx.getString(R.string.graphics_driver_bcn_emulation_type), Icons.Filled.Layers,
             uniq(bcnTypes, cfg.bcnEmulationType), cfg.bcnEmulationType) { v -> write { it.bcnEmulationType = v } }
-        rows += XmbRow.Choice("bcnCache", ctx.getString(R.string.graphics_driver_bcn_emulation_cache), Icons.Filled.Layers,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_bcncache), ctx.getString(R.string.graphics_driver_bcn_emulation_cache), Icons.Filled.Layers,
             uniq(bcnCaches, cfg.bcnEmulationCache), cfg.bcnEmulationCache) { v -> write { it.bcnEmulationCache = v } }
         val adrenoNote = if (isQualcomm) "No effect on Adreno (native BCn)" else null
         if (isIntegratedBcn) {
@@ -365,12 +366,12 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             write { it.turnipGmem = gmemValues[gmemLabels.indexOf(v).coerceAtLeast(0)] }
         }
         rows += XmbRow.Link("turnipTokens", "Advanced Turnip (TU_DEBUG)", Icons.Filled.Science,
-            subtitle = "Expert-only debug tokens, off by default") { p2TurnipMenu(xmb, { rawCfg() }, { ch -> write(ch) }) }
+            subtitle = I18n.s(R.string.ui_expert_only_debug_tokens_off_by_default)) { p2TurnipMenu(xmb, { rawCfg() }, { ch -> write(ch) }) }
 
         if (isImported) {
             rows += XmbRow.Link("detected", "Detected settings (advanced)", Icons.Filled.Science,
                 value = if (detectedKeys.isEmpty()) "None" else "${detectedKeys.size}",
-                subtitle = "From scanning this wrapper — passed to it as-is") { p2DetectedMenu(xmb, { detectedKeys }, { rawCfg() }, { ch -> write(ch) }) }
+                subtitle = I18n.s(R.string.ui_from_scanning_this_wrapper_passed_to_it_as_is)) { p2DetectedMenu(xmb, { detectedKeys }, { rawCfg() }, { ch -> write(ch) }) }
         }
         rows
     }
@@ -404,7 +405,7 @@ internal fun xmbWaylandDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbM
         val presentLabels = presentValues.map { if (it in WAYLAND_PRESENT_MODES) it else "$it (X11 only, not used here)" }
         val rows = mutableListOf<XmbRow>()
         rows += XmbRow.Info("help", "For games that refuse or misbehave on Adreno", Icons.Filled.Info,
-            subtitle = "DirectX games (DXVK) see the GPU named here. Off by default (Device); same settings as X11's.")
+            subtitle = I18n.s(R.string.ui_directx_games_dxvk_see_the_gpu_named_here_off_by_defa))
         rows += xmbAdapterRows(xmb, shortcut)
         rows += XmbRow.Choice("gpuName", ctx.getString(R.string.gpu_name) + " (spoof)", Icons.Filled.DeveloperBoard, names, gpuName,
             subtitle = com.winhub.hernandez.core.GpuSpoof.vendorWarning(ctx, gpuName)
@@ -412,11 +413,11 @@ internal fun xmbWaylandDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbM
         if (memEntries.isNotEmpty()) {
             rows += XmbRow.Choice("memory", ctx.getString(R.string.graphics_driver_max_device_memory), Icons.Filled.Memory,
                 memEntries, memLabel(cfg["maxDeviceMemory"] ?: "0"),
-                subtitle = "What DirectX games are told the GPU's memory is") { v -> write("maxDeviceMemory", StringUtils.parseNumber(v)) }
+                subtitle = I18n.s(R.string.ui_what_directx_games_are_told_the_gpu_memory_is)) { v -> write("maxDeviceMemory", StringUtils.parseNumber(v)) }
         }
-        rows += XmbRow.Choice("presentMode", ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_presentmode), ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
             presentLabels, presentLabels[presentValues.indexOf(storedPresent)],
-            subtitle = "Wayland offers mailbox and fifo (immediate needs tearing)") { v ->
+            subtitle = I18n.s(R.string.ui_wayland_offers_mailbox_and_fifo_immediate_needs_teari)) { v ->
             write("presentMode", presentValues[presentLabels.indexOf(v)])
         }
         rows += XmbRow.Toggle("fdDev", "OneUI / HyperOS Fix (UBWC flag hint)", Icons.Filled.Tune, cfg["fdDevFeatures"] == "1",
@@ -444,15 +445,15 @@ private fun xmbMaliPanvkRows(
     val on = MaliPanvk.modeOn(ctx, cfg, cfg["version"])
     val bcn = if (stored == null && on) "none" else storedBcn
     val rows = mutableListOf<XmbRow>()
-    rows += XmbRow.Info("maliHelp", ctx.getString(R.string.mali_panvk_section), Icons.Filled.Info,
-        subtitle = "For FristOneRR's PanVK driver (MIT); credit FristOneRR for the driver and these tweaks.")
+    rows += XmbRow.Info(I18n.s(R.string.ui_malihelp), ctx.getString(R.string.mali_panvk_section), Icons.Filled.Info,
+        subtitle = I18n.s(R.string.ui_for_fristonerr_panvk_driver_mit_credit_fristonerr_for))
     rows += XmbRow.Toggle("maliMode", ctx.getString(R.string.mali_panvk_mode), Icons.Filled.DeveloperBoard, on,
         subtitle = ctx.getString(R.string.mali_panvk_mode_hint)) { v ->
         write(mapOf(MaliPanvk.KEY_MODE to if (v) "1" else "0", "bcnEmulation" to if (v) "none" else storedBcn))
     }
     if (on) {
         val entries = ctx.resources.getStringArray(R.array.bcn_emulation_entries).toList()
-        rows += XmbRow.Choice("maliBcn", ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_malibcn), ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
             entries, bcn, subtitle = ctx.getString(R.string.mali_panvk_bcn_warning)) { v ->
             write(mapOf(MaliPanvk.KEY_MODE to "1", "bcnEmulation" to v))
         }
@@ -530,7 +531,7 @@ private fun p2TurnipMenu(xmb: XmbScope, raw: () -> String, write: ((P2GfxCfg) ->
             XmbRow.Toggle("sysmem", "sysmem — force sysmem (bypass GMEM)", Icons.Filled.Science, cfg.sysmem && !sysmemBlocked,
                 disabledReason = if (sysmemBlocked) "Disabled — Turnip GMEM = Force On overrides sysmem." else null) { on -> write { it.sysmem = on } },
             XmbRow.Toggle("deckEmu", "deck_emu — advertise as SteamDeck", Icons.Filled.Science, cfg.deckEmu,
-                subtitle = "Needs a Banners-Turnip driver (ignored on stock Turnip)") { on -> write { it.deckEmu = on } },
+                subtitle = I18n.s(R.string.ui_needs_a_banners_turnip_driver_ignored_on_stock_turnip)) { on -> write { it.deckEmu = on } },
         )
     }
 
@@ -629,7 +630,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
 
     // Applied at launch + the profile.
     val effective = com.winhub.hernandez.core.WaylandAdapterSettings.resolve(containerCfg, own().ifEmpty { null }, null, probe)
-    rows += XmbRow.Info("adApplied", "Applied at launch", Icons.Filled.Info, subtitle = effective.summary("mailbox"))
+    rows += XmbRow.Info(I18n.s(R.string.ui_adapplied), "Applied at launch", Icons.Filled.Info, subtitle = effective.summary("mailbox"))
     val containerProfile = com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(
         com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog.parseGraphicsDriverConfig(containerCfg)[
             com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PROFILE] ?: "")
@@ -641,7 +642,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         else com.winhub.hernandez.core.WaylandAdapterSettings.profileLabel(storedProfile)
     val profileHelp = if (storedProfile.isEmpty()) "Use whatever the container is set to."
         else com.winhub.hernandez.core.WaylandAdapterSettings.profileHelp(storedProfile)
-    rows += XmbRow.Choice("adProfile", "Profile", Icons.Filled.Tune, profileLabels, selectedProfile,
+    rows += XmbRow.Choice(I18n.s(R.string.ui_adprofile), "Profile", Icons.Filled.Tune, profileLabels, selectedProfile,
         subtitle = profileHelp +
             (if (effective.profile != com.winhub.hernandez.core.WaylandAdapterSettings.PROFILE_SMOOTH)
                 "  Tip: if frames look uneven or jittery, try Smooth. It paces frames through the compositor " +
@@ -649,8 +650,8 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         val i = profileLabels.indexOf(picked)
         write(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_PROFILE, if (i <= 0) "" else profiles[i - 1])
     }
-    rows += XmbRow.Info("adEnvNote", "Env vars always win", Icons.Filled.Info,
-        subtitle = "Env vars you type under Env vars always win over these; the switches below win over the profile.")
+    rows += XmbRow.Info(I18n.s(R.string.ui_adenvnote), "Env vars always win", Icons.Filled.Info,
+        subtitle = I18n.s(R.string.ui_env_vars_you_type_under_env_vars_always_win_over_thes))
 
     // Advanced: single switches.
     rows += XmbRow.Header("adAdvanced", "Advanced: single switches")
@@ -732,7 +733,7 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
     }
     if (driverId.isNotEmpty() && driverId != "System") {
         rows += XmbRow.Action("adRecheck", "Re-check", Icons.Filled.Science,
-            subtitle = "Checks the graphics driver again (about 2 seconds)") {
+            subtitle = I18n.s(R.string.ui_checks_the_graphics_driver_again_about_2_seconds)) {
             xmb.toast("Checking driver… about 2 seconds")
             xmb.scope.launch {
                 withContext(Dispatchers.IO) {

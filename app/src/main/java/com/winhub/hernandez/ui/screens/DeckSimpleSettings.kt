@@ -33,6 +33,8 @@ import com.winhub.hernandez.fexcore.FEXCorePresetManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Settings view: Simple shows the four things most games need (Proton, DXVK, GPU driver, FEXCore
@@ -60,8 +62,8 @@ internal object DeckSettingsMode {
 internal fun DeckViewModeRow() {
     val context = LocalContext.current
     DeckChoiceRow(
-        label = "Settings view",
-        hint = "Simple: Proton, DXVK, driver and FEXCore preset. Advanced: every setting.",
+        label = I18n.s(R.string.ui_settings_view),
+        hint = I18n.s(R.string.ui_simple_proton_dxvk_driver_and_fexcore_preset_advanced),
         options = listOf("simple" to "Simple", "advanced" to "Advanced"),
         selected = if (DeckSettingsMode.advanced(context)) "advanced" else "simple",
         onPick = { DeckSettingsMode.set(context, it == "advanced") },
@@ -74,8 +76,8 @@ internal fun DeckViewSwitch() {
     val context = LocalContext.current
     val advanced = DeckSettingsMode.advanced(context)
     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        DeckButton("Simple", primary = !advanced) { DeckSettingsMode.set(context, false) }
-        DeckButton("Advanced", primary = advanced) { DeckSettingsMode.set(context, true) }
+        DeckButton(I18n.s(R.string.ui_simple), primary = !advanced) { DeckSettingsMode.set(context, false) }
+        DeckButton(I18n.s(R.string.advanced), primary = advanced) { DeckSettingsMode.set(context, true) }
     }
 }
 
@@ -101,10 +103,10 @@ internal fun DeckResetDefaultsGroup(viewModel: ContainerDetailViewModel) {
     if (!viewModel.defaultsMode) return
     DeckGroup("Defaults") {
         DeckRow(
-            label = "Reset to app defaults",
-            hint = "Forgets your saved defaults for this architecture. New containers start from the app's own: Wayland, 1600x720, latest GE-Proton, DXVK gplasync with async, VKD3D 3.0.1, latest FEXCore, Performance preset.",
+            label = I18n.s(R.string.reset_to_app_defaults),
+            hint = I18n.s(R.string.ui_forgets_your_saved_defaults_for_this_architecture_new),
         ) {
-            DeckButton("Reset", primary = false) { viewModel.resetDefaults() }
+            DeckButton(I18n.s(R.string.reset), primary = false) { viewModel.resetDefaults() }
         }
     }
 }
@@ -117,14 +119,14 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
     DeckGroup("Essentials") {
         if (viewModel.wineVersionEnabled) {
             DeckChoiceRow(
-                label = "Proton Version",
-                hint = "The Proton layer this container runs on",
+                label = I18n.s(R.string.ui_proton_version),
+                hint = I18n.s(R.string.ui_proton_layer_this_container_runs_on),
                 options = viewModel.wineVersionEntries.map { it to it },
                 selected = viewModel.selectedWineVersion,
                 onPick = { viewModel.onWineVersionChanged(it) },
             )
         } else {
-            DeckRow(label = "Proton Version", hint = "Chosen when the container was made") {
+            DeckRow(label = I18n.s(R.string.ui_proton_version), hint = I18n.s(R.string.ui_chosen_when_the_container_was_made)) {
                 Text(
                     viewModel.selectedWineVersion,
                     color = DeckPalette.onSurfaceVariant,
@@ -136,8 +138,8 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
         }
 
         DeckChoiceRow(
-            label = "Display Backend",
-            hint = "Wayland routes the game through the embedded compositor",
+            label = I18n.s(R.string.ui_display_backend_2),
+            hint = I18n.s(R.string.ui_wayland_routes_the_game_through_the_embedded_composit),
             options = listOf(
                 Container.DISPLAY_BACKEND_WAYLAND to "Wayland",
                 Container.DISPLAY_BACKEND_X11 to "X11",
@@ -147,7 +149,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
         )
         if (viewModel.isWaylandStored && !viewModel.isWaylandBackend) {
             DeckRow(
-                label = "Wayland is not available",
+                label = I18n.s(R.string.ui_wayland_is_not_available),
                 hint = (viewModel.waylandLayerProblem() ?: "This Proton layer cannot run Wayland.") + " It will be saved as X11.",
                 control = {},
             )
@@ -158,8 +160,8 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
             val choices = remember(viewModel.isArm64EC, viewModel.wineVersionEntries) { viewModel.dxvkVersionChoices() }
             val current = viewModel.dxvkVersion()
             DeckChoiceRow(
-                label = "DXVK Version",
-                hint = "Direct3D 9, 10 and 11 on Vulkan",
+                label = I18n.s(R.string.dxvk_version),
+                hint = I18n.s(R.string.ui_direct3d_9_10_and_11_on_vulkan),
                 options = (if (current.isNotEmpty() && current !in choices) listOf(current) + choices else choices).map { it to it },
                 selected = current,
                 onPick = { viewModel.setDxvkVersion(it) },
@@ -181,7 +183,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
         }
         val currentDriver = GraphicsDriverConfigDialog.getVersion(viewModel.graphicsDriverConfig) ?: ""
         DeckChoiceRow(
-            label = "Graphics Driver",
+            label = I18n.s(R.string.graphics_driver),
             hint = if (wayland && compositorDriverUnusable(currentDriver, drivers.map { it.first }, drivers.isNotEmpty()))
                 "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
             else if (wayland) "The Turnip build the Wayland compositor and the game run on"
@@ -199,7 +201,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
                 GraphicsDriverConfigDialog.parseGraphicsDriverConfig(viewModel.graphicsDriverConfig)[WaylandAdapterSettings.KEY_PROFILE],
             )
             DeckChoiceRow(
-                label = "Wayland Profile",
+                label = I18n.s(R.string.ui_wayland_profile),
                 hint = WaylandAdapterSettings.profileHelp(profile),
                 options = WaylandAdapterSettings.PROFILES.map { it to WaylandAdapterSettings.profileLabel(it) },
                 selected = profile,
@@ -213,7 +215,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
             if (hdrProblem == null) {
                 DeckRow(
                     label = WaylandHdr.TITLE,
-                    hint = "HDR10 output on a screen that supports it",
+                    hint = I18n.s(R.string.ui_hdr10_output_on_a_screen_that_supports_it),
                     control = { DeckToggle(viewModel.waylandHdr) { viewModel.waylandHdr = it } },
                 )
             }
@@ -221,16 +223,16 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
 
         if (viewModel.isArm64EC) {
             DeckChoiceRow(
-                label = "FEXCore Preset",
-                hint = "Speed against compatibility of the CPU translation",
+                label = I18n.s(R.string.fexcore_preset),
+                hint = I18n.s(R.string.ui_speed_against_compatibility_of_the_cpu_translation),
                 options = viewModel.fexCorePresetEntries.mapIndexed { i, e -> i.toString() to e },
                 selected = viewModel.selectedFEXCorePresetIndex.toString(),
                 onPick = { viewModel.selectedFEXCorePresetIndex = it.toInt() },
             )
         } else {
             DeckChoiceRow(
-                label = "Box64 Preset",
-                hint = "Speed against compatibility of the CPU translation",
+                label = I18n.s(R.string.box64_preset),
+                hint = I18n.s(R.string.ui_speed_against_compatibility_of_the_cpu_translation),
                 options = viewModel.box64PresetEntries.mapIndexed { i, e -> i.toString() to e },
                 selected = viewModel.selectedBox64PresetIndex.toString(),
                 onPick = { viewModel.selectedBox64PresetIndex = it.toInt() },
@@ -268,7 +270,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
     return XmbMenu("Settings", Icons.Filled.Settings) {
         val rows = mutableListOf<XmbRow>()
         rows += XmbRow.Header("hEssentials", "Essentials")
-        rows += XmbRow.Info("sProton", "Proton", Icons.Filled.Tune, p.c.wineVersion, subtitle = "Set per container")
+        rows += XmbRow.Info(I18n.s(R.string.ui_sproton), "Proton", Icons.Filled.Tune, p.c.wineVersion, subtitle = I18n.s(R.string.ui_set_per_container))
 
         // Wayland: where the game runs, and (when it does) how its frames are paced.
         val waylandCapable = com.winhub.hernandez.core.WineWaylandSupport.isWaylandCapable(xmb.context, p.c.wineVersion)
@@ -276,7 +278,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val containerWayland = p.c.isWaylandBackend && waylandCapable
         val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
         val dbLabels = listOf("Container default (" + (if (containerWayland) "Wayland" else "X11") + ")", "X11", "Wayland")
-        rows += XmbRow.Choice("sBackend", "Display backend", Icons.Filled.DesktopWindows, dbLabels,
+        rows += XmbRow.Choice(I18n.s(R.string.ui_sbackend), "Display backend", Icons.Filled.DesktopWindows, dbLabels,
             dbLabels[dbValues.indexOf(dbOverride).coerceAtLeast(0)],
             subtitle = if (waylandCapable) "Wayland routes the game through the embedded compositor"
                 else "Wayland needs a layer with winewayland; this container's layer has none",
@@ -289,9 +291,9 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
             val stored = GraphicsDriverConfigDialog.parseGraphicsDriverConfig(own)[WaylandAdapterSettings.KEY_PROFILE].orEmpty()
             val profileValues = listOf("") + WaylandAdapterSettings.PROFILES
             val profileLabels = listOf("Container default") + WaylandAdapterSettings.PROFILES.map { WaylandAdapterSettings.profileLabel(it) }
-            rows += XmbRow.Choice("sWlProfile", "Wayland profile", Icons.Filled.Tune, profileLabels,
+            rows += XmbRow.Choice(I18n.s(R.string.ui_swlprofile), "Wayland profile", Icons.Filled.Tune, profileLabels,
                 profileLabels[profileValues.indexOf(stored).coerceAtLeast(0)],
-                subtitle = "Smooth evens out frame pacing, Fast lowers latency, Compatibility is the safest") { v ->
+                subtitle = I18n.s(R.string.ui_smooth_evens_out_frame_pacing_fast_lowers_latency_com)) { v ->
                 val value = profileValues[profileLabels.indexOf(v)]
                 // The shortcut's own config starts from the container's, with the adapter keys cleared so only this one is set.
                 val base = own.ifEmpty { withGraphicsDriverKeys(p.c.graphicsDriverConfig, WaylandAdapterSettings.KEYS.associateWith { "" }) }
@@ -305,8 +307,8 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val wrapper = StringUtils.parseIdentifier(p.ex("dxwrapper", p.c.getDXWrapper()))
         if (dxList != null && wrapper.contains("dxvk") && !wrapper.contains("vegas")) {
             val shown = if (dxCurrent.isNotEmpty() && dxCurrent !in dxList) listOf(dxCurrent) + dxList else dxList
-            rows += XmbRow.Choice("sDxvk", "DXVK version", Icons.Filled.DesktopWindows, shown, dxCurrent,
-                subtitle = "Direct3D 9, 10 and 11 on Vulkan") { v ->
+            rows += XmbRow.Choice(I18n.s(R.string.ui_sdxvk), "DXVK version", Icons.Filled.DesktopWindows, shown, dxCurrent,
+                subtitle = I18n.s(R.string.ui_direct3d_9_10_and_11_on_vulkan)) { v ->
                 write("dxwrapperConfig", AutoDefaults.withDxvkVersion(dxCfg, v))
             }
         }
@@ -316,8 +318,8 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val driverList = drivers
         if (driverList != null) {
             val shown = withCurrent(gdCurrent, driverList)
-            rows += XmbRow.Choice("sDriver", "Graphics driver", Icons.Filled.DesktopWindows, shown.map { it.second },
-                shown.firstOrNull { it.first == gdCurrent }?.second ?: gdCurrent, subtitle = "The Turnip build the game renders on") { label ->
+            rows += XmbRow.Choice(I18n.s(R.string.ui_sdriver), "Graphics driver", Icons.Filled.DesktopWindows, shown.map { it.second },
+                shown.firstOrNull { it.first == gdCurrent }?.second ?: gdCurrent, subtitle = I18n.s(R.string.ui_turnip_build_the_game_renders_on)) { label ->
                 shown.firstOrNull { it.second == label }?.let { write("graphicsDriverConfig", withGraphicsDriverVersion(gdCfg, it.first)) }
             }
         }
@@ -325,15 +327,15 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         if (p.arm64ec == true) {
             val presets = FEXCorePresetManager.getPresets(xmb.context)
             val id = p.ex("fexcorePreset", p.c.getFEXCorePreset())
-            rows += XmbRow.Choice("sFex", "FEXCore preset", Icons.Filled.Memory, presets.map { it.name },
-                presets.firstOrNull { it.id == id }?.name ?: id, subtitle = "Speed against compatibility of the CPU translation") { name ->
+            rows += XmbRow.Choice(I18n.s(R.string.ui_sfex), "FEXCore preset", Icons.Filled.Memory, presets.map { it.name },
+                presets.firstOrNull { it.id == id }?.name ?: id, subtitle = I18n.s(R.string.ui_speed_against_compatibility_of_the_cpu_translation)) { name ->
                 presets.firstOrNull { it.name == name }?.let { write("fexcorePreset", it.id) }
             }
         }
 
         rows += XmbRow.Header("hView", "View")
-        rows += XmbRow.Choice("sView", "Settings view", Icons.Filled.Settings, listOf("Simple", "Advanced"), "Simple",
-            subtitle = "Advanced shows every setting. Reopen Settings after switching.") { v ->
+        rows += XmbRow.Choice(I18n.s(R.string.ui_sview), "Settings view", Icons.Filled.Settings, listOf("Simple", "Advanced"), "Simple",
+            subtitle = I18n.s(R.string.ui_advanced_shows_every_setting_reopen_settings_after_sw)) { v ->
             DeckSettingsMode.set(xmb.context, v == "Advanced")
             xmb.toast(if (v == "Advanced") "Advanced view. Reopen Settings." else "Simple view")
         }

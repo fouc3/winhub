@@ -46,6 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Standalone host for the Steam friends list + 1:1 text chat. A single, self-contained screen (its
@@ -283,7 +285,7 @@ fun SteamFriendsAction(tint: Color = Color.White) {
         }) {
             Icon(
                 imageVector = Icons.Filled.People,
-                contentDescription = "Steam friends",
+                contentDescription = I18n.s(R.string.ui_steam_friends),
                 tint = tint,
             )
         }
@@ -340,13 +342,13 @@ fun SteamSocialSettingsSheet(onDismiss: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.People, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(10.dp))
-                Text("Steam friends & chat")
+                Text(I18n.s(R.string.ui_steam_friends_chat))
             }
         },
         text = {
             Column {
                 SocialSettingRow(
-                    title = "Enable Steam friends & chat",
+                    title = I18n.s(R.string.ui_enable_steam_friends_chat),
                     subtitle = "See your friends list, presence and chat. Off by default — no online status " +
                         "is shared until you turn this on.",
                     checked = socialEnabled,
@@ -355,23 +357,23 @@ fun SteamSocialSettingsSheet(onDismiss: () -> Unit) {
                 )
                 Spacer(Modifier.height(4.dp))
                 SocialSettingRow(
-                    title = "Chat notifications",
-                    subtitle = "Show a notification when a friend messages you.",
+                    title = I18n.s(R.string.ui_chat_notifications),
+                    subtitle = I18n.s(R.string.ui_show_a_notification_when_a_friend_messages_you),
                     checked = chatNotifs,
                     enabled = socialEnabled,
                     onCheckedChange = { chatNotifs = it; SteamPrefs.setChatNotificationsEnabled(ctx, it) },
                 )
                 Spacer(Modifier.height(4.dp))
                 SocialSettingRow(
-                    title = "Notification sound",
-                    subtitle = "Play a sound and pop a heads-up for new messages.",
+                    title = I18n.s(R.string.ui_notification_sound),
+                    subtitle = I18n.s(R.string.ui_play_a_sound_and_pop_a_heads_up_for_new_messages),
                     checked = chatSound,
                     enabled = socialEnabled && chatNotifs,
                     onCheckedChange = { chatSound = it; SteamPrefs.setChatSoundEnabled(ctx, it) },
                 )
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
     )
 }
 

@@ -44,6 +44,8 @@ import com.winhub.hernandez.perf.PerfRootApplier
 import com.winhub.hernandez.perf.PerformanceSettings
 import com.winhub.hernandez.perf.RootManager
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * App Settings → Performance menu. Binds the GLOBAL DEFAULTS (non-root three + root six) to the same
@@ -101,7 +103,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
             )
 
             // ── Non-root global defaults (always editable) ──
-            PerfCard(title = "Global defaults") {
+            PerfCard(title = I18n.s(R.string.ui_global_defaults)) {
                 PerfToggle("Sustained Performance Mode", sustained,
                     onInfo = { info = "Sustained Performance Mode" to PerfCopy.SUSTAINED }) { PerformanceSettings.setSustainedPerfMode(it) }
                 PerfToggle("Thread Priority Boost", priority,
@@ -113,13 +115,13 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                 RootToggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, "Lock GPU to max clock", granted, harnessProven,
                     onInfo = { info = "Lock GPU to max clock" to PerfCopy.GPU_CLOCK })
                 if (!granted && !PerfGpuTurbo.isSupported) {
-                    Text("Lock GPU to max clock needs an Adreno (Qualcomm) GPU, or root on other GPUs.",
+                    Text(I18n.s(R.string.ui_lock_gpu_to_max_clock_needs_an_adreno_qualcomm_gpu_or),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
                 }
             }
 
             // ── Root tier ──
-            PerfCard(title = "Root performance controls") {
+            PerfCard(title = I18n.s(R.string.ui_root_performance_controls)) {
                 Text("Root status: " + rootStateLabel(rootState),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
 
@@ -158,7 +160,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                 // ── Free memory (dual tier). Section "?" explains both tiers + the auto toggle. ──
                 Spacer(Modifier.height(4.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                    Text("Free memory", color = MaterialTheme.colorScheme.onSurface,
+                    Text(I18n.s(R.string.ui_free_memory), color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
                     InfoButton { info = "Free memory" to PerfCopy.FREE_MEM_SECTION }
                 }
@@ -168,8 +170,8 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                     onClick = { PerfRootApplier.freeMemoryNow() },
                     enabled = granted,
                     modifier = Modifier.fillMaxWidth()
-                ) { Text("Drop file caches", color = MaterialTheme.colorScheme.onPrimary) }
-                Text("Frees cached files. Little visible RAM; the system reclaims cache automatically.",
+                ) { Text(I18n.s(R.string.ui_drop_file_caches), color = MaterialTheme.colorScheme.onPrimary) }
+                Text(I18n.s(R.string.ui_frees_cached_files_little_visible_ram_the_system_recl),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
 
                 // TIER 2 — deep clean (root-only; the real RAM free via `am kill-all`).
@@ -177,8 +179,8 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                     onClick = { PerfRootApplier.deepCleanMemory() },
                     enabled = granted,
                     modifier = Modifier.fillMaxWidth()
-                ) { Text("Deep clean (free app memory)", color = MaterialTheme.colorScheme.onPrimary) }
-                Text("Force-closes background apps to free real memory. Won't touch your game or system.",
+                ) { Text(I18n.s(R.string.ui_deep_clean_free_app_memory), color = MaterialTheme.colorScheme.onPrimary) }
+                Text(I18n.s(R.string.ui_force_closes_background_apps_to_free_real_memory_won),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
 
                 // AUTO toggle — persists like the other root defaults; fires at game launch.
@@ -190,7 +192,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
 
             // ── Temperature watchdog (device-wide; not root-gated). Shared control block, identical
             // and synced with the in-game surface (both bind the one TempWatchdog singleton). ──
-            PerfCard(title = "Temperature watchdog") {
+            PerfCard(title = I18n.s(R.string.ui_temperature_watchdog)) {
                 Text(
                     "Auto-reverts all performance settings before the device gets too hot, anchored to " +
                         "your device's own thermal trip points. Keep this on unless you know what you're doing.",
@@ -205,7 +207,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
             )
 
             Button(onClick = { showExplainAll = true }, modifier = Modifier.fillMaxWidth()) {
-                Text("Explain toggles", color = MaterialTheme.colorScheme.onPrimary)
+                Text(I18n.s(R.string.ui_explain_toggles), color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Spacer(Modifier.height(24.dp))
@@ -217,12 +219,12 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
     }
 
     if (showExplainAll) {
-        PerfInfoDialog(title = "What the toggles do", body = explainAllBody(), onDismiss = { showExplainAll = false })
+        PerfInfoDialog(title = I18n.s(R.string.ui_what_the_toggles_do), body = explainAllBody(), onDismiss = { showExplainAll = false })
     }
 
     if (showRootDisclaimer) {
         PerfDisclaimerDialog(
-            title = "Power-user performance — read first",
+            title = I18n.s(R.string.ui_power_user_performance_read_first),
             body = PerfDisclaimerCopy.ROOT_RISK,
             confirmLabel = "Grant Root",
             onDismiss = { showRootDisclaimer = false },

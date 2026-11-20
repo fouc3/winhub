@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Shared, theme-token-driven building blocks for the per-store game DETAIL pages
@@ -76,7 +78,7 @@ fun StoreDetailHeader(
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = I18n.s(R.string.social_hub_configs_back),
                 tint = MaterialTheme.colorScheme.onBackground,
             )
         }

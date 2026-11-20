@@ -73,6 +73,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.Executors
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Adrenotools-style download menu for the given content type(s).
@@ -225,7 +227,7 @@ fun ContentDownloadSheet(
         OutlinedAlertDialog(
             onDismissRequest = { showInfoProfile = null },
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            title = { Text("Content Info", color = MaterialTheme.colorScheme.onSurface) },
+            title = { Text(I18n.s(R.string.content_info), color = MaterialTheme.colorScheme.onSurface) },
             text = {
                 androidx.compose.foundation.rememberScrollState().let { scroll ->
                     Column(Modifier.verticalScroll(scroll)) {
@@ -248,7 +250,7 @@ fun ContentDownloadSheet(
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemoveProfile = null },
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            title = { Text("Remove content?", color = MaterialTheme.colorScheme.onSurface) },
+            title = { Text(I18n.s(R.string.ui_remove_content), color = MaterialTheme.colorScheme.onSurface) },
             text = { Text("Remove \"${profile.verName}\"?", color = MaterialTheme.colorScheme.onSurface) },
             confirmButton = {
                 TextButton(onClick = {
@@ -257,9 +259,9 @@ fun ContentDownloadSheet(
                     loadProfiles(cm, effectiveTypes) { profiles = it }
                     confirmRemoveProfile = null
                     onContentChanged()
-                }) { Text("Remove") }
+                }) { Text(I18n.s(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text(I18n.s(R.string.cancel)) } }
         )
     }
 
@@ -350,7 +352,7 @@ fun ContentDownloadSheet(
                         Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 6.dp, bottom = 4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("WIN Components", color = cs.onSurface, fontWeight = FontWeight.Bold,
+                        Text(I18n.s(R.string.ui_win_components), color = cs.onSurface, fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.titleSmall)
                         Spacer(Modifier.width(16.dp))
                         // Component-source filter lives in the header (next to the title) in landscape, so the
@@ -398,14 +400,14 @@ fun ContentDownloadSheet(
                             Column(Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 6.dp)) {
                                 // Compact single line: "GPU Drivers   Turnip / adrenotools" + manage button.
                                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                                    Text("GPU Drivers", color = cs.onSurface,
+                                    Text(I18n.s(R.string.ui_gpu_drivers), color = cs.onSurface,
                                         style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                                     Spacer(Modifier.width(8.dp))
                                     Text("Turnip / adrenotools", color = cs.onSurfaceVariant,
                                         style = MaterialTheme.typography.labelSmall,
                                         maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                                     IconButton(onClick = { showDriverManage = true }, modifier = Modifier.size(36.dp)) {
-                                        Icon(Icons.Filled.Tune, contentDescription = "Manage sources",
+                                        Icon(Icons.Filled.Tune, contentDescription = I18n.s(R.string.ui_manage_sources),
                                             tint = cs.onSurfaceVariant)
                                     }
                                 }
@@ -468,12 +470,12 @@ fun ContentDownloadSheet(
                         Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 2.dp, bottom = 2.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("Tap a version to install",
+                        Text(I18n.s(R.string.ui_tap_a_version_to_install),
                             color = cs.onSurfaceVariant, style = MaterialTheme.typography.labelSmall,
                             maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                         TextButton(onClick = onDismiss,
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-                            Text("Close", color = cs.primary)
+                            Text(I18n.s(R.string.wrapper_manager_close), color = cs.primary)
                         }
                     }
                 }
@@ -550,7 +552,7 @@ fun ContentDownloadSheet(
                 )
 
                 Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = onDismiss) { Text("Close", color = MaterialTheme.colorScheme.primary) }
+                    TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close), color = MaterialTheme.colorScheme.primary) }
                 }
             }
         }
@@ -630,18 +632,18 @@ private fun DownloadContentItem(
                 when {
                     busy -> {}
                     isLocal -> {
-                        Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
+                        Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed), tint = installedBlue,
                             modifier = Modifier.size(20.dp))
                         Spacer(Modifier.width(14.dp))
-                        Icon(Icons.Filled.Info, contentDescription = "Info", tint = cs.onSurfaceVariant,
+                        Icon(Icons.Filled.Info, contentDescription = I18n.s(R.string.ui_info), tint = cs.onSurfaceVariant,
                             modifier = Modifier.size(20.dp).clickable(onClick = onInfo))
                         Spacer(Modifier.width(14.dp))
-                        Icon(Icons.Filled.Delete, contentDescription = "Remove", tint = Color(0xFFEF5350), // intentional: destructive-action red
+                        Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = Color(0xFFEF5350), // intentional: destructive-action red
                             modifier = Modifier.size(20.dp).clickable(onClick = onRemove))
                     }
-                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
+                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
                         tint = installedBlue, modifier = Modifier.size(20.dp))
-                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
+                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary,
                         modifier = Modifier.size(22.dp))
                 }
             }
@@ -857,9 +859,9 @@ private fun SourceToggleBox(
                 Icon(Icons.Filled.Hub, contentDescription = null, tint = cs.primary, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
-                    Text("Include community repos", style = MaterialTheme.typography.bodyMedium,
+                    Text(I18n.s(R.string.ui_include_community_repos), style = MaterialTheme.typography.bodyMedium,
                         color = cs.onSurface, fontWeight = FontWeight.SemiBold)
-                    Text("Add versions from the Contents screen's sources",
+                    Text(I18n.s(R.string.ui_add_versions_from_the_contents_screen_sources),
                         style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant)
                 }
                 Switch(checked = includeCommunity, onCheckedChange = onToggle,
@@ -950,7 +952,7 @@ private fun InstallFromFileButton(
     var showPickMenu by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { showPickMenu = true }, modifier = iconButtonModifier) {
-            Icon(Icons.Filled.FolderOpen, contentDescription = "Install from file",
+            Icon(Icons.Filled.FolderOpen, contentDescription = I18n.s(R.string.ui_install_from_file),
                 tint = MaterialTheme.colorScheme.primary)
         }
         // Outlined-card look to match the content rows / FileManager idiom (shared helper — this
@@ -960,9 +962,9 @@ private fun InstallFromFileButton(
             onDismissRequest = { showPickMenu = false },
             modifier = Modifier.outlinedMenuCard(),
         ) {
-            DropdownMenuItem(text = { Text("Browse files") }, onClick = { showPickMenu = false; onBrowseFiles() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = { showPickMenu = false; onBrowseFiles() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Pick via system…") }, onClick = { showPickMenu = false; onPickSystem() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = { showPickMenu = false; onPickSystem() })
         }
     }
 }
@@ -1020,7 +1022,7 @@ private fun ColumnScope.ComponentVersionSections(
         Box(Modifier.fillMaxWidth().weight(1f)) {
             if (totalRows == 0 && !communityLoading) {
                 Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                    Text("No content available.", color = MaterialTheme.colorScheme.onSurface)
+                    Text(I18n.s(R.string.ui_no_content_available), color = MaterialTheme.colorScheme.onSurface)
                 }
             } else {
                 LazyColumn(
@@ -1182,7 +1184,7 @@ private fun HeaderSourceControl(
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         Icon(Icons.Filled.Hub, contentDescription = null, tint = cs.primary, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(6.dp))
-        Text("Community repos", style = MaterialTheme.typography.labelMedium, color = cs.onSurface,
+        Text(I18n.s(R.string.ui_community_repos), style = MaterialTheme.typography.labelMedium, color = cs.onSurface,
             fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Spacer(Modifier.width(8.dp))
         Switch(checked = includeCommunity, onCheckedChange = onToggle,

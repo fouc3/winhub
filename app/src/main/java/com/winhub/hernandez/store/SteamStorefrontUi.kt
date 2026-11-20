@@ -66,6 +66,8 @@ import com.winhub.hernandez.ui.deck.xmbHighlightHostOrNull
 import com.winhub.hernandez.ui.theme.StoreDiscountBg
 import com.winhub.hernandez.ui.theme.StoreDiscountInk
 import com.winhub.hernandez.ui.theme.StoreFreeGreen
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Shared chrome for the Steam storefront's four tabs: the portrait↔landscape decision, the D-pad
@@ -498,7 +500,7 @@ fun StoreCapsule(
 fun StorePriceRow(item: SteamStoreCatalog.StoreItem, modifier: Modifier = Modifier) {
     when {
         item.isFree -> Text(
-            text = "Free to Play",
+            text = I18n.s(R.string.ui_free_to_play),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = StoreFreeGreen,
@@ -590,7 +592,7 @@ fun StoreActionButton(
         ) {
             Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
-            Text("Add to Library", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_add_to_library), style = style, maxLines = 1)
         }
 
         StoreAction.Working -> Button(
@@ -606,7 +608,7 @@ fun StoreActionButton(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Spacer(Modifier.width(6.dp))
-            Text("Adding…", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_adding), style = style, maxLines = 1)
         }
 
         StoreAction.Download -> Button(
@@ -621,7 +623,7 @@ fun StoreActionButton(
         ) {
             Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
-            Text("Download", style = style, maxLines = 1)
+            Text(I18n.s(R.string.wrapper_catalog_download), style = style, maxLines = 1)
         }
 
         StoreAction.NotOwned -> OutlinedButton(
@@ -632,7 +634,7 @@ fun StoreActionButton(
             contentPadding = pad,
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         ) {
-            Text("Not owned", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_not_owned), style = style, maxLines = 1)
         }
     }
 }
@@ -826,7 +828,7 @@ fun StoreHeroCard(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
-                text = "FEATURED & RECOMMENDED",
+                text = I18n.s(R.string.ui_featured_recommended),
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
                 // On the black scrim, not on a themed surface — but still the live accent, so a

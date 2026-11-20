@@ -55,6 +55,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Collections
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 enum class ShortcutSortOrder { NAME_ASC, NAME_DESC, CONTAINER }
 
@@ -443,7 +445,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
                 val fetched = CommunityConfigFetcher.fetchForFile(ref.workerGame, ref.filename, ref.ns)
                     ?: return@withContext CommunityConfigApply.ConfigApplyResult(
                         ok = false,
-                        message = "Couldn't fetch that config (offline, or it's no longer in the repo).",
+                        message = I18n.s(R.string.ui_couldn_t_fetch_that_config_offline_or_it_no_longer_in),
                     )
                 val config = ConfigTranslator.translate(fetched.json)
                 val installed = InstalledComponents.read(getApplication())
@@ -755,7 +757,7 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
                         ?.bufferedReader()?.use { it.readText() }
                         ?: return@withContext CommunityConfigApply.ConfigApplyResult(
                             ok = false,
-                            message = "Couldn't read that file.",
+                            message = I18n.s(R.string.ui_couldn_t_read_that_file),
                         )
                     val config = ConfigTranslator.translate(JSONObject(text))
                     val installed = InstalledComponents.read(getApplication())

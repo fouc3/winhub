@@ -16,6 +16,8 @@ import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.winhub.hernandez.core.Callback
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Hosts the shared Compose ColorPicker inside an AlertDialog so the legacy Java input-controls
 // controls editor can reuse the same picker as the Appearance screen and the in-game
@@ -41,7 +43,7 @@ fun showControlsColorPickerDialog(activity: ComponentActivity, initialArgb: Int,
         }
     }
     AlertDialog.Builder(activity)
-        .setTitle("Controls accent color")
+        .setTitle(I18n.s(R.string.controls_accent_color))
         .setView(composeView)
         .setPositiveButton(android.R.string.ok, null)
         .show()

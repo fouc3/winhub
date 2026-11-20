@@ -45,6 +45,8 @@ import com.winhub.hernandez.store.SteamAchievement
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** One title's Metacritic + HowLongToBeat answers, loaded once off the main thread. */
 internal data class DeckScores(
@@ -132,7 +134,7 @@ internal fun DeckScoresRow(scores: DeckScores, modifier: Modifier = Modifier) {
                     }
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        text = "METACRITIC",
+                        text = I18n.s(R.string.ui_metacritic),
                         color = Deck.onSurfaceVariant,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -157,7 +159,7 @@ internal fun DeckScoresRow(scores: DeckScores, modifier: Modifier = Modifier) {
                         .padding(horizontal = 10.dp, vertical = 6.dp),
                 ) {
                     Text(
-                        text = "HOW LONG TO BEAT",
+                        text = I18n.s(R.string.ui_how_long_to_beat),
                         color = Deck.onSurfaceVariant,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -203,7 +205,7 @@ internal fun DeckAboutCard(description: String, modifier: Modifier = Modifier) {
             .padding(14.dp),
     ) {
         Text(
-            text = "ABOUT",
+            text = I18n.s(R.string.ui_about),
             color = Deck.primary,
             fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold,
@@ -246,7 +248,7 @@ internal fun DeckAchievementsRow(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "ACHIEVEMENTS",
+                text = I18n.s(R.string.ui_achievements_2),
                 color = Deck.primary,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.SemiBold,

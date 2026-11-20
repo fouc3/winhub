@@ -50,6 +50,8 @@ import com.winhub.hernandez.ui.theme.Divider
 import com.winhub.hernandez.ui.theme.OnSurface
 import com.winhub.hernandez.ui.theme.OnSurfaceVariant
 import com.winhub.hernandez.ui.theme.themePresets
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @Composable
 fun AppearanceScreen() {
@@ -92,7 +94,7 @@ fun AppearanceScreen() {
         // ── Custom accent picker ─────────────────────────────────────────
         SectionLabel("Custom Accent Color")
         Text(
-            text = "Selecting a color below switches to Custom preset",
+            text = I18n.s(R.string.ui_selecting_a_color_below_switches_to_custom_preset),
             color = OnSurfaceVariant,
             fontSize = 12.sp
         )

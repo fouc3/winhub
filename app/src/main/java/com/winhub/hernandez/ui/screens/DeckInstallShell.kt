@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.winhub.hernandez.store.GameFacts
 import com.winhub.hernandez.store.SteamAchievement
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Shared scaffold for the in-Deck install/detail screens (GOG / Epic / Amazon / Steam) — the
@@ -92,7 +94,7 @@ internal fun DeckInstallShell(
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.size(6.dp))
-            Text("Back", color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.social_hub_configs_back), color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(Modifier.size(14.dp))
 
@@ -176,10 +178,10 @@ internal fun DeckInstallShell(
         Spacer(Modifier.size(14.dp))
 
         if (finished || installed) {
-            Text("Installed", color = Deck.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.wrapper_installed), color = Deck.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
             if (addGame != null) {
                 Spacer(Modifier.size(10.dp))
-                DeckButton("Add Game", primary = true) { addOpen = true }
+                DeckButton(I18n.s(R.string.xmb_hint_add_game), primary = true) { addOpen = true }
             }
             if (onOpenStore != null) {
                 Spacer(Modifier.size(8.dp))
@@ -196,7 +198,7 @@ internal fun DeckInstallShell(
             Text(status, color = Deck.onSurfaceVariant, fontSize = 12.sp)
             Spacer(Modifier.size(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                DeckButton("Cancel", primary = false) { onCancel() }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { onCancel() }
                 if (onPauseResume != null) {
                     DeckButton(if (paused) "Resume" else "Pause", primary = false) { onPauseResume() }
                 }
@@ -207,7 +209,7 @@ internal fun DeckInstallShell(
                 Spacer(Modifier.size(10.dp))
             }
             if (canInstall) {
-                DeckButton("Install", primary = true) { onStart() }
+                DeckButton(I18n.s(R.string.ui_install), primary = true) { onStart() }
             }
             if (onOpenStore != null) {
                 if (canInstall) Spacer(Modifier.size(8.dp))

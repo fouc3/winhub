@@ -19,6 +19,8 @@ import com.winhub.hernandez.store.download.StoreDownloadHooks
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-Deck Amazon install. Drives the REAL [AmazonDownloadManager] engine — same token → dir →
@@ -72,7 +74,7 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                     val token = AmazonCredentialStore.getValidAccessToken(appCtx)
                     if (token == null) {
                         StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "Login required")
-                        main.post { errorText = "Login required"; started = false }
+                        main.post { errorText = I18n.s(R.string.ui_login_required); started = false }
                         return@launch
                     }
                     var sanitized = game.title.replace("[^a-zA-Z0-9 \\-_]".toRegex(), "").trim()
@@ -118,13 +120,13 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                     }
                     if (!ok) {
                         StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "Download failed")
-                        main.post { errorText = "Download failed"; started = false }
+                        main.post { errorText = I18n.s(R.string.xmb_dl_status_failed); started = false }
                         return@launch
                     }
                     val exePath = deckResolveExe(installDir, game.title)
                     if (exePath == null) {
                         StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, "No executable found")
-                        main.post { errorText = "No executable found"; started = false }
+                        main.post { errorText = I18n.s(R.string.ui_no_executable_found); started = false }
                         return@launch
                     }
                     prefs.edit().putString("amazon_exe_${game.productId}", exePath).apply()

@@ -53,6 +53,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private val SETUP_STEPS = listOf(
     "System files",
@@ -155,7 +157,7 @@ private fun SplashBrand(modifier: Modifier = Modifier) {
             animation = tween(1500, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse,
         ),
-        label = "winhubPulse",
+        label = I18n.s(R.string.ui_winhubpulse),
     )
     val glow by transition.animateFloat(
         initialValue = 0.35f,
@@ -164,7 +166,7 @@ private fun SplashBrand(modifier: Modifier = Modifier) {
             animation = tween(1500, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse,
         ),
-        label = "winhubGlow",
+        label = I18n.s(R.string.ui_winhubglow),
     )
 
     Box(
@@ -194,14 +196,14 @@ private fun SplashBrand(modifier: Modifier = Modifier) {
         ) {
             Row {
                 Text(
-                    text = "Win",
+                    text = I18n.s(R.string.ui_win),
                     color = Color.White,
                     fontSize = 58.sp,
                     fontWeight = FontWeight.Black,
                     letterSpacing = (-1.5).sp,
                 )
                 Text(
-                    text = "Hub",
+                    text = I18n.s(R.string.ui_hub),
                     color = DeckPalette.primary,
                     fontSize = 58.sp,
                     fontWeight = FontWeight.Black,
@@ -209,7 +211,7 @@ private fun SplashBrand(modifier: Modifier = Modifier) {
                 )
             }
             Text(
-                text = "SYSTEM SETUP",
+                text = I18n.s(R.string.ui_system_setup),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -235,7 +237,7 @@ private fun SplashProgress(
     val animated by animateFloatAsState(
         targetValue = clamped / 100f,
         animationSpec = tween(320),
-        label = "setupProgress",
+        label = I18n.s(R.string.ui_setupprogress),
     )
     val proceedFocus = remember { FocusRequester() }
     LaunchedEffect(showProceed) {
@@ -250,7 +252,7 @@ private fun SplashProgress(
         modifier = modifier,
     ) {
         Text(
-            text = "Setting up",
+            text = I18n.s(R.string.ui_setting_up),
             color = DeckPalette.onBackground,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -320,7 +322,7 @@ private fun SplashProgress(
 
         if (degraded) {
             Text(
-                text = "Some components were skipped. You can retry them later from Contents.",
+                text = I18n.s(R.string.ui_some_components_were_skipped_you_can_retry_them_later),
                 color = DeckPalette.error,
                 fontSize = 11.5.sp,
                 maxLines = 2,
@@ -422,7 +424,7 @@ private fun SplashProceedButton(
             ),
     ) {
         Text(
-            text = "Proceed",
+            text = I18n.s(R.string.ui_proceed),
             color = DeckPalette.onPrimary,
             fontSize = 15.sp,
             fontWeight = FontWeight.SemiBold,

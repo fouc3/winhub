@@ -55,6 +55,8 @@ import com.winhub.hernandez.ui.XServerDialogState
 import com.winhub.hernandez.ui.XServerDialogState.AchievementPill
 import java.io.File
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ---------------------------------------------------------------------------------------------------
 // Achievement pill stack — gold cards that slide into the TOP-RIGHT when a Steam achievement is
@@ -251,7 +253,7 @@ private fun PillBody(pill: AchievementPill) {
 
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "ACHIEVEMENT UNLOCKED",
+                    text = I18n.s(R.string.ui_achievement_unlocked),
                     color = Gold,
                     fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,

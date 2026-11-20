@@ -37,6 +37,8 @@ import com.winhub.hernandez.ui.deck.XmbPageArtTheme
 import com.winhub.hernandez.ui.deck.xmbGlassCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Steam's game page in the XMB store style (landscape): the shared XMB layout with Steam's own Details tab, size card, status
 // and achievements. The state, the handlers and the other tab bodies stay in SteamGameDetailScreen.
@@ -130,7 +132,7 @@ internal fun SteamXmbDetailPage(
                     .xmbGlassCard(RoundedCornerShape(12.dp))
                     .padding(horizontal = 12.dp, vertical = 10.dp),
             ) {
-                Text("INSTALL SIZE", color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                Text(I18n.s(R.string.ui_install_size), color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
                 Text(sizeText, color = cs.onSurface, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -147,7 +149,7 @@ internal fun SteamXmbDetailPage(
             if (achTotal > 0) {
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("Achievements", color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        Text(I18n.s(R.string.ui_achievements), color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                         Text("$achDone / $achTotal", color = GoldAccent, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                     }
                     Box(Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(6.dp)).background(Color.Black.copy(alpha = 0.45f))) {

@@ -32,6 +32,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The **Friends** tab — a rehome, not a rewrite.
@@ -236,7 +238,7 @@ private fun FriendsTabHeader(
             verticalAlignment = Alignment.Bottom,
         ) {
             Text(
-                text = "Friends",
+                text = I18n.s(R.string.xmb_tab_friends),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -278,14 +280,14 @@ private fun EmptyDetailPane() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Pick a friend to start chatting",
+                text = I18n.s(R.string.ui_pick_a_friend_to_start_chatting),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                text = "Long-press a friend for their profile, invites and more.",
+                text = I18n.s(R.string.ui_long_press_a_friend_for_their_profile_invites_and_mor),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

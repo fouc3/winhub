@@ -25,6 +25,10 @@ class BannerlatorApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Localization entry point first: every screen reads its text through I18n.s(...), which
+        // needs the application context before any UI composes.
+        runCatching { com.winhub.hernandez.util.I18n.init(this) }
+
         // The Xbox sign-in window and the cloud player run in their own process (":xboxlogin", isolated WebView data). None of
         // the start-up work below belongs there.
         if (com.winhub.hernandez.store.xbox.XboxLoginActivity.isLoginProcess()) return

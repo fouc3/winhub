@@ -11,6 +11,8 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import com.winhub.hernandez.communityconfigs.GameDoctor
 import com.winhub.hernandez.container.Shortcut
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Game Doctor as an XMB column: what went wrong in the last run, with one-tap fixes, shared configs
@@ -24,7 +26,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     lateinit var menu: XmbMenu
 
     menu = XmbMenu(
-        title = "Game Doctor",
+        title = I18n.s(R.string.ui_game_doctor),
         icon = Icons.Filled.Healing,
         initialKey = "busy",
         onClose = { if (session.changed) xmb.reloadGames() },
@@ -41,8 +43,8 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             if (session.changed) {
                 add(
                     XmbRow.Action(
-                        key = "undo", label = "Undo all changes", icon = Icons.Filled.History,
-                        subtitle = "Back to how it was before the doctor",
+                        key = "undo", label = I18n.s(R.string.ui_undo_all_changes), icon = Icons.Filled.History,
+                        subtitle = I18n.s(R.string.ui_back_to_how_it_was_before_the_doctor),
                         disabledReason = if (session.busy) "Working…" else null,
                     ) {
                         session.undo {

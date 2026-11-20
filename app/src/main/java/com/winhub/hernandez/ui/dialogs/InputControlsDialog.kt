@@ -31,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +53,7 @@ fun InputControlsDialog(state: XServerDialogState) {
 
     OutlinedAlertDialog(
         onDismissRequest = { state.dismiss() },
-        title = { Text("Input Controls") },
+        title = { Text(I18n.s(R.string.input_controls)) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 // Profile dropdown
@@ -63,7 +65,7 @@ fun InputControlsDialog(state: XServerDialogState) {
                         value = allItems.getOrElse(selectedIdx) { "-- Disabled --" },
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Profile") },
+                        label = { Text(I18n.s(R.string.profile)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -105,7 +107,7 @@ fun InputControlsDialog(state: XServerDialogState) {
                     enabled = selectedIdx > 0,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Profile Settings…")
+                    Text(I18n.s(R.string.ui_profile_settings))
                 }
             }
         },
@@ -119,7 +121,7 @@ fun InputControlsDialog(state: XServerDialogState) {
             }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = { state.dismiss() }) { Text("Cancel") }
+            TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.cancel)) }
         }
     )
 }

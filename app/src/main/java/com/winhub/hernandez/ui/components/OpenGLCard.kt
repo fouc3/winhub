@@ -38,6 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /*
  * The "OpenGL" card shared by the container editor (plain switches) and the game editor (Auto | On |
@@ -89,14 +91,14 @@ fun OpenGLCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, top = 2.dp),
         ) {
-            Text("OpenGL", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
+            Text(I18n.s(R.string.opengl), fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
             IconButton(
                 onClick = onHelp,
                 modifier = Modifier
                     .size(40.dp)
                     .then(if (helpFocused) Modifier.border(2.dp, cs.primary, CircleShape) else Modifier),
             ) {
-                Icon(Icons.Default.Help, contentDescription = "What are these OpenGL settings?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_are_these_opengl_settings), modifier = Modifier.size(18.dp))
             }
             if (summary != null) {
                 Text(

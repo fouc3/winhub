@@ -38,6 +38,8 @@ import com.winhub.hernandez.core.AppUtils
 import com.winhub.hernandez.ui.XServerDrawerState
 import com.winhub.hernandez.ui.theme.AppThemeState
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The handheld's companion screen while a game plays on the TV ("Launch this game on the TV" — see
@@ -413,7 +415,7 @@ private fun TvCompanionScreen(
                     .height(64.dp),
                 shape = RoundedCornerShape(14.dp),
             ) {
-                Text("Send input back to the TV", style = MaterialTheme.typography.titleMedium)
+                Text(I18n.s(R.string.ui_send_input_back_to_the_tv), style = MaterialTheme.typography.titleMedium)
             }
             Spacer(Modifier.height(10.dp))
             Text(

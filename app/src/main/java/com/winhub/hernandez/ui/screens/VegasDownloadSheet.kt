@@ -33,6 +33,8 @@ import org.json.JSONObject
 import java.io.File
 import java.util.concurrent.Executors
 import androidx.compose.ui.text.style.TextOverflow
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Holds info about one downloadable vegas release from GitHub.
@@ -130,7 +132,7 @@ fun VegasDownloadSheet(
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(32.dp)) {
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(16.dp))
-                    Text("Installing VEGAS\u2026", color = MaterialTheme.colorScheme.onSurface)
+                    Text(I18n.s(R.string.ui_installing_vegas_u2026), color = MaterialTheme.colorScheme.onSurface)
                 }
             }
         }
@@ -140,17 +142,17 @@ fun VegasDownloadSheet(
     errorMsg?.let { msg ->
         AlertDialog(
             onDismissRequest = { errorMsg = null },
-            title = { Text("Download failed", color = MaterialTheme.colorScheme.onSurface) },
+            title = { Text(I18n.s(R.string.xmb_dl_status_failed), color = MaterialTheme.colorScheme.onSurface) },
             text = { Text(msg, color = MaterialTheme.colorScheme.onSurface) },
             confirmButton = { TextButton(onClick = { errorMsg = null }) { Text("OK") } },
-            dismissButton = { TextButton(onClick = { errorMsg = null; retryKey++ }) { Text("Retry") } }
+            dismissButton = { TextButton(onClick = { errorMsg = null; retryKey++ }) { Text(I18n.s(R.string.ui_retry)) } }
         )
     }
 
     // Main dialog
     AlertDialog(
         onDismissRequest = { if (downloadingTag == null && !installing) onDismiss() },
-        title = { Text("VEGAS Downloads", color = MaterialTheme.colorScheme.onSurface) },
+        title = { Text(I18n.s(R.string.ui_vegas_downloads), color = MaterialTheme.colorScheme.onSurface) },
         text = {
             if (isLoading) {
                 Box(Modifier.fillMaxWidth().padding(24.dp), contentAlignment = Alignment.Center) {
@@ -195,7 +197,7 @@ Column(modifier = Modifier.weight(1f)) {
                                     TextButton(onClick = {
                                         notesDialogTag = release.tagName
                                     }) {
-                                        Text("What's new", style = MaterialTheme.typography.bodySmall)
+                                        Text(I18n.s(R.string.ui_what_new), style = MaterialTheme.typography.bodySmall)
                                     }
                                 }
                                 Text(
@@ -278,7 +280,7 @@ Column(modifier = Modifier.weight(1f)) {
                                         }
                                     }
                                 ) {
-                                    Icon(Icons.Filled.Download, contentDescription = "Download", tint = MaterialTheme.colorScheme.primary)
+                                    Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         }
@@ -287,7 +289,7 @@ Column(modifier = Modifier.weight(1f)) {
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { if (downloadingTag == null && !installing) onDismiss() }) { Text("Close") } },
+        confirmButton = { TextButton(onClick = { if (downloadingTag == null && !installing) onDismiss() }) { Text(I18n.s(R.string.wrapper_manager_close)) } },
     )
 
     // Full-body release notes dialog — the inline preview stays at 2 lines by design
@@ -313,7 +315,7 @@ Column(modifier = Modifier.weight(1f)) {
                         modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                     )
                 },
-                confirmButton = { TextButton(onClick = { notesDialogTag = null }) { Text("Close") } },
+                confirmButton = { TextButton(onClick = { notesDialogTag = null }) { Text(I18n.s(R.string.wrapper_manager_close)) } },
             )
         } else {
             notesDialogTag = null

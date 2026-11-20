@@ -26,6 +26,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.store.download.StoreSection
 import com.winhub.hernandez.store.download.StoreStatusText
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** The Amazon **Profile** tab: identity (best-effort name), session, library counts, web links. */
 @Composable
@@ -101,7 +103,7 @@ fun AmazonProfileTab(
         }
     }
     val about: @Composable () -> Unit = {
-        StoreSection(title = "About Amazon Games here") {
+        StoreSection(title = I18n.s(R.string.ui_about_amazon_games_here)) {
             StoreStatusText(
                 "Games you claim on Prime Gaming download through Amazon's distribution service and " +
                     "run without the Amazon Games app. Amazon exposes no friends or catalog API to " +

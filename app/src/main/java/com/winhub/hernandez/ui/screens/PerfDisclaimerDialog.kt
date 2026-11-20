@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** Verbatim risk copy for the hard-gate disclaimers (kept in one place so both surfaces match). */
 object PerfDisclaimerCopy {
@@ -68,7 +70,7 @@ fun PerfInfoDialog(title: String, body: String, onDismiss: () -> Unit) {
                     modifier = Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState())
                 )
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                    Button(onClick = onDismiss) { Text("Got it") }
+                    Button(onClick = onDismiss) { Text(I18n.s(R.string.ui_got_it)) }
                 }
             }
         }
@@ -117,7 +119,7 @@ fun PerfDisclaimerDialog(
                 )
 
                 if (!reachedBottom) {
-                    Text("Scroll to the end to continue.",
+                    Text(I18n.s(R.string.ui_scroll_to_the_end_to_continue),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
                 }
 
@@ -127,12 +129,12 @@ fun PerfDisclaimerDialog(
                 ) {
                     Checkbox(checked = accepted, onCheckedChange = { accepted = it }, enabled = reachedBottom)
                     Spacer(Modifier.width(6.dp))
-                    Text("I understand and accept all risk",
+                    Text(I18n.s(R.string.ui_i_understand_and_accept_all_risk),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp)
                 }
 
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                    TextButton(onClick = onDismiss) { Text("Cancel") }
+                    TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
                     Spacer(Modifier.width(8.dp))
                     Button(onClick = { if (canConfirm) { onConfirm(); } }, enabled = canConfirm) {
                         Text(confirmLabel)

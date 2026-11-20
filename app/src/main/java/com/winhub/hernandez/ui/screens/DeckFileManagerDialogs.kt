@@ -65,6 +65,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /*
  * Deck dialogs for the file manager. Each opens in its own window, so they ride DeckConfigDialog
@@ -242,7 +244,7 @@ internal fun DeckFmOptionsDialog(
     onRefresh: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    DeckFmDialog(title = "Sort & view", onDismiss = onDismiss, dismissLabel = "Done") {
+    DeckFmDialog(title = I18n.s(R.string.ui_sort_view), onDismiss = onDismiss, dismissLabel = "Done") {
         FmSectionLabel("SORT BY")
         listOf("name" to "Name", "date" to "Date modified", "size" to "Size").forEach { (key, label) ->
             val on = sortBy == key
@@ -337,7 +339,7 @@ internal fun DeckFmPropertiesDialog(
     }
 
     DeckFmDialog(
-        title = "Properties",
+        title = I18n.s(R.string.ui_properties),
         subtitle = file.name,
         onDismiss = onDismiss,
         confirmLabel = "Done",
@@ -357,8 +359,8 @@ internal fun DeckFmPropertiesDialog(
         val state = attrs
         val readOnlyEnabled = state != null && !busy
         DeckRow(
-            label = "Read-only",
-            hint = "Stops games (and Wine) from overwriting or deleting this file.",
+            label = I18n.s(R.string.ui_read_only),
+            hint = I18n.s(R.string.ui_stops_games_and_wine_from_overwriting_or_deleting_thi),
         ) {
             Box(Modifier.alpha(if (readOnlyEnabled) 1f else 0.4f)) {
                 DeckToggle(checked = state?.readOnly == true) { want ->
@@ -380,7 +382,7 @@ internal fun DeckFmPropertiesDialog(
         val hiddenSupported = state?.hiddenSupported == true
         val hiddenEnabled = state != null && hiddenSupported && !busy
         DeckRow(
-            label = "Hidden",
+            label = I18n.s(R.string.ui_hidden),
             hint = if (state != null && !hiddenSupported) "This storage can't store the hidden flag."
             else "Marks the file hidden in Windows (Wine's hidden attribute).",
         ) {

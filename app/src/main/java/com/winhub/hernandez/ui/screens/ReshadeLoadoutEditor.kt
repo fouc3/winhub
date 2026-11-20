@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.reshade.ReshadeLoadout
 import com.winhub.hernandez.reshade.ReshadeManager
 import org.json.JSONObject
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Compose-observable state holder for a pre-launch ReShade LOADOUT (Tier 1), shared by the container
@@ -271,7 +273,7 @@ private fun ReshadeEffectEditorRow(
     }
     if (expanded) {
         if (params.isEmpty()) {
-            Text("No tunable parameters.", style = MaterialTheme.typography.bodySmall,
+            Text(I18n.s(R.string.ui_no_tunable_parameters), style = MaterialTheme.typography.bodySmall,
                 color = cs.onSurfaceVariant, modifier = Modifier.padding(start = 12.dp))
         } else {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -282,7 +284,7 @@ private fun ReshadeEffectEditorRow(
                         ReshadeManager.seedValues(p, null, tmp)
                         tmp.forEach { (k, v) -> state.setParam(name, k, v) }
                     }
-                }) { Text("Reset", color = cs.primary) }
+                }) { Text(I18n.s(R.string.reset), color = cs.primary) }
             }
             params.forEach { p -> ReshadeParamControl(state, name, p) }
         }

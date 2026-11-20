@@ -27,6 +27,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Epic **Store** tab — the Steam Store tab re-cut over Epic's store GraphQL.
@@ -114,7 +116,7 @@ fun EpicStoreTab(
             header.Header {
                 CatalogSearchField(
                     query = query,
-                    placeholder = "Search the Epic Games Store…",
+                    placeholder = I18n.s(R.string.ui_search_the_epic_games_store),
                     onQueryChange = { query = it },
                     onClear = { query = ""; focusManager.clearFocus() },
                     onSearch = { focusManager.clearFocus() },
@@ -145,7 +147,7 @@ fun EpicStoreTab(
                     contentAlignment = Alignment.Center,
                 ) {
                     StoreNotice(
-                        title = "Store browsing is unavailable",
+                        title = I18n.s(R.string.ui_store_browsing_is_unavailable),
                         body = "Epic's storefront didn't answer. Search still works, and everything you " +
                             "already own is in the Library tab.",
                         actionLabel = "Retry",
@@ -244,7 +246,7 @@ private fun EpicStoreLandscape(
             catalogRail("New Releases", "Just landed", data.newReleases, "Epic", actionFor, onOpen, onAction)
             if (data.onSale.isEmpty() && data.newReleases.isEmpty()) {
                 item(key = "browse_empty") {
-                    StoreNotice(title = "Nothing to browse right now", body = "Epic's store feeds came back empty.")
+                    StoreNotice(title = I18n.s(R.string.ui_nothing_to_browse_right_now), body = I18n.s(R.string.ui_epic_store_feeds_came_back_empty))
                 }
             }
         }

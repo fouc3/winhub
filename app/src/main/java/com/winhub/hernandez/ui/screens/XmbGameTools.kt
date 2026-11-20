@@ -65,6 +65,7 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Game tools as nested XMB columns (Phase 3). The ⋮-menu tools that used to open dialogs — Copy to
@@ -291,12 +292,12 @@ private fun xmbBrowserColumn(b: XmbBrowse, dir: File, depth: Int, focus: File?, 
                 }
             }
             if (parent != null) {
-                add(XmbRow.Action(key = "up", label = "Up one folder", icon = Icons.Filled.ArrowUpward, value = b.label(parent)) {
+                add(XmbRow.Action(key = "up", label = I18n.s(R.string.ui_up_one_folder), icon = Icons.Filled.ArrowUpward, value = b.label(parent)) {
                     replaceWith(parent, dir)
                 })
             }
             if (b.pickDir) {
-                add(XmbRow.Action(key = "pick", label = "Select this folder", icon = Icons.Filled.Check, subtitle = dir.absolutePath) { pick(dir) })
+                add(XmbRow.Action(key = "pick", label = I18n.s(R.string.ui_select_this_folder), icon = Icons.Filled.Check, subtitle = dir.absolutePath) { pick(dir) })
             }
             val rows = content
             if (rows == null) add(XmbRow.Info(KEY_LOADING, "Loading…", Icons.Filled.HourglassEmpty)) else addAll(rows)
@@ -391,12 +392,12 @@ internal fun xmbChangeExeMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             browser?.close(xmb)
             applyExe(exe, argsSuffix)
         }
-        return XmbMenu(title = "Launch arguments", icon = Icons.Filled.Tune, initialKey = "keep", onClose = { me.isOpen = false }) {
+        return XmbMenu(title = I18n.s(R.string.ui_launch_arguments), icon = Icons.Filled.Tune, initialKey = "keep", onClose = { me.isOpen = false }) {
             listOf<XmbRow>(
-                XmbRow.Action(key = "keep", label = "Keep arguments", icon = Icons.Filled.Check, subtitle = "Launch the new .exe with the same arguments") {
+                XmbRow.Action(key = "keep", label = I18n.s(R.string.ui_keep_arguments), icon = Icons.Filled.Check, subtitle = I18n.s(R.string.ui_launch_the_new_exe_with_the_same_arguments)) {
                     choose(info.argsSuffix)
                 },
-                XmbRow.Action(key = "clear", label = "Clear arguments", icon = Icons.Filled.Close, subtitle = "Launch the new .exe with no arguments") {
+                XmbRow.Action(key = "clear", label = I18n.s(R.string.ui_clear_arguments), icon = Icons.Filled.Close, subtitle = I18n.s(R.string.ui_launch_the_new_exe_with_no_arguments)) {
                     choose("")
                 },
                 XmbRow.Info("head", "This shortcut launches with arguments:", Icons.Filled.Info),
@@ -441,7 +442,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         // The dialog's short-circuit: toast and stop. The column repeats it so it isn't empty.
         val msg = if (info.onDriveC) "\"$name\" already runs from Drive C." else "Couldn't locate this game's files on disk."
         xmb.toast(msg)
-        return XmbMenu(title = "Copy to Drive C", icon = Icons.Filled.DriveFileMove) {
+        return XmbMenu(title = I18n.s(R.string.ui_copy_to_drive_c_2), icon = Icons.Filled.DriveFileMove) {
             XmbTools.para("msg", msg, Icons.Filled.Info, ctx)
         }
     }
@@ -483,7 +484,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             xmb.reloadGames()
         }
         return XmbMenu(
-            title = "Copied to Drive C",
+            title = I18n.s(R.string.ui_copied_to_drive_c),
             icon = Icons.Filled.CheckCircle,
             initialKey = "keep",
             onClose = {
@@ -503,14 +504,14 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 listOf(XmbRow.Info("deleting", "Deleting the original folder…", Icons.Filled.HourglassEmpty))
             } else {
                 listOf<XmbRow>(
-                    XmbRow.Action(key = "keep", label = "Keep original", icon = Icons.Filled.Check) {
+                    XmbRow.Action(key = "keep", label = I18n.s(R.string.ui_keep_original), icon = Icons.Filled.Check) {
                         if (!decided) {
                             decided = true
                             xmb.toast("Copied to Drive C — original kept.")
                             finish()
                         }
                     },
-                    XmbRow.Action(key = "delete", label = "Delete original", icon = Icons.Filled.Delete, danger = true) {
+                    XmbRow.Action(key = "delete", label = I18n.s(R.string.ui_delete_original), icon = Icons.Filled.Delete, danger = true) {
                         if (!decided) {
                             decided = true
                             deleting = true
@@ -542,7 +543,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val prog = XmbOpen()
         xmb.push(
             XmbMenu(
-                title = "Copying",
+                title = I18n.s(R.string.ui_copying),
                 icon = Icons.Filled.DriveFileMove,
                 initialKey = "cancel",
                 // Backing out cancels, like the dialog's Cancel: the partial copy is deleted.
@@ -550,7 +551,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             ) {
                 val p = progress
                 buildList<XmbRow> {
-                    add(XmbRow.Action(key = "cancel", label = "Cancel", icon = Icons.Filled.Close) { cancel.set(true) })
+                    add(XmbRow.Action(key = "cancel", label = I18n.s(R.string.cancel), icon = Icons.Filled.Close) { cancel.set(true) })
                     val pct = if (p.totalBytes > 0L) "${(p.copiedBytes * 100L / p.totalBytes).coerceIn(0L, 100L)}%" else ""
                     add(XmbRow.Info("progress", "Copying to Drive C…", Icons.Filled.DriveFileMove, value = pct))
                     if (p.totalBytes > 0L) add(XmbRow.Info("bytes", "${fmt(p.copiedBytes)} / ${fmt(p.totalBytes)}", Icons.Filled.Storage))
@@ -595,13 +596,13 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     // A folder of that name is already on C: — overwrite it or copy next to it.
     fun overwriteMenu(): XmbMenu {
         val me = XmbOpen()
-        return XmbMenu(title = "Already on Drive C", icon = Icons.Filled.Warning, initialKey = "both", onClose = { me.isOpen = false }) {
+        return XmbMenu(title = I18n.s(R.string.ui_already_on_drive_c), icon = Icons.Filled.Warning, initialKey = "both", onClose = { me.isOpen = false }) {
             listOf<XmbRow>(
-                XmbRow.Action(key = "both", label = "Keep both (new folder)", icon = Icons.Filled.ContentCopy) {
+                XmbRow.Action(key = "both", label = I18n.s(R.string.ui_keep_both_new_folder), icon = Icons.Filled.ContentCopy) {
                     me.close(xmb)
                     startCopy(CopyGameToDriveC.autoRenamedDest(CopyGameToDriveC.destRootFor(container, sourceRoot.name)), cleanFirst = false)
                 },
-                XmbRow.Action(key = "overwrite", label = "Overwrite", icon = Icons.Filled.Delete, danger = true) {
+                XmbRow.Action(key = "overwrite", label = I18n.s(R.string.ui_overwrite), icon = Icons.Filled.Delete, danger = true) {
                     me.close(xmb)
                     startCopy(CopyGameToDriveC.destRootFor(container, sourceRoot.name), cleanFirst = true)
                 },
@@ -632,7 +633,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
     measure()
     return XmbMenu(
-        title = "Copy to Drive C",
+        title = I18n.s(R.string.ui_copy_to_drive_c_2),
         icon = Icons.Filled.DriveFileMove,
         initialKey = "copy",
         onClose = { main.isOpen = false; sizeJob?.cancel() },
@@ -651,7 +652,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             buildList<XmbRow> {
                 add(
                     XmbRow.Action(
-                        key = "copy", label = "Copy", icon = Icons.Filled.DriveFileMove,
+                        key = "copy", label = I18n.s(R.string.copy), icon = Icons.Filled.DriveFileMove,
                         subtitle = "To C:\\${CopyGameToDriveC.GAMES_SUBDIR}\\${sourceRoot.name}",
                         disabledReason = blocked,
                     ) { confirmAndCopy() }
@@ -659,7 +660,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 add(XmbRow.Info("folder", "Folder to copy", Icons.Filled.Folder, value = sourceRoot.name, subtitle = sourceRoot.absolutePath))
                 add(
                     XmbRow.Link(
-                        key = "change", label = "Change folder…", icon = Icons.Filled.FolderOpen,
+                        key = "change", label = I18n.s(R.string.ui_change_folder), icon = Icons.Filled.FolderOpen,
                         disabledReason = if (copying) "Copying…" else null,
                     ) {
                         val roots = XmbTools.storageRoots(ctx, XmbTools.driveC(container))
@@ -767,7 +768,7 @@ internal fun xmbScrapeCoverMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
     }
 
-    return XmbMenu(title = "Scrape cover", icon = Icons.Filled.Image, onClose = { me.isOpen = false; job.cancel() }) {
+    return XmbMenu(title = I18n.s(R.string.ui_scrape_cover), icon = Icons.Filled.Image, onClose = { me.isOpen = false; job.cancel() }) {
         buildList<XmbRow> {
             if (saving) add(XmbRow.Info("saving", "Saving cover…", Icons.Filled.HourglassEmpty))
             covers.forEachIndexed { i, (thumb, url) ->
@@ -831,7 +832,7 @@ internal fun xmbBackupSavesMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }
     }
 
-    return XmbMenu(title = "Back up saves", icon = Icons.Filled.Archive, onClose = { me.isOpen = false }) {
+    return XmbMenu(title = I18n.s(R.string.ui_back_up_saves), icon = Icons.Filled.Archive, onClose = { me.isOpen = false }) {
         if (running) {
             listOf(XmbRow.Info("busy", "Backing up saves for \"$name\"…", Icons.Filled.HourglassEmpty))
         } else {
@@ -892,7 +893,7 @@ internal fun xmbRestoreSavesMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     }
 
     return XmbMenu(
-        title = "Restore saves", icon = Icons.Filled.Unarchive, initialKey = KEY_LOADING,
+        title = I18n.s(R.string.ui_restore_saves), icon = Icons.Filled.Unarchive, initialKey = KEY_LOADING,
         onClose = { me.isOpen = false; job.cancel() },
     ) {
         buildList<XmbRow> {
@@ -912,7 +913,7 @@ internal fun xmbRestoreSavesMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     }
                 }
             }
-            add(XmbRow.Link(key = "browse", label = "Browse for a save file…", icon = Icons.Filled.FolderOpen) { browse() })
+            add(XmbRow.Link(key = "browse", label = I18n.s(R.string.ui_browse_for_a_save_file), icon = Icons.Filled.FolderOpen) { browse() })
         }
     }
 }
@@ -967,7 +968,7 @@ private fun xmbRestoreContainerMenu(xmb: XmbScope, zip: File, parent: XmbOpen): 
     }
 
     return XmbMenu(
-        title = "Restore to container", icon = Icons.Filled.Widgets, initialKey = KEY_LOADING,
+        title = I18n.s(R.string.ui_restore_to_container), icon = Icons.Filled.Widgets, initialKey = KEY_LOADING,
         onClose = { me.isOpen = false; job.cancel() },
     ) {
         val list = containers
@@ -985,7 +986,7 @@ private fun xmbRestoreContainerMenu(xmb: XmbScope, zip: File, parent: XmbOpen): 
                         XmbRow.Action(key = "c:${c.id}", label = cname, icon = Icons.Filled.Widgets, subtitle = sub.ifEmpty { null }) {
                             xmb.confirm(
                                 XmbConfirm(
-                                    title = "Restore saves",
+                                    title = I18n.s(R.string.ui_restore_saves),
                                     message = "Restore ${zip.name} into \"$cname\"? Save files already there with the same names are replaced.",
                                     okLabel = "Restore",
                                 )
@@ -1038,7 +1039,7 @@ private fun xmbEmuConflicts(xmb: XmbScope, conflicts: List<GameSaveBackup.EmuIdC
         }
         xmb.push(
             XmbMenu(
-                title = "Emulator account", icon = Icons.Filled.AccountCircle, initialKey = "keep",
+                title = I18n.s(R.string.ui_emulator_account), icon = Icons.Filled.AccountCircle, initialKey = "keep",
                 onClose = { me.isOpen = false; decide(false) },
             ) {
                 listOf<XmbRow>(

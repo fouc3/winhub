@@ -44,6 +44,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.winhub.hernandez.store.download.MediaVideo
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The ONE video handoff every store's Media tab uses, so a trailer behaves the same on the Steam,
@@ -194,7 +196,7 @@ class MediaVideoActivity : ComponentActivity() {
                         onClick = { finish() },
                         modifier = Modifier.clip(CircleShape).background(Color.Black.copy(alpha = 0.45f)),
                     ) {
-                        Icon(Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
+                        Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = Color.White)
                     }
                     Text(
                         text = title,
@@ -209,7 +211,7 @@ class MediaVideoActivity : ComponentActivity() {
                         onClick = { MediaPlayback.openExternal(this@MediaVideoActivity, MediaVideo.Direct(url, null, title)) },
                         modifier = Modifier.clip(CircleShape).background(Color.Black.copy(alpha = 0.45f)),
                     ) {
-                        Icon(Icons.Filled.OpenInNew, contentDescription = "Open in another app", tint = Color.White)
+                        Icon(Icons.Filled.OpenInNew, contentDescription = I18n.s(R.string.ui_open_in_another_app), tint = Color.White)
                     }
                 }
             }

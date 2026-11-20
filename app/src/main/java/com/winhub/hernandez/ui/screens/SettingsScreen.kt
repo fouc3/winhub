@@ -107,6 +107,7 @@ import com.winhub.hernandez.MainActivity
 import java.io.File
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -477,7 +478,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 CircularProgressIndicator()
                 Spacer(Modifier.height(16.dp))
-                Text("Backing up data...")
+                Text(I18n.s(R.string.backing_up_data))
             }
         }
         return
@@ -486,8 +487,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
     if (showBackupDialog) {
         OutlinedAlertDialog(
             onDismissRequest = { showBackupDialog = false },
-            title = { Text("Backup Data") },
-            text = { Text("Do you want to create a backup of the app's data directory?") },
+            title = { Text(I18n.s(R.string.ui_backup_data)) },
+            text = { Text(I18n.s(R.string.ui_do_you_want_to_create_a_backup_of_the_app_data_direct)) },
             confirmButton = {
                 TextButton(onClick = {
                     showBackupDialog = false
@@ -511,7 +512,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                             }
                         }
                     }
-                }) { Text("Yes") }
+                }) { Text(I18n.s(R.string.yes)) }
             },
             dismissButton = { TextButton(onClick = { showBackupDialog = false }) { Text("No") } }
         )
@@ -520,8 +521,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
     if (showRestoreConfirm) {
         OutlinedAlertDialog(
             onDismissRequest = { showRestoreConfirm = false; pendingRestoreUri = null },
-            title = { Text("Restore Data") },
-            text = { Text("This will restart the app. Continue?") },
+            title = { Text(I18n.s(R.string.ui_restore_data)) },
+            text = { Text(I18n.s(R.string.ui_this_will_restart_the_app_continue)) },
             confirmButton = {
                 TextButton(onClick = {
                     showRestoreConfirm = false
@@ -531,9 +532,9 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                         context.startActivity(intent)
                         (context as? Activity)?.finish()
                     }
-                }) { Text("Restore") }
+                }) { Text(I18n.s(R.string.ui_restore)) }
             },
-            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text(I18n.s(R.string.cancel)) } }
         )
     }
 
@@ -577,7 +578,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                 ) { Text("Download & install V ${latest.versionName}", color = Color.White) } // intentional: high-contrast label on green fill
             } else if (latest != null) {
-                Text("You're up to date.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
+                Text(I18n.s(R.string.ui_you_re_up_to_date), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
             }
             Button(
                 onClick = {
@@ -602,7 +603,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     notifyUpdates = it
                     UpdateManager.setNotifyEnabled(context, it)
                 })
-                Text("Notify me about updates", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_notify_me_about_updates), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = includePrereleases, onCheckedChange = {
@@ -614,7 +615,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                         activity?.runOnUiThread { updateInfo = info; checkingUpdate = false }
                     }
                 })
-                Text("Include pre-releases (beta builds)", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_include_pre_releases_beta_builds), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
         }
 
@@ -626,7 +627,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     steamChatNotifs = it
                     SteamPrefs.setChatNotificationsEnabled(context, it)
                 })
-                Text("Steam chat notifications", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_steam_chat_notifications), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = "Steam chat notifications" to
@@ -646,7 +647,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     steamOfflinePresence = it
                     SteamPrefs.setOfflinePresenceEnabled(context, it)
                 })
-                Text("Show me as in-game for offline launches", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_show_me_as_in_game_for_offline_launches), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = "Show me as in-game" to
@@ -665,7 +666,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             //    Rust engine's CM pick, JavaSteam's CM pick (next app start), the download CDN
             //    preference and the in-game genuine client's CM seed.
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Steam connection region", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_steam_connection_region), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = "Steam connection region" to
@@ -690,7 +691,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     modifier = Modifier.outlinedMenuCard()
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Auto (nearest by ping — remembers the winner)") },
+                        text = { Text(I18n.s(R.string.ui_auto_nearest_by_ping_remembers_the_winner)) },
                         onClick = {
                             steamRegionMode = SteamRegion.AUTO
                             SteamRegion.setMode(context, SteamRegion.AUTO)
@@ -780,7 +781,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         // ── Box64 Preset ─────────────────────────────────────────────
         FieldSetLabel("Box64")
         FieldSet {
-            Text("Box64 Preset", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.box64_preset), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(8.dp))
             Box {
                 Button(onClick = { showBox64Dropdown = true },
@@ -832,7 +833,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }) { Icon(Icons.Default.FileUpload, "Export", tint = MaterialTheme.colorScheme.onSurface) }
                 ImportSourceIconButton(
                     icon = Icons.Default.FileDownload,
-                    contentDescription = "Import",
+                    contentDescription = I18n.s(R.string.preset_action_import),
                     tint = MaterialTheme.colorScheme.onSurface,
                     onInApp = { importBox64InAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select box64 preset")) },
                     onSystem = { importBox64Launcher.launch(arrayOf("*/*")) },
@@ -843,7 +844,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         // ── FEXCore Preset ────────────────────────────────────────────
         FieldSetLabel("FEXCore Config")
         FieldSet {
-            Text("FEXCore Preset", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.fexcore_preset), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(8.dp))
             Box {
                 Button(onClick = { showFEXCoreDropdown = true },
@@ -895,7 +896,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }) { Icon(Icons.Default.FileUpload, "Export", tint = MaterialTheme.colorScheme.onSurface) }
                 ImportSourceIconButton(
                     icon = Icons.Default.FileDownload,
-                    contentDescription = "Import",
+                    contentDescription = I18n.s(R.string.preset_action_import),
                     tint = MaterialTheme.colorScheme.onSurface,
                     onInApp = { importFEXCoreInAppLauncher.launch(InAppFilePicker.buildIntent(context, emptyArray(), "Select FEXCore preset")) },
                     onSystem = { importFEXCoreLauncher.launch(arrayOf("*/*")) },
@@ -906,7 +907,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         // ── Sound ─────────────────────────────────────────────────────
         FieldSetLabel("Sound")
         FieldSet {
-            Text("MIDI Sound Font", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.ui_midi_sound_font), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(Modifier.weight(1f)) {
@@ -960,7 +961,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }
                 ImportSourceIconButton(
                     icon = Icons.Default.Add,
-                    contentDescription = "Install",
+                    contentDescription = I18n.s(R.string.ui_install),
                     tint = MaterialTheme.colorScheme.onSurface,
                     onInApp = { prepareSFInstall(); installSFInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont")) },
                     onSystem = { prepareSFInstall(); installSFLauncher.launch(arrayOf("*/*")) },
@@ -981,25 +982,25 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         // ── Path Settings ─────────────────────────────────────────────
         FieldSetLabel("Path Settings")
         FieldSet {
-            Text("Winlator Path", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.ui_winlator_path), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(winlatorPath, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = { winlatorPathLauncher.launch(null) },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest)) {
-                    Text("Choose Path", color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_choose_path), color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
                 }
             }
             Spacer(Modifier.height(12.dp))
-            Text("Shortcut Export Path", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.ui_shortcut_export_path), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(shortcutExportPath, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = { shortcutExportPathLauncher.launch(null) },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest)) {
-                    Text("Choose Path", color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_choose_path), color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
                 }
             }
         }
@@ -1012,20 +1013,20 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             val showSd by AppThemeState.showSdStorage.collectAsState()
 
             DrawerToggleRow(
-                title = "Show game stores",
-                subtitle = "The GOG, Epic, Amazon and Steam shortcuts in the drawer",
+                title = I18n.s(R.string.ui_show_game_stores),
+                subtitle = I18n.s(R.string.ui_gog_epic_amazon_and_steam_shortcuts_in_the_drawer),
                 checked = showStores,
                 onCheckedChange = { AppThemeState.setShowStores(it) },
             )
             DrawerToggleRow(
-                title = "Show internal storage",
-                subtitle = "The storage bar at the bottom of the drawer",
+                title = I18n.s(R.string.ui_show_internal_storage),
+                subtitle = I18n.s(R.string.ui_storage_bar_at_the_bottom_of_the_drawer),
                 checked = showInternal,
                 onCheckedChange = { AppThemeState.setShowInternalStorage(it) },
             )
             DrawerToggleRow(
-                title = "Show SD card storage",
-                subtitle = "Only appears when a card is in the device",
+                title = I18n.s(R.string.ui_show_sd_card_storage),
+                subtitle = I18n.s(R.string.ui_only_appears_when_a_card_is_in_the_device),
                 checked = showSd,
                 onCheckedChange = { AppThemeState.setShowSdStorage(it) },
             )
@@ -1079,12 +1080,12 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             val uiScale by AppThemeState.uiScale.collectAsState()
             val fontScale by AppThemeState.fontScale.collectAsState()
             ScaleSlider(
-                label = "UI Scale",
+                label = I18n.s(R.string.ui_ui_scale),
                 value = uiScale,
                 onValueChange = { AppThemeState.setUiScale(it) },
             )
             ScaleSlider(
-                label = "Font Size",
+                label = I18n.s(R.string.ui_font_size),
                 value = fontScale,
                 onValueChange = { AppThemeState.setFontScale(it) },
             )
@@ -1095,7 +1096,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             val topBarOpacity by AppThemeState.topBarOpacity.collectAsState()
             ScaleSlider(
-                label = "Top Bar Opacity",
+                label = I18n.s(R.string.ui_top_bar_opacity),
                 value = topBarOpacity,
                 onValueChange = { AppThemeState.setTopBarOpacity(it) },
                 min = 0f,
@@ -1141,14 +1142,14 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     selected = defaultLandingScreen == "games",
                     onClick = { defaultLandingScreen = "games" },
                 )
-                Text("Game Shortcuts", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_game_shortcuts), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
                     selected = defaultLandingScreen == "containers",
                     onClick = { defaultLandingScreen = "containers" },
                 )
-                Text("Containers", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.containers), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
         }
 
@@ -1157,13 +1158,13 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = bigPictureMode, onCheckedChange = { bigPictureMode = it })
-                Text("Enable Big Picture Mode on App Launch", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_enable_big_picture_mode_on_app_launch), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Spacer(Modifier.height(8.dp))
             FieldSet {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = customApiKeyEnabled, onCheckedChange = { customApiKeyEnabled = it })
-                    Text("Set SteamGrid API Key? (Cover Art)", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                    Text(I18n.s(R.string.ui_set_steamgrid_api_key_cover_art), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                     Spacer(Modifier.weight(1f))
                     IconButton(onClick = {
                         val url = "https://www.steamgriddb.com/profile/preferences/api"
@@ -1175,7 +1176,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     OutlinedTextField(
                         value = customApiKey,
                         onValueChange = { customApiKey = it },
-                        placeholder = { Text("Enter your API Key here", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        placeholder = { Text(I18n.s(R.string.ui_enter_your_api_key_here), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         textStyle = MaterialTheme.typography.bodySmall
@@ -1188,7 +1189,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel("XServer")
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Cursor Speed", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f))
+                Text(I18n.s(R.string.cursor_speed), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f))
                 Text("${(cursorSpeed * 100).toInt()}%", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
             }
             Slider(
@@ -1199,15 +1200,15 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = useDRI3, onCheckedChange = { useDRI3 = it })
-                Text("Use DRI3 Extension", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_use_dri3_extension), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = useXR, onCheckedChange = { useXR = it })
-                Text("Use XR", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_use_xr), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = cursorLock, onCheckedChange = { cursorLock = it })
-                Text("True Mouse Control (Deactivate with Volume Down)", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_true_mouse_control_deactivate_with_volume_down), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = xinputToggle, onCheckedChange = { xinputToggle = it })
@@ -1233,7 +1234,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Button(
                 onClick = { showLogManager = true },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Open Log Manager", color = MaterialTheme.colorScheme.onPrimary) }
+            ) { Text(I18n.s(R.string.ui_open_log_manager), color = MaterialTheme.colorScheme.onPrimary) }
         }
 
         // ── Experimental ──────────────────────────────────────────────
@@ -1241,7 +1242,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = enableFileProvider, onCheckedChange = { enableFileProvider = it })
-                Text("Enable File Provider", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.enable_file_provider), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     AppUtils.showHelpBox(context, android.view.View(context), R.string.help_file_provider)
@@ -1249,14 +1250,14 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = openWithBrowser, onCheckedChange = { openWithBrowser = it })
-                Text("Open with Android Browser", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_open_with_android_browser), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = shareClipboard, onCheckedChange = { shareClipboard = it })
-                Text("Share Android Clipboard", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_share_android_clipboard), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             }
             Spacer(Modifier.height(8.dp))
-            Text("Downloadable Contents URL", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+            Text(I18n.s(R.string.ui_downloadable_contents_url), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
             OutlinedTextField(
                 value = downloadableContentsURL,
@@ -1278,21 +1279,21 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Reinstall ImageFS", color = Color.White) } // intentional: high-contrast label on green fill
+            ) { Text(I18n.s(R.string.ui_reinstall_imagefs), color = Color.White) } // intentional: high-contrast label on green fill
             Button(
                 onClick = { showBackupDialog = true },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Backup Data", color = Color.White) } // intentional: high-contrast label on green fill
+            ) { Text(I18n.s(R.string.ui_backup_data), color = Color.White) } // intentional: high-contrast label on green fill
             Button(
                 onClick = { restoreFileInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, "Select backup")) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action (install/backup/restore), distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Restore Data", color = Color.White) } // intentional: high-contrast label on green fill
+            ) { Text(I18n.s(R.string.ui_restore_data), color = Color.White) } // intentional: high-contrast label on green fill
             TextButton(
                 onClick = { restoreFileLauncher.launch(arrayOf("*/*")) },
                 modifier = Modifier.fillMaxWidth()
-            ) { Text("Pick via system…", color = MaterialTheme.colorScheme.primary) }
+            ) { Text(I18n.s(R.string.pick_via_system), color = MaterialTheme.colorScheme.primary) }
         }
 
         // ── Frame Generation: lsfg-vk (Lossless Scaling DLL) ─────────────
@@ -1319,7 +1320,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 onClick = { detectLosslessDllFromStore() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // intentional: green = success/safe action, distinct from accent
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Detect from Steam store", color = Color.White) } // intentional: high-contrast label on green fill
+            ) { Text(I18n.s(R.string.ui_detect_from_steam_store), color = Color.White) } // intentional: high-contrast label on green fill
             Text(
                 "Manual override — pick a Lossless.dll yourself:",
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
@@ -1333,7 +1334,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             TextButton(
                 onClick = { importLosslessDllLauncher.launch(arrayOf("*/*")) },
                 modifier = Modifier.fillMaxWidth()
-            ) { Text("Pick via system…", color = MaterialTheme.colorScheme.primary) }
+            ) { Text(I18n.s(R.string.pick_via_system), color = MaterialTheme.colorScheme.primary) }
             if (lsfgDllFile.isFile) {
                 Button(
                     onClick = {
@@ -1345,7 +1346,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                ) { Text("Remove", color = Color.White) } // intentional: high-contrast label on error/destructive fill
+                ) { Text(I18n.s(R.string.remove), color = Color.White) } // intentional: high-contrast label on error/destructive fill
             }
         }
 
@@ -1362,7 +1363,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Button(
                 onClick = { showPerformanceMenu = true },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-            ) { Text("Open Performance settings", color = MaterialTheme.colorScheme.onPrimary) }
+            ) { Text(I18n.s(R.string.ui_open_performance_settings), color = MaterialTheme.colorScheme.onPrimary) }
         }
 
         Spacer(Modifier.height(72.dp))
@@ -1385,7 +1386,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             title = { Text(title) },
             text = { Text(body, color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp) },
             confirmButton = {
-                TextButton(onClick = { steamHelp = null }) { Text("Close") }
+                TextButton(onClick = { steamHelp = null }) { Text(I18n.s(R.string.wrapper_manager_close)) }
             }
         )
     }
@@ -1438,9 +1439,9 @@ internal fun ImportSourceIconButton(
             onDismissRequest = { expanded = false },
             modifier = Modifier.outlinedMenuCard()
         ) {
-            DropdownMenuItem(text = { Text("Browse files") }, onClick = { expanded = false; onInApp() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = { expanded = false; onInApp() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Pick via system…") }, onClick = { expanded = false; onSystem() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = { expanded = false; onSystem() })
         }
     }
 }

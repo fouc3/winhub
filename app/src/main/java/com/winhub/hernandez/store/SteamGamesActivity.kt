@@ -43,6 +43,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Standalone Steam Library screen.
@@ -100,12 +102,12 @@ private fun SteamLibraryScreen(onBack: () -> Unit) {
                 IconButton(onClick = onBack, modifier = Modifier.steamFocusRing()) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.social_hub_configs_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
                 Text(
-                    text = "Steam Library",
+                    text = I18n.s(R.string.ui_steam_library),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(start = 4.dp),
@@ -133,7 +135,7 @@ private fun SteamLibraryScreen(onBack: () -> Unit) {
                 IconButton(onClick = library.refresh, modifier = Modifier.steamFocusRing()) {
                     Icon(
                         imageVector = Icons.Filled.Refresh,
-                        contentDescription = "Refresh",
+                        contentDescription = I18n.s(R.string.social_hub_refresh),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }

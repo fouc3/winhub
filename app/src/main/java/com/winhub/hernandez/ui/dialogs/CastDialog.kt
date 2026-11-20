@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @Composable
 fun CastDialog(state: XServerDialogState) {
@@ -74,7 +76,7 @@ fun CastDialog(state: XServerDialogState) {
                             Text("?", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                         }
                         Spacer(Modifier.size(4.dp))
-                        TextButton(onClick = { state.onCastRefresh?.run() }) { Text("Refresh") }
+                        TextButton(onClick = { state.onCastRefresh?.run() }) { Text(I18n.s(R.string.social_hub_refresh)) }
                     }
                 }
 
@@ -82,7 +84,7 @@ fun CastDialog(state: XServerDialogState) {
                     CastHelp()
                     Spacer(Modifier.height(8.dp))
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = { showHelp = false }) { Text("Back") }
+                        TextButton(onClick = { showHelp = false }) { Text(I18n.s(R.string.social_hub_configs_back)) }
                     }
                     return@Column
                 }
@@ -151,13 +153,13 @@ fun CastDialog(state: XServerDialogState) {
                                                 Text(detail, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
                                             TextButton(onClick = { state.onCastDisconnect?.run() },
                                                 contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp)) {
-                                                Text("Disconnect")
+                                                Text(I18n.s(R.string.ui_disconnect))
                                             }
                                         } else {
                                             // Selected but not connected: explicit Connect button.
                                             TextButton(onClick = { state.onCastConnect?.accept(d) },
                                                 contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp)) {
-                                                Text("Connect")
+                                                Text(I18n.s(R.string.xmb_fr_connect))
                                             }
                                         }
                                     }
@@ -169,7 +171,7 @@ fun CastDialog(state: XServerDialogState) {
 
                 Spacer(Modifier.height(12.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = { state.dismiss() }) { Text("Close") }
+                    TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.wrapper_manager_close)) }
                 }
             }
         }
@@ -181,8 +183,8 @@ fun CastDialog(state: XServerDialogState) {
 private fun CastHelp() {
     Column(modifier = Modifier.heightIn(max = 340.dp).verticalScroll(rememberScrollState())) {
         HelpBlock(
-            title = "Cast — no app on the TV (this screen) · EXPERIMENTAL",
-            body = "Pick a Google TV or Chromecast from the list — nothing to install on the TV.",
+            title = I18n.s(R.string.ui_cast_no_app_on_the_tv_this_screen_experimental),
+            body = I18n.s(R.string.ui_pick_a_google_tv_or_chromecast_from_the_list_nothing),
             pros = listOf("Nothing to set up on the TV", "Uses devices you already have"),
             cons = listOf(
                 "A few seconds of lag (video is buffered) — good for slower games, not fast ones",
@@ -191,19 +193,19 @@ private fun CastHelp() {
             )
         )
         HelpBlock(
-            title = "Cast — with a receiver app (coming later)",
-            body = "Install our small app on the Google TV once, then cast from this same list.",
+            title = I18n.s(R.string.ui_cast_with_a_receiver_app_coming_later),
+            body = I18n.s(R.string.ui_install_our_small_app_on_the_google_tv_once_then_cast),
             pros = listOf("Crisp, low-lag — good for any game", "Phone stays free (blank phone, game on TV)"),
             cons = listOf("Needs a one-time install on the Google TV", "Won't work on Roku (closed device)")
         )
         HelpBlock(
-            title = "Wired cable — lowest lag today",
-            body = "A USB-C→HDMI cable moves the game to the TV with almost no lag.",
+            title = I18n.s(R.string.ui_wired_cable_lowest_lag_today),
+            body = I18n.s(R.string.ui_usb_c_hdmi_cable_moves_the_game_to_the_tv_with_almost),
             pros = listOf("Best quality and responsiveness", "No Wi-Fi needed"),
             cons = listOf("Needs a cable and an HDMI port")
         )
         HelpBlock(
-            title = "Roku TVs",
+            title = I18n.s(R.string.ui_roku_tvs),
             body = "Roku can't run our app and can't take our stream. Use Android's built-in Screen " +
                 "Mirroring (in Settings) with the Roku's Screen-mirroring turned on.",
             pros = listOf("No app needed"),

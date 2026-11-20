@@ -32,6 +32,8 @@ import com.winhub.hernandez.ui.deck.XmbGlassBackdrop
 import com.winhub.hernandez.ui.deck.XmbGlassTheme
 import com.winhub.hernandez.ui.deck.XmbPageArtTheme
 import com.winhub.hernandez.ui.deck.deckFocusRingInk
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The look of a game's settings page opened from the XMB Home: the glass on the game's own blurred art, under the page. The page's
@@ -92,7 +94,7 @@ internal fun XmbSettingsRail(
                         .clip(backShape)
                         .clickable(onClick = onBack),
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = ink.onSurface, modifier = Modifier.size(22.dp))
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back), tint = ink.onSurface, modifier = Modifier.size(22.dp))
                 }
             }
             Spacer(Modifier.width(8.dp))

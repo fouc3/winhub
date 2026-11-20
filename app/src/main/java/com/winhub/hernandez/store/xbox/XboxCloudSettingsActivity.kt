@@ -27,6 +27,8 @@ import com.winhub.hernandez.store.download.Store
 import com.winhub.hernandez.store.download.StoreDetailHeader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** Xbox › Profile › Cloud gaming settings: the player's defaults (the same panel as the in-player menu). */
 class XboxCloudSettingsActivity : ComponentActivity() {
@@ -49,7 +51,7 @@ class XboxCloudSettingsActivity : ComponentActivity() {
                 }
                 Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())) {
                     StoreDetailHeader(onBack = { finish() }, storeBadge = { StoreBadge(Store.XBOX) })
-                    Text("Cloud gaming", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold,
+                    Text(I18n.s(R.string.ui_cloud_gaming), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.padding(horizontal = 16.dp))
                     XboxCloudSettingsPanel(settings, regions, live = false) { changed ->
                         settings = changed

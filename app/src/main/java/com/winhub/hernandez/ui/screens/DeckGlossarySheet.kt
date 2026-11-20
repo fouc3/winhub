@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.ui.components.CONTAINER_GLOSSARY
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck-native glossary popup replacing the shared Material [com.winhub.hernandez.ui.components.ContainerGlossarySheet]
@@ -36,8 +38,8 @@ internal fun DeckGlossarySheet(onDismiss: () -> Unit, initialQuery: String = "")
         }
     }
 
-    DeckConfigDialog(title = "What is all this?", onDismiss = onDismiss) {
-        DeckTextRow(label = "Search", hint = "Filter terms", value = query, onValueChange = { query = it })
+    DeckConfigDialog(title = I18n.s(R.string.ui_what_is_all_this), onDismiss = onDismiss) {
+        DeckTextRow(label = I18n.s(R.string.ui_search), hint = I18n.s(R.string.ui_filter_terms), value = query, onValueChange = { query = it })
         Column(
             modifier = Modifier
                 .fillMaxWidth()

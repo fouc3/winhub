@@ -80,6 +80,8 @@ import com.winhub.hernandez.ui.deck.rememberXmbRailState
 import com.winhub.hernandez.ui.deck.xmbRailGroup
 import com.winhub.hernandez.ui.deck.xmbCardFill
 import com.winhub.hernandez.ui.theme.LocalAccentDim
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Steam section's host — flipped from library-first to **store-first**.
@@ -540,7 +542,7 @@ private fun StorefrontRail(
         IconButton(onClick = library.refresh, modifier = Modifier.steamFocusRing().xmbRailStop()) {
             Icon(
                 Icons.Filled.Refresh,
-                contentDescription = "Refresh library",
+                contentDescription = I18n.s(R.string.ui_refresh_library),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
@@ -613,7 +615,7 @@ private fun RailStatusDot(status: SteamRepository.SteamStatus, onReconnect: () -
         )
         if (tappable) {
             Text(
-                text = "Reconnect",
+                text = I18n.s(R.string.ui_reconnect),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -650,7 +652,7 @@ private fun RailOverflow(
         IconButton(onClick = { expanded = true }, modifier = Modifier.steamFocusRing().xmbRailStop()) {
             Icon(
                 Icons.Filled.MoreVert,
-                contentDescription = "More Steam actions",
+                contentDescription = I18n.s(R.string.ui_more_steam_actions),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
@@ -667,7 +669,7 @@ private fun RailOverflow(
                 onClick = { expanded = false; onToggleView() },
             )
             DropdownMenuItem(
-                text = { Text("Save Manager") },
+                text = { Text(I18n.s(R.string.ui_save_manager)) },
                 leadingIcon = {
                     Icon(Icons.Filled.CloudSync, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 },
@@ -677,7 +679,7 @@ private fun RailOverflow(
                 },
             )
             DropdownMenuItem(
-                text = { Text("Friends & chat settings") },
+                text = { Text(I18n.s(R.string.ui_friends_chat_settings)) },
                 leadingIcon = {
                     Icon(Icons.Filled.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 },
@@ -685,7 +687,7 @@ private fun RailOverflow(
             )
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
             DropdownMenuItem(
-                text = { Text("Sign out", color = MaterialTheme.colorScheme.error) },
+                text = { Text(I18n.s(R.string.social_hub_sign_out), color = MaterialTheme.colorScheme.error) },
                 leadingIcon = {
                     Icon(
                         Icons.AutoMirrored.Filled.Logout,
@@ -716,7 +718,7 @@ private fun StorefrontTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Steam",
+            text = I18n.s(R.string.ui_steam),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
@@ -758,20 +760,20 @@ private fun StorefrontActions(
             )
         }
         IconButton(onClick = library.refresh, modifier = Modifier.steamFocusRing()) {
-            Icon(Icons.Filled.Refresh, contentDescription = "Refresh library", tint = accent)
+            Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_refresh_library), tint = accent)
         }
         IconButton(
             onClick = { runCatching { ctx.startActivity(Intent(ctx, SteamSaveManagerActivity::class.java)) } },
             modifier = Modifier.steamFocusRing(),
         ) {
-            Icon(Icons.Filled.CloudSync, contentDescription = "Save Manager", tint = accent)
+            Icon(Icons.Filled.CloudSync, contentDescription = I18n.s(R.string.ui_save_manager), tint = accent)
         }
         DownloadsButton()
         IconButton(onClick = { showSocialSettings = true }, modifier = Modifier.steamFocusRing()) {
-            Icon(Icons.Filled.Settings, contentDescription = "Friends & chat settings", tint = accent)
+            Icon(Icons.Filled.Settings, contentDescription = I18n.s(R.string.ui_friends_chat_settings), tint = accent)
         }
         IconButton(onClick = onSignOut, modifier = Modifier.steamFocusRing()) {
-            Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Sign out", tint = accent)
+            Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = I18n.s(R.string.social_hub_sign_out), tint = accent)
         }
     }
 

@@ -104,6 +104,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 // The retro library in portrait: the PC library's portrait Home (PortraitHome) and game page (PortraitGamePage) and the same game menu
 // sheet, fed with the games of the consoles picked in Settings. Tap a cover for its page, hold it for the menu.
@@ -586,11 +587,11 @@ private fun RetroContinueBanner(
     val whenPlayed = lastPlayed?.let { lastPlayedLabel(context, it) } ?: stringResource(R.string.retro_info_never)
     val shape = RoundedCornerShape(24.dp)
     // A slow float, drawn in the layer so it never recomposes or re-lays-out the banner.
-    val bob by rememberInfiniteTransition(label = "bannerBob").animateFloat(
+    val bob by rememberInfiniteTransition(label = I18n.s(R.string.ui_bannerbob)).animateFloat(
         initialValue = -3f,
         targetValue = 3f,
         animationSpec = infiniteRepeatable(tween(3500, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "bannerBobY",
+        label = I18n.s(R.string.ui_bannerboby),
     )
     Box(
         modifier = Modifier
@@ -622,7 +623,7 @@ private fun RetroContinueBanner(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(18.dp),
         ) {
-            Text("CONTINUE PLAYING", color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.2.sp)
+            Text(I18n.s(R.string.ui_continue_playing), color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.2.sp)
             Text(
                 game.title,
                 color = Deck.onBackground,

@@ -161,6 +161,7 @@ import org.json.JSONArray
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
+import com.winhub.hernandez.util.I18n
 
 // Big Picture — a couch/TV launcher shown at startup instead of the normal UI when the pref is on.
 // Full-bleed Compose rebuild of the old XML BigPictureActivity: blurred hero background, a centred
@@ -563,7 +564,7 @@ fun BigPictureScreen(navController: NavController) {
         Crossfade(
             targetState = (selected?.name ?: "") to heroCover,
             animationSpec = tween(350),
-            label = "bp-hero-bg",
+            label = I18n.s(R.string.ui_bp_hero_bg),
         ) { (_, cover) ->
             if (cover != null) {
                 Image(
@@ -612,28 +613,28 @@ fun BigPictureScreen(navController: NavController) {
             ) {
                 RailButton(
                     icon = Icons.Filled.Public,
-                    label = "Community Configs",
+                    label = I18n.s(R.string.ui_community_configs),
                     focused = zone == BpZone.RAIL && railIndex == 0,
                     onClick = { zone = BpZone.RAIL; railIndex = 0; showCommunity = true },
                 )
                 Spacer(Modifier.width(12.dp))
                 RailButton(
                     icon = Icons.Filled.Settings,
-                    label = "App Settings",
+                    label = I18n.s(R.string.ui_app_settings),
                     focused = zone == BpZone.RAIL && railIndex == 1,
                     onClick = { zone = BpZone.RAIL; railIndex = 1; navController.navigate(Screen.Settings.route) },
                 )
                 Spacer(Modifier.width(12.dp))
                 RailButton(
                     icon = Icons.Filled.Apps,
-                    label = "Tools",
+                    label = I18n.s(R.string.ui_tools),
                     focused = zone == BpZone.RAIL && railIndex == 2,
                     onClick = { zone = BpZone.RAIL; railIndex = 2; activeSheet = BpSheet.TOOLS },
                 )
                 Spacer(Modifier.width(12.dp))
                 RailButton(
                     icon = Icons.Filled.PowerSettingsNew,
-                    label = "Power",
+                    label = I18n.s(R.string.ui_power),
                     focused = zone == BpZone.RAIL && railIndex == 3,
                     onClick = { zone = BpZone.RAIL; railIndex = 3; activeSheet = BpSheet.POWER },
                 )
@@ -646,9 +647,9 @@ fun BigPictureScreen(navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Text("No games yet", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Text(I18n.s(R.string.ui_no_games_yet), color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(16.dp))
-                    Button(onClick = { navController.navigate(Screen.Games.route) }) { Text("Add games") }
+                    Button(onClick = { navController.navigate(Screen.Games.route) }) { Text(I18n.s(R.string.ui_add_games)) }
                 }
             } else {
                 // Hero — fills the band between the rail and the carousel (a weighted sibling, so its
@@ -733,7 +734,7 @@ fun BigPictureScreen(navController: NavController) {
                                 ) {
                                     Icon(Icons.Filled.PlayArrow, contentDescription = null)
                                     Spacer(Modifier.width(8.dp))
-                                    Text("Play", fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                                    Text(I18n.s(R.string.retro_opt_play), fontSize = 17.sp, fontWeight = FontWeight.Bold)
                                 }
                                 Spacer(Modifier.width(12.dp))
                                 OutlinedButton(
@@ -749,7 +750,7 @@ fun BigPictureScreen(navController: NavController) {
                                 ) {
                                     Icon(Icons.Filled.Tune, contentDescription = null, tint = Color.White)
                                     Spacer(Modifier.width(8.dp))
-                                    Text("Game options", color = Color.White)
+                                    Text(I18n.s(R.string.ui_game_options), color = Color.White)
                                 }
                             }
                         }
@@ -766,7 +767,7 @@ fun BigPictureScreen(navController: NavController) {
                 ) {
                     itemsIndexed(shortcuts) { index, s ->
                         val isSel = index == selectedIndex
-                        val scale by animateFloatAsState(if (isSel) 1.12f else 1f, label = "bp-card-scale")
+                        val scale by animateFloatAsState(if (isSel) 1.12f else 1f, label = I18n.s(R.string.ui_bp_card_scale))
                         LaunchedEffect(s.name) { ensureCover(s) }
                         CoverCard(
                             cover = coverCache[s.name],
@@ -929,7 +930,7 @@ fun BigPictureScreen(navController: NavController) {
                                 "Needs ${mc.label}${mc.wanted.ifBlank { "" }.let { if (it.isBlank()) "" else " ($it)" }}",
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text("Install") }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text(I18n.s(R.string.ui_install)) }
                         }
                     }
                     res.missingDrivers.forEach { md ->
@@ -939,14 +940,14 @@ fun BigPictureScreen(navController: NavController) {
                                 "Needs GPU driver ${md.wanted}",
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text("Install") }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text(I18n.s(R.string.ui_install)) }
                         }
                     }
                     res.advisories.forEach { Text("• $it", color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp) }
                 }
             },
             confirmButton = {
-                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text("Done") }
+                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) }
             },
         )
     }
@@ -1106,7 +1107,7 @@ fun BigPictureScreen(navController: NavController) {
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateHandle?.cancel() }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.primary)
+                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.primary)
                 }
             },
         )
@@ -1272,7 +1273,7 @@ private fun ToolsSheet(
     onDownloads: () -> Unit,
 ) {
     BpSheetScaffold(
-        title = "Tools",
+        title = I18n.s(R.string.ui_tools),
         rows = listOf(
             BpRow(Icons.Filled.FolderOpen, "File Manager", onFileManager),
             BpRow(Icons.Filled.Layers, "Manage Wrappers", onWrappers),
@@ -1290,7 +1291,7 @@ private fun PowerSheet(
     onQuit: () -> Unit,
 ) {
     BpSheetScaffold(
-        title = "Power",
+        title = I18n.s(R.string.ui_power),
         rows = listOf(
             BpRow(Icons.Filled.ExitToApp, "Exit Big Picture", onExit),
             BpRow(Icons.Filled.PowerSettingsNew, "Turn off Big Picture mode", onTurnOff),
@@ -1526,14 +1527,14 @@ private fun GameCommunitySheet(
                     OutlinedButton(onClick = shareConfig, modifier = Modifier.fillMaxWidth()) {
                         Icon(Icons.Filled.Share, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Share")
+                        Text(I18n.s(R.string.share))
                     }
                 }
                 DpadHighlight(focused = focusRow == 0 && curCol == 1, modifier = Modifier.weight(1f)) {
                     OutlinedButton(onClick = onImport, modifier = Modifier.fillMaxWidth()) {
                         Icon(Icons.Filled.FileUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Import")
+                        Text(I18n.s(R.string.preset_action_import))
                     }
                 }
             }
@@ -1547,7 +1548,7 @@ private fun GameCommunitySheet(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Upload to community")
+                        Text(I18n.s(R.string.ui_upload_to_community))
                     }
                 }
             }
@@ -1560,7 +1561,7 @@ private fun GameCommunitySheet(
                         if (q.trim().length >= 2) vm.searchCommunityGames(q) { searchResults = it }
                         else searchResults = emptyList()
                     },
-                    label = { Text("Search all games") },
+                    label = { Text(I18n.s(R.string.ui_search_all_games)) },
                     leadingIcon = { Icon(Icons.Filled.Search, null) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
@@ -1656,7 +1657,7 @@ private fun GameCommunitySheet(
                     FilterChip(
                         selected = matchesMine,
                         onClick = { matchesMine = !matchesMine },
-                        label = { Text("Matches my device") },
+                        label = { Text(I18n.s(R.string.social_hub_configs_matches_device)) },
                         enabled = hwEnabled,
                     )
                     Spacer(Modifier.height(8.dp))
@@ -1694,7 +1695,7 @@ private fun GameCommunitySheet(
             }
             Spacer(Modifier.height(8.dp))
             DpadHighlight(focused = focusRow == closeRow) {
-                OutlinedButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text("Close") }
+                OutlinedButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text(I18n.s(R.string.wrapper_manager_close)) }
             }
         }
     }
@@ -1710,10 +1711,10 @@ private fun GameCommunitySheet(
         }
         androidx.compose.material3.AlertDialog(
             onDismissRequest = dismissReplace,
-            title = { Text("Replace your shared config?") },
+            title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
             text = { Text("You've already shared a config for \"${existing.game}\". Replace it with this one?") },
-            confirmButton = { TextButton(onClick = { replacePrompt = null; proceed() }) { Text("Replace") } },
-            dismissButton = { TextButton(onClick = dismissReplace) { Text("Cancel") } },
+            confirmButton = { TextButton(onClick = { replacePrompt = null; proceed() }) { Text(I18n.s(R.string.ui_replace)) } },
+            dismissButton = { TextButton(onClick = dismissReplace) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 }

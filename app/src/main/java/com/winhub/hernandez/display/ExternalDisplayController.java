@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * "Version A" external-display mode — game on the TV, handheld as the controller.
@@ -411,7 +413,7 @@ public class ExternalDisplayController {
             scrim.setBackgroundColor(0x99000000); // 60% black; frozen frame stays faintly visible
 
             TextView pill = new TextView(ctx);
-            pill.setText("▶  Paused");
+            pill.setText(I18n.s(R.string.ui_paused));
             pill.setTextColor(0xFFFFFFFF);
             pill.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
             pill.setTypeface(pill.getTypeface(), Typeface.BOLD);

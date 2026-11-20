@@ -83,6 +83,8 @@ import com.winhub.hernandez.ui.theme.DangerRed
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Rendering + input for the nested XMB menus (model in XmbModel.kt). The Games-tab XMB owns one
@@ -365,8 +367,8 @@ internal fun XmbNestedLayer(
             LaunchedEffect(flash) {
                 if (flash > 0L && System.currentTimeMillis() - flash < 1500L) { showSaved = true; kotlinx.coroutines.delay(1200); showSaved = false }
             }
-            val sa by animateFloatAsState(if (showSaved) 1f else 0f, tween(250), label = "xmbSavedBeside")
-            Text("✓ Saved", color = Color(0xFF3DDC84), fontSize = 12.sp,
+            val sa by animateFloatAsState(if (showSaved) 1f else 0f, tween(250), label = I18n.s(R.string.ui_xmbsavedbeside))
+            Text(I18n.s(R.string.ui_saved), color = Color(0xFF3DDC84), fontSize = 12.sp,
                 modifier = Modifier.align(Alignment.TopEnd).padding(top = 12.dp, end = 16.dp).graphicsLayer { alpha = sa })
         } else Row(
             Modifier.offset(16.dp, 30.dp).fillMaxWidth(),
@@ -391,8 +393,8 @@ internal fun XmbNestedLayer(
             LaunchedEffect(flash) {
                 if (flash > 0L && System.currentTimeMillis() - flash < 1500L) { showSaved = true; kotlinx.coroutines.delay(1200); showSaved = false }
             }
-            val sa by animateFloatAsState(if (showSaved) 1f else 0f, tween(250), label = "xmbSaved")
-            Text("✓ Saved", color = Color(0xFF3DDC84), fontSize = 11.sp, modifier = Modifier.graphicsLayer { alpha = sa })
+            val sa by animateFloatAsState(if (showSaved) 1f else 0f, tween(250), label = I18n.s(R.string.ui_xmbsaved))
+            Text(I18n.s(R.string.ui_saved), color = Color(0xFF3DDC84), fontSize = 11.sp, modifier = Modifier.graphicsLayer { alpha = sa })
         }
 
         // icon strips: the game's options, then each menu behind the active one
@@ -447,8 +449,8 @@ internal fun XmbNestedLayer(
                     if (i != si && r !is XmbRow.Header) o *= max(0.45f, 1f - abs(i - si) * 0.07f)
                     if (r.disabled() != null) o *= 0.5f
                     key(r.key) {
-                        val ay by animateFloatAsState(y, spring(dampingRatio = 0.9f, stiffness = 500f), label = "xmbNy")
-                        val ao by animateFloatAsState(o, tween(220), label = "xmbNa")
+                        val ay by animateFloatAsState(y, spring(dampingRatio = 0.9f, stiffness = 500f), label = I18n.s(R.string.ui_xmbny))
+                        val ao by animateFloatAsState(o, tween(220), label = I18n.s(R.string.ui_xmbna))
                         val src = remember { MutableInteractionSource() }
                         XmbRowView(
                             row = r, selected = i == si, editing = i == si && nav.editingKey == r.key,
@@ -671,7 +673,7 @@ private fun XmbPickerPanel(
                 val isCur = opt == p.row.selected
                 val off = opt in p.row.disabledOptions
                 val src = remember { MutableInteractionSource() }
-                val sc by animateFloatAsState(if (isSel) 1.02f else 1f, tween(180), label = "xmbPs")
+                val sc by animateFloatAsState(if (isSel) 1.02f else 1f, tween(180), label = I18n.s(R.string.ui_xmbps))
                 Row(
                     Modifier
                         .fillMaxWidth()
@@ -697,8 +699,8 @@ private fun XmbPickerPanel(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f).padding(horizontal = 10.dp),
                     )
-                    if (off) Text("Unavailable", color = Color(0xFF9A9AA5), fontSize = 11.sp)
-                    else if (isCur) Icon(Icons.Filled.Check, contentDescription = "Current", tint = accent, modifier = Modifier.size(20.dp))
+                    if (off) Text(I18n.s(R.string.ui_unavailable), color = Color(0xFF9A9AA5), fontSize = 11.sp)
+                    else if (isCur) Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_current), tint = accent, modifier = Modifier.size(20.dp))
                 }
             }
         }

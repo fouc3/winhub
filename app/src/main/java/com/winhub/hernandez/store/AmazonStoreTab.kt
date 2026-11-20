@@ -38,6 +38,8 @@ import com.winhub.hernandez.ui.deck.xmbCardFill
 import com.winhub.hernandez.ui.deck.xmbCardLine
 import com.winhub.hernandez.ui.deck.xmbGlassCard
 import com.winhub.hernandez.ui.deck.xmbInner
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Amazon **Store** tab.
@@ -87,7 +89,7 @@ fun AmazonStoreTab(
             header.Header {
                 CatalogSearchField(
                     query = query,
-                    placeholder = "Search your Amazon games…",
+                    placeholder = I18n.s(R.string.ui_search_your_amazon_games),
                     onQueryChange = { query = it },
                     onClear = { query = ""; focusManager.clearFocus() },
                     onSearch = { focusManager.clearFocus() },
@@ -172,11 +174,11 @@ fun AmazonStoreTab(
 @Composable
 private fun EmptyLibraryNotice(state: AmazonLibraryState) {
     if (state.isSyncing) {
-        StoreNotice(title = "Syncing your library", body = state.statusText.ifBlank { "Fetching your Amazon games…" })
+        StoreNotice(title = I18n.s(R.string.ui_syncing_your_library), body = state.statusText.ifBlank { "Fetching your Amazon games…" })
     } else {
         StoreNotice(
-            title = "No Amazon games yet",
-            body = "Claim games on Prime Gaming and sync — they show up here as Ready to install.",
+            title = I18n.s(R.string.ui_no_amazon_games_yet),
+            body = I18n.s(R.string.ui_claim_games_on_prime_gaming_and_sync_they_show_up_her),
             actionLabel = "Sync now",
             onAction = { state.refresh(true) },
         )
@@ -198,14 +200,14 @@ private fun PrimeGamingCard(onOpenWeb: (url: String, title: String) -> Unit, mod
                 .padding(16.dp),
         ) {
             Text(
-                text = "PRIME GAMING",
+                text = I18n.s(R.string.ui_prime_gaming),
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "Free games every month",
+                text = I18n.s(R.string.ui_free_games_every_month),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -223,12 +225,12 @@ private fun PrimeGamingCard(onOpenWeb: (url: String, title: String) -> Unit, mod
                     onClick = { onOpenWeb("https://gaming.amazon.com/home", "Prime Gaming") },
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.weight(1f).steamFocusRing(RoundedCornerShape(8.dp)).xmbInner(group, first = true),
-                ) { Text("Claim free games", maxLines = 1) }
+                ) { Text(I18n.s(R.string.ui_claim_free_games), maxLines = 1) }
                 OutlinedButton(
                     onClick = { onOpenWeb("https://gaming.amazon.com/home?filter=games", "Amazon Games") },
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.weight(1f).steamFocusRing(RoundedCornerShape(8.dp)).xmbInner(group),
-                ) { Text("Browse", maxLines = 1) }
+                ) { Text(I18n.s(R.string.browse), maxLines = 1) }
             }
         }
     }

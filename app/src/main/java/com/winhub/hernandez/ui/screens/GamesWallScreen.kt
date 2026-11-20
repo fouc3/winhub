@@ -124,6 +124,8 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Games wall — a landscape-locked, 10-foot "Big Picture" library. This is the presentation the app now
 // uses for the main library route (Screen.Games); it swaps the phone-grid ShortcutsScreen for a couch
@@ -522,7 +524,7 @@ fun GamesWallScreen(navController: NavController) {
             onDismissRequest = { applyResult = null },
             title = { Text(if (res.ok) "Config applied" else "Couldn't apply") },
             text = { Text(res.message, color = TXT.copy(alpha = 0.85f)) },
-            confirmButton = { TextButton(onClick = { applyResult = null }) { Text("Done") } },
+            confirmButton = { TextButton(onClick = { applyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
         )
     }
 }
@@ -600,7 +602,7 @@ private fun WallHeader(
             Icon(Icons.Filled.Search, contentDescription = null, tint = DIM, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(10.dp))
             Box(modifier = Modifier.weight(1f)) {
-                if (query.isEmpty()) Text("Search…", color = DIM, fontSize = 15.sp)
+                if (query.isEmpty()) Text(I18n.s(R.string.ui_search_2), color = DIM, fontSize = 15.sp)
                 BasicTextField(
                     value = query,
                     onValueChange = onQuery,
@@ -712,8 +714,8 @@ private fun GameTile(
     onClick: () -> Unit,
 ) {
     val accent = MaterialTheme.colorScheme.primary
-    val scale by animateFloatAsState(if (selected) 1.14f else 1f, label = "wall-tile-scale")
-    val alpha by animateFloatAsState(if (selected) 1f else 0.82f, label = "wall-tile-alpha")
+    val scale by animateFloatAsState(if (selected) 1.14f else 1f, label = I18n.s(R.string.ui_wall_tile_scale))
+    val alpha by animateFloatAsState(if (selected) 1f else 0.82f, label = I18n.s(R.string.ui_wall_tile_alpha))
     Box(
         modifier = Modifier
             .width(baseWidth)
@@ -726,7 +728,7 @@ private fun GameTile(
         // Monogram fallback always underneath; real art crossfades in when resolved.
         MonogramTile(name)
         if (cover != null) {
-            Crossfade(targetState = cover, label = "wall-cover") { c ->
+            Crossfade(targetState = cover, label = I18n.s(R.string.ui_wall_cover)) { c ->
                 Image(
                     bitmap = c,
                     contentDescription = name,
@@ -817,7 +819,7 @@ private fun WallFooter(
         ) {
             Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
-            Text("LAUNCH", fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
+            Text(I18n.s(R.string.ui_launch_2), fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
         }
         Spacer(Modifier.width(14.dp))
         OutlinedButton(
@@ -828,7 +830,7 @@ private fun WallFooter(
         ) {
             Icon(Icons.Filled.Settings, contentDescription = null, tint = TXT, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
-            Text("Options", color = TXT, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.options), color = TXT, fontWeight = FontWeight.Bold)
         }
         // Controller button hints.
         Spacer(Modifier.width(20.dp))
@@ -922,7 +924,7 @@ private fun WallSheetScaffold(title: String, rows: List<WallSheetRow>, onDismiss
 @Composable
 private fun WallToolsSheet(onDismiss: () -> Unit, onNavigate: (String) -> Unit, onDownloads: () -> Unit) {
     WallSheetScaffold(
-        title = "Tools",
+        title = I18n.s(R.string.ui_tools),
         rows = listOf(
             WallSheetRow(Icons.Filled.FolderOpen, "File Manager") { onNavigate(Screen.FileManager.route) },
             WallSheetRow(Icons.Filled.Layers, "Containers") { onNavigate(Screen.Containers.route) },
@@ -940,7 +942,7 @@ private fun WallToolsSheet(onDismiss: () -> Unit, onNavigate: (String) -> Unit, 
 @Composable
 private fun WallPowerSheet(onDismiss: () -> Unit, onSettings: () -> Unit, onQuit: () -> Unit) {
     WallSheetScaffold(
-        title = "Power",
+        title = I18n.s(R.string.ui_power),
         rows = listOf(
             WallSheetRow(Icons.Filled.Settings, "App settings", onSettings),
             WallSheetRow(Icons.Filled.PowerSettingsNew, "Quit", onQuit),

@@ -23,6 +23,7 @@ import com.winhub.hernandez.core.StickPacing
 import com.winhub.hernandez.ui.components.IconButton
 import com.winhub.hernandez.ui.components.OutlinedButton
 import com.winhub.hernandez.ui.components.Switch
+import com.winhub.hernandez.util.I18n
 
 /**
  * The controller-input settings of the container editor: Direct XInput (HERMES), in-game switching,
@@ -49,7 +50,7 @@ internal fun ControllerSettingsRows(
             Spacer(Modifier.width(8.dp))
             Text(label, modifier = Modifier.weight(1f))
             IconButton(onClick = { onHelp(helpRes) }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
     }
@@ -71,7 +72,7 @@ internal fun ControllerSettingsRows(
             modifier = Modifier.weight(1f),
         )
         IconButton(onClick = { onHelp(R.string.help_controller_identity) }) {
-            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
         }
     }
 
@@ -99,7 +100,7 @@ internal fun ControllerSettingsRows(
             modifier = Modifier.weight(1f),
         )
         IconButton(onClick = { onHelp(R.string.help_stick_pacing) }) {
-            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
         }
     }
     if (current.mode != StickPacing.MODE_OFF) {

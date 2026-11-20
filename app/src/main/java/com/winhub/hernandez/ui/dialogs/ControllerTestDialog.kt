@@ -65,6 +65,8 @@ import com.winhub.hernandez.ui.screens.MenuItemDivider
 import com.winhub.hernandez.ui.screens.outlinedMenuCard
 import kotlin.math.min
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // In-game Controls > Players — landscape controller-test popup. The LEFT rail keeps every per-device
@@ -206,7 +208,7 @@ private fun PlayerRail(
     }
 
     Column(modifier.fillMaxSize()) {
-        Text("Player slots", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_player_slots_2), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Spacer(Modifier.height(2.dp))
         Text(
             "Pads emulate as Xbox 360 to the game; the picture shows the physical pad you're holding.",
@@ -239,7 +241,7 @@ private fun PlayerRail(
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
-        ) { Text("Reset Input") }
+        ) { Text(I18n.s(R.string.ui_reset_input)) }
         Text(
             "Re-handshake controllers & on-screen if input stops responding.",
             style = MaterialTheme.typography.bodySmall,
@@ -294,7 +296,7 @@ private fun PlayerCard(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(9.dp),
                     contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp),
-                ) { Text("Identify", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.ui_identify), fontSize = 12.sp) }
                 OutlinedButton(
                     onClick = {
                         // Per-card reset: clear this device's override → Auto, then rebuild the pipeline.
@@ -305,7 +307,7 @@ private fun PlayerCard(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(9.dp),
                     contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp),
-                ) { Text("Reset", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.reset), fontSize = 12.sp) }
             }
         }
     }
@@ -357,7 +359,7 @@ private fun TestPanel(state: XServerDialogState, selected: String?, modifier: Mo
 
     ControllerTestPanel(
         snapshot = snap,
-        title = "Controller Test",
+        title = I18n.s(R.string.ui_controller_test),
         subtitle = selectedRow?.displayName ?: "No controller selected",
         resetKey = selected,
         manualArt = manualArt,
@@ -428,7 +430,7 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
     if (renaming) {
         AlertDialog(
             onDismissRequest = { renaming = false },
-            title = { Text("Rename profile") },
+            title = { Text(I18n.s(R.string.ui_rename_profile)) },
             text = {
                 OutlinedTextField(
                     value = renameText,
@@ -447,7 +449,7 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
                     renaming = false
                 }) { Text("OK") }
             },
-            dismissButton = { TextButton(onClick = { renaming = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { renaming = false }) { Text(I18n.s(R.string.cancel)) } }
         )
     }
 
@@ -455,7 +457,7 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
         val p = selectedProfile
         AlertDialog(
             onDismissRequest = { deleting = false },
-            title = { Text("Delete profile") },
+            title = { Text(I18n.s(R.string.ui_delete_profile)) },
             text = { Text("Delete \"${p?.name ?: ""}\"? This can't be undone.") },
             confirmButton = {
                 TextButton(onClick = {
@@ -468,9 +470,9 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
                         state.onProfilesChanged?.run()                            // keep the Touch list live
                     }
                     deleting = false
-                }) { Text("Delete") }
+                }) { Text(I18n.s(R.string.preset_action_delete)) }
             },
-            dismissButton = { TextButton(onClick = { deleting = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { deleting = false }) { Text(I18n.s(R.string.cancel)) } }
         )
     }
 }

@@ -136,6 +136,7 @@ import com.winhub.hernandez.ui.theme.LocalAccentDim
 import com.winhub.hernandez.ui.theme.WinlatorTheme
 import com.winhub.hernandez.widget.fusionhud.parseHudOutline
 import com.winhub.hernandez.widget.exportHudDiagnostics
+import com.winhub.hernandez.util.I18n
 
 // Accent colors route to the live MaterialTheme.colorScheme (primary/surface) so the drawer
 // follows the user's theme preset / custom accent. The dim accent (low-emphasis fills/borders/
@@ -329,7 +330,7 @@ private fun XServerDrawerContent() {
                     )
                 }
                 if (confirmExit) {
-                    Text("Exit game?", color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.padding(end = 8.dp))
+                    Text(I18n.s(R.string.ui_exit_game), color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.padding(end = 8.dp))
                     DrawerPill("Cancel", danger = false, focusRequester = cancelFocus) { confirmExit = false }
                     Spacer(Modifier.width(6.dp))
                     DrawerPill("Exit", danger = true) { state.onExit?.run() }
@@ -547,7 +548,7 @@ private fun TvContent(state: XServerDrawerState) {
         state.onOpenCastPicker?.run()
     }
     Text(
-        text = "For the lowest lag, a wired USB-C→HDMI cable is still best.",
+        text = I18n.s(R.string.ui_for_the_lowest_lag_a_wired_usb_c_hdmi_cable_is_still),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 11.sp,
         modifier = Modifier.padding(top = 4.dp)
@@ -615,7 +616,7 @@ private fun TvContent(state: XServerDrawerState) {
         state.onResetAudio?.run()
     }
     Text(
-        text = "Fixes lost sound after switching apps.",
+        text = I18n.s(R.string.ui_fixes_lost_sound_after_switching_apps),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 11.sp,
         modifier = Modifier.padding(top = 4.dp)
@@ -630,7 +631,7 @@ private fun TvContent(state: XServerDrawerState) {
 
     // Aspect on TV — reuses the same fullscreen-mode cycle as the handheld (OFF / FIT / STRETCH).
     val fullscreenMode by state.fullscreenMode.collectAsState()
-    Text("Aspect", color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp,
+    Text(I18n.s(R.string.ui_aspect), color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp,
         fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 6.dp))
     FullscreenModeButtons(fullscreenMode) { mode ->
         state.setFullscreenMode(mode)
@@ -648,7 +649,7 @@ private fun TvContent(state: XServerDrawerState) {
             state.onTvOverscanChange?.accept(overscanVal)
         },
         steps = 7, enabled = true)
-    Text("Shrinks the picture inward if your TV cuts off the edges.",
+    Text(I18n.s(R.string.ui_shrinks_the_picture_inward_if_your_tv_cuts_off_the_ed),
         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
         modifier = Modifier.padding(top = 2.dp, bottom = 6.dp))
 
@@ -684,7 +685,7 @@ private fun TvContent(state: XServerDrawerState) {
     FrameGenSection(state)
 
     // TV Game Mode tip (biggest wired-latency win is TV-side; we can only advise).
-    Text("Tip: enable Game Mode on your TV for the lowest input lag.",
+    Text(I18n.s(R.string.ui_tip_enable_game_mode_on_your_tv_for_the_lowest_input),
         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
         modifier = Modifier.padding(top = 8.dp))
 
@@ -697,7 +698,7 @@ private fun TvContent(state: XServerDrawerState) {
         state.setTvAudioOut(i)
         state.onTvAudioOutChange?.accept(i)
     }
-    Text("Experimental — the guest audio route may not always follow.",
+    Text(I18n.s(R.string.ui_experimental_the_guest_audio_route_may_not_always_fol),
         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
         modifier = Modifier.padding(top = 2.dp, bottom = 6.dp))
 
@@ -706,7 +707,7 @@ private fun TvContent(state: XServerDrawerState) {
         state.setTvDimHandheld(it)
         state.onTvDimHandheldChange?.accept(it)
     }
-    Text("Saves battery and heat by dimming the phone screen.",
+    Text(I18n.s(R.string.ui_saves_battery_and_heat_by_dimming_the_phone_screen),
         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
         modifier = Modifier.padding(top = 2.dp))
 
@@ -719,14 +720,14 @@ private fun TvContent(state: XServerDrawerState) {
         state.setTvRenderRes(i)
         state.onTvRenderResChange?.accept(i)
     }
-    Text("Applies on the next game launch (the render resolution is fixed at startup).",
+    Text(I18n.s(R.string.ui_applies_on_the_next_game_launch_the_render_resolution),
         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
         modifier = Modifier.padding(top = 2.dp))
 
     // ───────────── Streaming (v3 — WiFi caster, not yet available) ─────────────
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(vertical = 12.dp))
     val disabledColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-    Text("Streaming", style = MaterialTheme.typography.titleSmall.copy(
+    Text(I18n.s(R.string.ui_streaming), style = MaterialTheme.typography.titleSmall.copy(
         fontSize = 15.sp, fontWeight = FontWeight.Bold), color = disabledColor)
     Text("Wireless streaming to a TV without a cable (bitrate, codec, transport) is coming in a " +
         "future update. Wired HDMI / DeX casting works today via the controls above.",
@@ -1115,7 +1116,7 @@ private fun GraphicsContent(state: XServerDrawerState) {
 
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(vertical = 6.dp))
 
-        Text("Screen Effects", color = vkHeaderColor, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_screen_effects), color = vkHeaderColor, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Spacer(Modifier.height(4.dp))
 
         LooksRow(
@@ -1446,7 +1447,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("Frame Generation", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_frame_generation_2), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -1995,7 +1996,7 @@ private fun ReshadeSection() {
                         resetNonce++
                         apply()
                     }, enabled = item.params.isNotEmpty()) {
-                        Text("Reset", color = accent, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        Text(I18n.s(R.string.reset), color = accent, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
                 if (item.params.isEmpty()) {
@@ -2375,7 +2376,7 @@ private fun ScalingModeHeader(title: String, color: Color, modifier: Modifier = 
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         Text(title, color = color, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         IconButton(onClick = { showHelp = true }, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Help, contentDescription = "What is this?", tint = color, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), tint = color, modifier = Modifier.size(16.dp))
         }
     }
     if (showHelp) HelpDialog(R.string.help_scaling_mode) { showHelp = false }
@@ -2490,7 +2491,7 @@ private fun RefreshRateSlider(rates: List<Int>, selected: Int, enabled: Boolean,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Rate", style = MaterialTheme.typography.bodySmall, color = if (enabled) MaterialTheme.colorScheme.onSurface else dim)
+            Text(I18n.s(R.string.gyro_mode_rate), style = MaterialTheme.typography.bodySmall, color = if (enabled) MaterialTheme.colorScheme.onSurface else dim)
             Text(
                 rightText,
                 style = MaterialTheme.typography.bodySmall,
@@ -2725,7 +2726,7 @@ private fun HudContent(state: XServerDrawerState) {
     // ── Performance group: always shown. The limiter + refresh live here regardless of the HUD. ──
     HudGroupLabel("Performance")
     CollapsibleSection("Frame rate & refresh", lead = "always on", initiallyExpanded = true) {
-        Text("FPS Limiter", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(I18n.s(R.string.fps_limiter), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Spacer(Modifier.height(4.dp))
         val nativeFgLocks by state.nativeFgLocks.collectAsState()
         val fgEngine by state.frameGenEngine.collectAsState()
@@ -2789,7 +2790,7 @@ private fun HudContent(state: XServerDrawerState) {
         }
 
         Spacer(Modifier.height(14.dp))
-        Text("Refresh rate", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_refresh_rate), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Spacer(Modifier.height(4.dp))
         // Auto (match FPS) == the existing VRR toggle. While native frame gen runs it is the
         // session's Auto: switched on at start unless this game opted out, and toggling it off
@@ -2934,7 +2935,7 @@ private fun HudContent(state: XServerDrawerState) {
             // an owner can report which sysfs nodes their SoC actually exposes for any metric showing "—".
             val diagContext = LocalContext.current
             OutlinedButton(onClick = { exportHudDiagnostics(diagContext) }, modifier = Modifier.fillMaxWidth()) {
-                Text("Export HUD diagnostics")
+                Text(I18n.s(R.string.ui_export_hud_diagnostics))
             }
             Text(
                 "Saves a sensor report (CPU/GPU/temp/VRAM…) straight to your Downloads folder.",
@@ -2970,7 +2971,7 @@ private fun CollapsibleSection(
     content: @Composable () -> Unit
 ) {
     var expanded by rememberSaveable(title) { mutableStateOf(initiallyExpanded) }
-    val chevronRotation by animateFloatAsState(if (expanded) 90f else 0f, label = "hudSectionChevron")
+    val chevronRotation by animateFloatAsState(if (expanded) 90f else 0f, label = I18n.s(R.string.ui_hudsectionchevron))
     Column {
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(top = 6.dp))
         Row(
@@ -3141,14 +3142,14 @@ private fun ControlsContent(state: XServerDrawerState) {
     when (subTab) {
         // ── Touch ──
         0 -> {
-            Text("Input Controls", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text(I18n.s(R.string.input_controls), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(6.dp))
 
             ExposedDropdownMenuBox(expanded = dropdownExpanded, onExpandedChange = { dropdownExpanded = it }) {
                 OutlinedTextField(
                     value = allItems.getOrElse(selectedIdx) { "-- Disabled --" },
                     onValueChange = {}, readOnly = true,
-                    label = { Text("Profile", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    label = { Text(I18n.s(R.string.profile), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
                     modifier = Modifier.fillMaxWidth().menuAnchor(),
                     singleLine = true,
@@ -3189,7 +3190,7 @@ private fun ControlsContent(state: XServerDrawerState) {
             // On-screen controls opacity — live, applied to the visible overlay as you drag.
             var overlayOpacity by remember(initOverlayOpacity) { mutableFloatStateOf(initOverlayOpacity) }
             LabeledSlider(
-                label = "Overlay Opacity",
+                label = I18n.s(R.string.overlay_opacity),
                 value = overlayOpacity,
                 valueRange = 0f..1f,
                 onValueChange = {
@@ -3202,7 +3203,7 @@ private fun ControlsContent(state: XServerDrawerState) {
 
             // On-screen controls icon style — Fusion (tinted pads, default) or Glass (blurred black glass).
             Spacer(Modifier.height(4.dp))
-            Text("Icon Style", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text(I18n.s(R.string.icon_style), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(6.dp))
             ModeChipGrid(
                 ControlsIconStyle.values().map { style ->
@@ -3228,7 +3229,7 @@ private fun ControlsContent(state: XServerDrawerState) {
             )
             if (!controlsFollowTheme) {
                 Spacer(Modifier.height(8.dp))
-                Text("Controls Accent", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                Text(I18n.s(R.string.ui_controls_accent), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
                 Spacer(Modifier.height(8.dp))
                 ColorPicker(
                     initialColor = Color(initControlsAccent),
@@ -3249,7 +3250,7 @@ private fun ControlsContent(state: XServerDrawerState) {
                 enabled = selectedIdx > 0,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-            ) { Text("Profile Settings\u2026") }
+            ) { Text(I18n.s(R.string.ui_profile_settings_u2026)) }
 
             Spacer(Modifier.height(4.dp))
 
@@ -3262,7 +3263,7 @@ private fun ControlsContent(state: XServerDrawerState) {
 
         // ── Mouse ──
         1 -> {
-            Text("Mouse & Cursor", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text(I18n.s(R.string.ui_mouse_cursor), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(4.dp))
 
             // Each of these flips its flag host-side and stays open — like the fullscreen selector, the
@@ -3316,7 +3317,7 @@ private fun ControlsContent(state: XServerDrawerState) {
 
         // ── Vibration ──
         2 -> {
-            Text("Vibration", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text(I18n.s(R.string.vibration), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(4.dp))
 
             // Master kill-switch — off suppresses ALL controller rumble regardless of slot (and hides the
@@ -3456,7 +3457,7 @@ private fun PadRowHeader(title: String, apply: PadApply, helpRes: Int) {
                 .padding(horizontal = 6.dp, vertical = 2.dp)
         )
         IconButton(onClick = { showHelp = true }, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Help, contentDescription = "What is this?",
+            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
         }
     }
@@ -3481,7 +3482,7 @@ private fun PadSection() {
         }
     }
 
-    Text("Controller", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+    Text(I18n.s(R.string.vibration_mode_controller), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(4.dp))
 
     // Controller type. The Classic DirectInput pad changes how winebus presents every pad, which it
@@ -3635,7 +3636,7 @@ private fun PadSection() {
 private fun SaveScopeFooter() {
     val scope by XServerDialogState.controllerSaveScope.collectAsState()
     if (scope.gameName != null) {
-        Text("Save for", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(I18n.s(R.string.ui_save_for), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(4.dp))
         ModeChipGrid(
             listOf(
@@ -3667,7 +3668,7 @@ private fun PlayersSection() {
     // Devices hot-plug, so pull a fresh snapshot whenever this sub-tab is shown.
     LaunchedEffect(Unit) { XServerDialogState.onPlayerSlotsRefresh?.run() }
 
-    Text("Player Slots", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+    Text(I18n.s(R.string.ui_player_slots), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(4.dp))
     Text(
         "Assign each device to a player, or ignore it. Applied immediately and saved for this container.",
@@ -3719,7 +3720,7 @@ private fun PlayersSection() {
         },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
-    ) { Text("Reset Input") }
+    ) { Text(I18n.s(R.string.ui_reset_input)) }
     Text(
         "Re-handshake controllers & on-screen if input stops responding.",
         style = MaterialTheme.typography.bodySmall,
@@ -3771,7 +3772,7 @@ private fun PlayerSlotRowItem(row: XServerDialogState.PlayerSlotRow) {
             OutlinedTextField(
                 value = selectedLabel,
                 onValueChange = {}, readOnly = true,
-                label = { Text("Slot", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                label = { Text(I18n.s(R.string.ui_slot), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier.fillMaxWidth().menuAnchor(),
                 singleLine = true,
@@ -3811,7 +3812,7 @@ private fun TouchGestureSettings(state: XServerDrawerState) {
     val longPress by state.gestureLongPressRightClick.collectAsState()
 
     Spacer(Modifier.height(10.dp))
-    Text("Touch Gestures", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+    Text(I18n.s(R.string.ui_touch_gestures), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(2.dp))
     Text(
         "Drag to box-select, hold for right click. Two-finger drag scrolls the wheel.",
@@ -4214,7 +4215,7 @@ private fun PerfOverrideLine(overridden: Boolean, onReset: () -> Unit) {
             modifier = Modifier.weight(1f)
         )
         if (overridden) {
-            Text("Reset to global", fontSize = 10.sp, color = accent,
+            Text(I18n.s(R.string.ui_reset_to_global), fontSize = 10.sp, color = accent,
                 modifier = Modifier.clickable { onReset() })
         }
     }
@@ -4317,12 +4318,12 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
         // TIER 1 — light, honest label. Drops file caches; the system reclaims cache automatically.
         AdvancedActionRow(
             "Drop file caches", R.drawable.icon_task_manager,
-            subtitle = "Frees cached files. Little visible RAM; the system reclaims cache automatically.",
+            subtitle = I18n.s(R.string.ui_frees_cached_files_little_visible_ram_the_system_recl),
         ) { state.onFreeMemory?.run() }
         // TIER 2 — the real RAM free (root-only). `am kill-all` never touches the running game/system.
         AdvancedActionRow(
             "Deep clean (free app memory)", R.drawable.icon_task_manager,
-            subtitle = "Force-closes background apps to free real memory. Won't touch your game or system.",
+            subtitle = I18n.s(R.string.ui_force_closes_background_apps_to_free_real_memory_won),
         ) { state.onDeepClean?.run() }
     }
 
@@ -4438,7 +4439,7 @@ private fun TmContent() {
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text("No processes", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
+            Text(I18n.s(R.string.ui_no_processes), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
         }
     } else {
         // Each process is its own card (matching the app File Manager rows), not a flat
@@ -4458,9 +4459,9 @@ private fun TmContent() {
                 XServerDialogState.onTmDismissed?.run()
                 XServerDialogState.onTmNewTask?.run()
             }
-        ) { Text("New Task\u2026", color = accent) }
+        ) { Text(I18n.s(R.string.ui_new_task_u2026), color = accent) }
         Spacer(Modifier.weight(1f))
-        TextButton(onClick = { XServerDialogState.onTmDismissed?.run() }) { Text("Clear", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        TextButton(onClick = { XServerDialogState.onTmDismissed?.run() }) { Text(I18n.s(R.string.clear), color = MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 }
 
@@ -4526,7 +4527,7 @@ private fun TmProcessRow(proc: XServerDialogState.TmProcess) {
 
         Box {
             IconButton(onClick = { menuExpanded = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "Options", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Icon(Icons.Default.MoreVert, contentDescription = I18n.s(R.string.options), tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             DropdownMenu(
                 expanded = menuExpanded,
@@ -4534,7 +4535,7 @@ private fun TmProcessRow(proc: XServerDialogState.TmProcess) {
                 modifier = Modifier.outlinedMenuCard()
             ) {
                 DropdownMenuItem(
-                    text = { Text("Processor Affinity") },
+                    text = { Text(I18n.s(R.string.processor_affinity)) },
                     leadingIcon = {
                         Icon(
                             Icons.Default.Memory,
@@ -4550,7 +4551,7 @@ private fun TmProcessRow(proc: XServerDialogState.TmProcess) {
                 )
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("Bring to Front") },
+                    text = { Text(I18n.s(R.string.bring_to_front)) },
                     leadingIcon = {
                         Icon(
                             Icons.Default.FlipToFront,
@@ -4566,7 +4567,7 @@ private fun TmProcessRow(proc: XServerDialogState.TmProcess) {
                 )
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("End Process", color = MaterialTheme.colorScheme.error) },
+                    text = { Text(I18n.s(R.string.end_process), color = MaterialTheme.colorScheme.error) },
                     leadingIcon = {
                         Icon(
                             Icons.Default.Close,
@@ -4620,7 +4621,7 @@ private fun ProcessorAffinityDialog(
                     modifier = Modifier.size(18.dp),
                 )
                 Spacer(Modifier.width(8.dp))
-                Text("Processor Affinity", fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                Text(I18n.s(R.string.processor_affinity), fontSize = 17.sp, fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -4638,7 +4639,7 @@ private fun ProcessorAffinityDialog(
                 // regardless of an arm64ec vs x86-64 container. Laid out 4-per-row so 8 cores fit in
                 // two rows without scrolling; a heightIn + scroll fallback covers the 32-core cap.
                 AffinityCheckRow(
-                    label = "<All Processors>",
+                    label = I18n.s(R.string.ui_all_processors),
                     checked = allChecked,
                     bold = true,
                     onToggle = { mask = if (allChecked) 0 else allMask },
@@ -4684,7 +4685,7 @@ private fun ProcessorAffinityDialog(
                 },
             ) { Text("OK") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 

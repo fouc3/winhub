@@ -81,6 +81,7 @@ import com.winhub.hernandez.store.SteamSessionManager.Step
 import com.winhub.hernandez.store.SteamSessionManager.StepState
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
 
 // Plain-terms help copy for the "?" bubbles (same idea as LaunchMethodSheet's: what it is, one breath).
 private const val HELP_PREFLIGHT =
@@ -365,7 +366,7 @@ fun SteamPreflightDialog(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
             },
         )
     }
@@ -435,17 +436,17 @@ private fun failCardFor(
             "$needSignIn. Sign in again to play online with SteamLite, or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text("Launch with Goldberg", color = cs.onSurfaceVariant) }
-            TextButton(onClick = onSignIn) { Text("Sign in", color = cs.primary) }
+            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_launch_with_goldberg), color = cs.onSurfaceVariant) }
+            TextButton(onClick = onSignIn) { Text(I18n.s(R.string.xmb_store_card_signed_out), color = cs.primary) }
         }
         offline != null -> FailCardModel(
             "Steam is unreachable",
             "$offline. You can retry, launch anyway (the game's own Steam client will try to sign in), or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text("Goldberg", color = cs.onSurfaceVariant) }
-            TextButton(onClick = launchAnyway) { Text("Launch anyway", color = cs.onSurfaceVariant) }
-            TextButton(onClick = retry) { Text("Retry", color = cs.primary) }
+            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_goldberg), color = cs.onSurfaceVariant) }
+            TextButton(onClick = launchAnyway) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
+            TextButton(onClick = retry) { Text(I18n.s(R.string.ui_retry), color = cs.primary) }
         }
         updateOffer != null -> FailCardModel(
             "Update available",
@@ -454,8 +455,8 @@ private fun failCardFor(
             else "A newer build of ${shortcut.name} is available.",
             red = false,
         ) {
-            TextButton(onClick = launchThisBuild) { Text("Launch anyway", color = cs.onSurfaceVariant) }
-            TextButton(onClick = onUpdate) { Text("Update", color = cs.primary) }
+            TextButton(onClick = launchThisBuild) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
+            TextButton(onClick = onUpdate) { Text(I18n.s(R.string.wrapper_update), color = cs.primary) }
         }
         clientOffer != null && !clientUpdating -> {
             val size = if (clientOffer.downloadMb > 0) " (~${clientOffer.downloadMb} MB)" else ""
@@ -474,9 +475,9 @@ private fun failCardFor(
                 // Below MIN_AGENT_VERSION the only offered action is Update (a failed download
                 // still launches the installed package — see updateClientThenLaunch).
                 if (!clientOffer.required) {
-                    TextButton(onClick = launchInstalledClient) { Text("Launch anyway", color = cs.onSurfaceVariant) }
+                    TextButton(onClick = launchInstalledClient) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
                 }
-                TextButton(onClick = updateClient) { Text("Update", color = cs.primary) }
+                TextButton(onClick = updateClient) { Text(I18n.s(R.string.wrapper_update), color = cs.primary) }
             }
         }
         else -> null
@@ -544,7 +545,7 @@ private fun LandscapePreflight(
                         LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = false)
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
                     }
                 }
             } else {
@@ -563,7 +564,7 @@ private fun LandscapePreflight(
                             LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = true)
                         }
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
                         }
                     }
                 }
@@ -587,7 +588,7 @@ private fun LandscapeText(
     Text(gameName, style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
     if (summary) {
         Spacer(Modifier.height(4.dp))
-        Text("Five quick checks before the game starts.", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+        Text(I18n.s(R.string.ui_five_quick_checks_before_the_game_starts), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
     }
     Spacer(Modifier.height(8.dp))
     Text(
@@ -624,7 +625,7 @@ private fun SlideStrip(
         Crossfade(
             targetState = show.shown,
             animationSpec = if (show.motion) tween(CROSSFADE_MS) else snap(),
-            label = "preflight-slide",
+            label = I18n.s(R.string.ui_preflight_slide),
         ) { idx ->
             SlidePhoto(SLIDE_PHOTOS[idx], show.motion, photoBias)
         }
@@ -698,7 +699,7 @@ private fun SlideStrip(
                 val w by animateDpAsState(
                     targetValue = if (i == show.shown) 18.dp else 6.dp,
                     animationSpec = if (show.motion) tween(300) else snap(),
-                    label = "preflight-dot",
+                    label = I18n.s(R.string.ui_preflight_dot),
                 )
                 Box(
                     Modifier.height(6.dp).width(w).clip(RoundedCornerShape(3.dp)).background(

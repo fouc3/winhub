@@ -26,6 +26,7 @@ import com.winhub.hernandez.store.download.DownloadRegistry
 import com.winhub.hernandez.store.download.Store
 import com.winhub.hernandez.ui.screens.OutlinedAlertDialog
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 /**
  * What a card of the cross-store Download Manager does, shared by [DownloadManagerActivity] and the XMB Home's Downloads page
@@ -239,18 +240,18 @@ internal class DownloadActions(private val activity: Activity) {
     fun cancel(entry: DownloadEntry) {
         if (entry.store == Store.EPIC) {
             AlertDialog.Builder(activity)
-                .setTitle("Cancel download?")
+                .setTitle(I18n.s(R.string.ui_cancel_download))
                 .setMessage("Keep the partial download so you can resume later, or delete all " +
                         "downloaded files for this game?")
-                .setPositiveButton("Keep files") { _, _ ->
+                .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                     EpicCancelPolicy.setDeleteOnCancel(entry.id, false)
                     entry.cancel?.invoke()
                 }
-                .setNegativeButton("Delete files") { _, _ ->
+                .setNegativeButton(I18n.s(R.string.ui_delete_files)) { _, _ ->
                     EpicCancelPolicy.setDeleteOnCancel(entry.id, true)
                     entry.cancel?.invoke()
                 }
-                .setNeutralButton("Keep downloading", null)
+                .setNeutralButton(I18n.s(R.string.ui_keep_downloading), null)
                 .show()
         } else {
             entry.cancel?.invoke()

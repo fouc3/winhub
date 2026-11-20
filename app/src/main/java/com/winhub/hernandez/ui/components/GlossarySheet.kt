@@ -28,6 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Container glossary — a plain-language "what is all this?" compendium for the
@@ -202,7 +204,7 @@ fun ContainerGlossarySheet(onDismiss: () -> Unit, initialQuery: String = "") {
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
-                label = { Text("Search terms") },
+                label = { Text(I18n.s(R.string.ui_search_terms)) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()

@@ -80,6 +80,7 @@ import com.winhub.hernandez.util.InAppFilePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 /**
  * Wrapper Version Manager (issue #132). Step 1: a fixed-slot updater — each bundled graphics-wrapper
@@ -463,7 +464,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
                             context.getString(R.string.wrapper_select_title),
                         )
                     )
-                }) { Text("Browse files") }
+                }) { Text(I18n.s(R.string.browse_files)) }
             },
             dismissButton = {
                 Row {
@@ -474,7 +475,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
                             type = "*/*"
                         }
                         filePicker.launch(intent)
-                    }) { Text("Pick via system…") }
+                    }) { Text(I18n.s(R.string.pick_via_system)) }
                     TextButton(onClick = {
                         confirmInstallPrompt = false; pendingFileName = null; importMode = false
                     }) {
@@ -1328,7 +1329,7 @@ private fun EditWrapperSettingsDialog(
                         ) {
                             CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("Scanning…", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+                            Text(I18n.s(R.string.ui_scanning), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                         }
                     resolved.isEmpty() ->
                         Text(

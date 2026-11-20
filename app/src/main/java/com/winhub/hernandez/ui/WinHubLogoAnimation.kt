@@ -28,6 +28,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.util.lerp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The WinHub mark's loop (wh-animated.svg), in that file's own coordinates: the three dots pulse in turn,
 // the H's outline draws itself in white and retracts, then all three dots pulse once more and ripple out.
@@ -110,13 +112,13 @@ internal fun WinHubLogoAnimation(modifier: Modifier = Modifier, still: Boolean =
         }.getOrDefault(1f) == 0f
     }
     val frozen = still || animationsOff
-    val loop = rememberInfiniteTransition(label = "whLogo").animateFloat(
+    val loop = rememberInfiniteTransition(label = I18n.s(R.string.ui_whlogo)).animateFloat(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(LOOP_MS, easing = LinearEasing)),
-        label = "whLogoT",
+        label = I18n.s(R.string.ui_whlogot),
     )
-    Canvas(modifier.aspectRatio(VIEW_W / VIEW_H).semantics { contentDescription = "WinHub" }) {
+    Canvas(modifier.aspectRatio(VIEW_W / VIEW_H).semantics { contentDescription = I18n.s(R.string.app_name) }) {
         // The phase is read here, in the draw pass, so the loop never recomposes anything.
         val t = if (frozen) STILL_T else loop.value
         // Draw in the SVG's own coordinates: shift its viewBox to the origin, then scale to the canvas.

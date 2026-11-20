@@ -38,6 +38,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val TAG = "DeckUpdates"
 private val PERCENT = Regex("(\\d+)%")
@@ -89,7 +91,7 @@ private fun DeckDoctorNoticeDialog(notice: GameDoctor.Notice, onClose: () -> Uni
         GameDoctor.dismissNotice(context, notice)
         onClose()
     }
-    DeckConfigDialog(title = "Game Doctor", onDismiss = { close() }, compact = true) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_game_doctor), onDismiss = { close() }, compact = true) {
         Text(notice.game, color = DeckPalette.onBackground, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(6.dp))
         Text(
@@ -106,7 +108,7 @@ private fun DeckDoctorNoticeDialog(notice: GameDoctor.Notice, onClose: () -> Uni
         DeckButton("OK", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) { close() }
         if (undone == null) {
             Spacer(Modifier.height(8.dp))
-            DeckButton("Undo", primary = false, modifier = Modifier.fillMaxWidth()) {
+            DeckButton(I18n.s(R.string.ui_undo), primary = false, modifier = Modifier.fillMaxWidth()) {
                 scope.launch { undone = withContext(Dispatchers.IO) { GameDoctor.undoNotice(context, notice) } }
             }
         }
@@ -218,24 +220,24 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
 
         when (phase) {
             UpdatePhase.OFFER -> {
-                DeckButton("Download", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) { startInstall() }
+                DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) { startInstall() }
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                    DeckButton("Later", primary = false, modifier = Modifier.weight(1f), onClick = onClose)
-                    DeckButton("Skip version", primary = false, modifier = Modifier.weight(1f)) {
+                    DeckButton(I18n.s(R.string.ui_later), primary = false, modifier = Modifier.weight(1f), onClick = onClose)
+                    DeckButton(I18n.s(R.string.ui_skip_version), primary = false, modifier = Modifier.weight(1f)) {
                         offer.skip()
                         onClose()
                     }
                 }
             }
             UpdatePhase.WORKING ->
-                DeckButton("Cancel", primary = false, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) {
+                DeckButton(I18n.s(R.string.cancel), primary = false, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) {
                     job?.cancel()
                     onClose()
                 }
             UpdatePhase.INSTALLED ->
                 if (switchable > 0) {
-                    DeckButton("Switch containers", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) {
+                    DeckButton(I18n.s(R.string.ui_switch_containers), primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus)) {
                         val id = installedId ?: return@DeckButton
                         phase = UpdatePhase.SWITCHING
                         scope.launch {
@@ -246,17 +248,17 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
                         }
                     }
                     Spacer(Modifier.height(8.dp))
-                    DeckButton("Not now", primary = false, modifier = Modifier.fillMaxWidth(), onClick = onClose)
+                    DeckButton(I18n.s(R.string.ui_not_now), primary = false, modifier = Modifier.fillMaxWidth(), onClick = onClose)
                 } else {
-                    DeckButton("Done", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
+                    DeckButton(I18n.s(R.string.wrapper_catalog_close), primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
                 }
             UpdatePhase.SWITCHING -> {}
             UpdatePhase.DONE -> {
-                DeckButton("Done", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
+                DeckButton(I18n.s(R.string.wrapper_catalog_close), primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
                 val revert = undo
                 if (revert != null) {
                     Spacer(Modifier.height(8.dp))
-                    DeckButton("Undo", primary = false, modifier = Modifier.fillMaxWidth()) {
+                    DeckButton(I18n.s(R.string.ui_undo), primary = false, modifier = Modifier.fillMaxWidth()) {
                         undo = null
                         scope.launch {
                             withContext(Dispatchers.IO) { revert() }
@@ -266,7 +268,7 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
                 }
             }
             UpdatePhase.FAILED ->
-                DeckButton("Close", primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
+                DeckButton(I18n.s(R.string.wrapper_manager_close), primary = true, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus), onClick = onClose)
         }
     }
 }

@@ -111,6 +111,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URL
+import com.winhub.hernandez.util.I18n
 
 /** Semantic action carried by the install button; the colour resolves inside the composable
  *  (install/retry = primary, cancel/uninstall = error) so theme presets recolor it live. */
@@ -398,7 +399,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 if (showCloudDisclaimer) {
                     OutlinedAlertDialog(
                         onDismissRequest = { showCloudDisclaimer = false; pendingCloudMove = null },
-                        title = { Text("Third-party cloud sync") },
+                        title = { Text(I18n.s(R.string.ui_third_party_cloud_sync)) },
                         text = {
                             Text(
                                 "Steam Cloud save syncing here is handled by a third-party tool, not " +
@@ -412,13 +413,13 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                                 setCloudDisclaimerAccepted()
                                 pendingCloudMove?.let { prepareCloudConfirm(it) }
                                 pendingCloudMove = null
-                            }) { Text("I understand") }
+                            }) { Text(I18n.s(R.string.ui_i_understand)) }
                         },
                         dismissButton = {
                             TextButton(onClick = {
                                 showCloudDisclaimer = false
                                 pendingCloudMove = null
-                            }) { Text("Cancel") }
+                            }) { Text(I18n.s(R.string.cancel)) }
                         },
                     )
                 }
@@ -467,7 +468,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                     val gName = game?.name?.takeIf { it.isNotBlank() } ?: "this game"
                     OutlinedAlertDialog(
                         onDismissRequest = { showCancelDeleteConfirm = false },
-                        title = { Text("Cancel & delete download?") },
+                        title = { Text(I18n.s(R.string.ui_cancel_delete_download)) },
                         text = {
                             Text(
                                 "This stops the download for \"$gName\", deletes every file already " +
@@ -479,11 +480,11 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                             TextButton(onClick = {
                                 showCancelDeleteConfirm = false
                                 performCancelDeleteReset()
-                            }) { Text("Delete & reset", color = MaterialTheme.colorScheme.error) }
+                            }) { Text(I18n.s(R.string.ui_delete_reset), color = MaterialTheme.colorScheme.error) }
                         },
                         dismissButton = {
                             TextButton(onClick = { showCancelDeleteConfirm = false }) {
-                                Text("Keep download")
+                                Text(I18n.s(R.string.ui_keep_download))
                             }
                         },
                     )
@@ -519,7 +520,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 goldbergMessage?.let { msg ->
                     OutlinedAlertDialog(
                         onDismissRequest = { goldbergMessage = null },
-                        title = { Text("Steam Emulator (Goldberg)") },
+                        title = { Text(I18n.s(R.string.ui_steam_emulator_goldberg)) },
                         text = { Text(msg) },
                         confirmButton = {
                             TextButton(onClick = { goldbergMessage = null }) { Text("OK") }
@@ -654,7 +655,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 downloadProgressValue = 0
                 progressTextVisible = false
                 progressText = ""
-                statusText = "Not installed"
+                statusText = I18n.s(R.string.ui_not_installed)
                 gameStatus = GameStatus.NOT_INSTALLED
                 installBtnEnabled = true
                 installBtnText = "Install"
@@ -992,7 +993,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         refreshMoveStorageOffer(g)
 
         if (g.isInstalled) {
-            statusText = "Installed"
+            statusText = I18n.s(R.string.wrapper_installed)
             gameStatus = GameStatus.INSTALLED
             installBtnText = "Uninstall"
             installAction = InstallAction.UNINSTALL
@@ -1019,7 +1020,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 }
             }
         } else {
-            statusText = "Not installed"
+            statusText = I18n.s(R.string.ui_not_installed)
             gameStatus = GameStatus.NOT_INSTALLED
             installBtnText = "Install"
             installAction = InstallAction.INSTALL
@@ -1245,7 +1246,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         downloadProgressValue = 0
         progressTextVisible = false
         progressText = ""
-        statusText = "Not installed"
+        statusText = I18n.s(R.string.ui_not_installed)
         gameStatus = GameStatus.NOT_INSTALLED
         installBtnText = "Install"
         installAction = InstallAction.INSTALL
@@ -1787,7 +1788,7 @@ private fun SteamGameDetailScreen(
                             onClick = onBranchLineClick,
                             modifier = Modifier.padding(top = 6.dp),
                         ) {
-                            Text("Change branch")
+                            Text(I18n.s(R.string.ui_change_branch))
                         }
                     }
                     Spacer(Modifier.height(8.dp))
@@ -1824,25 +1825,25 @@ private fun SteamGameDetailScreen(
                 when {
                     // Still resolving and nothing cached yet — brief, only on a never-resolved game.
                     dlcTabLoading && dlcTabRows.isEmpty() && !dlcHasAny -> Text(
-                        text = "Loading DLC…",
+                        text = I18n.s(R.string.ui_loading_dlc),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     // Resolved and the game genuinely lists no DLC.
                     !dlcHasAny -> Text(
-                        text = "No DLC available for this game.",
+                        text = I18n.s(R.string.ui_no_dlc_available_for_this_game),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     // Has DLC, but the user owns none of it.
                     ownedDlc.isEmpty() -> Text(
-                        text = "You don't own any DLC for this game.",
+                        text = I18n.s(R.string.ui_you_don_t_own_any_dlc_for_this_game),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     else -> {
                         Text(
-                            text = "Your DLC",
+                            text = I18n.s(R.string.ui_your_dlc),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -1874,7 +1875,7 @@ private fun SteamGameDetailScreen(
                             OutlinedButton(
                                 onClick = onDlcLineClick,
                                 modifier = Modifier.padding(top = 8.dp),
-                            ) { Text("Choose DLC") }
+                            ) { Text(I18n.s(R.string.ui_choose_dlc)) }
                         }
                     }
                 }
@@ -1882,7 +1883,7 @@ private fun SteamGameDetailScreen(
                 if (unownedDlc.isNotEmpty()) {
                     Spacer(Modifier.height(14.dp))
                     Text(
-                        text = "Not owned",
+                        text = I18n.s(R.string.ui_not_owned),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1930,7 +1931,7 @@ private fun SteamGameDetailScreen(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 16.dp),
                     ) {
                         Text(
-                            text = "Steam Cloud Saves",
+                            text = I18n.s(R.string.ui_steam_cloud_saves),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -2014,7 +2015,7 @@ private fun SteamGameDetailScreen(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.social_hub_configs_back),
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -2232,12 +2233,12 @@ private fun SteamGameDetailScreen(
                     .padding(start = 20.dp, end = 20.dp, bottom = 24.dp),
             ) {
                 Text(
-                    text = "DLC to download",
+                    text = I18n.s(R.string.ui_dlc_to_download),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "Unchecked DLC won't download with the game.",
+                    text = I18n.s(R.string.ui_unchecked_dlc_won_t_download_with_the_game),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 2.dp, bottom = 12.dp),
@@ -2265,7 +2266,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissDlcSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("Done") }
+                ) { Text(I18n.s(R.string.wrapper_catalog_close)) }
             }
         }
     }
@@ -2284,7 +2285,7 @@ private fun SteamGameDetailScreen(
                     .padding(start = 20.dp, end = 20.dp, bottom = 24.dp),
             ) {
                 Text(
-                    text = "Choose a branch",
+                    text = I18n.s(R.string.ui_choose_a_branch),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -2335,7 +2336,7 @@ private fun SteamGameDetailScreen(
                 if (branches.any { it.pwdRequired && !it.unlocked }) {
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        text = "Unlock a password-protected beta",
+                        text = I18n.s(R.string.ui_unlock_a_password_protected_beta),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
@@ -2347,7 +2348,7 @@ private fun SteamGameDetailScreen(
                             onValueChange = { code = it },
                             singleLine = true,
                             enabled = !branchCheckBusy,
-                            label = { Text("Beta access code") },
+                            label = { Text(I18n.s(R.string.ui_beta_access_code)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 6.dp),
@@ -2375,7 +2376,7 @@ private fun SteamGameDetailScreen(
                                 strokeWidth = 2.dp,
                             )
                         } else {
-                            Text("Unlock branch")
+                            Text(I18n.s(R.string.ui_unlock_branch))
                         }
                     }
                 }
@@ -2384,7 +2385,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissBranchSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("Done") }
+                ) { Text(I18n.s(R.string.wrapper_catalog_close)) }
             }
         }
     }
@@ -2524,7 +2525,7 @@ private fun AchievementsTabBody(
 
     when {
         !signedIn -> Text(
-            text = "Sign in to Steam to view achievements.",
+            text = I18n.s(R.string.ui_sign_in_to_steam_to_view_achievements),
             fontSize = 13.sp,
             color = AchvInk2,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -2539,10 +2540,10 @@ private fun AchievementsTabBody(
                 strokeWidth = 2.dp,
             )
             Spacer(Modifier.width(8.dp))
-            Text("Loading achievements…", fontSize = 13.sp, color = AchvInk2)
+            Text(I18n.s(R.string.ui_loading_achievements), fontSize = 13.sp, color = AchvInk2)
         }
         achievements.isEmpty() -> Text(
-            text = "This game has no achievements.",
+            text = I18n.s(R.string.ui_this_game_has_no_achievements),
             fontSize = 13.sp,
             color = AchvInk2,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -2596,7 +2597,7 @@ private fun AchievementProgressBlock(done: Int, total: Int, pct: Int) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Achievements", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = AchvInk)
+            Text(I18n.s(R.string.ui_achievements), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = AchvInk)
             Text(
                 text = buildAnnotatedString {
                     withStyle(SpanStyle(color = AchvGold, fontWeight = FontWeight.Bold)) { append("$done") }
@@ -2809,7 +2810,7 @@ private fun AchievementHelpDialog(a: SteamAchievement, onDismiss: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Got it") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_got_it)) }
         },
     )
 }
@@ -2830,10 +2831,10 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 .padding(start = 16.dp, end = 16.dp, top = 11.dp, bottom = 14.dp),
         ) {
             if (selected == null) {
-                Text("Tap an icon to see details", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = AchvInk)
+                Text(I18n.s(R.string.ui_tap_an_icon_to_see_details), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = AchvInk)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "The grid shows icons only — completed ones in full colour, locked ones greyed out.",
+                    text = I18n.s(R.string.ui_grid_shows_icons_only_completed_ones_in_full_colour_l),
                     fontSize = 12.sp,
                     color = AchvInk2,
                     lineHeight = 17.sp,
@@ -2875,8 +2876,8 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = "Unlocked")
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = "Locked")
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = I18n.s(R.string.ui_unlocked))
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = I18n.s(R.string.ui_locked))
                 AchvLegendItem(swatch = { Text("🔒", fontSize = 11.sp) }, label = "Hidden")
             }
         }
@@ -2984,7 +2985,7 @@ private fun GoldbergModeDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Done") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) }
         },
     )
 }
@@ -3020,7 +3021,7 @@ private fun GoldbergSection(
     // content column with no card wrapper of its own.
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Steam Emulator (Goldberg)",
+            text = I18n.s(R.string.ui_steam_emulator_goldberg),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
         )
@@ -3123,7 +3124,7 @@ private fun GoldbergSection(
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = "Applying…",
+                    text = I18n.s(R.string.ui_applying),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -3171,7 +3172,7 @@ private fun CloudSavesSection(
             .padding(16.dp),
     ) {
         Text(
-            text = "Steam Cloud Saves",
+            text = I18n.s(R.string.ui_steam_cloud_saves),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
         )
@@ -3185,7 +3186,7 @@ private fun CloudSavesSection(
         // Always-visible third-party disclaimer note.
         Spacer(Modifier.height(6.dp))
         Text(
-            text = "⚠️ Third-party cloud sync — use at your own risk.",
+            text = I18n.s(R.string.ui_third_party_cloud_sync_use_at_your_own_risk),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.error,
         )
@@ -3202,7 +3203,7 @@ private fun CloudSavesSection(
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        text = "Checking this game's container…",
+                        text = I18n.s(R.string.ui_checking_this_game_container),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3223,7 +3224,7 @@ private fun CloudSavesSection(
                     onClick = onSetUp,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("Set up in a container", maxLines = 1) }
+                ) { Text(I18n.s(R.string.ui_set_up_in_a_container), maxLines = 1) }
             }
 
             else -> {
@@ -3246,10 +3247,10 @@ private fun CloudSavesSection(
                     enabled = !busy,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("⬇ Sync from Cloud", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                ) { Text(I18n.s(R.string.ui_sync_from_cloud), maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 Spacer(Modifier.height(2.dp))
                 Text(
-                    text = "Bring your Steam Cloud saves down and into this game.",
+                    text = I18n.s(R.string.ui_bring_your_steam_cloud_saves_down_and_into_this_game),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -3260,10 +3261,10 @@ private fun CloudSavesSection(
                     enabled = !busy,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("⬆ Sync to Cloud", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                ) { Text(I18n.s(R.string.ui_sync_to_cloud), maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 Spacer(Modifier.height(2.dp))
                 Text(
-                    text = "Send this game's current saves up to Steam Cloud.",
+                    text = I18n.s(R.string.ui_send_this_game_current_saves_up_to_steam_cloud),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -3295,7 +3296,7 @@ private fun CloudSavesSection(
                     // Cloud row — Download (Cloud → Library) / Upload (Library → Cloud, additive).
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "Cloud",
+                        text = I18n.s(R.string.ui_cloud),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3306,20 +3307,20 @@ private fun CloudSavesSection(
                             enabled = !busy,
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(10.dp),
-                        ) { Text("⬇ Download", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                        ) { Text(I18n.s(R.string.ui_download), maxLines = 1, overflow = TextOverflow.Ellipsis) }
 
                         OutlinedButton(
                             onClick = onUpload,
                             enabled = !busy,
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(10.dp),
-                        ) { Text("⬆ Upload", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                        ) { Text(I18n.s(R.string.ui_upload), maxLines = 1, overflow = TextOverflow.Ellipsis) }
                     }
 
                     // Container row — Apply (Library → Container) / Collect (Container → Library).
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "Container",
+                        text = I18n.s(R.string.container),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3330,14 +3331,14 @@ private fun CloudSavesSection(
                             enabled = !busy,
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(10.dp),
-                        ) { Text("→ Apply", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                        ) { Text(I18n.s(R.string.ui_apply), maxLines = 1, overflow = TextOverflow.Ellipsis) }
 
                         OutlinedButton(
                             onClick = onCollect,
                             enabled = !busy,
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(10.dp),
-                        ) { Text("← Collect", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                        ) { Text(I18n.s(R.string.ui_collect), maxLines = 1, overflow = TextOverflow.Ellipsis) }
                     }
                 }
 
@@ -3439,7 +3440,7 @@ private fun CloudConfirmDialog(
                 }
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text = "Third-party cloud sync — use at your own risk.",
+                    text = I18n.s(R.string.ui_third_party_cloud_sync_use_at_your_own_risk_2),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -3449,7 +3450,7 @@ private fun CloudConfirmDialog(
             TextButton(onClick = onConfirm) { Text(action) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
         },
     )
 }
@@ -3540,7 +3541,7 @@ private fun DownloadSpeedPickerDialog(
                             .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 6.dp),
                     ) {
                         Text(
-                            text = "Download speed",
+                            text = I18n.s(R.string.ui_download_speed),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = cs.onSurface,
@@ -3549,7 +3550,7 @@ private fun DownloadSpeedPickerDialog(
                         IconButton(onClick = { helpRes = R.string.help_download_speed }) {
                             Icon(
                                 Icons.Default.Help,
-                                contentDescription = "What is this?",
+                                contentDescription = I18n.s(R.string.ui_what_is_this),
                                 modifier = Modifier.size(18.dp),
                             )
                         }
@@ -3572,7 +3573,7 @@ private fun DownloadSpeedPickerDialog(
                                 .padding(start = 14.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
                         ) {
                             Text(
-                                text = "SPEED & RESOURCE USE",
+                                text = I18n.s(R.string.ui_speed_resource_use),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = cs.onSurfaceVariant,
                             )
@@ -3639,7 +3640,7 @@ private fun DownloadSpeedPickerDialog(
                                                         .padding(horizontal = 6.dp, vertical = 1.dp),
                                                 ) {
                                                     Text(
-                                                        text = "RECOMMENDED",
+                                                        text = I18n.s(R.string.ui_recommended),
                                                         style = MaterialTheme.typography.labelSmall,
                                                         color = cs.onPrimary,
                                                         fontWeight = FontWeight.Bold,
@@ -3661,7 +3662,7 @@ private fun DownloadSpeedPickerDialog(
                                     IconButton(onClick = { helpRes = tierHelpRes(tier) }) {
                                         Icon(
                                             Icons.Default.Help,
-                                            contentDescription = "What is this?",
+                                            contentDescription = I18n.s(R.string.ui_what_is_this),
                                             modifier = Modifier.size(18.dp),
                                         )
                                     }
@@ -3688,7 +3689,7 @@ private fun DownloadSpeedPickerDialog(
                                 .padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 10.dp),
                         ) {
                             Text(
-                                text = "OPTIONS",
+                                text = I18n.s(R.string.ui_options),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = cs.onSurfaceVariant,
                             )
@@ -3708,12 +3709,12 @@ private fun DownloadSpeedPickerDialog(
                                 Spacer(Modifier.width(6.dp))
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = "Log debug session",
+                                        text = I18n.s(R.string.ui_log_debug_session),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = cs.onSurface,
                                     )
                                     Text(
-                                        text = "Writes a detailed log to help diagnose download problems.",
+                                        text = I18n.s(R.string.ui_writes_a_detailed_log_to_help_diagnose_download_probl),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = cs.onSurfaceVariant,
                                     )
@@ -3744,7 +3745,7 @@ private fun DownloadSpeedPickerDialog(
                                     Spacer(Modifier.width(6.dp))
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            text = "Install to SD card (frees internal space)",
+                                            text = I18n.s(R.string.ui_install_to_sd_card_frees_internal_space),
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = cs.onSurface,
                                         )
@@ -3782,13 +3783,13 @@ private fun DownloadSpeedPickerDialog(
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
-                        TextButton(onClick = onDismiss) { Text("Cancel") }
+                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
                         Spacer(Modifier.width(4.dp))
                         Button(
                             onClick = {
                                 onDownload(options[selected].second, debugLog, installToSd)
                             },
-                        ) { Text("Download") }
+                        ) { Text(I18n.s(R.string.wrapper_catalog_download)) }
                     }
                 }
             }
@@ -3800,11 +3801,11 @@ private fun DownloadSpeedPickerDialog(
         onDismissRequest = onDismiss,
         title = {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                Text("Download speed", modifier = Modifier.weight(1f))
+                Text(I18n.s(R.string.ui_download_speed), modifier = Modifier.weight(1f))
                 IconButton(onClick = { helpRes = R.string.help_download_speed }) {
                     Icon(
                         Icons.Default.Help,
-                        contentDescription = "What is this?",
+                        contentDescription = I18n.s(R.string.ui_what_is_this),
                         modifier = Modifier.size(18.dp),
                     )
                 }
@@ -3834,7 +3835,7 @@ private fun DownloadSpeedPickerDialog(
                         IconButton(onClick = { helpRes = tierHelpRes(tier) }) {
                             Icon(
                                 Icons.Default.Help,
-                                contentDescription = "What is this?",
+                                contentDescription = I18n.s(R.string.ui_what_is_this),
                                 modifier = Modifier.size(18.dp),
                             )
                         }
@@ -3858,11 +3859,11 @@ private fun DownloadSpeedPickerDialog(
                     Spacer(Modifier.width(8.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Log debug session",
+                            text = I18n.s(R.string.ui_log_debug_session),
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         Text(
-                            text = "Writes a detailed log to help diagnose download problems.",
+                            text = I18n.s(R.string.ui_writes_a_detailed_log_to_help_diagnose_download_probl),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -3901,7 +3902,7 @@ private fun DownloadSpeedPickerDialog(
                         Spacer(Modifier.width(8.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Install to SD card (frees internal space)",
+                                text = I18n.s(R.string.ui_install_to_sd_card_frees_internal_space),
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
@@ -3929,11 +3930,11 @@ private fun DownloadSpeedPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = { onDownload(options[selected].second, debugLog, installToSd) }) {
-                Text("Download")
+                Text(I18n.s(R.string.wrapper_catalog_download))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
         },
     )
 }

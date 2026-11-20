@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.winhub.hernandez.util.I18n
 
 /**
  * Shared audio config used by the editor cog (per-container / per-game) and the in-game side menu.
@@ -337,7 +338,7 @@ fun AudioSettingsDialog(
                 // header
                 Row(Modifier.fillMaxWidth().padding(16.dp, 14.dp, 16.dp, 4.dp),
                     verticalAlignment = Alignment.CenterVertically) {
-                    Text("🎧 Audio settings", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                    Text(I18n.s(R.string.ui_audio_settings), fontSize = 18.sp, fontWeight = FontWeight.Bold,
                         color = cs.onSurface, modifier = Modifier.weight(1f))
                     // Engine badge — which audio engine these settings actually hit (dropdown value in
                     // the editors; the driver chosen at launch in-game). Makes "correct settings" explicit.
@@ -361,8 +362,8 @@ fun AudioSettingsDialog(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                         Column(Modifier.padding(14.dp)) {
                             Row(Modifier.fillMaxWidth()) {
-                                Text("◀ Lower delay", color = cs.onSurfaceVariant, fontSize = 11.sp, modifier = Modifier.weight(1f))
-                                Text("Fewer crackles ▶", color = cs.onSurfaceVariant, fontSize = 11.sp)
+                                Text(I18n.s(R.string.ui_lower_delay), color = cs.onSurfaceVariant, fontSize = 11.sp, modifier = Modifier.weight(1f))
+                                Text(I18n.s(R.string.ui_fewer_crackles), color = cs.onSurfaceVariant, fontSize = 11.sp)
                             }
                             Box(Modifier.fillMaxWidth().padding(top = 8.dp).height(8.dp)
                                 .background(cs.surface, RoundedCornerShape(6.dp))) {
@@ -374,7 +375,7 @@ fun AudioSettingsDialog(
                         }
                     }
 
-                    Text("PRESET", color = cs.onSurfaceVariant, fontSize = 11.sp, fontWeight = FontWeight.Bold,
+                    Text(I18n.s(R.string.ui_preset), color = cs.onSurfaceVariant, fontSize = 11.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(4.dp, 14.dp, 0.dp, 8.dp))
                     AUDIO_PRESETS.forEach { p ->
                         val sel = p.id == cfg.preset
@@ -495,9 +496,9 @@ fun AudioSettingsDialog(
                 }
 
                 Row(Modifier.fillMaxWidth().padding(14.dp)) {
-                    OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) { Text("Cancel") }
+                    OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) { Text(I18n.s(R.string.cancel)) }
                     Spacer(Modifier.width(10.dp))
-                    Button(onClick = { onSave(cfg) }, modifier = Modifier.weight(1f)) { Text("Save") }
+                    Button(onClick = { onSave(cfg) }, modifier = Modifier.weight(1f)) { Text(I18n.s(R.string.save)) }
                 }
             }
         }

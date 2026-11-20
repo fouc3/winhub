@@ -50,6 +50,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * "Recommended components" chip row — Pillar 2 / Phase 2.2. Detects the redistributables a game
@@ -160,7 +162,7 @@ fun RecommendedComponentsSection(
         // The prefix must exist first — at import time it usually doesn't. Gate here rather than let
         // the installer return a failure, so the message is actionable.
         if (!File(container.rootDir, ".wine").isDirectory) {
-            message = "Launch the game once first, then install its components from the game's settings."
+            message = I18n.s(R.string.ui_launch_the_game_once_first_then_install_its_component)
             return
         }
         // Prefer the file-drop `_dll` variant when the catalog carries one (e.g. vcredist2010_dll): it
@@ -216,9 +218,9 @@ fun RecommendedComponentsSection(
                 )
             },
             confirmButton = {
-                TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text("Continue") }
+                TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text(I18n.s(R.string._continue)) }
             },
-            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -253,29 +255,29 @@ fun RecommendedComponentsSection(
     Column(modifier = modifier.fillMaxWidth()) {
         if (bundled.isNotEmpty() && shipped.isNotEmpty()) {
             RecommendedChipGroup(
-                title = "Recommended",
-                subtitle = "Redistributables this game bundles.",
+                title = I18n.s(R.string.ui_recommended_2),
+                subtitle = I18n.s(R.string.ui_redistributables_this_game_bundles),
                 recs = bundled, catalog = catalog, installed = installed, installing = installing,
                 cs = cs, onChipTap = ::onChipTap,
             )
             Spacer(Modifier.height(12.dp))
             RecommendedChipGroup(
-                title = "Optional",
-                subtitle = "Ships with the game — install only if it misbehaves.",
+                title = I18n.s(R.string.ui_optional),
+                subtitle = I18n.s(R.string.ui_ships_with_the_game_install_only_if_it_misbehaves),
                 recs = shipped, catalog = catalog, installed = installed, installing = installing,
                 cs = cs, onChipTap = ::onChipTap,
             )
         } else if (shipped.isNotEmpty()) {
             RecommendedChipGroup(
-                title = "Optional components",
-                subtitle = "Ships with the game — install only if it misbehaves.",
+                title = I18n.s(R.string.ui_optional_components),
+                subtitle = I18n.s(R.string.ui_ships_with_the_game_install_only_if_it_misbehaves),
                 recs = shipped, catalog = catalog, installed = installed, installing = installing,
                 cs = cs, onChipTap = ::onChipTap,
             )
         } else {
             RecommendedChipGroup(
-                title = "Recommended components",
-                subtitle = "Redistributables this game bundles — tap to install into its container.",
+                title = I18n.s(R.string.ui_recommended_components),
+                subtitle = I18n.s(R.string.ui_redistributables_this_game_bundles_tap_to_install_int),
                 recs = bundled, catalog = catalog, installed = installed, installing = installing,
                 cs = cs, onChipTap = ::onChipTap,
             )
@@ -316,11 +318,11 @@ private fun RecommendedChipGroup(
                                 modifier = Modifier.size(16.dp), strokeWidth = 2.dp,
                             )
                             isInstalled -> Icon(
-                                Icons.Filled.CheckCircle, contentDescription = "Installed",
+                                Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
                                 modifier = Modifier.size(18.dp),
                             )
                             else -> Icon(
-                                Icons.Filled.Download, contentDescription = "Install",
+                                Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install),
                                 modifier = Modifier.size(18.dp),
                             )
                         }

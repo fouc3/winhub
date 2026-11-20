@@ -37,6 +37,8 @@ import com.winhub.hernandez.core.StringUtils
 import com.winhub.hernandez.core.UpdateManager
 import com.winhub.hernandez.core.UpdateManager.DownloadState
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private val UpdateGreen = Color(0xFF4CAF50)
 
@@ -64,7 +66,7 @@ fun UpdateHost() {
         )
         is DownloadState.Rebuilding -> UpdateProgressCard(
             title = "Updating to V ${s.info.versionName}",
-            subtitle = "Building the update from the installed app…",
+            subtitle = I18n.s(R.string.ui_building_the_update_from_the_installed_app),
             bytes = s.bytes, total = s.total, bytesPerSec = 0L,
         )
         is DownloadState.Failed -> UpdateFailedCard(
@@ -146,7 +148,7 @@ private fun UpdateProgressCard(title: String, subtitle: String, bytes: Long, tot
                 TextButton(
                     onClick = { UpdateManager.cancelDownload() },
                     modifier = Modifier.heightIn(min = 48.dp).focusRequester(cancelFocus),
-                ) { Text("Cancel (B)", fontSize = 14.sp) }
+                ) { Text(I18n.s(R.string.ui_cancel_b), fontSize = 14.sp) }
             }
         }
     }
@@ -163,18 +165,18 @@ private fun UpdateFailedCard(
     LaunchedEffect(Unit) { runCatching { retryFocus.requestFocus() } }
     Dialog(onDismissRequest = onClose, properties = DialogProperties(dismissOnClickOutside = false)) {
         UpdateCardSurface {
-            Text("Update failed", color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_update_failed), color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(6.dp))
             Text(s.reason, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
             Spacer(Modifier.height(14.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                TextButton(onClick = onClose, modifier = Modifier.heightIn(min = 48.dp)) { Text("Close (B)", fontSize = 14.sp) }
-                TextButton(onClick = onReleasePage, modifier = Modifier.heightIn(min = 48.dp)) { Text("Release page", fontSize = 14.sp) }
+                TextButton(onClick = onClose, modifier = Modifier.heightIn(min = 48.dp)) { Text(I18n.s(R.string.ui_close_b), fontSize = 14.sp) }
+                TextButton(onClick = onReleasePage, modifier = Modifier.heightIn(min = 48.dp)) { Text(I18n.s(R.string.ui_release_page), fontSize = 14.sp) }
                 Button(
                     onClick = onRetry,
                     colors = ButtonDefaults.buttonColors(containerColor = UpdateGreen, contentColor = Color.White),
                     modifier = Modifier.heightIn(min = 48.dp).focusRequester(retryFocus),
-                ) { Text("Retry", fontSize = 14.sp) }
+                ) { Text(I18n.s(R.string.ui_retry), fontSize = 14.sp) }
             }
         }
     }

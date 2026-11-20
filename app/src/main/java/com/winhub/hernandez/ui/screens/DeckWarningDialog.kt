@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck-native confirm/warning popup used wherever the Deck UI would otherwise fall back to the classic
@@ -33,7 +35,7 @@ internal fun DeckButtonRow(onDismiss: () -> Unit, confirmLabel: String, onConfir
         modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        DeckButton("Cancel", primary = false, onClick = onDismiss)
+        DeckButton(I18n.s(R.string.cancel), primary = false, onClick = onDismiss)
         DeckButton(confirmLabel, primary = true, onClick = onConfirm)
     }
 }

@@ -50,6 +50,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val AVATAR_PX = 256
 
@@ -81,12 +83,12 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                     modifier = Modifier.heightIn(min = 240.dp),
                 ) { SocialButton("Go to Feed to sign in", onClick = onGoFeed) }
             } else {
-                Text("Sign in to edit your profile", color = cs.onSurface, fontSize = 18.sp)
+                Text(I18n.s(R.string.ui_sign_in_to_edit_your_profile), color = cs.onSurface, fontSize = 18.sp)
                 Text(
                     "Your Social Hub profile is tied to your GitHub sign-in. Sign in from the Feed tab first.",
                     color = cs.onSurfaceVariant, fontSize = 14.sp, textAlign = TextAlign.Center,
                 )
-                Button(onClick = onGoFeed, modifier = Modifier.heightIn(min = 48.dp)) { Text("Go to Feed to sign in") }
+                Button(onClick = onGoFeed, modifier = Modifier.heightIn(min = 48.dp)) { Text(I18n.s(R.string.ui_go_to_feed_to_sign_in)) }
             }
             return@Column
         }
@@ -103,7 +105,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             scope.launch {
                 val bytes = withContext(Dispatchers.IO) { squareJpeg(context, uri) }
                 if (bytes == null) {
-                    message = "Couldn't read that picture."
+                    message = I18n.s(R.string.ui_couldn_t_read_that_picture)
                 } else {
                     pickedBytes = bytes
                     picked = withContext(Dispatchers.IO) { BitmapFactory.decodeByteArray(bytes, 0, bytes.size) }
@@ -121,7 +123,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                 if (bytes != null) {
                     avatarUrl = SocialHubStore.uploadImage(bytes, "avatar.jpg")
                     if (avatarUrl == null) {
-                        message = "Picture upload failed. Try again."
+                        message = I18n.s(R.string.ui_picture_upload_failed_try_again)
                         working = false
                         return@launch
                     }
@@ -148,12 +150,12 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
         val shownBitmap = picked
         if (deck) {
             DeckGroup("Profile") {
-                DeckRow(label = "Picture", hint = "Choose a new profile picture") {
+                DeckRow(label = I18n.s(R.string.ui_picture), hint = I18n.s(R.string.ui_choose_a_new_profile_picture)) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         if (shownBitmap != null) {
                             Image(
                                 bitmap = shownBitmap.asImageBitmap(),
-                                contentDescription = "New profile picture",
+                                contentDescription = I18n.s(R.string.ui_new_profile_picture),
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.size(44.dp).clip(CircleShape).border(2.dp, cs.primary, CircleShape),
                             )
@@ -168,7 +170,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                     }
                 }
                 DeckRow(
-                    label = "Display name",
+                    label = I18n.s(R.string.ui_display_name),
                     hint = "${name.length}/${SocialProfiles.MAX_NAME} - leave empty to use @${acct.login}",
                 ) {
                     ControllerTextField(
@@ -195,7 +197,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
         if (shownBitmap != null) {
             Image(
                 bitmap = shownBitmap.asImageBitmap(),
-                contentDescription = "New profile picture",
+                contentDescription = I18n.s(R.string.ui_new_profile_picture),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(112.dp).clip(CircleShape).border(2.dp, cs.primary, CircleShape).clickable { picker.launch("image/*") },
             )
@@ -206,12 +208,12 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                 modifier = Modifier.border(2.dp, cs.primary, CircleShape).clickable { picker.launch("image/*") },
             )
         }
-        OutlinedButton(onClick = { picker.launch("image/*") }, modifier = Modifier.heightIn(min = 48.dp)) { Text("Change picture") }
+        OutlinedButton(onClick = { picker.launch("image/*") }, modifier = Modifier.heightIn(min = 48.dp)) { Text(I18n.s(R.string.ui_change_picture)) }
 
         OutlinedTextField(
             value = name,
             onValueChange = { name = SocialProfiles.sanitizeName(it) },
-            label = { Text("Display name") },
+            label = { Text(I18n.s(R.string.ui_display_name)) },
             placeholder = { Text(acct.login) },
             singleLine = true,
             supportingText = { Text("${name.length}/${SocialProfiles.MAX_NAME} · leave empty to use @${acct.login}") },
@@ -228,7 +230,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             enabled = canReset,
             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
             onClick = { reset() },
-        ) { Text("Reset to GitHub") }
+        ) { Text(I18n.s(R.string.ui_reset_to_github)) }
 
         message?.let { Text(it, color = cs.onSurfaceVariant, fontSize = 14.sp, textAlign = TextAlign.Center) }
         Text(

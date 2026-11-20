@@ -73,6 +73,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.winhub.hernandez.util.I18n
 
 public class SettingsFragment extends Fragment {
     public static final String DEFAULT_WINE_DEBUG_CHANNELS = "warn,err,fixme";
@@ -686,9 +687,9 @@ public class SettingsFragment extends Fragment {
 
 	private void showBackupConfirmationDialog() {
         new AlertDialog.Builder(getContext())
-                .setTitle("Backup Data")
-                .setMessage("Do you want to create a backup of the app's data directory?")
-                .setPositiveButton("Yes", (dialog, which) -> backupAppData())
+                .setTitle(I18n.s(R.string.ui_backup_data))
+                .setMessage(I18n.s(R.string.ui_do_you_want_to_create_a_backup_of_the_app_data_direct))
+                .setPositiveButton(I18n.s(R.string.yes), (dialog, which) -> backupAppData())
                 .setNegativeButton("No", null)
                 .show();
     }

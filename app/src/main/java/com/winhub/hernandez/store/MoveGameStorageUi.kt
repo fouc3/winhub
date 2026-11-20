@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.winhub.hernandez.ui.screens.OutlinedAlertDialog
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Confirm sheet for a storage move — says exactly where the game is going, what it costs, and what
@@ -61,7 +63,7 @@ internal fun MoveStorageDialog(
                 if (!plan.fitsOnTarget) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "⛔ There isn't enough free space for this game.",
+                        text = I18n.s(R.string.ui_there_isn_t_enough_free_space_for_this_game),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error,
                     )
@@ -79,7 +81,7 @@ internal fun MoveStorageDialog(
                 if (plan.shortcuts.isEmpty()) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "This game isn't in a container yet, so there's no shortcut to update.",
+                        text = I18n.s(R.string.ui_this_game_isn_t_in_a_container_yet_so_there_no_shortc),
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
@@ -115,7 +117,7 @@ internal fun MoveStorageDialog(
                 Text(if (toSd) "Move to SD card" else "Move to internal")
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 
@@ -179,7 +181,7 @@ internal fun MoveProgressDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                 ) {
-                    TextButton(onClick = onCancel, enabled = copying) { Text("Cancel") }
+                    TextButton(onClick = onCancel, enabled = copying) { Text(I18n.s(R.string.cancel)) }
                 }
             }
         }

@@ -78,6 +78,8 @@ import com.winhub.hernandez.ui.theme.LocalAccentDim
 import `in`.dragonbra.javasteam.enums.EPersonaState
 import java.util.Locale
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The **Profile** tab — the signed-in user's own Steam profile, the one surface the app never had.
@@ -197,8 +199,8 @@ fun SteamProfileTab(
             contentAlignment = Alignment.Center,
         ) {
             StoreNotice(
-                title = "Not signed in",
-                body = "Sign in to Steam to see your profile, level and playtime.",
+                title = I18n.s(R.string.ui_not_signed_in),
+                body = I18n.s(R.string.ui_sign_in_to_steam_to_see_your_profile_level_and_playti),
             )
         }
         return
@@ -553,7 +555,7 @@ private fun SteamIdRow(steamId: Long, onCopy: () -> Unit) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(
-            text = "Copy",
+            text = I18n.s(R.string.copy),
             style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
@@ -638,21 +640,21 @@ private fun StatTiles(c: ProfileTabContent, columns: Int = 4) {
     val stats = listOf(
         ProfileStat(
             value = (c.profile?.gamesCount ?: c.libraryCount.takeIf { it > 0 })?.let { fmtCount(it) } ?: "—",
-            label = "Games",
+            label = I18n.s(R.string.shortcuts),
         ),
         ProfileStat(
             value = c.profile?.hoursTotal?.let { "${fmtCount(it.roundToInt())}h" } ?: "—",
-            label = "Played",
+            label = I18n.s(R.string.ui_played),
         ),
         ProfileStat(
             // No global achievement total is exposed anywhere in this build — SteamAchievementStore
             // is per-app. An honest dash beats an invented number.
             value = "—",
-            label = "Achiev.",
+            label = I18n.s(R.string.ui_achiev),
         ),
         ProfileStat(
             value = if (c.friendsCount > 0) fmtCount(c.friendsCount) else "—",
-            label = "Friends",
+            label = I18n.s(R.string.xmb_tab_friends),
             onClick = c.onOpenFriends,
         ),
     )
@@ -778,7 +780,7 @@ private fun BadgesRail(c: ProfileTabContent) {
             item(key = "favorite_badge") {
                 BadgeTile(
                     candidates = badgeArt,
-                    caption = "Game badge",
+                    caption = I18n.s(R.string.ui_game_badge),
                     // Explicitly "Badge level": this is the level of THIS badge, which is a
                     // different number from the account level in the chip beside the persona name.
                     // The device build showed "Level 22" here next to an account level of 12 and
@@ -886,7 +888,7 @@ private fun RecentlyPlayedList(c: ProfileTabContent, fillsPane: Boolean = false)
         // copy commits to neither.
         Box(modifier = paneBox, contentAlignment = Alignment.Center) {
             StoreNotice(
-                title = "No recent play data",
+                title = I18n.s(R.string.ui_no_recent_play_data),
                 body = "Steam only shares playtime when your game details are public. " +
                     "Anything you've played recently will show up here once it does.",
             )

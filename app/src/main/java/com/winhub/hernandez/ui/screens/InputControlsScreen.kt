@@ -98,6 +98,7 @@ import com.winhub.hernandez.util.InAppFilePicker
 import org.json.JSONObject
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
+import com.winhub.hernandez.util.I18n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -230,7 +231,7 @@ fun InputControlsScreen() {
 
     if (promptCreateName) {
         var name by remember { mutableStateOf("") }
-        DeckConfigDialog(title = "New profile", onDismiss = { promptCreateName = false }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_new_profile), onDismiss = { promptCreateName = false }, compact = true) {
             DeckConfigTextField("Profile name", name, { name = it })
             DeckDialogButtons("Create", enabled = name.isNotBlank(), onCancel = { promptCreateName = false }) {
                 currentProfile = manager.createProfile(name)
@@ -243,7 +244,7 @@ fun InputControlsScreen() {
 
     if (promptRenameOldName != null) {
         var name by remember { mutableStateOf(promptRenameOldName ?: "") }
-        DeckConfigDialog(title = "Rename profile", onDismiss = { promptRenameOldName = null }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_rename_profile), onDismiss = { promptRenameOldName = null }, compact = true) {
             DeckConfigTextField("Profile name", name, { name = it })
             DeckDialogButtons("Save", enabled = name.isNotBlank(), onCancel = { promptRenameOldName = null }) {
                 currentProfile?.setName(name)
@@ -255,7 +256,7 @@ fun InputControlsScreen() {
     }
 
     pendingConfirmation?.let { (messageRes, action) ->
-        DeckConfigDialog(title = "Are you sure?", onDismiss = { pendingConfirmation = null }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_are_you_sure), onDismiss = { pendingConfirmation = null }, compact = true) {
             DeckConfigNote(stringResource(messageRes))
             DeckDialogButtons(stringResource(R.string.ok), onCancel = { pendingConfirmation = null }) {
                 pendingConfirmation = null
@@ -300,7 +301,7 @@ fun InputControlsScreen() {
                     ImportSourceRow(
                         icon = Icons.Default.PhoneAndroid,
                         title = stringResource(R.string.pick_via_system),
-                        subtitle = "Android document picker",
+                        subtitle = I18n.s(R.string.ui_android_document_picker),
                     ) {
                         showImportChooser = false
                         armImport()
@@ -310,14 +311,14 @@ fun InputControlsScreen() {
                     ImportSourceRow(
                         icon = Icons.Default.CloudDownload,
                         title = stringResource(R.string.download_file),
-                        subtitle = "Community profiles from the online list",
+                        subtitle = I18n.s(R.string.ui_community_profiles_from_the_online_list),
                     ) {
                         showImportChooser = false
                         showDownloadDialog = true
                     }
             }
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
-                DeckButton("Cancel", primary = false) { showImportChooser = false }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { showImportChooser = false }
             }
         }
     }
@@ -340,19 +341,19 @@ fun InputControlsScreen() {
         }
 
         if (isLoadingList) {
-            DeckConfigDialog(title = "Profiles", onDismiss = { showDownloadDialog = false }, compact = true) {
+            DeckConfigDialog(title = I18n.s(R.string.ui_profiles), onDismiss = { showDownloadDialog = false }, compact = true) {
                 Row(Modifier.fillMaxWidth().padding(vertical = 20.dp), horizontalArrangement = Arrangement.Center) {
                     CircularProgressIndicator(color = DeckPalette.primary)
                 }
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                    DeckButton("Cancel", primary = false) { showDownloadDialog = false }
+                    DeckButton(I18n.s(R.string.cancel), primary = false) { showDownloadDialog = false }
                 }
             }
         } else {
             // DeckConfigDialog is one scroll surface, so a long list never overlaps the button bar.
             DeckConfigDialog(
-                title = "Download profiles",
-                subtitle = "Tick the profiles to import",
+                title = I18n.s(R.string.ui_download_profiles),
+                subtitle = I18n.s(R.string.ui_tick_the_profiles_to_import),
                 onDismiss = { showDownloadDialog = false },
             ) {
                     Column {
@@ -371,7 +372,7 @@ fun InputControlsScreen() {
                                 Text(item, color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
                                 // View example: fetch the .icp and draw its on-screen layout (no import).
                                 IconButton(onClick = { previewItem = item }, modifier = Modifier.size(48.dp)) {
-                                    Icon(Icons.Default.Visibility, contentDescription = "View example",
+                                    Icon(Icons.Default.Visibility, contentDescription = I18n.s(R.string.ui_view_example),
                                         tint = DeckPalette.primary, modifier = Modifier.size(20.dp))
                                 }
                             }
@@ -550,19 +551,19 @@ fun InputControlsScreen() {
             Row(verticalAlignment = Alignment.Bottom) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = "Controls",
+                        text = I18n.s(R.string.ui_controls),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = DeckPalette.onBackground,
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "How you play",
+                        text = I18n.s(R.string.ui_how_you_play),
                         fontSize = 13.sp,
                         color = DeckPalette.onSurfaceVariant,
                     )
                 }
-                DeckButton("New profile") { promptCreateName = true }
+                DeckButton(I18n.s(R.string.ui_new_profile)) { promptCreateName = true }
             }
             Spacer(Modifier.height(10.dp))
 
@@ -645,7 +646,7 @@ fun InputControlsScreen() {
                                     onDismissRequest = { showProfileDropdown = false },
                                     modifier = Modifier.background(deckInsetFill()),
                                 ) {
-                                    DropdownMenuItem(text = { Text("-- Select Profile --", color = DeckPalette.onBackground) }, onClick = {
+                                    DropdownMenuItem(text = { Text(I18n.s(R.string.ui_select_profile), color = DeckPalette.onBackground) }, onClick = {
                                         selectedProfileIdx = 0; loadProfile(0); showProfileDropdown = false
                                     })
                                     profiles.forEachIndexed { i, p ->
@@ -663,13 +664,13 @@ fun InputControlsScreen() {
                                     modifier = Modifier.background(deckInsetFill()),
                                 ) {
                                     DropdownMenuItem(
-                                        text = { Text("New profile", color = DeckPalette.onBackground) },
+                                        text = { Text(I18n.s(R.string.ui_new_profile), color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.Add, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = { showOverflow = false; promptCreateName = true },
                                     )
                                     DeckMenuDivider()
                                     DropdownMenuItem(
-                                        text = { Text("Rename", color = DeckPalette.onBackground) },
+                                        text = { Text(I18n.s(R.string.ui_rename_2), color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.Edit, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = {
                                             showOverflow = false
@@ -679,7 +680,7 @@ fun InputControlsScreen() {
                                     )
                                     DeckMenuDivider()
                                     DropdownMenuItem(
-                                        text = { Text("Duplicate", color = DeckPalette.onBackground) },
+                                        text = { Text(I18n.s(R.string.duplicate), color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.ContentCopy, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = {
                                             showOverflow = false
@@ -695,7 +696,7 @@ fun InputControlsScreen() {
                                     )
                                     DeckMenuDivider()
                                     DropdownMenuItem(
-                                        text = { Text("Delete", color = DeckPalette.onBackground) },
+                                        text = { Text(I18n.s(R.string.preset_action_delete), color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.Delete, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = {
                                             showOverflow = false
@@ -781,7 +782,7 @@ fun InputControlsScreen() {
                                             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
                                         )
                                     }
-                                    DeckButton("Edit layout", modifier = Modifier.fillMaxWidth(), onClick = openLayoutEditor)
+                                    DeckButton(I18n.s(R.string.ui_edit_layout), modifier = Modifier.fillMaxWidth(), onClick = openLayoutEditor)
                                 }
                             }
 
@@ -790,8 +791,8 @@ fun InputControlsScreen() {
                                 // Opens the live pad-picture test (highlights, verified checklist, rumble Identify).
                                 // No profile needed: it just reads the pad.
                                 DeckHeroCard(
-                                    title = "Test and bind controllers",
-                                    subtitle = "Remap buttons and check every input registers",
+                                    title = I18n.s(R.string.ui_test_and_bind_controllers),
+                                    subtitle = I18n.s(R.string.ui_remap_buttons_and_check_every_input_registers),
                                 ) { showControllerTest = true }
 
                                 DeckGroup("Connected controllers") {
@@ -800,7 +801,7 @@ fun InputControlsScreen() {
                                     DeckPadRow(
                                         tint = DeckPalette.onSurfaceVariant,
                                         title = "Default / Any controller",
-                                        subtitle = "New controllers inherit these bindings",
+                                        subtitle = I18n.s(R.string.ui_new_controllers_inherit_these_bindings),
                                         onClick = { openBindings(ControlsProfile.DEFAULT_CONTROLLER_ID) },
                                     ) {
                                         Icon(
@@ -1097,7 +1098,7 @@ private fun GyroscopeSection() {
 
     if (sensor == null) {
         DeckGroup("Gyroscope") {
-            DeckRow(label = "No gyroscope on this device") {}
+            DeckRow(label = I18n.s(R.string.ui_no_gyroscope_on_this_device)) {}
         }
         return
     }
@@ -1156,7 +1157,7 @@ private fun GyroscopeSection() {
                         refreshBias()
                     }
                 }
-                DeckButton("Reset", primary = false) {
+                DeckButton(I18n.s(R.string.reset), primary = false) {
                     if (!calibrated || activeRun != null) return@DeckButton
                     GyroCalibrator.clearBias(context)
                     status = "Calibration reset"
@@ -1200,7 +1201,7 @@ private fun SteamControllerSection() {
             modifier = Modifier.padding(start = 12.dp, top = 10.dp, end = 12.dp),
         )
         DeckRow(
-            label = "Steam Controller support",
+            label = I18n.s(R.string.ui_steam_controller_support),
             control = {
                 DeckToggle(enabled) { on ->
                     enabled = on
@@ -1217,8 +1218,8 @@ private fun SteamControllerSection() {
                 SteamControllerBackend.TRACKPAD_MOUSE_BOTH, SteamControllerBackend.TRACKPAD_MOUSE_OFF,
             )
             DeckChoiceRow(
-                label = "Trackpad mouse",
-                hint = "Which trackpad moves the mouse. Clicking it is a left click; with both, the left trackpad clicks right.",
+                label = I18n.s(R.string.ui_trackpad_mouse),
+                hint = I18n.s(R.string.ui_which_trackpad_moves_the_mouse_clicking_it_is_a_left),
                 options = trackpadLabels.map { it to it },
                 selected = trackpadLabels[trackpadModes.indexOf(trackpadMode).coerceAtLeast(0)],
                 onPick = {
@@ -1228,10 +1229,10 @@ private fun SteamControllerSection() {
             )
             if (!bluetoothGranted) {
                 DeckRow(
-                    label = "Bluetooth permission is off",
-                    hint = "Only a USB-connected controller will work.",
+                    label = I18n.s(R.string.ui_bluetooth_permission_is_off),
+                    hint = I18n.s(R.string.ui_only_a_usb_connected_controller_will_work),
                 ) {
-                    if (Build.VERSION.SDK_INT >= 31) DeckButton("Allow", primary = false) { requestBluetooth() }
+                    if (Build.VERSION.SDK_INT >= 31) DeckButton(I18n.s(R.string.ui_allow), primary = false) { requestBluetooth() }
                 }
             }
         }
@@ -1324,18 +1325,18 @@ private fun GlobalPlayerSlotsSection() {
 
     DeckGroup("Player slots") {
         DeckRow(
-            label = "Defaults for new containers",
-            hint = "Assign two devices to one player to share control. Existing containers keep their own settings.",
+            label = I18n.s(R.string.ui_defaults_for_new_containers),
+            hint = I18n.s(R.string.ui_assign_two_devices_to_one_player_to_share_control_exi),
             control = {
                 IconButton(onClick = { helpRes = R.string.help_player_slots }, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.Help, contentDescription = "What is this?",
+                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this),
                         tint = DeckPalette.onSurfaceVariant, modifier = Modifier.size(20.dp))
                 }
             },
         )
         val onScreenModeLabels = listOf("Keep on-screen player", "Yield Player 1 to pad", "Share the player")
         DeckChoiceRow(
-            label = "On-screen priority",
+            label = I18n.s(R.string.ui_on_screen_priority),
             options = onScreenModeLabels.map { it to it },
             selected = onScreenModeLabels.getOrElse(onScreenMode) { onScreenModeLabels[0] },
             onPick = {
@@ -1344,7 +1345,7 @@ private fun GlobalPlayerSlotsSection() {
             },
         )
         DeckRow(
-            label = "Hide on-screen controls when a controller connects",
+            label = I18n.s(R.string.ui_hide_on_screen_controls_when_a_controller_connects),
             control = {
                 DeckToggle(autoHideOnPad) { on ->
                     autoHideOnPad = on

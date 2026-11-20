@@ -58,6 +58,8 @@ import com.winhub.hernandez.ui.deck.XmbStoreMark
 import com.winhub.hernandez.ui.deck.isSignedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The first-run wizard's console steps: Home (look, Home style, game settings, store style), Sounds and Stores. They write their
 // choices to the same preferences Settings uses (see FirstRunViewModel), so they hold from the first launch.
@@ -192,7 +194,7 @@ internal fun HomePreview(vm: FirstRunViewModel, modifier: Modifier) {
     val glass = look == GlassLook.GLASS
     val xmbStores = glass || store == com.winhub.hernandez.ui.deck.StoreStyle.XMB
     BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
-        val height by animateDpAsState(minOf(230.dp, maxHeight - 56.dp), tween(320), label = "homePreviewHeight")
+        val height by animateDpAsState(minOf(230.dp, maxHeight - 56.dp), tween(320), label = I18n.s(R.string.ui_homepreviewheight))
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Box(
                 modifier = Modifier
@@ -358,18 +360,18 @@ internal fun SoundsStep(vm: FirstRunViewModel, modifier: Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
         StepHeading(SOUNDS, "Pick your sounds", "The D-pad and buttons make a sound as you move through Deck mode. Pick a set and try it.")
         WizChoice(
-            title = "SteamOS", body = "The app's own soft set. Plays at the media volume.", selected = snd == DeckSound.STEAMOS,
+            title = I18n.s(R.string.ui_steamos), body = I18n.s(R.string.ui_app_own_soft_set_plays_at_the_media_volume), selected = snd == DeckSound.STEAMOS,
             onClick = { vm.setSounds(ctx, DeckSound.STEAMOS) }, badge = "Recommended",
         ) { SoundGlyph("♪") }
         WizChoice(
-            title = "Phone", body = "The system click sounds. Follows your touch-sounds switch.", selected = snd == DeckSound.PHONE,
+            title = I18n.s(R.string.ui_phone), body = I18n.s(R.string.ui_system_click_sounds_follows_your_touch_sounds_switch), selected = snd == DeckSound.PHONE,
             onClick = { vm.setSounds(ctx, DeckSound.PHONE) },
         ) { SoundGlyph("◉") }
         WizChoice(
-            title = "Off", body = "No navigation sounds.", selected = snd == DeckSound.OFF,
+            title = I18n.s(R.string.vibration_mode_off), body = I18n.s(R.string.ui_no_navigation_sounds), selected = snd == DeckSound.OFF,
             onClick = { vm.setSounds(ctx, DeckSound.OFF) },
         ) { SoundGlyph("∅") }
-        Text("Change it any time in Settings, Navigation sounds.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_change_it_any_time_in_settings_navigation_sounds), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
     }
 }
 
@@ -389,10 +391,10 @@ private fun SoundGlyph(symbol: String) {
 internal fun SoundTry(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
         DeckGroup("Try it") {
-            DeckRow("Move", "Stepping along a list") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
-            DeckRow("Select", "Opening something") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.SELECT) } }
-            DeckRow("Back", "Going up a level") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.BACK) } }
-            DeckRow("Tab", "Changing page") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
+            DeckRow("Move", "Stepping along a list") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.MOVE) } }
+            DeckRow("Select", "Opening something") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.SELECT) } }
+            DeckRow("Back", "Going up a level") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.BACK) } }
+            DeckRow("Tab", "Changing page") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.TAB) } }
         }
     }
 }
@@ -457,7 +459,7 @@ private fun StoreLoginRow(store: DeckStore, signedIn: Boolean, onSignIn: () -> U
             )
         }
         if (signedIn) {
-            Icon(Icons.Filled.Check, contentDescription = "Signed in", tint = DeckPalette.good, modifier = Modifier.size(22.dp))
+            Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_signed_in_2), tint = DeckPalette.good, modifier = Modifier.size(22.dp))
         } else {
             Text(
                 "Sign in", color = DeckPalette.onPrimary, fontSize = 14.sp, fontWeight = FontWeight.Bold,

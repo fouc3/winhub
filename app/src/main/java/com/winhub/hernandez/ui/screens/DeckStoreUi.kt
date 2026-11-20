@@ -62,6 +62,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Shared visual pieces for the Deck Stores tab: store rail, header, pill tabs, skeletons, empty
 // states, the controller hint bar and the focus-scale used by the poster cards.
@@ -70,7 +72,7 @@ import kotlinx.coroutines.delay
 @Composable
 internal fun Modifier.deckFocusScale(interaction: InteractionSource, scale: Float = 1.06f): Modifier {
     val focused by interaction.collectIsFocusedAsState()
-    val s by animateFloatAsState(if (focused) scale else 1f, tween(160, easing = DeckEase), label = "focusScale")
+    val s by animateFloatAsState(if (focused) scale else 1f, tween(160, easing = DeckEase), label = I18n.s(R.string.ui_focusscale))
     return graphicsLayer { scaleX = s; scaleY = s }
 }
 
@@ -82,7 +84,7 @@ internal fun DeckShimmer(modifier: Modifier = Modifier, shape: Shape = RoundedCo
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(1100, easing = LinearEasing)),
-        label = "shimmerPhase",
+        label = I18n.s(R.string.ui_shimmerphase),
     )
     val sheen = Deck.onBackground.copy(alpha = 0.07f)
     Box(
@@ -190,7 +192,7 @@ internal fun DeckStorePicker(
             val isSel = i == selected
             // The logos sit on the store's brand colours, so the text is always light.
             val ink = Color.White
-            val height by animateDpAsState(if (isSel) 200.dp else 148.dp, tween(220, easing = DeckEase), label = "storeTileH")
+            val height by animateDpAsState(if (isSel) 200.dp else 148.dp, tween(220, easing = DeckEase), label = I18n.s(R.string.ui_storetileh))
             val brand = brands[i]
             val shape = RoundedCornerShape(22.dp)
             Box(
@@ -329,7 +331,7 @@ internal fun DeckStoreSideTabs(
             val bg by animateColorAsState(
                 if (isSel) Deck.primary.copy(alpha = 0.16f) else Color.Transparent,
                 tween(200, easing = DeckEase),
-                label = "sideTabBg",
+                label = I18n.s(R.string.ui_sidetabbg),
             )
             val shape = RoundedCornerShape(12.dp)
             Row(

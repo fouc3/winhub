@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** One component the first-run install downloads. [driver] items go through the adrenotools importer. */
 internal data class FirstRunContent(val label: String, val url: String, val driver: Boolean = false)
@@ -24,23 +26,23 @@ internal data class FirstRunContent(val label: String, val url: String, val driv
  */
 internal val FIRST_RUN_CONTENTS = listOf(
     FirstRunContent(
-        label = "GE-Proton 11.0-9 arm64ec",
+        label = I18n.s(R.string.ui_ge_proton_11_0_9_arm64ec),
         url = "https://github.com/The412Banner/winlator-contents/releases/download/bionic-layers-20261030-v16/GE-proton-11.0-9-arm64ec.wcp",
     ),
     FirstRunContent(
-        label = "DXVK 2.4.1 gplasync",
+        label = I18n.s(R.string.ui_dxvk_2_4_1_gplasync),
         url = "https://github.com/The412Banner/Nightlies/releases/download/Dxvk-gplasync/dxvk-gplasync-2.4.1-1.wcp",
     ),
     FirstRunContent(
-        label = "FEXCore 2611.1 PPA unix",
+        label = I18n.s(R.string.ui_fexcore_2611_1_ppa_unix),
         url = "https://github.com/The412Banner/Nightlies/releases/download/FexCore/FEXCore-2611.1-PPA-unix.wcp",
     ),
     FirstRunContent(
-        label = "VKD3D 3.0.1",
+        label = I18n.s(R.string.ui_vkd3d_3_0_1),
         url = "https://github.com/The412Banner/Nightlies/releases/download/VKD3D-PROTON-ARM/vkd3d-proton-arm64ec-3.0.1.wcp",
     ),
     // The URL is picked at install time from the GPU (Gen8 on A8xx, A7xx on the other Adreno chips).
-    FirstRunContent(label = "GPU driver", url = "", driver = true),
+    FirstRunContent(label = I18n.s(R.string.ui_gpu_driver), url = "", driver = true),
 )
 
 class SplashViewModel(app: Application) : AndroidViewModel(app) {

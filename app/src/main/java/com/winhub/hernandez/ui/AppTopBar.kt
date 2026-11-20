@@ -32,6 +32,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** Right-hand end of the header hairline — the Synthwave primary, so the rail reads purple → magenta. */
 private val HairlineBlue = Color(0xFF4FB2FF)
@@ -98,17 +100,17 @@ fun AppTopBar(
             when {
                 showBack -> Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.social_hub_configs_back),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
                 avatarUrl != null -> AccountAvatar(
                     avatarUrl = avatarUrl,
                     size = 28.dp,
-                    modifier = Modifier.semantics { contentDescription = "Open menu" },
+                    modifier = Modifier.semantics { contentDescription = I18n.s(R.string.ui_open_menu) },
                 )
                 else -> Icon(
                     imageVector = Icons.Filled.Menu,
-                    contentDescription = "Open menu",
+                    contentDescription = I18n.s(R.string.ui_open_menu),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
             }

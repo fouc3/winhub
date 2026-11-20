@@ -77,6 +77,8 @@ import com.winhub.hernandez.core.unpack.UnpackService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The "Unpack Archive" screen: point the bundled 7-Zip engine at a disc image / archive and extract
@@ -245,7 +247,7 @@ fun UnpackArchiveScreen(
         ) {
             // ── Source ──
             SectionCard {
-                Text("Source", style = sectionTitle())
+                Text(I18n.s(R.string.ui_source), style = sectionTitle())
                 Spacer(Modifier.height(6.dp))
                 Text(selected.name, color = MaterialTheme.colorScheme.onBackground, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                 Spacer(Modifier.height(2.dp))
@@ -290,7 +292,7 @@ fun UnpackArchiveScreen(
             if (sevenZipAllowed || innoExtract || innoFreeArc) {
             // ── Destination ──
             SectionCard {
-                Text("Extract to", style = sectionTitle())
+                Text(I18n.s(R.string.ui_extract_to), style = sectionTitle())
                 Spacer(Modifier.height(6.dp))
                 Text(
                     destPath,
@@ -307,7 +309,7 @@ fun UnpackArchiveScreen(
                         destPicker.launch(
                             com.winhub.hernandez.util.InAppFilePicker.buildDirIntent(
                                 context,
-                                title = "Choose where to extract",
+                                title = I18n.s(R.string.ui_choose_where_to_extract),
                                 initialDir = archive.parent,
                             )
                         )
@@ -316,7 +318,7 @@ fun UnpackArchiveScreen(
                 ) {
                     Icon(Icons.Filled.Folder, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.width(6.dp))
-                    Text("Change folder", color = MaterialTheme.colorScheme.onBackground)
+                    Text(I18n.s(R.string.ui_change_folder_2), color = MaterialTheme.colorScheme.onBackground)
                 }
             }
 
@@ -325,7 +327,7 @@ fun UnpackArchiveScreen(
             // ── Power (7-Zip only; innoextract has no thread/buffer knobs) ──
             if (sevenZipAllowed) {
             SectionCard {
-                Text("Power", style = sectionTitle())
+                Text(I18n.s(R.string.ui_power), style = sectionTitle())
                 Spacer(Modifier.height(8.dp))
                 SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                     val modes = listOf(PowerMode.AUTO to "Auto", PowerMode.MAX to "Max", PowerMode.MANUAL to "Manual")
@@ -363,7 +365,7 @@ fun UnpackArchiveScreen(
 
                 // Read-buffer knob.
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Read buffer", color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                    Text(I18n.s(R.string.ui_read_buffer), color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f))
                     Box {
                         OutlinedButton(
                             enabled = !running,
@@ -403,7 +405,7 @@ fun UnpackArchiveScreen(
                                     .setData(Uri.parse("package:${context.packageName}"))
                             )
                         }
-                    }) { Text("Grant access") }
+                    }) { Text(I18n.s(R.string.ui_grant_access)) }
                 }
                 Spacer(Modifier.height(12.dp))
             }
@@ -434,7 +436,7 @@ fun UnpackArchiveScreen(
                                     .setData(Uri.parse("package:${context.packageName}"))
                             )
                         }
-                    }) { Text("Allow background running") }
+                    }) { Text(I18n.s(R.string.ui_allow_background_running)) }
                 }
                 Spacer(Modifier.height(12.dp))
             }
@@ -459,7 +461,7 @@ fun UnpackArchiveScreen(
                                 }
                             },
                             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                        ) { Text("App settings", color = MaterialTheme.colorScheme.onBackground) }
+                        ) { Text(I18n.s(R.string.ui_app_settings_2), color = MaterialTheme.colorScheme.onBackground) }
                         Spacer(Modifier.width(8.dp))
                         OutlinedButton(
                             onClick = {
@@ -467,7 +469,7 @@ fun UnpackArchiveScreen(
                                 prefs.edit().putBoolean("unpackOemHintDismissed", true).apply()
                             },
                             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                        ) { Text("Got it", color = MaterialTheme.colorScheme.onBackground) }
+                        ) { Text(I18n.s(R.string.ui_got_it), color = MaterialTheme.colorScheme.onBackground) }
                     }
                 }
                 Spacer(Modifier.height(12.dp))
@@ -501,7 +503,7 @@ fun UnpackArchiveScreen(
             // ── Not a recognized archive (judged by content, not extension) ──
             if (!running && notAnArchive) {
                 WarnCard {
-                    Text("Nothing to unpack", color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_nothing_to_unpack), color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                     Spacer(Modifier.height(6.dp))
                     Text(
                         "This file isn't a recognized archive or disc image — it looks like raw data, " +
@@ -533,7 +535,7 @@ fun UnpackArchiveScreen(
                 ) {
                     Icon(Icons.Filled.Unarchive, null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Unpack game natively (unarc)", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_unpack_game_natively_unarc), fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                 }
                 // No dead-ends: also offer the container route (e.g. srep, or if unarc fails at runtime).
                 Spacer(Modifier.height(8.dp))
@@ -545,7 +547,7 @@ fun UnpackArchiveScreen(
             if (!running && innoContainerOnly) {
                 val comp = innoClass?.compression ?: "FreeArc"
                 WarnCard {
-                    Text("Can't unpack this repack in-app", color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_can_t_unpack_this_repack_in_app), color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                     Spacer(Modifier.height(6.dp))
                     Text(
                         "This is a $comp repack whose data can't be decoded in-app (it may use SREP). Install it " +
@@ -628,7 +630,7 @@ fun UnpackArchiveScreen(
                 ) {
                     Icon(Icons.Filled.Unarchive, null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Extract", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_extract), fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
 
@@ -680,9 +682,9 @@ fun UnpackArchiveScreen(
                         OutlinedButton(
                             onClick = { UnpackService.cancel(context) },
                             border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
-                        ) { Text("Cancel", color = MaterialTheme.colorScheme.error) }
+                        ) { Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.error) }
                         Spacer(Modifier.width(8.dp))
-                        Button(onClick = onClose) { Text("Minimize") }
+                        Button(onClick = onClose) { Text(I18n.s(R.string.ui_minimize)) }
                     }
                 }
             }
@@ -693,7 +695,7 @@ fun UnpackArchiveScreen(
                     UnpackPhase.DONE -> {
                         Spacer(Modifier.height(4.dp))
                         SectionCard {
-                            Text("Done", color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                            Text(I18n.s(R.string.wrapper_catalog_close), color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 "${state.filesExtracted} files • ${StringUtils.formatBytes(state.archiveSize)} in ${humanDuration(state.elapsedMs)}",
@@ -726,7 +728,7 @@ fun UnpackArchiveScreen(
                                 Spacer(Modifier.height(8.dp))
                                 RunSetupInContainer(exe = archive)
                             } else {
-                                Text("Extraction failed", color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                Text(I18n.s(R.string.ui_extraction_failed), color = MaterialTheme.colorScheme.error, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                             }
                             state.errorTail?.let {
                                 Spacer(Modifier.height(6.dp))
@@ -737,7 +739,7 @@ fun UnpackArchiveScreen(
                     UnpackPhase.CANCELLED -> {
                         Spacer(Modifier.height(4.dp))
                         SectionCard {
-                            Text("Cancelled", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                            Text(I18n.s(R.string.xmb_dl_status_cancelled), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
                         }
                     }
                     else -> Unit

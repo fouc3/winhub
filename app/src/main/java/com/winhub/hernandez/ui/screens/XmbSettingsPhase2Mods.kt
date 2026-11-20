@@ -19,6 +19,8 @@ import com.winhub.hernandez.core.WinePath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val TAG = "XmbMods"
 
@@ -61,7 +63,7 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val rows = mutableListOf<XmbRow>()
         rows += XmbRow.Header("hMods", "Game mods")
         if (mods.isEmpty()) {
-            rows += XmbRow.Info("noMods", "No mods for this game", Icons.Filled.Info,
+            rows += XmbRow.Info(I18n.s(R.string.ui_nomods), "No mods for this game", Icons.Filled.Info,
                 subtitle = "REFramework is for RE Engine games and Special K for 32 and 64-bit Windows games. " +
                     "This game's EXE can't take either.")
         }
@@ -80,9 +82,9 @@ internal fun xmbModsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             if (mod === GameMods.SPECIAL_K && on) {
                 val auto = GameMods.targetDll(mod, "", imports, machine) + " (auto)"
                 val stored = shortcut.getExtra(GameMods.EXTRA_SPECIALK_DLL) ?: ""
-                rows += XmbRow.Choice("skDll", "Special K DLL name", Icons.Filled.Extension,
+                rows += XmbRow.Choice(I18n.s(R.string.ui_skdll), "Special K DLL name", Icons.Filled.Extension,
                     listOf(auto) + GameMods.SPECIALK_DLLS, stored.ifEmpty { auto },
-                    subtitle = "The name it loads as in the game folder") { v ->
+                    subtitle = I18n.s(R.string.ui_name_it_loads_as_in_the_game_folder_2)) { v ->
                     p2Put(xmb, shortcut, GameMods.EXTRA_SPECIALK_DLL, if (v == auto) null else v)
                 }
             }

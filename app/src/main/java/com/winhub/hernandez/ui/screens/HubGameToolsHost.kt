@@ -40,6 +40,8 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import java.io.File
 import java.io.IOException
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** The per-game tools Home's classic menu offers on top of the basics (the same flows the Games screen's ⋮ menu runs). */
 internal enum class HubTool { DETAILS, COVERS, CLONE, DRIVE_C, CHANGE_EXE, DOCTOR }
@@ -75,10 +77,10 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
     val context = LocalContext.current
     OutlinedAlertDialog(
         onDismissRequest = onClose,
-        title = { Text("Clone to container") },
+        title = { Text(I18n.s(R.string.ui_clone_to_container)) },
         text = {
             if (containers.isEmpty()) {
-                Text("No containers yet.")
+                Text(I18n.s(R.string.ui_no_containers_yet))
             } else {
                 Column(Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState())) {
                     containers.forEach { c ->
@@ -99,7 +101,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 
@@ -138,8 +140,8 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
         title = { Text("Search covers for \"${s.name}\"") },
         text = {
             when {
-                loading -> Text("Searching SteamGridDB...")
-                covers.isEmpty() -> Text("No covers found.")
+                loading -> Text(I18n.s(R.string.ui_searching_steamgriddb))
+                covers.isEmpty() -> Text(I18n.s(R.string.ui_no_covers_found))
                 else -> Column(
                     modifier = Modifier.fillMaxWidth().heightIn(max = 400.dp).verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -170,7 +172,7 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.cancel)) } },
     )
 }
 

@@ -23,6 +23,8 @@ import com.winhub.hernandez.store.download.StoreDownloadHooks
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-Deck Epic install. Drives the REAL [EpicDownloadManager] engine — same token → manifest →
@@ -87,7 +89,7 @@ internal fun DeckEpicInstall(game: EpicGame, onBack: () -> Unit, onOpenStore: ((
                     val token = EpicCredentialStore.getValidAccessToken(appCtx)
                     if (token == null) {
                         StoreDownloadHooks.markFailed(Store.EPIC, game.appName, "Login required")
-                        main.post { errorText = "Login required"; started = false }
+                        main.post { errorText = I18n.s(R.string.ui_login_required); started = false }
                         return@launch
                     }
                     val manifestJson = EpicApiClient.getManifestApiJson(
@@ -95,7 +97,7 @@ internal fun DeckEpicInstall(game: EpicGame, onBack: () -> Unit, onOpenStore: ((
                     )
                     if (manifestJson == null) {
                         StoreDownloadHooks.markFailed(Store.EPIC, game.appName, "Failed to fetch manifest")
-                        main.post { errorText = "Failed to fetch manifest"; started = false }
+                        main.post { errorText = I18n.s(R.string.ui_failed_to_fetch_manifest); started = false }
                         return@launch
                     }
                     var sanitized = game.title.replace(Regex("[^a-zA-Z0-9 \\-_]"), "").trim()
@@ -120,13 +122,13 @@ internal fun DeckEpicInstall(game: EpicGame, onBack: () -> Unit, onOpenStore: ((
                     }
                     if (!ok) {
                         StoreDownloadHooks.markFailed(Store.EPIC, game.appName, "Download failed")
-                        main.post { errorText = "Download failed"; started = false }
+                        main.post { errorText = I18n.s(R.string.xmb_dl_status_failed); started = false }
                         return@launch
                     }
                     val exePath = deckResolveExe(installDir, game.title)
                     if (exePath == null) {
                         StoreDownloadHooks.markFailed(Store.EPIC, game.appName, "No executable found")
-                        main.post { errorText = "No executable found"; started = false }
+                        main.post { errorText = I18n.s(R.string.ui_no_executable_found); started = false }
                         return@launch
                     }
                     prefs.edit().putString("epic_exe_${game.appName}", exePath).apply()

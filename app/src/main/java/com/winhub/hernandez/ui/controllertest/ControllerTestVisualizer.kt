@@ -66,6 +66,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Reusable controller-test visualizer, decoupled from any game/xserver state so it can be hosted from
@@ -387,11 +389,11 @@ fun ControllerTestPanel(
                     enabled = identifyEnabled,
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = accent),
-                ) { Text("Identify", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.ui_identify), fontSize = 12.sp) }
             }
             if (onDone != null) {
                 Spacer(Modifier.width(8.dp))
-                TextButton(onClick = { onDone() }) { Text("Done") }
+                TextButton(onClick = { onDone() }) { Text(I18n.s(R.string.wrapper_catalog_close)) }
             }
         }
     }
@@ -411,7 +413,7 @@ private fun ArtSelector(effective: PadArt, manual: PadArt?, onChange: (PadArt?) 
             onDismissRequest = { open = false },
             modifier = Modifier.outlinedMenuCard(),
         ) {
-            DropdownMenuItem(text = { Text("Auto-detect") }, onClick = { open = false; onChange(null) })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_auto_detect)) }, onClick = { open = false; onChange(null) })
             for (a in PadArt.values()) {
                 MenuItemDivider()
                 DropdownMenuItem(text = { Text(padArtLabel(a)) }, onClick = { open = false; onChange(a) })

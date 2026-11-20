@@ -96,6 +96,8 @@ import com.winhub.hernandez.ui.theme.themePresets
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private val WIZARD_STEPS = listOf("Layout", "Theme", "Home", "Sounds", "Stores", "Retro", "Contents", "Social Hub", "Install")
 private const val LAST_STEP = 7
@@ -287,7 +289,7 @@ internal fun FirstRunSetup(onInstall: (List<FirstRunContent>) -> Unit) {
 private fun WizardHeader(step: Int, wide: Boolean) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "WINHUB",
+            text = I18n.s(R.string.winhub_ping_notice_kicker),
             color = DeckPalette.onBackground,
             fontSize = 15.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -365,7 +367,7 @@ private fun WizardFooter(step: Int, wide: Boolean, extraCount: Int, onBack: () -
                 modifier = Modifier.weight(1f),
             )
         }
-        if (step > 0) DeckButton("Back", primary = false, onClick = onBack)
+        if (step > 0) DeckButton(I18n.s(R.string.social_hub_configs_back), primary = false, onClick = onBack)
         DeckButton(if (step == LAST_STEP) "Install" else "Next", primary = true, onClick = onNext)
     }
 }
@@ -445,19 +447,19 @@ private fun LayoutStep(selected: String, modifier: Modifier, onPick: (String) ->
     Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
         StepHeading(LAYOUT, "How do you play?", "Pick the layout that fits how you hold your device. Landscape is the better choice if you want a console experience.")
         WizChoice(
-            title = "Landscape",
-            body = "Controller, dock or TV. Side rail, wide grid, button hints along the bottom. The full console experience: Steam-style Home, XMB stores, SteamOS sounds.",
+            title = I18n.s(R.string.ui_landscape),
+            body = I18n.s(R.string.ui_controller_dock_or_tv_side_rail_wide_grid_button_hint),
             selected = selected == AppOrientation.LANDSCAPE,
             onClick = { onPick(AppOrientation.LANDSCAPE) },
             badge = "Recommended",
         ) { OrientationGlyph(portrait = false) }
         WizChoice(
-            title = "Portrait",
-            body = "One hand on a phone. Chips replace the rail, big touch targets. The console Home options are landscape only.",
+            title = I18n.s(R.string.ui_portrait),
+            body = I18n.s(R.string.ui_one_hand_on_a_phone_chips_replace_the_rail_big_touch),
             selected = selected == AppOrientation.PORTRAIT,
             onClick = { onPick(AppOrientation.PORTRAIT) },
         ) { OrientationGlyph(portrait = true) }
-        Text("Change it any time in Settings, App Orientation.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_change_it_any_time_in_settings_app_orientation), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
     }
 }
 
@@ -557,7 +559,7 @@ private fun ThemeStep(wide: Boolean, modifier: Modifier) {
         if (selected == CUSTOM_PRESET_INDEX) {
             ColorPicker(initialColor = customAccent, onColorChanged = { AppThemeState.setCustomAccent(it) })
         }
-        Text("Change it any time in Settings.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
+        Text(I18n.s(R.string.ui_change_it_any_time_in_settings), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
     }
 }
 
@@ -610,10 +612,10 @@ internal val PREVIEW_COVERS = listOf(
 
 @Composable
 private fun MiniDeckPreview(portrait: Boolean, compact: Boolean, modifier: Modifier) {
-    val ratio by animateFloatAsState(if (portrait) 9f / 19f else 16f / 9f, tween(320), label = "previewRatio")
+    val ratio by animateFloatAsState(if (portrait) 9f / 19f else 16f / 9f, tween(320), label = I18n.s(R.string.ui_previewratio))
     val landscapeHeight = if (compact) 120.dp else 230.dp
     val portraitHeight = if (compact) 170.dp else 330.dp
-    val height by animateDpAsState(if (portrait) portraitHeight else landscapeHeight, tween(320), label = "previewHeight")
+    val height by animateDpAsState(if (portrait) portraitHeight else landscapeHeight, tween(320), label = I18n.s(R.string.ui_previewheight))
     Box(modifier, contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
@@ -632,7 +634,7 @@ private fun MiniDeckPreview(portrait: Boolean, compact: Boolean, modifier: Modif
                         .background(DeckPalette.background),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(horizontal = 9.dp, vertical = 7.dp)) {
-                        Text("WINHUB", color = DeckPalette.onBackground, fontSize = 7.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.sp, modifier = Modifier.weight(1f))
+                        Text(I18n.s(R.string.winhub_ping_notice_kicker), color = DeckPalette.onBackground, fontSize = 7.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.sp, modifier = Modifier.weight(1f))
                         repeat(if (portrait) 2 else 4) { i ->
                             Box(
                                 Modifier
@@ -963,16 +965,16 @@ private fun InstallPlan(picked: List<ExtraPick>, modifier: Modifier) {
                 .verticalScroll(rememberScrollState()),
         ) {
             Row(Modifier.fillMaxWidth().padding(bottom = 6.dp)) {
-                Text("INSTALL PLAN", color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, modifier = Modifier.weight(1f))
+                Text(I18n.s(R.string.ui_install_plan), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, modifier = Modifier.weight(1f))
                 Text("${1 + FIRST_RUN_CONTENTS.size + picked.size} items", color = DeckPalette.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
             PlanRow("System files", "Always", false)
             FIRST_RUN_CONTENTS.forEach { PlanRow(it.label, "Included", false) }
             picked.forEach { PlanRow(it.content.label, "${it.type} from ${it.source}", true) }
             if (picked.isEmpty()) {
-                Text("No extras selected. You can add some later in Contents.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.padding(top = 8.dp))
+                Text(I18n.s(R.string.ui_no_extras_selected_you_can_add_some_later_in_contents), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.padding(top = 8.dp))
             }
-            Text("Needs an internet connection. Wi-Fi recommended.", color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(top = 10.dp))
+            Text(I18n.s(R.string.ui_needs_an_internet_connection_wi_fi_recommended), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(top = 10.dp))
         }
     }
 }
@@ -1019,11 +1021,11 @@ private fun SocialStep(vm: FirstRunViewModel, modifier: Modifier) {
             ) { SocialHubStore.beginLogin() }
             else -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (skipped) {
-                    Text("Skipped for now. You can connect any time from the Social tab.", color = DeckPalette.onSurfaceVariant, fontSize = 14.sp)
+                    Text(I18n.s(R.string.ui_skipped_for_now_you_can_connect_any_time_from_the_soc), color = DeckPalette.onSurfaceVariant, fontSize = 14.sp)
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    DeckButton("Connect with GitHub", primary = true) { vm.socialSkipped.value = false; SocialHubStore.beginLogin() }
-                    if (!skipped) DeckButton("Not now", primary = false) { vm.socialSkipped.value = true }
+                    DeckButton(I18n.s(R.string.ui_connect_with_github), primary = true) { vm.socialSkipped.value = false; SocialHubStore.beginLogin() }
+                    if (!skipped) DeckButton(I18n.s(R.string.ui_not_now), primary = false) { vm.socialSkipped.value = true }
                 }
             }
         }
@@ -1050,10 +1052,10 @@ private fun ConnectedCard(account: GitHubAuthClient.Account, onDisconnect: () ->
             Icon(Icons.Filled.Check, null, tint = DeckPalette.good, modifier = Modifier.size(26.dp))
             Column {
                 Text("Connected as @${account.login}", color = DeckPalette.onBackground, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                Text("Configs, posts and votes are ready.", color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
+                Text(I18n.s(R.string.ui_configs_posts_and_votes_are_ready), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
             }
         }
-        DeckButton("Disconnect", primary = false, onClick = onDisconnect)
+        DeckButton(I18n.s(R.string.ui_disconnect), primary = false, onClick = onDisconnect)
     }
 }
 
@@ -1072,8 +1074,8 @@ private fun CodeCard(state: SocialHubStore.LoginState.AwaitingUser, onOpen: () -
         Text(state.userCode, color = DeckPalette.primary, fontSize = 38.sp, fontWeight = FontWeight.SemiBold, fontFamily = FontFamily.Monospace, letterSpacing = 4.sp)
         Text(state.status, color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DeckButton("Open GitHub", primary = true, onClick = onOpen)
-            DeckButton("Cancel", primary = false, onClick = onCancel)
+            DeckButton(I18n.s(R.string.ui_open_github), primary = true, onClick = onOpen)
+            DeckButton(I18n.s(R.string.cancel), primary = false, onClick = onCancel)
         }
     }
 }

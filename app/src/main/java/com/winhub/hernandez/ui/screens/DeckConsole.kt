@@ -94,6 +94,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
 
 /** Shell-wide console state: the Start-button quick menu, the idle screensaver and the idle clock. */
 internal object DeckConsole {
@@ -311,7 +312,7 @@ private fun DeckScreensaver() {
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(30_000, easing = LinearEasing), RepeatMode.Reverse),
-        label = "saverDrift",
+        label = I18n.s(R.string.ui_saverdrift),
     )
     val time = remember(now / 1_000L) { android.text.format.DateFormat.getTimeFormat(context).format(java.util.Date(now)) }
     val date = remember(now / 60_000L) { android.text.format.DateFormat.getMediumDateFormat(context).format(java.util.Date(now)) }
@@ -331,7 +332,7 @@ private fun DeckScreensaver() {
         ) {
             Text(time, color = Color.White.copy(alpha = 0.8f), fontSize = 56.sp, fontWeight = FontWeight.Light)
             Text(date, color = Deck.onSurfaceVariant, fontSize = 16.sp)
-            Text("Press any button", color = Deck.onSurfaceVariant.copy(alpha = 0.6f), fontSize = 12.sp, modifier = Modifier.padding(top = 18.dp))
+            Text(I18n.s(R.string.ui_press_any_button), color = Deck.onSurfaceVariant.copy(alpha = 0.6f), fontSize = 12.sp, modifier = Modifier.padding(top = 18.dp))
         }
     }
 }
@@ -375,9 +376,9 @@ private fun DeckQuickMenu(onDismiss: () -> Unit, onGo: (String) -> Unit) {
                 .padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text("Quick menu", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_quick_menu), color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             QuickLevelRow(
-                label = "Volume",
+                label = I18n.s(R.string.ui_volume),
                 icon = Icons.Filled.VolumeUp,
                 level = volume / maxVolume.toFloat(),
                 onMinus = {
@@ -390,7 +391,7 @@ private fun DeckQuickMenu(onDismiss: () -> Unit, onGo: (String) -> Unit) {
                 },
             )
             QuickLevelRow(
-                label = "Brightness",
+                label = I18n.s(R.string.brightness),
                 icon = Icons.Filled.BrightnessMedium,
                 level = brightness,
                 onMinus = { brightness = (brightness - 0.1f).coerceAtLeast(0.05f); applyBrightness(window, brightness) },
@@ -399,7 +400,7 @@ private fun DeckQuickMenu(onDismiss: () -> Unit, onGo: (String) -> Unit) {
             QuickRow("Downloads", Icons.Filled.Download) { onDismiss(); onGo("stores") }
             QuickRow("Settings", Icons.Filled.Settings) { onDismiss(); onGo("settings") }
             QuickRow("Close", Icons.Filled.Close, onDismiss)
-            Text("B  Back", color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
+            Text(I18n.s(R.string.ui_b_back), color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
         }
     }
 }
@@ -534,7 +535,7 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
         initialValue = 0.96f,
         targetValue = 1.04f,
         animationSpec = infiniteRepeatable(tween(1_400), RepeatMode.Reverse),
-        label = "bootPulse",
+        label = I18n.s(R.string.ui_bootpulse),
     )
     val accent = Deck.primary
     Box(
@@ -551,12 +552,12 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Image(
                 painter = painterResource(R.drawable.deck_boot_logo),
-                contentDescription = "WinHub",
+                contentDescription = I18n.s(R.string.app_name),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(120.dp).graphicsLayer { scaleX = pulse; scaleY = pulse },
             )
-            Text("WinHub", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp)
-            Text("Starting services", color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(bottom = 10.dp))
+            Text(I18n.s(R.string.app_name), color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp)
+            Text(I18n.s(R.string.ui_starting_services), color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(bottom = 10.dp))
             names.forEach { name ->
                 val (state, detail) = status[name] ?: (0 to "Waiting")
                 Row(

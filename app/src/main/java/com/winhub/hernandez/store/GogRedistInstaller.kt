@@ -19,6 +19,7 @@ import org.json.JSONObject
 import java.io.File
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
 
 /**
  * GOG gap#3 P1 — auto-install a gen2 game's required GOG "dependencies" (VC++/.NET/DirectX/…
@@ -101,14 +102,14 @@ object GogRedistInstaller {
             if (activity.isFinishing || activity.isDestroyed) return@post
             val listStr = info.deps.joinToString(", ")
             AlertDialog.Builder(activity, R.style.StoreAlertDialogDark)
-                .setTitle("Install prerequisites?")
+                .setTitle(I18n.s(R.string.ui_install_prerequisites_2))
                 .setMessage(
                     "This game needs: $listStr.\n\n" +
                         "They'll be installed into \"${container.name}\". A brief setup window will " +
                         "appear for each one and close on its own."
                 )
-                .setPositiveButton("Install") { _, _ -> installPrereqs(activity, container, gameId) }
-                .setNegativeButton("Skip", null)
+                .setPositiveButton(I18n.s(R.string.ui_install)) { _, _ -> installPrereqs(activity, container, gameId) }
+                .setNegativeButton(I18n.s(R.string.ui_skip), null)
                 .show()
         }
     }
@@ -138,9 +139,9 @@ object GogRedistInstaller {
                 val names = containers.map { it.name?.ifEmpty { "Container ${it.id}" } ?: "Container ${it.id}" }
                     .toTypedArray()
                 AlertDialog.Builder(activity, R.style.StoreAlertDialogDark)
-                    .setTitle("Install prerequisites into…")
+                    .setTitle(I18n.s(R.string.ui_install_prerequisites_into))
                     .setItems(names) { _, which -> promptAndInstall(activity, containers[which], gameId) }
-                    .setNegativeButton("Cancel", null)
+                    .setNegativeButton(I18n.s(R.string.cancel), null)
                     .show()
             }
         }.also { it.name = "gog-redist-picker" }.start()
@@ -222,7 +223,7 @@ object GogRedistInstaller {
                 // is driven to completion automatically. Each step carries its own GOG:<depId> marker.
                 val component = Component(
                     name = "GOG Prerequisites",
-                    description = "Auto-installed GOG redistributables",
+                    description = I18n.s(R.string.ui_auto_installed_gog_redistributables),
                     provider = "gog",
                     status = "ready",
                     dependencies = emptyList(),

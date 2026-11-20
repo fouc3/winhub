@@ -45,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** One tappable entry in a [CollapsibleRail] (a container tab, a file-manager location, …). */
 data class RailItem(
@@ -174,7 +176,7 @@ fun CollapsibleRail(
     outlinedItems: Boolean = false,
 ) {
     val collapsed = state.collapsed
-    val width by animateDpAsState(if (collapsed) 58.dp else 190.dp, label = "railWidth")
+    val width by animateDpAsState(if (collapsed) 58.dp else 190.dp, label = I18n.s(R.string.ui_railwidth))
 
     Column(
         modifier = modifier

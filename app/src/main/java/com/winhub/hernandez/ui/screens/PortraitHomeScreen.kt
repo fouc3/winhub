@@ -73,6 +73,7 @@ import com.winhub.hernandez.store.SocialHubStore
 import com.winhub.hernandez.store.rememberShownAvatar
 import kotlinx.coroutines.delay
 import java.util.Date
+import com.winhub.hernandez.util.I18n
 
 private val shelfLabels = listOf("All", "Recent", "Favourites", "Store games")
 
@@ -168,8 +169,8 @@ internal fun PortraitHome(
                     .glassCard(RoundedCornerShape(14.dp))
                     .clickable { onAdd() },
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add game", tint = Deck.primary, modifier = Modifier.size(32.dp))
-                Text("Add game", color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
+                Icon(Icons.Filled.Add, contentDescription = I18n.s(R.string.ui_add_game), tint = Deck.primary, modifier = Modifier.size(32.dp))
+                Text(I18n.s(R.string.ui_add_game), color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
             }
         }
         if (loaded && entries.isEmpty()) {
@@ -204,11 +205,11 @@ private fun PortraitContinueBanner(entry: HubEntry, onOpen: () -> Unit, onPlay: 
     val hours = remember(entry.title) { hubPlaytimeLabel(context, entry.title) }
     val shape = RoundedCornerShape(24.dp)
     // A slow float, drawn in the layer so it never recomposes or re-lays-out the banner.
-    val bob by rememberInfiniteTransition(label = "bannerBob").animateFloat(
+    val bob by rememberInfiniteTransition(label = I18n.s(R.string.ui_bannerbob)).animateFloat(
         initialValue = -3f,
         targetValue = 3f,
         animationSpec = infiniteRepeatable(tween(3500, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "bannerBobY",
+        label = I18n.s(R.string.ui_bannerboby),
     )
     Box(
         modifier = Modifier
@@ -244,7 +245,7 @@ private fun PortraitContinueBanner(entry: HubEntry, onOpen: () -> Unit, onPlay: 
             verticalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(18.dp),
         ) {
-            Text("CONTINUE PLAYING", color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.2.sp)
+            Text(I18n.s(R.string.ui_continue_playing), color = Deck.primary, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.2.sp)
             Text(
                 entry.title,
                 color = Deck.onBackground,
@@ -267,7 +268,7 @@ private fun PortraitContinueBanner(entry: HubEntry, onOpen: () -> Unit, onPlay: 
                 ) {
                     Icon(Icons.Filled.PlayArrow, contentDescription = null, tint = Deck.onPrimary)
                     Spacer(Modifier.size(6.dp))
-                    Text("Play", color = Deck.onPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(I18n.s(R.string.retro_opt_play), color = Deck.onPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
                     hubOriginLabel(entry) + " · " + hours,
@@ -319,7 +320,7 @@ private fun PortraitCover(entry: HubEntry, isSelected: Boolean, favourite: Boole
         if (favourite) {
             Icon(
                 Icons.Filled.Star,
-                contentDescription = "Favourite",
+                contentDescription = I18n.s(R.string.ui_favourite),
                 tint = Color(0xFFFFC94D),
                 modifier = Modifier.align(Alignment.TopEnd).padding(6.dp).size(18.dp),
             )
@@ -353,7 +354,7 @@ private fun PortraitSourceBadge(store: String?, modifier: Modifier) {
                 modifier = Modifier.size(16.dp),
             )
         } else {
-            Icon(Icons.Filled.FolderOpen, contentDescription = "Custom game", tint = Color.White, modifier = Modifier.size(15.dp))
+            Icon(Icons.Filled.FolderOpen, contentDescription = I18n.s(R.string.ui_custom_game), tint = Color.White, modifier = Modifier.size(15.dp))
         }
     }
 }

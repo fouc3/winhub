@@ -69,6 +69,8 @@ import com.winhub.hernandez.ui.deck.xmbGlassCard
 import com.winhub.hernandez.ui.screens.XmbArtGround
 import com.winhub.hernandez.ui.screens.outlinedMenuCard
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The game page of the XMB store style, in landscape, for every store (docs/design/winhub-game-page-design.html): the game's
 // art fills the screen, the tabs, the content card and the actions sit at the left, the banner, the title and what the store
@@ -300,7 +302,7 @@ internal fun XmbDetailPage(
                             .padding(horizontal = 14.dp),
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text("BRANCH", color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                            Text(I18n.s(R.string.ui_branch), color = cs.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
                             Text(
                                 branchLabel,
                                 color = cs.onSurface,

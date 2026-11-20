@@ -146,6 +146,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
 
 /**
  * What to do when a pasted item already exists at the destination.
@@ -860,13 +861,13 @@ fun FileManagerScreen(
             if (folderName.isNotBlank()) createFolder(currentDir, folderName)
         }
         if (deckMode) DeckFmDialog(
-            title = "New folder",
+            title = I18n.s(R.string.ui_new_folder_2),
             onDismiss = { showNewFolderDialog = false },
             confirmLabel = "Create",
             onConfirm = createNow,
         ) {
             DeckConfigTextField(
-                label = "Folder name",
+                label = I18n.s(R.string.ui_folder_name),
                 value = folderName,
                 onValueChange = { folderName = it },
                 imeAction = ImeAction.Done,
@@ -874,12 +875,12 @@ fun FileManagerScreen(
             )
         } else OutlinedAlertDialog(
             onDismissRequest = { showNewFolderDialog = false },
-            title = { Text("New Folder") },
+            title = { Text(I18n.s(R.string.ui_new_folder)) },
             text = {
                 OutlinedTextField(
                     value = folderName,
                     onValueChange = { folderName = it },
-                    label = { Text("Folder name") },
+                    label = { Text(I18n.s(R.string.ui_folder_name)) },
                     singleLine = true,
                 )
             },
@@ -887,9 +888,9 @@ fun FileManagerScreen(
                 TextButton(onClick = {
                     showNewFolderDialog = false
                     if (folderName.isNotBlank()) createFolder(currentDir, folderName)
-                }) { Text("Create") }
+                }) { Text(I18n.s(R.string.create)) }
             },
-            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -901,14 +902,14 @@ fun FileManagerScreen(
             if (file != null && newName.isNotBlank()) performRename(file, newName)
         }
         if (deckMode) DeckFmDialog(
-            title = "Rename",
+            title = I18n.s(R.string.ui_rename_2),
             subtitle = renameTarget?.name,
             onDismiss = { renameTarget = null },
             confirmLabel = "Rename",
             onConfirm = renameNow,
         ) {
             DeckConfigTextField(
-                label = "New name",
+                label = I18n.s(R.string.ui_new_name),
                 value = newName,
                 onValueChange = { newName = it },
                 imeAction = ImeAction.Done,
@@ -916,12 +917,12 @@ fun FileManagerScreen(
             )
         } else OutlinedAlertDialog(
             onDismissRequest = { renameTarget = null },
-            title = { Text("Rename") },
+            title = { Text(I18n.s(R.string.ui_rename_2)) },
             text = {
                 OutlinedTextField(
                     value = newName,
                     onValueChange = { newName = it },
-                    label = { Text("New name") },
+                    label = { Text(I18n.s(R.string.ui_new_name)) },
                     singleLine = true,
                 )
             },
@@ -930,9 +931,9 @@ fun FileManagerScreen(
                     val file = renameTarget
                     renameTarget = null
                     if (file != null && newName.isNotBlank()) performRename(file, newName)
-                }) { Text("Rename") }
+                }) { Text(I18n.s(R.string.ui_rename_2)) }
             },
-            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -953,7 +954,7 @@ fun FileManagerScreen(
     if (selectedEntry != null && selectedEntry != showMenuFor) {
         val file = selectedEntry ?: return
         if (deckMode) DeckFmDialog(
-            title = "Delete?",
+            title = I18n.s(R.string.ui_delete_2),
             onDismiss = { selectedEntry = null },
             confirmLabel = "Delete",
             danger = true,
@@ -965,15 +966,15 @@ fun FileManagerScreen(
             DeckConfigNote("Delete \"${file.name}\" permanently?")
         } else OutlinedAlertDialog(
             onDismissRequest = { selectedEntry = null },
-            title = { Text("Delete?") },
+            title = { Text(I18n.s(R.string.ui_delete_2)) },
             text = { Text("Delete \"${file.name}\" permanently?") },
             confirmButton = {
                 TextButton(onClick = {
                     selectedEntry = null
                     performDelete(file)
-                }) { Text("Delete") }
+                }) { Text(I18n.s(R.string.preset_action_delete)) }
             },
-            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1014,7 +1015,7 @@ fun FileManagerScreen(
             title = { Text("Delete ${victims.size} item${if (victims.size == 1) "" else "s"}?") },
             text = {
                 Column {
-                    Text("This can't be undone.")
+                    Text(I18n.s(R.string.ui_this_can_t_be_undone))
                     Spacer(Modifier.height(6.dp))
                     // Name a few so an accidental Select-All is obvious before it's too late.
                     victims.take(5).forEach {
@@ -1030,9 +1031,9 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = bulkDeleteNow) { Text("Delete", color = MaterialTheme.colorScheme.error) }
+                TextButton(onClick = bulkDeleteNow) { Text(I18n.s(R.string.preset_action_delete), color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1064,7 +1065,7 @@ fun FileManagerScreen(
                                 checked = conflictApplyToAll,
                                 onCheckedChange = { conflictApplyToAll = it },
                             )
-                            Text("Apply to all conflicts", fontSize = 12.sp)
+                            Text(I18n.s(R.string.ui_apply_to_all_conflicts), fontSize = 12.sp)
                         }
                     }
                     Spacer(Modifier.height(4.dp))
@@ -1084,7 +1085,7 @@ fun FileManagerScreen(
             confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { conflictChoice = ConflictChoice.SKIP; pendingConflict = null }) {
-                    Text("Cancel")
+                    Text(I18n.s(R.string.cancel))
                 }
             },
         )
@@ -1092,7 +1093,7 @@ fun FileManagerScreen(
 
     if (showContainerPicker) {
         if (deckMode) DeckFmChoiceDialog(
-            title = "Choose container",
+            title = I18n.s(R.string.ui_choose_container),
             labels = containers.map { it.name },
             onPick = { i ->
                 showContainerPicker = false
@@ -1101,7 +1102,7 @@ fun FileManagerScreen(
             onDismiss = { showContainerPicker = false },
         ) else OutlinedAlertDialog(
             onDismissRequest = { showContainerPicker = false },
-            title = { Text("Choose container") },
+            title = { Text(I18n.s(R.string.ui_choose_container)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -1131,7 +1132,7 @@ fun FileManagerScreen(
     if (pendingRun != null) {
         val file = pendingRun
         if (deckMode) DeckFmChoiceDialog(
-            title = "Run in which container?",
+            title = I18n.s(R.string.ui_run_in_which_container),
             labels = containers.map { it.name },
             onPick = { i ->
                 pendingRun = null
@@ -1141,7 +1142,7 @@ fun FileManagerScreen(
             onDismiss = { pendingRun = null },
         ) else OutlinedAlertDialog(
             onDismissRequest = { pendingRun = null },
-            title = { Text("Run in which container?") },
+            title = { Text(I18n.s(R.string.ui_run_in_which_container)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -1165,14 +1166,14 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
     if (pendingAddShortcut != null) {
         val file = pendingAddShortcut
         if (deckMode) DeckFmChoiceDialog(
-            title = "Add to which container?",
+            title = I18n.s(R.string.ui_add_to_which_container),
             labels = containers.map { it.name },
             onPick = { i ->
                 pendingAddShortcut = null
@@ -1182,7 +1183,7 @@ fun FileManagerScreen(
             onDismiss = { pendingAddShortcut = null },
         ) else OutlinedAlertDialog(
             onDismissRequest = { pendingAddShortcut = null },
-            title = { Text("Add to which container?") },
+            title = { Text(I18n.s(R.string.ui_add_to_which_container)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -1206,7 +1207,7 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1545,7 +1546,7 @@ fun FileManagerScreen(
             ) {
                 Icon(Icons.Filled.Folder, null, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))
-                Text("Select this folder")
+                Text(I18n.s(R.string.ui_select_this_folder))
             }
         }
         // ── Path bar ──
@@ -1602,7 +1603,7 @@ fun FileManagerScreen(
                     modifier = Modifier.outlinedMenuCard(),
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Drive C:") },
+                        text = { Text(I18n.s(R.string.drive_c)) },
                         leadingIcon = {
                             Icon(Icons.Filled.SdStorage, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         },
@@ -1623,7 +1624,7 @@ fun FileManagerScreen(
                     )
                     MenuItemDivider()
                     DropdownMenuItem(
-                        text = { Text("Drive Z:") },
+                        text = { Text(I18n.s(R.string.ui_drive_z)) },
                         leadingIcon = {
                             Icon(Icons.Filled.Storage, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         },
@@ -1665,7 +1666,7 @@ fun FileManagerScreen(
 
             if (showFavorites) {
                 Text(
-                    text = "★ Favorites",
+                    text = I18n.s(R.string.ui_favorites_2),
                     color = MaterialTheme.colorScheme.primary,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -1704,7 +1705,7 @@ fun FileManagerScreen(
                     ) {
                         Icon(Icons.Filled.CreateNewFolder, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                         Spacer(Modifier.width(5.dp))
-                        Text("New Folder", color = MaterialTheme.colorScheme.onBackground, fontSize = 12.sp)
+                        Text(I18n.s(R.string.ui_new_folder), color = MaterialTheme.colorScheme.onBackground, fontSize = 12.sp)
                     }
                 }
                 IconButton(modifier = Modifier.deckSelfFocusStroke(RoundedCornerShape(12.dp)), onClick = {
@@ -1789,7 +1790,7 @@ fun FileManagerScreen(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
                 singleLine = true,
-                placeholder = { Text("Filter this folder", fontSize = 13.sp) },
+                placeholder = { Text(I18n.s(R.string.ui_filter_this_folder), fontSize = 13.sp) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
             )
         }
@@ -1861,7 +1862,7 @@ fun FileManagerScreen(
                         selectedPaths = emptySet()
                     },
                     contentPadding = selBarPadding,
-                ) { Text("Copy", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.copy), fontSize = 12.sp) }
                 Spacer(Modifier.width(4.dp))
                 OutlinedButton(
                     enabled = selectedPaths.isNotEmpty(),
@@ -1872,19 +1873,19 @@ fun FileManagerScreen(
                         selectedPaths = emptySet()
                     },
                     contentPadding = selBarPadding,
-                ) { Text("Cut", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.ui_cut), fontSize = 12.sp) }
                 Spacer(Modifier.width(4.dp))
                 OutlinedButton(
                     enabled = selectedPaths.isNotEmpty(),
                     onClick = { pendingBulkDelete = entries.filter { it.absolutePath in selectedPaths } },
                     contentPadding = selBarPadding,
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
-                ) { Text("Delete", color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.preset_action_delete), color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
                 Spacer(Modifier.width(4.dp))
                 OutlinedButton(
                     onClick = { selectionMode = false; selectedPaths = emptySet() },
                     contentPadding = selBarPadding,
-                ) { Text("Done", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.wrapper_catalog_close), fontSize = 12.sp) }
             }
         }
 
@@ -1907,7 +1908,7 @@ fun FileManagerScreen(
                     color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { clipboardFiles = emptyList(); isCutOperation = false }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
             }
         }
@@ -1939,7 +1940,7 @@ fun FileManagerScreen(
                             isOperationRunning = false
                             operationDeterminate = false
                             loadDirectory(currentDir, resetScroll = false)
-                        }) { Text("Cancel", fontSize = 12.sp) }
+                        }) { Text(I18n.s(R.string.cancel), fontSize = 12.sp) }
                     }
                 }
                 Spacer(Modifier.height(4.dp))
@@ -2091,7 +2092,7 @@ fun FileManagerScreen(
                             modifier = Modifier.fillParentMaxSize(),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text("Empty directory", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(I18n.s(R.string.ui_empty_directory), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 } else {
@@ -2184,7 +2185,7 @@ fun FileManagerScreen(
             // the exception — it shows the rail so the "Drive C:" location item is reachable. Pickers
             // that don't pass driveCPath keep the rail hidden exactly as before.
             if ((!pickMode || driveCPath != null) && !deckMode) {
-                CollapsibleRail(state = fmRailState, title = "Files", sections = locationSections, outlinedItems = true)
+                CollapsibleRail(state = fmRailState, title = I18n.s(R.string.ui_files), sections = locationSections, outlinedItems = true)
             }
             if (deckMode && (!pickMode || driveCPath != null)) {
                 // Deck: every rail target (drives, quick folders, pinned favourites) plus the Favorites
@@ -2237,7 +2238,7 @@ private fun FileContextMenuItems(
     val canRun = isDir || file.name.lowercase().let { it.endsWith(".exe") || it.endsWith(".bat") || it.endsWith(".msi") || it.endsWith(".sh") }
     // Enter multi-select on this item (replaces the old long-press-only entry point).
     DropdownMenuItem(
-        text = { Text("Select") },
+        text = { Text(I18n.s(R.string.ui_select)) },
         leadingIcon = { Icon(Icons.Filled.Checklist, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onSelect() },
     )
@@ -2245,7 +2246,7 @@ private fun FileContextMenuItems(
     // Properties: basic info + Read-only / Hidden toggles, for ANY file or folder (handy for config
     // files like .txt/.cfg/.ini). Kept near the top since it's a common reason to open this menu.
     DropdownMenuItem(
-        text = { Text("Properties") },
+        text = { Text(I18n.s(R.string.ui_properties)) },
         leadingIcon = { Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onProperties() },
     )
@@ -2267,7 +2268,7 @@ private fun FileContextMenuItems(
     }
     if (canRun) {
         DropdownMenuItem(
-            text = { Text("Run") },
+            text = { Text(I18n.s(R.string.run)) },
             leadingIcon = { Icon(Icons.Filled.PlayArrow, null, tint = MaterialTheme.colorScheme.primary) },
             onClick = { onDismissMenu(); onRun() },
         )
@@ -2278,7 +2279,7 @@ private fun FileContextMenuItems(
     // correct for .exe, so we don't offer it for .bat/.sh/.msi.
     if (!isDir && file.name.lowercase().endsWith(".exe")) {
         DropdownMenuItem(
-            text = { Text("Add to Shortcuts") },
+            text = { Text(I18n.s(R.string.ui_add_to_shortcuts)) },
             leadingIcon = { Icon(Icons.Filled.Add, null, tint = MaterialTheme.colorScheme.primary) },
             onClick = { onDismissMenu(); onAddToShortcuts() },
         )
@@ -2305,32 +2306,32 @@ private fun FileContextMenuItems(
         // Convenience: one tap, no screen — pre-fill defaults (new sibling folder, Auto
         // power) and start straight into the progress pill. Same engines/throughput.
         DropdownMenuItem(
-            text = { Text("Fast Extract") },
+            text = { Text(I18n.s(R.string.ui_fast_extract)) },
             leadingIcon = { Icon(Icons.Filled.Bolt, null, tint = MaterialTheme.colorScheme.primary) },
             onClick = { onDismissMenu(); onFastExtract() },
         )
         MenuItemDivider()
     }
     DropdownMenuItem(
-        text = { Text("Rename") },
+        text = { Text(I18n.s(R.string.ui_rename_2)) },
         leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onRename() },
     )
     MenuItemDivider()
     DropdownMenuItem(
-        text = { Text("Copy") },
+        text = { Text(I18n.s(R.string.copy)) },
         leadingIcon = { Icon(Icons.Filled.FileCopy, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onCopy() },
     )
     MenuItemDivider()
     DropdownMenuItem(
-        text = { Text("Cut") },
+        text = { Text(I18n.s(R.string.ui_cut)) },
         leadingIcon = { Icon(Icons.Filled.ContentCut, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onCut() },
     )
     MenuItemDivider()
     DropdownMenuItem(
-        text = { Text("Delete") },
+        text = { Text(I18n.s(R.string.preset_action_delete)) },
         leadingIcon = { Icon(Icons.Filled.Delete, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onDelete() },
     )
@@ -2546,7 +2547,7 @@ private fun FavoritesList(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
                 Text(
-                    text = "Favorites",
+                    text = I18n.s(R.string.ui_favorites),
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -2559,7 +2560,7 @@ private fun FavoritesList(
                     Icon(Icons.Filled.PushPin, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(
-                        text = "Pin current folder",
+                        text = I18n.s(R.string.ui_pin_current_folder),
                         color = MaterialTheme.colorScheme.primary,
                         fontSize = 13.sp,
                     )
@@ -2574,7 +2575,7 @@ private fun FavoritesList(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = "No favorites yet — pin a folder with its ⋮ menu to jump back here fast.",
+                        text = I18n.s(R.string.ui_no_favorites_yet_pin_a_folder_with_its_menu_to_jump_b),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(horizontal = 32.dp),
@@ -2711,7 +2712,7 @@ private fun FavoriteCard(
             IconButton(onClick = onUnpin) {
                 Icon(
                     Icons.Filled.Star,
-                    contentDescription = "Remove from favorites",
+                    contentDescription = I18n.s(R.string.ui_remove_from_favorites),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(22.dp),
                 )
@@ -2900,7 +2901,7 @@ private fun FilePropertiesDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Properties") },
+        title = { Text(I18n.s(R.string.ui_properties)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 // ── Basic info ──
@@ -2929,8 +2930,8 @@ private fun FilePropertiesDialog(
                 val state = attrs
                 // ── Read-only ── checked when the owner can't write (Wine's FILE_ATTRIBUTE_READONLY).
                 AttributeToggleRow(
-                    label = "Read-only",
-                    description = "Stops games (and Wine) from overwriting or deleting this file.",
+                    label = I18n.s(R.string.ui_read_only),
+                    description = I18n.s(R.string.ui_stops_games_and_wine_from_overwriting_or_deleting_thi),
                     checked = state?.readOnly == true,
                     enabled = state != null && !busy,
                     onToggle = { want ->
@@ -2951,7 +2952,7 @@ private fun FilePropertiesDialog(
                 // ── Hidden ── Wine's DOS hidden bit in the user.DOSATTRIB xattr.
                 val hiddenSupported = state?.hiddenSupported == true
                 AttributeToggleRow(
-                    label = "Hidden",
+                    label = I18n.s(R.string.ui_hidden),
                     description = if (state != null && !hiddenSupported)
                         "This storage can't store the hidden flag."
                     else "Marks the file hidden in Windows (Wine's hidden attribute).",
@@ -2975,7 +2976,7 @@ private fun FilePropertiesDialog(
                 )
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
     )
 }
 
@@ -3048,14 +3049,14 @@ private fun ParentFolderRow(compact: Boolean, onTap: () -> Unit) {
     ) {
         Icon(
             Icons.Filled.ArrowUpward,
-            contentDescription = "Parent folder",
+            contentDescription = I18n.s(R.string.ui_parent_folder),
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(if (compact) 20.dp else 24.dp),
         )
         Spacer(Modifier.width(16.dp))
         Column {
             Text("..", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            if (!compact) Text("Parent folder", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (!compact) Text(I18n.s(R.string.ui_parent_folder), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -3074,7 +3075,7 @@ private fun ParentFolderTile(onTap: () -> Unit) {
     ) {
         Icon(
             Icons.Filled.ArrowUpward,
-            contentDescription = "Parent folder",
+            contentDescription = I18n.s(R.string.ui_parent_folder),
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(48.dp),
         )

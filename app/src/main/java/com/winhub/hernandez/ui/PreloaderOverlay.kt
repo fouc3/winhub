@@ -76,6 +76,8 @@ import com.winhub.hernandez.ui.screens.hueOf
 import com.winhub.hernandez.ui.theme.AppThemeState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The hero surface is always laid over a dark scrim, so text/accents use fixed light-on-dark
 // values that read over any cover art rather than the ambient theme's surface colours.
@@ -177,7 +179,7 @@ fun PreloaderOverlay() {
             WinHubLogoAnimation(Modifier.width(if (portrait) 240.dp else 170.dp), still = failed)
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Starting up",
+                text = I18n.s(R.string.ui_starting_up),
                 style = MaterialTheme.typography.headlineSmall,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
@@ -234,7 +236,7 @@ fun PreloaderOverlay() {
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = HeroText),
                             border = BorderStroke(1.dp, HeroText.copy(alpha = 0.45f)),
                         ) {
-                            Text("Cancel launch")
+                            Text(I18n.s(R.string.ui_cancel_launch))
                         }
                     }
                 }
@@ -316,7 +318,7 @@ private fun StepPips(stepIndex: Int, stepTotal: Int) {
         initialValue = 0.35f,
         targetValue = 0.9f,
         animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
-        label = "pipPulse",
+        label = I18n.s(R.string.ui_pippulse),
     )
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -560,23 +562,23 @@ private fun FailureCard(failure: Failure?) {
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
                     OutlinedButton(onClick = { PreloaderState.onOpenLog?.run() }) {
-                        Text("Open log folder")
+                        Text(I18n.s(R.string.ui_open_log_folder))
                     }
                     Spacer(Modifier.width(8.dp))
                     Button(onClick = { PreloaderState.close() }) {
-                        Text("Close")
+                        Text(I18n.s(R.string.wrapper_manager_close))
                     }
                 }
             } else {
                 Text(
-                    text = "Enable logging in Settings → Logs and relaunch to capture the cause.",
+                    text = I18n.s(R.string.ui_enable_logging_in_settings_logs_and_relaunch_to_captu),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
                     Button(onClick = { PreloaderState.close() }) {
-                        Text("Close")
+                        Text(I18n.s(R.string.wrapper_manager_close))
                     }
                 }
             }

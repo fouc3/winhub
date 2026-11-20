@@ -106,6 +106,7 @@ import com.winhub.hernandez.ui.screens.XmbDownloadRing
 import com.winhub.hernandez.ui.screens.XmbSteamTab
 import com.winhub.hernandez.ui.screens.xmbClick
 import com.winhub.hernandez.ui.screens.xmbTabStep
+import com.winhub.hernandez.util.I18n
 
 // The XMB Home's tabs page, in the look of the Steam Deck's What's New / Friends / Recommended pages. Down from the games row pushes the
 // Home up and out and brings the page up from the bottom: a pill bar of tabs (Stores, Downloads, Friends) under the
@@ -165,7 +166,7 @@ internal fun XmbTabsPageHost(
     home: @Composable () -> Unit,
 ) {
     val glassLook = rememberGlassLook()
-    val progress = animateFloatAsState(if (open) 1f else 0f, tween(XMB_TABS_SLIDE_MS, easing = FastOutSlowInEasing), label = "xmbTabsPage")
+    val progress = animateFloatAsState(if (open) 1f else 0f, tween(XMB_TABS_SLIDE_MS, easing = FastOutSlowInEasing), label = I18n.s(R.string.ui_xmbtabspage))
     val openNow by rememberUpdatedState(open)
     // The page is composed while it is up or still sliding away; derived, so the animation does not recompose this per frame.
     val shown by remember { derivedStateOf { openNow || progress.value > 0.001f } }
@@ -390,7 +391,7 @@ private fun XmbTabsPageBody(
                         (fadeIn(tween(220)) + slideInHorizontally(tween(260)) { w -> way * w / 5 }) togetherWith
                             (fadeOut(tween(140)) + slideOutHorizontally(tween(260)) { w -> -way * w / 5 })
                     },
-                    label = "xmbTabsContent",
+                    label = I18n.s(R.string.ui_xmbtabscontent),
                     modifier = Modifier.fillMaxSize(),
                 ) { i ->
                     when (tabs[i.coerceIn(0, tabs.lastIndex)]) {
@@ -560,7 +561,7 @@ internal fun XmbTabPill(
         XmbSteamTab.FRIENDS -> count > 0
         else -> false
     }
-    val shown = animateFloatAsState(if (wanted) 1f else 0f, tween(180), label = "xmbTabBadge")
+    val shown = animateFloatAsState(if (wanted) 1f else 0f, tween(180), label = I18n.s(R.string.ui_xmbtabbadge))
     val bw = xmbBadgeW(tab, hold.count, ss)
     val bh = xmbBadgeH(tab, ss)
     val reach = xmbBadgeReach(bw, padEnd, ss)
@@ -599,7 +600,7 @@ internal fun XmbTabPill(
  */
 @Composable
 private fun XmbRingGlyph(ring: XmbDownloadRing, ss: ScreenScale, accent: Color, size: Dp, modifier: Modifier) {
-    val sweep by animateFloatAsState(ring.progress, tween(300), label = "xmbRingSweep")
+    val sweep by animateFloatAsState(ring.progress, tween(300), label = I18n.s(R.string.ui_xmbringsweep))
     val running = ring.running
     Canvas(modifier.size(size)) {
         val stroke = ss.dp(2f).toPx()

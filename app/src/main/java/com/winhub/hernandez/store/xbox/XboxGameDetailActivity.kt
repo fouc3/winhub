@@ -44,6 +44,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
 
 /**
  * One Xbox PC game: Install (with a package choice when the offer has several PC packages), progress from the
@@ -188,10 +189,10 @@ class XboxGameDetailActivity : ComponentActivity() {
                             if (game.publisher.isNotBlank() && game.publisher != game.developer) InfoChip(game.publisher)
                             InfoChip("ID: ${game.id}")
                         }
-                        if (game.description.isNotBlank()) StoreSection(title = "About") {
+                        if (game.description.isNotBlank()) StoreSection(title = I18n.s(R.string.about)) {
                             Text(game.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        StoreSection(title = "How it runs") {
+                        StoreSection(title = I18n.s(R.string.ui_how_it_runs)) {
                             if (game.pc) Text("Install: the PC version is downloaded with your license and runs in a Wine container you pick when " +
                                 "adding it to Games. Each launch checks the license with Microsoft, so play online the first time. " +
                                 "Cloud saves are ${if (XboxMainActivity.cloudSaves(this@XboxGameDetailActivity)) "on" else "off"} (Xbox › Profile).",
@@ -246,9 +247,9 @@ class XboxGameDetailActivity : ComponentActivity() {
             choices.onFailure { status = it.message ?: "The Xbox package could not be resolved." }.onSuccess { list ->
                 if (list.size == 1) XboxDownloads.start(applicationContext, game, list.single().contentId)
                 else AlertDialog.Builder(this@XboxGameDetailActivity, R.style.StoreAlertDialogDark)
-                    .setTitle("Choose the PC package")
+                    .setTitle(I18n.s(R.string.ui_choose_the_pc_package))
                     .setItems(list.map { it.label }.toTypedArray()) { _, which -> XboxDownloads.start(applicationContext, game, list[which].contentId) }
-                    .setNegativeButton("Cancel", null).show()
+                    .setNegativeButton(I18n.s(R.string.cancel), null).show()
             }
         }
     }
@@ -276,14 +277,14 @@ class XboxGameDetailActivity : ComponentActivity() {
     private fun confirmUninstall() {
         AlertDialog.Builder(this, R.style.StoreAlertDialogDark)
             .setTitle("Uninstall ${game.title}?")
-            .setMessage("The game's files are deleted. Shortcuts that point to it stop working until you install it again.")
-            .setPositiveButton("Uninstall") { _, _ ->
+            .setMessage(I18n.s(R.string.ui_game_files_are_deleted_shortcuts_that_point_to_it_sto))
+            .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ ->
                 lifecycleScope.launch {
                     val r = withContext(Dispatchers.IO) { runCatching { XboxDownloads.uninstall(applicationContext, game.id) } }
                     r.onFailure { status = it.message }
                     refresh()
                 }
             }
-            .setNegativeButton("Cancel", null).show()
+            .setNegativeButton(I18n.s(R.string.cancel), null).show()
     }
 }

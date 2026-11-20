@@ -6,6 +6,8 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.os.storage.StorageVolume
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * A storage volume offered in the file manager's drive menu.
@@ -63,7 +65,7 @@ object StorageRoots {
 
         // Internal storage is never removable and never absent; seed it first so it heads the menu.
         volumeOf(PRIMARY_KEY).apply {
-            label = "Internal"
+            label = I18n.s(R.string.ui_internal)
             removable = false
             candidates += File(INTERNAL_PATH)
         }

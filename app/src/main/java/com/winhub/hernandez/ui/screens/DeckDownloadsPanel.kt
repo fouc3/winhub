@@ -55,6 +55,8 @@ import com.winhub.hernandez.store.download.formatDownloadSize
 import com.winhub.hernandez.store.download.formatDownloadSpeed
 import com.winhub.hernandez.store.download.formatEta
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Downloads chip's in-Deck destination: every store's real [DownloadRegistry] queue with the
@@ -120,25 +122,25 @@ internal fun DeckDownloadsPanel(onBack: () -> Unit) {
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.size(6.dp))
-            Text("Back", color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.social_hub_configs_back), color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(Modifier.size(14.dp))
         Text(
-            text = "Downloads",
+            text = I18n.s(R.string.xmb_tab_downloads),
             color = Deck.onBackground,
             fontSize = 24.sp,
             fontWeight = FontWeight.Black,
         )
         Spacer(Modifier.size(2.dp))
         Text(
-            text = "What every store is installing",
+            text = I18n.s(R.string.ui_what_every_store_is_installing),
             color = Deck.onSurfaceVariant,
             fontSize = 12.sp,
         )
         Spacer(Modifier.size(14.dp))
 
         if (entries.isEmpty()) {
-            Text("No downloads yet.", color = Deck.onSurfaceVariant, fontSize = 13.sp)
+            Text(I18n.s(R.string.ui_no_downloads_yet), color = Deck.onSurfaceVariant, fontSize = 13.sp)
         } else {
             // Active first (pause/resume still works), then whatever the queue holds.
             val sorted = entries.sortedByDescending { it.isActive }
@@ -151,7 +153,7 @@ internal fun DeckDownloadsPanel(onBack: () -> Unit) {
         Spacer(Modifier.size(6.dp))
         DeckGroup("Store settings") {
             DeckRow(
-                label = "Show mature content",
+                label = I18n.s(R.string.ui_show_mature_content),
                 hint = "Storefront 17+/18+ titles; owned games always show",
                 control = {
                     DeckToggle(showMature) { v ->
@@ -161,8 +163,8 @@ internal fun DeckDownloadsPanel(onBack: () -> Unit) {
                 },
             )
             DeckChoiceRow(
-                label = "Download speed",
-                hint = "Ceiling the next store download may ramp to",
+                label = I18n.s(R.string.ui_download_speed),
+                hint = I18n.s(R.string.ui_ceiling_the_next_store_download_may_ramp_to),
                 options = StoreDownloadTier.ALL.map { t -> t.toString() to StoreDownloadTier.label(t) },
                 selected = dlTier.toString(),
                 onPick = { v ->
@@ -298,9 +300,9 @@ private fun DeckDownloadRow(
                     }
                 }
                 if (row.isActive) {
-                    DeckButton("Cancel", primary = false) { row.cancel?.invoke() }
+                    DeckButton(I18n.s(R.string.cancel), primary = false) { row.cancel?.invoke() }
                 } else {
-                    DeckButton("Dismiss", primary = false) { DownloadRegistry.remove(row.key) }
+                    DeckButton(I18n.s(R.string.xmb_dl_act_dismiss), primary = false) { DownloadRegistry.remove(row.key) }
                 }
             }
         }

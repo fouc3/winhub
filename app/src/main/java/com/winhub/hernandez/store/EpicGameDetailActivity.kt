@@ -72,6 +72,8 @@ import org.json.JSONObject
 import androidx.lifecycle.lifecycleScope
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class EpicGameDetailActivity : ComponentActivity() {
 
@@ -318,18 +320,18 @@ class EpicGameDetailActivity : ComponentActivity() {
         if (installBtnText == "Cancel") {
             // Ask what to do with the partial download before cancelling.
             AlertDialog.Builder(this)
-                .setTitle("Cancel download?")
+                .setTitle(I18n.s(R.string.ui_cancel_download))
                 .setMessage("Keep the partial download so you can resume later, or delete all " +
                         "downloaded files for this game?")
-                .setPositiveButton("Keep files") { _, _ ->
+                .setPositiveButton(I18n.s(R.string.ui_keep_files)) { _, _ ->
                     appName?.let { EpicCancelPolicy.setDeleteOnCancel(it, false) }
                     cancelDownload?.run(); cancelDownload = null
                 }
-                .setNegativeButton("Delete files") { _, _ ->
+                .setNegativeButton(I18n.s(R.string.ui_delete_files)) { _, _ ->
                     appName?.let { EpicCancelPolicy.setDeleteOnCancel(it, true) }
                     cancelDownload?.run(); cancelDownload = null
                 }
-                .setNeutralButton("Keep downloading", null)
+                .setNeutralButton(I18n.s(R.string.ui_keep_downloading), null)
                 .show()
             return
         }
@@ -503,8 +505,8 @@ class EpicGameDetailActivity : ComponentActivity() {
     private fun confirmUninstall() {
         AlertDialog.Builder(this)
             .setTitle("Uninstall $title?")
-            .setMessage("This will delete all installed game files.")
-            .setPositiveButton("Uninstall") { _, _ ->
+            .setMessage(I18n.s(R.string.ui_this_will_delete_all_installed_game_files))
+            .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ ->
                 val an = appName ?: return@setPositiveButton
                 val dir = prefs!!.getString("epic_dir_$an", null) ?: return@setPositiveButton
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -521,7 +523,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                     }
                 }
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(I18n.s(R.string.cancel), null)
             .show()
     }
 
@@ -814,7 +816,7 @@ class EpicGameDetailActivity : ComponentActivity() {
             (if (parent != null) "${parent.name}/${f.name}" else f.name)
         }.toTypedArray()
         AlertDialog.Builder(this)
-            .setTitle("Select game executable")
+            .setTitle(I18n.s(R.string.ui_select_game_executable))
             .setItems(labels) { _, which -> onSelected(candidates[which]) }
             .setCancelable(false)
             .show()
@@ -999,7 +1001,7 @@ private fun EpicGameDetailScreen(
                     }
                 }
                 Spacer(Modifier.height(8.dp))
-                StoreSection(title = "Updates") {
+                StoreSection(title = I18n.s(R.string.ui_updates)) {
                     if (!installed) {
                         StoreStatusText("Install the game first to check for updates.")
                     } else {
@@ -1013,14 +1015,14 @@ private fun EpicGameDetailScreen(
                         Spacer(Modifier.height(8.dp))
                         if (updateBtnVisible) {
                             StoreActionButton(
-                                text = "Update Now",
+                                text = I18n.s(R.string.ui_update_now_2),
                                 onClick = onUpdateClick,
                                 modifier = Modifier.fillMaxWidth(),
                             )
                             Spacer(Modifier.height(8.dp))
                         }
                         StoreActionButton(
-                            text = "Check for Updates",
+                            text = I18n.s(R.string.ui_check_for_updates),
                             onClick = onCheckUpdates,
                             modifier = Modifier.fillMaxWidth(),
                             enabled = checkUpdatesEnabled,
@@ -1041,7 +1043,7 @@ private fun EpicGameDetailScreen(
             }
 
             1 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
-                StoreSection(title = "DLC") {
+                StoreSection(title = I18n.s(R.string.ui_dlc)) {
                     if (dlcArr == null) {
                         StoreStatusText("No DLCs in your library for this game")
                     } else if (dlcArr.length() == 0) {
@@ -1078,7 +1080,7 @@ private fun EpicGameDetailScreen(
                                     )
                                     if (dlcInstalled) {
                                         Text(
-                                            text = "✓ Installed",
+                                            text = I18n.s(R.string.ui_installed_2),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = INSTALLED_GREEN,
                                             fontWeight = FontWeight.Bold,
@@ -1100,7 +1102,7 @@ private fun EpicGameDetailScreen(
             }
 
             2 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
-                StoreSection(title = "Cloud Saves") {
+                StoreSection(title = I18n.s(R.string.ui_cloud_saves)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth(),
@@ -1113,7 +1115,7 @@ private fun EpicGameDetailScreen(
                             modifier = Modifier.weight(1f),
                         )
                         Spacer(Modifier.width(8.dp))
-                        StoreActionButton(text = "Browse", onClick = onCloudBrowse)
+                        StoreActionButton(text = I18n.s(R.string.browse), onClick = onCloudBrowse)
                     }
                     if (cloudSaveStatusVisible) {
                         Spacer(Modifier.height(8.dp))
@@ -1121,14 +1123,14 @@ private fun EpicGameDetailScreen(
                     }
                     Spacer(Modifier.height(8.dp))
                     StoreActionButton(
-                        text = "Upload Saves",
+                        text = I18n.s(R.string.ui_upload_saves),
                         onClick = onCloudUpload,
                         modifier = Modifier.fillMaxWidth(),
                         enabled = cloudButtonsEnabled,
                     )
                     Spacer(Modifier.height(8.dp))
                     StoreActionButton(
-                        text = "Download Saves",
+                        text = I18n.s(R.string.ui_download_saves),
                         onClick = onCloudDownload,
                         modifier = Modifier.fillMaxWidth(),
                         enabled = cloudButtonsEnabled,

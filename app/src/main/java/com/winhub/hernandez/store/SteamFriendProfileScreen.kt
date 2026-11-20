@@ -62,6 +62,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import java.util.Locale
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * In-app friend profile — replaces the old "View Steam profile" browser jump (the browser option now
@@ -215,12 +217,12 @@ private fun ProfileTopBar(onBack: () -> Unit, onViewOnSteam: () -> Unit, onRemov
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = I18n.s(R.string.social_hub_configs_back),
                 tint = MaterialTheme.colorScheme.onBackground,
             )
         }
         Text(
-            text = "Profile",
+            text = I18n.s(R.string.profile),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(start = 4.dp),
@@ -237,11 +239,11 @@ private fun ProfileMoreButton(onViewOnSteam: () -> Unit, onRemove: () -> Unit, t
     var confirmRemove by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { expanded = true; confirmRemove = false }) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "More", tint = tint)
+            Icon(Icons.Filled.MoreVert, contentDescription = I18n.s(R.string.ui_more), tint = tint)
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(
-                text = { Text("View full profile on Steam") },
+                text = { Text(I18n.s(R.string.ui_view_full_profile_on_steam)) },
                 onClick = { expanded = false; onViewOnSteam() },
             )
             HorizontalDivider(thickness = 1.dp, color = ProfileRowLine)
@@ -404,7 +406,7 @@ private fun StatusCard(friend: SteamFriendsStore.SteamFriend, modifier: Modifier
                 }
             },
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
-        ) { Text("Join") }
+        ) { Text(I18n.s(R.string.ui_join)) }
     }
 }
 
@@ -600,7 +602,7 @@ private fun RecentGameCard(game: SteamFriendsStore.RecentGame) {
 @Composable
 private fun ViewOnSteamRow(onViewOnSteam: () -> Unit) {
     Text(
-        text = "View full profile on Steam  ↗",
+        text = I18n.s(R.string.ui_view_full_profile_on_steam_2),
         style = MaterialTheme.typography.bodyMedium,
         fontWeight = FontWeight.SemiBold,
         color = MaterialTheme.colorScheme.primary,
@@ -618,7 +620,7 @@ private fun ViewOnSteamRow(onViewOnSteam: () -> Unit) {
 @Composable
 private fun PrivacyNote() {
     Text(
-        text = "This profile is private — only what the friend chooses to share is shown here.",
+        text = I18n.s(R.string.ui_this_profile_is_private_only_what_the_friend_chooses),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
@@ -641,7 +643,7 @@ private fun LoadingBlock() {
         CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(14.dp))
         Text(
-            text = "Loading profile…",
+            text = I18n.s(R.string.ui_loading_profile),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

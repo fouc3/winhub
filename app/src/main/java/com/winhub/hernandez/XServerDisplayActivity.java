@@ -174,6 +174,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.sherlock.com.sun.media.sound.SF2Soundbank;
+import com.winhub.hernandez.util.I18n
 
 public class XServerDisplayActivity extends AppCompatActivity {
     public static String NOTIFICATION_CHANNEL_ID = "Winlator";
@@ -1694,7 +1695,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
     private void createNotifcationChannel() {
         String name = "Winlator";
-        String description = "Winlator XServer Messages";
+        String description = I18n.s(R.string.ui_winlator_xserver_messages);
         int importance = NotificationManager.IMPORTANCE_LOW;
         NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
         channel.setDescription(description);
@@ -4178,7 +4179,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     final boolean haveEngineRates = realFps > 0f;
                     String text;
                     if (shownFps <= 0f) {
-                        text = "measuring…";
+                        text = I18n.s(R.string.ui_measuring);
                     } else {
                         text = String.format(java.util.Locale.US,
                             "%.0f real → %.0f shown  (%dx", realFps, shownFps, trusted + 1);
@@ -14978,7 +14979,7 @@ return true;
             String title = w.getName();
             String cls   = w.getClassName() != null ? w.getClassName() : "";
             if (title == null || title.isEmpty()) title = cls;
-            if (title.isEmpty()) title = "Unnamed Window";
+            if (title.isEmpty()) title = I18n.s(R.string.ui_unnamed_window);
             windowInfoList.add(new XServerDialogState.ActiveWindow(
                 title, cls, activeIcons.get(i), null, w.getHandle()));
         }

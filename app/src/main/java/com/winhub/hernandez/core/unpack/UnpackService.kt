@@ -16,6 +16,8 @@ import android.util.Log
 import com.winhub.hernandez.UnpackArchiveActivity
 import com.winhub.hernandez.core.StringUtils
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Foreground service that runs one archive extraction to completion, surviving the app going to
@@ -430,7 +432,7 @@ class UnpackService : Service() {
         if (nm.getNotificationChannel(CHANNEL_ID) != null) return
         nm.createNotificationChannel(
             NotificationChannel(CHANNEL_ID, "Unpacking", NotificationManager.IMPORTANCE_LOW).apply {
-                description = "Shows archive extraction progress and keeps it running in the background"
+                description = I18n.s(R.string.ui_shows_archive_extraction_progress_and_keeps_it_runnin)
                 setShowBadge(false)
             }
         )

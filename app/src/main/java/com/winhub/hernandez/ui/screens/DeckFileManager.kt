@@ -117,6 +117,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /*
  * The Deck file manager: a locations panel (landscape) or tab strip (portrait), a header card with
@@ -353,7 +355,7 @@ private fun FmLocationsPanel(ui: DeckFmUi, act: DeckFmActions, modifier: Modifie
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
-            text = "Files",
+            text = I18n.s(R.string.ui_files),
             color = DeckPalette.onBackground,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
@@ -385,7 +387,7 @@ private fun FmLocationRow(item: RailItem) {
     val bg by animateColorAsState(
         targetValue = if (item.selected) DeckPalette.primary.copy(alpha = 0.16f) else Color.Transparent,
         animationSpec = tween(200),
-        label = "fmLocBg",
+        label = I18n.s(R.string.ui_fmlocbg),
     )
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -448,7 +450,7 @@ private fun FmMain(
         FmHeader(ui, act, portrait)
         if (ui.showSearch && !ui.showFavorites) {
             DeckConfigTextField(
-                label = "Filter this folder",
+                label = I18n.s(R.string.ui_filter_this_folder),
                 value = ui.searchQuery,
                 onValueChange = act.setSearch,
             )
@@ -492,14 +494,14 @@ private fun FmHeader(ui: DeckFmUi, act: DeckFmActions, portrait: Boolean) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 FmIconButton(
                     icon = Icons.Filled.ArrowUpward,
-                    description = "Parent folder",
+                    description = I18n.s(R.string.ui_parent_folder),
                     enabled = !ui.showFavorites && ui.currentDir != ui.currentRoot,
                     onClick = act.goUp,
                 )
                 Spacer(Modifier.width(8.dp))
                 if (ui.showFavorites) {
                     Text(
-                        text = "Favorites",
+                        text = I18n.s(R.string.ui_favorites),
                         color = DeckPalette.onBackground,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
@@ -816,7 +818,7 @@ private fun FmProgressBar(ui: DeckFmUi, act: DeckFmActions) {
 
 @Composable
 private fun FmPickDirBar(ui: DeckFmUi, act: DeckFmActions) {
-    DeckButton("Select this folder", modifier = Modifier.fillMaxWidth(), onClick = act.pickHere)
+    DeckButton(I18n.s(R.string.ui_select_this_folder), modifier = Modifier.fillMaxWidth(), onClick = act.pickHere)
 }
 
 // ── Directory content ──
@@ -831,25 +833,25 @@ private fun FmDirectory(ui: DeckFmUi, act: DeckFmActions, portrait: Boolean, onF
     ) {
         when {
             ui.loading && ui.entries.isEmpty() -> FmStateView(
-                icon = Icons.Filled.FolderOpen, title = "Opening folder…", body = "", loading = true,
+                icon = Icons.Filled.FolderOpen, title = I18n.s(R.string.ui_opening_folder), body = "", loading = true,
             )
             ui.unreadable -> FmStateView(
                 icon = Icons.Filled.Lock,
-                title = "Can't read this folder",
-                body = "Android didn't let the app list it. Try another location.",
+                title = I18n.s(R.string.ui_can_t_read_this_folder),
+                body = I18n.s(R.string.ui_android_didn_t_let_the_app_list_it_try_another_locati),
                 actionLabel = if (atFloor) "Try again" else "Go up",
                 onAction = if (atFloor) act.refresh else act.goUp,
             )
             ui.entries.isEmpty() -> FmStateView(
                 icon = Icons.Filled.FolderOpen,
-                title = "Empty folder",
+                title = I18n.s(R.string.ui_empty_folder),
                 body = if (ui.pickMode) "Nothing to pick here." else "Copy something in, or create a new folder.",
                 actionLabel = if (atFloor) null else "Go up",
                 onAction = act.goUp,
             )
             ui.shown.isEmpty() -> FmStateView(
                 icon = Icons.Filled.Search,
-                title = "No matches",
+                title = I18n.s(R.string.ui_no_matches),
                 body = "Nothing here matches \"${ui.searchQuery}\".",
             )
             ui.gridView -> FmGrid(ui, act, portrait, onFocused)
@@ -922,7 +924,7 @@ private fun FmParentRow(onTap: () -> Unit) {
         Spacer(Modifier.width(12.dp))
         Column {
             Text("..", color = DeckPalette.onBackground, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-            Text("Parent folder", color = DeckPalette.onSurfaceVariant, fontSize = 12.5.sp)
+            Text(I18n.s(R.string.ui_parent_folder), color = DeckPalette.onSurfaceVariant, fontSize = 12.5.sp)
         }
     }
 }
@@ -968,7 +970,7 @@ private fun FmCheck(checked: Boolean) {
             .background(if (checked) DeckPalette.primary else Color.Transparent)
             .border(2.dp, if (checked) DeckPalette.primary else DeckPalette.onSurfaceVariant, CircleShape),
     ) {
-        if (checked) Icon(Icons.Filled.Check, contentDescription = "Selected", tint = DeckPalette.onPrimary, modifier = Modifier.size(16.dp))
+        if (checked) Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_selected), tint = DeckPalette.onPrimary, modifier = Modifier.size(16.dp))
     }
 }
 
@@ -1025,7 +1027,7 @@ private fun FmRow(file: File, ui: DeckFmUi, act: DeckFmActions, onFocused: (File
         }
         if (fav) {
             Icon(
-                Icons.Filled.Star, contentDescription = "Favorite",
+                Icons.Filled.Star, contentDescription = I18n.s(R.string.ui_favorite),
                 tint = DeckPalette.primary, modifier = Modifier.padding(horizontal = 4.dp).size(18.dp),
             )
         }
@@ -1039,7 +1041,7 @@ private fun FmRow(file: File, ui: DeckFmUi, act: DeckFmActions, onFocused: (File
                     .focusProperties { canFocus = false }
                     .clickable { act.openMenu(file) },
             ) {
-                Icon(Icons.Filled.MoreVert, contentDescription = "Actions", tint = DeckPalette.onSurfaceVariant, modifier = Modifier.size(20.dp))
+                Icon(Icons.Filled.MoreVert, contentDescription = I18n.s(R.string.ui_actions), tint = DeckPalette.onSurfaceVariant, modifier = Modifier.size(20.dp))
             }
         } else if (isDir) {
             Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = DeckPalette.onSurfaceVariant, modifier = Modifier.size(20.dp))
@@ -1073,7 +1075,7 @@ private fun FmTile(file: File, ui: DeckFmUi, act: DeckFmActions, onFocused: (Fil
             }
             if (fav) {
                 Icon(
-                    Icons.Filled.Star, contentDescription = "Favorite", tint = DeckPalette.primary,
+                    Icons.Filled.Star, contentDescription = I18n.s(R.string.ui_favorite), tint = DeckPalette.primary,
                     modifier = Modifier.align(Alignment.TopEnd).padding(6.dp).size(18.dp),
                 )
             }
@@ -1130,8 +1132,8 @@ private fun FmFavorites(ui: DeckFmUi, act: DeckFmActions, onFocused: (File) -> U
                 Box(Modifier.fillParentMaxHeightCompat()) {
                     FmStateView(
                         icon = Icons.Filled.StarBorder,
-                        title = "No favorites yet",
-                        body = "Pin a folder from its menu to jump back to it fast.",
+                        title = I18n.s(R.string.ui_no_favorites_yet),
+                        body = I18n.s(R.string.ui_pin_a_folder_from_its_menu_to_jump_back_to_it_fast),
                     )
                 }
             }
@@ -1222,7 +1224,7 @@ private fun FmFavCard(file: File, ui: DeckFmUi, act: DeckFmActions, onFocused: (
                 .focusProperties { canFocus = false }
                 .clickable { act.unpin(file) },
         ) {
-            Icon(Icons.Filled.Star, contentDescription = "Remove from favorites", tint = DeckPalette.primary, modifier = Modifier.size(22.dp))
+            Icon(Icons.Filled.Star, contentDescription = I18n.s(R.string.ui_remove_from_favorites), tint = DeckPalette.primary, modifier = Modifier.size(22.dp))
         }
     }
 }

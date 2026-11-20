@@ -78,6 +78,7 @@ import com.winhub.hernandez.core.AppUtils
 import com.winhub.hernandez.core.PresetScope
 import com.winhub.hernandez.core.PreloaderDialog
 import com.winhub.hernandez.midi.MidiManager
+import com.winhub.hernandez.util.I18n
 
 /**
  * Deck Mode's settings page — a 1:1 mirror of [SettingsScreen]: the same preference keys, the same
@@ -434,14 +435,14 @@ internal fun DeckSettingsScreen() {
         // ── Header ──
         Column(modifier = Modifier.fillMaxWidth().padding(start = 22.dp, end = 22.dp, top = 18.dp, bottom = 10.dp)) {
             Text(
-                text = "Settings",
+                text = I18n.s(R.string.settings),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "Identical to the Settings tab",
+                text = I18n.s(R.string.ui_identical_to_the_settings_tab),
                 fontSize = 13.sp,
                 color = DeckPalette.onSurfaceVariant,
             )
@@ -519,8 +520,8 @@ internal fun DeckSettingsScreen() {
         ) {
         if (settingsLayout == "pages" && settingsPagesCategoryOpen) {
             DeckRow(
-                label = "← All categories",
-                hint = "Back to the category list",
+                label = I18n.s(R.string.ui_all_categories),
+                hint = I18n.s(R.string.ui_back_to_the_category_list),
                 onConfigClick = { settingsPagesCategoryOpen = false },
                 control = {},
             )
@@ -529,21 +530,21 @@ internal fun DeckSettingsScreen() {
         when (settingsTab) {
         0 -> {
         // ── Steam ──
-        DeckGroup(title = "Steam") {
-            DeckRow(label = "Steam chat notifications") {
+        DeckGroup(title = I18n.s(R.string.ui_steam)) {
+            DeckRow(label = I18n.s(R.string.ui_steam_chat_notifications)) {
                 DeckToggle(steamChat) {
                     steamChat = it
                     SteamPrefs.setChatNotificationsEnabled(context, it)
                 }
             }
-            DeckRow(label = "Show me as in-game for offline launches") {
+            DeckRow(label = I18n.s(R.string.ui_show_me_as_in_game_for_offline_launches)) {
                 DeckToggle(steamOffline) {
                     steamOffline = it
                     SteamPrefs.setOfflinePresenceEnabled(context, it)
                 }
             }
             DeckChoiceRow(
-                label = "Steam connection region",
+                label = I18n.s(R.string.ui_steam_connection_region),
                 options = buildList {
                     add(SteamRegion.AUTO to "Auto (nearest by ping)")
                     SteamRegion.CATALOG.forEach { add(it.code to "${it.name}  (${it.code})") }
@@ -557,21 +558,21 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Sound ──
-        DeckGroup(title = "Sound") {
+        DeckGroup(title = I18n.s(R.string.sound)) {
             DeckChoiceRow(
-                label = "MIDI Sound Font",
+                label = I18n.s(R.string.ui_midi_sound_font),
                 options = sfNames.map { it to it },
                 selected = sfNames.getOrElse(selectedSF) { MidiManager.DEFAULT_SF2_FILE },
                 onPick = { picked -> selectedSF = sfNames.indexOf(picked).coerceAtLeast(0) },
             )
-            DeckRow(label = "Install / Remove", hint = "Add a .sf2 or remove a custom one") {
+            DeckRow(label = "Install / Remove", hint = I18n.s(R.string.ui_add_a_sf2_or_remove_a_custom_one)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DeckButton("Install") {
+                    DeckButton(I18n.s(R.string.ui_install)) {
                         installSFInAppLauncher.launch(
                             InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont"),
                         )
                     }
-                    DeckButton("Remove", primary = false) {
+                    DeckButton(I18n.s(R.string.remove), primary = false) {
                         if (selectedSF != 0) {
                             ContentDialog.confirm(context, R.string.do_you_want_to_remove_this_sound_font) {
                                 if (MidiManager.removeSF2File(context, sfNames[selectedSF])) {
@@ -586,13 +587,13 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Music Player ──
-        DeckGroup(title = "Music Player") {
+        DeckGroup(title = I18n.s(R.string.ui_music_player)) {
             DeckRow(
-                label = "Music file",
+                label = I18n.s(R.string.ui_music_file),
                 hint = musicName ?: "No file chosen. Pick an MP3 to play while you use WinHub.",
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DeckButton("Choose") {
+                    DeckButton(I18n.s(R.string.ui_choose)) {
                         musicLauncher.launch(
                             InAppFilePicker.buildIntent(
                                 context, arrayOf("mp3", "m4a", "ogg", "wav", "flac", "aac"), "Choose music",
@@ -600,7 +601,7 @@ internal fun DeckSettingsScreen() {
                         )
                     }
                     if (musicName != null) {
-                        DeckButton("Clear", primary = false) {
+                        DeckButton(I18n.s(R.string.clear), primary = false) {
                             com.winhub.hernandez.core.MusicPlayer.clear(context)
                             musicName = null
                         }
@@ -608,15 +609,15 @@ internal fun DeckSettingsScreen() {
                 }
             }
             if (musicName != null) {
-                DeckRow(label = "Play music", hint = "Loops while WinHub is open.") {
+                DeckRow(label = I18n.s(R.string.ui_play_music), hint = I18n.s(R.string.ui_loops_while_winhub_is_open)) {
                     DeckToggle(musicOn) {
                         musicOn = it
                         com.winhub.hernandez.core.MusicPlayer.setEnabled(it)
                     }
                 }
                 DeckRow(
-                    label = "Play in games",
-                    hint = "Off by default. The music plays under the game's own sound.",
+                    label = I18n.s(R.string.ui_play_in_games),
+                    hint = I18n.s(R.string.ui_off_by_default_the_music_plays_under_the_game_own_sou),
                 ) {
                     DeckToggle(musicInGame) {
                         musicInGame = it
@@ -627,10 +628,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Mali ──
-        DeckGroup(title = "Mali") {
+        DeckGroup(title = I18n.s(R.string.ui_mali)) {
             DeckRow(
-                label = "Force Mali mode",
-                hint = "Use this if the app doesn't detect a non Adreno GPU.",
+                label = I18n.s(R.string.ui_force_mali_mode),
+                hint = I18n.s(R.string.ui_use_this_if_the_app_doesn_t_detect_a_non_adreno_gpu),
             ) {
                 DeckToggle(forceMali) {
                     forceMali = it
@@ -641,14 +642,14 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Settings view ──
-        DeckGroup(title = "Settings view") { DeckViewModeRow() }
+        DeckGroup(title = I18n.s(R.string.ui_settings_view)) { DeckViewModeRow() }
 
         // ── Game Doctor ──
-        DeckGroup(title = "Game Doctor") {
+        DeckGroup(title = I18n.s(R.string.ui_game_doctor)) {
             var doctorAuto by remember { mutableStateOf(GameDoctor.isAutoEnabled(context)) }
             DeckRow(
-                label = "Auto step-down",
-                hint = "When a game crashes soon after launch, lower its FEX preset one step. You can undo it.",
+                label = I18n.s(R.string.ui_auto_step_down),
+                hint = I18n.s(R.string.ui_when_a_game_crashes_soon_after_launch_lower_its_fex_p),
                 control = {
                     DeckToggle(doctorAuto) {
                         doctorAuto = it
@@ -659,9 +660,9 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Box64 ──
-        DeckGroup(title = "Box64") {
+        DeckGroup(title = I18n.s(R.string.box64)) {
             DeckChoiceRow(
-                label = "Box64 Preset",
+                label = I18n.s(R.string.box64_preset),
                 options = box64Presets.map { it.id to it.name },
                 selected = box64,
                 onPick = { box64 = it; saved = false },
@@ -683,9 +684,9 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── FEXCore Config ──
-        DeckGroup(title = "FEXCore Config") {
+        DeckGroup(title = I18n.s(R.string.ui_fexcore_config)) {
             DeckChoiceRow(
-                label = "FEXCore Preset",
+                label = I18n.s(R.string.fexcore_preset),
                 options = fexPresets.map { it.id to it.name },
                 selected = fex,
                 onPick = { fex = it; saved = false },
@@ -708,20 +709,20 @@ internal fun DeckSettingsScreen() {
         }
         1 -> {
         // ── Side Menu ──
-        DeckGroup(title = "Side Menu") {
-            DeckRow(label = "Show game stores") {
+        DeckGroup(title = I18n.s(R.string.ui_side_menu)) {
+            DeckRow(label = I18n.s(R.string.ui_show_game_stores)) {
                 DeckToggle(showStores) {
                     showStores = it
                     AppThemeState.setShowStores(it)
                 }
             }
-            DeckRow(label = "Show internal storage") {
+            DeckRow(label = I18n.s(R.string.ui_show_internal_storage)) {
                 DeckToggle(showInternal) {
                     showInternal = it
                     AppThemeState.setShowInternalStorage(it)
                 }
             }
-            DeckRow(label = "Show SD card storage") {
+            DeckRow(label = I18n.s(R.string.ui_show_sd_card_storage)) {
                 DeckToggle(showSd) {
                     showSd = it
                     AppThemeState.setShowSdStorage(it)
@@ -730,9 +731,9 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── App Orientation ──
-        DeckGroup(title = "App Orientation") {
+        DeckGroup(title = I18n.s(R.string.ui_app_orientation)) {
             DeckChoiceRow(
-                label = "App Orientation",
+                label = I18n.s(R.string.ui_app_orientation),
                 options = listOf(
                     AppOrientation.AUTO to "Auto",
                     AppOrientation.PORTRAIT to "Portrait",
@@ -747,9 +748,9 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Interface Scale ──
-        DeckGroup(title = "Interface Scale") {
+        DeckGroup(title = I18n.s(R.string.ui_interface_scale)) {
             DeckSliderRow(
-                label = "UI Scale",
+                label = I18n.s(R.string.ui_ui_scale),
                 value = uiScale,
                 range = 0.5f..1.5f,
                 format = { "${(it * 100).toInt()}%" },
@@ -759,7 +760,7 @@ internal fun DeckSettingsScreen() {
                 },
             )
             DeckSliderRow(
-                label = "Font Size",
+                label = I18n.s(R.string.ui_font_size),
                 value = fontScale,
                 range = 0.5f..1.5f,
                 format = { "${(it * 100).toInt()}%" },
@@ -771,9 +772,9 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Default Screen on Launch ──
-        DeckGroup(title = "Default Screen on Launch") {
+        DeckGroup(title = I18n.s(R.string.ui_default_screen_on_launch)) {
             DeckChoiceRow(
-                label = "Default landing screen",
+                label = I18n.s(R.string.ui_default_landing_screen),
                 options = listOf(
                     "games" to "Game Shortcuts",
                     "containers" to "Containers",
@@ -784,8 +785,8 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Big Picture Mode ──
-        DeckGroup(title = "Big Picture Mode") {
-            DeckRow(label = "Enable Big Picture Mode on App Launch") {
+        DeckGroup(title = I18n.s(R.string.ui_big_picture_mode)) {
+            DeckRow(label = I18n.s(R.string.ui_enable_big_picture_mode_on_app_launch)) {
                 DeckToggle(bigPicture) { bigPicture = it; saved = false }
             }
         }
@@ -793,10 +794,10 @@ internal fun DeckSettingsScreen() {
         }
         2 -> {
         // ── Theme ──
-        DeckGroup(title = "Theme") {
+        DeckGroup(title = I18n.s(R.string.theme)) {
             DeckChoiceRow(
-                label = "App Theme",
-                hint = "Recolors the whole app, including popups and touch controls",
+                label = I18n.s(R.string.ui_app_theme),
+                hint = I18n.s(R.string.ui_recolors_the_whole_app_including_popups_and_touch_con),
                 options = themeChoices.map { it.name to it.name },
                 selected = selectedTheme,
                 onPick = { name ->
@@ -805,7 +806,7 @@ internal fun DeckSettingsScreen() {
                 },
             )
             DeckRow(
-                label = "Preview",
+                label = I18n.s(R.string.ui_preview),
                 hint = selectedTheme,
                 control = {
                     ThemePreviewDots(
@@ -814,8 +815,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             DeckChoiceRow(
-                label = "App icon",
-                hint = "The four circles of the launcher icon. Default keeps them blue, Follow the theme gives them the theme's colour, or pick a colour. The launcher can take a moment to change, and may drop a shortcut you pinned to the home screen",
+                label = I18n.s(R.string.ui_app_icon),
+                hint = I18n.s(R.string.ui_four_circles_of_the_launcher_icon_default_keeps_them),
                 options = AppIcon.options,
                 selected = appIcon,
                 onPick = {
@@ -826,10 +827,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Orientation ── (only place this can be changed; the app restarts its screen to apply it)
-        DeckGroup(title = "Orientation") {
+        DeckGroup(title = I18n.s(R.string.orientation)) {
             DeckChoiceRow(
-                label = "App orientation",
-                hint = "Portrait is a touch-first layout with the tabs along the bottom",
+                label = I18n.s(R.string.ui_app_orientation_2),
+                hint = I18n.s(R.string.ui_portrait_is_a_touch_first_layout_with_the_tabs_along),
                 options = listOf(
                     AppOrientation.AUTO to "Landscape",
                     AppOrientation.PORTRAIT to "Portrait",
@@ -845,10 +846,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Home ── (landscape only: portrait Home is always the cover grid)
-        if (!portraitUi) DeckGroup(title = "Home") {
+        if (!portraitUi) DeckGroup(title = I18n.s(R.string.ui_home)) {
             DeckChoiceRow(
-                label = "Interface look",
-                hint = "Glass puts every page on see-through glass, and a game's settings on the game's own art. Material is the plain look. Home keeps its own style either way",
+                label = I18n.s(R.string.ui_interface_look),
+                hint = I18n.s(R.string.ui_glass_puts_every_page_on_see_through_glass_and_a_game),
                 options = listOf(
                     GlassLook.GLASS to "Glass",
                     GlassLook.MATERIAL to "Material",
@@ -864,8 +865,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             DeckChoiceRow(
-                label = "Home style",
-                hint = "Full XMB puts the stores and Social on Home as cards above your games. Steam keeps one row of covers at the bottom, with Stores, Downloads, Friends and Social as pages that slide up. Both hide those tabs",
+                label = I18n.s(R.string.ui_home_style),
+                hint = I18n.s(R.string.ui_full_xmb_puts_the_stores_and_social_on_home_as_cards),
                 options = listOf(
                     DeckHomeStyle.FULL_XMB to "Full XMB",
                     DeckHomeStyle.STEAM to "Steam",
@@ -877,8 +878,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             DeckChoiceRow(
-                label = "Game settings",
-                hint = "What a game's Settings opens from Home. Classic opens the settings page on glass over the game's art, with small tabs and every setting. XMB keeps the settings as XMB columns beside the game",
+                label = I18n.s(R.string.ui_game_settings),
+                hint = I18n.s(R.string.ui_what_a_game_settings_opens_from_home_classic_opens_th),
                 options = listOf(
                     GameSettingsStyle.CLASSIC to "Classic",
                     GameSettingsStyle.XMB to "XMB",
@@ -892,33 +893,33 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Retro library ── (landscape only, like the Home it switches on)
-        if (!portraitUi) DeckGroup(title = "Retro library") {
+        if (!portraitUi) DeckGroup(title = I18n.s(R.string.retro_title)) {
             DeckRow(
-                label = "ROM folder",
+                label = I18n.s(R.string.retro_opt_folder),
                 hint = retroRoot ?: "Not chosen yet. WinHub looks in ROMs and Games when you open the retro library",
             ) {
-                DeckButton("Choose", primary = false) {
+                DeckButton(I18n.s(R.string.ui_choose), primary = false) {
                     retroFolderLauncher.launch(InAppFilePicker.buildDirIntent(context, "ROM folder", retroRoot))
                 }
             }
             DeckRow(
-                label = "Consoles",
+                label = I18n.s(R.string.retro_hint_consoles),
                 hint = if (retroConsoleCount == 0) "None picked. Pick the consoles whose games the retro library shows" else "$retroConsoleCount picked",
             ) {
-                DeckButton("Choose", primary = false) { showRetroConsoles = true }
+                DeckButton(I18n.s(R.string.ui_choose), primary = false) { showRetroConsoles = true }
             }
             DeckRow(
-                label = "Removed games",
+                label = I18n.s(R.string.ui_removed_games),
                 hint = if (retroHidden == 0) "None removed from the retro library" else "$retroHidden removed from the retro library. Their ROM files are untouched",
             ) {
-                DeckButton("Show again", primary = false, enabled = retroHidden > 0) {
+                DeckButton(I18n.s(R.string.ui_show_again), primary = false, enabled = retroHidden > 0) {
                     RetroLibrary.clearExcluded(context)
                     RetroSession.scan = null
                     retroHidden = 0
                 }
             }
-            DeckRow(label = "Rescan library", hint = "Looks for new and missing ROM files the next time the retro library opens") {
-                DeckButton("Rescan", primary = false) {
+            DeckRow(label = I18n.s(R.string.retro_opt_rescan), hint = I18n.s(R.string.ui_looks_for_new_and_missing_rom_files_the_next_time_the)) {
+                DeckButton(I18n.s(R.string.ui_rescan), primary = false) {
                     RetroSession.scan = null
                     Toast.makeText(context, "The retro library rescans when you open it", Toast.LENGTH_SHORT).show()
                 }
@@ -930,10 +931,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Sounds ──
-        DeckGroup(title = "Navigation sounds") {
+        DeckGroup(title = I18n.s(R.string.ui_navigation_sounds)) {
             DeckChoiceRow(
-                label = "Sound set",
-                hint = "The sounds the D-pad and buttons make in Deck mode. SteamOS is the app's own soft set; Phone uses the system click sounds (it follows the touch-sounds switch). SteamOS plays at the media volume",
+                label = I18n.s(R.string.ui_sound_set),
+                hint = I18n.s(R.string.ui_sounds_the_d_pad_and_buttons_make_in_deck_mode_steamo),
                 options = listOf(
                     DeckSound.STEAMOS to "SteamOS",
                     DeckSound.PHONE to "Phone",
@@ -950,10 +951,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Stores ── (the Deck pages inside this app, or the full-screen XMB store pages)
-        DeckGroup(title = "Stores") {
+        DeckGroup(title = I18n.s(R.string.xmb_tab_stores)) {
             DeckChoiceRow(
-                label = "Store style",
-                hint = "XMB opens each store as its own full-screen XMB page, in Home cards and in the Stores tab. The Glass look always uses XMB",
+                label = I18n.s(R.string.ui_store_style),
+                hint = I18n.s(R.string.ui_xmb_opens_each_store_as_its_own_full_screen_xmb_page),
                 options = listOf(
                     StoreStyle.DECK to "Deck",
                     StoreStyle.XMB to "XMB",
@@ -967,10 +968,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Top Bar ──
-        DeckGroup(title = "Top Bar") {
+        DeckGroup(title = I18n.s(R.string.ui_top_bar)) {
             DeckSliderRow(
-                label = "Top Bar Opacity",
-                hint = "Background of the tab bar across the top of Deck Mode",
+                label = I18n.s(R.string.ui_top_bar_opacity),
+                hint = I18n.s(R.string.ui_background_of_the_tab_bar_across_the_top_of_deck_mode),
                 value = topBarOpacity,
                 range = 0f..1f,
                 format = { "${(it * 100).toInt()}%" },
@@ -982,10 +983,10 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Editors ──
-        DeckGroup(title = "Editors") {
+        DeckGroup(title = I18n.s(R.string.ui_editors)) {
             DeckChoiceRow(
-                label = "Config Editor Style",
-                hint = "How driver, wrapper and renderer settings open",
+                label = I18n.s(R.string.ui_config_editor_style),
+                hint = I18n.s(R.string.ui_how_driver_wrapper_and_renderer_settings_open),
                 options = listOf(
                     "popup" to "Popup (dialog)",
                     "dropdown" to "Dropdown (inline)",
@@ -997,8 +998,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             if (portraitUi) DeckChoiceRow(
-                label = "Portrait Tabs",
-                hint = "How the container editor, Contents and Settings arrange their categories",
+                label = I18n.s(R.string.ui_portrait_tabs),
+                hint = I18n.s(R.string.ui_how_the_container_editor_contents_and_settings_arrang),
                 options = listOf(
                     "strip" to "Icon Tabs (top)",
                     "pages" to "Category List",
@@ -1011,8 +1012,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             if (!portraitUi) DeckChoiceRow(
-                label = "Container Editor Layout",
-                hint = "How the container editor arranges its categories",
+                label = I18n.s(R.string.ui_container_editor_layout),
+                hint = I18n.s(R.string.ui_how_the_container_editor_arranges_its_categories),
                 options = listOf(
                     "rail" to "Side Rail",
                     "pages" to "Category Pages",
@@ -1024,8 +1025,8 @@ internal fun DeckSettingsScreen() {
                 },
             )
             if (!portraitUi) DeckChoiceRow(
-                label = "Settings Layout",
-                hint = "How the Settings page, Save Manager and Contents arrange their categories",
+                label = I18n.s(R.string.ui_settings_layout),
+                hint = I18n.s(R.string.ui_how_the_settings_page_save_manager_and_contents_arran),
                 options = listOf(
                     "rail" to "Side Rail",
                     "pages" to "Category Pages",
@@ -1042,29 +1043,29 @@ internal fun DeckSettingsScreen() {
         }
         3 -> {
         // ── Path Settings ──
-        DeckGroup(title = "Path Settings") {
+        DeckGroup(title = I18n.s(R.string.ui_path_settings)) {
             DeckRow(
-                label = "Winlator Path",
+                label = I18n.s(R.string.ui_winlator_path),
                 hint = winlatorPathUri?.lastPathSegment ?: "/storage/emulated/0/Winlator",
             ) {
-                DeckButton("Choose", primary = false) { winlatorPathLauncher.launch(null) }
+                DeckButton(I18n.s(R.string.ui_choose), primary = false) { winlatorPathLauncher.launch(null) }
             }
             DeckRow(
-                label = "Shortcut Export Path",
+                label = I18n.s(R.string.ui_shortcut_export_path),
                 hint = shortcutsPathUri?.lastPathSegment ?: "/storage/emulated/0/Winlator/Shortcuts",
             ) {
-                DeckButton("Choose", primary = false) { shortcutsPathLauncher.launch(null) }
+                DeckButton(I18n.s(R.string.ui_choose), primary = false) { shortcutsPathLauncher.launch(null) }
             }
         }
 
         // ── SteamGrid API ──
-        DeckGroup(title = "SteamGrid API") {
-            DeckRow(label = "Set SteamGrid API Key? (Cover Art)") {
+        DeckGroup(title = I18n.s(R.string.ui_steamgrid_api)) {
+            DeckRow(label = I18n.s(R.string.ui_set_steamgrid_api_key_cover_art)) {
                 DeckToggle(apiKeyEnabled) { apiKeyEnabled = it; saved = false }
             }
             if (apiKeyEnabled) {
                 DeckTextRow(
-                    label = "API Key",
+                    label = I18n.s(R.string.ui_api_key),
                     value = apiKey,
                     onValueChange = { apiKey = it; saved = false },
                     width = 260.dp,
@@ -1073,48 +1074,48 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── XServer ──
-        DeckGroup(title = "XServer") {
+        DeckGroup(title = I18n.s(R.string.xserver)) {
             DeckSliderRow(
-                label = "Cursor Speed",
+                label = I18n.s(R.string.cursor_speed),
                 value = cursorSpeed,
                 range = 0.1f..2.0f,
                 format = { "${(it * 100).toInt()}%" },
                 onChange = { cursorSpeed = it; saved = false },
             )
-            DeckRow(label = "True Mouse Control (Deactivate with Volume Down)") {
+            DeckRow(label = I18n.s(R.string.ui_true_mouse_control_deactivate_with_volume_down)) {
                 DeckToggle(cursorLock) { cursorLock = it; saved = false }
             }
             DeckRow(label = "Disable Xinput (Used for Exclusive M/KB support)") {
                 DeckToggle(xinputOff) { xinputOff = it; saved = false }
             }
-            DeckRow(label = "Use DRI3 Extension") {
+            DeckRow(label = I18n.s(R.string.ui_use_dri3_extension)) {
                 DeckToggle(dri3) { dri3 = it; saved = false }
             }
-            DeckRow(label = "Use XR") {
+            DeckRow(label = I18n.s(R.string.ui_use_xr)) {
                 DeckToggle(xr) { xr = it; saved = false }
             }
         }
 
         // ── Logs ──
-        DeckGroup(title = "Logs") {
-            DeckRow(label = "Open Log Manager", hint = "Wine / Box64 logging and log location") {
-                DeckButton("Open", primary = false) { showLogManager = true }
+        DeckGroup(title = I18n.s(R.string.logs)) {
+            DeckRow(label = I18n.s(R.string.ui_open_log_manager), hint = "Wine / Box64 logging and log location") {
+                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showLogManager = true }
             }
         }
 
         // ── Experimental ──
-        DeckGroup(title = "Experimental") {
-            DeckRow(label = "Enable File Provider") {
+        DeckGroup(title = I18n.s(R.string.experimental)) {
+            DeckRow(label = I18n.s(R.string.enable_file_provider)) {
                 DeckToggle(fileProvider) { fileProvider = it; saved = false }
             }
-            DeckRow(label = "Open with Android Browser") {
+            DeckRow(label = I18n.s(R.string.ui_open_with_android_browser)) {
                 DeckToggle(androidBrowser) { androidBrowser = it; saved = false }
             }
-            DeckRow(label = "Share Android Clipboard") {
+            DeckRow(label = I18n.s(R.string.ui_share_android_clipboard)) {
                 DeckToggle(shareClipboard) { shareClipboard = it; saved = false }
             }
             DeckTextRow(
-                label = "Downloadable Contents URL",
+                label = I18n.s(R.string.ui_downloadable_contents_url),
                 value = contentsUrl,
                 onValueChange = { contentsUrl = it; saved = false },
                 width = 320.dp,
@@ -1122,19 +1123,19 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── ImageFS ──
-        DeckGroup(title = "ImageFS") {
-            DeckRow(label = "Reinstall ImageFS", hint = "Restore system files; containers unchanged") {
-                DeckButton("Reinstall", primary = false) {
+        DeckGroup(title = I18n.s(R.string.ui_imagefs)) {
+            DeckRow(label = I18n.s(R.string.ui_reinstall_imagefs), hint = I18n.s(R.string.ui_restore_system_files_containers_unchanged)) {
+                DeckButton(I18n.s(R.string.ui_reinstall), primary = false) {
                     ContentDialog.confirm(context, R.string.do_you_want_to_reinstall_imagefs) {
                         mainActivity?.reinstallImageFs()
                     }
                 }
             }
-            DeckRow(label = "Backup Data", hint = "Archive the app data directory") {
-                DeckButton("Backup", primary = false) { showBackupDialog = true }
+            DeckRow(label = I18n.s(R.string.ui_backup_data), hint = I18n.s(R.string.ui_archive_the_app_data_directory)) {
+                DeckButton(I18n.s(R.string.ui_backup), primary = false) { showBackupDialog = true }
             }
-            DeckRow(label = "Restore Data", hint = "Restore from a backup (restarts the app)") {
-                DeckButton("Restore", primary = false) {
+            DeckRow(label = I18n.s(R.string.ui_restore_data), hint = I18n.s(R.string.ui_restore_from_a_backup_restarts_the_app)) {
+                DeckButton(I18n.s(R.string.ui_restore), primary = false) {
                     restoreFileInAppLauncher.launch(
                         InAppFilePicker.buildIntent(context, InAppFilePicker.SAVE, "Select backup"),
                     )
@@ -1145,17 +1146,17 @@ internal fun DeckSettingsScreen() {
         }
         4 -> {
         // ── Frame Generation — LSFG Native (Lossless Scaling) ──
-        DeckGroup(title = "Frame Generation — LSFG Native") {
-            DeckRow(label = "Status", hint = lsfgDllStatus) {
+        DeckGroup(title = I18n.s(R.string.ui_frame_generation_lsfg_native)) {
+            DeckRow(label = I18n.s(R.string.ui_status), hint = lsfgDllStatus) {
                 if (lsfgShaderStatus.isNotEmpty()) {
                     Text(lsfgShaderStatus, color = DeckPalette.onSurfaceVariant, fontSize = 11.sp)
                 }
             }
-            DeckRow(label = "Detect from Steam store", hint = "Find Lossless.dll in a store install") {
-                DeckButton("Detect", primary = false) { detectLosslessDllFromStore() }
+            DeckRow(label = I18n.s(R.string.ui_detect_from_steam_store), hint = I18n.s(R.string.ui_find_lossless_dll_in_a_store_install)) {
+                DeckButton(I18n.s(R.string.ui_detect), primary = false) { detectLosslessDllFromStore() }
             }
-            DeckRow(label = "Import Lossless.dll", hint = "Pick your own copy") {
-                DeckButton("Import", primary = false) {
+            DeckRow(label = "Import Lossless.dll", hint = I18n.s(R.string.ui_pick_your_own_copy)) {
+                DeckButton(I18n.s(R.string.preset_action_import), primary = false) {
                     importLosslessDllInAppLauncher.launch(
                         InAppFilePicker.buildIntent(context, InAppFilePicker.DLL, "Select Lossless.dll"),
                     )
@@ -1163,7 +1164,7 @@ internal fun DeckSettingsScreen() {
             }
             if (lsfgDllFile.isFile) {
                 DeckRow(label = "Remove Lossless.dll") {
-                    DeckButton("Remove", primary = false) {
+                    DeckButton(I18n.s(R.string.remove), primary = false) {
                         lsfgDllFile.delete()
                         com.winhub.hernandez.core.LsfgNative.cacheFile(context).delete()
                         prefs.edit().remove("lsfg_dll_source").apply()
@@ -1175,29 +1176,29 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Performance ──
-        DeckGroup(title = "Performance") {
-            DeckRow(label = "Open Performance settings") {
-                DeckButton("Open", primary = false) { showPerformance = true }
+        DeckGroup(title = I18n.s(R.string.performance)) {
+            DeckRow(label = I18n.s(R.string.ui_open_performance_settings)) {
+                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showPerformance = true }
             }
         }
         }
         5 -> {
         // ── Release channel ── (Stable = latest non-prerelease, Preview = newest release incl. betas)
-        DeckGroup(title = "Release channel") {
+        DeckGroup(title = I18n.s(R.string.ui_release_channel)) {
             DeckRow(
-                label = "Update channel",
+                label = I18n.s(R.string.ui_update_channel),
                 hint = if (includePre) "Preview: beta builds, newest first" else "Stable: tested releases only",
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DeckButton("Stable", primary = !includePre) { selectChannel(false) }
-                    DeckButton("Preview", primary = includePre) { selectChannel(true) }
+                    DeckButton(I18n.s(R.string.ui_stable), primary = !includePre) { selectChannel(false) }
+                    DeckButton(I18n.s(R.string.ui_preview), primary = includePre) { selectChannel(true) }
                 }
             }
         }
 
         // ── Updates ──
-        DeckGroup(title = "Updates") {
-            DeckRow(label = "Notify me about updates") {
+        DeckGroup(title = I18n.s(R.string.ui_updates)) {
+            DeckRow(label = I18n.s(R.string.ui_notify_me_about_updates)) {
                 DeckToggle(notifyUpdates) {
                     notifyUpdates = it
                     UpdateManager.setNotifyEnabled(context, it)
@@ -1207,7 +1208,7 @@ internal fun DeckSettingsScreen() {
                 label = if (checkingUpdate) "Checking…" else "Check for updates",
                 hint = updateNote ?: "Installed: V ${UpdateManager.installedVersionName()}",
             ) {
-                DeckButton("Check", primary = false) { checkNow() }
+                DeckButton(I18n.s(R.string.ui_check), primary = false) { checkNow() }
             }
             availableUpdate?.let { update ->
                 val sizeMb = update.downloadSize.takeIf { it > 0 }?.let { " (${it / (1024 * 1024)} MB)" } ?: ""
@@ -1215,7 +1216,7 @@ internal fun DeckSettingsScreen() {
                     label = "Download & install V ${update.versionName}",
                     hint = (update.notes.takeIf { it.isNotBlank() } ?: "Downloads in the background and opens the installer") + sizeMb,
                 ) {
-                    DeckButton("Install", primary = true) {
+                    DeckButton(I18n.s(R.string.ui_install), primary = true) {
                         activity?.let { UpdateManager.downloadAndInstall(it, update) {} }
                     }
                 }
@@ -1247,7 +1248,7 @@ internal fun DeckSettingsScreen() {
                     .padding(horizontal = 28.dp),
             ) {
                 Text(
-                    text = "Save",
+                    text = I18n.s(R.string.save),
                     color = DeckPalette.onPrimary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
@@ -1255,7 +1256,7 @@ internal fun DeckSettingsScreen() {
             }
             if (saved) {
                 Text(
-                    text = "✓ Saved",
+                    text = I18n.s(R.string.ui_saved),
                     color = DeckPalette.good,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -1272,7 +1273,7 @@ internal fun DeckSettingsScreen() {
             onDismissRequest = { showPerformance = false },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showPerformance = false }) { Text("Close") }
+                TextButton(onClick = { showPerformance = false }) { Text(I18n.s(R.string.wrapper_manager_close)) }
             },
             text = { PerformanceSettingsScreen(onClose = { showPerformance = false }) },
         )
@@ -1288,14 +1289,14 @@ internal fun DeckSettingsScreen() {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 CircularProgressIndicator()
                 Spacer(Modifier.height(16.dp))
-                Text("Backing up data...")
+                Text(I18n.s(R.string.backing_up_data))
             }
         }
     }
     if (showBackupDialog) {
         DeckWarningDialog(
-            title = "Backup Data",
-            message = "Do you want to create a backup of the app's data directory?",
+            title = I18n.s(R.string.ui_backup_data),
+            message = I18n.s(R.string.ui_do_you_want_to_create_a_backup_of_the_app_data_direct),
             confirmLabel = "Yes",
             onConfirm = {
                 showBackupDialog = false
@@ -1325,8 +1326,8 @@ internal fun DeckSettingsScreen() {
     }
     if (showRestoreConfirm) {
         DeckWarningDialog(
-            title = "Restore Data",
-            message = "This will restart the app. Continue?",
+            title = I18n.s(R.string.ui_restore_data),
+            message = I18n.s(R.string.ui_this_will_restart_the_app_continue),
             confirmLabel = "Restore",
             onConfirm = {
                 showRestoreConfirm = false

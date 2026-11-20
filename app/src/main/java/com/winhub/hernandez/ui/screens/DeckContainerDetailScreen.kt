@@ -73,6 +73,8 @@ import com.winhub.hernandez.BuildConfig
 import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.core.StringUtils
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck Mode's container editor — the classic editor's SAME settings, regrouped into modern
@@ -203,7 +205,7 @@ internal fun DeckContainerDetailScreen(
                 },
                 modifier = Modifier.focusRequester(backFocus),
             ) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Deck.onBackground)
+                Icon(Icons.Default.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back), tint = Deck.onBackground)
             }
             Spacer(Modifier.width(4.dp))
             Column(Modifier.weight(1f)) {
@@ -311,7 +313,7 @@ internal fun DeckContainerDetailScreen(
                 .fillMaxHeight()
                 .focusRequester(tabContentFocus)
                 .focusGroup(),
-            label = "deckContainerTab",
+            label = I18n.s(R.string.ui_deckcontainertab),
         ) { currentTab ->
             DeckDragFrame(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -325,14 +327,14 @@ internal fun DeckContainerDetailScreen(
                         DeckResetDefaultsGroup(viewModel)
                         DeckGroup("Container") {
                             DeckTextRow(
-                                label = "Container Name",
-                                hint = "Shown in the container list",
+                                label = I18n.s(R.string.ui_container_name),
+                                hint = I18n.s(R.string.ui_shown_in_the_container_list),
                                 value = viewModel.containerName,
                                 onValueChange = { viewModel.containerName = it },
                                 width = 360.dp,
                             )
                             DeckChoiceRow(
-                                label = "Screen Size",
+                                label = I18n.s(R.string.screen_size),
                                 options = viewModel.screenSizeEntries.map { it to it },
                                 selected = viewModel.screenSizeEntries.firstOrNull {
                                     it.equals(viewModel.selectedScreenSize, ignoreCase = true)
@@ -341,15 +343,15 @@ internal fun DeckContainerDetailScreen(
                             )
                             if (viewModel.selectedScreenSize.equals("custom", ignoreCase = true)) {
                                 DeckTextRow(
-                                    label = "Custom Width",
-                                    hint = "Even pixel width, e.g. 1280",
+                                    label = I18n.s(R.string.ui_custom_width),
+                                    hint = I18n.s(R.string.ui_even_pixel_width_e_g_1280),
                                     value = viewModel.customWidth,
                                     onValueChange = { viewModel.customWidth = it },
                                     width = 360.dp,
                                 )
                                 DeckTextRow(
-                                    label = "Custom Height",
-                                    hint = "Even pixel height, e.g. 720",
+                                    label = I18n.s(R.string.ui_custom_height),
+                                    hint = I18n.s(R.string.ui_even_pixel_height_e_g_720),
                                     value = viewModel.customHeight,
                                     onValueChange = { viewModel.customHeight = it },
                                     width = 360.dp,
@@ -358,12 +360,12 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Behaviour") {
                             DeckRow(
-                                label = "Run as Administrator",
-                                hint = "Disables UAC (EnableLUA=0) inside the Wine prefix",
+                                label = I18n.s(R.string.ui_run_as_administrator_2),
+                                hint = I18n.s(R.string.ui_disables_uac_enablelua_0_inside_the_wine_prefix),
                                 control = { DeckToggle(viewModel.runAsAdmin) { viewModel.runAsAdmin = it } },
                             )
                             DeckRow(
-                                label = "Auto Close on Exit",
+                                label = I18n.s(R.string.ui_auto_close_on_exit),
                                 control = { DeckToggle(viewModel.autoCloseOnExit) { viewModel.autoCloseOnExit = it } },
                             )
                         }
@@ -376,7 +378,7 @@ internal fun DeckContainerDetailScreen(
                             val waylandVersion = com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog
                                 .getVersion(viewModel.graphicsDriverConfig) ?: ""
                             DeckChoiceRow(
-                                label = "Graphics Driver",
+                                label = I18n.s(R.string.graphics_driver),
                                 hint = if (compositorDriverUnusable(waylandVersion, waylandCompositorChoices, waylandCompositorChoices.isNotEmpty()))
                                     "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
                                 else "Turnip the Wayland compositor (and the adapter) runs on",
@@ -389,17 +391,17 @@ internal fun DeckContainerDetailScreen(
                             val gameValues = if (shownGameDriver in waylandGameDriverValues) waylandGameDriverValues
                                 else waylandGameDriverValues + shownGameDriver
                             DeckChoiceRow(
-                                label = "Wayland Game Driver",
-                                hint = "What the game renders on; the adapter uses the Graphics Driver above",
+                                label = I18n.s(R.string.ui_wayland_game_driver_2),
+                                hint = I18n.s(R.string.ui_what_the_game_renders_on_the_adapter_uses_the_graphic),
                                 options = gameValues.map { it to com.winhub.hernandez.core.WaylandGameDriver.optionLabel(context, it, waylandAutoPick) },
                                 selected = shownGameDriver,
                                 onPick = { viewModel.waylandGameDriver = it },
                             )
                             DeckRow(
-                                label = "Wayland Adapter Settings",
-                                hint = "Profile, switches, GPU name spoof, memory cap",
+                                label = I18n.s(R.string.ui_wayland_adapter_settings_2),
+                                hint = I18n.s(R.string.ui_profile_switches_gpu_name_spoof_memory_cap),
                             ) {
-                                DeckValueChip(text = "Open", open = false, onClick = { showWaylandAdapterDialog = true })
+                                DeckValueChip(text = I18n.s(R.string.xmb_all_games_open), open = false, onClick = { showWaylandAdapterDialog = true })
                             }
                             DeckRow(
                                 label = com.winhub.hernandez.display.WaylandHdr.TITLE,
@@ -409,7 +411,7 @@ internal fun DeckContainerDetailScreen(
                             )
                         } else {
                         DeckChoiceRow(
-                            label = "Graphics Driver",
+                            label = I18n.s(R.string.graphics_driver),
                             hint = "Turnip / system Vulkan driver for Direct3D",
                             options = viewModel.graphicsDriverEntries.map { it to it },
                             selected = viewModel.selectedGraphicsDriver,
@@ -417,9 +419,9 @@ internal fun DeckContainerDetailScreen(
                         )
                         }
                         if (!viewModel.isWaylandBackend) DeckConfigSection(
-                            label = "Driver Config",
+                            label = I18n.s(R.string.ui_driver_config),
                             hint = "Turnip / BCn / wrapper tuning",
-                            title = "Driver Config",
+                            title = I18n.s(R.string.ui_driver_config),
                             sectionKey = "gfxDriver",
                             style = configEditorStyle,
                             openSection = openSection,
@@ -435,15 +437,15 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Direct3D") {
                         DeckChoiceRow(
-                            label = "DX Wrapper",
+                            label = I18n.s(R.string.dxwrapper),
                             options = viewModel.dxWrapperEntries.map { it to it },
                             selected = viewModel.selectedDXWrapper,
                             onPick = { viewModel.selectedDXWrapper = it },
                         )
                         DeckConfigSection(
-                            label = "Wrapper Config",
+                            label = I18n.s(R.string.ui_wrapper_config),
                             hint = "DXVK / VKD3D / wined3d tuning",
-                            title = "Wrapper Config",
+                            title = I18n.s(R.string.ui_wrapper_config),
                             sectionKey = "dxWrapper",
                             style = configEditorStyle,
                             openSection = openSection,
@@ -477,7 +479,7 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Renderer") {
                         DeckChoiceRow(
-                            label = "Renderer",
+                            label = I18n.s(R.string.renderer),
                             options = viewModel.rendererEntries.map { it to it },
                             selected = viewModel.selectedRenderer,
                             onPick = { viewModel.selectedRenderer = it },
@@ -485,9 +487,9 @@ internal fun DeckContainerDetailScreen(
                         // EGL has nothing to configure; Vulkan and SurfaceDirect each bring their own settings.
                         if (viewModel.selectedRenderer == "Vulkan") {
                             DeckConfigSection(
-                                label = "Renderer Config",
+                                label = I18n.s(R.string.ui_renderer_config),
                                 hint = "Native render / present mode / colours",
-                                title = "Renderer Config",
+                                title = I18n.s(R.string.ui_renderer_config),
                                 sectionKey = "renderer",
                                 style = configEditorStyle,
                                 openSection = openSection,
@@ -509,16 +511,16 @@ internal fun DeckContainerDetailScreen(
                             }
                         }
                         if (viewModel.selectedRenderer == "SurfaceDirect") {
-                            DeckRow(label = "Performance mode", hint = "Hints the CPU governor while presenting") {
+                            DeckRow(label = I18n.s(R.string.fg_performance_mode), hint = I18n.s(R.string.ui_hints_the_cpu_governor_while_presenting)) {
                                 DeckToggle(viewModel.surfaceDirectPerformanceMode) { viewModel.surfaceDirectPerformanceMode = it }
                             }
-                            DeckRow(label = "Present at refresh rate", hint = "Submit once per display refresh") {
+                            DeckRow(label = I18n.s(R.string.ui_present_at_refresh_rate), hint = I18n.s(R.string.ui_submit_once_per_display_refresh)) {
                                 DeckToggle(viewModel.surfaceDirectPresentAtRefreshRate) { viewModel.surfaceDirectPresentAtRefreshRate = it }
                             }
-                            DeckRow(label = "Submit every buffer", hint = "Back-pressure: never drop a frame") {
+                            DeckRow(label = I18n.s(R.string.ui_submit_every_buffer), hint = I18n.s(R.string.ui_back_pressure_never_drop_a_frame)) {
                                 DeckToggle(viewModel.surfaceDirectBackPressure) { viewModel.surfaceDirectBackPressure = it }
                             }
-                            DeckRow(label = "Precise presentation", hint = "Align frames to the display vsync timeline") {
+                            DeckRow(label = I18n.s(R.string.ui_precise_presentation), hint = I18n.s(R.string.ui_align_frames_to_the_display_vsync_timeline)) {
                                 DeckToggle(viewModel.surfaceDirectPrecisePresentation) { viewModel.surfaceDirectPrecisePresentation = it }
                             }
                         }
@@ -542,7 +544,7 @@ internal fun DeckContainerDetailScreen(
                                     if (fastGlReason == null) {
                                         DeckToggle(viewModel.fastOpenGL) { viewModel.fastOpenGL = it }
                                     } else {
-                                        Text("Off", color = DeckPalette.onSurfaceVariant)
+                                        Text(I18n.s(R.string.vibration_mode_off), color = DeckPalette.onSurfaceVariant)
                                     }
                                 },
                             )
@@ -559,8 +561,8 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Display") {
                         DeckChoiceRow(
-                            label = "Display Backend",
-                            hint = "Wayland routes launches through the embedded compositor",
+                            label = I18n.s(R.string.ui_display_backend_2),
+                            hint = I18n.s(R.string.ui_wayland_routes_launches_through_the_embedded_composit),
                             options = listOf(
                                 Container.DISPLAY_BACKEND_X11 to "X11",
                                 Container.DISPLAY_BACKEND_WAYLAND to "Wayland",
@@ -571,14 +573,14 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.isWaylandStored && !viewModel.isWaylandBackend) {
                             // Saved as X11 without this note, which looks like Wayland "reverting".
                             DeckRow(
-                                label = "Wayland is not available",
+                                label = I18n.s(R.string.ui_wayland_is_not_available),
                                 hint = (viewModel.waylandLayerProblem() ?: "This Proton layer cannot run Wayland.") +
                                     " It will be saved as X11.",
                                 control = {},
                             )
                         }
                         DeckChoiceRow(
-                            label = "Fullscreen",
+                            label = I18n.s(R.string.pref_fullscreen),
                             options = listOf(
                                 "Windowed" to Container.FULLSCREEN_OFF.toString(),
                                 "Fit (letterboxed)" to Container.FULLSCREEN_FIT.toString(),
@@ -588,9 +590,9 @@ internal fun DeckContainerDetailScreen(
                             onPick = { viewModel.fullscreenMode = it.toInt() },
                         )
                         DeckConfigSection(
-                            label = "Show FPS",
-                            hint = "On-screen frame counter",
-                            title = "FPS Counter",
+                            label = I18n.s(R.string.ui_show_fps),
+                            hint = I18n.s(R.string.ui_on_screen_frame_counter),
+                            title = I18n.s(R.string.ui_fps_counter),
                             sectionKey = "fps",
                             style = configEditorStyle,
                             openSection = openSection,
@@ -610,7 +612,7 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.vulkanSupported) {
                         DeckGroup("Frame Generation") {
                         DeckChoiceRow(
-                            label = "Frame Generation",
+                            label = I18n.s(R.string.ui_frame_generation_2),
                             hint = if (viewModel.frameGenEngine != "off" &&
                                 viewModel.selectedRenderer != "Vulkan")
                                 "LSFG Native needs Vulkan — the Renderer switches on pick"
@@ -629,25 +631,25 @@ internal fun DeckContainerDetailScreen(
                             },
                         )
                         DeckRow(
-                            label = "LSFG Performance Mode",
+                            label = I18n.s(R.string.ui_lsfg_performance_mode),
                             control = { DeckToggle(viewModel.lsfgPerformanceMode) { viewModel.lsfgPerformanceMode = it } },
                         )
                         DeckRow(
-                            label = "LSFG Auto Enable",
-                            hint = "Start frame generation live at launch",
+                            label = I18n.s(R.string.ui_lsfg_auto_enable),
+                            hint = I18n.s(R.string.ui_start_frame_generation_live_at_launch),
                             control = { DeckToggle(viewModel.lsfgAutoEnable) { viewModel.lsfgAutoEnable = it } },
                         )
                         }
                         }
                         DeckGroup("Framerate") {
                         DeckRow(
-                            label = "FPS Limiter",
-                            hint = "Loads the limiter layer; the cap is tuned in-game",
+                            label = I18n.s(R.string.fps_limiter),
+                            hint = I18n.s(R.string.ui_loads_the_limiter_layer_the_cap_is_tuned_in_game),
                             control = { DeckToggle(viewModel.fpsLimiterEnabled) { viewModel.fpsLimiterEnabled = it } },
                         )
                         DeckRow(
-                            label = "Match Refresh Rate",
-                            hint = "Sync the panel refresh to the game's FPS",
+                            label = I18n.s(R.string.ui_match_refresh_rate),
+                            hint = I18n.s(R.string.ui_sync_the_panel_refresh_to_the_game_fps),
                             control = { DeckToggle(viewModel.matchRefreshRate) { viewModel.matchRefreshRate = it } },
                         )
                         }
@@ -657,7 +659,7 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.emulatorEnabled) {
                             DeckGroup("Emulator") {
                                 DeckChoiceRow(
-                                    label = "Emulator",
+                                    label = I18n.s(R.string.retro_opt_emulator),
                                     options = viewModel.emulatorEntries.map { it to it },
                                     selected = viewModel.selectedEmulator,
                                     onPick = { viewModel.selectedEmulator = it },
@@ -666,13 +668,13 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Box64") {
                         DeckChoiceRow(
-                            label = "Box64 Version",
+                            label = I18n.s(R.string.box64_version),
                             options = viewModel.box64VersionEntries.map { it to it },
                             selected = viewModel.selectedBox64Version,
                             onPick = { viewModel.selectedBox64Version = it },
                         )
                         DeckChoiceRow(
-                            label = "Box64 Preset",
+                            label = I18n.s(R.string.box64_preset),
                             options = viewModel.box64PresetEntries.mapIndexed { i, e -> i.toString() to e },
                             selected = viewModel.selectedBox64PresetIndex.toString(),
                             onPick = { viewModel.selectedBox64PresetIndex = it.toInt() },
@@ -681,13 +683,13 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.isArm64EC) {
                             DeckGroup("FEXCore") {
                             DeckChoiceRow(
-                                label = "FEXCore Version",
+                                label = I18n.s(R.string.fexcore_version),
                                 options = viewModel.fexCoreVersionEntries.map { it to it },
                                 selected = viewModel.selectedFEXCoreVersion,
                                 onPick = { viewModel.selectedFEXCoreVersion = it },
                             )
                             DeckChoiceRow(
-                                label = "FEXCore Preset",
+                                label = I18n.s(R.string.fexcore_preset),
                                 options = viewModel.fexCorePresetEntries.mapIndexed { i, e -> i.toString() to e },
                                 selected = viewModel.selectedFEXCorePresetIndex.toString(),
                                 onPick = { viewModel.selectedFEXCorePresetIndex = it.toInt() },
@@ -699,8 +701,8 @@ internal fun DeckContainerDetailScreen(
                     4 -> {
                         DeckGroup("Input") {
                         DeckRow(
-                            label = "DirectInput games can see the controller",
-                            hint = "Lets DirectInput games (many older titles, racing games, wheels) see the controller.",
+                            label = I18n.s(R.string.dinput_visible),
+                            hint = I18n.s(R.string.ui_lets_directinput_games_many_older_titles_racing_games),
                             control = { DeckToggle(viewModel.dinputVisible) { viewModel.dinputVisible = it } },
                         )
                         }
@@ -718,7 +720,7 @@ internal fun DeckContainerDetailScreen(
                         )
                         DeckGroup("Feedback") {
                         DeckChoiceRow(
-                            label = "Controller Vibration",
+                            label = I18n.s(R.string.ui_controller_vibration_2),
                             options = listOf(
                                 "Off" to Container.VIBRATION_MODE_OFF.toString(),
                                 "Controller" to Container.VIBRATION_MODE_CONTROLLER.toString(),
@@ -729,15 +731,15 @@ internal fun DeckContainerDetailScreen(
                             onPick = { viewModel.vibrationMode = it.toInt() },
                         )
                         DeckSliderRow(
-                            label = "Vibration Intensity",
+                            label = I18n.s(R.string.ui_vibration_intensity),
                             value = viewModel.vibrationIntensity.toFloat(),
                             range = 0f..100f,
                             format = { "${it.toInt()}%" },
                             onChange = { viewModel.vibrationIntensity = it.toInt() },
                         )
                         DeckRow(
-                            label = "Gyroscope Aim",
-                            hint = "Motion-controlled aiming default for this container",
+                            label = I18n.s(R.string.ui_gyroscope_aim),
+                            hint = I18n.s(R.string.ui_motion_controlled_aiming_default_for_this_container),
                             control = { DeckToggle(viewModel.gyroEnabled) { viewModel.gyroEnabled = it } },
                         )
                         }
@@ -746,9 +748,9 @@ internal fun DeckContainerDetailScreen(
                     5 -> {
                         DeckGroup("Environment") {
                         DeckConfigSection(
-                            label = "Env Vars",
-                            hint = "KEY=value pairs",
-                            title = "Env Vars",
+                            label = I18n.s(R.string.ui_env_vars),
+                            hint = I18n.s(R.string.ui_key_value_pairs),
+                            title = I18n.s(R.string.ui_env_vars),
                             sectionKey = "envVars",
                             style = configEditorStyle,
                             openSection = openSection,
@@ -763,7 +765,7 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Startup") {
                         DeckChoiceRow(
-                            label = "Startup Selection",
+                            label = I18n.s(R.string.startup_selection),
                             options = viewModel.startupSelectionEntries.mapIndexed { i, e -> i.toString() to e },
                             selected = viewModel.selectedStartupSelection.toString(),
                             onPick = { viewModel.selectedStartupSelection = it.toInt() },
@@ -792,7 +794,7 @@ internal fun DeckContainerDetailScreen(
                             // so the arch-dependent defaults (emulator / box64 / FEXCore) re-seed.
                             if (viewModel.wineVersionEnabled) {
                                 DeckChoiceRow(
-                                    label = "Wine Version",
+                                    label = I18n.s(R.string.wine_version),
                                     hint = "The Wine / Proton layer this container runs on",
                                     options = viewModel.wineVersionEntries.map { it to it },
                                     selected = viewModel.selectedWineVersion,
@@ -804,7 +806,7 @@ internal fun DeckContainerDetailScreen(
                             if (!viewModel.defaultsMode) {
                                 val syncCaps = viewModel.syncCaps
                                 DeckChoiceRow(
-                                    label = "Sync",
+                                    label = I18n.s(R.string.ui_sync),
                                     hint = viewModel.syncNotice ?: if (syncCaps == null) {
                                         "Checking what ${viewModel.selectedWineVersion} supports…"
                                     } else {
@@ -823,13 +825,13 @@ internal fun DeckContainerDetailScreen(
                                 )
                             }
                             DeckChoiceRow(
-                                label = "Audio Driver",
+                                label = I18n.s(R.string.audio_driver),
                                 options = viewModel.audioDriverEntries.map { it to it },
                                 selected = viewModel.selectedAudioDriver,
                                 onPick = { viewModel.selectedAudioDriver = it },
                             )
                             DeckChoiceRow(
-                                label = "Language",
+                                label = I18n.s(R.string.ui_language),
                                 options = viewModel.lcAllEntries.map { it to it },
                                 selected = viewModel.lcAll,
                                 onPick = { viewModel.lcAll = it },
@@ -837,13 +839,13 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Desktop") {
                             DeckChoiceRow(
-                                label = "Theme",
+                                label = I18n.s(R.string.theme),
                                 options = listOf("0" to "Light", "1" to "Dark"),
                                 selected = viewModel.desktopThemeIndex.toString(),
                                 onPick = { viewModel.desktopThemeIndex = it.toInt() },
                             )
                             DeckChoiceRow(
-                                label = "Mouse Warp",
+                                label = I18n.s(R.string.ui_mouse_warp),
                                 options = viewModel.mouseWarpEntries.mapIndexed { i, e -> i.toString() to e },
                                 selected = viewModel.selectedMouseWarpIndex.toString(),
                                 onPick = { viewModel.selectedMouseWarpIndex = it.toInt() },
@@ -871,7 +873,7 @@ internal fun DeckContainerDetailScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            DeckButton("Cancel", primary = false) { onNavigateBack() }
+            DeckButton(I18n.s(R.string.cancel), primary = false) { onNavigateBack() }
             Spacer(Modifier.weight(1f))
             DeckButton(saveLabel, primary = true) {
                 if (!viewModel.isSaving) viewModel.confirm(
@@ -1067,7 +1069,7 @@ internal fun DeckEditorCategoryRow(
     val bg by animateColorAsState(
         targetValue = if (selected) Deck.secondary.copy(alpha = 0.18f) else Deck.surface,
         animationSpec = tween(220, easing = DeckEase),
-        label = "pageItemBg",
+        label = I18n.s(R.string.ui_pageitembg),
     )
     Row(
         modifier = Modifier

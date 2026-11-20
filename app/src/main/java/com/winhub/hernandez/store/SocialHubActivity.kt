@@ -33,6 +33,8 @@ import com.winhub.hernandez.core.AppOrientation
 import com.winhub.hernandez.ui.SocialConfigsContent
 import com.winhub.hernandez.ui.SocialContent
 import com.winhub.hernandez.ui.SocialProfileContent
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The Social Hub as a full-screen XMB page (Settings > Store style = XMB): the stores' slim rail with Feed, Configs and
@@ -89,7 +91,7 @@ private fun SocialHubXmbHost(onClose: () -> Unit) {
         railStatusSlot = { StoreAvatar(listOfNotNull(account?.avatarUrl), account?.login ?: "S", 36.dp) },
         actions = {
             IconButton(onClick = { SocialHubStore.refresh(); SocialHubStore.refreshConfigs() }, modifier = Modifier.steamFocusRing()) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Refresh", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.social_hub_refresh), tint = MaterialTheme.colorScheme.primary)
             }
         },
         railActions = {
@@ -97,7 +99,7 @@ private fun SocialHubXmbHost(onClose: () -> Unit) {
                 onClick = { SocialHubStore.refresh(); SocialHubStore.refreshConfigs() },
                 modifier = Modifier.steamFocusRing().xmbRailStop(),
             ) {
-                Icon(Icons.Filled.Refresh, contentDescription = "Refresh", tint = MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.social_hub_refresh), tint = MaterialTheme.colorScheme.primary)
             }
         },
     ) { _, mod ->

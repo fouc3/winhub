@@ -62,6 +62,7 @@ import com.winhub.hernandez.ui.theme.LocalAccentDim
 import com.winhub.hernandez.ui.components.ContainerGlossarySheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 private fun iconFor(screen: Screen): Int = when (screen) {
     Screen.Containers    -> R.drawable.icon_menu_container
@@ -143,7 +144,7 @@ fun AppDrawerContent(
         DrawerSectionHeader("Community", showDivider = true)
         DrawerItem(Screen.SocialHub,     currentRoute, onNavigate)
         DrawerIconItem(
-            label = "Help",
+            label = I18n.s(R.string.ui_help),
             icon = Icons.Filled.MenuBook,
             onClick = { showGlossary = true },
         )
@@ -164,12 +165,12 @@ fun AppDrawerContent(
         )
 
         DrawerIconItem(
-            label = "About",
+            label = I18n.s(R.string.about),
             icon = Icons.Filled.Info,
             onClick = onAbout,
         )
         DrawerIconItem(
-            label = "Help and Support",
+            label = I18n.s(R.string.contact_us),
             icon = Icons.Filled.HelpOutline,
             onClick = { showHelp = true },
         )
@@ -204,7 +205,7 @@ private fun DrawerAccountHeader(account: AccountManager.Account?, onMyAccount: (
                     maxLines = 1,
                 )
                 Text(
-                    text = "My account",
+                    text = I18n.s(R.string.ui_my_account),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp,
                 )
@@ -216,7 +217,7 @@ private fun DrawerAccountHeader(account: AccountManager.Account?, onMyAccount: (
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
-                    text = "Optional — to manage your shared configs",
+                    text = I18n.s(R.string.ui_optional_to_manage_your_shared_configs),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 11.sp,
                     maxLines = 1,
@@ -462,7 +463,7 @@ private fun NewBadge() {
             .padding(horizontal = 5.dp, vertical = 1.dp),
     ) {
         Text(
-            text = "NEW",
+            text = I18n.s(R.string.ui_new),
             color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 8.5.sp,
             fontWeight = FontWeight.Bold,
@@ -526,7 +527,7 @@ private fun DrawerIconItem(label: String, icon: ImageVector, onClick: () -> Unit
 private fun HelpSupportDialog(onDismiss: () -> Unit, onOpenUrl: (String) -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Help & Support") },
+        title = { Text(I18n.s(R.string.ui_help_support)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
@@ -534,24 +535,24 @@ private fun HelpSupportDialog(onDismiss: () -> Unit, onOpenUrl: (String) -> Unit
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 SupportLink(
-                    label = "GitHub Repository",
+                    label = I18n.s(R.string.ui_github_repository),
                     url = "https://github.com/winhub-emu/winhub",
                     onOpenUrl = onOpenUrl
                 )
                 SupportLink(
-                    label = "Report an Issue",
+                    label = I18n.s(R.string.ui_report_an_issue),
                     url = "https://github.com/winhub-emu/winhub/issues",
                     onOpenUrl = onOpenUrl
                 )
                 SupportLink(
-                    label = "Discord Community",
+                    label = I18n.s(R.string.ui_discord_community),
                     url = "https://discord.gg/kk6GR3C2pX",
                     onOpenUrl = onOpenUrl
                 )
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close)) }
         }
     )
 }

@@ -27,6 +27,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * True while the Steam-style Home is on screen. The shell lets B through to the Home then (its games row and tabs page close
@@ -69,7 +71,7 @@ internal fun SteamEmptyHome(
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Your library is empty", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black)
+            Text(I18n.s(R.string.ui_your_library_is_empty), color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black)
             Text(
                 "A  Add a game      Down  Stores, Downloads, Friends, Social",
                 color = Color.White.copy(alpha = 0.7f),

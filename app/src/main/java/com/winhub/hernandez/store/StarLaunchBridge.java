@@ -31,6 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import com.winhub.hernandez.util.I18n
 
 /**
  * Launch bridge for store integrations (GOG / Epic / Amazon).
@@ -187,7 +188,7 @@ public final class StarLaunchBridge {
                                 writeShortcut(activity, chosen, gameName, exePath, coverArtUrl, epic);
                                 if (postAdd != null) postAdd.onAdded(chosen);
                         })
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(I18n.s(R.string.cancel), null)
                         .show());
 
             } catch (Exception e) {
@@ -235,7 +236,7 @@ public final class StarLaunchBridge {
                                     storeSource, preferSgdbCover,
                                     (success, message) -> showToast(activity, message));
                         })
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(I18n.s(R.string.cancel), null)
                         .show());
             } catch (Exception e) {
                 Log.e(TAG, "addToLauncher(store) failed", e);

@@ -61,6 +61,8 @@ import com.winhub.hernandez.ui.findActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Pre-launch ReShade LOADOUT picker (Tier 1) — used by the container editor + per-game shortcut
@@ -84,7 +86,7 @@ fun ReshadeLoadoutPicker(
 
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.weight(1f)) {
-            Text("ReShade loadout", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
+            Text(I18n.s(R.string.ui_reshade_loadout), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
             Text(
                 if (selectedNames.isEmpty()) "None"
                 else "${selectedNames.size} effect${if (selectedNames.size == 1) "" else "s"}: ${selectedNames.joinToString(", ")}",
@@ -94,7 +96,7 @@ fun ReshadeLoadoutPicker(
         OutlinedButton(onClick = { showSheet = true }) {
             Icon(Icons.Filled.CloudDownload, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
-            Text("Browse")
+            Text(I18n.s(R.string.browse))
         }
     }
     if (!supported && selectedNames.isNotEmpty()) {
@@ -211,7 +213,7 @@ private fun ReshadeCatalogSheet(
                     modifier = Modifier.weight(1f),
                 )
                 if (selectedNames.isNotEmpty()) {
-                    TextButton(onClick = onClear) { Text("Clear all", color = cs.primary) }
+                    TextButton(onClick = onClear) { Text(I18n.s(R.string.ui_clear_all), color = cs.primary) }
                 }
             }
             if (offline && !loading) {
@@ -230,11 +232,11 @@ private fun ReshadeCatalogSheet(
                 value = query,
                 onValueChange = { query = it },
                 singleLine = true,
-                placeholder = { Text("Search effects…") },
+                placeholder = { Text(I18n.s(R.string.ui_search_effects)) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
-                        Icon(Icons.Filled.Close, contentDescription = "Clear",
+                        Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.clear),
                             modifier = Modifier.size(20.dp).clickable { query = "" })
                     }
                 },
@@ -287,7 +289,7 @@ private fun ReshadeCatalogSheet(
                 }
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.End) {
-                TextButton(onClick = onDismiss) { Text("Done", color = cs.primary) }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close), color = cs.primary) }
             }
         }
     }
@@ -298,7 +300,7 @@ private fun ReshadeCatalogSheet(
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
             title = { Text("Delete ${entry.name}?") },
-            text = { Text("This removes the downloaded effect from storage and takes it out of your loadout. You can re-download it any time.") },
+            text = { Text(I18n.s(R.string.ui_this_removes_the_downloaded_effect_from_storage_and_t)) },
             confirmButton = {
                 TextButton(onClick = {
                     val id = entry.id
@@ -311,10 +313,10 @@ private fun ReshadeCatalogSheet(
                             onCatalogChanged()              // parent rescans the drop-in folder
                         } else errorMsg = "Couldn't delete ${entry.name}."
                     }
-                }) { Text("Delete", color = cs.error) }
+                }) { Text(I18n.s(R.string.preset_action_delete), color = cs.error) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text("Cancel", color = cs.primary) }
+                TextButton(onClick = { pendingDelete = null }) { Text(I18n.s(R.string.cancel), color = cs.primary) }
             },
         )
     }
@@ -412,7 +414,7 @@ private fun ReshadeCatalogRow(
                 }
                 // Offline + not yet downloaded: tell the user a connection is needed.
                 if (!isInstalled && offline && !isBusy) {
-                    Text("Needs connection to download", style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant.copy(alpha = contentAlpha))
+                    Text(I18n.s(R.string.ui_needs_connection_to_download), style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant.copy(alpha = contentAlpha))
                 }
             }
             when {
@@ -421,7 +423,7 @@ private fun ReshadeCatalogRow(
                     // Trash: its own tap target, so it never triggers the row's loadout toggle.
                     onDelete?.let { del ->
                         IconButton(onClick = del, modifier = Modifier.size(34.dp)) {
-                            Icon(Icons.Filled.Delete, contentDescription = "Delete download",
+                            Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.ui_delete_download),
                                 tint = cs.onSurfaceVariant, modifier = Modifier.size(19.dp))
                         }
                     }
@@ -431,8 +433,8 @@ private fun ReshadeCatalogRow(
                         modifier = Modifier.size(22.dp),
                     )
                 }
-                offline -> Icon(Icons.Filled.CloudOff, contentDescription = "Offline", tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
-                else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary, modifier = Modifier.size(22.dp))
+                offline -> Icon(Icons.Filled.CloudOff, contentDescription = I18n.s(R.string.xmb_fr_section_offline), tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary, modifier = Modifier.size(22.dp))
             }
         }
         if (isBusy) {

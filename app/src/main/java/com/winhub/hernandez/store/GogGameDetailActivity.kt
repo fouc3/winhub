@@ -75,6 +75,8 @@ import java.io.File
 import java.net.URL
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.function.Consumer
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
 
@@ -552,9 +554,9 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
         val dlgTitle = title
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle("Uninstall $dlgTitle?")
-            .setMessage("This will delete all installed game files.")
-            .setPositiveButton("Uninstall") { _, _ -> doUninstall() }
-            .setNegativeButton("Cancel", null)
+            .setMessage(I18n.s(R.string.ui_this_will_delete_all_installed_game_files))
+            .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ -> doUninstall() }
+            .setNegativeButton(I18n.s(R.string.cancel), null)
             .show()
     }
 
@@ -991,7 +993,7 @@ private fun GogGameDetailScreen(
                     }
                 }
                 Spacer(Modifier.height(8.dp))
-                StoreSection(title = "Updates") {
+                StoreSection(title = I18n.s(R.string.ui_updates)) {
                     GogUpdatesContent(
                         installed = updatesInstalled,
                         updateStatusText = updateStatusText,
@@ -1003,14 +1005,14 @@ private fun GogGameDetailScreen(
                     )
                 }
                 if (prereqsVisible) {
-                    StoreSection(title = "Prerequisites") {
+                    StoreSection(title = I18n.s(R.string.ui_prerequisites)) {
                         StoreStatusText(
                             "This game needs Microsoft runtimes (Visual C++, .NET, …). Install them into a " +
                                 "container's Wine prefix so the game can start. A brief setup window appears for each."
                         )
                         Spacer(Modifier.height(8.dp))
                         StoreActionButton(
-                            text = "Install prerequisites",
+                            text = I18n.s(R.string.ui_install_prerequisites),
                             onClick = onInstallPrereqs,
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -1019,7 +1021,7 @@ private fun GogGameDetailScreen(
             }
 
             1 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
-                StoreSection(title = "DLC") {
+                StoreSection(title = I18n.s(R.string.ui_dlc)) {
                     GogDlcContent(
                         dlcJson = dlcJson,
                         baseInstalled = dlcBaseInstalled,
@@ -1030,7 +1032,7 @@ private fun GogGameDetailScreen(
             }
 
             2 -> Column(modifier = Modifier.padding(top = 6.dp, bottom = 8.dp)) {
-                StoreSection(title = "Cloud Saves") {
+                StoreSection(title = I18n.s(R.string.ui_cloud_saves)) {
                     GogCloudSavesContent(
                         saveDirText = cloudSaveDirText,
                         saveDirColor = cloudSaveDirColor,
@@ -1077,14 +1079,14 @@ private fun GogUpdatesContent(
     Spacer(Modifier.height(8.dp))
     if (updateBtnVisible) {
         StoreActionButton(
-            text = "Update Now",
+            text = I18n.s(R.string.ui_update_now_2),
             onClick = onUpdateNow,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
     }
     StoreActionButton(
-        text = "Check for Updates",
+        text = I18n.s(R.string.ui_check_for_updates),
         onClick = onCheckUpdate,
         modifier = Modifier.fillMaxWidth(),
         enabled = checkUpdateEnabled,
@@ -1149,7 +1151,7 @@ private fun GogDlcContent(
             )
             when {
                 state?.installed == true -> Text(
-                    text = "Installed",
+                    text = I18n.s(R.string.wrapper_installed),
                     style = MaterialTheme.typography.labelSmall,
                     color = INSTALLED_GREEN,
                     fontWeight = FontWeight.Bold,
@@ -1161,12 +1163,12 @@ private fun GogDlcContent(
                     fontWeight = FontWeight.Bold,
                 )
                 !baseInstalled -> Text(
-                    text = "Install the game first",
+                    text = I18n.s(R.string.ui_install_the_game_first),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 else -> StoreActionButton(
-                    text = "Install",
+                    text = I18n.s(R.string.ui_install),
                     onClick = { if (dlcId.isNotEmpty()) onInstall(dlcId, dlcTitle) },
                     enabled = dlcId.isNotEmpty(),
                 )
@@ -1202,7 +1204,7 @@ private fun GogCloudSavesContent(
             maxLines = 2,
             modifier = Modifier.weight(1f),
         )
-        StoreActionButton(text = "Browse", onClick = onBrowse)
+        StoreActionButton(text = I18n.s(R.string.browse), onClick = onBrowse)
     }
     if (statusVisible) {
         Spacer(Modifier.height(8.dp))
@@ -1210,14 +1212,14 @@ private fun GogCloudSavesContent(
     }
     Spacer(Modifier.height(8.dp))
     StoreActionButton(
-        text = "Upload Saves",
+        text = I18n.s(R.string.ui_upload_saves),
         onClick = onUpload,
         modifier = Modifier.fillMaxWidth(),
         enabled = btnsEnabled,
     )
     Spacer(Modifier.height(8.dp))
     StoreActionButton(
-        text = "Download Saves",
+        text = I18n.s(R.string.ui_download_saves),
         onClick = onDownload,
         modifier = Modifier.fillMaxWidth(),
         enabled = btnsEnabled,
@@ -1232,7 +1234,7 @@ private fun ExePickerDialogGame(
 ) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select game executable") },
+        title = { Text(I18n.s(R.string.ui_select_game_executable)) },
         text = {
             Column {
                 candidates.forEach { path ->

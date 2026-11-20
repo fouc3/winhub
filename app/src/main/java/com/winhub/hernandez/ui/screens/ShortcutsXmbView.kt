@@ -149,6 +149,7 @@ import java.io.File
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import com.winhub.hernandez.util.I18n
 
 /** One row of the XMB options column: the same entries as a game card's ⋮ menu. */
 internal data class XmbAction(
@@ -434,7 +435,7 @@ internal fun ShortcutsXmbView(
             )
             // The focused game's cover IS the background: full-bleed and unblurred, the way the
             // list rows put wallpaper behind their content. The shades below keep text readable.
-            Crossfade(targetState = focused.icon, animationSpec = tween(600), label = "xmbBackdrop") { bmp ->
+            Crossfade(targetState = focused.icon, animationSpec = tween(600), label = I18n.s(R.string.ui_xmbbackdrop)) { bmp ->
                 if (bmp != null) {
                     Image(
                         bitmap = remember(bmp) { bmp.asImageBitmap() },
@@ -478,7 +479,7 @@ internal fun ShortcutsXmbView(
                         }
                     }
                 }
-                val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = "xmbRootAlpha")
+                val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = I18n.s(R.string.ui_xmbrootalpha))
                 // Four clean transparent squares with a thin outline: Steam, GOG, Epic, then the app
                 // menu. L1/R1 (or a tap) moves between them, A/tap opens one. They replace the old
                 // store-badge cluster.
@@ -521,7 +522,7 @@ internal fun ShortcutsXmbView(
                     targetState = focused,
                     contentKey = { it.file.path },
                     transitionSpec = { (fadeIn(tween(220)) + slideInVertically(tween(220)) { it / 6 }) togetherWith fadeOut(tween(90)) },
-                    label = "xmbTitle",
+                    label = I18n.s(R.string.ui_xmbtitle),
                     modifier = Modifier.offset(m.titleX.dp, m.titleY.dp).width(m.titleW.dp),
                 ) { s ->
                     val meta = remember(s) { buildLaunchSpec(s, context).meta }
@@ -555,8 +556,8 @@ internal fun ShortcutsXmbView(
                         key(a.label) {
                             val d = i - act.coerceAtLeast(0)
                             val vis = d in 0 until m.nVis
-                            val y by animateFloatAsState(d * m.rowH + if (d > 0) m.extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = "xmbRowY")
-                            val a2 by animateFloatAsState(if (!vis) 0f else if (d == 0) 1f else max(0.35f, 1f - d * 0.13f), tween(220), label = "xmbRowA")
+                            val y by animateFloatAsState(d * m.rowH + if (d > 0) m.extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = I18n.s(R.string.ui_xmbrowy))
+                            val a2 by animateFloatAsState(if (!vis) 0f else if (d == 0) 1f else max(0.35f, 1f - d * 0.13f), tween(220), label = I18n.s(R.string.ui_xmbrowa))
                             val src = remember { MutableInteractionSource() }
                             XmbActionRow(
                                 action = a, selected = i == act, accent = accent, iconBox = m.iconBox,
@@ -595,8 +596,8 @@ private const val SQUARE_COUNT = 4
 @Composable
 private fun XmbSquare(icon: Int?, label: String, selected: Boolean, accent: Color, onClick: () -> Unit) {
     val shape = RoundedCornerShape(9.dp)
-    val border by animateColorAsState(if (selected) accent else Color(0x66FFFFFF), tween(180), label = "xmbSquareBorder")
-    val sc by animateFloatAsState(if (selected) 1.1f else 1f, spring(dampingRatio = 0.75f, stiffness = 620f), label = "xmbSquareScale")
+    val border by animateColorAsState(if (selected) accent else Color(0x66FFFFFF), tween(180), label = I18n.s(R.string.ui_xmbsquareborder))
+    val sc by animateFloatAsState(if (selected) 1.1f else 1f, spring(dampingRatio = 0.75f, stiffness = 620f), label = I18n.s(R.string.ui_xmbsquarescale))
     val src = remember { MutableInteractionSource() }
     Box(
         Modifier
@@ -647,7 +648,7 @@ internal fun screenMenu(screen: Screen, content: @Composable () -> Unit): XmbMen
 /** The pop-in column behind the fourth square: every destination the nav drawer lists. In XMB mode
  *  the tabs open as XMB columns (full controller) instead of jumping out to the tab. */
 private fun xmbAppMenu(onGo: (Screen) -> Unit, onOpenContainer: (Int?) -> Unit): XmbMenu = XmbMenu(
-    title = "Menu",
+    title = I18n.s(R.string.ui_menu),
     icon = Icons.Filled.Menu,
     rows = {
         val xs = this
@@ -694,7 +695,7 @@ private fun xmbAppMenu(onGo: (Screen) -> Unit, onOpenContainer: (Int?) -> Unit):
                         onGo(d)
                     }
             }
-        } + XmbRow.Link(key = "graphics", label = "Graphics", icon = Icons.Filled.Memory) {
+        } + XmbRow.Link(key = "graphics", label = I18n.s(R.string.ui_graphics), icon = Icons.Filled.Memory) {
             xmbGraphicsMenu(xs)
         }
     },
@@ -933,10 +934,10 @@ private val XMB_RIBBONS = listOf(
 // internal: shared with the launch preloader, which draws the same field behind its progress.
 @Composable
 internal fun XmbWaves(accent: Color, modifier: Modifier) {
-    val phase by rememberInfiniteTransition(label = "xmbWaves").animateFloat(
+    val phase by rememberInfiniteTransition(label = I18n.s(R.string.ui_xmbwaves)).animateFloat(
         initialValue = 0f, targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(40_000, easing = LinearEasing)),
-        label = "xmbWavePhase",
+        label = I18n.s(R.string.ui_xmbwavephase),
     )
     val paths = remember { List(XMB_RIBBONS.size * 2) { Path() } }
     Canvas(modifier) {

@@ -33,6 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * ONE shared install-progress popup used by BOTH the container-create component sheet
@@ -158,7 +160,7 @@ fun InstallProgressDialog(
                 Spacer(Modifier.height(16.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     if (!terminal) {
-                        TextButton(onClick = onCancel) { Text("Cancel", color = cs.primary) }
+                        TextButton(onClick = onCancel) { Text(I18n.s(R.string.cancel), color = cs.primary) }
                     } else {
                         TextButton(onClick = onDismiss) {
                             Text(if (state.phase == ContentDownloadPhase.DONE) "Done" else "Close", color = cs.primary)

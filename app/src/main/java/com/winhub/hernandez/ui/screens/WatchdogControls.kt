@@ -33,6 +33,8 @@ import com.winhub.hernandez.perf.TempWatchdog.ThresholdMode
 import com.winhub.hernandez.widget.HudMetrics
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private const val WATCHDOG_WHATS_THIS =
     "A safety backstop. If your device gets too hot, it automatically undoes the performance " +
@@ -121,7 +123,7 @@ fun WatchdogSection() {
     }
 
     // Preset selector.
-    Text("Threshold", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+    Text(I18n.s(R.string.ui_threshold), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
     ThresholdMode.values().forEach { m ->
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -166,7 +168,7 @@ fun WatchdogSection() {
     // "What is the Temperature Watchdog?" explainer.
     if (showWhatsThis) {
         PerfInfoDialog(
-            title = "What is the Temperature Watchdog?",
+            title = I18n.s(R.string.ui_what_is_the_temperature_watchdog),
             body = WATCHDOG_WHATS_THIS,
             onDismiss = { showWhatsThis = false }
         )
@@ -184,7 +186,7 @@ fun WatchdogSection() {
     // Hard disclaimer to disarm the watchdog.
     if (showOffDisclaimer) {
         PerfDisclaimerDialog(
-            title = "Disable thermal safety?",
+            title = I18n.s(R.string.ui_disable_thermal_safety),
             body = PerfDisclaimerCopy.WATCHDOG_OFF,
             confirmLabel = "Turn watchdog OFF",
             onDismiss = { showOffDisclaimer = false },

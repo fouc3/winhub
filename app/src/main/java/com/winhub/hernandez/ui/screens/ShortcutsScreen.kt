@@ -322,6 +322,7 @@ import java.io.IOException
 import java.lang.reflect.Field
 import org.json.JSONArray
 import org.json.JSONObject
+import com.winhub.hernandez.util.I18n
 
 @Composable
 fun ShortcutsScreen(
@@ -992,7 +993,7 @@ fun ShortcutsScreen(
             IconButton(onClick = { showCommunityBrowser = true }) {
                 Icon(
                     imageVector = Icons.Filled.Public,
-                    contentDescription = "Community configs",
+                    contentDescription = I18n.s(R.string.ui_community_configs_2),
                     tint = androidx.compose.ui.graphics.Color.White,
                 )
             }
@@ -1008,7 +1009,7 @@ fun ShortcutsScreen(
                 ) {
                     Icon(
                         Icons.Filled.Delete,
-                        contentDescription = "Remove selected",
+                        contentDescription = I18n.s(R.string.ui_remove_selected),
                         tint = if (selectedPaths.isEmpty())
                             androidx.compose.ui.graphics.Color.White.copy(alpha = 0.4f)
                         else DangerRed,
@@ -1046,7 +1047,7 @@ fun ShortcutsScreen(
             }
             Box {
                 IconButton(onClick = { showSortMenu = true }) {
-                    Icon(Icons.Filled.SwapVert, contentDescription = "Sort", tint = androidx.compose.ui.graphics.Color.White)
+                    Icon(Icons.Filled.SwapVert, contentDescription = I18n.s(R.string.xmb_all_sort), tint = androidx.compose.ui.graphics.Color.White)
                 }
                 DropdownMenu(expanded = showSortMenu, onDismissRequest = { showSortMenu = false }) {
                     val orders = listOf(
@@ -1120,7 +1121,7 @@ fun ShortcutsScreen(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (shortcuts.isEmpty()) {
                 Text(
-                    text = "No shortcuts yet.",
+                    text = I18n.s(R.string.ui_no_shortcuts_yet),
                     color = OnSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center),
                 )
@@ -1248,7 +1249,7 @@ fun ShortcutsScreen(
             ) {
                 Icon(
                     Icons.Filled.Add,
-                    contentDescription = "Add Shortcut",
+                    contentDescription = I18n.s(R.string.ui_add_shortcut),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(28.dp),
                 )
@@ -1367,10 +1368,10 @@ fun ShortcutsScreen(
                     importExeBrowseLauncher.launch(
                         InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, "Select the game's .exe")
                     )
-                }) { Text("Browse…") }
+                }) { Text(I18n.s(R.string.ui_browse)) }
             },
             dismissButton = {
-                TextButton(onClick = { exePickerFor = null }) { Text("Cancel") }
+                TextButton(onClick = { exePickerFor = null }) { Text(I18n.s(R.string.cancel)) }
             },
         )
     }
@@ -1382,12 +1383,12 @@ fun ShortcutsScreen(
                 showImportMethodPicker = false
                 pendingImportContainerIndex = -1
             },
-            title = { Text("Add games") },
+            title = { Text(I18n.s(R.string.ui_add_games)) },
             text = {
                 Column {
                     MenuOptionCard(
-                        title = "Add game EXE",
-                        subtitle = "Pick one game's .exe file",
+                        title = I18n.s(R.string.ui_add_game_exe),
+                        subtitle = I18n.s(R.string.ui_pick_one_game_exe_file),
                         icon = Icons.Default.InsertDriveFile,
                     ) {
                         showImportMethodPicker = false
@@ -1405,7 +1406,7 @@ fun ShortcutsScreen(
                         )
                     }
                     MenuOptionCard(
-                        title = "Add games folder",
+                        title = I18n.s(R.string.ui_add_games_folder),
                         subtitle = "Pick the folder holding all your games — each one is scanned for its .exe",
                         icon = Icons.Default.Folder,
                     ) {
@@ -1427,7 +1428,7 @@ fun ShortcutsScreen(
                 TextButton(onClick = {
                     showImportMethodPicker = false
                     pendingImportContainerIndex = -1
-                }) { Text("Cancel") }
+                }) { Text(I18n.s(R.string.cancel)) }
             },
         )
     }
@@ -1436,7 +1437,7 @@ fun ShortcutsScreen(
     if (folderScanRunning) {
         OutlinedAlertDialog(
             onDismissRequest = {},
-            title = { Text("Scanning for games") },
+            title = { Text(I18n.s(R.string.ui_scanning_for_games)) },
             text = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
@@ -1533,7 +1534,7 @@ fun ShortcutsScreen(
                         folderScanSelected = emptySet()
                         pendingImportContainerIndex = -1
                     },
-                ) { Text("Cancel") }
+                ) { Text(I18n.s(R.string.cancel)) }
             },
         )
     }
@@ -1543,11 +1544,11 @@ fun ShortcutsScreen(
         val containers = vm.containers()
         OutlinedAlertDialog(
             onDismissRequest = { showImportContainerPicker = false },
-            title = { Text("Select container") },
+            title = { Text(I18n.s(R.string.ui_select_container)) },
             text = {
                 Column {
                     if (containers.isEmpty()) {
-                        Text("No containers found.", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_no_containers_found), color = OnSurfaceVariant)
                     } else {
                         // Scroll the container list so it can't be clipped when there are many
                         // containers and vertical space is tight (landscape). "Pick via system…"
@@ -1572,13 +1573,13 @@ fun ShortcutsScreen(
                         }
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
                             Checkbox(checked = importUseSystemPicker, onCheckedChange = { importUseSystemPicker = it })
-                            Text("Pick via system…", color = OnSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                            Text(I18n.s(R.string.pick_via_system), color = OnSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                         }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showImportContainerPicker = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showImportContainerPicker = false }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1601,7 +1602,7 @@ fun ShortcutsScreen(
         val confirmContainer = vm.containers().getOrNull(renameDialogContainerIndex)
         OutlinedAlertDialog(
             onDismissRequest = { showRenameDialog = false },
-            title = { Text("Confirm game") },
+            title = { Text(I18n.s(R.string.ui_confirm_game)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -1613,12 +1614,12 @@ fun ShortcutsScreen(
                     OutlinedTextField(
                         value = confirmNameField,
                         onValueChange = { confirmNameField = it; confirmNameEdited = true },
-                        label = { Text("Game name") },
+                        label = { Text(I18n.s(R.string.ui_game_name)) },
                         singleLine = true,
                         trailingIcon = {
                             if (confirmNameField.isNotEmpty()) {
                                 IconButton(onClick = { confirmNameField = ""; confirmNameEdited = true }) {
-                                    Icon(Icons.Default.Close, contentDescription = "Clear")
+                                    Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.clear))
                                 }
                             }
                         },
@@ -1645,11 +1646,11 @@ fun ShortcutsScreen(
                         if (steamSearching) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("Searching…")
+                            Text(I18n.s(R.string.ui_searching))
                         } else {
                             Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Search Steam")
+                            Text(I18n.s(R.string.ui_search_steam))
                         }
                     }
 
@@ -1738,13 +1739,13 @@ fun ShortcutsScreen(
                     }
                     showRenameDialog = false
                     Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
-                }) { Text("Save") }
+                }) { Text(I18n.s(R.string.save)) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     showRenameDialog = false
                     Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
-                }) { Text("Skip") }
+                }) { Text(I18n.s(R.string.ui_skip)) }
             },
         )
     }
@@ -1753,7 +1754,7 @@ fun ShortcutsScreen(
     confirmRemove?.let { s ->
         OutlinedAlertDialog(
             onDismissRequest = { confirmRemove = null },
-            title = { Text("Remove shortcut?") },
+            title = { Text(I18n.s(R.string.ui_remove_shortcut)) },
             text = { Text("Remove \"${s.name}\"?") },
             confirmButton = {
                 TextButton(onClick = {
@@ -1764,9 +1765,9 @@ fun ShortcutsScreen(
                         if (ok) "Shortcut removed." else "Failed to remove shortcut.",
                         Toast.LENGTH_SHORT,
                     ).show()
-                }) { Text("Remove") }
+                }) { Text(I18n.s(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemove = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { confirmRemove = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1797,10 +1798,10 @@ fun ShortcutsScreen(
                         else "Removed $ok of ${targets.size} — the rest could not be deleted.",
                         Toast.LENGTH_SHORT,
                     ).show()
-                }) { Text("Remove", color = DangerRed) }
+                }) { Text(I18n.s(R.string.remove), color = DangerRed) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmRemoveSelected = false }) { Text("Cancel") }
+                TextButton(onClick = { confirmRemoveSelected = false }) { Text(I18n.s(R.string.cancel)) }
             },
         )
     }
@@ -1810,7 +1811,7 @@ fun ShortcutsScreen(
         val containers = vm.containers()
         OutlinedAlertDialog(
             onDismissRequest = { cloneTarget = null },
-            title = { Text("Select container") },
+            title = { Text(I18n.s(R.string.ui_select_container)) },
             text = {
                 // Scroll so a long container list isn't clipped in landscape / on short screens.
                 Column(
@@ -1840,7 +1841,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { cloneTarget = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { cloneTarget = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1933,7 +1934,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { backupFormatShortcut = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { backupFormatShortcut = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -1993,7 +1994,7 @@ fun ShortcutsScreen(
         var didReset by remember { mutableStateOf(false) }
         OutlinedAlertDialog(
             onDismissRequest = { propertiesShortcut = null },
-            title = { Text("Properties") },
+            title = { Text(I18n.s(R.string.ui_properties)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(if (didReset) "Number of times played: 0" else "Number of times played: $playCount")
@@ -2004,10 +2005,10 @@ fun ShortcutsScreen(
                             didReset = true
                         },
                         modifier = Modifier.fillMaxWidth()
-                    ) { Text("Reset Properties") }
+                    ) { Text(I18n.s(R.string.ui_reset_properties)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { propertiesShortcut = null }) { Text("Close") } }
+            confirmButton = { TextButton(onClick = { propertiesShortcut = null }) { Text(I18n.s(R.string.wrapper_manager_close)) } }
         )
     }
 
@@ -2019,9 +2020,9 @@ fun ShortcutsScreen(
             title = { Text("Scrape cover for \"${sc.name}\"") },
             text = {
                 if (scrapeLoading) {
-                    Text("Searching SteamGridDB...", color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_searching_steamgriddb), color = OnSurfaceVariant)
                 } else if (scrapeCovers.isEmpty()) {
-                    Text("No covers found.", color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_no_covers_found), color = OnSurfaceVariant)
                 } else {
                     Column(
                         modifier = Modifier
@@ -2074,7 +2075,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { scrapeTarget = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { scrapeTarget = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2092,7 +2093,7 @@ fun ShortcutsScreen(
             // Outline the whole dialog box (AlertDialog has no border param) so it reads as a bordered
             // panel like the catalog browser, matched to the dialog's rounded shape.
             modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.outline, communityDialogShape),
-            title = { Text("Community configs") },
+            title = { Text(I18n.s(R.string.ui_community_configs_2)) },
             text = {
                 val result = communityResult
                 val game = result?.match
@@ -2106,7 +2107,7 @@ fun ShortcutsScreen(
                     ) {
                         Icon(Icons.Filled.Share, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Share config")
+                        Text(I18n.s(R.string.ui_share_config))
                     }
                     OutlinedButton(
                         onClick = { launchConfigImport(s) },
@@ -2114,7 +2115,7 @@ fun ShortcutsScreen(
                     ) {
                         Icon(Icons.Filled.FileUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Import")
+                        Text(I18n.s(R.string.preset_action_import))
                     }
                 }
                 // Phase 3 (online sharing) — UPLOAD this shortcut's effective config to OUR community repo
@@ -2148,7 +2149,7 @@ fun ShortcutsScreen(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Upload to community")
+                        Text(I18n.s(R.string.ui_upload_to_community))
                     }
                 }
                 // Manage the configs the user has shared (list / delete / edit description). Reinstall-
@@ -2159,7 +2160,7 @@ fun ShortcutsScreen(
                 ) {
                     Icon(Icons.Filled.AccountCircle, null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("My uploads")
+                    Text(I18n.s(R.string.ui_my_uploads))
                 }
                 Divider(color = DividerColor)
                 OutlinedTextField(
@@ -2169,7 +2170,7 @@ fun ShortcutsScreen(
                         if (q.trim().length >= 2) vm.searchCommunityGames(q) { communitySearchResults = it }
                         else communitySearchResults = emptyList()
                     },
-                    label = { Text("Search all games") },
+                    label = { Text(I18n.s(R.string.ui_search_all_games)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -2231,7 +2232,7 @@ fun ShortcutsScreen(
                             val tieOptions = result?.alternatives.orEmpty()
                             if (tieOptions.size > 1) {
                                 Text(
-                                    text = "Which game is this?",
+                                    text = I18n.s(R.string.ui_which_game_is_this),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = OnSurface,
                                 )
@@ -2295,7 +2296,7 @@ fun ShortcutsScreen(
                             FilterChip(
                                 selected = matchesMine,
                                 onClick = { matchesMine = !matchesMine },
-                                label = { Text("Matches my device") },
+                                label = { Text(I18n.s(R.string.social_hub_configs_matches_device)) },
                                 enabled = uSoc != null || uGpu != null,
                             )
                             Divider(color = DividerColor)
@@ -2309,14 +2310,14 @@ fun ShortcutsScreen(
                             val myFolder = s.name.replace(Regex("[^a-zA-Z0-9_\\-]"), "_")
                             val cfg = rememberGameConfigs(vm, game, extraBannerlatorFolders = listOf(myFolder))
                             when {
-                                cfg.loading -> Text("Loading configs…", color = OnSurfaceVariant)
+                                cfg.loading -> Text(I18n.s(R.string.social_hub_configs_loading), color = OnSurfaceVariant)
                                 cfg.entries.isNotEmpty() -> {
                                     val shown = if (!matchesMine) cfg.entries
                                         else cfg.entries.filter {
                                             GameMatcher.hardwareMatchesUser(uSoc, uGpu, listOf(it.second.device, it.second.soc))
                                         }
                                     if (shown.isEmpty()) {
-                                        Text("No uploaded configs match your device.", color = OnSurfaceVariant)
+                                        Text(I18n.s(R.string.ui_no_uploaded_configs_match_your_device), color = OnSurfaceVariant)
                                     } else {
                                         shown.forEach { (folder, e) ->
                                             val isMatch = (uSoc != null || uGpu != null) &&
@@ -2331,7 +2332,7 @@ fun ShortcutsScreen(
                                         }
                                     }
                                 }
-                                result?.rankedDevices.isNullOrEmpty() -> Text("No device configs listed.", color = OnSurfaceVariant)
+                                result?.rankedDevices.isNullOrEmpty() -> Text(I18n.s(R.string.ui_no_device_configs_listed), color = OnSurfaceVariant)
                                 else -> {
                                     Text(
                                         "Showing device configs (vote counts unavailable offline).",
@@ -2379,7 +2380,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = dismiss) { Text("Close") } },
+            dismissButton = { TextButton(onClick = dismiss) { Text(I18n.s(R.string.wrapper_manager_close)) } },
         )
 
         // Replace-confirm for an already-shared config (surfaced by uploadShortcutConfig's onExisting).
@@ -2394,7 +2395,7 @@ fun ShortcutsScreen(
             }
             OutlinedAlertDialog(
                 onDismissRequest = dismissReplace,
-                title = { Text("Replace your shared config?") },
+                title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
                 text = {
                     Text(
                         "You already shared a config for \"${s.name}\". Replace it?",
@@ -2405,10 +2406,10 @@ fun ShortcutsScreen(
                     TextButton(onClick = {
                         replaceUploadPrompt = null
                         proceed()
-                    }) { Text("Replace") }
+                    }) { Text(I18n.s(R.string.ui_replace)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = dismissReplace) { Text("Cancel") }
+                    TextButton(onClick = dismissReplace) { Text(I18n.s(R.string.cancel)) }
                 },
             )
         }
@@ -2435,16 +2436,16 @@ fun ShortcutsScreen(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
             shape = myUploadsShape,
             modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.outline, myUploadsShape),
-            title = { Text("My uploads") },
+            title = { Text(I18n.s(R.string.ui_my_uploads)) },
             text = {
                 when (val rows = myUploads) {
                     null -> Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.width(10.dp))
-                        Text("Loading…", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.loading), color = OnSurfaceVariant)
                     }
                     else -> if (rows.isEmpty()) {
-                        Text("You haven't shared any configs yet.", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_you_haven_t_shared_any_configs_yet), color = OnSurfaceVariant)
                     } else {
                         Column(
                             modifier = Modifier.fillMaxWidth().heightIn(max = 460.dp).verticalScroll(rememberScrollState()),
@@ -2520,7 +2521,7 @@ fun ShortcutsScreen(
                                                 OutlinedButton(onClick = { deleteUploadRow = row }) {
                                                     Icon(Icons.Filled.Delete, null, modifier = Modifier.size(18.dp))
                                                     Spacer(Modifier.width(6.dp))
-                                                    Text("Delete")
+                                                    Text(I18n.s(R.string.preset_action_delete))
                                                 }
                                                 Spacer(Modifier.weight(1f))
                                                 Button(
@@ -2535,7 +2536,7 @@ fun ShortcutsScreen(
                                                             ).show()
                                                         }
                                                     },
-                                                ) { Text("Save") }
+                                                ) { Text(I18n.s(R.string.save)) }
                                             }
                                         }
                                     }
@@ -2546,7 +2547,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = closeMyUploads) { Text("Close") } },
+            dismissButton = { TextButton(onClick = closeMyUploads) { Text(I18n.s(R.string.wrapper_manager_close)) } },
         )
     }
 
@@ -2554,7 +2555,7 @@ fun ShortcutsScreen(
     deleteUploadRow?.let { row ->
         OutlinedAlertDialog(
             onDismissRequest = { deleteUploadRow = null },
-            title = { Text("Delete shared config?") },
+            title = { Text(I18n.s(R.string.ui_delete_shared_config)) },
             text = { Text("Delete your shared config for \"${row.record.game}\"?", color = OnSurface) },
             confirmButton = {
                 TextButton(onClick = {
@@ -2567,9 +2568,9 @@ fun ShortcutsScreen(
                             Toast.makeText(context, "Couldn't reach the server.", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }) { Text("Delete") }
+                }) { Text(I18n.s(R.string.preset_action_delete)) }
             },
-            dismissButton = { TextButton(onClick = { deleteUploadRow = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { deleteUploadRow = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2620,13 +2621,13 @@ fun ShortcutsScreen(
                 TextButton(onClick = {
                     configAction = null
                     startConfigApply(pick, ctxShortcut)
-                }) { Text("Apply to game…") }
+                }) { Text(I18n.s(R.string.ui_apply_to_game)) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     configAction = null
                     detailFor = pick to ctxShortcut
-                }) { Text("View details") }
+                }) { Text(I18n.s(R.string.ui_view_details)) }
             },
         )
     }
@@ -2681,10 +2682,10 @@ fun ShortcutsScreen(
         }
         OutlinedAlertDialog(
             onDismissRequest = { applyPicker = null },
-            title = { Text("Apply to game…") },
+            title = { Text(I18n.s(R.string.ui_apply_to_game)) },
             text = {
                 if (shortcutList.isEmpty()) {
-                    Text("You have no shortcuts yet.", color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_you_have_no_shortcuts_yet), color = OnSurfaceVariant)
                 } else {
                     Column(
                         modifier = Modifier.fillMaxWidth().heightIn(max = 380.dp).verticalScroll(rememberScrollState()),
@@ -2709,7 +2710,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { applyPicker = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { applyPicker = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2717,15 +2718,15 @@ fun ShortcutsScreen(
     applyMismatch?.let { (sc, pick) ->
         OutlinedAlertDialog(
             onDismissRequest = { applyMismatch = null },
-            title = { Text("Different game") },
+            title = { Text(I18n.s(R.string.ui_different_game)) },
             text = { Text("This config is for \"${pick.game.name}\" — apply to \"${sc.name}\" anyway?") },
             confirmButton = {
                 TextButton(onClick = {
                     applyMismatch = null
                     runCommunityApply(sc, pick)
-                }) { Text("Apply anyway") }
+                }) { Text(I18n.s(R.string.ui_apply_anyway)) }
             },
-            dismissButton = { TextButton(onClick = { applyMismatch = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { applyMismatch = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2734,7 +2735,7 @@ fun ShortcutsScreen(
     exportResult?.let { res ->
         OutlinedAlertDialog(
             onDismissRequest = { exportResult = null },
-            title = { Text("Share this game's config") },
+            title = { Text(I18n.s(R.string.ui_share_this_game_config)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("A config file for \"${res.game}\" is ready.", color = OnSurface)
@@ -2746,16 +2747,16 @@ fun ShortcutsScreen(
                     TextButton(onClick = { saveExportToDownloads(res) }) {
                         Icon(Icons.Filled.Download, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Save to Downloads")
+                        Text(I18n.s(R.string.ui_save_to_downloads))
                     }
                     TextButton(onClick = { shareExport(res) }) {
                         Icon(Icons.Filled.Share, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Share")
+                        Text(I18n.s(R.string.share))
                     }
                 }
             },
-            dismissButton = { TextButton(onClick = { exportResult = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { exportResult = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2765,10 +2766,10 @@ fun ShortcutsScreen(
         val shortcutList = vm.currentShortcuts()
         OutlinedAlertDialog(
             onDismissRequest = { importedConfigUri = null },
-            title = { Text("Apply imported config to…") },
+            title = { Text(I18n.s(R.string.ui_apply_imported_config_to)) },
             text = {
                 if (shortcutList.isEmpty()) {
-                    Text("You have no shortcuts yet.", color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_you_have_no_shortcuts_yet), color = OnSurfaceVariant)
                 } else {
                     Column(
                         modifier = Modifier.fillMaxWidth().heightIn(max = 380.dp).verticalScroll(rememberScrollState()),
@@ -2790,7 +2791,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { importedConfigUri = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { importedConfigUri = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 
@@ -2798,11 +2799,11 @@ fun ShortcutsScreen(
     if (applyBusy) {
         OutlinedAlertDialog(
             onDismissRequest = {},
-            title = { Text("Applying config") },
+            title = { Text(I18n.s(R.string.ui_applying_config)) },
             text = {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                    Text("Fetching and merging…", color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_fetching_and_merging), color = OnSurfaceVariant)
                 }
             },
             confirmButton = {},
@@ -2841,14 +2842,14 @@ fun ShortcutsScreen(
                     Text(res.message, color = OnSurface)
                     if (res.changed.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text("Changed", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_changed), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.changed.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                     // Missing components — smart inline installer: exact-match confirm, or a shortlist of
                     // the closest catalog versions, with "Browse all versions" as the full-menu fallback.
                     if (res.missingComponents.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text("Needs a component", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_needs_a_component), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.missingComponents.forEach { mc ->
                             SmartComponentInstallRow(
                                 mc = mc,
@@ -2866,7 +2867,7 @@ fun ShortcutsScreen(
                     // then the full driver browser. Adreno-only (the apply engine gates emission).
                     if (res.missingDrivers.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text("Needs a GPU driver", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_needs_a_gpu_driver), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.missingDrivers.forEach { md ->
                             SmartDriverInstallRow(
                                 md = md,
@@ -2897,12 +2898,12 @@ fun ShortcutsScreen(
                     }
                     if (res.advisories.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text("Heads up", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { applyResult = null }) { Text("Done") } },
+            confirmButton = { TextButton(onClick = { applyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
         )
     }
 
@@ -2970,7 +2971,7 @@ fun ShortcutsScreen(
     eaUnsupportedFor?.let { s ->
         AlertDialog(
             onDismissRequest = { eaUnsupportedFor = null },
-            title = { Text("Not supported: EA anti-cheat") },
+            title = { Text(I18n.s(R.string.ui_not_supported_ea_anti_cheat)) },
             text = {
                 Text(
                     "\"${s.name}\" ships EA Javelin anti-cheat, which needs a Windows kernel driver. " +
@@ -2983,7 +2984,7 @@ fun ShortcutsScreen(
     eaSetupFor?.let { s ->
         AlertDialog(
             onDismissRequest = { if (!eaSetupBusy) eaSetupFor = null },
-            title = { Text("Set up EA Desktop") },
+            title = { Text(I18n.s(R.string.ui_set_up_ea_desktop)) },
             text = {
                 Text(
                     "\"${s.name}\" is an EA title: it launches through EA Desktop, which isn't installed in this " +
@@ -3034,7 +3035,7 @@ fun ShortcutsScreen(
                     }
                 }) { Text(if (eaSetupBusy) "Starting…" else "Set up") }
             },
-            dismissButton = { TextButton(enabled = !eaSetupBusy, onClick = { eaSetupFor = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(enabled = !eaSetupBusy, onClick = { eaSetupFor = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
     launchChoiceFor?.let { s ->
@@ -3171,7 +3172,7 @@ fun ShortcutsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateHandle?.cancel() }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.primary)
+                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.primary)
                 }
             },
         )
@@ -3230,7 +3231,7 @@ private fun BannerlatorSourceBadge() {
             .padding(horizontal = 6.dp, vertical = 2.dp),
     ) {
         Text(
-            text = "WINHUB",
+            text = I18n.s(R.string.winhub_ping_notice_kicker),
             style = MaterialTheme.typography.labelSmall,
             color = Color.White,
         )
@@ -3387,7 +3388,7 @@ internal fun MyAccountDialog(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Icon(Icons.Filled.AccountCircle, contentDescription = null, tint = orange)
-                Text("My account")
+                Text(I18n.s(R.string.ui_my_account))
             }
         },
         text = {
@@ -3404,7 +3405,7 @@ internal fun MyAccountDialog(
                             style = MaterialTheme.typography.bodyMedium,
                             color = OnSurface,
                         )
-                        Text("Your recovery key", style = MaterialTheme.typography.labelLarge, color = orange)
+                        Text(I18n.s(R.string.ui_your_recovery_key), style = MaterialTheme.typography.labelLarge, color = orange)
                         Surface(
                             color = MaterialTheme.colorScheme.surfaceContainer,
                             shape = RoundedCornerShape(10.dp),
@@ -3430,14 +3431,14 @@ internal fun MyAccountDialog(
                             }) {
                                 Icon(Icons.Filled.ContentCopy, null, modifier = Modifier.size(18.dp))
                                 Spacer(Modifier.width(6.dp))
-                                Text("Copy")
+                                Text(I18n.s(R.string.copy))
                             }
                             Spacer(Modifier.weight(1f))
                             Button(onClick = {
                                 justCreated = null
                                 account = AccountManager.current(context)
                                 AccountUiBus.refresh(context)
-                            }) { Text("I've saved it") }
+                            }) { Text(I18n.s(R.string.ui_i_ve_saved_it)) }
                         }
                     }
 
@@ -3472,7 +3473,7 @@ internal fun MyAccountDialog(
                                     onClick = { avatarPicker.launch("image/*") },
                                     enabled = !avatarBusy,
                                     contentPadding = PaddingValues(vertical = 2.dp),
-                                ) { Text("Change picture", style = MaterialTheme.typography.labelMedium) }
+                                ) { Text(I18n.s(R.string.ui_change_picture), style = MaterialTheme.typography.labelMedium) }
                             }
                         }
                         Divider(color = DividerColor)
@@ -3497,7 +3498,7 @@ internal fun MyAccountDialog(
                                         IconButton(onClick = {
                                             clipboard.setText(AnnotatedString(key))
                                             Toast.makeText(context, "Recovery key copied.", Toast.LENGTH_SHORT).show()
-                                        }) { Icon(Icons.Filled.ContentCopy, contentDescription = "Copy recovery key", modifier = Modifier.size(18.dp)) }
+                                        }) { Icon(Icons.Filled.ContentCopy, contentDescription = I18n.s(R.string.ui_copy_recovery_key), modifier = Modifier.size(18.dp)) }
                                     }
                                 }
                             } else {
@@ -3511,7 +3512,7 @@ internal fun MyAccountDialog(
                         OutlinedButton(onClick = onOpenMyUploads, modifier = Modifier.fillMaxWidth()) {
                             Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("My uploads")
+                            Text(I18n.s(R.string.ui_my_uploads))
                         }
                         OutlinedButton(
                             onClick = {
@@ -3522,12 +3523,12 @@ internal fun MyAccountDialog(
                                 AccountUiBus.refresh(context)
                             },
                             modifier = Modifier.fillMaxWidth(),
-                        ) { Text("Log out") }
+                        ) { Text(I18n.s(R.string.ui_log_out)) }
                     }
 
                     // --- LOGGED OUT: reset flow ---------------------------------------------------
                     showReset -> {
-                        Text("Reset password", style = MaterialTheme.typography.labelLarge, color = orange)
+                        Text(I18n.s(R.string.ui_reset_password), style = MaterialTheme.typography.labelLarge, color = orange)
                         Text(
                             "Enter your username, your recovery key, and a new password.",
                             style = MaterialTheme.typography.bodySmall,
@@ -3536,7 +3537,7 @@ internal fun MyAccountDialog(
                         OutlinedTextField(
                             value = username,
                             onValueChange = { username = it; error = null },
-                            label = { Text("Username") },
+                            label = { Text(I18n.s(R.string.ui_username)) },
                             singleLine = true,
                             enabled = !busy,
                             modifier = Modifier.fillMaxWidth(),
@@ -3544,7 +3545,7 @@ internal fun MyAccountDialog(
                         OutlinedTextField(
                             value = recoveryKeyInput,
                             onValueChange = { recoveryKeyInput = it; error = null },
-                            label = { Text("Recovery key") },
+                            label = { Text(I18n.s(R.string.ui_recovery_key)) },
                             singleLine = true,
                             enabled = !busy,
                             modifier = Modifier.fillMaxWidth(),
@@ -3552,7 +3553,7 @@ internal fun MyAccountDialog(
                         OutlinedTextField(
                             value = newPassword,
                             onValueChange = { newPassword = it; error = null },
-                            label = { Text("New password") },
+                            label = { Text(I18n.s(R.string.ui_new_password)) },
                             singleLine = true,
                             visualTransformation = PasswordVisualTransformation(),
                             enabled = !busy,
@@ -3560,7 +3561,7 @@ internal fun MyAccountDialog(
                         )
                         ErrorText()
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text("Back") }
+                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text(I18n.s(R.string.social_hub_configs_back)) }
                             Spacer(Modifier.weight(1f))
                             Button(
                                 enabled = !busy && username.isNotBlank() && recoveryKeyInput.isNotBlank() && newPassword.isNotBlank(),
@@ -3581,20 +3582,20 @@ internal fun MyAccountDialog(
                                         }
                                     }
                                 },
-                            ) { if (busy) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text("Reset") }
+                            ) { if (busy) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text(I18n.s(R.string.reset)) }
                         }
                     }
 
                     // --- LOGGED OUT: create / login tabs ------------------------------------------
                     else -> {
                         TabRow(selectedTabIndex = tab, containerColor = Color.Transparent, contentColor = orange) {
-                            Tab(selected = tab == 0, onClick = { tab = 0; error = null }, text = { Text("Create") })
-                            Tab(selected = tab == 1, onClick = { tab = 1; error = null }, text = { Text("Log in") })
+                            Tab(selected = tab == 0, onClick = { tab = 0; error = null }, text = { Text(I18n.s(R.string.create)) })
+                            Tab(selected = tab == 1, onClick = { tab = 1; error = null }, text = { Text(I18n.s(R.string.ui_log_in)) })
                         }
                         OutlinedTextField(
                             value = username,
                             onValueChange = { username = it; error = null },
-                            label = { Text("Username") },
+                            label = { Text(I18n.s(R.string.ui_username)) },
                             singleLine = true,
                             enabled = !busy,
                             modifier = Modifier.fillMaxWidth(),
@@ -3602,7 +3603,7 @@ internal fun MyAccountDialog(
                         OutlinedTextField(
                             value = password,
                             onValueChange = { password = it; error = null },
-                            label = { Text("Password") },
+                            label = { Text(I18n.s(R.string.ui_password)) },
                             singleLine = true,
                             visualTransformation = PasswordVisualTransformation(),
                             enabled = !busy,
@@ -3660,13 +3661,13 @@ internal fun MyAccountDialog(
                             onClick = { showReset = true; error = null },
                             enabled = !busy,
                             modifier = Modifier.align(Alignment.End),
-                        ) { Text("Forgot password? Reset with recovery key") }
+                        ) { Text(I18n.s(R.string.ui_forgot_password_reset_with_recovery_key)) }
                     }
                 }
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = { if (!busy) onDismiss() }) { Text("Close") } },
+        dismissButton = { TextButton(onClick = { if (!busy) onDismiss() }) { Text(I18n.s(R.string.wrapper_manager_close)) } },
     )
 }
 
@@ -3742,7 +3743,7 @@ private fun SmartComponentInstallRow(
             )
             when {
                 done -> Icon(
-                    Icons.Filled.CheckCircle, contentDescription = "Installed",
+                    Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
                     tint = installedBlue, modifier = Modifier.size(20.dp),
                 )
                 busy || catalogLoading -> CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
@@ -3754,7 +3755,7 @@ private fun SmartComponentInstallRow(
                             shortlist.closest.isEmpty() -> onBrowseAll()
                             else -> expanded = !expanded
                         }
-                    }) { Text("Install", color = MaterialTheme.colorScheme.primary) }
+                    }) { Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary) }
                 }
             }
         }
@@ -3811,8 +3812,8 @@ private fun SmartComponentInstallRow(
             onDismissRequest = { confirmProfile = null },
             title = { Text("Install ${p.verName}?") },
             text = { Text("Download and install ${mc.type} ${p.verName}, then apply it to this shortcut?") },
-            confirmButton = { TextButton(onClick = { install(p) }) { Text("Install") } },
-            dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text("Cancel") } },
+            confirmButton = { TextButton(onClick = { install(p) }) { Text(I18n.s(R.string.ui_install)) } },
+            dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 }
@@ -3911,12 +3912,12 @@ private fun SmartDriverInstallRow(
             )
             when {
                 done -> Icon(
-                    Icons.Filled.CheckCircle, contentDescription = "Installed",
+                    Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
                     tint = installedBlue, modifier = Modifier.size(20.dp),
                 )
                 busy || loading -> CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                 else -> TextButton(onClick = { onInstallClick() }) {
-                    Text("Install", color = MaterialTheme.colorScheme.primary)
+                    Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -3986,8 +3987,8 @@ private fun SmartDriverInstallRow(
             onDismissRequest = { confirmEntry = null },
             title = { Text("Quick install ${e.displayName}?") },
             text = { Text("Download and install this Turnip driver from ${e.source}, then apply it to this shortcut?") },
-            confirmButton = { TextButton(onClick = { install(e) }) { Text("Install") } },
-            dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text("Cancel") } },
+            confirmButton = { TextButton(onClick = { install(e) }) { Text(I18n.s(R.string.ui_install)) } },
+            dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 }
@@ -4197,7 +4198,7 @@ internal fun CommunityCatalogBrowser(
                         OutlinedTextField(
                             value = query,
                             onValueChange = { query = it },
-                            label = { Text("Search all games") },
+                            label = { Text(I18n.s(R.string.ui_search_all_games)) },
                             leadingIcon = { Icon(Icons.Filled.Search, null) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
@@ -4215,13 +4216,13 @@ internal fun CommunityCatalogBrowser(
                     // Left-pane control 1 — store filter group (Left/Right cycles the focused chip).
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 0) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.ALL, onClick = { storeFilter = CatalogStoreFilter.ALL; leftZone = true; leftRow = 1; storeChipFocus = 0 }, label = { Text("All") })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.ALL, onClick = { storeFilter = CatalogStoreFilter.ALL; leftZone = true; leftRow = 1; storeChipFocus = 0 }, label = { Text(I18n.s(R.string.binding_filter_all)) })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 1) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.STEAM, onClick = { storeFilter = CatalogStoreFilter.STEAM; leftZone = true; leftRow = 1; storeChipFocus = 1 }, label = { Text("Steam") })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.STEAM, onClick = { storeFilter = CatalogStoreFilter.STEAM; leftZone = true; leftRow = 1; storeChipFocus = 1 }, label = { Text(I18n.s(R.string.ui_steam)) })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 2) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.TITLE, onClick = { storeFilter = CatalogStoreFilter.TITLE; leftZone = true; leftRow = 1; storeChipFocus = 2 }, label = { Text("Title") })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.TITLE, onClick = { storeFilter = CatalogStoreFilter.TITLE; leftZone = true; leftRow = 1; storeChipFocus = 2 }, label = { Text(I18n.s(R.string.social_hub_post_title_field)) })
                         }
                     }
                     // Left-pane control 2 — Matches my device.
@@ -4229,21 +4230,21 @@ internal fun CommunityCatalogBrowser(
                         FilterChip(
                             selected = matchesMyDevice,
                             onClick = { matchesMyDevice = !matchesMyDevice; leftZone = true; leftRow = 2 },
-                            label = { Text("Matches my device") },
+                            label = { Text(I18n.s(R.string.social_hub_configs_matches_device)) },
                             enabled = userSoc != null || userGpu != null,
                         )
                     }
                     // Left-pane control 3 — sort group (Left/Right cycles the focused chip).
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text("Sort:", style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_sort), style = MaterialTheme.typography.labelMedium, color = OnSurfaceVariant)
                         DpadHighlight(focused = leftZone && leftRow == 3 && sortChipFocus == 0) {
-                            FilterChip(selected = sort == CatalogSort.CONFIGS, onClick = { sort = CatalogSort.CONFIGS; leftZone = true; leftRow = 3; sortChipFocus = 0 }, label = { Text("Configs") })
+                            FilterChip(selected = sort == CatalogSort.CONFIGS, onClick = { sort = CatalogSort.CONFIGS; leftZone = true; leftRow = 3; sortChipFocus = 0 }, label = { Text(I18n.s(R.string.ui_configs)) })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 3 && sortChipFocus == 1) {
-                            FilterChip(selected = sort == CatalogSort.NAME, onClick = { sort = CatalogSort.NAME; leftZone = true; leftRow = 3; sortChipFocus = 1 }, label = { Text("Name") })
+                            FilterChip(selected = sort == CatalogSort.NAME, onClick = { sort = CatalogSort.NAME; leftZone = true; leftRow = 3; sortChipFocus = 1 }, label = { Text(I18n.s(R.string.name)) })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 3 && sortChipFocus == 2) {
-                            FilterChip(selected = sort == CatalogSort.DEVICES, onClick = { sort = CatalogSort.DEVICES; leftZone = true; leftRow = 3; sortChipFocus = 2 }, label = { Text("Devices") })
+                            FilterChip(selected = sort == CatalogSort.DEVICES, onClick = { sort = CatalogSort.DEVICES; leftZone = true; leftRow = 3; sortChipFocus = 2 }, label = { Text(I18n.s(R.string.ui_devices)) })
                         }
                     }
                     Text(
@@ -4290,7 +4291,7 @@ internal fun CommunityCatalogBrowser(
                 ) {
                     if (selectedGame != null) {
                         IconButton(onClick = { selectedIdentity = null }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.Filled.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back))
                         }
                     }
                     Text(
@@ -4329,7 +4330,7 @@ internal fun CommunityCatalogBrowser(
                             if (refreshing) {
                                 CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                             } else {
-                                Icon(Icons.Filled.Refresh, contentDescription = "Refresh community index")
+                                Icon(Icons.Filled.Refresh, contentDescription = I18n.s(R.string.ui_refresh_community_index))
                             }
                         }
                     }
@@ -4343,11 +4344,11 @@ internal fun CommunityCatalogBrowser(
                             if (myAvatarUrl != null) {
                                 AccountAvatar(avatarUrl = myAvatarUrl, size = 28.dp)
                             } else {
-                                Icon(Icons.Filled.AccountCircle, contentDescription = "My account")
+                                Icon(Icons.Filled.AccountCircle, contentDescription = I18n.s(R.string.ui_my_account))
                             }
                         }
                     }
-                    IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = "Close") }
+                    IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.wrapper_manager_close)) }
                 }
                 Divider(color = DividerColor)
 
@@ -4622,7 +4623,7 @@ private fun CommunityDevicePanel(
         FilterChip(
             selected = matchesMyDevice,
             onClick = { matchesMyDevice = !matchesMyDevice },
-            label = { Text("Matches my device") },
+            label = { Text(I18n.s(R.string.social_hub_configs_matches_device)) },
             enabled = hwEnabled,
         )
     }
@@ -4635,12 +4636,12 @@ private fun CommunityDevicePanel(
                 cfg.loading -> {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                        Text("Loading configs…", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.social_hub_configs_loading), color = OnSurfaceVariant)
                     }
                 }
                 cfg.entries.isNotEmpty() -> {
                     if (shownEntries.isEmpty()) {
-                        Text("No uploaded configs match your device.", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_no_uploaded_configs_match_your_device), color = OnSurfaceVariant)
                     } else {
                         shownEntries.forEachIndexed { idx, (folder, e) ->
                             val isMatch = hwEnabled &&
@@ -4659,7 +4660,7 @@ private fun CommunityDevicePanel(
                         }
                     }
                 }
-                fallback.isEmpty() -> Text("No configs listed.", color = OnSurfaceVariant)
+                fallback.isEmpty() -> Text(I18n.s(R.string.ui_no_configs_listed), color = OnSurfaceVariant)
                 else -> {
                     // Offline fallback: per-device index rows (best-matching file resolved at apply).
                     Text(
@@ -4837,9 +4838,9 @@ private fun CommunityConfigDetailDialog(
             }
         }
 
-        Text("Comments", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+        Text(I18n.s(R.string.ui_comments), style = MaterialTheme.typography.labelLarge, color = OnSurface)
         if (comments.isEmpty()) {
-            Text("No comments yet.", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
+            Text(I18n.s(R.string.ui_no_comments_yet), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
         } else {
             comments.forEach { c ->
                 Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
@@ -4857,7 +4858,7 @@ private fun CommunityConfigDetailDialog(
             OutlinedTextField(
                 value = commentText,
                 onValueChange = { if (it.length <= 500) commentText = it },
-                label = { Text("Add a comment") },
+                label = { Text(I18n.s(R.string.ui_add_a_comment)) },
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 3,
             )
@@ -4953,7 +4954,7 @@ private fun CommunityConfigDetailDialog(
                 loading -> {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                        Text("Loading config…", color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_loading_config), color = OnSurfaceVariant)
                     }
                 }
                 failed || detail == null -> {
@@ -4963,10 +4964,10 @@ private fun CommunityConfigDetailDialog(
                     )
                 }
                 else -> {
-                    Text("What this config sets", style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                    Text(I18n.s(R.string.ui_what_this_config_sets), style = MaterialTheme.typography.labelLarge, color = OnSurface)
                     val lines = configSummaryLines(detail.config)
                     if (lines.isEmpty()) {
-                        Text("Nothing this app can set.", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_nothing_this_app_can_set), style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                     } else {
                         lines.forEach { (label, value) ->
                             Text(
@@ -4990,22 +4991,22 @@ private fun CommunityConfigDetailDialog(
                         Text("Changes to \"${game.name}\"", style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         Text(pre.message, style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                         if (pre.changed.isNotEmpty()) {
-                            Text("Would change", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text(I18n.s(R.string.ui_would_change), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.changed.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                         if (pre.missingComponents.isNotEmpty()) {
-                            Text("Needs a component", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text(I18n.s(R.string.ui_needs_a_component), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.missingComponents.forEach { Text("• ${it.label}", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                         if (pre.missingDrivers.isNotEmpty()) {
-                            Text("Needs a GPU driver", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text(I18n.s(R.string.ui_needs_a_gpu_driver), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.missingDrivers.forEach {
                                 val had = it.current?.let { c -> " (you have $c)" } ?: ""
                                 Text("• Turnip ${it.wanted}$had", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant)
                             }
                         }
                         if (pre.advisories.isNotEmpty()) {
-                            Text("Heads up", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                     }
@@ -5038,7 +5039,7 @@ private fun CommunityConfigDetailDialog(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f),
                     )
-                    IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = "Close") }
+                    IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.wrapper_manager_close)) }
                 }
                 Divider(color = DividerColor)
 
@@ -5079,8 +5080,8 @@ private fun CommunityConfigDetailDialog(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.End,
                 ) {
-                    TextButton(onClick = onDismiss) { Text("Close") }
-                    TextButton(onClick = onApply, enabled = detail != null) { Text("Apply") }
+                    TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close)) }
+                    TextButton(onClick = onApply, enabled = detail != null) { Text(I18n.s(R.string.ui_apply_2)) }
                 }
             }
         }
@@ -5343,7 +5344,7 @@ private fun ShortcutOverflowButton(
     var menuExpanded by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { menuExpanded = true }) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "Options", tint = OnSurfaceVariant)
+            Icon(Icons.Filled.MoreVert, contentDescription = I18n.s(R.string.options), tint = OnSurfaceVariant)
         }
         DropdownMenu(
             expanded = menuExpanded,
@@ -5351,57 +5352,57 @@ private fun ShortcutOverflowButton(
             modifier = Modifier.outlinedMenuCard(),
         ) {
             DropdownMenuItem(
-                text = { Text("Settings") },
+                text = { Text(I18n.s(R.string.settings)) },
                 leadingIcon = { Icon(Icons.Filled.Settings, null) },
                 onClick = { menuExpanded = false; onSettings() },
             )
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
                 DropdownMenuItem(
-                    text = { Text("Game Doctor") },
+                    text = { Text(I18n.s(R.string.ui_game_doctor)) },
                     leadingIcon = { Icon(Icons.Filled.Healing, null) },
                     onClick = { menuExpanded = false; openDoctor(shortcut) },
                 )
                 MenuItemDivider()
             }
             DropdownMenuItem(
-                text = { Text("Remove") },
+                text = { Text(I18n.s(R.string.remove)) },
                 leadingIcon = { Icon(Icons.Filled.Delete, null) },
                 onClick = { menuExpanded = false; onRemove() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Clone to container") },
+                text = { Text(I18n.s(R.string.ui_clone_to_container)) },
                 leadingIcon = { Icon(Icons.Filled.ContentCopy, null) },
                 onClick = { menuExpanded = false; onClone() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Copy to Drive C…") },
+                text = { Text(I18n.s(R.string.ui_copy_to_drive_c)) },
                 leadingIcon = { Icon(Icons.Filled.DriveFileMove, null, tint = MaterialTheme.colorScheme.primary) },
                 onClick = { menuExpanded = false; onCopyToDriveC() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Change executable…") },
+                text = { Text(I18n.s(R.string.ui_change_executable)) },
                 leadingIcon = { Icon(Icons.Filled.SwapHoriz, null, tint = MaterialTheme.colorScheme.primary) },
                 onClick = { menuExpanded = false; onChangeExe() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Add to home screen") },
+                text = { Text(I18n.s(R.string.ui_add_to_home_screen)) },
                 leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) },
                 onClick = { menuExpanded = false; onAddToHome() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Export") },
+                text = { Text(I18n.s(R.string.export)) },
                 leadingIcon = { Icon(Icons.Filled.Upload, null) },
                 onClick = { menuExpanded = false; onExport() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Game Details") },
+                text = { Text(I18n.s(R.string.ui_game_details)) },
                 leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary) },
                 onClick = { menuExpanded = false; onGameDetails() },
             )
@@ -5409,7 +5410,7 @@ private fun ShortcutOverflowButton(
             if (onCloudSaves != null) {
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("Cloud Saves") },
+                    text = { Text(I18n.s(R.string.ui_cloud_saves)) },
                     leadingIcon = { Icon(Icons.Filled.CloudSync, null, tint = MaterialTheme.colorScheme.primary) },
                     onClick = { menuExpanded = false; onCloudSaves() },
                 )
@@ -5418,7 +5419,7 @@ private fun ShortcutOverflowButton(
             if (onBackupSaves != null) {
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("Back up saves") },
+                    text = { Text(I18n.s(R.string.ui_back_up_saves)) },
                     leadingIcon = { Icon(Icons.Filled.Archive, null, tint = MaterialTheme.colorScheme.primary) },
                     onClick = { menuExpanded = false; onBackupSaves() },
                 )
@@ -5426,32 +5427,32 @@ private fun ShortcutOverflowButton(
             if (onRestoreSaves != null) {
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("Restore saves") },
+                    text = { Text(I18n.s(R.string.ui_restore_saves)) },
                     leadingIcon = { Icon(Icons.Filled.Unarchive, null, tint = MaterialTheme.colorScheme.primary) },
                     onClick = { menuExpanded = false; onRestoreSaves() },
                 )
             }
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Scrape cover") },
+                text = { Text(I18n.s(R.string.ui_scrape_cover)) },
                 leadingIcon = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.primary) },
                 onClick = { menuExpanded = false; onScrapeCover() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Community configs") },
+                text = { Text(I18n.s(R.string.ui_community_configs_2)) },
                 leadingIcon = { Icon(Icons.Filled.Public, null, tint = MaterialTheme.colorScheme.primary) },
                 onClick = { menuExpanded = false; onCommunityConfigs() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("View logs") },
+                text = { Text(I18n.s(R.string.ui_view_logs)) },
                 leadingIcon = { Icon(Icons.Filled.Description, null) },
                 onClick = { menuExpanded = false; onViewLogs() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Properties") },
+                text = { Text(I18n.s(R.string.ui_properties)) },
                 leadingIcon = { Icon(Icons.Filled.Info, null) },
                 onClick = { menuExpanded = false; onProperties() },
             )
@@ -5614,47 +5615,47 @@ private fun ShortcutGridItem(
             onDismissRequest = { menuExpanded = false },
             modifier = Modifier.outlinedMenuCard(),
         ) {
-            DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.settings)) }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
-                DropdownMenuItem(text = { Text("Game Doctor") }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
+                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_game_doctor)) }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
                 MenuItemDivider()
             }
-            DropdownMenuItem(text = { Text("Remove") }, leadingIcon = { Icon(Icons.Filled.Delete, null) }, onClick = { menuExpanded = false; onRemove() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.remove)) }, leadingIcon = { Icon(Icons.Filled.Delete, null) }, onClick = { menuExpanded = false; onRemove() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Clone to container") }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_clone_to_container)) }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Copy to Drive C…") }, leadingIcon = { Icon(Icons.Filled.DriveFileMove, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCopyToDriveC() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_copy_to_drive_c)) }, leadingIcon = { Icon(Icons.Filled.DriveFileMove, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCopyToDriveC() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Change executable…") }, leadingIcon = { Icon(Icons.Filled.SwapHoriz, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onChangeExe() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_change_executable)) }, leadingIcon = { Icon(Icons.Filled.SwapHoriz, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onChangeExe() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Add to home screen") }, leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) }, onClick = { menuExpanded = false; onAddToHome() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_add_to_home_screen)) }, leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) }, onClick = { menuExpanded = false; onAddToHome() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Export") }, leadingIcon = { Icon(Icons.Filled.Upload, null) }, onClick = { menuExpanded = false; onExport() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.export)) }, leadingIcon = { Icon(Icons.Filled.Upload, null) }, onClick = { menuExpanded = false; onExport() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Game Details") }, leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onGameDetails() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_game_details)) }, leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onGameDetails() })
             // Steam-origin only — opens the Save Manager focused on this game.
             if (onCloudSaves != null) {
                 MenuItemDivider()
-                DropdownMenuItem(text = { Text("Cloud Saves") }, leadingIcon = { Icon(Icons.Filled.CloudSync, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCloudSaves() })
+                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_cloud_saves)) }, leadingIcon = { Icon(Icons.Filled.CloudSync, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCloudSaves() })
             }
             // Custom-import games only — local save backup/restore (the non-Steam equivalent).
             if (onBackupSaves != null) {
                 MenuItemDivider()
-                DropdownMenuItem(text = { Text("Back up saves") }, leadingIcon = { Icon(Icons.Filled.Archive, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onBackupSaves() })
+                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_back_up_saves)) }, leadingIcon = { Icon(Icons.Filled.Archive, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onBackupSaves() })
             }
             if (onRestoreSaves != null) {
                 MenuItemDivider()
-                DropdownMenuItem(text = { Text("Restore saves") }, leadingIcon = { Icon(Icons.Filled.Unarchive, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onRestoreSaves() })
+                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_restore_saves)) }, leadingIcon = { Icon(Icons.Filled.Unarchive, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onRestoreSaves() })
             }
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Scrape cover") }, leadingIcon = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onScrapeCover() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_scrape_cover)) }, leadingIcon = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onScrapeCover() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Community configs") }, leadingIcon = { Icon(Icons.Filled.Public, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCommunityConfigs() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_community_configs_2)) }, leadingIcon = { Icon(Icons.Filled.Public, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCommunityConfigs() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("View logs") }, leadingIcon = { Icon(Icons.Filled.Description, null) }, onClick = { menuExpanded = false; onViewLogs() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_view_logs)) }, leadingIcon = { Icon(Icons.Filled.Description, null) }, onClick = { menuExpanded = false; onViewLogs() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text("Properties") }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_properties)) }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
         }
     }
 }
@@ -5790,10 +5791,10 @@ internal fun GameDetailsSheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = "Cancel", tint = OnSurface)
+                        Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.cancel), tint = OnSurface)
                     }
                     Text(
-                        text = "Edit Game",
+                        text = I18n.s(R.string.ui_edit_game),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = OnSurface,
@@ -5805,7 +5806,7 @@ internal fun GameDetailsSheet(
                         if (saving) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                         } else {
-                            Text("Save", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                            Text(I18n.s(R.string.save), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
@@ -5824,7 +5825,7 @@ internal fun GameDetailsSheet(
                             SteamResultThumbnail(id)
                             Spacer(Modifier.width(12.dp))
                             Column {
-                                Text("Linked to Steam App ID:", fontSize = 11.sp, color = OnSurfaceVariant)
+                                Text(I18n.s(R.string.ui_linked_to_steam_app_id), fontSize = 11.sp, color = OnSurfaceVariant)
                                 Text(
                                     "$id",
                                     fontSize = 13.sp,
@@ -5835,24 +5836,24 @@ internal fun GameDetailsSheet(
                                     onClick = { linkedAppId = null },
                                     contentPadding = PaddingValues(0.dp),
                                     modifier = Modifier.height(28.dp),
-                                ) { Text("Unlink", fontSize = 12.sp, color = MaterialTheme.colorScheme.error) }
+                                ) { Text(I18n.s(R.string.ui_unlink), fontSize = 12.sp, color = MaterialTheme.colorScheme.error) }
                             }
                         }
                         Divider(color = DividerColor)
                     }
 
                     // Game name + Search Steam.
-                    Text("Game Name", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_game_name_2), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
                     OutlinedTextField(
                         value = nameField,
                         onValueChange = { nameField = it; searchResults = emptyList(); searchError = null },
-                        placeholder = { Text("Enter game name") },
+                        placeholder = { Text(I18n.s(R.string.ui_enter_game_name)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         trailingIcon = {
                             if (nameField.isNotBlank()) {
                                 IconButton(onClick = { nameField = ""; searchResults = emptyList() }) {
-                                    Icon(Icons.Default.Close, contentDescription = "Clear", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.clear), modifier = Modifier.size(18.dp))
                                 }
                             }
                         },
@@ -5868,17 +5869,17 @@ internal fun GameDetailsSheet(
                                 Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(16.dp))
                             }
                             Spacer(Modifier.width(6.dp))
-                            Text("Search Steam", fontSize = 13.sp)
+                            Text(I18n.s(R.string.ui_search_steam), fontSize = 13.sp)
                         }
                         if (filling) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                             Spacer(Modifier.width(6.dp))
-                            Text("Loading…", fontSize = 12.sp, color = OnSurfaceVariant)
+                            Text(I18n.s(R.string.loading), fontSize = 12.sp, color = OnSurfaceVariant)
                         }
                     }
                     searchError?.let { Text(it, fontSize = 12.sp, color = MaterialTheme.colorScheme.error) }
                     if (searchResults.isNotEmpty()) {
-                        Text("Tap a result to auto-fill all fields:", fontSize = 11.sp, color = OnSurfaceVariant)
+                        Text(I18n.s(R.string.ui_tap_a_result_to_auto_fill_all_fields), fontSize = 11.sp, color = OnSurfaceVariant)
                         searchResults.forEach { hit ->
                             Row(
                                 modifier = Modifier
@@ -5901,22 +5902,22 @@ internal fun GameDetailsSheet(
                     Divider(color = DividerColor)
 
                     // Genres.
-                    Text("Genres", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.ui_genres), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
                     OutlinedTextField(
                         value = genresField,
                         onValueChange = { genresField = it },
-                        placeholder = { Text("e.g. Action, RPG, Strategy") },
+                        placeholder = { Text(I18n.s(R.string.ui_e_g_action_rpg_strategy)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        supportingText = { Text("Comma-separated", fontSize = 10.sp) },
+                        supportingText = { Text(I18n.s(R.string.ui_comma_separated), fontSize = 10.sp) },
                     )
 
                     // Description.
-                    Text("Description", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
+                    Text(I18n.s(R.string.description), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
                     OutlinedTextField(
                         value = descField,
                         onValueChange = { descField = it },
-                        placeholder = { Text("Short description shown on the launch screen") },
+                        placeholder = { Text(I18n.s(R.string.ui_short_description_shown_on_the_launch_screen)) },
                         minLines = 3,
                         maxLines = 5,
                         modifier = Modifier.fillMaxWidth(),
@@ -5925,7 +5926,7 @@ internal fun GameDetailsSheet(
                     // Release year + Metacritic.
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Release Year", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
+                            Text(I18n.s(R.string.ui_release_year), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
                             Spacer(Modifier.height(4.dp))
                             OutlinedTextField(
                                 value = yearField,
@@ -5937,7 +5938,7 @@ internal fun GameDetailsSheet(
                             )
                         }
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Metacritic", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
+                            Text(I18n.s(R.string.ui_metacritic_2), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = OnSurfaceVariant)
                             Spacer(Modifier.height(4.dp))
                             OutlinedTextField(
                                 value = metaField,
@@ -5945,7 +5946,7 @@ internal fun GameDetailsSheet(
                                 placeholder = { Text("1–100") },
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                supportingText = { Text("Leave blank to hide", fontSize = 10.sp) },
+                                supportingText = { Text(I18n.s(R.string.ui_leave_blank_to_hide), fontSize = 10.sp) },
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         }
@@ -6209,7 +6210,7 @@ private fun DpTabs(dp: SettingsDpad, id: String, selected: Int, count: Int, onSe
 private fun LinuxHelp(show: Boolean, textResId: Int, onOpen: (Int) -> Unit) {
     if (!show) return
     IconButton(onClick = { onOpen(textResId) }) {
-        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
     }
 }
 
@@ -7210,7 +7211,7 @@ internal fun ShortcutSettingsDialogScreen(
                     Text(shortcut.name, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     DpButton(dp, "titleX", onActivate = onDismiss) {
                         IconButton(onClick = onDismiss, modifier = Modifier.size(28.dp)) {
-                            Icon(Icons.Default.Close, contentDescription = "Close")
+                            Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.wrapper_manager_close))
                         }
                     }
                 }
@@ -7274,7 +7275,7 @@ internal fun ShortcutSettingsDialogScreen(
                             helpRes = if (isLinuxEntry) R.string.help_linux_display_driver
                                       else R.string.help_graphics_driver
                         }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
 
@@ -7325,7 +7326,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.weight(1f)
                         )
                         IconButton(onClick = { helpRes = R.string.dxwrapper_help_content }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     DpButton(dp, "dxConfig", onActivate = {
@@ -7340,7 +7341,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 else showWineD3DConfig = true
                             },
                             modifier = Modifier.fillMaxWidth()
-                        ) { Text("DX Wrapper Config") }
+                        ) { Text(I18n.s(R.string.ui_dx_wrapper_config)) }
                     }
 
                     // Renderer (host) — Vulkan is the only host renderer.
@@ -7358,7 +7359,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.weight(1f)
                         )
                         IconButton(onClick = { helpRes = R.string.help_renderer }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
 
@@ -7367,7 +7368,7 @@ internal fun ShortcutSettingsDialogScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(stringResource(R.string.renderer_native), Modifier.weight(1f))
                             IconButton(onClick = { helpRes = R.string.help_renderer_native }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                             DpSwitch(dp, "vkNative", checked = vkNative, onCheckedChange = { vkNative = it })
                         }
@@ -7385,7 +7386,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 modifier = Modifier.weight(1f)
                             )
                             IconButton(onClick = { helpRes = R.string.help_renderer_colors }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                         }
                         // Present mode is ignored under Native Rendering (direct scanout), so grey it out.
@@ -7407,7 +7408,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 modifier = (if (vkNative) Modifier.alpha(0.5f) else Modifier).weight(1f)
                             )
                             IconButton(onClick = { helpRes = R.string.renderer_present_mode_help_content }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                         }
                         // Compositor (present-layer) Vulkan driver: System or an installed Turnip. Applies
@@ -7428,7 +7429,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 modifier = Modifier.weight(1f)
                             )
                             IconButton(onClick = { helpRes = R.string.help_renderer_driver }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                         }
                         // FG temporarily forces Mailbox; caption the field so FIFO-while-FG-selected isn't confusing.
@@ -7451,7 +7452,7 @@ internal fun ShortcutSettingsDialogScreen(
                         val rsShown = if (effectiveWaylandShortcut) "Not used on Wayland" else renderScaleLabels[rsIdx]
                         DpDrop(
                             dp, "renderScale",
-                            label = "Render scale (supersampling)",
+                            label = I18n.s(R.string.ui_render_scale_supersampling),
                             options = if (effectiveWaylandShortcut) listOf(rsShown) else renderScaleLabels,
                             selected = rsShown,
                             onSelect = { renderScale = renderScaleValues[renderScaleLabels.indexOf(it)] },
@@ -7574,7 +7575,7 @@ internal fun ShortcutSettingsDialogScreen(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Storage", fontSize = 14.sp)
+                            Text(I18n.s(R.string.ui_storage), fontSize = 14.sp)
                             Text(
                                 storageLabel,
                                 fontSize = 11.sp,
@@ -7597,7 +7598,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Executable", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_executable), fontSize = 14.sp)
                                 Text(
                                     currentExeName.ifEmpty { "Unknown" },
                                     fontSize = 11.sp,
@@ -7619,7 +7620,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Epic Online Services (EOS) auth", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_epic_online_services_eos_auth), fontSize = 14.sp)
                                 Text(
                                     "Sign EOS games in with your Epic account",
                                     fontSize = 11.sp,
@@ -7636,7 +7637,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Force Denuvo ownership token", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_force_denuvo_ownership_token), fontSize = 14.sp)
                                 Text(
                                     "Force the ownership token for Denuvo games we don't auto-detect",
                                     fontSize = 11.sp,
@@ -7655,7 +7656,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Launch offline", fontSize = 14.sp)
+                                Text(I18n.s(R.string.ui_launch_offline), fontSize = 14.sp)
                                 Text(
                                     "Skip Epic sign-in for this game (no online features)",
                                     fontSize = 11.sp,
@@ -7677,7 +7678,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text("Epic Friends Overlay", fontSize = 14.sp)
+                                    Text(I18n.s(R.string.ui_epic_friends_overlay), fontSize = 14.sp)
                                     Text(
                                         "Experimental — in-game Epic overlay on Shift+F3 (a draggable pill " +
                                                 "can summon it too). Needs the container to allow full services.",
@@ -7703,7 +7704,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.weight(1f)
                         )
                         IconButton(onClick = { helpRes = if (isLinuxEntry) R.string.help_linux_screen_size else R.string.help_screen_size }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     if (selectedScreenSize == "Custom") {
@@ -7712,7 +7713,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 dp, "customW",
                                 value = customWidth,
                                 onValueChange = { customWidth = it },
-                                label = "Width",
+                                label = I18n.s(R.string.width),
                                 modifier = Modifier.weight(1f),
                                 singleLine = true,
                                 onRightId = "customH"
@@ -7721,7 +7722,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 dp, "customH",
                                 value = customHeight,
                                 onValueChange = { customHeight = it },
-                                label = "Height",
+                                label = I18n.s(R.string.height),
                                 modifier = Modifier.weight(1f),
                                 singleLine = true,
                                 onLeftId = "customW"
@@ -7768,15 +7769,15 @@ internal fun ShortcutSettingsDialogScreen(
                         Box(modifier = Modifier.weight(1f)) {
                             DpButton(dp, "selectIcon", onActivate = { showIconPickMenu = true }, modifier = Modifier.fillMaxWidth()) {
                                 OutlinedButton(onClick = { showIconPickMenu = true }, modifier = Modifier.fillMaxWidth()) {
-                                    Text("Select Icon")
+                                    Text(I18n.s(R.string.ui_select_icon))
                                 }
                             }
                             DropdownMenu(expanded = showIconPickMenu, onDismissRequest = { showIconPickMenu = false }) {
-                                DropdownMenuItem(text = { Text("Browse files") }, onClick = {
+                                DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                     showIconPickMenu = false
                                     iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select icon image"))
                                 })
-                                DropdownMenuItem(text = { Text("Pick via system…") }, onClick = {
+                                DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
                                     showIconPickMenu = false
                                     iconPickerLauncher.launch("image/*")
                                 })
@@ -7798,7 +7799,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     else dbValues.indexOf(displayBackendOverride).coerceAtLeast(0)
                         DpDrop(
                             dp, "displayBackend",
-                            label = "Display backend",
+                            label = I18n.s(R.string.ui_display_backend),
                             options = dbLabels,
                             selected = dbLabels[dbIdx],
                             disabledOptions = if (containerWaylandCapable) emptySet() else setOf(dbLabels[2]),
@@ -7926,7 +7927,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 )
                                 DpButton(dp, "waylandDriverCfg", onActivate = { showWaylandDriverCfg = true }, onLeftId = "waylandAdvanced") {
                                     IconButton(onClick = { showWaylandDriverCfg = true }) {
-                                        Icon(Icons.Default.Settings, contentDescription = "Wayland adapter settings")
+                                        Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_wayland_adapter_settings))
                                     }
                                 }
                             }
@@ -7951,7 +7952,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 )
                                 DpDrop(
                                     dp, "waylandGameDriver",
-                                    label = "Wayland game driver",
+                                    label = I18n.s(R.string.ui_wayland_game_driver),
                                     options = labels,
                                     selected = selectedLabel,
                                     onSelect = { waylandGameDriverOverride = values[labels.indexOf(it)] },
@@ -7994,7 +7995,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 if (!isLinuxEntry) IconButton(
                                     onClick = { helpText = com.winhub.hernandez.display.WaylandHdr.HELP_TEXT }
                                 ) {
-                                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                 }
                             }
                             if (hdrUnavailable != null) {
@@ -8085,7 +8086,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 modifier = (if (!fgVulkan) Modifier.alpha(0.5f) else Modifier).weight(1f)
                             )
                             IconButton(onClick = { helpRes = R.string.help_frame_generation }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                         }
                         if (!fgVulkan) {
@@ -8110,7 +8111,7 @@ internal fun ShortcutSettingsDialogScreen(
                         Spacer(Modifier.width(8.dp))
                         Text(stringResource(R.string.fps_limiter), modifier = Modifier.weight(1f))
                         IconButton(onClick = { helpRes = if (isLinuxEntry) R.string.help_linux_fps_limiter else R.string.help_fps_limiter }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
 
@@ -8139,8 +8140,8 @@ internal fun ShortcutSettingsDialogScreen(
                             value = if (perfOverrideCount > 0) "$perfOverrideCount overridden" else "Global defaults",
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Performance") },
-                            trailingIcon = { Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Open") },
+                            label = { Text(I18n.s(R.string.performance)) },
+                            trailingIcon = { Icon(Icons.Default.KeyboardArrowRight, contentDescription = I18n.s(R.string.xmb_all_games_open)) },
                             // Accent-colored outline so this opener stands out from the grey menu fields.
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -8191,11 +8192,11 @@ internal fun ShortcutSettingsDialogScreen(
                         val scAudioId = StringUtils.parseIdentifier(selectedAudioDriver)
                         if (scAudioId == "pulseaudio" || scAudioId == "alsa" || scAudioId == "directaudio") {
                             IconButton(onClick = { showScAudioSettings = true }) {
-                                Icon(Icons.Default.Settings, contentDescription = "Audio settings", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_audio_settings_2), modifier = Modifier.size(18.dp))
                             }
                         }
                         IconButton(onClick = { helpRes = if (isLinuxEntry) R.string.help_linux_audio_driver else R.string.help_audio_driver }) {
-                            Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                         }
                     }
                     if (!directAudioSupported && directAudioEntry != null) {
@@ -8289,7 +8290,7 @@ internal fun ShortcutSettingsDialogScreen(
                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                     DpDrop(
                         dp, "emulator",
-                        label = "Emulator",
+                        label = I18n.s(R.string.retro_opt_emulator),
                         options = EmulatorLabels.options(emulatorEntries, isArm64EC),
                         selected = emulatorShown,
                         onSelect = {
@@ -8303,7 +8304,7 @@ internal fun ShortcutSettingsDialogScreen(
                         val midiDisplay = midiList.firstOrNull { it == selectedMidi } ?: midiList.first()
                         DpDrop(
                             dp, "midi",
-                            label = "MIDI Sound Font",
+                            label = I18n.s(R.string.ui_midi_sound_font),
                             options = midiList,
                             selected = midiDisplay,
                             onSelect = { selectedMidi = it }
@@ -8316,7 +8317,7 @@ internal fun ShortcutSettingsDialogScreen(
                         dp, "lcAll",
                         value = lcAll,
                         onValueChange = { lcAll = it },
-                        label = "LC_ALL",
+                        label = I18n.s(R.string.lc_all),
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )
@@ -8387,13 +8388,13 @@ internal fun ShortcutSettingsDialogScreen(
                     if (!isLinuxEntry) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DpCheck(dp, "autoClose", checked = autoCloseOnExit, onCheckedChange = { autoCloseOnExit = it })
-                            Text("Close when game exits")
+                            Text(I18n.s(R.string.ui_close_when_game_exits))
                         }
                     }
                             }
                             4 -> Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     // Input section
-                    SectionBox(title = "Input") {
+                    SectionBox(title = I18n.s(R.string.ui_input)) {
                         // XInput/DInput, exclusive input and the controller count are how WinHandler
                         // presents pads to a Wine game and what it writes into the prefix's joystick
                         // registry keys. A Linux session's pads arrive as fake-evdev devices instead,
@@ -8402,19 +8403,19 @@ internal fun ShortcutSettingsDialogScreen(
                         if (!isLinuxEntry) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DpCheck(dp, "disableXInput", checked = disabledXInput, onCheckedChange = { disabledXInput = it })
-                            Text("Disable XInput")
+                            Text(I18n.s(R.string.ui_disable_xinput))
                         }
                         ControllerOverrideRows(dp, shortcut.container, ctrlOv)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DpCheck(dp, "simTouch", checked = simTouchScreen, onCheckedChange = { simTouchScreen = it })
-                            Text("Touchscreen Mode")
+                            Text(I18n.s(R.string.ui_touchscreen_mode))
                             LinuxHelp(isLinuxEntry, R.string.help_linux_touchscreen_mode) { helpRes = it }
                         }
                         if (!isLinuxEntry) {
                             DpDrop(
                                 dp, "numControllers",
-                                label = "Num Controllers",
+                                label = I18n.s(R.string.ui_num_controllers),
                                 options = numControllersEntries,
                                 selected = selectedNumControllers,
                                 onSelect = { selectedNumControllers = it }
@@ -8428,7 +8429,7 @@ internal fun ShortcutSettingsDialogScreen(
                             val autoHideIdx = when (autoHideControlsOnPad) { "1" -> 1; "0" -> 2; else -> 0 }
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 LabeledDropdown(
-                                    label = "Hide on-screen controls when a controller connects",
+                                    label = I18n.s(R.string.ui_hide_on_screen_controls_when_a_controller_connects),
                                     options = autoHideLabels,
                                     selectedOption = autoHideLabels[autoHideIdx],
                                     onSelect = {
@@ -8446,13 +8447,13 @@ internal fun ShortcutSettingsDialogScreen(
                         // empty override starts from an all-auto ("{}") view.
                         Spacer(Modifier.height(12.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("Player Slots", modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
+                            Text(I18n.s(R.string.ui_player_slots), modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
                             IconButton(onClick = { helpRes = if (isLinuxEntry) R.string.help_linux_player_slots else R.string.help_player_slots }) {
-                                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                             }
                             if (controllerSlotOverridesJson.isNotEmpty()) {
                                 TextButton(onClick = { controllerSlotOverridesJson = "" }) {
-                                    Text("Use container default")
+                                    Text(I18n.s(R.string.fullscreen_mode_default))
                                 }
                             }
                         }
@@ -8500,7 +8501,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     modifier = Modifier.weight(1f)
                                 )
                                 IconButton(onClick = { helpRes = R.string.help_gyro_mode }) {
-                                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                 }
                             }
                             Spacer(Modifier.height(8.dp))
@@ -8525,7 +8526,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     modifier = Modifier.weight(1f)
                                 )
                                 IconButton(onClick = { helpRes = R.string.help_gyro_target }) {
-                                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                 }
                             }
                             val gyroActivatorLabels = listOf(
@@ -8547,7 +8548,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     modifier = Modifier.weight(1f)
                                 )
                                 IconButton(onClick = { helpRes = R.string.help_gyro_activator }) {
-                                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                 }
                             }
                             // Hold vs Toggle for that button — hidden under "Always On", which has no
@@ -8569,7 +8570,7 @@ internal fun ShortcutSettingsDialogScreen(
                                         modifier = Modifier.weight(1f)
                                     )
                                     IconButton(onClick = { helpRes = R.string.help_gyro_activation_mode }) {
-                                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                     }
                                 }
                             }
@@ -8580,7 +8581,7 @@ internal fun ShortcutSettingsDialogScreen(
                                     modifier = Modifier.weight(1f)
                                 )
                                 IconButton(onClick = { helpRes = R.string.help_gyro_sensitivity }) {
-                                    Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                                 }
                             }
                             DpSlider(
@@ -9654,7 +9655,7 @@ private fun DeckShortcutSettingsBody(
                     if (layoutPref == "pages" && pagesCategoryOpen) pagesCategoryOpen = false
                     else onDismiss()
                 }) {
-                    Icon(Icons.Default.Close, contentDescription = "Close", tint = DeckPalette.onBackground)
+                    Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = DeckPalette.onBackground)
                 }
                 Text(
                     shortcut.name,
@@ -9665,7 +9666,7 @@ private fun DeckShortcutSettingsBody(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f).padding(start = 4.dp),
                 )
-                DeckButton("Save") { save(); onDismiss() }
+                DeckButton(I18n.s(R.string.save)) { save(); onDismiss() }
             }
 
             if (layoutPref == "portrait") {
@@ -9757,7 +9758,7 @@ private fun DeckShortcutSettingsBody(
                                     DeckTextRow("Exec arguments", value = execArgs, onValueChange = { execArgs = it })
                                 }
                                 DeckRow(
-                                    label = "Launch method",
+                                    label = I18n.s(R.string.ui_launch_method),
                                     hint = if (!launchModeRemembered) "Ask every launch" else when (launchMode) {
                                         "RealSteam" -> "SteamLite (real Steam client)"
                                         "Goldberg" -> "Goldberg (offline emulator)"
@@ -9775,14 +9776,14 @@ private fun DeckShortcutSettingsBody(
                                     Text(exeName.ifEmpty { "Unknown" }, color = DeckPalette.onSurfaceVariant, fontSize = 12.5.sp)
                                 }
                                 DeckRow("Icon") {
-                                    DeckButton("Select Icon", primary = false) { showIconPickMenu = true }
+                                    DeckButton(I18n.s(R.string.ui_select_icon), primary = false) { showIconPickMenu = true }
                                     Box {
                                         DropdownMenu(expanded = showIconPickMenu, onDismissRequest = { showIconPickMenu = false }) {
-                                            DropdownMenuItem(text = { Text("Browse files") }, onClick = {
+                                            DropdownMenuItem(text = { Text(I18n.s(R.string.browse_files)) }, onClick = {
                                                 showIconPickMenu = false
                                                 iconPickerInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.IMAGES, "Select icon image"))
                                             })
-                                            DropdownMenuItem(text = { Text("Pick via system…") }, onClick = {
+                                            DropdownMenuItem(text = { Text(I18n.s(R.string.pick_via_system)) }, onClick = {
                                                 showIconPickMenu = false
                                                 iconPickerLauncher.launch("image/*")
                                             })
@@ -9797,17 +9798,17 @@ private fun DeckShortcutSettingsBody(
                             }
                             if (isEpicShortcut) {
                                 DeckGroup("Epic Online Services") {
-                                    DeckRow("EOS auth", hint = "Sign EOS games in with your Epic account") {
+                                    DeckRow("EOS auth", hint = I18n.s(R.string.ui_sign_eos_games_in_with_your_epic_account)) {
                                         DeckToggle(checked = epicEosEnabled, onChange = { epicEosEnabled = it })
                                     }
-                                    DeckRow("Force Denuvo ownership token", hint = "For Denuvo games we don't auto-detect") {
+                                    DeckRow("Force Denuvo ownership token", hint = I18n.s(R.string.ui_for_denuvo_games_we_don_t_auto_detect)) {
                                         DeckToggle(checked = epicOvtForce && epicEosEnabled, onChange = { epicOvtForce = it })
                                     }
-                                    DeckRow("Launch offline", hint = "Skip Epic sign-in for this game") {
+                                    DeckRow("Launch offline", hint = I18n.s(R.string.ui_skip_epic_sign_in_for_this_game)) {
                                         DeckToggle(checked = epicOffline && epicEosEnabled, onChange = { epicOffline = it })
                                     }
                                     if (com.winhub.hernandez.FeatureFlags.EPIC_OVERLAY_ENABLED) {
-                                        DeckRow("Epic Friends Overlay", hint = "Experimental in-game overlay on Shift+F3") {
+                                        DeckRow("Epic Friends Overlay", hint = I18n.s(R.string.ui_experimental_in_game_overlay_on_shift_f3)) {
                                             DeckToggle(checked = epicOverlayEnabled, onChange = { epicOverlayEnabled = it })
                                         }
                                     }
@@ -9815,7 +9816,7 @@ private fun DeckShortcutSettingsBody(
                             }
                             if (xboxShipsRuntime) {
                                 DeckGroup("Xbox") {
-                                    DeckRow("Use the app's Xbox runtime", hint = "This game ships Microsoft's own Xbox runtime, which needs Windows' Gaming Services. Turn off only to try the game's own.") {
+                                    DeckRow("Use the app's Xbox runtime", hint = I18n.s(R.string.ui_this_game_ships_microsoft_own_xbox_runtime_which_need)) {
                                         DeckToggle(checked = xboxNexusRuntime, onChange = { xboxNexusRuntime = it })
                                     }
                                 }
@@ -9827,7 +9828,7 @@ private fun DeckShortcutSettingsBody(
                                     val waylandStoredUnusable =
                                         displayBackendOverride == Container.DISPLAY_BACKEND_WAYLAND && !containerWaylandCapable
                                     DeckChoiceRow(
-                                        label = "Display backend",
+                                        label = I18n.s(R.string.ui_display_backend),
                                         hint = when {
                                             effectiveWaylandShortcut -> "Wayland (experimental): renders through the embedded compositor"
                                             waylandStoredUnusable -> "Set to Wayland, but the container's Proton layer is not Wayland-capable: runs on X11"
@@ -9840,7 +9841,7 @@ private fun DeckShortcutSettingsBody(
                                     )
                                 }
                                 DeckChoiceRow(
-                                    label = "Screen size",
+                                    label = I18n.s(R.string.ui_screen_size),
                                     options = screenSizeEntries.map { it to it },
                                     selected = selectedScreenSize,
                                     onPick = { selectedScreenSize = it },
@@ -9940,10 +9941,10 @@ private fun DeckShortcutSettingsBody(
                                         (if (preferBigCores != com.winhub.hernandez.perf.PerformanceSettings.preferBigCores.value) 1 else 0) +
                                         com.winhub.hernandez.perf.PerfRootApplier.ROOT_KEYS.count { (rootOverrides[it] ?: false) != com.winhub.hernandez.perf.PerformanceSettings.rootDefaultValue(it) }
                                     DeckRow(
-                                        label = "Performance",
+                                        label = I18n.s(R.string.performance),
                                         hint = if (perfOverrideCount > 0) "$perfOverrideCount overridden" else "Global defaults",
                                     ) {
-                                        DeckButton("Configure", primary = false) { showPerfDialog = true }
+                                        DeckButton(I18n.s(R.string.configure), primary = false) { showPerfDialog = true }
                                     }
                                 }
                             }
@@ -9959,7 +9960,7 @@ private fun DeckShortcutSettingsBody(
                                 val scAudioId = StringUtils.parseIdentifier(selectedAudioDriver)
                                 if (scAudioId == "pulseaudio" || scAudioId == "alsa" || scAudioId == "directaudio") {
                                     DeckRow("Audio settings") {
-                                        DeckButton("Configure", primary = false) { showScAudioSettings = true }
+                                        DeckButton(I18n.s(R.string.configure), primary = false) { showScAudioSettings = true }
                                     }
                                 }
                                 run {
@@ -9972,7 +9973,7 @@ private fun DeckShortcutSettingsBody(
                                         if (!granted) Toast.makeText(context, "Microphone permission denied — mic stays off.", Toast.LENGTH_SHORT).show()
                                     }
                                     DeckRow(
-                                        label = "Microphone",
+                                        label = I18n.s(R.string.ui_microphone),
                                         hint = if (micDriverActive) "Let games use the mic (DirectAudio captures input)"
                                                else "Available on the DirectAudio driver",
                                     ) {
@@ -9999,14 +10000,14 @@ private fun DeckShortcutSettingsBody(
                                         if (archLoaded && !isArm64EC) EmulatorLabels.box64EntryOf(emulatorEntries)
                                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                                     DeckChoiceRow(
-                                        label = "Emulator",
+                                        label = I18n.s(R.string.retro_opt_emulator),
                                         options = EmulatorLabels.options(emulatorEntries, isArm64EC).map { it to it },
                                         selected = emulatorShown,
                                         onPick = { selectedEmulator = EmulatorLabels.fromDisplay(it, emulatorEntries, isArm64EC) },
                                     )
                                     if (midiList.isNotEmpty()) {
                                         DeckChoiceRow(
-                                            label = "MIDI Sound Font",
+                                            label = I18n.s(R.string.ui_midi_sound_font),
                                             options = midiList.map { it to it },
                                             selected = midiList.firstOrNull { it == selectedMidi } ?: midiList.first(),
                                             onPick = { selectedMidi = it },
@@ -10016,7 +10017,7 @@ private fun DeckShortcutSettingsBody(
                                     // Sync: follows the container unless this game picks otherwise. Only
                                     // modes the layer can run are listed (fsync never is on Android).
                                     DeckChoiceRow(
-                                        label = "Sync",
+                                        label = I18n.s(R.string.ui_sync),
                                         hint = when {
                                             syncOverrideUnavailable && syncCaps != null ->
                                                 com.winhub.hernandez.ui.components.syncSwitchedBackNotice(syncOverride!!, syncLayer, syncCaps!!)
@@ -10057,8 +10058,8 @@ private fun DeckShortcutSettingsBody(
                                         if (overrideShown.isEmpty() || overrideShown in waylandGameDriverValues) waylandGameDriverValues
                                         else waylandGameDriverValues + overrideShown)
                                     DeckChoiceRow(
-                                        label = "Wayland Game Driver",
-                                        hint = "What the game renders on; the adapter uses the Graphics Driver above",
+                                        label = I18n.s(R.string.ui_wayland_game_driver_2),
+                                        hint = I18n.s(R.string.ui_what_the_game_renders_on_the_adapter_uses_the_graphic),
                                         options = gameValues.map {
                                             it to (if (it.isEmpty()) "Use container default (" +
                                                 com.winhub.hernandez.core.WaylandGameDriver.optionLabel(context, containerChoice, waylandAutoPick) + ")"
@@ -10068,10 +10069,10 @@ private fun DeckShortcutSettingsBody(
                                         onPick = { waylandGameDriverOverride = it },
                                     )
                                     DeckRow(
-                                        label = "Wayland Adapter Settings",
-                                        hint = "Profile, switches, GPU name spoof, memory cap (blank = the container's)",
+                                        label = I18n.s(R.string.ui_wayland_adapter_settings_2),
+                                        hint = I18n.s(R.string.ui_profile_switches_gpu_name_spoof_memory_cap_blank_the),
                                     ) {
-                                        DeckValueChip(text = "Open", open = false, onClick = { showWaylandAdapterDialog = true })
+                                        DeckValueChip(text = I18n.s(R.string.xmb_all_games_open), open = false, onClick = { showWaylandAdapterDialog = true })
                                     }
                                     val hdrUnavailable = remember { com.winhub.hernandez.display.WaylandHdr.unavailableReason(context) }
                                     val containerHdr = shortcut.container.isWaylandHdr()
@@ -10096,7 +10097,7 @@ private fun DeckShortcutSettingsBody(
                                 if (!isLinuxEntry) {
                                     if (configEditorStyle == "dropdown") {
                                         DeckExpandableRow(
-                                            label = "Driver Config",
+                                            label = I18n.s(R.string.ui_driver_config),
                                             hint = GraphicsDriverConfigDialog.getVersion(graphicsDriverConfig),
                                             expanded = configSection == "gfxDriver",
                                             onToggle = { configSection = if (configSection == "gfxDriver") null else "gfxDriver" },
@@ -10113,11 +10114,11 @@ private fun DeckShortcutSettingsBody(
                                             label = stringResource(R.string.graphics_driver),
                                             hint = GraphicsDriverConfigDialog.getVersion(graphicsDriverConfig),
                                         ) {
-                                            DeckButton("Configure", primary = false) { showGfxConfig = true }
+                                            DeckButton(I18n.s(R.string.configure), primary = false) { showGfxConfig = true }
                                         }
                                     }
                                     DeckRow("Wrapper Manager", hint = stringResource(R.string.wrapper_manager_open)) {
-                                        DeckButton("Manage", primary = false) { showWrapperManager = true }
+                                        DeckButton(I18n.s(R.string.ui_manage), primary = false) { showWrapperManager = true }
                                     }
                                     DeckChoiceRow(
                                         label = stringResource(R.string.dxwrapper),
@@ -10144,7 +10145,7 @@ private fun DeckShortcutSettingsBody(
                                         val wrapperIsDxvk = StringUtils.parseIdentifier(selectedDxWrapper)
                                             .let { it.contains("dxvk") || it.contains("vegas") }
                                         DeckExpandableRow(
-                                            label = "DX Wrapper Config",
+                                            label = I18n.s(R.string.ui_dx_wrapper_config),
                                             hint = if (wrapperIsDxvk) "DXVK / VKD3D tuning" else "WineD3D tuning",
                                             expanded = configSection == "dxWrapper",
                                             onToggle = { configSection = if (configSection == "dxWrapper") null else "dxWrapper" },
@@ -10175,7 +10176,7 @@ private fun DeckShortcutSettingsBody(
                                         }
                                     } else {
                                         DeckRow("DX Wrapper Config") {
-                                            DeckButton("Configure", primary = false) {
+                                            DeckButton(I18n.s(R.string.configure), primary = false) {
                                                 val w = StringUtils.parseIdentifier(selectedDxWrapper)
                                                 if (w.contains("dxvk") || w.contains("vegas")) showDxvkConfig = true else showWineD3DConfig = true
                                             }
@@ -10235,7 +10236,7 @@ private fun DeckShortcutSettingsBody(
                                         val renderScaleValues = listOf("1.0", "1.25", "1.5", "2.0")
                                         val renderScaleLabels = listOf("Off", "1.25x", "1.5x", "2x")
                                         DeckChoiceRow(
-                                            label = "Render scale (supersampling)",
+                                            label = I18n.s(R.string.ui_render_scale_supersampling),
                                             options = renderScaleValues.zip(renderScaleLabels),
                                             selected = renderScale,
                                             onPick = { renderScale = it },
@@ -10293,7 +10294,7 @@ private fun DeckShortcutSettingsBody(
                                 }
                                 if (!isLinuxEntry) {
                                     DeckChoiceRow(
-                                        label = "Num Controllers",
+                                        label = I18n.s(R.string.ui_num_controllers),
                                         options = numControllersEntries.map { it to it },
                                         selected = selectedNumControllers,
                                         onPick = { selectedNumControllers = it },
@@ -10306,18 +10307,18 @@ private fun DeckShortcutSettingsBody(
                                     val autoHideValues = listOf("", "1", "0")
                                     val autoHideIdx = when (autoHideControlsOnPad) { "1" -> 1; "0" -> 2; else -> 0 }
                                     DeckChoiceRow(
-                                        label = "Hide on-screen controls when a controller connects",
+                                        label = I18n.s(R.string.ui_hide_on_screen_controls_when_a_controller_connects),
                                         options = autoHideValues.zip(autoHideLabels),
                                         selected = autoHideValues[autoHideIdx],
                                         onPick = { autoHideControlsOnPad = it },
                                     )
                                 }
                                 if (controllerSlotOverridesJson.isNotEmpty()) {
-                                    DeckRow("Player Slots", hint = "Inheriting shows the container's Player Slots") {
-                                        DeckButton("Use container default", primary = false) { controllerSlotOverridesJson = "" }
+                                    DeckRow("Player Slots", hint = I18n.s(R.string.ui_inheriting_shows_the_container_player_slots)) {
+                                        DeckButton(I18n.s(R.string.fullscreen_mode_default), primary = false) { controllerSlotOverridesJson = "" }
                                     }
                                 } else {
-                                    DeckRow("Player Slots", hint = "Inheriting the container's Player Slots. Pin a controller below to override.") {}
+                                    DeckRow("Player Slots", hint = I18n.s(R.string.ui_inheriting_the_container_player_slots_pin_a_controlle)) {}
                                 }
                                 PlayerSlotsEditor(
                                     savedOverridesJson = controllerSlotOverridesJson.ifEmpty { "{}" },
@@ -10535,8 +10536,8 @@ private fun DeckShortcutSettingsBody(
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                DeckButton("Cancel", primary = false) { onDismiss() }
-                DeckButton("Save") { save(); onDismiss() }
+                DeckButton(I18n.s(R.string.cancel), primary = false) { onDismiss() }
+                DeckButton(I18n.s(R.string.save)) { save(); onDismiss() }
             }
         }
     }
@@ -10553,7 +10554,7 @@ private fun DeckShortcutSettingsBody(
     }
     if (showDxvkConfig) {
         val isVegasCfg = StringUtils.parseIdentifier(selectedDxWrapper).contains("vegas")
-        DeckConfigDialog(title = "DX Wrapper Config", onDismiss = { showDxvkConfig = false }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_dx_wrapper_config), onDismiss = { showDxvkConfig = false }) {
             if (StringUtils.parseIdentifier(selectedDxWrapper).let { it.contains("dxvk") || it.contains("vegas") }) {
                 DeckDxvkConfigEditor(
                     isArm64EC = isArm64EC,
@@ -10579,7 +10580,7 @@ private fun DeckShortcutSettingsBody(
         }
     }
     if (showWineD3DConfig) {
-        DeckConfigDialog(title = "DX Wrapper Config", onDismiss = { showWineD3DConfig = false }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_dx_wrapper_config), onDismiss = { showWineD3DConfig = false }) {
             DeckWineD3DConfigEditor(
                 initialConfig = dxWrapperConfig,
                 onConfirm = { dxWrapperConfig = it; showWineD3DConfig = false },
@@ -10841,7 +10842,7 @@ private fun DeckAdvancedTab(
                     onPick = onBox64VersionChange,
                 )
                 DeckRow("$emulatorLabel Downloads") {
-                    DeckButton("Download", primary = false) { onShowBox64DownloadSheet() }
+                    DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onShowBox64DownloadSheet() }
                 }
                 val presetNames = box64Presets.map { it.name }
                 val b64Id = box64Presets.getOrNull(selectedBox64PresetIndex)?.id ?: ""
@@ -10881,7 +10882,7 @@ private fun DeckAdvancedTab(
                         onPick = onFexVersionChange,
                     )
                     DeckRow("FEXCore Downloads") {
-                        DeckButton("Download", primary = false) { onShowFexCoreDownloadSheet() }
+                        DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onShowFexCoreDownloadSheet() }
                     }
                 }
                 val fexNames = fexCorePresets.map { it.name }
@@ -10916,7 +10917,7 @@ private fun DeckAdvancedTab(
             val profileNames = mutableListOf(stringResource(R.string.none))
             profileNames.addAll(controlsProfiles.map { it.getName() })
             DeckChoiceRow(
-                label = "Controls Profile",
+                label = I18n.s(R.string.ui_controls_profile),
                 options = profileNames.indices.toList().map { it.toString() to profileNames[it] },
                 selected = selectedControlsProfileIndex.coerceIn(0, profileNames.lastIndex).toString(),
                 onPick = { onControlsProfileChange(it.toIntOrNull() ?: 0) },
@@ -10952,20 +10953,20 @@ private fun DeckAdvancedTab(
         if (!isLinuxEntry) {
             DeckGroup("Sharpness (VKBasalt)") {
                 DeckChoiceRow(
-                    label = "Effect",
+                    label = I18n.s(R.string.ui_effect),
                     options = sharpnessEffectEntries.map { it to it },
                     selected = selectedSharpnessEffect,
                     onPick = onSharpnessEffectChange,
                 )
                 DeckSliderRow(
-                    label = "Level",
+                    label = I18n.s(R.string.ui_level),
                     value = sharpnessLevel.toFloat(),
                     range = 0f..100f,
                     format = { "${it.toInt()}%" },
                     onChange = { onSharpnessLevelChange(it.toInt()) },
                 )
                 DeckSliderRow(
-                    label = "Denoise",
+                    label = I18n.s(R.string.ui_denoise),
                     value = sharpnessDenoise.toFloat(),
                     range = 0f..100f,
                     format = { "${it.toInt()}%" },
@@ -11007,7 +11008,7 @@ private fun DeckTvTab(
                        else "Nothing is plugged in. This game is still set to launch on a TV, so the tab stays here.",
             ) {}
             DeckRow(
-                label = "Launch this game on the TV",
+                label = I18n.s(R.string.ui_launch_this_game_on_the_tv),
                 hint = com.winhub.hernandez.display.ExternalDisplay.HELP_LAUNCH,
             ) {
                 DeckToggle(checked = tvLaunch, onChange = onTvLaunchChange)
@@ -11017,15 +11018,15 @@ private fun DeckTvTab(
                 val labels = listOf("Default (leave the TV as it is)") +
                     modes.map { com.winhub.hernandez.display.ExternalDisplay.modeLabel(it) }
                 DeckChoiceRow(
-                    label = "Output mode",
-                    hint = "What the TV is told to run at.",
+                    label = I18n.s(R.string.ui_output_mode),
+                    hint = I18n.s(R.string.ui_what_the_tv_is_told_to_run_at),
                     options = values.indices.toList().map { it.toString() to labels[it] },
                     selected = values.indexOf(tvModeId).coerceAtLeast(0).toString(),
                     onPick = { onTvModeIdChange(values.getOrElse(it.toIntOrNull() ?: 0) { 0 }) },
                 )
             } else {
                 DeckRow(
-                    label = "Output mode",
+                    label = I18n.s(R.string.ui_output_mode),
                     hint = if (display != null) "This screen advertises one output mode."
                            else "Plug a screen in to choose an output mode.",
                 ) {
@@ -11037,7 +11038,7 @@ private fun DeckTvTab(
                 }
             }
             DeckRow(
-                label = "Match the TV's resolution",
+                label = I18n.s(R.string.ui_match_the_tv_resolution),
                 hint = run {
                     val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                         com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
@@ -11048,7 +11049,7 @@ private fun DeckTvTab(
                 DeckToggle(checked = tvMatchRes, onChange = onTvMatchResChange)
             }
             DeckRow(
-                label = "Use HDR on the TV",
+                label = I18n.s(R.string.ui_use_hdr_on_the_tv),
                 hint = hdrReason ?: "Automatic. This screen accepts HDR10, so HDR output switches on for this game.",
             ) {
                 Text(
@@ -11143,7 +11144,7 @@ private fun ScTvTab(
 
         // ── The one switch that matters ─────────────────────────────────────────────────────────
         TvSettingRow(
-            title = "Launch this game on the TV",
+            title = I18n.s(R.string.ui_launch_this_game_on_the_tv),
             subtitle = com.winhub.hernandez.display.ExternalDisplay.HELP_LAUNCH,
         ) {
             DpSwitch(dp, "tvLaunch", checked = tvLaunch, onCheckedChange = onTvLaunchChange)
@@ -11158,7 +11159,7 @@ private fun ScTvTab(
                 modes.map { com.winhub.hernandez.display.ExternalDisplay.modeLabel(it) }
             DpDrop(
                 dp, "tvModeId",
-                label = "Output mode",
+                label = I18n.s(R.string.ui_output_mode),
                 options = labels,
                 selected = labels[values.indexOf(tvModeId).coerceAtLeast(0)],
                 onSelect = { onTvModeIdChange(values[labels.indexOf(it)]) },
@@ -11171,7 +11172,7 @@ private fun ScTvTab(
             )
         } else {
             TvSettingRow(
-                title = "Output mode",
+                title = I18n.s(R.string.ui_output_mode),
                 subtitle = if (display != null) "This screen advertises one output mode."
                            else "Plug a screen in to choose an output mode.",
             ) {
@@ -11185,7 +11186,7 @@ private fun ScTvTab(
 
         // ── Render resolution ───────────────────────────────────────────────────────────────────
         TvSettingRow(
-            title = "Match the TV's resolution",
+            title = I18n.s(R.string.ui_match_the_tv_resolution),
             subtitle = run {
                 val tvRes = com.winhub.hernandez.display.ExternalDisplay.resolutionOf(
                     com.winhub.hernandez.display.ExternalDisplay.effectiveMode(display, tvModeId))
@@ -11199,7 +11200,7 @@ private fun ScTvTab(
 
         // ── HDR: reported, never asked ──────────────────────────────────────────────────────────
         TvSettingRow(
-            title = "Use HDR on the TV",
+            title = I18n.s(R.string.ui_use_hdr_on_the_tv),
             subtitle = hdrReason
                 ?: "Automatic. This screen accepts HDR10, so HDR output switches on for this game.",
             dimSubtitle = !hdrOk,
@@ -11266,7 +11267,7 @@ private fun ScWinComponentsTab(components: androidx.compose.runtime.snapshots.Sn
 
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         if (directx.isNotEmpty()) {
-            SectionBox(title = "DirectX") {
+            SectionBox(title = I18n.s(R.string.directx)) {
                 directx.forEach { comp ->
                     LabeledDropdown(
                         label = comp.label,
@@ -11283,7 +11284,7 @@ private fun ScWinComponentsTab(components: androidx.compose.runtime.snapshots.Sn
             Spacer(Modifier.height(8.dp))
         }
         if (general.isNotEmpty()) {
-            SectionBox(title = "General") {
+            SectionBox(title = I18n.s(R.string.general)) {
                 general.forEach { comp ->
                     LabeledDropdown(
                         label = comp.label,
@@ -11318,7 +11319,7 @@ private fun ScEnvVarsTab(
     Column {
         if (isLinuxEntry) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Environment variables", modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
+                Text(I18n.s(R.string.ui_environment_variables), modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
                 LinuxHelp(true, R.string.help_linux_env_vars) { helpRes = it }
             }
         }
@@ -11465,7 +11466,7 @@ private fun ScAdvancedTab(
         // A Linux session hands the FEXCore preset to the games the Steam client launches whatever the
         // container's Windows architecture is, so the section is offered there even off arm64ec.
         if (isArm64EC || isLinuxEntry) {
-            SectionBox(title = "FEXCore") {
+            SectionBox(title = I18n.s(R.string.fexcore_config)) {
                 // The version picks which FEX build is staged into the container for the Wine
                 // launcher; the Linux runtime carries its own, so only the preset is offered there.
                 if (!isLinuxEntry) {
@@ -11478,7 +11479,7 @@ private fun ScAdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = R.string.help_fexcore_version }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                     OutlinedButton(
                         onClick = onShowFexCoreDownloadSheet,
@@ -11487,7 +11488,7 @@ private fun ScAdvancedTab(
                         contentPadding = PaddingValues(0.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Icon(Icons.Default.Settings, contentDescription = "Download FEXCore", tint = MaterialTheme.colorScheme.primary)
+                        Icon(Icons.Default.Settings, contentDescription = I18n.s(R.string.ui_download_fexcore), tint = MaterialTheme.colorScheme.primary)
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -11508,7 +11509,7 @@ private fun ScAdvancedTab(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { helpRes = if (isLinuxEntry) R.string.help_linux_fexcore_preset else R.string.help_fexcore_preset }) {
-                        Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
                     }
                     if (fexCustomised) PresetCustomBadge()
                 }
@@ -11532,7 +11533,7 @@ private fun ScAdvancedTab(
         profileNames.addAll(controlsProfiles.map { it.getName() })
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             LabeledDropdown(
-                label = "Controls Profile",
+                label = I18n.s(R.string.ui_controls_profile),
                 options = profileNames,
                 selectedOption = profileNames.getOrElse(selectedControlsProfileIndex) { profileNames.first() },
                 onSelect = { opt -> onControlsProfileChange(profileNames.indexOf(opt).coerceAtLeast(0)) },
@@ -11552,7 +11553,7 @@ private fun ScAdvancedTab(
                 modifier = Modifier.weight(1f)
             )
             IconButton(onClick = { helpRes = R.string.help_startup_selection }) {
-                Icon(Icons.Default.Help, contentDescription = "What is this?", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_this), modifier = Modifier.size(18.dp))
             }
         }
 
@@ -11582,9 +11583,9 @@ private fun ScAdvancedTab(
         // vkBasalt (sharpness) and the ReShade loadout are Vulkan layers switched on through the Wine
         // environment, which the gamescope path never builds; the client's games load neither.
         if (!isLinuxEntry) {
-        SectionBox(title = "Sharpness (VKBasalt)") {
+        SectionBox(title = I18n.s(R.string.ui_sharpness_vkbasalt)) {
             LabeledDropdown(
-                label = "Effect",
+                label = I18n.s(R.string.ui_effect),
                 options = sharpnessEffectEntries,
                 selectedOption = selectedSharpnessEffect,
                 onSelect = onSharpnessEffectChange
@@ -11608,7 +11609,7 @@ private fun ScAdvancedTab(
 
         // ReShade multi-effect loadout (vkBasalt drop-in). Multi-select picker + solo/stack mode + a
         // collapsible per-effect param block. Only applies to DXVK/VKD3D (Vulkan) games — a hint shows.
-        SectionBox(title = "ReShade loadout") {
+        SectionBox(title = I18n.s(R.string.ui_reshade_loadout)) {
             ReshadeLoadoutEditor(
                 state = reshadeLoadout,
                 effects = reshadeEffects,
@@ -12075,7 +12076,7 @@ private fun XboxRuntimeRow(checked: Boolean, onChange: (Boolean) -> Unit) {
         modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text("Use the app's Xbox runtime", fontSize = 14.sp)
+            Text(I18n.s(R.string.ui_use_the_app_xbox_runtime), fontSize = 14.sp)
             Text(
                 "This game ships Microsoft's own Xbox runtime, which needs Windows' Gaming Services. " +
                         "Turn off only to try the game's own.",
@@ -12266,7 +12267,7 @@ internal fun CopyToDriveCCoordinator(
                         style = MaterialTheme.typography.bodySmall,
                         color = OnSurfaceVariant,
                     )
-                    Text("Folder to copy", style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                    Text(I18n.s(R.string.ui_folder_to_copy), style = MaterialTheme.typography.labelMedium, color = OnSurface)
                     Text(
                         sourceRoot.absolutePath,
                         style = MaterialTheme.typography.bodySmall,
@@ -12300,7 +12301,7 @@ internal fun CopyToDriveCCoordinator(
                     }) {
                         Icon(Icons.Filled.Folder, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("Change folder…")
+                        Text(I18n.s(R.string.ui_change_folder))
                     }
                 }
             },
@@ -12308,14 +12309,14 @@ internal fun CopyToDriveCCoordinator(
                 TextButton(
                     onClick = { confirmAndCopy() },
                     enabled = validationError == null && sourceSize != null,
-                ) { Text("Copy") }
+                ) { Text(I18n.s(R.string.copy)) }
             },
-            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
         )
 
         CopyToCPhase.OVERWRITE -> OutlinedAlertDialog(
             onDismissRequest = onFinished,
-            title = { Text("Already on Drive C") },
+            title = { Text(I18n.s(R.string.ui_already_on_drive_c)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
@@ -12329,15 +12330,15 @@ internal fun CopyToDriveCCoordinator(
                             CopyGameToDriveC.destRootFor(target.container, sourceRoot.name)
                         )
                         startCopy(dest, cleanFirst = false)
-                    }) { Text("Keep both (new folder)") }
+                    }) { Text(I18n.s(R.string.ui_keep_both_new_folder)) }
                 }
             },
             confirmButton = {
                 TextButton(onClick = {
                     startCopy(CopyGameToDriveC.destRootFor(target.container, sourceRoot.name), cleanFirst = true)
-                }) { Text("Overwrite") }
+                }) { Text(I18n.s(R.string.ui_overwrite)) }
             },
-            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
         )
 
         CopyToCPhase.COPYING -> {
@@ -12346,7 +12347,7 @@ internal fun CopyToDriveCCoordinator(
             val done = p?.copiedBytes ?: 0L
             OutlinedAlertDialog(
                 onDismissRequest = {}, // no accidental dismiss mid-copy; use Cancel
-                title = { Text("Copying to Drive C…") },
+                title = { Text(I18n.s(R.string.ui_copying_to_drive_c)) },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (total > 0L) {
@@ -12374,7 +12375,7 @@ internal fun CopyToDriveCCoordinator(
                     }
                 },
                 confirmButton = {
-                    TextButton(onClick = { cancelFlag.set(true) }) { Text("Cancel") }
+                    TextButton(onClick = { cancelFlag.set(true) }) { Text(I18n.s(R.string.cancel)) }
                 },
             )
         }
@@ -12384,7 +12385,7 @@ internal fun CopyToDriveCCoordinator(
                 Toast.makeText(context, "\"${target.name}\" now runs from Drive C.", Toast.LENGTH_SHORT).show()
                 onFinished()
             },
-            title = { Text("Copied to Drive C") },
+            title = { Text(I18n.s(R.string.ui_copied_to_drive_c)) },
             text = {
                 Text(
                     "\"${target.name}\" now runs from Drive C. Delete the original folder to free " +
@@ -12401,13 +12402,13 @@ internal fun CopyToDriveCCoordinator(
                         Toast.makeText(context, "Moved to Drive C — original deleted.", Toast.LENGTH_SHORT).show()
                         onFinished()
                     }
-                }) { Text("Delete original", color = DangerRed) }
+                }) { Text(I18n.s(R.string.ui_delete_original), color = DangerRed) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     Toast.makeText(context, "Copied to Drive C — original kept.", Toast.LENGTH_SHORT).show()
                     onFinished()
-                }) { Text("Keep original") }
+                }) { Text(I18n.s(R.string.ui_keep_original)) }
             },
         )
     }
@@ -12487,7 +12488,7 @@ internal fun ChangeExecutableCoordinator(
     pendingExe?.let { exe ->
         OutlinedAlertDialog(
             onDismissRequest = onFinished,
-            title = { Text("Launch arguments") },
+            title = { Text(I18n.s(R.string.ui_launch_arguments)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
@@ -12505,7 +12506,7 @@ internal fun ChangeExecutableCoordinator(
                             .clickable { applyExe(exe, info.argsSuffix) }
                             .padding(vertical = 8.dp),
                     ) {
-                        Text("Keep arguments", color = MaterialTheme.colorScheme.primary)
+                        Text(I18n.s(R.string.ui_keep_arguments), color = MaterialTheme.colorScheme.primary)
                         Text(
                             "Launch the new .exe with the same arguments",
                             color = OnSurfaceVariant,
@@ -12517,7 +12518,7 @@ internal fun ChangeExecutableCoordinator(
                             .clickable { applyExe(exe, "") }
                             .padding(vertical = 8.dp),
                     ) {
-                        Text("Clear arguments", color = MaterialTheme.colorScheme.primary)
+                        Text(I18n.s(R.string.ui_clear_arguments), color = MaterialTheme.colorScheme.primary)
                         Text(
                             "Launch the new .exe with no arguments",
                             color = OnSurfaceVariant,
@@ -12527,7 +12528,7 @@ internal fun ChangeExecutableCoordinator(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
         )
     }
 }
@@ -12611,7 +12612,7 @@ private fun SdCardBadge(modifier: Modifier = Modifier) {
     ) {
         Icon(
             Icons.Default.SdCard,
-            contentDescription = "On SD card",
+            contentDescription = I18n.s(R.string.ui_on_sd_card),
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(11.dp),
         )
@@ -12777,7 +12778,7 @@ private fun ScannedGameRow(
         // Available on EVERY row, not just flagged ones — a confident pick can still be the wrong
         // one, and the user is the only one who actually knows.
         if (!candidate.alreadyAdded) {
-            TextButton(onClick = onChangeExe, enabled = enabled) { Text("Change") }
+            TextButton(onClick = onChangeExe, enabled = enabled) { Text(I18n.s(R.string.confirm_change)) }
         }
     }
     }

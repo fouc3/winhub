@@ -75,6 +75,8 @@ import coil.compose.AsyncImage
 import com.winhub.hernandez.store.MediaPlayback
 import com.winhub.hernandez.store.StoreNotice
 import kotlin.math.abs
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The shared "Media" tab of the four store game-detail pages (Steam · GOG · Epic · Amazon) and the
@@ -150,7 +152,7 @@ fun MediaTab(
             }
 
             media == null || media.isEmpty -> StoreNotice(
-                title = "No media",
+                title = I18n.s(R.string.ui_no_media),
                 body = "$storeLabel published no videos or screenshots for this title.",
             )
 
@@ -320,7 +322,7 @@ fun ScreenshotViewer(
                         .clip(CircleShape)
                         .background(Color.Black.copy(alpha = 0.45f)),
                 ) {
-                    Icon(Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
+                    Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = Color.White)
                 }
                 if (images.size > 1) {
                     Box(

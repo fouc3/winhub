@@ -53,6 +53,7 @@ import com.winhub.hernandez.ui.findActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
 
 /**
  * Step 5 (issue #132) — the curated wrapper-catalog browser, mirroring the ReShade catalog picker.
@@ -377,7 +378,7 @@ private fun WrapperCatalogDetail(
     // gpuTargets chips.
     if (entry.gpuTargets.isNotEmpty()) {
         Spacer(Modifier.height(8.dp))
-        Text("GPU targets", style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
+        Text(I18n.s(R.string.ui_gpu_targets), style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
         Spacer(Modifier.height(4.dp))
         FlowRow(
             modifier = Modifier.fillMaxWidth(),

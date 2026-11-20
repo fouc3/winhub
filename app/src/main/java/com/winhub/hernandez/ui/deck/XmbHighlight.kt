@@ -59,6 +59,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The XMB gliding highlight: ONE outline per window that moves from the focused item to the next one, instead of every item
 // drawing its own ring. Look: a thin (2 dp) accent outline with only a faint accent fill (the empty part of the item is barely
@@ -705,7 +707,7 @@ internal fun XmbInk(item: XmbHighlightItem? = LocalXmbHighlightItem.current, con
         XmbHighlightItem.ROLE_SECONDARY -> 0.85f
         else -> 0f
     }
-    val t by animateFloatAsState(target, tween(XMB_HL_COLOR_MS), label = "xmbInk")
+    val t by animateFloatAsState(target, tween(XMB_HL_COLOR_MS), label = I18n.s(R.string.ui_xmbink))
     val scheme = if (t <= 0f) cs else cs.copy(
         onSurface = xmbMix(cs.onSurface, ink, t),
         onSurfaceVariant = xmbMix(cs.onSurfaceVariant, ink, t),

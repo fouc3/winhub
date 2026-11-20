@@ -14,6 +14,8 @@ import android.util.Log
 import com.winhub.hernandez.store.DownloadManagerActivity
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Store-agnostic foreground service that keeps the process alive while ANY non-Steam store
@@ -130,7 +132,7 @@ class DownloadForegroundService : Service() {
             "Downloads",
             NotificationManager.IMPORTANCE_LOW,   // quiet: no sound/heads-up for a progress bar
         ).apply {
-            description = "Shows game download progress and keeps downloads running in the background"
+            description = I18n.s(R.string.ui_shows_game_download_progress_and_keeps_downloads_runn)
             setShowBadge(false)
         }
         nm.createNotificationChannel(ch)

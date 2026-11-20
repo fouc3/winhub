@@ -66,6 +66,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // "View logs" as XMB columns: Logs (run + files) › one file (follow / wrap / find / copy / share) ›
@@ -90,7 +92,7 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             "Nothing has been captured for $name yet. Logs are written while a game runs — play it once, " +
                 "then check back here."
         }
-        return XmbMenu(title = "Logs", icon = Icons.Filled.Description) {
+        return XmbMenu(title = I18n.s(R.string.logs), icon = Icons.Filled.Description) {
             XmbTools.para("title", "No logs for $name", Icons.Filled.Info, ctx) +
                 XmbTools.para("msg", msg, XmbTools.blankIcon, ctx)
         }
@@ -108,7 +110,7 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             if (runs.size > 1) {
                 add(
                     XmbRow.Choice(
-                        key = "run", label = "Run", icon = Icons.Filled.History,
+                        key = "run", label = I18n.s(R.string.run), icon = Icons.Filled.History,
                         options = runLabels, selected = runLabels.getOrElse(runIdx) { runLabels.first() },
                     ) { picked ->
                         runIdx = runLabels.indexOf(picked).coerceAtLeast(0)
@@ -130,7 +132,7 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 }
             }
             val dir = runDir()
-            add(XmbRow.Link(key = "report", label = "Report a problem", icon = Icons.Filled.BugReport) { xmbLogReportMenu(xmb, entry, dir) })
+            add(XmbRow.Link(key = "report", label = I18n.s(R.string.ui_report_a_problem), icon = Icons.Filled.BugReport) { xmbLogReportMenu(xmb, entry, dir) })
         }
     }
 }
@@ -206,19 +208,19 @@ private fun xmbLogFileMenu(xmb: XmbScope, file: File): XmbMenu {
         val count = "${shown.size} line${if (shown.size == 1) "" else "s"}"
         listOf(
             XmbRow.Link(
-                key = "view", label = "View", icon = Icons.Filled.Description,
+                key = "view", label = I18n.s(R.string.xmb_all_view), icon = Icons.Filled.Description,
                 value = LogInventory.humanBytes(file.length()),
                 subtitle = if (v.loaded) count else "Loading…",
-            ) { XmbMenu(title = "View", icon = Icons.Filled.Description, panel = XmbLogPanel(v, xmb)) },
-            XmbRow.Toggle(key = "follow", label = "Follow", icon = Icons.Filled.Sync, value = v.following) { v.following = it },
-            XmbRow.Toggle(key = "wrap", label = "Wrap", icon = Icons.Filled.WrapText, value = v.wrap) { v.wrap = it },
+            ) { XmbMenu(title = I18n.s(R.string.xmb_all_view), icon = Icons.Filled.Description, panel = XmbLogPanel(v, xmb)) },
+            XmbRow.Toggle(key = "follow", label = I18n.s(R.string.ui_follow), icon = Icons.Filled.Sync, value = v.following) { v.following = it },
+            XmbRow.Toggle(key = "wrap", label = I18n.s(R.string.ui_wrap), icon = Icons.Filled.WrapText, value = v.wrap) { v.wrap = it },
             XmbRow.Text(
-                key = "find", label = "Find", icon = Icons.Filled.Search, value = v.query,
-                placeholder = "Find in this log…",
+                key = "find", label = I18n.s(R.string.ui_find), icon = Icons.Filled.Search, value = v.query,
+                placeholder = I18n.s(R.string.ui_find_in_this_log),
                 subtitle = if (v.query.isBlank()) null else count,
             ) { v.query = it },
             XmbRow.Action(
-                key = "copy", label = "Copy", icon = Icons.Filled.ContentCopy,
+                key = "copy", label = I18n.s(R.string.copy), icon = Icons.Filled.ContentCopy,
                 disabledReason = if (v.loaded) null else "Loading…",
             ) {
                 val lines = v.shown
@@ -229,7 +231,7 @@ private fun xmbLogFileMenu(xmb: XmbScope, file: File): XmbMenu {
                 }.getOrDefault(false)
                 if (copied) xmb.toast("Copied ${lines.size} lines")
             },
-            XmbRow.External(key = "share", label = "Share", icon = Icons.Filled.Share) { shareLogFile(ctx, file) },
+            XmbRow.External(key = "share", label = I18n.s(R.string.share), icon = Icons.Filled.Share) { shareLogFile(ctx, file) },
         )
     }
 }
@@ -277,7 +279,7 @@ private class XmbLogPanel(private val v: XmbLogView, private val xmb: XmbScope) 
             Spacer(Modifier.height(6.dp))
             Box(Modifier.fillMaxWidth().weight(1f)) {
                 when {
-                    !v.loaded -> Text("Loading…", color = XMB_LOG_MUTED, fontSize = 11.sp)
+                    !v.loaded -> Text(I18n.s(R.string.loading), color = XMB_LOG_MUTED, fontSize = 11.sp)
                     shown.isEmpty() -> Text(
                         if (v.query.isBlank()) "This log is empty." else "No lines match \"${v.query}\".",
                         color = XMB_LOG_MUTED, fontSize = 11.sp,
@@ -365,19 +367,19 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
         }
     }
 
-    return XmbMenu(title = "Report a problem", icon = Icons.Filled.BugReport, onClose = { me.isOpen = false }) {
+    return XmbMenu(title = I18n.s(R.string.ui_report_a_problem), icon = Icons.Filled.BugReport, onClose = { me.isOpen = false }) {
         val locked = if (busy) "Working…" else null
         buildList<XmbRow> {
-            add(XmbRow.Text(key = "title", label = "What went wrong?", icon = Icons.Filled.Edit, value = title, disabledReason = locked) { title = it })
+            add(XmbRow.Text(key = "title", label = I18n.s(R.string.ui_what_went_wrong), icon = Icons.Filled.Edit, value = title, disabledReason = locked) { title = it })
             add(
                 XmbRow.Text(
-                    key = "desc", label = "Any detail that helps (optional)", icon = Icons.Filled.Description,
+                    key = "desc", label = I18n.s(R.string.ui_any_detail_that_helps_optional), icon = Icons.Filled.Description,
                     value = description, disabledReason = locked,
                 ) { description = it }
             )
             add(
                 XmbRow.Toggle(
-                    key = "app", label = "Also app logcat and crash reports", icon = Icons.Filled.Tune,
+                    key = "app", label = I18n.s(R.string.ui_also_app_logcat_and_crash_reports), icon = Icons.Filled.Tune,
                     value = includeApp, disabledReason = locked,
                 ) { includeApp = it }
             )

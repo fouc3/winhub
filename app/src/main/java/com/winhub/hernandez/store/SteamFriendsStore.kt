@@ -39,6 +39,8 @@ import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Facade for the Steam friends list + 1:1 text chat, riding the live [SteamRepository] CM session —
@@ -520,7 +522,7 @@ object SteamFriendsStore {
                 var changed = false
                 for ((id, f) in friendMap) {
                     when {
-                        f.presence == Presence.UNKNOWN -> { friendMap[id] = f.copy(presence = Presence.OFFLINE, statusText = "Offline"); changed = true }
+                        f.presence == Presence.UNKNOWN -> { friendMap[id] = f.copy(presence = Presence.OFFLINE, statusText = I18n.s(R.string.xmb_fr_section_offline)); changed = true }
                         f.stale -> { friendMap[id] = f.copy(stale = false, statusText = f.statusText.removeSuffix(STALE_SUFFIX)); changed = true }
                     }
                 }

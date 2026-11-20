@@ -50,6 +50,8 @@ import com.winhub.hernandez.ui.screens.DeckConfigTextField
 import com.winhub.hernandez.ui.screens.DeckGroup
 import com.winhub.hernandez.ui.screens.DeckPalette
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
 
@@ -119,7 +121,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
                         onDismiss = { guardDialog = null },
                         onSubmit = { code ->
                             guardDialog = null
-                            statusText = "Verifying…"
+                            statusText = I18n.s(R.string.ui_verifying)
                             isStatusError = false
                             isLoading = true
                             SteamAuthManager.getInstance().submitGuardCode(code)
@@ -127,7 +129,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
                         onCancel = {
                             guardDialog = null
                             SteamAuthManager.getInstance().cancelAuth()
-                            statusText = "Sign-in cancelled."
+                            statusText = I18n.s(R.string.ui_sign_in_cancelled)
                             isStatusError = false
                             isLoading = false
                         },
@@ -158,11 +160,11 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         if (isLoading) return
         val u = username.trim()
         val p = password
-        if (u.isEmpty()) { statusText = "Enter your username."; isStatusError = true; return }
-        if (p.isEmpty())  { statusText = "Enter your password."; isStatusError = true; return }
+        if (u.isEmpty()) { statusText = I18n.s(R.string.ui_enter_your_username); isStatusError = true; return }
+        if (p.isEmpty())  { statusText = I18n.s(R.string.ui_enter_your_password); isStatusError = true; return }
         hideKeyboard()
         isStatusError = false
-        statusText = "Connecting to Steam\u2026"
+        statusText = I18n.s(R.string.ui_connecting_to_steam_u2026)
         isLoading = true
 
         val repo = SteamRepository.getInstance()
@@ -216,19 +218,19 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         statusText = ""
         guardDialog = GuardDialogData(
             title   = if (codeWrong) "Incorrect code — try again" else "Steam Guard",
-            message = "Enter the code from your Steam Guard Mobile Authenticator app",
+            message = I18n.s(R.string.ui_enter_the_code_from_your_steam_guard_mobile_authentic),
         )
     }
 
     override fun onDeviceConfirmationRequired() {
-        statusText = "Approve the login in your Steam mobile app\u2026"
+        statusText = I18n.s(R.string.ui_approve_the_login_in_your_steam_mobile_app_u2026)
         isStatusError = false
         isLoading = true
     }
 
     override fun onSuccess(username: String, refreshToken: String) {
         SteamRepository.getInstance().loginWithToken(username, refreshToken)
-        statusText = "Signed in!"
+        statusText = I18n.s(R.string.ui_signed_in)
         isStatusError = false
         isLoading = false
         // Deck Mode opened this screen from its own Steam store pane. Finish straight back into
@@ -277,21 +279,21 @@ private fun SteamGuardDialog(
     var code by remember { mutableStateOf("") }
     DeckConfigDialog(title = title, onDismiss = onDismiss, subtitle = message) {
         DeckConfigTextField(
-            label = "Code",
+            label = I18n.s(R.string.ui_code),
             value = code,
             onValueChange = { code = it.take(5) },
             numeric = title.contains("Authenticator"),
         )
         Spacer(Modifier.height(12.dp))
         DeckButton(
-            text = "Submit",
+            text = I18n.s(R.string.ui_submit),
             primary = true,
             onClick = { onSubmit(code.trim()) },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
         DeckButton(
-            text = "Cancel",
+            text = I18n.s(R.string.cancel),
             primary = false,
             onClick = onCancel,
             modifier = Modifier.fillMaxWidth(),
@@ -321,14 +323,14 @@ private fun SteamLoginScreen(
     ) {
         Spacer(Modifier.height(20.dp))
         Text(
-            text = "Steam",
+            text = I18n.s(R.string.ui_steam),
             color = DeckPalette.onBackground,
             fontSize = 34.sp,
             fontWeight = FontWeight.Black,
         )
         Spacer(Modifier.height(6.dp))
         Text(
-            text = "Sign in to your account",
+            text = I18n.s(R.string.ui_sign_in_to_your_account),
             color = DeckPalette.onSurfaceVariant,
             fontSize = 14.sp,
         )
@@ -337,13 +339,13 @@ private fun SteamLoginScreen(
         Column(modifier = Modifier.widthIn(max = 520.dp).fillMaxWidth()) {
             DeckGroup("Account") {
                 DeckConfigTextField(
-                    label = "Username",
+                    label = I18n.s(R.string.ui_username),
                     value = username,
                     onValueChange = onUsernameChange,
                     imeAction = ImeAction.Next,
                 )
                 DeckConfigTextField(
-                    label = "Password",
+                    label = I18n.s(R.string.ui_password),
                     value = password,
                     onValueChange = onPasswordChange,
                     password = true,
@@ -368,7 +370,7 @@ private fun SteamLoginScreen(
             // advisory to fall back to username + password if downloads or the
             // session keep dropping after signing in this way.
             DeckButton(
-                text = "Sign in with QR Code",
+                text = I18n.s(R.string.ui_sign_in_with_qr_code),
                 primary = false,
                 onClick = onQrClick,
                 modifier = Modifier.fillMaxWidth(),

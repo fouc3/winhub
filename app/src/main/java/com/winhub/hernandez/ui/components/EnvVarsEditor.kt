@@ -59,6 +59,8 @@ import com.winhub.hernandez.ui.screens.outlinedMenuCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Environment-variables editor — Compose replacement for the legacy EnvVarsView
@@ -505,7 +507,7 @@ internal fun EnvVarsEditor(
         // Hidden while the raw text editor is open: there the user is authoring the
         // whole string by hand, and a helper that rewrites it under them would fight
         // the cursor.
-        if (!rawMode) SectionBox(title = "Compatibility") {
+        if (!rawMode) SectionBox(title = I18n.s(R.string.compatibility)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Switch(
                     // Master = select-all/none over whatever is in scope. "On" only when every
@@ -522,7 +524,7 @@ internal fun EnvVarsEditor(
                 )
                 Spacer(Modifier.width(8.dp))
                 Column(Modifier.weight(1f)) {
-                    Text("Prefer game-folder DLLs")
+                    Text(I18n.s(R.string.ui_prefer_game_folder_dlls))
                     Text(
                         "Loads the game's own copies of " + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") +
                             " instead of Wine's. Needed by many wrappers and mod loaders. Graphics DLLs are " +
@@ -544,7 +546,7 @@ internal fun EnvVarsEditor(
                     IconButton(onClick = { showPreferDllsHelp = true }) {
                         Icon(
                             Icons.Outlined.HelpOutline,
-                            contentDescription = "About Prefer game-folder DLLs",
+                            contentDescription = I18n.s(R.string.ui_about_prefer_game_folder_dlls),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -590,7 +592,7 @@ internal fun EnvVarsEditor(
         }
 
         // ── Variables ────────────────────────────────────────────────────────
-        SectionBox(title = "Environment Variables") {
+        SectionBox(title = I18n.s(R.string.environment_variables)) {
             if (rawMode) {
                 // Escape hatch: edit the whole string by hand. Same format that gets stored,
                 // so anything the typed controls can't express can still be entered here.
@@ -612,7 +614,7 @@ internal fun EnvVarsEditor(
                         lastEmitted = it
                         onValueChange(it)
                     },
-                    label = { Text("NAME=VALUE, separated by spaces") },
+                    label = { Text(I18n.s(R.string.ui_name_value_separated_by_spaces)) },
                     isError = malformed.isNotEmpty(),
                     supportingText = if (malformed.isEmpty()) null else {
                         {
@@ -650,7 +652,7 @@ internal fun EnvVarsEditor(
             Button(onClick = { showAddPicker = true }, modifier = Modifier.weight(1f)) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(Modifier.width(4.dp))
-                Text("Add Variable")
+                Text(I18n.s(R.string.ui_add_variable))
             }
             TextButton(onClick = { rawMode = !rawMode }) {
                 Text(if (rawMode) "Done" else "Edit as text")
@@ -1009,14 +1011,14 @@ private fun AddEnvVarPicker(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add environment variable") },
+        title = { Text(I18n.s(R.string.ui_add_environment_variable)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     value = nameQuery,
                     onValueChange = { nameQuery = it },
-                    label = { Text("Name (search or type)") },
-                    placeholder = { Text("e.g. DXVK_FRAME_RATE") },
+                    label = { Text(I18n.s(R.string.ui_name_search_or_type)) },
+                    placeholder = { Text(I18n.s(R.string.ui_e_g_dxvk_frame_rate)) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
@@ -1024,7 +1026,7 @@ private fun AddEnvVarPicker(
                 OutlinedTextField(
                     value = valueQuery,
                     onValueChange = { valueQuery = it },
-                    label = { Text("Value (optional)") },
+                    label = { Text(I18n.s(R.string.ui_value_optional)) },
                     placeholder = { Text("e.g. 60") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()

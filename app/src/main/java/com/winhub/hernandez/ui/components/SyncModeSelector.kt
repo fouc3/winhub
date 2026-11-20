@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.winhub.hernandez.core.SyncCaps
 import com.winhub.hernandez.core.SyncMode
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The "Sync" row shared by the container editor and the game shortcut editor: a label, a segmented
@@ -81,10 +83,10 @@ fun SyncModeSelector(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.align(Alignment.CenterVertically).padding(end = 10.dp),
             ) {
-                Text("Sync", fontSize = 14.sp, color = cs.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_sync), fontSize = 14.sp, color = cs.onSurfaceVariant)
                 if (onHelp != null) {
                     IconButton(onClick = onHelp, modifier = Modifier.size(44.dp)) {
-                        Icon(Icons.Default.Help, contentDescription = "What is Sync?", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Help, contentDescription = I18n.s(R.string.ui_what_is_sync), modifier = Modifier.size(18.dp))
                     }
                 }
             }
@@ -141,7 +143,7 @@ fun SyncModeSelector(
             )
             if (onUseContainer != null) {
                 TextButton(onClick = onUseContainer, modifier = Modifier.heightIn(min = 32.dp)) {
-                    Text("Use container's", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_use_container), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
         }

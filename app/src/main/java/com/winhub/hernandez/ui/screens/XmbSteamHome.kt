@@ -80,6 +80,8 @@ import com.winhub.hernandez.ui.simple.LabPicture
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.floor
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // The XMB Home in the Steam Deck library's look: the focused game's own landscape art fills the screen under a gradient to dark navy,
 // one row of square-cornered covers sits low (the first game as a wide capsule, the focused card a touch larger and ringed with a thin
@@ -142,7 +144,7 @@ private fun XmbSteamPicture(
     alignment: Alignment = Alignment.Center,
 ) {
     var loaded by remember(pics.map { it.model }) { mutableStateOf(false) }
-    val a by animateFloatAsState(if (loaded) 1f else 0f, tween(350), label = "xmbSteamArt")
+    val a by animateFloatAsState(if (loaded) 1f else 0f, tween(350), label = I18n.s(R.string.ui_xmbsteamart))
     LabPicture(pics, modifier.graphicsLayer { alpha = a }, contentScale = contentScale, alignment = alignment, onLoaded = { loaded = true })
 }
 
@@ -185,7 +187,7 @@ internal fun XmbSteamBackdrop(game: Shortcut?, picture: Any?, fadeFrom: Float, l
         // The art layers (the blurred cover and the hero) blur and dim as the options open; the gradient above them stays sharp.
         XmbSteamBlurred(lift, blurs) {
             XmbHomeBackdrop(picture)
-            Crossfade(targetState = hero, animationSpec = tween(600), label = "xmbSteamHero") { h ->
+            Crossfade(targetState = hero, animationSpec = tween(600), label = I18n.s(R.string.ui_xmbsteamhero)) { h ->
                 if (h != null) {
                     XmbSteamPicture(h.pics, Modifier.fillMaxSize(), contentScale = ContentScale.Crop, alignment = Alignment.TopCenter)
                 }
@@ -490,8 +492,8 @@ private fun XmbSteamWideArt(s: Shortcut, accent: Color) {
     var coverDecided by remember(path) { mutableStateOf(false) }
     val cover = xmbWideCoverShows(failed, resolved, coverDecided)
     LaunchedEffect(cover) { if (cover) coverDecided = true }
-    val coverA by animateFloatAsState(if (cover) 1f else 0f, tween(250), label = "xmbWideCover")
-    val artA by animateFloatAsState(if (loaded) 1f else 0f, tween(350), label = "xmbSteamArt")
+    val coverA by animateFloatAsState(if (cover) 1f else 0f, tween(250), label = I18n.s(R.string.ui_xmbwidecover))
+    val artA by animateFloatAsState(if (loaded) 1f else 0f, tween(350), label = I18n.s(R.string.ui_xmbsteamart))
     val bmp = s.icon
     Box(Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1B2230), Color(0xFF0C1018)))))
@@ -546,7 +548,7 @@ private fun XmbSteamTitle(
         targetState = focused,
         contentKey = { it?.file?.path },
         transitionSpec = { xmbTitleTransition() },
-        label = "xmbSteamTitle",
+        label = I18n.s(R.string.ui_xmbsteamtitle),
         modifier = Modifier
             .offset(0.dp, sl.titleY.dp - ss.dp(XMB_STEAM_TITLE_NUDGE))
             .width(sl.titleW.dp)

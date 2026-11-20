@@ -36,6 +36,8 @@ import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /** Epic library state for the storefront host — the twin of [rememberGogLibrary]. */
 class EpicLibraryState internal constructor(
@@ -148,7 +150,7 @@ fun EpicLibraryTab(
     ) {
         CatalogSearchField(
             query = query,
-            placeholder = "Search your Epic library…",
+            placeholder = I18n.s(R.string.ui_search_your_epic_library),
             onQueryChange = { query = it },
             onClear = { query = ""; focusManager.clearFocus() },
             onSearch = { focusManager.clearFocus() },
@@ -171,20 +173,20 @@ fun EpicLibraryTab(
 
         when {
             state.games.isEmpty() && state.isSyncing -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                StoreNotice(title = "Syncing your library", body = state.statusText.ifBlank { "Fetching your Epic games…" })
+                StoreNotice(title = I18n.s(R.string.ui_syncing_your_library), body = state.statusText.ifBlank { "Fetching your Epic games…" })
             }
 
             state.games.isEmpty() -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 StoreNotice(
-                    title = "Your Epic library is empty here",
-                    body = "Sync to pull your games from Epic, or open the full library screen.",
+                    title = I18n.s(R.string.ui_your_epic_library_is_empty_here),
+                    body = I18n.s(R.string.ui_sync_to_pull_your_games_from_epic_or_open_the_full_li),
                     actionLabel = "Sync now",
                     onAction = { state.refresh(true) },
                 )
             }
 
             shown.isEmpty() -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                StoreNotice(title = "No matches", body = "Nothing in your library matches that filter.")
+                StoreNotice(title = I18n.s(R.string.ui_no_matches), body = I18n.s(R.string.ui_nothing_in_your_library_matches_that_filter))
             }
 
             else -> LazyVerticalGrid(
@@ -206,8 +208,8 @@ fun EpicLibraryTab(
                 item(key = "full_library_footer", span = { GridItemSpan(maxLineSpan) }) {
                     Box(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
                         StoreNotice(
-                            title = "Full library",
-                            body = "Need the list view or in-list installs? Open the full library screen.",
+                            title = I18n.s(R.string.ui_full_library),
+                            body = I18n.s(R.string.ui_need_the_list_view_or_in_list_installs_open_the_full),
                             actionLabel = "Open full library",
                             onAction = onOpenFullLibrary,
                         )

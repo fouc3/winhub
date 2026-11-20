@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.Executors
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Bannerlator's own Xbox Cloud Gaming player: signs in with the store account (XboxCloudSession, no web
@@ -183,9 +185,9 @@ class XboxCloudPlayerActivity : ComponentActivity() {
         if (withButtons) {
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER }
             (webUrl ?: intent.getStringExtra("webUrl"))?.let { url ->
-                row.addView(Button(this).apply { this.text = "Open in Microsoft's player"; setOnClickListener { startActivity(XboxCloudActivity.intent(this@XboxCloudPlayerActivity, url)); finish() } })
+                row.addView(Button(this).apply { this.text = I18n.s(R.string.ui_open_in_microsoft_player); setOnClickListener { startActivity(XboxCloudActivity.intent(this@XboxCloudPlayerActivity, url)); finish() } })
             }
-            row.addView(Button(this).apply { this.text = "Close"; setOnClickListener { finish() } })
+            row.addView(Button(this).apply { this.text = I18n.s(R.string.wrapper_manager_close); setOnClickListener { finish() } })
             box.addView(row)
         }
         notice = box
@@ -344,7 +346,7 @@ class XboxCloudPlayerActivity : ComponentActivity() {
                             MenuEntry("Stream quality", "Resolution, region, language, codec, bitrate (next stream)", entries[3], 3) { menuPage = "stream" }
                             MenuEntry("Performance overlay and sound", "Overlay level and layout, volume, controller rumble", entries[4], 4) { menuPage = "overlay" }
                             MenuEntry("Leave", "End the stream", entries[5], 5) { finish() }
-                            androidx.compose.material3.Text("Guide twice opens this menu; Back or Guide closes it.",
+                            androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                         } else {

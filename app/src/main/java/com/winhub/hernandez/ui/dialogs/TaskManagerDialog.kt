@@ -49,6 +49,7 @@ import com.winhub.hernandez.ui.XServerDialogState
 import com.winhub.hernandez.ui.screens.MenuItemDivider
 import com.winhub.hernandez.ui.screens.outlinedMenuCard
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
 
 @Composable
 fun TaskManagerDialog(state: XServerDialogState) {
@@ -86,7 +87,7 @@ fun TaskManagerDialog(state: XServerDialogState) {
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
-                Text("Task Manager", style = MaterialTheme.typography.titleMedium)
+                Text(I18n.s(R.string.task_manager), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = "Processes: $count",
@@ -99,7 +100,7 @@ fun TaskManagerDialog(state: XServerDialogState) {
                 // Process list
                 if (processes.isEmpty()) {
                     Text(
-                        text = "No processes",
+                        text = I18n.s(R.string.ui_no_processes),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 8.dp)
@@ -134,12 +135,12 @@ fun TaskManagerDialog(state: XServerDialogState) {
                         state.onTmDismissed?.run()
                         state.dismiss()
                         state.onTmNewTask?.run()
-                    }) { Text("New Task…") }
+                    }) { Text(I18n.s(R.string.ui_new_task)) }
                     Spacer(Modifier.weight(1f))
                     TextButton(onClick = {
                         state.onTmDismissed?.run()
                         state.dismiss()
-                    }) { Text("Close") }
+                    }) { Text(I18n.s(R.string.wrapper_manager_close)) }
                 }
             }
         }
@@ -189,7 +190,7 @@ private fun ProcessRow(proc: XServerDialogState.TmProcess, state: XServerDialogS
 
         Box {
             IconButton(onClick = { menuExpanded = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "Options")
+                Icon(Icons.Default.MoreVert, contentDescription = I18n.s(R.string.options))
             }
             DropdownMenu(
                 expanded = menuExpanded,
@@ -197,7 +198,7 @@ private fun ProcessRow(proc: XServerDialogState.TmProcess, state: XServerDialogS
                 modifier = Modifier.outlinedMenuCard()
             ) {
                 DropdownMenuItem(
-                    text = { Text("Bring to Front") },
+                    text = { Text(I18n.s(R.string.bring_to_front)) },
                     onClick = {
                         menuExpanded = false
                         state.onTmBringToFront?.invoke(proc.name, proc.pid)
@@ -206,7 +207,7 @@ private fun ProcessRow(proc: XServerDialogState.TmProcess, state: XServerDialogS
                 )
                 MenuItemDivider()
                 DropdownMenuItem(
-                    text = { Text("End Process") },
+                    text = { Text(I18n.s(R.string.end_process)) },
                     onClick = {
                         menuExpanded = false
                         state.onTmKillProcess?.invoke(proc.name)

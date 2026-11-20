@@ -17,6 +17,8 @@ import com.winhub.hernandez.core.GameModCache
 import com.winhub.hernandez.core.GameMods
 import com.winhub.hernandez.core.WinePath
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Game settings > Mods: which mods (core.GameMods) this game's EXE can take, each one's per-game switch
@@ -75,7 +77,7 @@ internal fun DeckModsTab(mods: GameModsSetting, programs: StartProgramsState) {
         DeckGroup("Game mods") {
             if (mods.mods.isEmpty()) {
                 DeckRow(
-                    label = "No mods for this game",
+                    label = I18n.s(R.string.ui_no_mods_for_this_game),
                     hint = "REFramework is for RE Engine games and Special K for 32 and 64-bit Windows games. " +
                         "This game's EXE can't take either.",
                 ) {}
@@ -99,8 +101,8 @@ internal fun DeckModsTab(mods: GameModsSetting, programs: StartProgramsState) {
                 if (mod === GameMods.SPECIAL_K && mods.on[mod.id] == true) {
                     val auto = GameMods.targetDll(mod, "", mods.imports, mods.machine)
                     DeckChoiceRow(
-                        label = "Special K DLL name",
-                        hint = "The name it loads as in the game folder.",
+                        label = I18n.s(R.string.ui_special_k_dll_name),
+                        hint = I18n.s(R.string.ui_name_it_loads_as_in_the_game_folder),
                         options = listOf("" to "$auto (auto)") + GameMods.SPECIALK_DLLS.map { it to it },
                         selected = mods.skDll,
                         onPick = { mods.skDll = it },

@@ -47,6 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.winhub.hernandez.core.AppOrientation
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The in-app store web page — where "Get for free" and "View on GOG / Epic" land.
@@ -116,7 +118,7 @@ class StoreWebActivity : ComponentActivity() {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             IconButton(onClick = { finish() }) {
-                                Icon(Icons.Filled.Close, contentDescription = "Close", tint = MaterialTheme.colorScheme.onBackground)
+                                Icon(Icons.Filled.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = MaterialTheme.colorScheme.onBackground)
                             }
                             Text(
                                 text = title.ifBlank { url },
@@ -131,7 +133,7 @@ class StoreWebActivity : ComponentActivity() {
                             IconButton(onClick = {
                                 runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(webView?.url ?: url))) }
                             }) {
-                                Icon(Icons.Filled.OpenInNew, contentDescription = "Open in browser", tint = MaterialTheme.colorScheme.primary)
+                                Icon(Icons.Filled.OpenInNew, contentDescription = I18n.s(R.string.ui_open_in_browser), tint = MaterialTheme.colorScheme.primary)
                             }
                         }
                         if (progress in 1..99) {

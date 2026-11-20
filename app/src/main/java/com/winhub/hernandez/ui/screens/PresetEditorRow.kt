@@ -48,6 +48,7 @@ import com.winhub.hernandez.core.PresetScope
 import com.winhub.hernandez.fexcore.FEXCorePreset
 import com.winhub.hernandez.fexcore.FEXCorePresetManager
 import com.winhub.hernandez.util.InAppFilePicker
+import com.winhub.hernandez.util.I18n
 
 /**
  * The preset action row — **add · edit · duplicate · delete · export · import** — as it appears
@@ -257,12 +258,12 @@ private fun androidx.compose.foundation.layout.RowScope.PresetImportAction(
             modifier = Modifier.outlinedMenuCard(),
         ) {
             DropdownMenuItem(
-                text = { Text("Browse files") },
+                text = { Text(I18n.s(R.string.browse_files)) },
                 onClick = { expanded = false; onInApp() },
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text("Pick via system…") },
+                text = { Text(I18n.s(R.string.pick_via_system)) },
                 onClick = { expanded = false; onSystem() },
             )
         }

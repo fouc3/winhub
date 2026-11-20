@@ -55,6 +55,8 @@ import com.winhub.hernandez.inputcontrols.ControlsProfile
 import com.winhub.hernandez.inputcontrols.ExternalController
 import com.winhub.hernandez.ui.screens.MenuItemDivider
 import com.winhub.hernandez.ui.screens.outlinedMenuCard
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // Shared VISUAL controller-binding editor. Tap a button on the drawn pad → bind it (keyboard / mouse /
@@ -110,7 +112,7 @@ fun VisualControllerBinder(
     Column(modifier.verticalScroll(rememberScrollState())) {
         // ── Toolbar: profile picker + new/rename + All-bindings ──
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Text("Profile", fontSize = 11.sp, color = cs.onSurfaceVariant)
+            Text(I18n.s(R.string.profile), fontSize = 11.sp, color = cs.onSurfaceVariant)
             Spacer(Modifier.width(8.dp))
             Box {
                 OutlinedButton(
@@ -127,7 +129,7 @@ fun VisualControllerBinder(
                     modifier = Modifier.outlinedMenuCard(),
                 ) {
                     if (onSelectNone != null) {
-                        DropdownMenuItem(text = { Text("— None (native Xbox) —") }, onClick = { profMenu = false; onSelectNone() })
+                        DropdownMenuItem(text = { Text(I18n.s(R.string.ui_none_native_xbox)) }, onClick = { profMenu = false; onSelectNone() })
                         MenuItemDivider()
                     }
                     allProfiles.forEach { p ->
@@ -135,11 +137,11 @@ fun VisualControllerBinder(
                         MenuItemDivider()
                     }
                     if (profile != null) {
-                        DropdownMenuItem(text = { Text("Rename…") }, onClick = { profMenu = false; onRenameProfile() })
+                        DropdownMenuItem(text = { Text(I18n.s(R.string.ui_rename)) }, onClick = { profMenu = false; onRenameProfile() })
                         if (onDeleteProfile != null) {
                             MenuItemDivider()
                             DropdownMenuItem(
-                                text = { Text("Delete…", color = cs.error) },
+                                text = { Text(I18n.s(R.string.ui_delete), color = cs.error) },
                                 onClick = { profMenu = false; onDeleteProfile() },
                             )
                         }
@@ -150,7 +152,7 @@ fun VisualControllerBinder(
             TextButton(onClick = { showNew = !showNew }) { Text("+ New", fontSize = 12.sp) }
             Spacer(Modifier.weight(1f))
             if (onOpenAllBindings != null) {
-                TextButton(onClick = onOpenAllBindings) { Text("All bindings", fontSize = 12.sp) }
+                TextButton(onClick = onOpenAllBindings) { Text(I18n.s(R.string.ui_all_bindings), fontSize = 12.sp) }
             }
         }
         if (showNew) {
@@ -159,13 +161,13 @@ fun VisualControllerBinder(
                     value = newName,
                     onValueChange = { newName = it },
                     singleLine = true,
-                    placeholder = { Text("New profile name", fontSize = 12.sp) },
+                    placeholder = { Text(I18n.s(R.string.ui_new_profile_name), fontSize = 12.sp) },
                     modifier = Modifier.weight(1f),
                 )
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = {
                     if (newName.isNotBlank()) { onCreateProfile(newName.trim()); newName = ""; showNew = false }
-                }, shape = RoundedCornerShape(9.dp)) { Text("Create", fontSize = 12.sp) }
+                }, shape = RoundedCornerShape(9.dp)) { Text(I18n.s(R.string.create), fontSize = 12.sp) }
             }
         }
         Spacer(Modifier.height(8.dp))
@@ -189,14 +191,14 @@ fun VisualControllerBinder(
             ) {
                 Column(Modifier.weight(1f)) {
                     Text("Remapping is ON — $boundN of ${BIND_TARGETS.size} mapped", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = WARN)
-                    Text("Unbound buttons go SILENT in-game (they no longer act as native Xbox).", fontSize = 11.sp, color = cs.onSurfaceVariant)
+                    Text(I18n.s(R.string.ui_unbound_buttons_go_silent_in_game_they_no_longer_act), fontSize = 11.sp, color = cs.onSurfaceVariant)
                 }
                 Spacer(Modifier.width(8.dp))
                 OutlinedButton(
                     onClick = { fillNative(controller, profile); bumpSaved() },
                     shape = RoundedCornerShape(9.dp),
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
-                ) { Text("Fill → native", fontSize = 11.sp) }
+                ) { Text(I18n.s(R.string.ui_fill_native), fontSize = 11.sp) }
             }
             Spacer(Modifier.height(8.dp))
         }
@@ -299,7 +301,7 @@ private fun BindEditor(
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             Text("Bind: ", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
             Text(t?.name ?: id, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = BIND_BLUE, modifier = Modifier.weight(1f))
-            TextButton(onClick = onDone) { Text("Done", fontSize = 12.sp) }
+            TextButton(onClick = onDone) { Text(I18n.s(R.string.wrapper_catalog_close), fontSize = 12.sp) }
         }
         Text(
             "Currently: " + (currentLabel ?: "native (pass-through)"),
@@ -364,7 +366,7 @@ private fun BindEditor(
                 shape = RoundedCornerShape(9.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE2564E).copy(alpha = 0.85f)),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-            ) { Text("Clear", fontSize = 11.sp) }
+            ) { Text(I18n.s(R.string.clear), fontSize = 11.sp) }
         }
     }
 }

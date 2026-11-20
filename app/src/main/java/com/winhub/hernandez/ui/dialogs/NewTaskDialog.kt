@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.winhub.hernandez.R
 import com.winhub.hernandez.ui.XServerDialogState
+import com.winhub.hernandez.util.I18n
 
 // Compose replacement for the old native ContentDialog.prompt(R.string.new_task, "taskmgr.exe").
 // The native prompt does not render over the Vulkan/ASR fullscreen SurfaceView, so the New Task
@@ -43,7 +44,7 @@ fun NewTaskDialog(state: XServerDialogState) {
             }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = { state.dismiss() }) { Text("Cancel") }
+            TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.cancel)) }
         }
     )
 }

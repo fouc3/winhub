@@ -107,6 +107,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Deck-native config editors — replace the Material "old UI" dialogs the Deck
@@ -535,7 +537,7 @@ internal fun DeckConfigDialog(
                     }
                 }
                 IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = "Close", tint = DeckPalette.onSurfaceVariant)
+                    Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.wrapper_manager_close), tint = DeckPalette.onSurfaceVariant)
                 }
             }
             Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(DeckPalette.line))
@@ -559,7 +561,7 @@ internal fun DeckHelpButton(text: String) {
     IconButton(onClick = { show = true }) {
         Icon(
             Icons.Outlined.HelpOutline,
-            contentDescription = "What is this?",
+            contentDescription = I18n.s(R.string.ui_what_is_this),
             tint = DeckPalette.onSurfaceVariant,
             modifier = Modifier.size(18.dp),
         )
@@ -665,7 +667,7 @@ internal fun DeckEnvVarsEditor(
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         DeckConfigPanel("Compatibility") {
             DeckRow(
-                label = "Prefer game-folder DLLs",
+                label = I18n.s(R.string.ui_prefer_game_folder_dlls),
                 hint = "Loads the game's own copies of ${DllOverrides.PREFER_GAME_FOLDER.joinToString(", ")}",
                 control = {
                     DeckToggle(allPreferred) { on ->
@@ -680,7 +682,7 @@ internal fun DeckEnvVarsEditor(
             foundDlls.forEach { dll ->
                 DeckRow(
                     label = "$dll.dll",
-                    hint = "Detected in the game folder",
+                    hint = I18n.s(R.string.ui_detected_in_the_game_folder),
                     control = {
                         DeckToggle(DllOverrides.isEnabled(overrides, dll)) { checked ->
                             putVar(
@@ -699,7 +701,7 @@ internal fun DeckEnvVarsEditor(
                 var rawText by remember { mutableStateOf(renderDeckEnvRows(rows)) }
                 val malformed = rawText.split(" ").filter { it.isNotBlank() && it.indexOf('=') <= 0 }
                 DeckConfigTextField(
-                    label = "NAME=VALUE, separated by spaces",
+                    label = I18n.s(R.string.ui_name_value_separated_by_spaces),
                     value = rawText,
                     onValueChange = {
                         rawText = it
@@ -734,7 +736,7 @@ internal fun DeckEnvVarsEditor(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth().padding(top = 2.dp),
         ) {
-            DeckButton("Add Variable", primary = true) { showAddPicker = true }
+            DeckButton(I18n.s(R.string.ui_add_variable), primary = true) { showAddPicker = true }
             DeckButton(if (rawMode) "Done" else "Edit as text", primary = false) { rawMode = !rawMode }
         }
     }
@@ -874,7 +876,7 @@ private fun DeckAddEnvVarPicker(
             .filter { name.isBlank() || it.contains(name, ignoreCase = true) }
     }
 
-    DeckConfigDialog(title = "Add environment variable", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_add_environment_variable), onDismiss = onDismiss) {
         DeckConfigTextField("Name (search or type)", nameQuery, { nameQuery = it })
         DeckConfigTextField("Value (optional)", valueQuery, { valueQuery = it })
         when {
@@ -894,7 +896,7 @@ private fun DeckAddEnvVarPicker(
             DeckRow(
                 label = known,
                 control = {
-                    DeckButton("Add", primary = false) {
+                    DeckButton(I18n.s(R.string.add), primary = false) {
                         onAdd(if (value.isEmpty()) known else "$known=$value")
                     }
                 },
@@ -944,28 +946,28 @@ internal fun DeckWineD3DConfigEditor(
     var renderer by remember { mutableStateOf(config.get("renderer").ifEmpty { "gl" }) }
 
     DeckConfigPanel("WineD3D Configuration") {
-        DeckChoiceRow(label = "CSMT", options = csmtOptions, selected = csmt, onPick = { csmt = it })
+        DeckChoiceRow(label = I18n.s(R.string.ui_csmt), options = csmtOptions, selected = csmt, onPick = { csmt = it })
         DeckChoiceRow(
-            label = "GPU Name",
+            label = I18n.s(R.string.gpu_name),
             options = gpuNames.map { it to it },
             selected = gpuName,
             onPick = { gpuName = it },
         )
         DeckChoiceRow(
-            label = "DDraw Wrapper",
+            label = I18n.s(R.string.ddraw_wrapper),
             options = ddraEntries.map { it to it },
             selected = ddra,
             onPick = { ddra = it },
         )
         DeckChoiceRow(
-            label = "Max Device Memory",
+            label = I18n.s(R.string.max_device_memory),
             options = videoMemEntries.map { it to it },
             selected = videoMem,
             onPick = { videoMem = it },
         )
-        DeckChoiceRow(label = "Strict Shader Math", options = ssmOptions, selected = ssm, onPick = { ssm = it })
-        DeckChoiceRow(label = "Offscreen Rendering Mode", options = ormOptions, selected = orm, onPick = { orm = it })
-        DeckChoiceRow(label = "Renderer", options = rendOptions, selected = renderer, onPick = { renderer = it })
+        DeckChoiceRow(label = I18n.s(R.string.strict_shader_math), options = ssmOptions, selected = ssm, onPick = { ssm = it })
+        DeckChoiceRow(label = I18n.s(R.string.offscreen_rendering_mode), options = ormOptions, selected = orm, onPick = { orm = it })
+        DeckChoiceRow(label = I18n.s(R.string.renderer), options = rendOptions, selected = renderer, onPick = { renderer = it })
     }
     fun buildConfig(): String {
         val cfg = com.winhub.hernandez.contentdialog.WineD3DConfigDialog.parseConfig(initialConfig)
@@ -986,7 +988,7 @@ internal fun DeckWineD3DConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton("Done") { onConfirm(buildConfig()) }
+        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
     }
 }
 
@@ -1018,12 +1020,12 @@ internal fun DeckVulkanConfigEditor(
 
     DeckConfigPanel("Renderer Configuration") {
         DeckRow(
-            label = "Native Rendering",
-            hint = "Direct scanout straight to the display",
+            label = I18n.s(R.string.ui_native_rendering),
+            hint = I18n.s(R.string.ui_direct_scanout_straight_to_the_display),
             control = { DeckToggle(nativeRender) { nativeRender = it } },
         )
         DeckChoiceRow(
-            label = "Present Mode",
+            label = I18n.s(R.string.renderer_present_mode),
             hint = if (nativeRender) "Ignored under native rendering" else null,
             options = listOf(
                 "fifo" to "FIFO (vsync)",
@@ -1037,15 +1039,15 @@ internal fun DeckVulkanConfigEditor(
             DeckConfigNote("Frame generation temporarily forces Mailbox while active.")
         }
         DeckChoiceRow(
-            label = "Renderer Driver",
-            hint = "Vulkan driver the present layer runs on",
+            label = I18n.s(R.string.renderer_driver_id),
+            hint = I18n.s(R.string.ui_vulkan_driver_the_present_layer_runs_on),
             options = rendererDriverOptions.map { it to it },
             selected = if (rendererDriverOptions.contains(driverId)) driverId else "system",
             onPick = { driverId = it },
         )
         DeckChoiceRow(
-            label = "Colors",
-            hint = "Game buffer channel order",
+            label = I18n.s(R.string.renderer_colors),
+            hint = I18n.s(R.string.ui_game_buffer_channel_order),
             options = listOf("BGRA" to "BGRA", "RGBA" to "RGBA"),
             selected = if (swapRB) "RGBA" else "BGRA",
             onPick = { swapRB = it == "RGBA" },
@@ -1061,7 +1063,7 @@ internal fun DeckVulkanConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton("Done") { onConfirm(buildConfig()) }
+        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
     }
 }
 
@@ -1156,10 +1158,10 @@ internal fun DeckFpsConfigEditor(
     ).joinToString(",")
 
     DeckConfigPanel("HUD") {
-        DeckRow(label = "Show HUD", control = { DeckToggle(hudEnabled) { hudEnabled = it } })
+        DeckRow(label = I18n.s(R.string.ui_show_hud), control = { DeckToggle(hudEnabled) { hudEnabled = it } })
         DeckChoiceRow(
-            label = "Detail level",
-            hint = "1 FPS, 2 adds the frametime graph, 3 adds GPU, CPU and memory, 4 shows everything.",
+            label = I18n.s(R.string.ui_detail_level),
+            hint = I18n.s(R.string.ui_1_fps_2_adds_the_frametime_graph_3_adds_gpu_cpu_and_m),
             options = fusionLevels.map { it.token to it.label },
             selected = fusionSize,
             onPick = { fusionSize = it },
@@ -1200,13 +1202,13 @@ internal fun DeckFpsConfigEditor(
         DeckConfigPanel("Temperature Display") {
             val bandMode = if (!tempBands) 0 else if (tempAuto) 1 else 2
             DeckChoiceRow(
-                label = "Temp unit",
+                label = I18n.s(R.string.ui_temp_unit),
                 options = listOf("0" to "\u00B0C", "1" to "\u00B0F"),
                 selected = if (tempUnitF) "1" else "0",
                 onPick = { tempUnitF = it == "1" },
             )
             DeckChoiceRow(
-                label = "Danger colors",
+                label = I18n.s(R.string.ui_danger_colors),
                 options = listOf("0" to "Off", "1" to "Auto", "2" to "Manual"),
                 selected = bandMode.toString(),
                 onPick = {
@@ -1229,14 +1231,14 @@ internal fun DeckFpsConfigEditor(
         DeckSliderRow("HUD Scale", null, hudScale.toFloat(), 50f..150f, { "${it.toInt()}%" }) { hudScale = it.toInt().coerceAtLeast(50) }
         DeckSliderRow("HUD Opacity", null, hudOpacity.toFloat(), 0f..100f, { "${it.toInt()}%" }) { hudOpacity = it.toInt() }
         DeckChoiceRow(
-            label = "HUD color",
+            label = I18n.s(R.string.ui_hud_color),
             options = listOf("soft" to "Soft", "mid" to "Mid", "vivid" to "Vivid"),
             selected = color,
             onPick = { color = it },
         )
         DeckSliderRow("HUD outline", null, outlineValue.toFloat(), 0f..100f, { it.toInt().toString() }) { outlineValue = it.toInt() }
         DeckRow(
-            label = "Outline color",
+            label = I18n.s(R.string.ui_outline_color),
             hint = if (outlineAccent) "Accent" else "Gray",
             control = { DeckToggle(outlineAccent) { outlineAccent = it } },
         )
@@ -1253,10 +1255,10 @@ internal fun DeckFpsConfigEditor(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        DeckButton("Export diagnostics", primary = false) {
+        DeckButton(I18n.s(R.string.ui_export_diagnostics), primary = false) {
             com.winhub.hernandez.widget.exportHudDiagnostics(diagContext)
         }
-        DeckButton("Done") { onConfirm(buildConfig()) }
+        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
     }
 }
 
@@ -1437,8 +1439,8 @@ internal fun DeckGraphicsDriverConfigEditor(
         DeckChoiceRow("Vulkan Version", null, vulkanVersions.map { it to it }, vulkanVersion) { vulkanVersion = it }
         DeckChoiceRow("Driver Version", "Turnip / custom Vulkan driver", driverVersions.map { it to it }, version) { version = it }
         DeckRow(
-            label = "Show Incompatible Drivers",
-            hint = "List drivers your GPU can't load",
+            label = I18n.s(R.string.ui_show_incompatible_drivers),
+            hint = I18n.s(R.string.ui_list_drivers_your_gpu_can_t_load),
             control = { DeckToggle(showAllDrivers) { showAllDrivers = it } },
         )
         if (isCustomDriver) {
@@ -1450,7 +1452,7 @@ internal fun DeckGraphicsDriverConfigEditor(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text("Available Extensions ($enabled/${allExtensions.size})", color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
-                DeckButton("Manage", primary = false) { showExtPicker = true }
+                DeckButton(I18n.s(R.string.ui_manage), primary = false) { showExtPicker = true }
             }
         }
         DeckChoiceRow("GPU Name", null, gpuNames.map { it to it }, gpuName) { gpuName = it }
@@ -1467,19 +1469,19 @@ internal fun DeckGraphicsDriverConfigEditor(
         DeckChoiceRow("BCn Emulation Type", null, bcnTypeEntries.map { it to it }, bcnEmulationType) { bcnEmulationType = it }
         DeckChoiceRow("BCn Emulation Cache", null, bcnCacheEntries.map { it to it }, bcnEmulationCache) { bcnEmulationCache = it }
         if (isIntegratedBcn) {
-            DeckRow(label = "BCn → ASTC transcode", control = { DeckToggle(bcnEmulationAstc) { bcnEmulationAstc = it } })
+            DeckRow(label = I18n.s(R.string.graphics_driver_bcn_emulation_astc), control = { DeckToggle(bcnEmulationAstc) { bcnEmulationAstc = it } })
         }
         if (!isBcnLayer && bcnEmulationType == "compute" && (bcnEmulation == "auto" || bcnEmulation == "full")) {
-            DeckRow(label = "Decode BCn to ASTC", control = { DeckToggle(bcnTranscodeAstc) { bcnTranscodeAstc = it } })
+            DeckRow(label = I18n.s(R.string.ui_decode_bcn_to_astc), control = { DeckToggle(bcnTranscodeAstc) { bcnTranscodeAstc = it } })
         }
-        DeckRow(label = "Sync Every Frame", control = { DeckToggle(syncFrame) { syncFrame = it } })
-        DeckRow(label = "Disable Present Wait", control = { DeckToggle(disablePresentWait) { disablePresentWait = it } })
+        DeckRow(label = I18n.s(R.string.graphics_driver_sync_frame), control = { DeckToggle(syncFrame) { syncFrame = it } })
+        DeckRow(label = I18n.s(R.string.ui_disable_present_wait), control = { DeckToggle(disablePresentWait) { disablePresentWait = it } })
         DeckRow(label = "OneUI / HyperOS Fix", control = { DeckToggle(fdDevFeatures) { fdDevFeatures = it } })
     }
 
     DeckConfigPanel("Turnip") {
         DeckChoiceRow(
-            label = "GMEM (tiled rendering)",
+            label = I18n.s(R.string.ui_gmem_tiled_rendering),
             hint = "Auto applies gmem only on Adreno 710/720/722",
             options = listOf(
                 "auto" to "Auto (Adreno 710/720/722)",
@@ -1490,20 +1492,20 @@ internal fun DeckGraphicsDriverConfigEditor(
             onPick = { turnipGmem = it },
         )
         DeckExpandableRow(
-            label = "Advanced Turnip (TU_DEBUG)",
-            hint = "Expert debug tokens — off by default",
+            label = I18n.s(R.string.ui_advanced_turnip_tu_debug),
+            hint = I18n.s(R.string.ui_expert_debug_tokens_off_by_default),
             expanded = turnipSectionExpanded,
             onToggle = { turnipSectionExpanded = !turnipSectionExpanded },
         ) {
-            DeckRow(label = "forcecb", hint = "Force concurrent binning", control = { DeckToggle(turnipForceCb) { turnipForceCb = it } })
-            DeckRow(label = "nocb", hint = "Disable concurrent binning", control = { DeckToggle(turnipNoCb) { turnipNoCb = it } })
+            DeckRow(label = "forcecb", hint = I18n.s(R.string.ui_force_concurrent_binning), control = { DeckToggle(turnipForceCb) { turnipForceCb = it } })
+            DeckRow(label = "nocb", hint = I18n.s(R.string.ui_disable_concurrent_binning), control = { DeckToggle(turnipNoCb) { turnipNoCb = it } })
             val sysmemBlocked = turnipGmem == "on"
             DeckRow(
                 label = "sysmem",
                 hint = if (sysmemBlocked) "Disabled — GMEM Force On overrides sysmem" else "Force sysmem (bypass GMEM)",
                 control = { DeckToggle(turnipSysmem && !sysmemBlocked) { if (!sysmemBlocked) turnipSysmem = it } },
             )
-            DeckRow(label = "deck_emu", hint = "Advertise as SteamDeck", control = { DeckToggle(turnipDeckEmu) { turnipDeckEmu = it } })
+            DeckRow(label = "deck_emu", hint = I18n.s(R.string.ui_advertise_as_steamdeck), control = { DeckToggle(turnipDeckEmu) { turnipDeckEmu = it } })
             DeckConfigNote("deck_emu requires a Banners-Turnip driver (ignored on stock Turnip).")
         }
     }
@@ -1511,14 +1513,14 @@ internal fun DeckGraphicsDriverConfigEditor(
     if (showBcnLayerSettings) {
         DeckConfigPanel("BCn Layer Settings") {
             if (isQualcomm) DeckConfigNote("No effect on Adreno (native BCn) — applies to Mali/non-Qualcomm GPUs")
-            DeckRow(label = "Force decode on all GPUs", control = { DeckToggle(bcnLayerAuto) { bcnLayerAuto = it } })
-            DeckRow(label = "Transcode to ETC2", control = { DeckToggle(bcnTranscodeEtc2) { bcnTranscodeEtc2 = it } })
-            DeckRow(label = "Transcode to ASTC", control = { DeckToggle(bcnTranscodeAstc) { bcnTranscodeAstc = it } })
-            DeckRow(label = "Storage image path", control = { DeckToggle(bcnImageView) { bcnImageView = it } })
-            DeckRow(label = "Debug log", control = { DeckToggle(bcnDebugLog) { bcnDebugLog = it } })
+            DeckRow(label = I18n.s(R.string.bcn_layer_force_decode), control = { DeckToggle(bcnLayerAuto) { bcnLayerAuto = it } })
+            DeckRow(label = I18n.s(R.string.bcn_layer_transcode_etc2), control = { DeckToggle(bcnTranscodeEtc2) { bcnTranscodeEtc2 = it } })
+            DeckRow(label = I18n.s(R.string.bcn_layer_transcode_astc), control = { DeckToggle(bcnTranscodeAstc) { bcnTranscodeAstc = it } })
+            DeckRow(label = I18n.s(R.string.bcn_layer_image_view), control = { DeckToggle(bcnImageView) { bcnImageView = it } })
+            DeckRow(label = I18n.s(R.string.ui_debug_log), control = { DeckToggle(bcnDebugLog) { bcnDebugLog = it } })
             if (isCompatDriver) {
-                DeckRow(label = "Use GameNative engine", control = { DeckToggle(compatUseGamenative) { compatUseGamenative = it } })
-                DeckRow(label = "Emulate sparse binding", control = { DeckToggle(bcnCompatSparse) { bcnCompatSparse = it } })
+                DeckRow(label = I18n.s(R.string.ui_use_gamenative_engine), control = { DeckToggle(compatUseGamenative) { compatUseGamenative = it } })
+                DeckRow(label = I18n.s(R.string.ui_emulate_sparse_binding), control = { DeckToggle(bcnCompatSparse) { bcnCompatSparse = it } })
             }
         }
     }
@@ -1596,7 +1598,7 @@ internal fun DeckGraphicsDriverConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton("Done") { onConfirm(buildConfig()) }
+        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
     }
 }
 
@@ -1920,18 +1922,18 @@ internal fun DeckDxvkConfigEditor(
             }
             if (onOpenConfigDownload != null) {
                 Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Manage VEGAS builds", color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
-                    DeckButton("Download", primary = false) { onOpenConfigDownload() }
+                    Text(I18n.s(R.string.ui_manage_vegas_builds), color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
+                    DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onOpenConfigDownload() }
                 }
             }
         } else {
             DeckChoiceRowWithDownload("DXVK Version", filteredDxvk.map { it to it }, selectedDxvk, { selectedDxvk = it }, onDownloadDxvk)
         }
         if (dxvkType != DXVKConfigDialog.DXVK_TYPE_NONE) {
-            DeckRow(label = "Async", hint = "Compile shaders on background threads", control = { DeckToggle(asyncEnabled) { asyncEnabled = it } })
+            DeckRow(label = I18n.s(R.string.ui_async), hint = I18n.s(R.string.ui_compile_shaders_on_background_threads), control = { DeckToggle(asyncEnabled) { asyncEnabled = it } })
         }
         if (dxvkType == DXVKConfigDialog.DXVK_TYPE_GPLASYNC) {
-            DeckRow(label = "Async Cache", control = { DeckToggle(asyncCacheEnabled) { asyncCacheEnabled = it } })
+            DeckRow(label = I18n.s(R.string.ui_async_cache), control = { DeckToggle(asyncCacheEnabled) { asyncCacheEnabled = it } })
         }
         DeckChoiceRow("Frame Rate", null, framerateEntries.map { it to it }, selectedFramerate) { selectedFramerate = it }
     }
@@ -1971,7 +1973,7 @@ internal fun DeckDxvkConfigEditor(
             val tp = staged ?: return@DeckConfigPanel
             DeckConfigNote("will write: vegas.forceTier = $tp")
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Apply tier") {
+                DeckButton(I18n.s(R.string.ui_apply_tier)) {
                     if (!useDefaults) { applyValue("vegas.forceTier", tp.toString()); tierChoice = null }
                 }
             }
@@ -1980,7 +1982,7 @@ internal fun DeckDxvkConfigEditor(
         DeckConfigPanel("Config File") {
             DeckConfigNote("Pick a stock config then edit it — your changes become your own copy. Or point at any .conf.")
             DeckRow(
-                label = "Use defaults (no config file)",
+                label = I18n.s(R.string.ui_use_defaults_no_config_file),
                 control = { DeckToggle(useDefaults) { useDefaults = it } },
             )
             if (!useDefaults) {
@@ -1995,7 +1997,7 @@ internal fun DeckDxvkConfigEditor(
                     }
                     if (onOpenConfigDownload != null) {
                         IconButton(onClick = onOpenConfigDownload) {
-                            Icon(Icons.Filled.Download, contentDescription = "Download stock configs", tint = DeckPalette.primary)
+                            Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_download_stock_configs), tint = DeckPalette.primary)
                         }
                     }
                 }
@@ -2022,17 +2024,17 @@ internal fun DeckDxvkConfigEditor(
                             if (backupsList.isEmpty()) "No backups yet" else "Backups: ${backupsList.size}",
                             color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.weight(1f),
                         )
-                        DeckButton("Backup now", primary = false) { manualBackup() }
+                        DeckButton(I18n.s(R.string.ui_backup_now), primary = false) { manualBackup() }
                         if (backupsList.isNotEmpty()) {
                             Spacer(Modifier.width(8.dp))
-                            DeckButton("Restore…", primary = false) { showBackups = true }
+                            DeckButton(I18n.s(R.string.ui_restore_2), primary = false) { showBackups = true }
                         }
                     }
                 }
                 if (configSourceText.isNotEmpty()) {
                     DeckRow(
-                        label = "Fork-feature filter",
-                        hint = "Show only fork-specific keys",
+                        label = I18n.s(R.string.ui_fork_feature_filter),
+                        hint = I18n.s(R.string.ui_show_only_fork_specific_keys),
                         control = {
                             DeckToggle(forkFilter) {
                                 forkFilter = it
@@ -2041,7 +2043,7 @@ internal fun DeckDxvkConfigEditor(
                         },
                     )
                     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.End) {
-                        DeckButton("Add key", primary = false) { addKeyDraft = ""; addValueDraft = ""; showAddKey = true }
+                        DeckButton(I18n.s(R.string.ui_add_key), primary = false) { addKeyDraft = ""; addValueDraft = ""; showAddKey = true }
                     }
                     val visibleRows = remember(configRows, forkFilter, selectedDxvk, vegasKnowledge) {
                         configRows.filter { r ->
@@ -2082,7 +2084,7 @@ internal fun DeckDxvkConfigEditor(
                             DeckRow(
                                 label = row.key,
                                 hint = row.value,
-                                control = { DeckButton("Add", primary = false) { applyToggle(row.key, row.value, true) } },
+                                control = { DeckButton(I18n.s(R.string.add), primary = false) { applyToggle(row.key, row.value, true) } },
                             )
                         }
                     }
@@ -2117,16 +2119,16 @@ internal fun DeckDxvkConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton("Done") { onConfirm(buildConfig()) }
+        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
     }
 
     if (showAddKey) {
-        DeckConfigDialog(title = "Add config entry", onDismiss = { showAddKey = false }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_add_config_entry), onDismiss = { showAddKey = false }) {
             val keyValid = VegasKeyKnowledge.isValidConfigKey(addKeyDraft.trim())
             DeckConfigTextField("Key (e.g. dxvk.maxFrameLatency)", addKeyDraft, { addKeyDraft = it }, isError = addKeyDraft.isNotBlank() && !keyValid)
             DeckConfigTextField("Value", addValueDraft, { addValueDraft = it })
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Add") {
+                DeckButton(I18n.s(R.string.add)) {
                     if (addKeyDraft.isNotBlank() && addValueDraft.isNotBlank() && keyValid) {
                         applyAddKey(addKeyDraft.trim(), addValueDraft.trim())
                         showAddKey = false
@@ -2144,23 +2146,23 @@ internal fun DeckDxvkConfigEditor(
             if (row.value.isNotEmpty()) opts.add(row.value)
             baselineRowsForSelected.filter { it.key == row.key }.forEach { opts.add(it.value) }
             opts.forEach { v ->
-                DeckRow(label = v, control = { DeckButton("Pick", primary = false) { applyValue(row.key, v); customValueDraft = v } })
+                DeckRow(label = v, control = { DeckButton(I18n.s(R.string.ui_pick), primary = false) { applyValue(row.key, v); customValueDraft = v } })
             }
             if (baseline != null && (baseline.value != row.value || baseline.enabled != row.enabled)) {
                 DeckRow(label = "Reset to stock (${baseline.value})", control = { DeckButton("Reset", primary = false) { applyValue(row.key, baseline.value); customValueDraft = baseline.value } })
             }
             DeckConfigTextField("Custom value", customValueDraft, { customValueDraft = it })
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Apply") { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()) }
+                DeckButton(I18n.s(R.string.ui_apply_2)) { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()) }
             }
         }
     }
 
     pendingDeleteKey?.let { delKey ->
-        DeckConfigDialog(title = "Remove key?", onDismiss = { pendingDeleteKey = null }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_remove_key), onDismiss = { pendingDeleteKey = null }, compact = true) {
             DeckConfigNote("Are you sure you want '$delKey' removed? You can restore it via Backup → Restore or Add key.")
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Remove", primary = true) {
+                DeckButton(I18n.s(R.string.remove), primary = true) {
                     applyDeleteKey(delKey); pendingDeleteKey = null
                     if (activity != null) Toast.makeText(activity, "Removed $delKey — Restore to undo", Toast.LENGTH_SHORT).show()
                 }
@@ -2169,23 +2171,23 @@ internal fun DeckDxvkConfigEditor(
     }
 
     if (showBackups) {
-        DeckConfigDialog(title = "Restore a backup", onDismiss = { showBackups = false }) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_restore_a_backup), onDismiss = { showBackups = false }) {
             if (backupsList.isEmpty()) DeckConfigNote("No backups yet — they appear after the first edit.")
             backupsList.forEach { b ->
                 DeckRow(
                     label = b.name,
                     hint = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.ROOT).format(b.lastModified()),
-                    control = { DeckButton("Restore", primary = false) { restoreTarget = b; showBackups = false } },
+                    control = { DeckButton(I18n.s(R.string.ui_restore), primary = false) { restoreTarget = b; showBackups = false } },
                 )
             }
         }
     }
 
     restoreTarget?.let { backup ->
-        DeckConfigDialog(title = "Restore this backup?", onDismiss = { restoreTarget = null }, compact = true) {
+        DeckConfigDialog(title = I18n.s(R.string.ui_restore_this_backup), onDismiss = { restoreTarget = null }, compact = true) {
             DeckConfigNote("The live config file will be replaced by '${backup.name}'. The current state is backed up first.")
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-                DeckButton("Restore") { restoreBackup(backup); restoreTarget = null }
+                DeckButton(I18n.s(R.string.ui_restore)) { restoreBackup(backup); restoreTarget = null }
             }
         }
     }

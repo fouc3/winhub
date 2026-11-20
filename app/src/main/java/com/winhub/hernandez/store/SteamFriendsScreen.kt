@@ -102,6 +102,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.delay
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // Status-dot colours — recognisable Steam-ish presence palette, held explicitly so both themes match.
 // `internal` so the in-app friend-profile screen (SteamFriendProfileScreen.kt) reuses the exact palette.
@@ -163,7 +165,7 @@ private fun FriendsTopBar(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.social_hub_configs_back),
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -171,7 +173,7 @@ private fun FriendsTopBar(
             Spacer(Modifier.width(8.dp))
         }
         Text(
-            text = "Friends",
+            text = I18n.s(R.string.xmb_tab_friends),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(start = 4.dp),
@@ -182,7 +184,7 @@ private fun FriendsTopBar(
             IconButton(onClick = onAdd) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = "Add friend",
+                    contentDescription = I18n.s(R.string.xmb_fr_add),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -191,7 +193,7 @@ private fun FriendsTopBar(
             IconButton(onClick = onRefresh) {
                 Icon(
                     imageVector = Icons.Filled.Refresh,
-                    contentDescription = "Refresh",
+                    contentDescription = I18n.s(R.string.social_hub_refresh),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -199,7 +201,7 @@ private fun FriendsTopBar(
         IconButton(onClick = onSettings) {
             Icon(
                 imageVector = Icons.Filled.Settings,
-                contentDescription = "Friends & chat settings",
+                contentDescription = I18n.s(R.string.ui_friends_chat_settings),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
@@ -345,7 +347,7 @@ internal fun FriendsOffState(onBack: () -> Unit, showBackButton: Boolean = true)
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                text = "Steam friends & chat is off",
+                text = I18n.s(R.string.ui_steam_friends_chat_is_off),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 textAlign = TextAlign.Center,
@@ -360,7 +362,7 @@ internal fun FriendsOffState(onBack: () -> Unit, showBackButton: Boolean = true)
             )
             Spacer(Modifier.height(20.dp))
             Button(onClick = { SteamFriendsStore.setSocialEnabled(ctx, true) }) {
-                Text("Enable")
+                Text(I18n.s(R.string.enable))
             }
         }
     }
@@ -376,7 +378,7 @@ private fun EmptyChatState() {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Select a friend to start chatting",
+            text = I18n.s(R.string.ui_select_a_friend_to_start_chatting),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
@@ -475,7 +477,7 @@ internal fun FriendsListBody(
                 value = filter,
                 onValueChange = { filter = it },
                 singleLine = true,
-                placeholder = { Text("Search friends") },
+                placeholder = { Text(I18n.s(R.string.ui_search_friends)) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -682,7 +684,7 @@ private fun IncomingRequestRow(
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = "Wants to add you",
+                text = I18n.s(R.string.xmb_fr_wants_to_add),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
@@ -691,10 +693,10 @@ private fun IncomingRequestRow(
         }
         Spacer(Modifier.width(8.dp))
         Button(onClick = onAccept, contentPadding = PaddingValues(horizontal = 14.dp, vertical = 4.dp)) {
-            Text("Accept")
+            Text(I18n.s(R.string.xmb_fr_accept))
         }
         TextButton(onClick = onDecline, contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)) {
-            Text("Decline")
+            Text(I18n.s(R.string.xmb_fr_decline))
         }
     }
 }
@@ -722,7 +724,7 @@ private fun OutgoingRequestRow(
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = "Pending — request sent",
+                text = I18n.s(R.string.ui_pending_request_sent),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
@@ -731,7 +733,7 @@ private fun OutgoingRequestRow(
         }
         Spacer(Modifier.width(8.dp))
         TextButton(onClick = onCancel, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-            Text("Cancel")
+            Text(I18n.s(R.string.cancel))
         }
     }
 }
@@ -793,7 +795,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
     // scroll column in portrait, two side-by-side columns in landscape). Pure layout, no logic change.
     val friendCodeSection: @Composable () -> Unit = {
         Column {
-            Text("Your Friend Code", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(I18n.s(R.string.ui_your_friend_code), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(8.dp))
             Row(
                 modifier = Modifier
@@ -820,7 +822,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                     },
                     enabled = myCode != null,
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                ) { Text("Copy") }
+                ) { Text(I18n.s(R.string.copy)) }
             }
             Text(
                 "Share this so friends can add you — it's your Steam account number.",
@@ -833,21 +835,21 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
 
     val addByCodeSection: @Composable () -> Unit = {
         Column {
-            Text("Add by Friend Code", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(I18n.s(R.string.ui_add_by_friend_code), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(
                     value = codeInput,
                     onValueChange = { codeInput = it },
                     singleLine = true,
-                    placeholder = { Text("Enter a Friend Code") },
+                    placeholder = { Text(I18n.s(R.string.ui_enter_a_friend_code)) },
                     modifier = Modifier.weight(1f),
                 )
                 Spacer(Modifier.width(8.dp))
                 Button(
                     onClick = { SteamFriendsStore.addByFriendCode(codeInput); codeInput = "" },
                     enabled = codeInput.isNotBlank(),
-                ) { Text("Add") }
+                ) { Text(I18n.s(R.string.add)) }
             }
             Text(
                 "Enter a friend's code to send a request. A full SteamID64 works too.",
@@ -860,13 +862,13 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
 
     val searchSection: @Composable () -> Unit = {
         Column {
-            Text("Search Steam by name", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(I18n.s(R.string.xmb_fr_add_search_label), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(8.dp))
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
                 singleLine = true,
-                placeholder = { Text("Search for a player…") },
+                placeholder = { Text(I18n.s(R.string.xmb_fr_add_search_hint)) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 trailingIcon = { if (searching) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) },
                 modifier = Modifier.fillMaxWidth(),
@@ -914,7 +916,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
 
     val quickInviteSection: @Composable () -> Unit = {
         Column {
-            Text("Or send a Quick Invite", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(I18n.s(R.string.ui_or_send_a_quick_invite), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(8.dp))
             val link = inviteLink
             if (link == null) {
@@ -944,7 +946,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                                 Toast.makeText(ctx, "Invite link copied", Toast.LENGTH_SHORT).show()
                             },
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                        ) { Text("Copy") }
+                        ) { Text(I18n.s(R.string.copy)) }
                     }
                     Spacer(Modifier.height(8.dp))
                     TextButton(onClick = { generateInvite() }, enabled = !generating) {
@@ -978,7 +980,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.People, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(10.dp))
-                Text("Add a friend")
+                Text(I18n.s(R.string.xmb_fr_add_title))
             }
         },
         text = {
@@ -1025,7 +1027,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
     )
 }
 
@@ -1074,9 +1076,9 @@ private fun SearchResultRow(result: SteamUserSearch.Result, state: ResultState, 
         }
         Spacer(Modifier.width(8.dp))
         when (state) {
-            ResultState.ADD -> Button(onClick = onAdd, contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)) { Text("Add") }
-            ResultState.PENDING -> TextButton(onClick = {}, enabled = false) { Text("Pending") }
-            ResultState.FRIEND -> TextButton(onClick = {}, enabled = false) { Text("Friend") }
+            ResultState.ADD -> Button(onClick = onAdd, contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)) { Text(I18n.s(R.string.add)) }
+            ResultState.PENDING -> TextButton(onClick = {}, enabled = false) { Text(I18n.s(R.string.ui_pending)) }
+            ResultState.FRIEND -> TextButton(onClick = {}, enabled = false) { Text(I18n.s(R.string.ui_friend)) }
         }
     }
 }
@@ -1098,19 +1100,19 @@ private fun ConnectState() {
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Not connected to Steam",
+            text = I18n.s(R.string.xmb_fr_disconnected_title),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Connect to Steam to see your friends and chat.",
+            text = I18n.s(R.string.ui_connect_to_steam_to_see_your_friends_and_chat),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(20.dp))
         Button(onClick = { runCatching { SteamRepository.getInstance().reconnectNow() } }) {
-            Text("Connect")
+            Text(I18n.s(R.string.xmb_fr_connect))
         }
     }
 }
@@ -1127,7 +1129,7 @@ private fun LoadingState() {
         CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(16.dp))
         Text(
-            text = "Loading friends…",
+            text = I18n.s(R.string.ui_loading_friends),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -1390,7 +1392,7 @@ fun ChatScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.social_hub_configs_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
@@ -1425,7 +1427,7 @@ fun ChatScreen(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (messages.isEmpty()) {
                 Text(
-                    text = "No messages yet. Say hello!",
+                    text = I18n.s(R.string.ui_no_messages_yet_say_hello),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center),
@@ -1492,7 +1494,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Image,
-                        contentDescription = "Send image",
+                        contentDescription = I18n.s(R.string.ui_send_image),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -1528,7 +1530,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.ContentPaste,
-                        contentDescription = "Paste from clipboard",
+                        contentDescription = I18n.s(R.string.ui_paste_from_clipboard),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -1536,7 +1538,7 @@ fun ChatScreen(
                     value = draft,
                     onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Message") },
+                    placeholder = { Text(I18n.s(R.string.xmb_fr_message)) },
                     maxLines = 4,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                     keyboardActions = KeyboardActions(onSend = {
@@ -1560,7 +1562,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = "Send",
+                        contentDescription = I18n.s(R.string.social_hub_send),
                         tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1620,7 +1622,7 @@ internal fun MessageBubble(
                 if (imageUrl != null) {
                     AsyncImage(
                         model = imageUrl,
-                        contentDescription = "Image",
+                        contentDescription = I18n.s(R.string.ui_image),
                         modifier = Modifier
                             .widthIn(max = 240.dp)
                             .heightIn(max = 240.dp)

@@ -59,6 +59,7 @@ import com.winhub.hernandez.core.PresetOverrides
 import com.winhub.hernandez.core.PresetScope
 import org.json.JSONArray
 import java.util.Locale
+import com.winhub.hernandez.util.I18n
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PresetEditDialog — the Compose replacement for Box64EditPresetDialog and
@@ -257,7 +258,7 @@ internal fun PresetEditDialog(
                         ) {
                             Icon(
                                 Icons.Outlined.HelpOutline,
-                                contentDescription = "About this preset",
+                                contentDescription = I18n.s(R.string.ui_about_this_preset),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -298,7 +299,7 @@ internal fun PresetEditDialog(
                     // Built-in names come from string resources, so only custom presets rename.
                     enabled = !isBuiltIn,
                     singleLine = true,
-                    label = { Text("Name") },
+                    label = { Text(I18n.s(R.string.name)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(Modifier.height(12.dp))
@@ -380,7 +381,7 @@ internal fun PresetEditDialog(
                 }
                 onSaved()
                 onDismiss()
-            }) { Text("Save") }
+            }) { Text(I18n.s(R.string.save)) }
         },
         dismissButton = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -404,9 +405,9 @@ internal fun PresetEditDialog(
                         }
                         modified = false
                         onSaved()
-                    }) { Text("Reset", color = MaterialTheme.colorScheme.error) }
+                    }) { Text(I18n.s(R.string.reset), color = MaterialTheme.colorScheme.error) }
                 }
-                TextButton(onClick = onDismiss) { Text("Cancel") }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
             }
         },
     )

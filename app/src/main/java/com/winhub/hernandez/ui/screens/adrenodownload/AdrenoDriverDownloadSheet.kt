@@ -69,6 +69,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.contents.AdrenotoolsManager
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -100,13 +102,13 @@ fun AdrenoDriverDownloadSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Download GPU drivers",
+                    text = I18n.s(R.string.ui_download_gpu_drivers),
                     style = MaterialTheme.typography.titleLarge,
                     color = cs.onSurface,
                     modifier = Modifier.weight(1f),
                 )
                 IconButton(onClick = { showManage = true }) {
-                    Icon(Icons.Filled.Tune, contentDescription = "Manage sources", tint = cs.onSurfaceVariant)
+                    Icon(Icons.Filled.Tune, contentDescription = I18n.s(R.string.ui_manage_sources), tint = cs.onSurfaceVariant)
                 }
             }
 
@@ -260,7 +262,7 @@ fun ColumnScope.AdrenoDriverListPane(
         if (!downloading) {
             OutlinedAlertDialog(
                 onDismissRequest = { pendingEntry = null },
-                title = { Text("Download driver?") },
+                title = { Text(I18n.s(R.string.ui_download_driver)) },
                 text = {
                     Column {
                         Text(entry.displayName, style = MaterialTheme.typography.bodyMedium)
@@ -317,10 +319,10 @@ fun ColumnScope.AdrenoDriverListPane(
                                     },
                                 )
                         }
-                    }) { Text("Download") }
+                    }) { Text(I18n.s(R.string.wrapper_catalog_download)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { pendingEntry = null }) { Text("Cancel") }
+                    TextButton(onClick = { pendingEntry = null }) { Text(I18n.s(R.string.cancel)) }
                 },
             )
         } else {
@@ -415,7 +417,7 @@ private fun EntryRow(
             )
             Icon(
                 imageVector = Icons.Filled.CloudDownload,
-                contentDescription = "Download",
+                contentDescription = I18n.s(R.string.wrapper_catalog_download),
                 tint = cs.primary,
                 modifier = Modifier.size(22.dp),
             )
@@ -449,14 +451,14 @@ private fun EntryRow(
                     overflow = TextOverflow.Ellipsis,
                 )
                 if (installed) {
-                    Text("Installed", style = MaterialTheme.typography.labelSmall, color = installedBlue)
+                    Text(I18n.s(R.string.wrapper_installed), style = MaterialTheme.typography.labelSmall, color = installedBlue)
                 }
             }
             if (installed) {
-                Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
+                Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed), tint = installedBlue,
                     modifier = Modifier.size(20.dp))
             } else {
-                Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
+                Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary,
                     modifier = Modifier.size(22.dp))
             }
         }
@@ -509,7 +511,7 @@ private fun CenteredError(message: String, onRetry: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
             )
             Spacer(Modifier.height(12.dp))
-            TextButton(onClick = onRetry) { Text("Retry") }
+            TextButton(onClick = onRetry) { Text(I18n.s(R.string.ui_retry)) }
         }
     }
 }
@@ -540,10 +542,10 @@ private fun ManageSourcesDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Manage driver sources") },
+        title = { Text(I18n.s(R.string.ui_manage_driver_sources)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Text("Built-in sources", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_built_in_sources), style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
                 DriverSources.builtIns().forEach { src ->
                     Row(
@@ -562,7 +564,7 @@ private fun ManageSourcesDialog(
                     Spacer(Modifier.height(12.dp))
                     Divider(color = cs.outline.copy(alpha = 0.3f))
                     Spacer(Modifier.height(8.dp))
-                    Text("Custom sources", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
+                    Text(I18n.s(R.string.ui_custom_sources), style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
                     Spacer(Modifier.height(4.dp))
                     custom.forEach { src ->
                         Row(
@@ -574,7 +576,7 @@ private fun ManageSourcesDialog(
                                 Text(feedSummary(src), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                             }
                             IconButton(onClick = { mutate { store.removeCustom(src.name) } }) {
-                                Icon(Icons.Filled.Delete, contentDescription = "Remove", tint = cs.error)
+                                Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = cs.error)
                             }
                         }
                     }
@@ -583,12 +585,12 @@ private fun ManageSourcesDialog(
                 Spacer(Modifier.height(12.dp))
                 Divider(color = cs.outline.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
-                Text("Add source", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_add_source), style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
                 Spacer(Modifier.height(6.dp))
                 OutlinedTextField(
                     value = newName,
                     onValueChange = { newName = it },
-                    label = { Text("Name") },
+                    label = { Text(I18n.s(R.string.name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -602,7 +604,7 @@ private fun ManageSourcesDialog(
                     OutlinedTextField(
                         value = newUrl,
                         onValueChange = { newUrl = it },
-                        label = { Text("JSON URL") },
+                        label = { Text(I18n.s(R.string.ui_json_url)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -618,7 +620,7 @@ private fun ManageSourcesDialog(
                     OutlinedTextField(
                         value = newRepo,
                         onValueChange = { newRepo = it },
-                        label = { Text("Repo") },
+                        label = { Text(I18n.s(R.string.ui_repo)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -648,12 +650,12 @@ private fun ManageSourcesDialog(
                 }) {
                     Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Add source")
+                    Text(I18n.s(R.string.ui_add_source))
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Done") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) }
         },
     )
 }

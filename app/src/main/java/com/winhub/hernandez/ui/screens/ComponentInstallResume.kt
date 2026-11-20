@@ -22,6 +22,8 @@ import com.winhub.hernandez.ui.findActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Shown on app startup when an installer-based component install is mid-flight (its previous
@@ -119,7 +121,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
                         null -> {}
                     }
                 }
-            }) { Text("Finish") }
+            }) { Text(I18n.s(R.string.ui_finish)) }
         },
         dismissButton = {
             TextButton(enabled = !busy, onClick = {
@@ -129,7 +131,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
                 // No success toast (nothing was installed); Tier 2 still re-opens the shortcut so they
                 // can retry from its recommendations.
                 consumeReturn(null)
-            }) { Text("Discard", color = Color(0xFFE57373)) } // intentional: destructive-action red
+            }) { Text(I18n.s(R.string.ui_discard), color = Color(0xFFE57373)) } // intentional: destructive-action red
         },
     )
 }

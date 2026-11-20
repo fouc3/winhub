@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 private val TWO_PI = (2.0 * PI).toFloat()
 
@@ -64,7 +66,7 @@ internal fun Modifier.liquidBackdrop(glows: Boolean = true): Modifier {
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(24_000, easing = LinearEasing)),
-        label = "liquidPhase",
+        label = I18n.s(R.string.ui_liquidphase),
     )
     val primary = Deck.primary
     val secondary = Deck.secondary

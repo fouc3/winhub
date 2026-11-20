@@ -8,6 +8,8 @@ import androidx.compose.runtime.setValue
 import com.winhub.hernandez.perf.PerfRootApplier
 import com.winhub.hernandez.perf.PerformanceSettings
 import com.winhub.hernandez.ui.rememberLiveReadouts
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck-native replacement for [com.winhub.hernandez.ui.PerformanceDashboardDialogPerGame]. Same state
@@ -58,7 +60,7 @@ internal fun DeckPerformanceDialog(
         }
     }
 
-    DeckConfigDialog(title = "Performance", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.performance), onDismiss = onDismiss) {
         DeckConfigNote("Per-game preset · saved on OK · honored at launch")
 
         DeckConfigPanel("Device") {
@@ -68,7 +70,7 @@ internal fun DeckPerformanceDialog(
         }
 
         DeckConfigChipGrid(
-            label = "Power profile",
+            label = I18n.s(R.string.ui_power_profile),
             chips = listOf("Off", "Battery", "Balanced", "Performance", "Turbo")
                 .map { Triple(it, profile == it, { applyProfile(it) }) },
         )
@@ -122,7 +124,7 @@ internal fun DeckPerformanceDialog(
             bigCores != globalOf("preferBigCores") ||
             PerfRootApplier.ROOT_KEYS.any { rootValue(it) != globalOf(it) }
         if (anyOverride) {
-            DeckButton(text = "Reset all to global", primary = false, onClick = onResetAll)
+            DeckButton(text = I18n.s(R.string.ui_reset_all_to_global), primary = false, onClick = onResetAll)
         }
     }
 

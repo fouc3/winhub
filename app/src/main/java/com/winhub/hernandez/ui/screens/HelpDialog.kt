@@ -21,6 +21,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 // ─────────────────────────────────────────────────────────────────────────────
 // HelpDialog — a plain, CENTERED Compose dialog for the per-field "?" help. Uses
@@ -69,7 +71,7 @@ internal fun HelpTextDialog(text: String, onDismiss: () -> Unit) {
                     .verticalScroll(rememberScrollState())
             )
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Got it") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_got_it)) } }
     )
 }
 
@@ -90,6 +92,6 @@ internal fun HelpDialog(textResId: Int, onDismiss: () -> Unit) {
                     .verticalScroll(rememberScrollState())
             )
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Got it") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_got_it)) } }
     )
 }

@@ -53,6 +53,8 @@ import org.webrtc.audio.JavaAudioDeviceModule
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Native Xbox Cloud Gaming player (opt-in, Android 10+): Google's WebRTC library instead of the web page, the
@@ -624,7 +626,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                                 else "Overlay: " + listOf("", "FPS only", "Basic", "Detailed", "Full")[current.statsLevel] + ", " + current.statsLayout,
                                 entries[5], { lastMainEntry = 5 }) { menuPage = "overlay-native" }
                             XboxMenuEntry("Leave", "End the stream", entries[6], { lastMainEntry = 6 }) { finish() }
-                            androidx.compose.material3.Text("Guide twice opens this menu; Back or Guide closes it.",
+                            androidx.compose.material3.Text(I18n.s(R.string.ui_guide_twice_opens_this_menu_back_or_guide_closes_it),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                         }
@@ -639,7 +641,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                                     else -> "Show the stream's own frames only"
                                 }, choices[i]) { current = current.copy(frameGen = mode); setFrameGen(mode) }
                             }
-                            if (!lsfg) androidx.compose.material3.Text("LSFG appears here once Lossless.dll is imported in Settings.",
+                            if (!lsfg) androidx.compose.material3.Text(I18n.s(R.string.ui_lsfg_appears_here_once_lossless_dll_is_imported_in_se),
                                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
                                 modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                             if (current.zeroCopy) androidx.compose.material3.Text(

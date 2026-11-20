@@ -74,6 +74,8 @@ import com.winhub.hernandez.core.LogcatCapture
 import com.winhub.hernandez.ui.theme.DangerRed
 import kotlinx.coroutines.launch
 import java.io.File
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * App Settings → Log Manager. One place for everything logging: where logs go, which ones are
@@ -239,7 +241,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     }
                 }
                 LogToggle("Folder for each game", perGame,
-                    hint = "Each game keeps its own folder",
+                    hint = I18n.s(R.string.ui_each_game_keeps_its_own_folder),
                     onInfo = { info = "Folder for each game" to LogCopy.PER_GAME }) {
                     perGame = it; putBool(LogLocation.PREF_PER_GAME, it); refreshTick++
                 }
@@ -249,7 +251,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             SectionLabel("What to record")
             LogCard {
                 LogToggle("Wine debug", wineDebug,
-                    hint = "Slows games down — for diagnosing a problem",
+                    hint = I18n.s(R.string.ui_slows_games_down_for_diagnosing_a_problem),
                     onInfo = { info = "Wine debug" to LogCopy.WINE }) {
                     wineDebug = it; putBool("enable_wine_debug", it)
                 }
@@ -261,32 +263,32 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     )
                 }
                 LogToggle("Box64 / FEXCore", box64Logs,
-                    hint = "Slows games down at higher verbosity",
+                    hint = I18n.s(R.string.ui_slows_games_down_at_higher_verbosity),
                     onInfo = { info = "Box64 / FEXCore" to LogCopy.BOX64 }) {
                     box64Logs = it; putBool("enable_box64_logs", it)
                 }
                 LogToggle("DXVK & VKD3D", dxvkLogs,
-                    hint = "Safe to leave on — mostly written at startup",
+                    hint = I18n.s(R.string.ui_safe_to_leave_on_mostly_written_at_startup),
                     onInfo = { info = "DXVK & VKD3D" to LogCopy.DXVK }) {
                     dxvkLogs = it; putBool("enable_dxvk_logs", it)
                 }
                 LogToggle("Controller input", controllerLogs,
-                    hint = "For controls that don't work — written when the game exits",
+                    hint = I18n.s(R.string.ui_for_controls_that_don_t_work_written_when_the_game_ex),
                     onInfo = { info = "Controller input" to LogCopy.CONTROLLER }) {
                     controllerLogs = it; putBool(com.winhub.hernandez.core.ControllerLog.PREF_KEY, it)
                 }
                 LogToggle("SteamLite (Steam client)", steamLite,
-                    hint = "Only when a game launches through SteamLite",
+                    hint = I18n.s(R.string.ui_only_when_a_game_launches_through_steamlite),
                     onInfo = { info = "SteamLite (Steam client)" to LogCopy.STEAMLITE }) {
                     steamLite = it; putBool("enable_steamlite_logs", it)
                 }
                 LogToggle("Android logcat", logcat,
-                    hint = "WinHub's own output only",
+                    hint = I18n.s(R.string.ui_winhub_own_output_only),
                     onInfo = { info = "Android logcat" to LogCopy.LOGCAT }) {
                     logcat = it; putBool("enable_logcat", it)
                 }
                 LogToggle("Crash reports", crashReports,
-                    hint = "Nothing runs until something crashes",
+                    hint = I18n.s(R.string.ui_nothing_runs_until_something_crashes),
                     onInfo = { info = "Crash reports" to LogCopy.CRASH }) {
                     crashReports = it; putBool("enable_crash_reports", it)
                 }
@@ -298,7 +300,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     if (ExitReasonReporter.isSupported()) "Exit reasons (auto-save on launch)"
                     else "Exit reasons (needs Android 11+)",
                     exitAutosave,
-                    hint = "Records native crashes without root",
+                    hint = I18n.s(R.string.ui_records_native_crashes_without_root),
                     enabled = ExitReasonReporter.isSupported(),
                     onInfo = { info = "Exit reasons" to LogCopy.EXIT_REASONS }) {
                     exitAutosave = it; putBool(ExitReasonReporter.PREF_AUTOSAVE, it)
@@ -309,7 +311,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // library, downloads, cloud, achievements, social, presence) runs on libblsteam.so and
                 // the engine's steam_engine.txt is folded into the SteamLite log bundle (Phase 3b-4).
                 LogToggle("Native Steam engine (restart required)", rustSteamEngine,
-                    hint = "On by default — the whole Steam session (sign-in, library, downloads, cloud, achievements, friends) runs on the native engine; its log joins the SteamLite bundle. Off = legacy Java engine",
+                    hint = I18n.s(R.string.ui_on_by_default_the_whole_steam_session_sign_in_library),
                     onInfo = { info = "Rust Steam engine" to LogCopy.RUST_ENGINE }) {
                     rustSteamEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlSteamEngineFlag.PREF_KEY, it)
@@ -318,19 +320,19 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // Read at download start by each store's Java manager, so a flip applies to the next
                 // download — no restart. OFF = that manager's existing Java fetch loop.
                 LogToggle("Rust engine: Epic downloads", rustEpicEngine,
-                    hint = "On by default — Epic file chunks are fetched by the native engine; takes effect on the next download. Off = Java downloader",
+                    hint = I18n.s(R.string.ui_on_by_default_epic_file_chunks_are_fetched_by_the_nat),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustEpicEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlStoreEngineFlag.PREF_KEY_EPIC, it)
                 }
                 LogToggle("Rust engine: GOG downloads", rustGogEngine,
-                    hint = "On by default — GOG depot chunks are fetched by the native engine; takes effect on the next download. Off = Java downloader",
+                    hint = I18n.s(R.string.ui_on_by_default_gog_depot_chunks_are_fetched_by_the_nat),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustGogEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlStoreEngineFlag.PREF_KEY_GOG, it)
                 }
                 LogToggle("Rust engine: Amazon downloads", rustAmazonEngine,
-                    hint = "On by default — Amazon Games files are fetched by the native engine; takes effect on the next download. Off = Java downloader",
+                    hint = I18n.s(R.string.ui_on_by_default_amazon_games_files_are_fetched_by_the_n),
                     onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }) {
                     rustAmazonEngine = it
                     putBool(com.winhub.hernandez.store.blsteam.BlStoreEngineFlag.PREF_KEY_AMAZON, it)
@@ -396,7 +398,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             LogCard {
                 Box {
                     PickRow(
-                        label = "Keep last",
+                        label = I18n.s(R.string.ui_keep_last),
                         sub = if (keepLast == 0) "No history — each run replaces the last"
                               else "$keepLast launch${if (keepLast == 1) "" else "es"} per game",
                         action = "▾",
@@ -424,18 +426,18 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Total size", color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
+                        Text(I18n.s(R.string.ui_total_size), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp)
                         Text(
                             LogInventory.humanBytes(LogInventory.totalBytes(entries)) +
                                 " across ${entries.size} " + if (entries.size == 1) "folder" else "folders",
                             color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp
                         )
                     }
-                    Text("Browse", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp,
+                    Text(I18n.s(R.string.browse), color = MaterialTheme.colorScheme.primary, fontSize = 12.sp,
                         modifier = Modifier
                             .clickable { browseDir = LogLocation.resolveLogDir(context) }
                             .padding(horizontal = 8.dp, vertical = 6.dp))
-                    Text("Clear all", color = DangerRed, fontSize = 12.sp,
+                    Text(I18n.s(R.string.ui_clear_all), color = DangerRed, fontSize = 12.sp,
                         modifier = Modifier
                             .clickable { if (entries.isNotEmpty()) confirmClearAll = true }
                             .padding(horizontal = 6.dp, vertical = 6.dp)
@@ -447,7 +449,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
             SectionLabel("Logs by game")
             if (entries.isEmpty()) {
                 LogCard {
-                    Text("No logs yet.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_no_logs_yet), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
             } else {
                 entries.forEach { e ->
@@ -533,7 +535,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     )
                 }
             },
-            confirmButton = { TextButton(onClick = { exitReport = null }) { Text("Close") } }
+            confirmButton = { TextButton(onClick = { exitReport = null }) { Text(I18n.s(R.string.wrapper_manager_close)) } }
         )
     }
 
@@ -576,7 +578,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             context, "Deleted $n file${if (n == 1) "" else "s"}",
                             android.widget.Toast.LENGTH_SHORT
                         ).show()
-                    }) { Text("Delete", color = DangerRed) }
+                    }) { Text(I18n.s(R.string.preset_action_delete), color = DangerRed) }
                 }
             },
             dismissButton = {
@@ -591,7 +593,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
         val count = remember(refreshTick) { entries.sumOf { LogInventory.deletableCount(it) } }
         OutlinedAlertDialog(
             onDismissRequest = { confirmClearAll = false },
-            title = { Text("Clear all logs?") },
+            title = { Text(I18n.s(R.string.ui_clear_all_logs)) },
             text = {
                 Text(
                     "Deletes $count log file${if (count == 1) "" else "s"} across ${entries.size} " +
@@ -610,15 +612,15 @@ fun LogManagerScreen(onClose: () -> Unit) {
                         context, "Deleted $n file${if (n == 1) "" else "s"}",
                         android.widget.Toast.LENGTH_SHORT
                     ).show()
-                }) { Text("Delete all", color = DangerRed) }
+                }) { Text(I18n.s(R.string.ui_delete_all), color = DangerRed) }
             },
-            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text(I18n.s(R.string.cancel)) } }
         )
     }
 
     info?.let { (title, body) -> PerfInfoDialog(title = title, body = body, onDismiss = { info = null }) }
     if (showExplainAll) {
-        PerfInfoDialog(title = "What each log is for", body = LogCopy.explainAll(),
+        PerfInfoDialog(title = I18n.s(R.string.ui_what_each_log_is_for), body = LogCopy.explainAll(),
             onDismiss = { showExplainAll = false })
     }
 }
@@ -757,7 +759,7 @@ private fun WineChannelGroup(
             // Static labels, not chips: a tap that silently deselected a channel from a summary
             // view would be a destructive action hidden behind a collapsed control.
             if (selected.isEmpty()) {
-                Text("None selected", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
+                Text(I18n.s(R.string.ui_none_selected), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                     modifier = Modifier.padding(vertical = 4.dp))
             } else {
                 FlowRow(
@@ -917,7 +919,7 @@ internal fun AllChannelsDialog(
             Column(modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp, vertical = 10.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("All Wine channels", style = MaterialTheme.typography.titleMedium)
+                        Text(I18n.s(R.string.ui_all_wine_channels), style = MaterialTheme.typography.titleMedium)
                         Text(
                             "${all.size} available · ${selected.size} on",
                             fontSize = 11.sp,
@@ -927,7 +929,7 @@ internal fun AllChannelsDialog(
                     FilterChip(
                         selected = showHelp,
                         onClick = { showHelp = !showHelp },
-                        label = { Text("What's this?", fontSize = 11.sp) },
+                        label = { Text(I18n.s(R.string.ui_what_this), fontSize = 11.sp) },
                         leadingIcon = {
                             Icon(Icons.Outlined.HelpOutline, null, modifier = Modifier.size(14.dp))
                         },
@@ -936,7 +938,7 @@ internal fun AllChannelsDialog(
                     FilterChip(
                         selected = selectedOnly,
                         onClick = { selectedOnly = !selectedOnly },
-                        label = { Text("On only", fontSize = 11.sp) },
+                        label = { Text(I18n.s(R.string.ui_on_only), fontSize = 11.sp) },
                     )
                     IconButton(onClick = onDismiss) {
                         Icon(Icons.Default.Close, "Close", tint = MaterialTheme.colorScheme.onSurface)
@@ -946,7 +948,7 @@ internal fun AllChannelsDialog(
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
-                    placeholder = { Text("Search", fontSize = 12.sp) },
+                    placeholder = { Text(I18n.s(R.string.ui_search), fontSize = 12.sp) },
                     singleLine = true,
                     textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp),
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),

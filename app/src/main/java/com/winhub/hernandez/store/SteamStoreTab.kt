@@ -49,6 +49,8 @@ import androidx.compose.ui.unit.dp
 import com.winhub.hernandez.ui.deck.rememberScreenScale
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * The **Store** tab — the storefront's new front door, replacing the old library-first landing.
@@ -205,7 +207,7 @@ fun SteamStoreTab(
                     contentAlignment = Alignment.Center,
                 ) {
                     StoreNotice(
-                        title = "Store browsing is unavailable",
+                        title = I18n.s(R.string.ui_store_browsing_is_unavailable),
                         body = "Steam's storefront feed didn't answer. Search still works, and " +
                             "everything you already own is in the Library tab.",
                         actionLabel = "Retry",
@@ -319,8 +321,8 @@ private fun StoreLandscape(
             if (data.newReleases.isEmpty() && data.specials.isEmpty()) {
                 item(key = "browse_empty") {
                     StoreNotice(
-                        title = "Nothing to browse right now",
-                        body = "Steam's new-releases and specials feeds came back empty.",
+                        title = I18n.s(R.string.ui_nothing_to_browse_right_now),
+                        body = I18n.s(R.string.ui_steam_new_releases_and_specials_feeds_came_back_empty),
                     )
                 }
             }
@@ -400,7 +402,7 @@ private fun StoreSearchField(
                 IconButton(onClick = onClear, modifier = Modifier.steamFocusRing(RoundedCornerShape(20.dp))) {
                     Icon(
                         Icons.Filled.Close,
-                        contentDescription = "Clear search",
+                        contentDescription = I18n.s(R.string.social_hub_search_clear),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -452,8 +454,8 @@ private fun StoreResults(
             ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
 
             results.isEmpty() -> StoreNotice(
-                title = "No matches",
-                body = "Nothing in Steam's catalog matched that. Try a shorter or different title.",
+                title = I18n.s(R.string.ui_no_matches),
+                body = I18n.s(R.string.ui_nothing_in_steam_catalog_matched_that_try_a_shorter_o),
             )
 
             // XMB home: the results as a grid of portrait covers.

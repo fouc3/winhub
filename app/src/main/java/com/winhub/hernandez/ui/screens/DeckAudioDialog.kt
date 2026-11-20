@@ -22,6 +22,8 @@ import com.winhub.hernandez.ui.components.PRESET_CUSTOM
 import com.winhub.hernandez.ui.components.effectiveConfigFor
 import com.winhub.hernandez.ui.components.latencyIsDirectBuffer
 import com.winhub.hernandez.ui.components.latencyUsedBy
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Deck-native replacement for [com.winhub.hernandez.ui.components.AudioSettingsDialog]. Same [AudioConfig]
@@ -44,12 +46,12 @@ internal fun DeckAudioSettingsDialog(
     val shown = effectiveConfigFor(cfg, driverId)
     val latencyUsed = latencyUsedBy(driverId)
 
-    DeckConfigDialog(title = "Audio settings", onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_audio_settings_2), onDismiss = onDismiss) {
         DeckConfigNote("Balance crackle-free vs low delay  ·  $scopeLabel")
         if (driverLabel.isNotBlank()) DeckConfigNote("Engine: $driverLabel")
 
         DeckConfigChipGrid(
-            label = "Preset",
+            label = I18n.s(R.string.preset),
             chips = AUDIO_PRESETS.map { Triple(it.name, cfg.preset == it.id, { cfg = it.cfg }) },
         )
 
@@ -58,8 +60,8 @@ internal fun DeckAudioSettingsDialog(
                 listOf("0" to "None", "1" to "Low lat.")
             else listOf("0" to "None", "1" to "Low lat.", "2" to "Power")
             DeckChoiceRow(
-                label = "Output mode",
-                hint = "AAudio performance mode",
+                label = I18n.s(R.string.ui_output_mode),
+                hint = I18n.s(R.string.ui_aaudio_performance_mode),
                 options = perfOpts,
                 selected = shown.perfMode.toString(),
                 onPick = { if (custom) cfg = cfg.copy(perfMode = it.toInt()) },
@@ -69,7 +71,7 @@ internal fun DeckAudioSettingsDialog(
             }
             if (directBuffer) {
                 DeckSliderRow(
-                    label = "Audio buffer",
+                    label = I18n.s(R.string.ui_audio_buffer),
                     hint = "≈${shown.latencyMsec + ANDROID_OUTPUT_MS} ms total · ${shown.latencyMsec} ms buffer" +
                         if (!latencyLive) "  · next launch" else "",
                     value = shown.latencyMsec.toFloat(),
@@ -79,7 +81,7 @@ internal fun DeckAudioSettingsDialog(
                 )
             } else {
                 DeckSliderRow(
-                    label = "Guest buffer",
+                    label = I18n.s(R.string.ui_guest_buffer),
                     hint = (if (!latencyUsed) "not used by ALSA — set the buffer rows below"
                             else "winepulse · ${shown.latencyMsec} ms") +
                         if (!latencyLive) "  · next launch" else "",
@@ -105,8 +107,8 @@ internal fun DeckAudioSettingsDialog(
             modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            DeckButton("Cancel", primary = false, onClick = onDismiss)
-            DeckButton("Save", primary = true) { onSave(cfg) }
+            DeckButton(I18n.s(R.string.cancel), primary = false, onClick = onDismiss)
+            DeckButton(I18n.s(R.string.save), primary = true) { onSave(cfg) }
         }
     }
 }

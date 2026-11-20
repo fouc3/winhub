@@ -132,6 +132,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.math.abs
 import kotlin.math.min
+import com.winhub.hernandez.util.I18n
 
 /** One game on the hub carousel: display art plus the launchable shortcut (null = featured art only). */
 internal data class HubEntry(
@@ -420,12 +421,12 @@ internal fun HubCarousel(
     ) {
         // One infinite clock for the selected cover's stroke: blue -> light blue, sliding around
         // the frame while the tile is focused.
-        val shimmer = rememberInfiniteTransition(label = "hubStroke")
+        val shimmer = rememberInfiniteTransition(label = I18n.s(R.string.ui_hubstroke))
         val strokePhase by shimmer.animateFloat(
             initialValue = 0f,
             targetValue = 1f,
             animationSpec = infiniteRepeatable(tween(durationMillis = 2600, easing = LinearEasing)),
-            label = "hubStrokePhase",
+            label = I18n.s(R.string.ui_hubstrokephase),
         )
         entries.forEachIndexed { index, entry ->
             val delta = index - current
@@ -434,7 +435,7 @@ internal fun HubCarousel(
 
             val scale by animateFloatAsState(
                 if (isSelected) 1.16f else 0.74f - 0.05f * min(distance, 3),
-                label = "hubScale",
+                label = I18n.s(R.string.ui_hubscale),
             )
             val rotY by animateFloatAsState(
                 when {
@@ -442,12 +443,12 @@ internal fun HubCarousel(
                     delta < 0 -> 42f - 6f * min(distance, 3)
                     else -> -42f + 6f * min(distance, 3)
                 },
-                label = "hubRot",
+                label = I18n.s(R.string.ui_hubrot),
             )
-            val translateX by animateFloatAsState(delta * 96f, label = "hubX")
+            val translateX by animateFloatAsState(delta * 96f, label = I18n.s(R.string.ui_hubx))
             val alphaAnim by animateFloatAsState(
                 if (isSelected) 1f else 0.82f - 0.15f * min(distance, 3),
-                label = "hubAlpha",
+                label = I18n.s(R.string.ui_hubalpha),
             )
 
             // Read in composition: the shimmer lambda draws with it, and a theme change must
@@ -576,12 +577,12 @@ internal fun DeckHubGamePage(
     val pageScale by animateFloatAsState(
         targetValue = if (pageIn) 1f else 0.9f,
         animationSpec = tween(240),
-        label = "hubPageScale",
+        label = I18n.s(R.string.ui_hubpagescale),
     )
     val pageAlpha by animateFloatAsState(
         targetValue = if (pageIn) 1f else 0f,
         animationSpec = tween(200),
-        label = "hubPageAlpha",
+        label = I18n.s(R.string.ui_hubpagealpha),
     )
     val pageFocus = remember { FocusRequester() }
     val playFocus = remember { FocusRequester() }
@@ -690,7 +691,7 @@ internal fun DeckHubGamePage(
                         modifier = Modifier.size(18.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Back", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.social_hub_configs_back), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
 
@@ -716,7 +717,7 @@ internal fun DeckHubGamePage(
                             .padding(14.dp),
                     ) {
                         Text(
-                            text = "ABOUT",
+                            text = I18n.s(R.string.ui_about),
                             color = DeckPalette.primary,
                             fontSize = 10.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -736,11 +737,11 @@ internal fun DeckHubGamePage(
                 Spacer(Modifier.height(18.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     HubGradientButton(
-                        text = "Play",
+                        text = I18n.s(R.string.retro_opt_play),
                         modifier = Modifier.focusRequester(playFocus),
                         onClick = onPlay,
                     )
-                    DeckButton("Settings", primary = false, onClick = onSettings)
+                    DeckButton(I18n.s(R.string.settings), primary = false, onClick = onSettings)
                 }
             }
         }
@@ -827,18 +828,18 @@ internal fun DeckAddModeMenu(onPick: (HubAddMode) -> Unit, onDismiss: () -> Unit
                 modifier = Modifier.padding(top = 2.dp, bottom = 16.dp),
             )
             DeckAddModeCard(
-                title = "Master Containers",
+                title = I18n.s(R.string.ui_master_containers),
                 desc = "Add it as a shortcut inside a container you already have.",
                 icon = Icons.Filled.Layers,
             ) { onPick(HubAddMode.MASTER) }
             Spacer(Modifier.height(10.dp))
             DeckAddModeCard(
-                title = "Cronos",
+                title = I18n.s(R.string.ui_cronos),
                 desc = "A fresh dedicated container built just for this game — one game, one container.",
                 icon = Icons.Filled.SportsEsports,
             ) { onPick(HubAddMode.CRONOS) }
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text("Cancel", color = DeckPalette.onSurfaceVariant)
+                Text(I18n.s(R.string.cancel), color = DeckPalette.onSurfaceVariant)
             }
         }
     }
@@ -940,7 +941,7 @@ internal fun HubConfirmDialog(
                     .verticalScroll(rememberScrollState()),
             ) {
                 Text(
-                    text = "Is the game correct?",
+                    text = I18n.s(R.string.ui_is_the_game_correct),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,
@@ -1025,7 +1026,7 @@ internal fun HubConfirmDialog(
                 } else {
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        text = "No container yet — create one in Containers first.",
+                        text = I18n.s(R.string.ui_no_container_yet_create_one_in_containers_first),
                         fontSize = 12.5.sp,
                         color = DeckPalette.error,
                     )
@@ -1059,7 +1060,7 @@ internal fun HubConfirmDialog(
                     Spacer(Modifier.height(10.dp))
                     if (hits.isEmpty()) {
                         Text(
-                            text = "No Steam matches — add it with the typed name.",
+                            text = I18n.s(R.string.ui_no_steam_matches_add_it_with_the_typed_name),
                             fontSize = 12.5.sp,
                             color = DeckPalette.onSurfaceVariant,
                         )
@@ -1092,7 +1093,7 @@ internal fun HubConfirmDialog(
                                     )
                                     Spacer(Modifier.width(10.dp))
                                     Text(
-                                        text = "Steam",
+                                        text = I18n.s(R.string.ui_steam),
                                         fontSize = 11.sp,
                                         color = DeckPalette.primary,
                                     )
@@ -1118,7 +1119,7 @@ internal fun HubConfirmDialog(
                             Spacer(Modifier.width(12.dp))
                         }
                         Text(
-                            text = "Steam match found ✓",
+                            text = I18n.s(R.string.ui_steam_match_found),
                             fontSize = 13.sp,
                             color = DeckPalette.primary,
                             fontWeight = FontWeight.SemiBold,
@@ -1133,7 +1134,7 @@ internal fun HubConfirmDialog(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     OutlinedButton(onClick = onDismiss) {
-                        Text("Cancel", color = DeckPalette.onBackground)
+                        Text(I18n.s(R.string.cancel), color = DeckPalette.onBackground)
                     }
                     Spacer(Modifier.width(10.dp))
                     HubGradientButton("Add") {
@@ -1304,7 +1305,7 @@ internal fun DeckLaunchMethodDialog(
                 modifier = Modifier.fillMaxWidth(),
             )
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text("Cancel", color = DeckPalette.onSurfaceVariant)
+                Text(I18n.s(R.string.cancel), color = DeckPalette.onSurfaceVariant)
             }
         }
     }
@@ -1541,8 +1542,8 @@ internal fun DeckGameMenu(
 ) {
     var shown by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { shown = true }
-    val menuScale by animateFloatAsState(if (shown) 1f else 0.88f, label = "gameMenuScale")
-    val menuAlpha by animateFloatAsState(if (shown) 1f else 0f, label = "gameMenuAlpha")
+    val menuScale by animateFloatAsState(if (shown) 1f else 0.88f, label = I18n.s(R.string.ui_gamemenuscale))
+    val menuAlpha by animateFloatAsState(if (shown) 1f else 0f, label = I18n.s(R.string.ui_gamemenualpha))
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Column(
             Modifier
@@ -1676,7 +1677,7 @@ internal fun DeckCronosReviewDialog(
             HubGradientButton("Settings are good", onClick = onKeep, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(8.dp))
             OutlinedButton(onClick = onEdit, modifier = Modifier.fillMaxWidth()) {
-                Text("Edit settings", color = DeckPalette.onSurfaceVariant)
+                Text(I18n.s(R.string.wrapper_edit_settings), color = DeckPalette.onSurfaceVariant)
             }
         }
     }

@@ -29,6 +29,7 @@ import com.winhub.hernandez.MainActivity
 import com.winhub.hernandez.R
 import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.ui.Screen
+import com.winhub.hernandez.util.I18n
 
 /**
  * Shared Compose add-to-shortcuts flow for the store activities (Steam today):
@@ -72,7 +73,7 @@ fun ContainerPickerDialog(
         text = {
             if (containers.isEmpty()) {
                 Text(
-                    text = "No containers yet — create one in the Containers screen first.",
+                    text = I18n.s(R.string.ui_no_containers_yet_create_one_in_the_containers_screen),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -123,7 +124,7 @@ fun ContainerPickerDialog(
         },
         confirmButton = {},
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
         },
     )
 }
@@ -138,19 +139,19 @@ fun AddResultDialog(
     if (result.success) {
         OutlinedAlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text("Added to Shortcuts") },
+            title = { Text(I18n.s(R.string.ui_added_to_shortcuts)) },
             text = { Text("\"${result.gameName}\" is ready in Shortcuts." + (result.note?.let { "\n\n$it" } ?: "")) },
             confirmButton = {
-                TextButton(onClick = onOpenShortcuts) { Text("Open Shortcuts") }
+                TextButton(onClick = onOpenShortcuts) { Text(I18n.s(R.string.ui_open_shortcuts)) }
             },
             dismissButton = {
-                TextButton(onClick = onDismiss) { Text("Close") }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_manager_close)) }
             },
         )
     } else {
         OutlinedAlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text("Couldn't add shortcut") },
+            title = { Text(I18n.s(R.string.ui_couldn_t_add_shortcut)) },
             text = { Text(result.message) },
             confirmButton = {
                 TextButton(onClick = onDismiss) { Text("OK") }

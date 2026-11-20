@@ -127,6 +127,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.floor
 import kotlin.math.max
+import com.winhub.hernandez.util.I18n
 
 // The retro library, laid out like the PC Home: every game of the consoles picked in Settings in one row of covers (the one under the
 // cursor larger) over the game's own background, its title and console under it, and the consoles as the filters in the strip below:
@@ -548,7 +549,7 @@ internal fun RetroLibraryScreen(onSwitchToPc: () -> Unit, focus: FocusRequester)
         }
         val backdropCover = rememberCover(focusedSystem, focusedGame, root, coverVersion)
         val backdropHero = rememberHero(focusedGame, coverVersion)
-        val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = "retroRootAlpha")
+        val rootAlpha by animateFloatAsState(if (nested) 0f else 1f, tween(260), label = I18n.s(R.string.ui_retrorootalpha))
 
         Box(
             Modifier
@@ -728,7 +729,7 @@ private fun RetroBackdrop(cover: Bitmap?, hero: Bitmap?, fadeFrom: Float, lift: 
         // The art blurs and dims as the options open (API 31+; below that only a stronger dim), so the options' text reads over any picture.
         XmbSteamBlurred(lift, blurs) {
             XmbHomeBackdrop(cover)
-            Crossfade(targetState = hero, animationSpec = tween(600), label = "retroHero") { h ->
+            Crossfade(targetState = hero, animationSpec = tween(600), label = I18n.s(R.string.ui_retrohero)) { h ->
                 if (h != null) {
                     Image(
                         bitmap = remember(h) { h.asImageBitmap() },
@@ -908,7 +909,7 @@ private fun RetroTitle(
         targetState = game,
         contentKey = { it?.path },
         transitionSpec = { xmbTitleTransition() },
-        label = "retroTitle",
+        label = I18n.s(R.string.ui_retrotitle),
         modifier = Modifier
             .offset(0.dp, sl.titleY.dp - ss.dp(XMB_STEAM_TITLE_NUDGE))
             .width(sl.titleW.dp)
@@ -980,8 +981,8 @@ private fun RetroOptions(
             key("$i:${a.label}") {
                 val d = i - actIdx
                 val vis = d in 0 until sl.nVis
-                val y by animateFloatAsState(d * rowH + if (d > 0) extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = "retroRowY")
-                val rowAlpha by animateFloatAsState(if (vis) 1f else 0f, tween(220), label = "retroRowA")
+                val y by animateFloatAsState(d * rowH + if (d > 0) extra else 0f, spring(dampingRatio = 0.9f, stiffness = 500f), label = I18n.s(R.string.ui_retrorowy))
+                val rowAlpha by animateFloatAsState(if (vis) 1f else 0f, tween(220), label = I18n.s(R.string.ui_retrorowa))
                 val src = remember { MutableInteractionSource() }
                 Box(
                     Modifier

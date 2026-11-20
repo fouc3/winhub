@@ -45,6 +45,8 @@ import com.winhub.hernandez.store.download.StoreSection
 import com.winhub.hernandez.store.download.StoreStatusText
 import com.winhub.hernandez.ui.theme.WinlatorTheme
 import org.json.JSONObject
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * Detail page for a catalog title the user does NOT own — the Steam detail layout
@@ -234,7 +236,7 @@ private fun CatalogDetailScreen(
                     }
                 }
                 Spacer(Modifier.height(16.dp))
-                StoreSection(title = "About this page") {
+                StoreSection(title = I18n.s(R.string.ui_about_this_page)) {
                     StoreStatusText(
                         "This title isn't in your $storeLabel library yet. Get it on the store page and it " +
                             "will show up under Library with install, DLC and cloud-save controls.",

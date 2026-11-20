@@ -31,6 +31,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 /**
  * An "add" button the user can long-press and slide along the bottom of the screen.
@@ -79,7 +81,7 @@ fun BoxScope.DraggableAddButton(
     // 1f lands at the visual left — the same spot Alignment.BottomEnd used to give RTL users.
     val dirSign = if (LocalLayoutDirection.current == LayoutDirection.Rtl) -1f else 1f
 
-    val lift by animateFloatAsState(if (dragging) 1.12f else 1f, label = "fabLift")
+    val lift by animateFloatAsState(if (dragging) 1.12f else 1f, label = I18n.s(R.string.ui_fablift))
 
     fun commit() {
         dragging = false

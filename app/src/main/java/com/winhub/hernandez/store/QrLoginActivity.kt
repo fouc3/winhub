@@ -40,6 +40,8 @@ import androidx.compose.ui.graphics.Color as ComposeColor
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.winhub.hernandez.ui.theme.WinlatorTheme
+import com.winhub.hernandez.util.I18n
+import com.winhub.hernandez.R
 
 class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
 
@@ -100,7 +102,7 @@ class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
         connectWaitListener = null
         reachState = REACH_UNKNOWN
 
-        statusText = "Connecting to Steam\u2026"
+        statusText = I18n.s(R.string.ui_connecting_to_steam_u2026)
         isLoading = true
         isError = false
         qrBitmap = null
@@ -115,19 +117,19 @@ class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
                     when {
                         event == "Reachable" -> {
                             reachState = REACH_OK
-                            runOnUiThread { statusText = "Connecting to Steam CM server\u2026"; isLoading = true; isError = false }
+                            runOnUiThread { statusText = I18n.s(R.string.ui_connecting_to_steam_cm_server_u2026); isLoading = true; isError = false }
                         }
                         event == "SteamBlocked" -> {
                             reachState = REACH_BLOCKED
                             runOnUiThread {
-                                statusText = "Steam is blocked on your network.\nA VPN is required."
+                                statusText = I18n.s(R.string.ui_steam_is_blocked_on_your_network_na_vpn_is_required)
                                 isLoading = false; isError = true; showRetry = true
                             }
                         }
                         event == "NoInternet" -> {
                             reachState = REACH_NO_NET
                             runOnUiThread {
-                                statusText = "No internet connection."
+                                statusText = I18n.s(R.string.ui_no_internet_connection)
                                 isLoading = false; isError = true; showRetry = true
                             }
                         }
@@ -153,7 +155,7 @@ class QrLoginActivity : ComponentActivity(), SteamQrAuthManager.QrAuthListener {
     }
 
     override fun onQrReady(challengeUrl: String) {
-        statusText = "Scan with the Steam app on your phone"
+        statusText = I18n.s(R.string.ui_scan_with_the_steam_app_on_your_phone)
         isLoading = false
         isError = false
         showQr(challengeUrl)
@@ -230,13 +232,13 @@ private fun QrLoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Sign in via QR Code",
+            text = I18n.s(R.string.ui_sign_in_via_qr_code),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Open the Steam app \u2192 \u2630 \u2192 Sign in via QR code",
+            text = I18n.s(R.string.ui_open_the_steam_app_u2192_u2630_u2192_sign_in_via_qr_c),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -253,7 +255,7 @@ private fun QrLoginScreen(
             if (qrBitmap != null) {
                 Image(
                     bitmap = qrBitmap!!.asImageBitmap(),
-                    contentDescription = "QR Code",
+                    contentDescription = I18n.s(R.string.ui_qr_code),
                     modifier = Modifier.size(260.dp),
                 )
             } else {
@@ -318,12 +320,12 @@ private fun QrLoginScreen(
                 onClick = onRetry,
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 shape = RoundedCornerShape(8.dp),
-            ) { Text("Retry") }
+            ) { Text(I18n.s(R.string.ui_retry)) }
             Spacer(Modifier.height(8.dp))
         }
 
         TextButton(onClick = onCancel) {
-            Text("\u2190 Back")
+            Text(I18n.s(R.string.ui_u2190_back))
         }
     }
 }
