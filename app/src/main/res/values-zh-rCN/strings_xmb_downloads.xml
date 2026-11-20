@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<resources>
+    <string name="xmb_dl_section_active">正在下载</string>
+    <string name="xmb_dl_section_queued">排队中</string>
+    <string name="xmb_dl_section_stopped">已停止</string>
+    <string name="xmb_dl_section_installed">已安装</string>
+    <string name="xmb_dl_empty_title">暂无下载</string>
+    <string name="xmb_dl_empty_body">你从商店下载的游戏会显示在这里。</string>
+    <string name="xmb_dl_status_downloading">下载中 · %1$d%%</string>
+    <string name="xmb_dl_status_paused">已暂停 · %1$d%%</string>
+    <string name="xmb_dl_status_queued">等待轮次 · #%1$d</string>
+    <string name="xmb_dl_status_installed">已安装</string>
+    <string name="xmb_dl_status_update">已安装 · 有可用更新</string>
+    <string name="xmb_dl_status_failed">下载失败</string>
+    <string name="xmb_dl_status_failed_why">失败：%1$s</string>
+    <string name="xmb_dl_status_cancelled">已取消</string>
+    <string name="xmb_dl_act_pause">暂停</string>
+    <string name="xmb_dl_act_resume">继续</string>
+    <string name="xmb_dl_act_cancel">取消</string>
+    <string name="xmb_dl_act_cancel_sure">取消它吗？</string>
+    <string name="xmb_dl_act_details">详情</string>
+    <string name="xmb_dl_act_start_next">开始下一个</string>
+    <string name="xmb_dl_act_launch">添加到游戏</string>
+    <string name="xmb_dl_act_uninstall">卸载</string>
+    <string name="xmb_dl_act_uninstall_sure">要卸载吗？</string>
+    <string name="xmb_dl_act_dismiss">忽略</string>
+    <string name="xmb_dl_added_to_games">%1$s 已添加到你的游戏</string>
+</resources>

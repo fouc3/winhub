@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<resources>
+    <item>自定义</item>
+    <item>包装器原版</item>
+    <item>封装 + 兼容 + bcn</item>
+    <item>系统</item>
+    <item>DirectAudio（实验性）</item>
+    <item>键盘</item>
+    <item>鼠标</item>
+    <item>游戏手柄</item>
+    <item>无</item>
+    <item>无</item>
+    <item>0（默认）</item>
+    <item>0（默认）</item>
+    <item>立即</item>
+    <item>宽松</item>
+    <item>自动</item>
+    <item>不透明</item>
+    <item>无</item>
+    <item>部分</item>
+    <item>自动</item>
+    <item>软件</item>
+    <item>0（默认）</item>
+    <item>内置（Wine）</item>
+    <item>原生（Windows）</item>
+    <item>浅色</item>
+    <item>深色</item>
+    <item>图像</item>
+    <item>纯色</item>
+    <item>普通（加载所有服务）</item>
+    <item>基础（仅加载必要服务）</item>
+    <item>激进（启动时停止服务）</item>
+    <item>自定义（逐项选择服务）</item>
+    <item>无</item>
+    <item>R1（右肩键）</item>
+    <item>R2（右扳机）</item>
+    <item>L1（左肩键）</item>
+    <item>L2（左扳机）</item>
+    <item>开始</item>
+    <item>选择</item>
+    <item>R3（右摇杆按下）</item>
+    <item>L3（左摇杆按下）</item>
+    <item>触摸板</item>
+    <item>模拟触摸屏</item>
+    <item>直接触摸</item>
+    <item>否</item>
+    <item>顺时针</item>
+    <item>逆时针</item>
+    <item>上下颠倒</item>
+    <item>自动（用于触摸板）</item>
+    <item>否</item>
+    <item>于</item>
+    <item>原生</item>
+    <item>已缩放</item>
+    <item>精确</item>
+    <item>自定义</item>
+    <item>无操作</item>
+    <item>切换软键盘</item>
+    <item>切换附加按键栏</item>
+    <item>打开偏好设置</item>
+    <item>释放指针与键盘捕获</item>
+    <item>切换全屏</item>
+    <item>重启 Activity</item>
+    <item>调低音量</item>
+    <item>音量增大</item>
+    <item>发送媒体操作</item>
+    <item>自动</item>
+    <item>竖屏</item>
+    <item>反向竖屏</item>
+    <item>反向横屏</item>
+    <item>无</item>
+</resources>

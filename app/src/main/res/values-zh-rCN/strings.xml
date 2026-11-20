@@ -1,0 +1,2396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<resources>
+    <string name="run">运行</string>
+    <string name="edit">编辑</string>
+    <string name="remove">移除</string>
+    <string name="add">添加</string>
+    <string name="shortcuts">游戏</string>
+    <string name="containers">容器</string>
+    <string name="input_controls">输入控制</string>
+    <string name="no_items_to_display">暂无内容可显示</string>
+    <string name="new_container">新建容器</string>
+    <string name="edit_container">编辑容器</string>
+    <string name="new_container_defaults">新建容器默认值</string>
+    <string name="new_container_defaults_saved">已保存新建容器的默认值</string>
+    <string name="new_container_defaults_save_failed">无法保存默认值</string>
+    <string name="container_saved">容器已保存</string>
+    <string name="container_save_failed">无法保存容器 — 存储写入失败</string>
+    <string name="winhub_ping_no_updates">未发现需要的更新。</string>
+    <string name="winhub_ping_notice_sub">资源已检查 — 全部为最新。</string>
+    <string name="winhub_update_available">有可用更新</string>
+    <string name="winhub_update_available_sub">版本 %1$s 已就绪。打开 设置 › 更新器 进行安装。</string>
+    <string name="winhub_ping_throttled">GitHub 正在限流 — 请稍后再试</string>
+    <string name="winhub_ping_failed">无法检查更新 — 网络未连接</string>
+    <string name="reset_to_app_defaults">恢复应用默认值</string>
+    <string name="creating_container">正在创建容器…</string>
+    <string name="removing_container">正在移除容器…</string>
+    <string name="duplicating_container">正在复制容器…</string>
+    <string name="installing_system_files">正在安装系统文件…</string>
+    <string name="updating_system_files">正在更新系统文件…</string>
+    <string name="starting_up">正在启动…</string>
+    <string name="unable_to_install_system_files">无法安装系统文件</string>
+    <string name="keyboard">键盘</string>
+    <string name="mouse">鼠标</string>
+    <string name="binding_filter_all">全部</string>
+    <string name="binding_filter_keyboard">键盘</string>
+    <string name="binding_filter_mouse">鼠标</string>
+    <string name="binding_filter_gamepad">手柄</string>
+    <string name="toggle_fullscreen">切换全屏</string>
+    <string name="exit">退出</string>
+    <string name="no_control_element_selected">未选择控制元素</string>
+    <string name="scale">缩放</string>
+    <string name="dead_zone">死区</string>
+    <string name="shape">形状</string>
+    <string name="type">类型</string>
+    <string name="binding">绑定</string>
+    <string name="binding_up">上绑定</string>
+    <string name="binding_right">右绑定</string>
+    <string name="binding_down">下绑定</string>
+    <string name="binding_left">左绑定</string>
+    <string name="detection_area">检测区域</string>
+    <string name="area_width">区域宽度</string>
+    <string name="area_height">区域高度</string>
+    <string name="stick_radius">摇杆半径</string>
+    <string name="mouse_sensitivity">鼠标灵敏度</string>
+    <string name="area_appearance">区域外观</string>
+    <string name="independent_area_appearance">使用独立颜色和不透明度</string>
+    <string name="area_color">区域颜色</string>
+    <string name="area_opacity">区域不透明度</string>
+    <string name="grid_rows">行数</string>
+    <string name="grid_cols">列数</string>
+    <string name="overlay_opacity">叠加层不透明度</string>
+    <string name="editing_in_game">游戏中编辑</string>
+    <string name="save_and_close">保存并关闭</string>
+    <string name="control_type_android_keyboard">Android 键盘</string>
+    <string name="change_control_type">更改控件类型？</string>
+    <string name="change_control_type_warning">更改类型将重置绑定、组合键、文本、图标及类型专属设置。</string>
+    <string name="confirm_change">更改</string>
+    <string name="controls_accent_color">控件强调色</string>
+    <string name="profile">配置</string>
+    <string name="name">名称</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="untitled">未命名</string>
+    <string name="no_profile_selected">未选择配置</string>
+    <string name="no_profile_found">未找到配置</string>
+    <string name="select_control_type">选择控件类型</string>
+    <string name="control_type_button">按钮</string>
+    <string name="control_type_d_pad">方向键</string>
+    <string name="control_type_range_button">范围按钮</string>
+    <string name="control_type_stick">摇杆</string>
+    <string name="control_type_trackpad">触控板</string>
+    <string name="control_type_dynamic_stick">动态摇杆</string>
+    <string name="control_type_mouse_area">鼠标区域</string>
+    <string name="control_type_button_grid">按钮网格</string>
+    <string name="control_type_expandable_button">可展开按钮</string>
+    <string name="expandable_button_settings">可展开按钮</string>
+    <string name="expandable_layout">布局</string>
+    <string name="expandable_layout_radial">径向</string>
+    <string name="expandable_layout_list">列表</string>
+    <string name="expandable_direction">列表方向</string>
+    <string name="child_button_count">子按钮</string>
+    <string name="child_button_label">按钮 %1$d</string>
+    <string name="direction_up">上</string>
+    <string name="direction_right">右</string>
+    <string name="direction_down">下</string>
+    <string name="direction_left">左</string>
+    <string name="control_shape_circle">圆形</string>
+    <string name="control_shape_rectangle">矩形</string>
+    <string name="control_shape_rounded_rectangle">圆角矩形</string>
+    <string name="control_shape_square">方形</string>
+    <string name="control_range_a_z">A 到 Z</string>
+    <string name="control_range_0_9">0 到 9</string>
+    <string name="control_range_f1_f12">F1 到 F12</string>
+    <string name="control_range_numpad_0_9">小键盘 0 到 9</string>
+    <string name="set_background_image">设置背景图片</string>
+    <string name="select_background_image">选择背景图片</string>
+    <string name="select_icon_image">选择图标图片</string>
+    <string name="clear_background">清除背景</string>
+    <string name="browse_files">浏览文件</string>
+    <string name="pick_via_system">通过系统选择…</string>
+    <string name="background_image_set">背景图片已设置</string>
+    <string name="background_cleared">背景已清除</string>
+    <string name="unable_to_load_image">无法加载图片</string>
+    <string name="opacity_percent">不透明度：%1$d%%</string>
+    <string name="binding_setup_title">绑定 — %1$s</string>
+    <string name="binding_text_value">字符或数字</string>
+    <string name="binding_selector">操作选择器</string>
+    <string name="set_binding">设置</string>
+    <string name="add_to_combo">添加到组合</string>
+    <string name="combo_bindings">组合绑定</string>
+    <string name="mouse_binding_priority">优先使用鼠标绑定</string>
+    <string name="mouse_binding_priority_description">当此控件显示时，禁用与之对应的触摸点击。</string>
+    <string name="binding_slot_label">绑定 %1$d</string>
+    <string name="fill_qwerty">填充：QWERTY</string>
+    <string name="fill_function_keys">填充：F1–F12</string>
+    <string name="fill_numpad">填充：小键盘</string>
+    <string name="hold_key">按住按键（激活期间保持按下）</string>
+    <string name="button_grid">按钮网格</string>
+    <string name="cell_shape">单元格形状</string>
+    <string name="grid_spacing">按钮间距</string>
+    <string name="grid_multitouch">多点触控</string>
+    <string name="custom_icons">自定义图标</string>
+    <string name="tint_custom_icon">用强调色着色自定义图标</string>
+    <string name="use_custom_icon_as_button">将自定义图标用作按钮</string>
+    <string name="icon_content_description">图标 %1$d</string>
+    <string name="long_press_custom_icon_to_delete">长按未使用的自定义图标即可删除。</string>
+    <string name="delete_custom_icon">删除自定义图标</string>
+    <string name="delete_custom_icon_confirmation">自定义图标在各控制配置之间共享。要删除这个未使用的图标吗？</string>
+    <string name="custom_icon_not_deleted">未删除自定义图标</string>
+    <string name="unable_to_check_custom_icon_usage">无法确认该图标是否正在使用，未做任何更改。</string>
+    <string name="unable_to_delete_custom_icon">无法删除该图标。它可能已被使用，或在其他地方被移除了。</string>
+    <string name="clear">清除</string>
+    <string name="no_items_to_display_saves">从你的某个容器注册一个存档目录即可开始！</string>
+    <string name="do_you_want_to_remove_this_profile">要移除此配置吗？</string>
+    <string name="do_you_want_to_duplicate_this_profile">要复制此配置吗？</string>
+    <string name="do_you_want_to_duplicate_this_preset">要复制此预设吗？</string>
+    <string name="do_you_want_to_remove_this_container">要移除此容器吗？</string>
+    <string name="do_you_want_to_duplicate_this_container">要复制此容器吗？</string>
+    <string name="do_you_want_to_remove_this_shortcut">要移除此快捷方式吗？</string>
+    <string name="do_you_want_to_remove_this_controller">要移除此控制器吗？</string>
+    <string name="do_you_want_to_remove_this_wine_version">要移除此 Wine 版本吗？</string>
+    <string name="do_you_want_to_remove_this_preset">要移除此预设吗？</string>
+    <string name="do_you_want_to_end_this_process">要结束此进程吗？</string>
+    <string name="enabled">已启用</string>
+    <string name="disabled">已禁用</string>
+    <string name="container">容器</string>
+    <string name="screen_size">屏幕尺寸</string>
+    <string name="help_screen_size"><![CDATA[
+        <b>屏幕尺寸</b><br /><br />
+        游戏运行所使用的分辨率。越低越快，但画面越不清晰；越高越清晰，但负载也越重。随后画面会被缩放以适配你的屏幕，具体方式由游戏内侧边菜单中的缩放模式（例如 SGSR HQ）决定。<br /><br />
+        新建容器会默认采用与你屏幕形状匹配的尺寸——16:9 及更宽的屏幕为 1280x720，16:10 为 1280x800，4:3 为 1280x960——这样画面就能铺满屏幕。<br /><br />
+        <b>示例：</b>大型游戏卡顿 → 试试 960x544 或 854x480 配合 SGSR HQ。1080p 屏幕上的轻量游戏 → 用 1920x1080 获得最佳清晰度。4:3 掌机 → 1280x960。
+    ]]></string>
+    <string name="new_environment_variable">新建环境变量</string>
+    <string name="environment_variables">环境变量</string>
+    <string name="value">值</string>
+    <string name="processor_affinity">处理器亲和性</string>
+    <string name="processor_affinity_32_bit_apps">处理器亲和性（32 位应用）</string>
+    <string name="cursor_speed">光标速度</string>
+    <string name="relative_mouse_movement">相对鼠标移动</string>
+    <string name="toggle_switch">切换开关</string>
+    <string name="input_controls_editor_swipeable">可滑动</string>
+    <string name="swipe_tab">滑动</string>
+    <string name="swipe_buttons">按键</string>
+    <string name="swipe_dpad">方向键</string>
+    <string name="swipe_sticks">摇杆</string>
+    <string name="profile_exported_to">配置已导出至</string>
+    <string name="unable_to_import_profile">无法导入配置</string>
+    <string name="import_control_profile">导入 ICP / ICpx</string>
+    <string name="export_control_profile_icpx">导出 ICpx</string>
+    <string name="export_control_profile_icp_legacy">导出旧版 ICP</string>
+    <string name="export_control_profile_icp_tooltip">旧版 ICP 仅尽力兼容。新指令、分组、组合键和自定义图标在旧版应用中可能被忽略或丢失。</string>
+    <string name="select_control_profile">选择 ICP 或 ICpx 配置</string>
+    <string name="wine_configuration">Wine 配置</string>
+    <string name="registry_keys">注册表键</string>
+    <string name="csmt">CSMT（命令流多线程）</string>
+    <string name="gpu_name">GPU 名称</string>
+    <string name="offscreen_rendering_mode">离屏渲染模式</string>
+    <string name="strict_shader_math">严格着色器运算</string>
+    <string name="video_memory_size">显存大小</string>
+    <string name="show_fps">显示 FPS 计数器</string>
+    <string name="none">无</string>
+    <string name="custom_text">自定义文本</string>
+    <string name="icon">图标</string>
+    <string name="touchpad_help">触控板帮助</string>
+    <string name="touchpad_help_mouse_left_click_title">鼠标左键单击</string>
+    <string name="touchpad_help_mouse_left_click_description">单指轻点</string>
+    <string name="touchpad_help_mouse_right_click_title">鼠标右键单击</string>
+    <string name="touchpad_help_mouse_right_click_description">单指轻点，再用另一根手指轻点</string>
+    <string name="touchpad_help_mouse_scroll_wheel_title">鼠标滚轮</string>
+    <string name="touchpad_help_mouse_scroll_wheel_description">双指轻点并移动</string>
+    <string name="touchpad_help_main_menu_title">主菜单</string>
+    <string name="touchpad_help_main_menu_description">四指轻点</string>
+    <string name="duplicate">复制</string>
+    <string name="about">关于</string>
+    <string name="credits_and_third_party_apps">致谢与第三方应用</string>
+    <string name="graphics_driver">显卡驱动</string>
+    <string name="audio_driver">音频驱动</string>
+    <string name="loading">加载中…</string>
+    <string name="press_any_button_on_your_controller">请按下控制器上的任意按键</string>
+    <string name="bindings">绑定</string>
+    <string name="dxwrapper">DX 封装层</string>
+    <string name="mouse_warp_override">鼠标指针锁定覆盖</string>
+    <string name="renderer">渲染器</string>
+    <string name="settings">设置</string>
+    <string name="exec_arguments">启动参数</string>
+    <string name="win_components">Win 组件</string>
+    <string name="drives">驱动器</string>
+    <string name="range">范围</string>
+    <string name="enable">启用</string>
+    <string name="disable">禁用</string>
+    <string name="force">强制</string>
+    <string name="installed_wine">已安装的 Wine</string>
+    <string name="install_wine">安装 Wine</string>
+    <string name="arch">架构</string>
+    <string name="version">版本</string>
+    <string name="dxvk_version">DXVK 版本</string>
+    <string name="vegas_config_loglevel_envvar_note">⚠ 日志级别（DXVK_LOG_LEVEL）必须设置为容器环境变量——VEGAS 会忽略配置文件中现有的该项（dxvk.logLevel / DXVK_LOG_LEVEL）。</string>
+    <string name="vkd3d_version">VKD3D 版本</string>
+    <string name="unable_to_install_wine">无法安装 Wine</string>
+    <string name="unable_to_remove_this_wine_version">无法移除此 Wine 版本</string>
+    <string name="wine_version">Wine 版本</string>
+    <string name="removing_wine">正在移除 Wine…</string>
+    <string name="preparing_installation">正在准备安装…</string>
+    <string name="finishing_installation">正在完成安装…</string>
+    <string name="storage_info">存储信息</string>
+    <string name="drive_c">驱动器 C：</string>
+    <string name="cache">缓存</string>
+    <string name="total">总计</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="estimated_used_space">预计已用空间</string>
+    <string name="advanced">高级</string>
+    <string name="system">系统</string>
+    <string name="box64_preset">Box64 预设</string>
+    <string name="box64_version">Box64 版本</string>
+    <string name="letter">盘符</string>
+    <string name="target_path">目标路径</string>
+    <string name="use_dri3_extension">使用 DRI3 扩展</string>
+    <string name="width">宽度</string>
+    <string name="height">高度</string>
+    <string name="old">旧</string>
+    <string name="_new">新</string>
+    <string name="task_manager">任务管理器</string>
+    <string name="process_name">进程名</string>
+    <string name="memory">内存</string>
+    <string name="end_process">结束进程</string>
+    <string name="new_task">新建任务</string>
+    <string name="processes">进程</string>
+    <string name="orientation">屏幕方向</string>
+    <string name="horizontal">横向</string>
+    <string name="vertical">纵向</string>
+    <string name="open_file">打开文件</string>
+    <string name="download_file">下载文件</string>
+    <string name="do_you_want_to_download_the_selected_profiles">要下载所选的配置吗？</string>
+    <string name="downloading_file">正在下载文件…</string>
+    <string name="unable_to_load_profile_list">无法加载配置列表</string>
+    <string name="copy">复制</string>
+    <string name="installed_version">已安装版本</string>
+    <string name="unable_to_download_file">无法下载文件</string>
+    <string name="stability">稳定性</string>
+    <string name="compatibility">兼容性</string>
+    <string name="intermediate">中等</string>
+    <string name="performance">性能</string>
+    <string name="performance_tso">性能 (TSO)</string>
+    <string name="performance_mali">性能 (Mali)</string>
+    <string name="extreme">极限</string>
+    <string name="extreme_2">极限-2</string>
+    <string name="fex_extreme_wn">极限-wn</string>
+    <string name="fex_extreme_tso_wn">极限 (TSO)-wn</string>
+    <string name="fex_extreme_gn">极限-gn</string>
+    <string name="fex_performance_x87_full">性能 (full x87)</string>
+    <string name="bcn_layer_fast">更快的 BCn 层（Fcharan 构建）</string>
+    <string name="help_bcn_layer_fast"><![CDATA[
+        <b>更快的 BCn 层</b><br /><br />
+        改用 Fcharan 构建的 leegao BCn 纹理层（来自 WinlatorMali 1.2，2026-10-22），替代内置版本。作者表示它在相同内存占用下加载纹理更快。<br /><br />
+        如果 Mali GPU 上纹理长时间不出现，或游戏在加载时卡顿，可以试试。若纹理出错或游戏崩溃，请重新关闭。此构建不会用到 ETC2 / ASTC 转码选项。仅适用于 Mali GPU；其他 GPU 上不会有任何变化。<br /><br />
+        致谢：Fcharan（GunaCharanTeja，WinlatorMali）与 leegao（bcn_layer，MIT）。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec"><![CDATA[
+        动态重编译器 —— Box64 的核心。它把游戏的 x86 代码一次性翻译成 ARM 代码，
+        之后复用这份翻译结果。<br /><br />
+        <b>0</b> ：逐条解释执行每条指令。结果正确，但慢很多倍，实际上无法游玩。仅用于调试。<br />
+        <b>1</b> ：翻译并缓存。正是它让游戏能跑到可用的速度。（默认）
+        <br /><br /><b>何时更改：</b>游玩时永远不要关闭它。它只用于诊断疑似的翻译错误：如果游戏在 1 下行为异常、在 0 下正常，那么问题出在重编译器而不是游戏。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_sep"><![CDATA[
+        CALL/RET 的次级入口点。让 Box64 能跳进它已经翻译过的代码块中间，
+        而不必另建一份几乎相同的副本。<br /><br />
+        <b>0</b> ：每个代码块只有一个入口点。重复的代码块更多，占用内存也更多。<br />
+        <b>1</b> ：增加次级入口点。重复更少，速度略快。（默认）<br />
+        <b>2</b> ：更加激进。<br /><br />
+        仅在 DYNAREC_CALLRET 开启时生效。
+        <br /><br /><b>何时更改：</b>保持默认即可。只有在你已为加壳或带 DRM 保护的可执行文件关闭 CALLRET 时才值得调低，因为两者是配合起作用的。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_noarch"><![CDATA[
+        Box64 为每个已翻译代码块保留多少记账信息。正是这些信息让它能
+        察觉代码或内存的变化并正确地重新翻译。<br /><br />
+        <b>0</b> ：全部保留。最安全。（默认）<br />
+        <b>1</b> ：裁减一部分。内存占用更少。<br />
+        <b>2</b> ：大幅裁减。内存最省，也最容易出问题。<br /><br />
+        <b>何时更改：</b>只有在内存吃紧时才调高 —— 它是用正确性换内存。如果游戏原本在同一预设下运行正常、之后开始崩溃，请先调回 0。]]></string>
+    <string name="box64_env_var_help__dynarec_volatile_metadata"><![CDATA[
+        64 位 Windows 程序可以携带易变元数据：由编译器精确标出哪些内存
+        访问不得重排。Box64 能读取它，只在游戏真正需要的地方强制执行严格顺序，而不是到处强制。<br /><br />
+        <b>0</b> ：忽略它。<br />
+        <b>1</b> ：使用它。通常比一刀切的 STRONGMEM 更快，同时保持正确。（默认）<br /><br />
+        仅适用于带该元数据构建的 64 位 Windows 游戏。
+        <br /><br /><b>何时更改：</b>保持开启 —— 它没有额外代价，对不带该元数据构建的游戏也毫无影响。关闭它只适合用来排查它是否掩盖了另一个顺序问题。
+        ]]></string>
+    <string name="box64_env_var_help__dynacache"><![CDATA[
+        是否在多次运行之间把已翻译的代码块保留在磁盘上，让下次启动时直接预热。<br /><br />
+        <b>0</b> ：关闭。每次启动都重新翻译。（默认）<br />
+        <b>1</b> / <b>2</b> ：逐级提高的缓存级别。启动更快，首次卡顿更少，
+        代价是占用磁盘空间。<br /><br />
+        游戏更新后如果出现异常行为，请清理容器缓存。
+        <br /><br /><b>何时更改：</b>如果游戏每次都要花很长时间预热，或每次启动都在相同位置卡顿，就打开它。游戏更新后要清理容器缓存，因为过期的缓存会导致异常行为。
+        ]]></string>
+    <string name="box64_env_var_help__aes"><![CDATA[
+        AES-NI，硬件加密指令。游戏、DRM 和反作弊大量使用它们。<br /><br />
+        <b>0</b> ：告诉游戏 CPU 不支持 AES。任何用到它的程序都会退回缓慢的软件
+        加密，或改走另一条代码路径。<br />
+        <b>1</b> ：声明支持 AES 并映射到 ARM 的等价指令，因此能以接近原生的
+        速度运行。（默认）<br /><br />
+        只有在游戏误判 CPU 并拒绝启动时才关闭。
+        <br /><br /><b>何时更改：</b>保持开启 —— 它映射到真实的 ARM 指令，几乎不花代价。只有在游戏误判 CPU 并拒绝启动时才关闭。
+        ]]></string>
+    <string name="box64_env_var_help__pclmulqdq"><![CDATA[
+        无进位乘法 —— 加密和校验和代码使用的一种专用指令，常与
+        AES 配合使用。<br /><br />
+        <b>0</b> ：隐藏它。调用方会退回较慢的软件例程。<br />
+        <b>1</b> ：声明支持并映射到 ARM 的等价指令。（默认）
+        <br /><br /><b>何时更改：</b>保持开启。它只对做大量加密或校验和计算的游戏有影响，隐藏它会让加载和校验明显变慢。
+        ]]></string>
+    <string name="box64_env_var_help__shaext"><![CDATA[
+        SHA 扩展——硬件 SHA-1 与 SHA-256 哈希运算，用于文件校验、存档
+        完整性检查与 DRM。<br /><br />
+        <b>0</b>：隐藏它。哈希计算会退回软件实现，速度变慢。<br />
+        <b>1</b>：对外声明并映射到 ARM 的等效指令。（默认）
+        <br /><br /><b>何时调整：</b>保持开启。隐藏它会让任何在启动时校验自身文件的游戏变慢，因为每一次哈希都要退回软件计算。
+        ]]></string>
+    <string name="box64_env_var_help__sse42"><![CDATA[
+        SSE4.2——字符串与文本处理指令，外加硬件 CRC32。<br /><br />
+        <b>0</b>：隐藏它。部分新游戏会在启动时检测 SSE4.2，没有就拒绝运行。<br />
+        <b>1</b>：对外声明。（默认）<br /><br />
+        除非某个游戏确实因此表现异常，否则保持开启。
+        <br /><br /><b>何时调整：</b>保持开启。多款新游戏会在启动阶段检测 SSE4.2，缺失时直接退出，往往只给出含糊的报错，甚至一句话都没有。
+        ]]></string>
+    <string name="box64_env_var_help__sse_flushto0"><![CDATA[
+        在 SSE 数学运算中如何处理非规格化数——即极小的浮点数。<br /><br />
+        <b>0</b>：完整的 IEEE 行为并记录异常标志。结果正确，但只要游戏产生非规格化数就会变慢。（默认）<br />
+        <b>1</b>：把非规格化数直接清零，这本来也是多数游戏引擎的要求。速度更快，但可能极轻微地改变物理或音频结果。
+        <br /><br /><b>何时调整：</b>物理或音频运算繁重、会不断产生非规格化数的游戏，设为 1 可以提速。如果物理或声音的表现与预期有细微差异，就改回 0。
+        ]]></string>
+    <string name="box64_env_var_help__x87_no80bits"><![CDATA[
+        x87 是旧的浮点单元，以 80 位扩展精度工作，ARM 没有对应的实现，
+        只能由 Box64 进行模拟。<br /><br />
+        <b>0</b>：模拟完整的 80 位精度。准确但慢。<br />
+        <b>1</b>：改用普通的 64 位双精度浮点。快得多，快速预设选用的就是这个。<br /><br />
+        做精确运算的老游戏——物理、模拟、飞行模型——在 1 下可能出现数值漂移或表现异常。
+        <br /><br /><b>何时调整：</b>新游戏几乎不碰 x87，保持 1 即可。老式模拟类游戏——飞行模拟、赛车物理、数值庞大的策略游戏——请设为 0，这类游戏累积的精度损失会在长时间游玩后表现为漂移。
+        ]]></string>
+    <string name="box64_env_var_help__cputype"><![CDATA[
+        Box64 向游戏报告的 CPU 厂商。<br /><br />
+        <b>0</b>：Intel（默认）<br />
+        <b>1</b>：AMD<br /><br />
+        一些游戏、DRM 和反作弊会按厂商走不同的代码分支，个别甚至在其中一种上直接拒绝运行。只有某个具体游戏需要时才值得改动。
+        <br /><br /><b>何时调整：</b>只有某个具体游戏需要时才改动。一些游戏与反作弊会按厂商走不同代码分支，个别甚至在其中一种上完全无法运行。
+        ]]></string>
+    <string name="box64_env_var_help__unity"><![CDATA[
+        把进程标记为 Unity 游戏，让 Box64 应用 Unity 专用的兼容处理，主要针对其 Mono 与 IL2CPP 运行时以及它们处理线程的方式。<br /><br />
+        <b>0</b>：关闭（默认）<br />
+        <b>1</b>：开启<br /><br />
+        如果 Unity 游戏在启动时崩溃或卡在加载界面，可以试试这一项。
+        <br /><br /><b>何时调整：</b>如果 Unity 游戏在启动时崩溃或卡在加载界面，就打开它。对其他游戏它不起作用，所以专门跑 Unity 游戏的容器可以放心一直开着。
+        ]]></string>
+    <string name="fexcore_env_var_help__maxinst"><![CDATA[
+        FEX 打包进单个翻译块的最大客户机指令数。<br /><br />
+        块越大运行越快，因为 FEX 能一次优化更多游戏代码，而块与块之间的跳转同样要花时间。但块越大编译越久、占用内存也越多，数值过大时新代码首次执行可能出现卡顿。<br /><br />
+        <b>5000</b> 是默认值，几乎适合所有情况。只有在想省内存或缓解启动卡顿时才需要调低。
+        <br /><br /><b>何时调整：</b>保持 5000。想省内存，或者游戏首次执行到新代码时卡顿明显、你更想换取更小更快的编译，就调低它。
+        ]]></string>
+    <string name="fexcore_env_var_help__smcchecks"><![CDATA[
+        FEX 监视自修改代码的严密程度——自修改代码即程序在运行时写入或改写自己的指令。FEX 必须察觉到，否则它会一直运行那段早已变化的过时翻译代码。<br /><br />
+        <b>none</b>：不做检查。最快，极限预设采用此值。会破坏任何在运行时生成代码的东西：Java 与 .NET 运行时、部分启动器以及大多数 DRM。<br />
+        <b>mtrack</b>：跟踪对存放翻译代码的内存页的写入。均衡的默认值。<br />
+        <b>full</b>：彻底检查。最慢也最安全——Denuvo 预设采用此值。<br /><br />
+        如果某个游戏在性能预设下能运行、在极限预设下不行，这就是第一个该改回来的项。
+        <br /><br /><b>何时调整：</b>如果游戏在性能预设下能跑、在极限预设下不行，这就是第一个该改回来的项。受 Denuvo 保护的游戏请设为 full，否则它根本不会启动。
+        ]]></string>
+    <string name="fexcore_env_var_help__dynamicl1cacheincreasecountheuristic"><![CDATA[
+        动态 L1 块缓存增长的积极程度。<br /><br />
+        L1 缓存保存最近用过的翻译块。缓存填满时，FEX 要么扩容，要么开始丢弃之后很可能还要用到的块。这个数值就是扩容前能承受多大压力：<b>越低越早扩容</b>，用内存换取少一次重新翻译。<br /><br />
+        默认 <b>250</b>。仅在 DYNAMICL1CACHE 开启时才有效果。
+        <br /><br /><b>何时调整：</b>如果繁忙场景中出现卡顿且内存还有余量，就调低。内存紧张的设备则调高。除非 DYNAMICL1CACHE 已开启，否则它完全不起作用。
+        ]]></string>
+    <string name="fexcore_env_var_help__dynamicl1cachedecreasecountheuristic"><![CDATA[
+        动态 L1 块缓存收缩回收的积极程度。<br /><br />
+        经过一段繁忙时期（例如关卡加载、大范围场景切换）之后，缓存可能远大于
+        游戏当前所需。这个数值决定它在交还内存之前等待多久：
+        <b>值越高，内存占用得越久</b>，可避免反复收缩与再扩张。<br /><br />
+        默认 <b>50</b>。仅在 DYNAMICL1CACHE 开启时生效。
+        <br /><br /><b>何时调整：</b>如果在关卡加载后不久出现卡顿，通常说明缓存刚收缩又不得不重新扩张，此时可调高。调低则更早交还内存。除非 DYNAMICL1CACHE 开启，否则此设置完全无效。
+        ]]></string>
+    <string name="box64_preset_help__stability"><![CDATA[<b>稳定</b> —— 最大程度保证正确性。完整模拟 CPU 标志位、不启用快速数学运算、完整 80 位 x87 精度且不合并块。最慢的选项：当游戏在其他所有模式下都崩溃时再选它。]]></string>
+    <string name="box64_preset_help__compatibility"><![CDATA[<b>兼容</b> —— 与「稳定」相同的保守数学设置，但对转换器留有更多余地。游戏在「中等」档下出问题时，这是不错的后备选择。]]></string>
+    <string name="box64_preset_help__intermediate"><![CDATA[<b>中等</b> —— 均衡的默认档。NaN 处理更快并轻度合并块，同时保留安全的 CPU 标志位与完整 x87 精度。建议从这里开始。]]></string>
+    <string name="box64_preset_help__performance"><![CDATA[<b>性能</b> —— 明显更快：放宽标志位、快速舍入、64 位 x87 与激进的块合并。<br><br>对舍入敏感的游戏存在轻微的数学或精度异常风险。]]></string>
+    <string name="box64_preset_help__performance_mali"><![CDATA[<b>性能（Mali）</b> —— 为 Mali GPU 重新调校的性能档：关闭 CPU 标志位模拟但保留精确舍入，更契合 Mali 驱动。在 Adreno 上没有收益。]]></string>
+    <string name="box64_preset_help__extreme"><![CDATA[<b>极致</b> —— 在性能档基础上加深指令预读、优化调用/返回并关闭 AVX。速度更进一步。<br><br>影响范围更广：对时序或数学敏感的游戏比在性能档下更容易出问题。]]></string>
+    <string name="box64_preset_help__extreme_2"><![CDATA[<b>极致-2</b> —— 社区的 32 变量调校。在极致档的全部做法上更进一步：更快的舍入、双倍预读、原生 CPU 标志位，并向游戏开放 AES、SSE4.2、SHA 与 PCLMULQDQ 指令集。<br><br><b>风险：</b>它还会削弱内存屏障，可能破坏多线程状态。表现是随机不稳定，而不是干脆的崩溃 —— 若游戏变得飘忽不定，请退回极致档。]]></string>
+    <string name="box64_preset_help__unity"><![CDATA[<b>Unity</b> —— 为 Unity 游戏重新调校的性能档，采用大多数 Unity 作品保持稳定所需的更严格内存顺序。]]></string>
+    <string name="box64_preset_help__unity_mono_bleeding_edge"><![CDATA[<b>Unity Mono 前沿版</b> —— 面向运行在前沿 Mono 运行时上的较新 Unity 版本。关闭会干扰其即时编译器的块合并。]]></string>
+    <string name="box64_preset_help__denuvo"><![CDATA[<b>Denuvo</b> —— 面向受 Denuvo 保护游戏的保守设置，这类游戏会察觉并排斥激进的指令转换。速度天生较慢；只在确实需要的游戏上使用。]]></string>
+    <string name="fexcore_preset_help__stability"><![CDATA[<b>稳定</b> —— 开启全部内存顺序模拟，并保留完整 x87 精度。最慢也最正确的选项；其他档位都跑不起来时再用它。]]></string>
+    <string name="fexcore_preset_help__compatibility"><![CDATA[<b>兼容</b> —— 与「稳定」一样开启完整的内存顺序模拟。以速度换取更全面的正确性。]]></string>
+    <string name="fexcore_preset_help__intermediate"><![CDATA[<b>中等</b> —— 均衡的默认档。保留主屏障与半屏障顺序，去掉较重的向量与 memcpy 顺序，并允许降低 x87 精度。]]></string>
+    <string name="fexcore_preset_help__performance"><![CDATA[<b>性能</b> —— 关闭全部内存顺序模拟。明显更快。<br><br><b>风险：</b>依赖严格存储顺序的游戏可能崩溃、卡死或损坏存档。若出现这种情况，请改用「性能（TSO）」。]]></string>
+    <string name="fexcore_preset_help__performance_tso"><![CDATA[<b>性能（TSO）</b> —— 在性能档基础上重新开启主要存储顺序模拟，较重的向量、半屏障与 memcpy 顺序仍然关闭。最佳通用折中，也是最安全的快速选项。]]></string>
+    <string name="fexcore_preset_help__extreme"><![CDATA[<b>极致-wn</b> —— 来自 WinNative。在性能档之上再加五项 JIT 与缓存开关：关闭自修改代码检查、关闭 L2 块缓存、启用动态大小的 L1 缓存。<br><br><b>风险：</b>关闭代码检查后，任何会在运行时写入自身代码的程序（Java 或 .NET 运行时、部分启动器与 DRM）都可能出问题。内存顺序同样关闭，因此这是最激进的档位。]]></string>
+    <string name="fexcore_preset_help__extreme_tso"><![CDATA[<b>极致（TSO）-wn</b> —— 与极致-wn 相同的调校，但保留存储顺序，因此适用的游戏多得多。若想要比「性能（TSO）」更快的速度，先试这一档。<br><br><b>风险：</b>自修改代码检查已关闭，可能破坏 Java 或 .NET 运行时、部分启动器与 DRM。若真踩到问题，退回极致-gn。]]></string>
+    <string name="fexcore_preset_help__extreme_gn"><![CDATA[<b>极致-gn</b> —— 来自 GameNative，实际远比名字温和。只在性能档之上加了计时器缩放与易变元数据提示，代码检查与块缓存都保持默认。<br><br>更安全的极致档：当游戏在两个 WinNative 档位下都跑不起来时，试试这一档。]]></string>
+    <string name="fexcore_preset_help__denuvo"><![CDATA[<b>Denuvo</b> —— 面向受 Denuvo 保护的游戏。为速度关闭内存顺序，但保留完整的自修改代码检查与一个隐藏的管理程序标志位，这两项都是 Denuvo 启动所必需的。]]></string>
+    <string name="unity_mono_bleeding_edge">Unity Mono 前沿版</string>
+    <string name="preset">预设</string>
+    <string name="you_cannot_remove_this_preset">无法删除此预设</string>
+    <string name="dxwrapper_help_content"><![CDATA[
+        <i><b>WineD3D</b></i> 是将 DirectX 1-11 转换为 OpenGL 的转换层。<br /><br />
+        <i><b>DXVK</b></i> 是将 Direct3D 9-11 转换为 Vulkan 的转换层。<br /><br />
+        <i><b>VEGAS</b></i> 是 DXVK 的性能调优分叉版，针对 Android/Adreno 设备做了游戏专属优化。<br /><br />
+        <i><b>VKD3D</b></i> 是将 Direct3D 12 API 转换为 Vulkan 的转换层。<br /><br />
+        <i><b>CNC DDraw</b></i> 是 DirectDraw 的一项实现，可改善经典游戏的兼容性。
+    ]]></string>
+    <string name="help_anisotropic_filtering"><![CDATA[
+        <b>各向异性过滤</b><br /><br />
+        以斜角观察纹理时仍能保持清晰——比如车前方的路面、地板、向远处延伸的墙面。不开启的话，稍远处就会变模糊。<br /><br />
+        <b>游戏默认</b>会把选择权交给游戏。<b>2x 到 16x</b> 则强制开启，数值越高，清晰距离越远。多数设备上开销不大；若帧率下降，可试试 4x 或 8x。<br /><br />
+        <b>示例：</b>赛车游戏里车前一点的赛道看起来糊成一片 → 选 16x。<br /><br />
+        仅 DirectX 9–11 游戏适用（DXVK / VEGAS）。下次启动游戏时生效。
+    ]]></string>
+    <string name="help_texture_sharpness"><![CDATA[
+        <b>纹理锐度</b><br /><br />
+        让游戏使用更精细的纹理。最适合游戏以低于屏幕分辨率的设置运行并开启升频器时——此时纹理本来会比画面其他部分更模糊。<br /><br />
+        <b>游戏默认</b>不做任何改动。<b>自动</b>会按游戏启动时所用的缩放模式（在游戏侧边菜单中设置：SGSR、SGSR HQ、FSR 或 NIS）选取合适的数值——1080p 屏幕上跑 720p 时约为 -0.58——未开启缩放时则不起作用。<b>更锐利 / 最锐利</b>使用固定数值；数值越大越锐利。<br /><br />
+        <b>示例：</b>1080p 屏幕上以 720p 加 SGSR HQ 运行的游戏 → 自动。<br /><br />
+        锐度过高会让细节（碎石、栅栏、草地）在移动时闪烁——出现这种情况就往回调一些。仅限 DirectX 9–11 游戏。下次游戏启动时生效。
+    ]]></string>
+    <string name="help_wine_version"><![CDATA[
+        <b>Wine 版本</b><br /><br />
+        运行 Windows 游戏的兼容层——它把 Windows 转译到 Android 上，无需真正安装 Windows。<i><b>Proton</b></i> 是针对游戏优化的 Wine 构建。较新的构建能修复更多游戏；除非某个游戏需要特定版本，否则保持默认即可。
+    ]]></string>
+    <string name="help_sync_mode"><![CDATA[
+        <b>同步</b><br /><br />
+        Windows 游戏会不断让各线程互相等待（“等这个加载完”“帧准备好时发出信号”）。Wine 有几种方式处理这类等待；更快的方式意味着更少的卡顿和更低的 CPU 开销。此设置决定游戏使用哪一种。所选兼容层不支持的方式会显示为灰色。<br /><br />
+        <b>esync</b> —— 默认值。Wine 用 Linux 事件文件处理大多数等待，不必每次都去问后台服务进程。速度快，也经过充分测试。<br /><br />
+        <b>ntsync</b> —— 照搬 Windows 自身的做法，因此最准确，速度也快。仅在以此构建的兼容层上可用。新增选项：可以按游戏试用。若无法启动，游戏会自动回退到 esync。<br /><br />
+        <b>fsync</b> —— Linux PC（Steam Deck）上使用的更快方式，建立在某项 Android 对应用屏蔽的 Linux 特性之上。在这里始终为灰色；它无法在 Android 上工作。<br /><br />
+        <b>wineserver</b> —— 完全不走捷径：每次等待都经过 Wine 的后台服务进程。最慢，CPU 负担最重，但兼容性最好——当游戏在其他方式下卡死、卡顿或出现异常时用它。<br /><br />
+        除非为该游戏单独选择，否则游戏设置跟随容器。<br /><br />
+        <i>启动时设置：esync → WINEESYNC=1 · ntsync → WINENTSYNC=1 + WINEESYNC=1 · wineserver → WINEESYNC=0。在环境变量中手动填写的上述任一变量都会被此设置覆盖。</i>
+    ]]></string>
+    <string name="help_opengl_settings"><![CDATA[
+        <b>OpenGL 设置</b><br /><br />
+        <b>快速</b> —— 让 OpenGL 游戏的帧通过 Vulkan 直接送到屏幕（DXVK 游戏走的就是这条路），而不是先把每一帧复制回来。速度提升数倍，也能通过 WineD3D 为 DirectDraw 和较旧的 Direct3D 游戏提速。它适用于任何 Wine 兼容层：带 Wine EGL 后端的层走 EGL，其余（较旧的 Wine 以及所有 x86-64 层）走 GLX。它需要 Turnip 显卡驱动；没有时该项为灰色，游戏继续走旧路径。默认开启；若某个游戏出现黑屏、崩溃或画面异常，请将它关闭。<br /><br />
+        <b>显示帧率</b> —— Mesa 的每秒帧数计数器，显示在 OpenGL 游戏左上角。DXVK 游戏不显示。默认关闭。<br /><br />
+        <b>关闭垂直同步</b> —— 让 OpenGL 游戏以高于屏幕刷新率的帧速运行，而不必等待每次刷新。可能出现画面撕裂。默认关闭。<br /><br />
+        这些选项都不会加快游戏时间：把速度与帧率绑定的老游戏可能跑得过快——请用帧率限制器加以限制。<br /><br />
+        <b>自动</b>（游戏设置）—— 跟随容器的设置；开启或关闭只对该游戏生效。更改在下次游戏启动时生效。<br /><br />
+        <i>启动时设置：快速 → 内置的 Zink OpenGL 库，并在 EGL 路径下加 WINE_USE_EGL=1，或在 GLX 路径下使用 X 服务器的 GLX（WINHUB_X11_EGL=0 关闭它，WINHUB_X11_EGL=1 强制 EGL，WINHUB_X11_GLX=1 强制 GLX）· 显示帧率 → GALLIUM_HUD=fps · 关闭垂直同步 → vblank_mode=0。你在环境变量中填写的 GALLIUM_HUD 或 vblank_mode 会被保留。</i>
+    ]]></string>
+    <string name="help_graphics_driver"><![CDATA[
+        <b>显卡驱动（封装层）</b><br /><br />
+        容器用来与你的 GPU 通信的 Vulkan 驱动。不同封装层适合不同 GPU——<i><b>Adreno</b></i>（骁龙）支持最好；<i><b>Mali</b></i> 手机可能需要特定封装层才能处理压缩纹理。除非在排查问题，否则保持默认。
+    ]]></string>
+    <string name="help_renderer"><![CDATA[
+        <b>渲染器</b><br /><br />
+        游戏的画面如何送达你的屏幕。<i><b>Vulkan</b></i> 是默认值，对大多数游戏效果最好。
+    ]]></string>
+    <string name="renderer_present_mode_help_content"><![CDATA[
+        <b>呈现模式</b>控制已完成的帧如何交给屏幕——在画面撕裂、输入延迟和耗电之间做取舍。<br /><br />
+        <b>FIFO（默认）：</b>“垂直同步开启”。每一帧都排队等待，在下次刷新时显示——流畅、无撕裂，也最省电。缺点：它让游戏等待显示器，可能拖慢帧生成。<br /><br />
+        <b>Mailbox：</b>“快速垂直同步”。屏幕总是取最新的一帧，从不让游戏等待——和 FIFO 一样无撕裂，但延迟更低。最适合帧生成，因为它额外生成的帧能真正到达屏幕。会稍微多耗一点电（它可能渲染随后被丢弃的帧）。<br /><br />
+        <b>Immediate：</b>“垂直同步关闭”。帧一准备好就立刻显示——延迟最低，但可能出现画面撕裂。在高刷新率屏幕上通常不值得。<br /><br />
+        <b>提示：</b>帧生成进行倍增时，WinHub 会自动切换到 Mailbox，关闭后再恢复为你的设置。
+    ]]></string>
+    <string name="renderer_present_mode_fg_note">LSFG Native 和 Win-FG Native 在生成期间会把它切换为 FIFO，结束后恢复你的选择——它们把真实帧与生成帧一起送出，需要 FIFO 才能每次刷新显示一帧。</string>
+    <string name="help_download_speed"><![CDATA[
+        <b>下载速度</b><br /><br />
+        下载速度决定同时下载多少游戏分片。数值越高越快，上限取决于你的网络和 Steam 服务器的能力——它不会限制你的网速。较低的设置会使用更少的连接数，从而减轻对设备和网络的负担。下载会逐个进行；多余的游戏会在队列中等待。
+    ]]></string>
+    <string name="help_download_speed_slow"><![CDATA[
+        <b>慢速</b><br /><br />
+        同时下载的分片最少。对设备和带宽的负担最轻，整体速度最慢。适合边玩游戏或边用手机时在后台下载。
+    ]]></string>
+    <string name="help_download_speed_medium"><![CDATA[
+        <b>中速</b><br /><br />
+        同时下载的数量适中——在速度与轻负载之间取得平衡。
+    ]]></string>
+    <string name="help_download_speed_fast"><![CDATA[
+        <b>快速（默认）</b><br /><br />
+        同时下载的分片较多，在多数网络下都能获得不错的速度。推荐使用。
+    ]]></string>
+    <string name="help_download_speed_blazing"><![CDATA[
+        <b>极速</b><br /><br />
+        同时下载的分片最多——速度最快，但占用带宽和设备资源也最多。适合在高速网络下下载大型游戏。
+    ]]></string>
+    <string name="help_turnip_gmem"><![CDATA[
+        <b>GMEM（分块渲染）</b><br /><br />
+        GPU 绘制每一帧的方式。GMEM（分块）渲染会把屏幕切成小块，在超高速的片上内存中绘制——这是移动端原生的高效方式。<br /><br />
+        <b>自动</b>仅对 Adreno 710/720/722 开启（这些型号需要它来避免画面异常）；<b>强制开启</b>会应用到任意 GPU；<b>强制关闭</b>则从不使用。除非某款游戏出现问题，否则保持 Auto。与之相对的是 \'sysmem\'。
+    ]]></string>
+    <string name="help_turnip_sysmem"><![CDATA[
+        <b>sysmem</b><br /><br />
+        强制 GPU 直接绘制到主内存，而不使用高速的片上分块内存——与 GMEM 正好相反。它兼容性最好（也是默认选项），但会占用更多内存带宽。如果强制开启 GMEM 导致游戏画面异常，就改用这个。
+    ]]></string>
+    <string name="help_sync_every_frame"><![CDATA[
+        <b>逐帧同步</b><br /><br />
+        让 GPU 把每一帧彻底画完并显示出来，再开始下一帧（同步呈现）。若出现画面撕裂、闪烁或屏幕画面异常，把它设为 <b>开</b>；若追求最佳性能则保持<b>关</b>，因为它会使 CPU 与 GPU 无法互相预跑，可能损失一些帧率。
+    ]]></string>
+    <string name="help_turnip_concurrent_binning"><![CDATA[
+        <b>forcecb / nocb（并发分箱）</b><br /><br />
+        分箱是 GPU 整理每个屏幕上分块里包含哪些内容的步骤。\'forcecb\' 会强制它与渲染过程同时进行（可能提升性能）；\'nocb\' 则将其关闭（可能修复某些游戏的画面异常）。这些是高级选项——只有某款游戏确实需要时才去调整。
+    ]]></string>
+    <string name="help_turnip_deck_emu"><![CDATA[
+        <b>deck_emu</b><br /><br />
+        让 GPU 向游戏报告自己是 Steam Deck，某些游戏因此会解锁更好的画质设置或代码路径。仅在 WinHub 自有的（Banners-Turnip）驱动上有效——在原生 Turnip 上会被忽略。
+    ]]></string>
+    <string name="help_disable_present_wait"><![CDATA[
+        <b>禁用 KHR_present_wait</b><br /><br />
+        部分 GPU 驱动对 Vulkan 的 \'present wait\' 特性（让游戏等待某一帧真正显示到屏幕上）实现有误，会导致卡顿或挂起。作为兼容性回退，将它设为<b>开</b>可让驱动停止使用该特性。除非游戏卡死或无法显示画面，否则保持<b>关</b>。
+    ]]></string>
+    <string name="help_oneui_hyperos_fix"><![CDATA[
+        <b>One UI / HyperOS 修复</b><br /><br />
+        针对部分三星（One UI）和小米（HyperOS）手机的兼容性变通方案：其 GPU 驱动需要额外的纹理压缩提示才能正确渲染。仅当这些设备上的游戏出现画面破损或崩溃时才设为<b>开</b>，其余情况保持<b>关</b>。
+    ]]></string>
+    <string name="help_bcn_emulation_type"><![CDATA[
+        <b>BCn 模拟类型</b><br /><br />
+        选择在无法原生读取压缩纹理（BCn / DXT）的 GPU 上，如何解包这类纹理——例如 Mali 及其他非 Adreno 芯片。<b>计算（Compute）</b>走 GPU 计算着色器层（通常更快）；<b>软件（software）</b>则使用封装层内置的解码器。对 Adreno 无效，因为它能原生读取 BCn 纹理。若纹理显示异常或游戏运行缓慢，可切换选项试试。
+    ]]></string>
+    <string name="help_bcn_emulation_cache"><![CDATA[
+        <b>BCn 模拟缓存</b><br /><br />
+        当 GPU 需要模拟压缩（BCn）纹理时，它会把已解码的纹理保存在缓存中，以免再次解包——从而减少卡顿和 CPU/GPU 开销，代价是占用少量额外内存。对 Adreno（原生 BCn）无效。
+    ]]></string>
+    <string name="help_bcn_transcode_astc"><![CDATA[
+        <b>转码为 ASTC</b><br /><br />
+        它不会把模拟的 BCn 纹理完全解压，而是重新打包为 ASTC——一种 Mali 及其他移动 GPU 可硬件支持的压缩纹理格式。在这类 GPU 上可省内存并提升性能。仅受支持 BCn 的驱动所响应；对 Adreno（原生 BCn）无效。
+    ]]></string>
+    <string name="help_vulkan_version"><![CDATA[
+        <b>Vulkan 版本</b><br /><br />
+        显卡驱动向 DirectX 转换层（DXVK / VKD3D）报告的 Vulkan 版本。更高的版本号可解锁某些游戏需要的新特性。它会自动限制为你的驱动实际支持的上限，因此选择高于驱动支持的版本不会有任何效果。除非某款游戏明确需要更高的 Vulkan 版本，否则保持默认。
+    ]]></string>
+    <string name="help_graphics_driver_version"><![CDATA[
+        <b>显卡驱动版本</b><br /><br />
+        选择这款游戏使用哪个版本的 GPU 驱动（Turnip / Vulkan 封装层）。较新的版本通常会修复错误或提升速度，但某款特定游戏在旧版本上可能运行得更好。如果游戏画面异常或无法启动，可在此换一个版本试试。通过云按钮可管理并导入更多驱动。
+    ]]></string>
+    <string name="help_show_incompatible_drivers"><![CDATA[
+        <b>显示不兼容的驱动</b><br /><br />
+        同时列出 WinHub 认为无法在你的手机 GPU 上正常工作的驱动版本。它们默认被隐藏，以免你选到会出错的驱动。只有在你想要试验时才开启——不兼容的驱动可能导致崩溃或黑屏。
+    ]]></string>
+    <string name="help_gpu_name"><![CDATA[
+        <b>GPU 名称（伪装）</b><br /><br />
+        让游戏看到一块与你真实显卡不同的显卡。当游戏识别到特定 GPU 时，有些会解锁更好的画质选项，或者干脆才能运行。保持在「设备」即上报你的真实 GPU；选择名称即进行伪装。当 DX 包装层设为 WineD3D 时此项被忽略。
+    ]]></string>
+    <string name="help_max_device_memory"><![CDATA[
+        <b>最大设备内存</b><br /><br />
+        限制驱动告诉游戏的显存（VRAM）大小。「默认」让驱动上报自己的实际容量。设定具体上限可以阻止游戏尝试使用超过手机实际拥有的内存——这能修复少数游戏的内存不足崩溃或卡顿。除非某个游戏表现异常，否则保持默认。
+    ]]></string>
+    <string name="help_wrapper_present_modes"><![CDATA[
+        <b>呈现模式</b><br /><br />
+        已完成的帧如何交给屏幕显示。<br /><br />
+        <b>mailbox</b> — 低延迟，总是显示最新的帧（三重缓冲）；这是流畅的默认选择。<br />
+        <b>fifo</b> — 传统垂直同步：帧会等待显示器，无画面撕裂，但可能感觉响应稍慢。<br />
+        <b>immediate</b> — 帧一准备好就立即发送：延迟最低，但可能出现撕裂。<br /><br />
+        除非你在追求更低的延迟或修复撕裂，否则保持 mailbox。
+    ]]></string>
+    <string name="help_resource_type"><![CDATA[
+        <b>内存资源类型</b><br /><br />
+        驱动如何在游戏与显示之间共享图像内存。<b>auto</b> 会为你的设备选择最佳方式，几乎适用于所有人。其他选项（dmabuf / AHB / opaque）都是备选方案——只有在某个游戏出现画面异常或无法在你的特定手机上显示时才切换。
+    ]]></string>
+    <string name="help_bcn_emulation"><![CDATA[
+        <b>BCn 模拟</b><br /><br />
+        是否为无法原生读取 PC 游戏所用压缩纹理（BCn / DXT）的 GPU 模拟这些纹理——例如 Mali 及其他非 Adreno 芯片。<b>auto</b> 只在需要时开启；<b>full</b> 强制开启；<b>partial</b> 只处理一部分；<b>none</b> 禁用。对硬件即可读取 BCn 纹理的 Adreno 无效。除非纹理显示异常，否则保持 auto。
+    ]]></string>
+    <string name="help_available_extensions"><![CDATA[
+        <b>可用扩展</b><br /><br />
+        打开驱动提供的可选 Vulkan 特性（扩展）列表，并允许你逐个将它们加入黑名单。这是专家级工具——关闭某个扩展可以绕过导致特定游戏崩溃或渲染错误的驱动 bug。除非你在按照已知的修复方案操作，否则请保持全部启用。
+    ]]></string>
+    <string name="help_renderer_colors"><![CDATA[
+        <b>颜色（BGRA / RGBA）</b><br /><br />
+        游戏画面中红、蓝颜色通道的顺序。<b>BGRA</b>（默认）对几乎所有游戏都是正确的。只有当游戏颜色看起来颠倒——该是红色的地方显示为蓝色——时才切换到 <b>RGBA</b>。RGBA 会经由合成器处理，因此无法与原生渲染同时使用。
+    ]]></string>
+    <string name="help_renderer_native"><![CDATA[
+        <b>原生渲染器</b><br /><br />
+        将游戏画面直接发送到屏幕，而不经过 WinHub 的合成器。这会降低延迟并提升性能，但会禁用需要合成器的功能——颜色通道交换（RGBA）以及呈现模式控制。如果游戏颜色显示错误或无法正常显示，请关闭它。
+    ]]></string>
+    <string name="help_renderer_driver"><![CDATA[
+        <b>渲染器驱动</b><br /><br />
+        屏幕上的<b>合成器</b>运行在哪一个 Vulkan 驱动上——合成器是负责把游戏渲染完成的帧放到屏幕上的那一层。这<b>不是</b>游戏渲染所在之处；那由顶层的<b>显卡驱动</b>决定。<br /><br />
+        <b>系统</b>（默认）使用 Android 自带的 Vulkan 驱动——安全且始终兼容的选择。选择已安装的 <b>Turnip</b> 则让合成器改用该版本。它主要影响呈现与兼容性行为，而非游戏的 FPS（合成器并不是渲染发生的地方）。<br /><br />
+        除非你确定需要，否则保持在<b>系统</b>：当 Turnip 构建的窗口系统支持与你的设备不匹配时，Turnip 合成器可能导致黑屏。
+    ]]></string>
+    <string name="help_scaling_mode"><![CDATA[
+        <b>缩放模式</b><br /><br />
+        游戏画面如何拉伸以填满你的屏幕。当游戏运行在低于屏幕分辨率的画质时（例如在 1080p 屏幕上运行 1280x720），放大算法最为重要，而这通常是获得更高帧率的常用方法。<br /><br />
+        <b>无 / 线性 / 邻近</b> — 普通拉伸。线性更平滑；邻近保留硬朗的像素边缘。<br />
+        <b>SGSR</b> — 骁龙放大算法。重建边缘，让较低分辨率看起来更锐利。非常轻量。<br />
+        <b>SGSR HQ</b> — SGSR 的高质量版本，斜线与曲线边缘更干净，开销大致相同。<br />
+        <b>FSR / FSR (Fit)</b> — AMD 的放大算法，稍重一些。FSR 填满整个屏幕（可能拉伸）；FSR (Fit) 保持画面比例并加黑边。<br />
+        <b>NIS</b> — NVIDIA 的放大算法，与 FSR 类似。<br />
+        <b>锐化</b> — 不做放大，只做锐化。适用于任何分辨率。<br /><br />
+        <b>示例：</b>1080p 屏幕上跑 720p 的重度游戏 → SGSR HQ。像素风或复古游戏 → 邻近。已经运行在屏幕分辨率上的游戏 → 无，或用锐化获得额外清晰度。<br /><br />
+        <b>锐度</b>决定锐化强度。你的选择会为此游戏记住。
+    ]]></string>
+    <string name="help_fps_limiter"><![CDATA[
+        <b>帧率限制器</b><br /><br />
+        为该游戏加载帧率限制功能。开启只是启用该功能——实际的上限（10–200 fps）需要你在游戏内的 FPS 菜单中实时设置。限制帧率可以减少发热与耗电，并让不稳定的帧率更平滑。（当 LSFG Native 或 Win-FG Native 运行时，限制器会自动开启——帧生成需要稳定的上限——因此只有在你不需要帧生成、仅想要一个上限时才需要单独开启此项。）
+    ]]></string>
+    <string name="help_frame_generation"><![CDATA[
+        <b>帧生成</b><br /><br />
+        在游戏绘制的帧之间插入生成出来的帧，让画面运动更顺滑。它不能让游戏响应更快，还会增加一点输入延迟。有两种引擎：<br /><br />
+        <b>Win-FG Native</b> — 内置，无需购买或导入。固定 2 倍。<br />
+        <b>LSFG Native</b> — Lossless Scaling 的帧生成。需要自备 Lossless.dll，在设置底部导入。可选 2 倍、3 倍或 4 倍。<br /><br />
+        两者都需要 Vulkan 渲染器。LSFG Native 还需要支持 Vulkan 1.3 的<b>渲染器驱动</b>——在较旧的 Adreno GPU 上，请在那里选一个 Turnip 驱动。若有条件缺失，游戏的侧边菜单会说明缺什么、怎么修。<br /><br />
+        <b>正确设好：</b>在游戏的侧边菜单里，把<b>最大 FPS</b> 设成游戏始终能稳住的数值，再选一个倍数，让最大 FPS × 倍数正好对上屏幕刷新率（例如 48 × 3 = 144 Hz）。超过会引起卡顿和延迟；侧边菜单会提醒你，并给出修复办法。<b>自动（匹配 FPS）</b>会在帧生成运行时开启，把屏幕适配到你的数值——如果你更希望自己控制，可以在那里关掉。<br /><br />
+        帧生成每次启动时都是关闭的；请在侧边菜单中开启。它还很新：如果某个游戏开了之后画面更差，就为这个游戏保持关闭。
+    ]]></string>
+    <string name="help_audio_driver"><![CDATA[
+        <b>音频驱动</b><br /><br />
+        游戏声音如何传到 Android。<b>PulseAudio</b> 是默认选项——功能完整的音频服务器，适用于大多数游戏和语音功能。<b>ALSA</b> 是更轻量、开销更低的替代方案。<b>DirectAudio（实验性）</b>把声音直接送到 Android，中间不经过任何服务器（延迟最低），但它很新——请留意它的警告。如果游戏没有声音或出现爆音，可以换个驱动试试。
+    ]]></string>
+    <string name="directaudio_experimental_warning"><![CDATA[
+        <b>DirectAudio 仍属实验功能</b><br /><br />
+        它把游戏声音直接送到 Android 音频系统，中间<b>不经过 PulseAudio 或 ALSA 服务</b>——这是延迟最低的路径，并由它自己混音游戏的全部声音。<br /><br />
+        由于是全新功能，部分游戏可能声音异常——偶尔跳音，或预设保存后无法生效。<b>自动</b>预设最为顺畅。<br /><br />
+        若遇到声音问题，请切回 <b>PulseAudio</b> 或 <b>ALSA</b>。
+    ]]></string>
+    <string name="help_fexcore_preset"><![CDATA[
+        <b>FEXCore 预设</b><br /><br />
+        FEXCore 让 x86 游戏运行在 ARM 手机上。此预设通过调整对 PC 内存排序（TSO）的模拟忠实度，以准确性换取速度。<b>稳定 / 兼容性</b>保持完全准确（最安全，稍慢）；<b>性能</b>放宽限制以提升帧率（可能让部分游戏出错）；中间档与 <b>Denuvo</b> 预设则针对特定游戏折中。请从默认档开始，只在游戏能跑但很慢时才逐步靠向性能档。
+    ]]></string>
+    <string name="help_fexcore_version"><![CDATA[
+        <b>FEXCore 版本</b><br /><br />
+        指定此游戏使用哪个版本的 FEXCore x86 到 ARM 转译器。较新的版本通常能运行更多游戏、速度也更快，但某些游戏可能更适合旧版本。如果游戏在 FEXCore 下崩溃或无法启动，请换一个版本试试。可用下载按钮导入更多版本。
+    ]]></string>
+    <string name="help_startup_selection"><![CDATA[
+        <b>启动选择</b><br /><br />
+        决定 Wine 在游戏启动前启动多少 Windows 后台服务。<b>普通</b>全部加载（兼容性最好）；<b>精简</b>只加载重要的服务；<b>激进</b>停用额外服务以节省内存、加快启动。<b>自定义</b>可逐项挑选服务。若游戏启动失败，请往回调到普通档。
+    ]]></string>
+    <string name="help_gyro_mode"><![CDATA[
+        <b>陀螺仪模式</b><br /><br />
+        决定倾斜手机如何带动瞄准。<b>速率</b>——靠倾斜的速度瞄准，静止时会自动回中（类似鼠标）。<b>倾斜瞄准</b>——靠保持的角度瞄准，因此一直倾斜就一直瞄准。速率适合大多数射击游戏；倾斜瞄准适合需要精细、持续微调的场合。（倾斜瞄准无法驱动鼠标目标。）
+    ]]></string>
+    <string name="help_gyro_activator"><![CDATA[
+        <b>陀螺仪激活键</b><br /><br />
+        用哪个手柄按键开启陀螺仪瞄准，免得手机一直在转向。请选一个瞄准时能按住的按键（例如 L2），或选择 <b>始终开启</b>让陀螺仪全程有效。
+    ]]></string>
+    <string name="help_gyro_activation_mode"><![CDATA[
+        <b>陀螺仪激活方式</b><br /><br />
+        激活键的行为方式。<b>按住</b>——只有按住按键时陀螺仪才瞄准。<b>切换</b>——按一次开启，再按一次关闭。按住适合短促瞄准；切换适合放手不管、长时间保持开启。
+    ]]></string>
+    <string name="help_gyro_sensitivity"><![CDATA[
+        <b>陀螺仪灵敏度</b><br /><br />
+        倾斜一定幅度时准心移动多少。数值越高，小幅倾斜转得越快；数值越低，瞄准越稳越细腻。随喜好调——从中间值起步，调到瞄准手感自然为止。
+    ]]></string>
+    <string name="help_gyro_target"><![CDATA[
+        <b>陀螺仪目标</b><br /><br />
+        手机的倾斜实际控制什么。<b>右摇杆</b>（最常用的选择）像右摇杆那样瞄准；<b>左摇杆</b>像左摇杆那样移动；<b>鼠标</b>驱动指针，适合鼠标瞄准的游戏。鼠标目标始终使用速率模式。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_safeflags"><![CDATA[
+        CALL/RET 指令的标志位处理<br /><br />
+        <b>0</b>：把 CALL/RET 当成从不需要标志位（更快，但不稳定）<br />
+        <b>1</b>：大多数 RET 需要标志位，大多数 CALL 不需要<br />
+        <b>2</b>：所有 CALL/RET 都需要标志位（更慢）
+        <br /><br /><b>何时调整：</b>调用密集的游戏可调低以提速。如果游戏启动后不久就崩溃或行为异常，请调到 2——调用前后缺失标志位，会破坏程序从函数返回后立刻做出的判断。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_fastnan"><![CDATA[
+        NaN 处理。在某些浮点情形下 x86 会产生负 NaN，而 ARM 产生的是正 NaN，
+        要与 x86 完全一致，每次这类运算都要多花指令。<br /><br />
+        <b>0</b>：精确复现 x86 的 NaN 符号。更慢，逐位准确。<br />
+        <b>1</b>：让 ARM 芯片产生它自然的 NaN。更快。（默认）<br /><br />
+        <b>何时调整：</b>保持 1。若游戏出现模型拉伸或不可见、
+        几何体飞向无穷远，或物理表现炸开，请降到 0——这些都是 NaN 符号差异
+        在数学运算中层层传播的典型表现。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_fastround"><![CDATA[
+        舍入模式。x86 允许程序选择舍入模式，并要求每次浮点运算都遵守；
+        在 ARM 上复现这点，每次都要付出额外代价。<br /><br />
+        <b>0</b>：精确模拟 x86 的所有舍入模式。最慢也最准确。<br />
+        <b>1</b>：快速舍入，覆盖常见情形。（默认）<br />
+        <b>2</b>：最快，保真度最低。Extreme-2 使用此档。<br /><br />
+        <b>何时调整：</b>想要更快就调高。若出现几何体抖动、物理漂移
+        或音频爆音——凡是细小数值误差会累积的情况，请降到 0。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_x87double"><![CDATA[
+        Box64 用哪种原生类型代替 x87 浮点。x87 工作在 80 位扩展精度下，
+        ARM 没有对应能力，因此必须用更窄的类型替代。<br /><br />
+        <b>0</b>：使用能放得下的最窄类型。最快，精度最低。<br />
+        <b>1</b>：全程使用双精度。更慢，更接近原始行为。（安全预设上的默认值）<br />
+        <b>2</b>：可用的最高精度。最慢。<br /><br />
+        <b>何时调整：</b>做大量数学运算的老游戏——飞行模拟、赛车物理、
+        数值量大的策略游戏——在 0 下可能漂移或失步。若游戏不是直接崩溃
+        而是出现细微错误，请调高。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_bigblock"><![CDATA[
+        动态编译器构建大块（BigBlock）<br /><br />
+        <b>0</b>：不尝试把块构建得尽可能大<br />
+        <b>1</b>：把动态编译块构建得尽可能大<br />
+        <b>2</b>：构建更大的动态编译块（块重叠时继续延伸，但仅限 ELF 内存中的块）<br />
+        <b>3</b>：构建更大的动态编译块（块重叠时继续延伸，适用于所有类型的内存）
+        <br /><br /><b>何时调整：</b>数值越高，持续帧率越快，因为游戏主循环有更多部分被一起优化。若首次进入每个新区域时都会卡一下，或游戏在运行中生成代码、碰到跨越内存过多的块，请调低。
+    ]]></string>
+    <string name="box64_env_var_help__dynarec_strongmem"><![CDATA[
+        强内存模型模拟<br /><br />
+        <b>0</b>：不做任何特殊处理<br />
+        <b>1</b>：在写入内存时启用部分内存屏障（针对某些 MOV 指令）<br />
+        <b>2</b>：在 1 的基础上，每次通过 MOV 写入内存都加内存屏障<br />
+        <b>3</b>：在 2 的基础上，读取内存以及部分 SSE/SSE2 指令也加内存屏障
+        <br /><br /><b>何时调整：</b>当多线程游戏随机崩溃、存档损坏或联机不同步时调高——这些都是写入顺序错乱的症状。确认游戏不开此项也能稳定运行后，可降低以提升速度。Unity 游戏通常至少需要 1。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_forward"><![CDATA[
+        Box64 在决定把多少代码翻译进一个块时，对前向跳转的预读距离上限为多少。<br /><br />
+        <b>0</b>：遇到第一个前向跳转就停止。块最小。<br />
+        <b>128</b> / <b>256</b>：适度预读。<br />
+        <b>512</b>：均衡。（默认）<br />
+        <b>1024</b>：最大预读。块最大、速度最快。Extreme-2 使用此值。<br /><br />
+        <b>何时调整：</b>在紧凑的游戏循环中调高可提升速度。如果首次进入新区域时出现卡顿，
+        就调低——块越大，第一次需要它时编译耗时越长。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_callret"><![CDATA[
+        CALL 与 RET 优化。通常每次函数返回都是一次 Box64 需要查表的间接跳转；此选项改用
+        正规的返回地址栈来替代。<br /><br />
+        <b>0</b>：通用处理。较慢，但能容忍那些会玩弄返回地址的程序。<br />
+        <b>1</b>：优化。在调用密集的代码中明显更快。（多数预设默认）<br /><br />
+        <b>何时更改：</b>对加壳、混淆或带 DRM 保护、会刻意操纵调用栈的可执行文件请关闭此项。
+        启动后不久便在陌生代码深处崩溃，通常是其典型症状。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_wait"><![CDATA[
+        当线程需要另一个线程正在编译的代码块时会怎么做。<br /><br />
+        <b>0</b>：不等待——先解释执行这段代码。没有停顿，但这一段跑得
+        很慢。<br />
+        <b>1</b>：等待编译完成的代码块。持续速度更好，代价是短暂停顿。
+        （默认）<br /><br />
+        <b>何时更改：</b>如果在加载画面或首次进入某个区域时出现短暂卡死，
+        尤其是核心数较少的设备上，请设为 0。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_weakbarrier"><![CDATA[
+        调整内存屏障，以减轻强内存模拟带来的性能开销<br /><br />
+        <b>0</b> ：使用常规安全屏障<br />
+        <b>1</b> ：使用弱屏障，小幅提升性能<br />
+        <b>2</b> ：使用弱屏障，并额外关闭最后的写屏障
+        <br /><br /><b>何时修改：</b>这是在保留大部分速度的同时仍模拟强内存的办法。如果某个游戏需要 STRONGMEM 但代价太高，先试试 1。若又出现不稳定，就退回 0——弱屏障失效时表现为随机数据损坏，而非干脆的崩溃。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_aligned_atomics"><![CDATA[
+        仅生成对齐的原子操作（目前仅限 Arm64 可用）。<br /><br />
+        <b>0</b>：生成处理未对齐原子操作的代码。<br />
+        <b>1</b>：仅生成对齐的原子操作，速度更快、代码体积更小，但作用在未对齐数据地址上的 LOCK 前缀指令会触发 SIGBUS。
+        <br /><br /><b>何时更改：</b>保持为 0。只有在你确知某款游戏始终让原子数据保持对齐时才设为 1，并做好回退的准备：一旦执行了未对齐的加锁操作，就会立刻发生硬性 SIGBUS 崩溃。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_df"><![CDATA[
+        延迟标志。x86 几乎每条算术指令都会更新条件标志位，而其中绝大多数从未被读取。
+        延迟意味着只在实际有人需要时才计算它们。<br /><br />
+        <b>0</b> ：每次立即计算标志位。较慢，但完全忠实于原行为。<br />
+        <b>1</b> ：延迟到被读取时再计算。速度明显更快。（默认）<br /><br />
+        <b>何时更改：</b>几乎永远不必——保持开启。只有在排查下面这类 bug 时才关闭：
+        游戏做出明显错误的判断，例如敌人不响应、门打不开、本该通过的检查却没有通过。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_dirty"><![CDATA[
+        允许继续运行未受保护且可能已变脏的代码块。<br /><br />
+        <b>0</b> ：禁止继续运行未受保护且可能已变脏的代码块。<br />
+        <b>1</b> ：允许继续运行动态块，即使它把数据写在代码所在的同一页中。可加快部分游戏的加载速度，但也可能引发意外崩溃。<br />
+        <b>2</b> ：同时会在检测到 HotPage 时把该页标记为 NEVERCLEAN，因此不再对其写保护，但由该页构建的块仍会被检测。这样可能更快（但某些 SMC 情形可能无法被捕获）。
+        <br /><br /><b>何时调整：</b>对于把数据写在自己代码旁边的游戏，调高可加快加载。若在加载画面期间或关卡开始后不久出现原因不明的崩溃，请改回 0。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_nativeflags"><![CDATA[
+        让 Box64 直接使用 ARM 芯片自带的条件标志位，而不是把模拟的 x86
+        标志位保存在内存中。<br /><br />
+        <b>0</b>：单独模拟 x86 标志位。安全，但较慢。<br />
+        <b>1</b>：在含义完全对应的位置使用 ARM 原生标志位。更快。（Extreme-2 使用）<br /><br />
+        <b>何时改动：</b>这是最有效的提速手段之一，值得一试。如果某个游戏开始出现不合逻辑的行为——比较结果反向、AI 表现异常——请改回 0，这类情况通常不会崩溃。
+        ]]></string>
+    <string name="box64_env_var_help__dynarec_pause"><![CDATA[
+        启用 x86 PAUSE 指令模拟，可能有助于提升自旋锁的性能。<br /><br />
+        <b>0</b>：忽略 x86 PAUSE 指令。<br />
+        <b>1</b>：使用 YIELD 模拟 x86 PAUSE 指令。<br />
+        <b>2</b>：使用 WFI 模拟 x86 PAUSE 指令。<br />
+        <b>3</b>：使用 SEVL+WFE 模拟 x86 PAUSE 指令。
+        <br /><br /><b>何时调整：</b>对在线程之间自旋等待的游戏有影响。如果游戏占满 CPU、发热严重却几乎没做什么事，试试 1 或 3——恰当的让出能让另一个线程真正推进，而不是两个线程争夺同一个核心。
+        ]]></string>
+    <string name="box64_env_var_help__avx"><![CDATA[
+        已实现 AVX 与 AVX2，以及 BMI1、BMI2、ADX、FMA、F16C 和 RDANDR 扩展！<br /><br />
+        <b>0</b> ：关闭 AVX 扩展<br />
+        <b>1</b> ：启用 AVX、BMI1、F16C 和 VAES 扩展。<br />
+        <b>2</b> ：包含 1 的全部内容，并额外启用 AVX2、BMI2、FMA、ADX、VPCLMULQDQ 和 RDRAND。<br />\
+        <br /><br /><b>何时调整：</b>遇到会检测 AVX 或 AVX2、缺少它们就拒绝启动的新游戏时，调高此项。若游戏检测到 AVX 后走了那条代码路径，结果渲染出错或崩溃，就降到 0 —— 模拟的 AVX 并不总能完全一致。
+        ]]></string>
+    <string name="box64_env_var_help__maxcpu"><![CDATA[
+        Box64 告诉游戏它有多少个 CPU 核心。<br /><br />
+        <b>0</b>：报告真实核心数。（默认）<br />
+        <b>4</b> / <b>8</b> / <b>16</b> / <b>32</b> / <b>64</b>：限制上报的核心数。<br /><br />
+        <b>何时需要调整：</b>有些游戏会为每个核心创建一个工作线程，在多核手机上就会撑不住——卡顿、线程饥饿，或者启动时直接崩溃。限制到 4 或 8 通常就能解决。少数老游戏在超过 32 时还会直接出错。
+        ]]></string>
+    <string name="box64_env_var_help__unityplayer"><![CDATA[
+        检测 UnityPlayer.dll，并自动应用 Unity 游戏所需的更强内存顺序，同时不拖慢其他游戏。<br /><br />
+        <b>0</b>：关闭。Unity 游戏需手动设置 STRONGMEM。<br />
+        <b>1</b>：开启。检测到 Unity 游戏时自动应用。（默认）<br /><br />
+        <b>何时修改：</b>保持开启——对非 Unity 游戏没有任何开销。只有在你手动设置内存顺序、不希望出现意外时才关闭。
+        ]]></string>
+    <string name="box64_env_var_help__mmap32"><![CDATA[
+        强制把内存分配限制在低 32 位地址范围内，让每个指针都能装进 32
+        位。<br /><br />
+        <b>0</b> ：可在 64 位空间的任意位置分配。<br />
+        <b>1</b> ：强制使用低 32 位空间。（默认）<br /><br />
+        <b>何时修改：</b>32 位游戏需要它，那些把指针草率地塞进 32 位字段的
+        64 位游戏也需要。如果是大型 64 位游戏出现内存不足，请关掉它，
+        因为不管设备有多少内存，低端空间都只有 4 GB。
+        ]]></string>
+    <string name="fexcore_env_var_help__tsoenabled"><![CDATA[
+        全存储顺序（TSO）。x86 保证内存写入按发生顺序对其他线程可见；ARM 不提供这种保证。FEX 可以强制实现，但要付出代价。<br /><br />
+        <b>0</b>：关闭。明显更快。<br />
+        <b>1</b>：开启。对多线程游戏才正确。（默认）<br /><br />
+        <b>何时更改：</b>这是最重要的正确性开关。需要它却没开启的游戏会随机崩溃、卡死、损坏存档或在多人对战中不同步 —— 很少在同一处出现两次。只有简单或单线程游戏才可以关闭。
+        ]]></string>
+    <string name="fexcore_env_var_help__vectortsoenabled"><![CDATA[
+        把存储顺序扩展到向量（SIMD）加载与存储，让它们同样具备原子性。<br /><br />
+        <b>0</b>：关闭。（在“性能”和“极致”预设下默认如此）<br />
+        <b>1</b>：开启。更慢——多数游戏里向量内存流量都很大。<br /><br />
+        <b>何时调整：</b>很少需要。只有那些在共享缓冲区上做多线程 SIMD 运算的游戏才需要。如果某个崩溃被稳定性相关设置修好了、而你正在一步步排查是哪个开关起的作用，那可以试试打开它。
+        ]]></string>
+    <string name="fexcore_env_var_help__halfbarriertsoenabled"><![CDATA[
+        在开启存储顺序时，对非对齐的加载和存储使用开销更低的半屏障，而不是完整屏障。<br /><br />
+        <b>0</b>：完整屏障。保证最强，速度最慢。<br />
+        <b>1</b>：半屏障。速度更快，保证略弱。<br /><br />
+        <b>何时需要调整：</b>在性能与稳定性之间一个实用的折中。如果某个游戏需要顺序保证，但完整屏障的开销太大，先试试开启这一项，再考虑放弃速度。
+        ]]></string>
+    <string name="fexcore_env_var_help__memcpysettsoenabled"><![CDATA[
+        让批量内存指令 REP MOVS 和 REP STOS——即块拷贝与块填充——在存储顺序下也具备原子性。<br /><br />
+        <b>0</b>：关闭。更快，而且块拷贝是游戏引擎里最热的操作之一。（在快速类预设下默认如此）<br />
+        <b>1</b>：开启。更慢，但当多个线程共享被拷贝的缓冲区时才是正确的。<br /><br />
+        <b>何时调整：</b>如果游戏在高负载下损坏贴图、音频或存档，而其他方面看起来依然稳定——这是一个线程正在读取另一个线程尚未拷完的缓冲区的迹象——那就把它打开。
+        ]]></string>
+    <string name="fexcore_env_var_help__multiblock"><![CDATA[
+        FEX 是否把若干相连的代码块一起编译，而不是逐个编译。<br /><br />
+        <b>0</b>：一次编译一块。编译快，代码较慢。<br />
+        <b>1</b>：跨块编译，FEX 可优化整条路径。代码更快，编译更久。（默认）<br /><br />
+        <b>何时修改：</b>想要稳定帧率就保持开启。如果首次进入新区域时的卡顿（第一次进去顿一下，之后就流畅）比平均速度更让你在意，就关闭。
+        ]]></string>
+    <string name="fexcore_env_var_help__hostfeatures"><![CDATA[
+        强制开启或关闭 CPU 特性，而不是让 FEX 自行检测。<br /><br />
+        <b>off</b>：自动检测。（默认）<br />
+        <b>enableavx</b> / <b>disableavx</b>：在告知游戏的信息中强制开启或关闭 AVX。<br />
+        <b>enablesve</b> / <b>disablesve</b>：在 FEX 内部使用时强制开启或关闭
+        ARM 可伸缩向量扩展。<br /><br />
+        <b>何时更改：</b>若游戏声称需要 AVX 而拒绝启动，请用 enableavx；
+        若游戏检测到 AVX、进入 AVX 代码路径后行为异常，请用 disableavx。SVE 选项
+        用于在实际支持该特性的芯片上做测试。
+        ]]></string>
+    <string name="fexcore_env_var_help__smalltscscale"><![CDATA[
+        对 CPU 时间戳计数器进行缩放，游戏正是靠读取它来衡量经过的时间。手机
+        计数器的频率往往与游戏所预期的桌面 CPU 相差很大。<br /><br />
+        <b>0</b> ：计数器原样传递，不做缩放。<br />
+        <b>1</b> ：缩放到游戏能够正确解读的数值。（默认）<br /><br />
+        <b>何时修改：</b>当游戏变成慢动作或快进、动画以错误速度播放，或者帧率
+        看起来正常但计时器却走错时，就该调这个选项。
+        ]]></string>
+    <string name="fexcore_env_var_help__smc_checks">自修改代码检查。</string>
+    <string name="fexcore_env_var_help__volatilemetadata"><![CDATA[
+        64 位 Windows 程序可以携带 volatile 元数据：由编译器精确标记哪些内存访问不得重排。FEX 能读取它，只在游戏真正需要的地方应用存储顺序，而不是处处应用。<br /><br />
+        <b>0</b>：忽略它。<br />
+        <b>1</b>：存在时使用。（默认）<br /><br />
+        <b>何时更改：</b>保持开启 —— 它几乎不花额外开销却更准确。对于未带该元数据构建的游戏，它完全不起作用。
+        ]]></string>
+    <string name="fexcore_env_var_help__monohacks"><![CDATA[
+        Mono 的兼容处理方案，Mono 是 Unity 游戏所基于的 .NET 运行时。Mono 会在运行中生成代码，
+        因此需要针对自修改代码检测和 JIT 代码块做特殊处理。<br /><br />
+        <b>0</b> ：关闭。<br />
+        <b>1</b> ：开启。检测到 Mono 时应用兼容处理。（默认）<br /><br />
+        <b>何时调整：</b>保持开启；它只对需要它的游戏生效。只有在排查某个 Unity 游戏异常是否与此有关时，
+        才临时关闭。
+        ]]></string>
+    <string name="fexcore_env_var_help__hidehypervisorbit"><![CDATA[
+        CPUID 中有一位表示代码是否运行在虚拟机监控程序之下。模拟环境看起来就像虚拟机监控程序，所以这一位通常会被置位。<br /><br />
+        <b>0</b> ：如实报告。<br />
+        <b>1</b> ：隐藏该位，让游戏以为自己跑在裸机上。（Denuvo 预设下默认开启）<br /><br />
+        <b>何时修改：</b>当某个游戏或反作弊认为自己在虚拟机中运行而拒绝启动、或启动后立刻退出时，就把它打开。
+        ]]></string>
+    <string name="fexcore_env_var_help__disablel2cache"><![CDATA[
+        FEX 用两级缓存保存翻译后的代码，此项会禁用第二级、也是更大的那一级。<br /><br />
+        <b>0</b>：保留 L2 缓存。更流畅，占用更多内存。（默认）<br />
+        <b>1</b>：禁用。占用内存更少，但代码需要更频繁地重新翻译，表现为卡顿。（Extreme-wn 预设使用）<br /><br />
+        <b>何时改动：</b>大型游戏内存紧张时开启。若在已经去过的区域反复出现卡顿，请改回关闭。
+        ]]></string>
+    <string name="fexcore_env_var_help__dynamicl1cache"><![CDATA[
+        让一级翻译代码缓存按需增长和收缩，而不是始终保持固定大小。<br /><br />
+        <b>0</b>：固定大小。可预测，无论是否需要都会占用内存。（默认）<br />
+        <b>1</b>：动态。空闲时占用更少内存，但扩容时会偶尔卡顿。（由 Extreme-wn 预设使用，并配合下方两个启发式计数器）<br /><br />
+        <b>何时调整：</b>内存紧张的设备或体量很大的游戏可开启；如果你更想要稳定的帧节奏而不是省内存，就关闭。
+        ]]></string>
+    <string name="fexcore_env_var_help__x87reducedprecision"><![CDATA[
+        x87 是旧的浮点运算单元，以 80 位扩展精度工作，ARM 没有对应实现。<br /><br />
+        <b>0</b>：模拟完整的 80 位精度。准确但慢。<br />
+        <b>1</b>：改用普通 64 位双精度浮点。快得多。（兼容性以上的每个预设均默认）<br /><br />
+        <b>何时更改：</b>如果较老的游戏出现渲染错误、几何裂缝，或长时间游玩后物理逐渐漂移出错，请改回 0。现代游戏几乎不用 x87，两种设置对它们都没有影响。
+        ]]></string>
+    <string name="columns">列数</string>
+    <string name="directinput_mapper_type">DirectInput 映射类型</string>
+    <string name="desktop">桌面</string>
+    <string name="theme">主题</string>
+    <string name="background">背景</string>
+    <string name="max_device_memory">最大设备内存</string>
+    <string name="frame_rate">帧率</string>
+    <string name="configuration">配置</string>
+    <string name="browse">浏览</string>
+    <string name="magnifier">放大镜</string>
+    <string name="bring_to_front">置于顶层</string>
+    <string name="options">选项</string>
+    <string name="enable_experimental_wow64_mode">启用实验性 WoW64 模式</string>
+    <string name="logs">日志</string>
+    <string name="enable_wine_debug">启用 Wine 调试</string>
+    <string name="enable_box64_logs">启用 Box64 日志</string>
+    <string name="export">导出</string>
+    <string name="logs_exported_to">日志导出到</string>
+    <string name="general">通用</string>
+    <string name="msg_warning_install_wine">警告：安装新版本的 Wine 仅建议用于测试目的。</string>
+    <string name="startup_selection">启动选择</string>
+    <string name="wine_debug_channel">Wine 调试通道</string>
+    <string name="game_controller">游戏手柄</string>
+    <string name="vibration">振动</string>
+    <string name="vibration_slot">槽位 %1$d</string>
+    <string name="vibration_mode_label">振动目标</string>
+    <string name="vibration_mode_off">关闭</string>
+    <string name="vibration_mode_controller">手柄</string>
+    <string name="vibration_mode_device">设备</string>
+    <string name="vibration_mode_both">两者</string>
+    <string name="vibration_intensity_label">振动强度</string>
+    <string name="gyro">陀螺仪（体感瞄准）</string>
+    <string name="gyro_enabled">启用体感瞄准</string>
+    <string name="gyro_mode_label">体感模式</string>
+    <string name="gyro_mode_rate">速率</string>
+    <string name="gyro_mode_orientation">倾斜瞄准</string>
+    <string name="gyro_target_label">体感目标</string>
+    <string name="gyro_target_right_stick">右摇杆</string>
+    <string name="gyro_target_left_stick">左摇杆</string>
+    <string name="gyro_target_mouse">鼠标</string>
+    <string name="gyro_activator_label">激活按键</string>
+    <string name="gyro_activator_always">始终开启</string>
+    <string name="gyro_activation_mode_label">激活</string>
+    <string name="gyro_activation_hold">按住</string>
+    <string name="gyro_activation_toggle">切换</string>
+    <string name="gyro_sensitivity_label">灵敏度</string>
+    <string name="gyro_deadzone_label">死区</string>
+    <string name="gyro_smoothing_label">平滑</string>
+    <string name="gyro_invert_x">反转 X</string>
+    <string name="gyro_invert_y">反转 Y 轴</string>
+    <string name="stick_tuning_title">摇杆</string>
+    <string name="stick_tuning_hint">死区会忽略摇杆的微小移动；如果摇杆漂移，可调高它。灵敏度高于 1.00x 时，同样的推动量会得到更强的响应，低于 1.00x 则更细腻。</string>
+    <string name="stick_left_deadzone">左摇杆死区</string>
+    <string name="stick_left_sensitivity">左摇杆灵敏度</string>
+    <string name="stick_right_deadzone">右摇杆死区</string>
+    <string name="stick_right_sensitivity">右摇杆灵敏度</string>
+    <string name="stick_smooth_edge">平滑边缘</string>
+    <string name="stick_smooth_edge_hint">越过死区后输出从零开始，而不是直接跳变。关闭则保持原有行为。</string>
+    <string name="stick_tuning_reset">重置摇杆</string>
+    <string name="stick_tuning_override">覆盖容器摇杆设置</string>
+    <string name="stick_tuning_inherit_hint">关闭时使用容器的摇杆设置。</string>
+    <string name="stick_tuning_inherit">使用容器摇杆</string>
+    <string name="stick_tuning_inherit_sub">移除本游戏的摇杆覆盖设置</string>
+    <string name="gyro_drawer_title">陀螺仪</string>
+    <string name="gyro_drawer_enabled">已启用</string>
+    <string name="gyro_drawer_mode">体感模式</string>
+    <string name="gyro_drawer_mode_rate">速率</string>
+    <string name="gyro_drawer_mode_orientation">倾斜瞄准</string>
+    <string name="gyro_drawer_orientation_hint">摇杆会跟随你持机时的倾斜角度，因此保持倾斜就能持续瞄准。</string>
+    <string name="gyro_drawer_orientation_unsupported">不可用——此设备没有旋转矢量传感器。</string>
+    <string name="gyro_drawer_orientation_mouse_hint">鼠标目标下不可用——请先选择一个摇杆。</string>
+    <string name="gyro_drawer_recenter">重新居中</string>
+    <string name="gyro_drawer_recenter_hint">将当前握持姿态设为中心。</string>
+    <string name="gyro_drawer_mouse_unavailable_hint">“倾斜瞄准”模式下无法使用鼠标——持续倾斜会把指针推出屏幕。</string>
+    <string name="gyro_drawer_apply_to">陀螺仪应用对象</string>
+    <string name="gyro_drawer_target_right_stick">右摇杆</string>
+    <string name="gyro_drawer_target_left_stick">左摇杆</string>
+    <string name="gyro_drawer_target_mouse">鼠标</string>
+    <string name="gyro_drawer_mouse_hint">移动指针而非摇杆 —— 适用于桌面和需要鼠标视角的游戏。</string>
+    <string name="gyro_drawer_activation">激活方式</string>
+    <string name="gyro_drawer_activator_always">始终</string>
+    <string name="gyro_drawer_toggle_hint">点按按钮开启陀螺仪，再次点按关闭。</string>
+    <string name="experimental">实验性</string>
+    <string name="glibc_exp_edition">基于</string>
+    <string name="enabled_async">启用异步</string>
+    <string name="enabled_async_cache">启用异步缓存</string>
+    <string name="vkd3d_feature_level">VKD3D 功能级别</string>
+    <string name="filter">筛选</string>
+    <string name="all">全部</string>
+    <string name="group">分组</string>
+    <string name="groups">分组</string>
+    <string name="group_label">分组</string>
+    <string name="create_new_group">新建分组</string>
+    <string name="create">创建</string>
+    <string name="group_visibility">分组可见性</string>
+    <string name="icon_style">图标样式</string>
+    <string name="group_element_count">%1$d 个元素</string>
+    <string name="no_groups">暂无分组</string>
+    <string name="new_group">新建分组</string>
+    <string name="import_group">导入分组</string>
+    <string name="new_file">新建文件</string>
+    <string name="new_item">新建项目</string>
+    <string name="group_edit">批量编辑</string>
+    <string name="group_name">分组名称</string>
+    <string name="do_you_want_to_duplicate_this_group">要复制此分组吗？</string>
+    <string name="do_you_want_to_remove_this_group">要删除此分组吗？</string>
+    <string name="do_you_want_to_duplicate_this_process">要复制此进程吗？</string>
+    <string name="do_you_want_to_remove_this_process">要移除这个进程吗？</string>
+    <string name="do_you_want_to_remove_this_variable">要删除这个变量吗？</string>
+    <string name="variable_name">变量名</string>
+    <string name="variable_already_exists">变量已存在</string>
+    <string name="cannot_remove_default_profile">无法删除默认配置。</string>
+    <string name="cannot_edit_default_profile">无法编辑默认配置。</string>
+    <string name="do_you_want_to_restore_default_profile">要恢复默认配置吗？</string>
+    <string name="simulate_touch_screen">模拟触摸屏</string>
+    <string name="install_content">安装内容</string>
+    <string name="content_type">内容类型</string>
+    <string name="contents">内容</string>
+    <string name="do_you_want_to_install_content">是否安装附加内容？</string>
+    <string name="pls_make_sure_content_trustworthy">内容中包含可执行文件。不安全的可执行文件可能危及你的数据和设备安全。安装前，请务必确认你要安装的附加内容是可信来源。</string>
+    <string name="content_suffix_is_wcp_packed_xz_zst">内容文件使用 .wcp 扩展名，并以 xz 或 zst 格式压缩。</string>
+    <string name="installing_content">正在安装内容…</string>
+    <string name="unable_to_install_content">无法安装内容。</string>
+    <string name="install_failed">安装失败</string>
+    <string name="file_cannot_be_recognied">无法识别该文件。</string>
+    <string name="profile_not_found_in_content">内容中未找到配置</string>
+    <string name="profile_cannot_be_recognized">无法识别配置</string>
+    <string name="content_already_exist">你尝试安装的内容已存在。</string>
+    <string name="content_info">内容信息</string>
+    <string name="version_code">版本代码</string>
+    <string name="description">描述</string>
+    <string name="file_list">文件列表</string>
+    <string name="_continue">继续</string>
+    <string name="content_installed_success">内容安装成功！</string>
+    <string name="content_cannot_be_trusted">无法确认内容可信。</string>
+    <string name="content_is_incomplete">内容不完整。</string>
+    <string name="warning_content_has_untrusted_files">警告：附加内容包含不受信任的文件。通常不应修改以下文件。请自行决定是否继续安装。</string>
+    <string name="warning">警告</string>
+    <string name="do_you_want_to_remove_this_content">要移除此内容吗？</string>
+    <string name="add_to_home_screen">添加到主屏幕</string>
+    <string name="shortcut_not_available">此快捷方式已不可用，请删除或重新创建。</string>
+    <string name="enable_file_provider">启用文件提供器</string>
+    <string name="take_effect_next_startup">该选项将在下次启动时生效。</string>
+    <string name="reinstall_imagefs">重装 Imagefs</string>
+    <string name="do_you_want_to_reinstall_imagefs">要重新安装 imagefs 吗？此操作会恢复系统文件，你的容器不会被改动。</string>
+    <string name="unable_to_remove_content_since_container_using">无法删除此内容，因为有容器正在使用该 Wine。</string>
+    <string name="get_more_contents_form_github">你可以访问 https://github.com/The412Banner/Bannerlator/releases 获取更多内容。</string>
+    <string name="setup_failed">设置失败</string>
+    <string name="graphics_driver_configuration">Turnip/包装器驱动配置</string>
+    <string name="select_graphics_driver_version">选择显卡驱动版本：</string>
+    <string name="graphics_driver_version">显卡驱动版本</string>
+    <string name="graphics_driver_available_extensions">可用扩展</string>
+    <string name="add_to_homescreen">添加到主屏幕</string>
+    <string name="add_save">添加存档</string>
+    <string name="saves">存档</string>
+    <string name="import_save">导入存档</string>
+    <string name="transfer">传输</string>
+    <string name="share">分享</string>
+    <string name="unregister">注销</string>
+    <string name="no_saves_to_display">没有可显示的存档</string>
+    <string name="new_save">注册存档</string>
+    <string name="save_path">存档路径</string>
+    <string name="save_title">存档名称</string>
+    <string name="save_container">已选容器</string>
+    <string name="select_save_path">定位存档文件夹</string>
+    <string name="select_container_first">请选择包含你的存档的容器。</string>
+    <string name="fill_all_fields">路径和存档名称为必填项</string>
+    <string name="invalid_path">存档目录路径无效</string>
+    <string name="confirm_selection">确认选择</string>
+    <string name="select_directory">选择存档目录</string>
+    <string name="invalid_container">路径无效</string>
+    <string name="up_directory">上级目录</string>
+    <string name="edit_save_title">更新存档标题</string>
+    <string name="edit_save">编辑存档</string>
+    <string name="original_save_path">已登记的存档路径</string>
+    <string name="updated_save_path">已更新存档路径</string>
+    <string name="confirmation">确认</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="path_not_changed_prompt">路径未更改，是否继续？</string>
+    <string name="save_transfer">转移存档</string>
+    <string name="select_container">目标容器：</string>
+    <string name="transfer_complete">传输完成</string>
+    <string name="transfer_failed">传输失败</string>
+    <string name="unable_to_transfer_save">无法传输存档</string>
+    <string name="spinner_container_selection">正在传输…</string>
+    <string name="name_required">名称为必填项</string>
+    <string name="exporting_save">正在导出存档…</string>
+    <string name="importing_save">正在导入存档...</string>
+    <string name="_copy">复制</string>
+    <string name="backing_up_data">正在备份数据…</string>
+    <string name="restoring_data">正在恢复数据…</string>
+    <string name="midi_sound_font">MIDI 音色库</string>
+    <string name="sound">声音</string>
+    <string name="do_you_want_to_remove_this_sound_font">要移除这个音色库吗？</string>
+    <string name="sound_font_removed_success">音色库已成功移除！</string>
+    <string name="sound_font_removed_failed">音色库删除失败！</string>
+    <string name="sound_font_installed_success">音色库安装成功！</string>
+    <string name="sound_font_installed_failed">音色库安装失败！</string>
+    <string name="sound_font_already_exist">要安装的音色库已经存在。</string>
+    <string name="unable_to_install_soundfont">无法安装音色库</string>
+    <string name="installing_soundfont">正在安装 SoundFont…</string>
+    <string name="sound_font_bad_format">SoundFont 格式错误。</string>
+    <string name="cannot_remove_default_sound_font">无法删除默认音色库</string>
+    <string name="enable_dinput_for_wine_game">为 Wine 中的游戏启用 DInput</string>
+    <string name="enable_xinput_for_wine_game">为 Wine 中的游戏启用 XInput</string>
+    <string name="help_xinput"><![CDATA[
+        如果你的游戏使用 <i><b>XInput API</b></i> 来支持游戏手柄，请启用此选项。<br/><br/>
+        此选项会同时影响 <i><b>虚拟</b></i> 手柄（由“输入控制”提供）和 <i><b>物理</b></i> 手柄。
+    ]]></string>
+    <string name="help_dinput"><![CDATA[
+        如果你的游戏通过 <i><b>DInput API</b></i> 支持游戏控制器，请启用此项。<br/><br/>
+        该选项会同时影响<i><b>虚拟</b></i>控制器（由输入控制提供）和<i><b>实体</b></i>控制器。
+    ]]></string>
+    <string name="help_exclusive_xinput">某些游戏（如 Rayman Origins 和 Need for Speed: Most Wanted 2005）在使用 DInput 时需要关闭此项。</string>
+    <string name="enable_xinput_and_dinput_same_time">部分游戏可能同时支持这两种 API。在这类游戏中同时启用 XInput 和 DInput 可能导致控制异常，《以撒的结合》和《生化危机》系列就出现过这种情况。</string>
+    <string name="startup_normal">正常（加载全部服务）</string>
+    <string name="startup_essential">精简（仅加载必要服务）</string>
+    <string name="startup_aggressive">激进（启动时停止服务）</string>
+    <string name="toggle_orientation">切换方向</string>
+    <string name="help_file_provider"><![CDATA[
+        <i><b>文件提供器</b></i>允许通过 Android 文件管理器访问 Winlator 的内部数据。<br/><br/>
+    ]]></string>
+    <string name="reconfigure">重新配置</string>
+    <string name="do_you_want_to_reconfigure_wine">要在下次启动时重新配置此容器吗？这会清除时间戳以触发 Wine 配置。</string>
+    <string name="primary_controller">主控制器</string>
+    <string name="left_controller">左控制器</string>
+    <string name="right_controller">右控制器</string>
+    <string name="button_a">A 键</string>
+    <string name="button_b">B 键</string>
+    <string name="button_x">X 键</string>
+    <string name="button_y">Y 键</string>
+    <string name="button_grip">握把键</string>
+    <string name="button_trigger">扳机键</string>
+    <string name="thumbstick_left">左摇杆</string>
+    <string name="thumbstick_right">右摇杆</string>
+    <string name="thumbstick_up">摇杆上推</string>
+    <string name="thumbstick_down">摇杆按下</string>
+    <string name="secondary_executable">路径：</string>
+    <string name="enter_secondary_exec_path"> 例："D:/Games/My Game/My Game.exe"</string>
+    <string name="exec_delay">延迟执行（秒）：</string>
+    <string name="enter_delay_seconds">请输入延迟秒数：</string>
+    <string name="use_secondary_executable">使用次要可执行文件？</string>
+    <string name="secondary_exec">次要可执行文件</string>
+    <string name="secondary_exe_path_subtext">（路径中的空格必须用引号包裹）</string>
+    <string name="pip_mode">画中画模式</string>
+    <string name="configure">配置</string>
+    <string name="enable_sendinput_mode">使用 Windows SendInput 模式</string>
+    <string name="help_steamgrid">SteamGrid API 密钥</string>
+    <string name="disable_xinput_for_shortcut">禁用 Xinput（独占键鼠控制）</string>
+    <string name="num_controllers">控制器数量</string>
+    <string name="fullscreen_stretched">启用全屏（拉伸）</string>
+    <string name="fullscreen_mode">全屏模式</string>
+    <string name="fullscreen_mode_off">关闭（窗口化）</string>
+    <string name="fullscreen_mode_fit">适应（留黑边）</string>
+    <string name="fullscreen_mode_stretch">拉伸（填充）</string>
+    <string name="fullscreen_mode_fill">填充（裁剪）</string>
+    <string name="fullscreen_mode_integer">整数（像素级精确）</string>
+    <string name="fullscreen_mode_default">使用容器默认值</string>
+    <string name="fullscreen_mode_off_short">关闭</string>
+    <string name="fullscreen_mode_fit_short">适应</string>
+    <string name="fullscreen_mode_stretch_short">拉伸</string>
+    <string name="fullscreen_mode_fill_short">填充</string>
+    <string name="fullscreen_mode_integer_short">整数</string>
+    <string name="screen_alignment">屏幕对齐</string>
+    <string name="screen_alignment_center">居中</string>
+    <string name="screen_alignment_top">顶部</string>
+    <string name="screen_alignment_bottom">底部</string>
+    <string name="screen_alignment_center_short">居中</string>
+    <string name="screen_alignment_top_short">顶部</string>
+    <string name="screen_alignment_bottom_short">底部</string>
+    <string name="screen_alignment_disabled_hint">在拉伸或填充模式下无效（没有黑边可移动）。</string>
+    <string name="frame_generation">帧生成（AI）</string>
+    <string name="frame_generation_off">关闭</string>
+    <string name="frame_generation_bionic">Win-FG 原生（内置）</string>
+    <string name="frame_generation_lsfg_native">LSFG 原生（Lossless Scaling）</string>
+    <string name="frame_generation_multiplier">倍率</string>
+    <string name="frame_generation_lsfg_needs_dll">lsfg-vk 不可用 —— 请在设置底部导入 Lossless.dll 以启用。</string>
+    <string name="frame_generation_requires_vulkan">帧生成需要 Vulkan 渲染器。</string>
+    <string name="present_mode_fg_locked">开启帧生成时必须启用 Mailbox。</string>
+    <string name="frame_generation_ingame_hint">可在游戏内侧边菜单中实时调整倍率 &amp; 流缩放。</string>
+    <string name="frame_generation_model">插值模式</string>
+    <string name="frame_generation_model_default">光流</string>
+    <string name="frame_generation_model_traced">光流</string>
+    <string name="frame_generation_model_v2">光流</string>
+    <string name="frame_generation_model_fsr3">光流</string>
+    <string name="frame_generation_model_fsr3_v2">光流 · 双向</string>
+    <string name="frame_generation_model_experimental_hint">实验性模型——可能渲染错误，或带来的性能损耗大于收益。如果游戏出现异常，请切回“默认”。</string>
+    <string name="frame_generation_lsfg_hint">使用你导入的 Lossless.dll（在设置页面底部指定）。可在游戏内侧边菜单中实时调整倍率 &amp; 光流缩放。</string>
+    <string name="frame_generation_lsfg_native_hint">在 WinHub 内部而非游戏内部运行 Lossless Scaling 着色器，让额外帧直接送达屏幕。需要已导入的 Lossless.dll、Vulkan 渲染器，以及支持 Vulkan 1.3 的渲染驱动（较旧的 Adreno GPU 请在渲染驱动中选择 Turnip 驱动）。画面更顺滑；但与所有帧插值一样，会增加约一帧的输入延迟。</string>
+    <string name="frame_generation_lsfg_native_unsupported">此设备上 LSFG Native 不可用：%1$s</string>
+    <string name="fg_experimental_header">实验性（LSFG 原生）</string>
+    <string name="fg_capture_resolution">捕获分辨率</string>
+    <string name="fg_capture_resolution_hint">帧生成链运行的高度；宽度跟随你屏幕\'的宽高比。数值越低，GPU 开销越小，画面也越柔和。面板 = 屏幕完整分辨率（默认）。游戏 = 游戏实际渲染的高度（含每个游戏的屏幕尺寸和渲染缩放）。最低不低于屏幕的四分之一。后期效果、升频器和渲染缩放都会按所选尺寸继续工作。</string>
+    <string name="fg_capture_panel">面板（默认）</string>
+    <string name="fg_capture_game">游戏分辨率</string>
+    <string name="lsfg_vk11_compat">在 Vulkan 1.1 驱动上运行 LSFG（兼容）</string>
+    <string name="lsfg_vk11_compat_hint">当合成器的自带驱动只报告 Vulkan 1.1、但提供了所需扩展时，允许 LSFG Native 在该驱动上运行（许多 Adreno 机型属于这种情况）。在运行 LSFG Native 的游戏启动时生效，包含按游戏设置的引擎覆盖。若着色器加载失败，游戏会作出提示，帧生成会回退为关闭。</string>
+    <string name="frame_generation_lsfg_native_preparing">正在从你的 Lossless.dll 准备帧生成着色器…</string>
+    <string name="fg_performance_mode">性能模式</string>
+    <string name="fg_performance_mode_hint">降低画质以换取更高 FPS——对低端设备有帮助。也可以在游戏内侧边菜单中随时切换。</string>
+    <string name="lsfg_auto_enable">启动时自动启用</string>
+    <string name="lsfg_auto_enable_hint">启动时即按已保存的倍率开启帧生成，而不是保持关闭状态。保持关闭则只加载该层，之后可在游戏内侧边菜单中按需为每次会话开启。</string>
+    <string name="fps_limiter">帧率限制</string>
+    <string name="fps_limiter_ingame_hint">加载限制器；可在游戏内帧率菜单中实时设置上限（10–200）。</string>
+    <string name="match_refresh_rate">刷新率与帧率同步</string>
+    <string name="match_refresh_rate_hint">向显示刷新率提交建议，使其跟随游戏帧率（画面更顺滑 + 更省电）。仅在帧率限制器生效时限时起作用；否则面板按原速率自由运行。</string>
+    <string name="match_refresh_rate_unsupported">此显示器不可用（仅单一刷新率或 Android 10 及更早版本）。</string>
+    <string name="auto_match_fps">自动（匹配帧率）</string>
+    <string name="manual_refresh_rate">手动刷新率</string>
+    <string name="manual_refresh_rate_hint">“自动”关闭时，把显示面板锁定到所选刷新率（与帧率上限无关）。关闭则面板自由运行。</string>
+    <string name="max_game_refresh_rate_unlimited">无限制</string>
+    <string name="in_game_refresh_rate">游戏内刷新率</string>
+    <string name="in_game_refresh_locked">锁定（60）</string>
+    <string name="in_game_refresh_rate_hint">游戏在自己的显示菜单中可选的最高刷新率。「锁定」会让游戏保持 60 Hz；选定某个刷新率或「不限制」则解除限制（需要支持刷新率的 Proton 层）。大多数游戏只在启动时读取此项。</string>
+    <string name="refresh_unlock_needs_compatible_layer">游戏内解锁刷新率需要支持刷新率的 Proton 层 —— 请安装 Refreshed Proton 10.0-4 / 11.0-1 版本。</string>
+    <string name="refresh_unlock_layer_incompatible_hint">为该容器选定的 Proton 不支持刷新率 —— 请安装 Refreshed Proton 10.0-4 / 11.0-1 版本，该设置才会生效。</string>
+    <string name="use_container_default">使用容器默认值</string>
+    <string name="export_container">导出容器</string>
+    <string name="exporting_container">正在导出容器…</string>
+    <string name="importing_container">正在导入容器…</string>
+    <string name="brightness">亮度</string>
+    <string name="contrast">对比度</string>
+    <string name="gamma">伽马</string>
+    <string name="color_adjustment">色彩调整</string>
+    <string name="enable_fxaa">启用 FXAA</string>
+    <string name="enable_crt_shader">启用 CRT 着色器</string>
+    <string name="do_you_want_to_add_a_new_profile">要添加新的配置吗？</string>
+    <string name="default_profile">默认配置</string>
+    <string name="reset">重置</string>
+    <string name="enable_toon_shader">启用卡通着色器</string>
+    <string name="enable_ntsc_effect">启用 NTSC 效果</string>
+    <string name="enter_profile_name">输入配置名称</string>
+    <string name="configure_analog_sticks">配置模拟摇杆</string>
+    <string name="analog_stick_settings">摇杆设置</string>
+    <string name="left_analog_stick_settings">左摇杆设置</string>
+    <string name="right_analog_stick_settings">右摇杆设置</string>
+    <string name="deadzone">死区：%1$d%%</string>
+    <string name="sensitivity">灵敏度：%1$d%%</string>
+    <string name="invert_x_axis_left">反转 X 轴（左摇杆）</string>
+    <string name="invert_y_axis_left">反转 Y 轴（左摇杆）</string>
+    <string name="invert_x_axis_right">反转 X 轴（右摇杆）</string>
+    <string name="invert_y_axis_right">反转 Y 轴（右摇杆）</string>
+    <string name="save">保存</string>
+    <string name="use_xr">使用 OpenXR 集成</string>
+    <string name="not_connected">未连接</string>
+    <string name="preferences_button_text">   偏好设置   </string>
+    <string name="help_button_text">   帮助   </string>
+    <string name="exit_button_text">   退出   </string>
+    <string name="extra_keys_config_desc">此处可像 Termux 应用那样设置附加按键（extra-keys）变量的值（参见<a href="http://wiki.termux.com/wiki/Touch_Keyboard#Extra_Keys_Row">此处</a>），以及更多内容 \n
+例如 <b>META</b> 表示 <i>META 键</i>，\n
+<b>KEYBOARD</b> 表示 <i>软键盘开关键</i>，\n
+<b>PREFERENCES</b> 表示 <i>打开设置键</i>，\n
+<b>MOUSE_HELPER</b> 表示 <i>鼠标辅助开关键</i>，\n
+<b>STYLUS_HELPER</b> 表示 <i>触控笔点击覆盖层开关键</i>，\n
+<b>EXIT</b> 表示 <i>退出应用键</i>。</string>
+    <string name="notification_content_text">下拉以显示选项</string>
+    <string name="notification_open_preferences">偏好设置</string>
+    <string name="notification_exit">退出</string>
+    <string name="notification_restart_activity">重启</string>
+    <string name="notification_toggle_soft_keyboard">切换输入法</string>
+    <string name="notification_toggle_additional_key_bar">切换附加键盘</string>
+    <string name="notification_release_pointer_and_keyboard_capture">释放捕获</string>
+    <string name="notification_toggle_fullscreen">切换全屏</string>
+    <string name="pref_main">偏好设置</string>
+    <string name="pref_output">输出</string>
+    <string name="pref_pointer">指针</string>
+    <string name="pref_kbd">键盘</string>
+    <string name="pref_other">其他</string>
+    <string name="pref_version">版本</string>
+    <string name="pref_ekbar">额外按键栏偏好</string>
+    <string name="pref_userActions">响应用户操作</string>
+    <string name="pref_displayResolutionMode">显示分辨率模式</string>
+    <string name="pref_displayScale">显示缩放，%</string>
+    <string name="pref_displayResolutionExact">显示分辨率</string>
+    <string name="pref_displayResolutionCustom">显示分辨率</string>
+    <string name="pref_adjustResolution">按屏幕方向调整设定分辨率</string>
+    <string name="pref_displayStretch">拉伸以适配显示</string>
+    <string name="pref_Reseed">软键盘打开时重绘屏幕</string>
+    <string name="pref_Reseed_summary">软键盘打开时会调整屏幕尺寸。</string>
+    <string name="pref_PIP">画中画模式</string>
+    <string name="pref_PIP_summary">按下主页键或最近任务键时，以画中画模式显示应用</string>
+    <string name="pref_fullscreen">全屏</string>
+    <string name="pref_fullscreen_summary">切换设备显示的沉浸模式</string>
+    <string name="pref_forceOrientation">屏幕方向</string>
+    <string name="pref_hideCutout">隐藏屏幕挖孔（如有）</string>
+    <string name="pref_keepScreenOn">保持屏幕常亮</string>
+    <string name="pref_touchMode">触屏输入模式</string>
+    <string name="pref_scaleTouchpad">对触控板应用显示缩放系数</string>
+    <string name="pref_showStylusClickOverride">显示触控笔点击选项</string>
+    <string name="pref_showStylusClickOverride_summary">触控笔触控覆盖为左键、中键或右键点击（仅触控笔）</string>
+    <string name="pref_stylusIsMouse">启用触控笔鼠标模式</string>
+    <string name="pref_stylusIsMouse_summary">让触控笔像鼠标一样工作。启用后，触控笔只会移动光标并发送鼠标点击，忽略压力、角度和倾斜。</string>
+    <string name="pref_stylusButtonContactModifierMode">触控笔按键接触修饰模式</string>
+    <string name="pref_stylusButtonContactModifierMode_summary">开启此项后，只有在按键被按住时触控笔接触屏幕，才会发送右键或中键操作。</string>
+    <string name="pref_showMouseHelper">显示鼠标点击辅助浮层</string>
+    <string name="pref_showMouseHelper_summary">可用触摸板点击的屏幕鼠标按键</string>
+    <string name="pref_pointerCapture">尽可能捕获外部指针设备</string>
+    <string name="pref_pointerCapture_summary">拦截所有硬件指针事件。按下 Escape 键后，指针交还 Android。</string>
+    <string name="pref_transformCapturedPointer">转换捕获的指针移动</string>
+    <string name="pref_capturedPointerSpeedFactor">捕获指针速度系数，%</string>
+    <string name="pref_tapToMove">为触摸板启用点按移动</string>
+    <string name="pref_showAdditionalKbd">显示附加键盘</string>
+    <string name="pref_showAdditionalKbd_summary">显示带附加按键的键盘。</string>
+    <string name="pref_showIMEWhileExternalConnected">外接键盘时显示输入法</string>
+    <string name="pref_showIMEWhileExternalConnected_summary">连接硬件键盘时仍显示软键盘。</string>
+    <string name="pref_preferScancodes">尽可能优先使用扫描码</string>
+    <string name="pref_preferScancodes_summary">由 X 服务器处理硬件键盘布局（使用桌面环境设置或 setxkbmap）。</string>
+    <string name="pref_hardwareKbdScancodesWorkaround">硬件键盘扫描码变通方案</string>
+    <string name="pref_hardwareKbdScancodesWorkaround_summary">修复部分设备上的扫描码问题。使用多种键盘布局时可能出问题。</string>
+    <string name="pref_dexMetaKeyCapture">拦截系统快捷键</string>
+    <string name="pref_dexMetaKeyCapture_summary">仅限 Samsung Dex。允许拦截 &quot;Alt+F4&quot;、&quot;Meta+D&quot;、&quot;Meta+E&quot; 等组合键。</string>
+    <string name="pref_enableAccessibilityService">启用无障碍服务，以便手动拦截系统快捷键。</string>
+    <string name="pref_enableAccessibilityService_summary">打开无障碍设置。</string>
+    <string name="pref_enableAccessibilityServiceAutomatically">启用无障碍服务，以自动拦截系统快捷键。</string>
+    <string name="pref_enableAccessibilityServiceAutomatically_summary">需要 WRITE_SECURE_SETTINGS 权限。</string>
+    <string name="pref_pauseKeyInterceptingWithEsc">拦截 Pause 键并映射为 Esc 键</string>
+    <string name="pref_filterOutWinkey">过滤被拦截的 Win（Meta/Mod4）键。</string>
+    <string name="pref_filterOutWinkey_summary">允许在拦截时使用 Dex 快捷键。需要无障碍服务才能生效。</string>
+    <string name="pref_enableGboardCJK">启用中日韩 Gboard 的变通方案</string>
+    <string name="pref_enableGboardCJK_summary">可能需要 Android 14 与 Gboard 14</string>
+    <string name="pref_clipboardEnable">剪贴板共享</string>
+    <string name="pref_requestNotificationPermission">请求通知权限</string>
+    <string name="pref_xrMode">Meta Oculus XR 模式</string>
+    <string name="pref_configureResponseToUserActions">配置对用户操作的响应</string>
+    <string name="pref_storeSecondaryDisplayPreferencesSeparately">为副屏单独保存偏好设置</string>
+    <string name="pref_storeSecondaryDisplayPreferencesSeparately_summary">在要配置的显示器上打开此界面</string>
+    <string name="pref_adjustHeightForEK">为附加按键栏调整显示高度</string>
+    <string name="pref_adjustHeightForEK_summary">切换 EK 栏时可能导致屏幕闪烁。</string>
+    <string name="pref_useTermuxEKBarBehaviour">按键后取消附加按键栏上的特殊键</string>
+    <string name="pref_useTermuxEKBarBehaviour_summary">长按以锁定特殊按键</string>
+    <string name="pref_opacityEKBar">附加按键栏不透明度，%</string>
+    <string name="pref_extra_keys_config">附加按键配置</string>
+    <string name="pref_swipeUpAction">三指上滑</string>
+    <string name="pref_swipeDownAction">三指下滑</string>
+    <string name="pref_volumeUpAction">音量+</string>
+    <string name="pref_volumeDownAction">音量减</string>
+    <string name="pref_backButtonAction">返回键</string>
+    <string name="pref_notificationTapAction">点击通知</string>
+    <string name="pref_notificationButton0Action">通知第一个按钮</string>
+    <string name="pref_notificationButton1Action">通知第二按钮</string>
+    <string name="pref_mediaKeysAction">媒体键</string>
+    <string name="pref_summary_requiresExactOrCustom">需把「显示分辨率模式」设为「精确」或「自定义」</string>
+    <string name="pref_summary_requiresIntercepting">需通过 Dex 模式或无障碍服务拦截系统快捷键</string>
+    <string name="pref_summary_requiresTrackpadAndNative">需要把“触摸屏输入模式”设为“触摸板”，并且“显示分辨率模式”不能是“原生”。</string>
+    <string name="fexcore_preset">FEXCore 预设</string>
+    <string name="preset_action_add">添加</string>
+    <string name="preset_action_edit">编辑</string>
+    <string name="preset_action_duplicate">复制</string>
+    <string name="preset_action_delete">删除</string>
+    <string name="preset_action_export">导出</string>
+    <string name="preset_action_import">导入</string>
+    <string name="preset_customised_badge">\u270E 自定义</string>
+    <string name="adrenotools_gpu_drivers">Adrenotools GPU 驱动</string>
+    <string name="install_drivers">安装驱动</string>
+    <string name="install_drivers_message">接下来会提示你选择驱动。这些驱动必须与其他模拟器（如 Yuzu、Dolphin、Citra 等）使用的驱动相同。</string>
+    <string name="install_drivers_warning">请注意：受当前 PC 模拟器的限制，Qualcomm 驱动在低于 8 Gen2 的芯片上可能不生效，需要先打补丁。</string>
+    <string name="enable_vulkan_api_dump">启用将 Vulkan API 调用导出到文件。</string>
+    <string name="dll_emulator">32 位模拟器</string>
+    <string name="open_with_android_browser">在 Wine 中打开 Android 浏览器</string>
+    <string name="share_android_clipboard">与 Wine 共享 Android 剪贴板</string>
+    <string name="ddraw_wrapper">DDraw 封装器</string>
+    <string name="fexcore_version">FEXCore 版本</string>
+    <string name="graphics_driver_max_device_memory">设备内存上限</string>
+    <string name="graphics_driver_sync_frame">每帧同步</string>
+    <string name="graphics_driver_disable_present_wait">禁用 KHR_present_wait</string>
+    <string name="graphics_driver_present_modes">呈现模式</string>
+    <string name="graphics_driver_resource_type">内存资源类型</string>
+    <string name="graphics_driver_vulkan_version">Vulkan 版本</string>
+    <string name="graphics_driver_bcn_emulation">BCn 模拟</string>
+    <string name="graphics_driver_bcn_emulation_type">BCn 模拟类型</string>
+    <string name="graphics_driver_bcn_emulation_cache">BCn 模拟缓存</string>
+    <string name="graphics_driver_bcn_emulation_astc">BCn → ASTC 转码</string>
+    <string name="bcn_layer_section">BCn 层设置</string>
+    <string name="bcn_layer_section_hint">在没有原生 BCn 支持的 GPU（Mali / Xclipse / PowerVR）上对 BC 压缩纹理进行转码。该层以隐式 Vulkan 层的形式随附；这些选项用于配置其环境变量。</string>
+    <string name="bcn_layer_force_decode">强制在所有 GPU 上解码</string>
+    <string name="bcn_layer_force_decode_hint">开启：始终转码（BCN_COMPUTE_AUTO=0——针对 Mali 的修复）。关闭：让图层自动检测（AUTO=1）。</string>
+    <string name="bcn_layer_transcode_etc2">转码为 ETC2</string>
+    <string name="bcn_layer_transcode_astc">转码为 ASTC</string>
+    <string name="bcn_layer_transcode_hint">ETC2 与 ASTC 实际上是互斥的，同时启用没有意义。两者都关闭即解码为 RGBA8。</string>
+    <string name="bcn_layer_image_view">存储映像路径</string>
+    <string name="bcn_layer_image_view_hint">开：存储图像（默认）。关：暂存缓冲。</string>
+    <string name="bcn_layer_debug_log">BCn 调试日志</string>
+    <string name="bcn_layer_debug_log_hint">把 BCn 层写入 Wine 调试日志（需开启「设置 &#8250; 日志 &#8250; Wine 调试」才能采集）。</string>
+    <string name="bcn_compat_sparse">模拟稀疏绑定（DX12）</string>
+    <string name="bcn_compat_sparse_hint">适用于使用平铺/稀疏资源的 D3D12 游戏。除非某个 DX12 游戏需要，否则请保持关闭。</string>
+    <string name="compat_use_gamenative">使用 GameNative 引擎（DX12）</string>
+    <string name="compat_use_gamenative_hint">DX12 游戏必需。在 GameNative 封装层（Vulkan 1.3 + 内置 BCn）上运行此驱动，而不是 leegao 层。关闭 = 仅用 BCn 纹理（默认）。仅限 Valhall Mali（r32p1+）。</string>
+    <string name="opengl_version">OpenGL 版本</string>
+    <string name="disableVertexArrayBGRA">禁用“Vertex array BGRA”</string>
+    <string name="disableKHRdebug">禁用 "KHR debug"</string>
+    <string name="disableTextureSRGBdecode">禁用“纹理 sRGB 解码”</string>
+    <string name="useOldVirGL">使用旧版 VirGL 服务端</string>
+    <string name="useOldVirGLinfo">（兼容性更好，速度较慢）</string>
+    <string name="vkbasalt_sharpness_effects">锐化效果</string>
+    <string name="vkbasalt_sharpness_level">锐度等级</string>
+    <string name="vkbasalt_sharpness_denoise">锐化降噪</string>
+    <string name="vulkan_settings">Vulkan 设置</string>
+    <string name="renderer_native">原生渲染器</string>
+    <string name="renderer_present_mode">呈现模式</string>
+    <string name="renderer_driver_id">渲染器驱动</string>
+    <string name="renderer_filter_mode">滤镜模式</string>
+    <string name="renderer_swap_rb">交换 R/B</string>
+    <string name="renderer_colors">颜色</string>
+    <string name="renderer_present_mode_immediate">立即</string>
+    <string name="renderer_filter_mode_nearest">最近邻</string>
+    <string name="renderer_filter_mode_linear">线性</string>
+    <string name="renderer_driver_system">系统</string>
+    <string name="shutdown">正在关闭…</string>
+    <string name="saving_on_exit">正在备份你的存档…</string>
+    <string name="downloading_on_launch">正在同步云存档…</string>
+    <string name="disable_mouse">切换鼠标</string>
+    <string name="custom_icon">自定义图标</string>
+    <string name="select_png_jpg_jpeg_ico">选择 PNG/JPG/JPEG/ICO</string>
+    <string name="shortcuticon">快捷方式图标</string>
+    <string name="active_windows">活动窗口</string>
+    <string name="contact_us">帮助与支持</string>
+    <string name="graphics_driver_show_incompatible">显示不兼容的驱动</string>
+    <string name="emu_id_conflict_title">此备份使用了另一个 %1$s 账号</string>
+    <string name="emu_id_conflict_body">破解版游戏会用运行时的账号编号命名存档文件夹，并拒绝加载在其他账号下创建的存档。你刚恢复的存档只能在备份中记录的那个账号下加载。</string>
+    <string name="emu_id_conflict_from_backup">本次备份内容</string>
+    <string name="emu_id_conflict_in_container">当前在此容器中</string>
+    <string name="emu_id_conflict_account_with_folder">%1$s：%2$s（存档文件夹 %3$s）</string>
+    <string name="emu_id_conflict_warning">此容器中所有被模拟的游戏共用这一个账号。切换账号后，已恢复的存档可以正常载入，但这里其他在当前账号下存过档的破解游戏将找不到自己的存档。</string>
+    <string name="emu_id_conflict_apply">使用备份的账户</string>
+    <string name="emu_id_conflict_keep">保持当前</string>
+    <string name="save_flow_caution_title">这还不算万无一失——清空任何内容前请先自行核实</string>
+    <string name="save_flow_caution_body">有些游戏会把存档放在我们不备份的目录中（游戏的安装目录、Windows 注册表或 Steam Cloud），因此备份可能并不完整。删除原始存档前，请务必核对备份内容——或者自己复制文件——并先测试恢复是否有效。</string>
+    <string name="save_backup_scope_title">备份此存档</string>
+    <string name="save_backup_scope_prompt">你想备份什么？</string>
+    <string name="save_backup_scope_whole">全部游戏存档（整个配置）</string>
+    <string name="save_backup_scope_game">指定游戏</string>
+    <string name="save_backup_pick_game_title">选择游戏</string>
+    <string name="save_backup_pick_game_empty">此容器中未找到游戏。</string>
+    <string name="save_backup_discovering">正在查找存档文件夹…</string>
+    <string name="save_backup_confirm_title">选择存档文件夹</string>
+    <string name="save_backup_confirm_prompt">勾选要包含在备份中的文件夹。</string>
+    <string name="save_backup_confirm_none">未检测到存档文件夹。请在下方手动添加一个。</string>
+    <string name="save_backup_confirm_remembered">已记住上次备份的选择，重新扫描即可再次查看。</string>
+    <string name="save_backup_add_folder">添加文件夹…</string>
+    <string name="save_backup_rescan">重新扫描</string>
+    <string name="save_backup_overlap_note">部分所选文件夹有重叠；共享的文件只备份一次。</string>
+    <string name="save_backup_add_folder_title">添加存档文件夹</string>
+    <string name="save_backup_add_folder_here">使用此文件夹</string>
+    <string name="save_backup_add_folder_escape">该文件夹位于本游戏的配置范围之外。</string>
+    <string name="save_backup_format_title">备份格式</string>
+    <string name="save_backup_format_prompt">此备份用于哪个工具？</string>
+    <string name="save_backup_format_gamehub">兼容 GameHub 的 .zip</string>
+    <string name="save_backup_format_gamehub_sub">GameHub，基于 Proton 的工具（默认）</string>
+    <string name="save_backup_format_winlator">Winlator 原生 .zip</string>
+    <string name="save_backup_format_winlator_sub">同源的 Winlator / WinNative 构建</string>
+    <string name="save_backup_next">下一步</string>
+    <string name="wrapper_manager_title">管理封装层</string>
+    <string name="wrapper_manager_header">用较新的文件替换内置图形封装库；更新保存在设备本地，并优先于内置版本使用。</string>
+    <string name="wrapper_update">更新</string>
+    <string name="wrapper_update_from_file">从文件</string>
+    <string name="wrapper_update_from_catalog">从目录选择</string>
+    <string name="wrapper_reset">重置</string>
+    <string name="wrapper_reset_all">全部重置</string>
+    <string name="wrapper_reset_all_confirm_title">重置所有封装层？</string>
+    <string name="wrapper_reset_all_confirm_message">要移除所有 wrapper 更新并恢复内置版本吗？</string>
+    <string name="wrapper_select_title">选择 wrapper .tzst 文件</string>
+    <string name="wrapper_bundled">内置</string>
+    <string name="wrapper_updated_label">已更新</string>
+    <string name="wrapper_updated_toast">封装已更新</string>
+    <string name="wrapper_reset_toast">已恢复为内置封装器</string>
+    <string name="wrapper_invalid_toast">该文件不是有效的 wrapper（.tzst）</string>
+    <string name="wrapper_manager_open">管理封装层</string>
+    <string name="wrapper_manager_close">关闭</string>
+    <string name="wrapper_imported_label">已导入</string>
+    <string name="wrapper_import_title">导入包装器…</string>
+    <string name="wrapper_import_subtitle">添加你自己的封装层（.tzst）。它会出现在显卡驱动菜单中。</string>
+    <string name="wrapper_import_name_title">为此包装器命名</string>
+    <string name="wrapper_import_name_message">此名称会显示在显卡驱动菜单中。</string>
+    <string name="wrapper_import_name_empty_toast">输入 wrapper 名称</string>
+    <string name="wrapper_import_reserved_toast">该名称已保留给内置封装，请另选一个</string>
+    <string name="wrapper_imported_toast">封装已导入</string>
+    <string name="wrapper_delete">删除</string>
+    <string name="wrapper_delete_confirm_title">删除此封装层？</string>
+    <string name="wrapper_delete_confirm_message">移除此导入的包装器。任何正在使用它的容器或游戏都会回到默认包装器。</string>
+    <string name="wrapper_more_actions">更多操作</string>
+    <string name="wrapper_details">详情</string>
+    <string name="wrapper_edit_settings">编辑设置</string>
+    <string name="wrapper_edit_settings_title">编辑检测到的设置</string>
+    <string name="wrapper_edit_settings_message">选择哪些已检测到的设置会出现在此封装的“显卡驱动”选项里。未勾选的设置将被隐藏。</string>
+    <string name="wrapper_edit_settings_empty">未检测到可配置的设置。</string>
+    <string name="wrapper_update_available">有可用更新</string>
+    <string name="wrapper_updating_progress">正在更新… %1$d%%</string>
+    <string name="wrapper_installed">已安装</string>
+    <string name="wrapper_from_catalog">从目录中选择</string>
+    <string name="wrapper_catalog_title">下载包装器…</string>
+    <string name="wrapper_catalog_subtitle">浏览其他项目精选的封装层，并直接下载到管理器中。</string>
+    <string name="wrapper_catalog_dialog_title">包装器目录</string>
+    <string name="wrapper_catalog_empty">暂无可用 wrapper。</string>
+    <string name="wrapper_catalog_offline">当前离线——连接网络后可浏览并下载目录。</string>
+    <string name="wrapper_catalog_offline_cache">离线 — 正在显示缓存的列表。联网后可下载。</string>
+    <string name="wrapper_catalog_needs_connection">需要联网才能下载</string>
+    <string name="wrapper_catalog_download">下载</string>
+    <string name="wrapper_catalog_downloading">下载中</string>
+    <string name="wrapper_catalog_installing">正在安装</string>
+    <string name="wrapper_catalog_download_ok">已添加 %1$s</string>
+    <string name="wrapper_catalog_download_failed">无法下载 %1$s</string>
+    <string name="wrapper_catalog_close">完成</string>
+    <string name="no_wine_version_installed">未安装 Wine 版本——请先从应用内目录下载 Proton（容器 → 下载图标）。</string>
+    <string name="help_player_slots"><![CDATA[
+        <b>玩家槽位</b><br /><br />
+        决定每个控制器在游戏中成为哪个 XInput <b>玩家</b>。<b>玩家 1</b> 是槽位 0，玩家 2 是槽位 1，依此类推。<br /><br />
+        <b>自动</b> — 控制器按手柄连接的顺序领取下一个空闲玩家（常规行为）。<br />
+        <b>玩家 1–4</b> — 每次启动都把这个控制器固定为该玩家。<br />
+        <b>忽略</b> — 该控制器不占用任何玩家槽位。<br /><br />
+        <b>共享 / 合并控制</b> — 把两个（或更多）设备分配给同一个玩家，它们会同时操控这个玩家（例如屏幕按键加一个实体手柄）。它们的输入会被合并，而不是互相争抢。<br /><br />
+        <b>屏幕控制</b> — 触控按键同样可以固定到任意玩家。启动之前就连上的实体手柄在连接顺序上优先。「屏幕控制优先级」决定游戏中途接上手柄时如何处理：<b>保持</b>让触控按键留在原位，<b>让位</b>把玩家 1 交给手柄并把触控按键往后挪，<b>共享</b>让手柄与触控板\'的玩家位合并。<br /><br />
+        <b>重置输入</b>（游戏内侧边菜单）会重建控制器连接，无需重启游戏。<br /><br />
+        在这里（游戏外）所做的修改会在游戏的<b>下次启动</b>时生效；游戏内侧边菜单则实时切换玩家。应用抽屉中「输入控制」里的同一项设置，决定<b>新建</b>容器的默认值。
+    ]]></string>
+    <string name="help_audio_preset_auto"><![CDATA[
+        <b>自动 / 智能</b> —— 推荐设置。<br /><br />
+        从较低的延迟开始，只有确实听到爆音时才继续加大。在 DirectAudio 上是一个
+        576 帧的缓冲区，总计约 <b>33 毫秒</b>。<br /><br />
+        安全网正是它的意义所在：固定的小缓冲在遇到重负载场景卡住 GPU 时会立刻爆音，
+        而这一项只会增长到刚好够用，不会再多。<br /><br />
+        除非你有别的理由，否则就选它。
+    ]]></string>
+    <string name="help_audio_preset_low"><![CDATA[
+        <b>低延迟</b>——最低的一档。<br /><br />
+        一次硬件突发：在 DirectAudio 上总共约 <b>25 ms</b>，这已是 Android 上能做到的最低水平。
+        自适应保持开启，因此撑不住这一档的游戏会升一档，而不是整局都爆音。<br /><br />
+        在三款游戏上实测，一款能从容保持，两款需要升一档。两种情况都不会出问题——但如果你听到了
+        任何异常，就回到“自动”。
+    ]]></string>
+    <string name="help_audio_preset_balanced"><![CDATA[
+        <b>均衡</b> —— 更平稳的缓冲区，但仍会自适应。<br /><br />
+        在 DirectAudio 上总计约 <b>47 ms</b>（1248 帧）。明显比自动更晚，但对吃力的设备也明显更安全。<br /><br />
+        如果自动模式在加载界面或繁忙场景中出现爆音，值得一试。
+    ]]></string>
+    <string name="help_audio_preset_stable"><![CDATA[
+        <b>稳定</b>——安全余量最大，延迟也最高。<br /><br />
+        在 DirectAudio（3000 帧）下总延迟约 <b>83 毫秒</b>。在快节奏游戏中声音会明显落后于画面，这就是你要付出的代价。<br /><br />
+        适用于性能较弱的设备、负载很高的游戏，或在其他设置下都会爆音的场景。
+    ]]></string>
+    <string name="help_audio_preset_custom"><![CDATA[
+        <b>自定义</b> —— 解锁下方的微调行。<br /><br />
+        其他预设会自动填好这些行并将其置灰，但它们仍会<i>显示</i>该预设实际应用的数值，方便你在切换前查看。<br /><br />
+        只有想自己设置缓冲区时才选这项。每行的“?”会说明它的作用。
+    ]]></string>
+    <string name="help_audio_perf_mode"><![CDATA[
+        <b>输出模式</b> —— 请求使用哪条 Android 音频通路。<br /><br />
+        <b>低延迟</b>会请求带高优先级音频线程的快速通路。在本模拟器上这是经过验证的选择：在 box64/FEX 下，普通优先级的线程会被游戏抢占，声音变得断断续续。<br /><br />
+        <b>无</b>是普通通路 —— 理论上更稳定，但正因如此在这里反而更断续。<br /><br />
+        <b>省电</b>优先保证电池续航而非延迟。<br /><br />
+        DirectAudio 会对所有命名预设强制使用<b>低延迟</b>，与本行无关；仅在自定义时生效。
+    ]]></string>
+    <string name="help_audio_adaptive"><![CDATA[
+        <b>自适应缓冲</b> —— 只在真正出问题时才增大。<br /><br />
+        缓冲区一开始很小。每次出现音频欠载就增加一点，最终稳定在<i>这个</i>游戏在<i>你的</i>设备上
+        能维持的最低延迟，而不是某个凭猜测定下的数值。<br /><br />
+        关闭后会固定缓冲区。如果游戏随后跟不上，<b>就会一直爆音，直到你重新启动</b>
+        —— 不会自行恢复。<br /><br />
+        现在每个预设都会保持开启，因此关闭它需要你在「自定义」中主动选择。
+        只在你测试固定大小、不希望受到干扰时才这么做。
+    ]]></string>
+    <string name="help_audio_direct_buffer"><![CDATA[
+        <b>音频缓冲区</b> —— DirectAudio 预留待播的声音量，单位毫秒。<br /><br />
+        越小越紧凑，但也越脆弱；越大能撑过卡顿，代价是延迟增加。<br /><br />
+        该行显示的是<b>总延迟</b>，因为 Android 自己还要加上固定的 <b>21 毫秒</b>，任何应用都无法避免。12 毫秒的缓冲即 33 毫秒总延迟。最低只能到一次硬件突发——4 毫秒的缓冲，<b>总共 25 毫秒</b>，这是本机任何应用的下限。<br /><br />
+        开启自适应后，这里既是起点，<i>也是</i>情况恢复平稳后缓冲区回到的水平——它永远不会低于你在此设定的值。
+    ]]></string>
+    <string name="help_audio_guest_buffer"><![CDATA[
+        <b>客户机缓冲区</b> —— Windows 一次交给 PulseAudio 的音频量。<br /><br />
+        这是延迟的客户机侧，与下方的输出缓冲区各自独立。它会在游戏连接时固定，
+        因此修改要等到<b>下次启动</b>才生效。<br /><br />
+        数值越低，同步越紧、每秒开销越大；越高则越平稳。
+    ]]></string>
+    <string name="help_audio_buffer_frames"><![CDATA[
+        <b>初始缓冲区</b>——起始大小，以音频帧而非毫秒为单位。<br /><br />
+        48 帧为 1 毫秒，因此 576 帧相当于 12 毫秒的缓冲区（总计 33 毫秒）。<b>自动</b> 由引擎自行选择。<br /><br />
+        这是上方毫秒一栏的高级形式。若两者都设置，<b>以帧为准</b>——将其清回自动即可重新按毫秒控制。
+    ]]></string>
+    <string name="help_audio_max_buffer_frames"><![CDATA[
+        <b>最大缓冲</b> — 自适应增长允许达到的上限。<br /><br />
+        这是上限，不是目标：只有游戏反复欠载，缓冲才会升到这里。它能防止有问题的
+        补丁把延迟无限拉大。<br /><br />
+        <b>设备最大值</b> 使用驱动默认值（100 毫秒）。设得太低会让本就吃力的游戏没有
+        余量，持续爆音。
+    ]]></string>
+    <string name="help_audio_latency_unused"><![CDATA[
+        <b>ALSA 不使用此项。</b><br /><br />
+        此行设置的是客户机侧缓冲区，只有 PulseAudio 才有。ALSA 通过应用自身的音频服务器接入
+        Android，其尺寸改由下方 <b>初始缓冲区</b> 和 <b>最大缓冲区</b> 两行决定。<br /><br />
+        要调整 ALSA 的延迟，请修改那两项。此处滑块已置灰，因为没有代码读取它。
+    ]]></string>
+    <string name="winfg_capture_consent_title">贡献帧生成训练采集数据</string>
+    <string name="winfg_capture_consent_v1">开启后会在你游戏时录下游戏内的原始画面帧，用于帮助训练一个开放、干净的帧生成模型。启用前请先阅读以下说明。\n\n采集内容\n• 仅采集游戏直接渲染出的原始画面帧，且只在你游戏时采集。\n\n不采集内容\n• 不采集任何个人信息。\n• 不采集账号、登录信息、姓名或邮箱。\n• 不采集 Android 系统数据。\n• 不采集音频。\n• 不采集全屏或系统录屏——不含游戏渲染画面之外的任何内容，也不含 HUD 或叠加层。\n\n匿名设计\n• 每个采集文件附带一条匿名的同意记录：仅包含随机匿名 ID、条款版本、时间戳和应用版本（可选包含你的设备型号，仅用于数据集多样性统计）。该记录无法识别你的身份。\n\n保存位置\n• 文件写入本机的 Download/win-fg 文件夹，供你分享给我们。\n\n温馨提示\n• 录制期间帧率会下降。\n• 你可以随时在设置中关闭此功能。\n\n勾选下方“我已了解”，即表示你同意将采集到的游戏画面帧用于训练模型，并确认这些数据由你自愿生成并分享。</string>
+    <string name="env_var_help__banner_audio_direct_decay"><![CDATA[
+        驱动是否会在安静一段时间后把缓冲区缩回原来的大小，从而收回当初为熬过一段不顺期而付出的
+延迟成本。<br /><br />
+<b>0</b>：保持增大后的尺寸。<br />
+<b>1</b>：情况稳定后缩回。<br /><br />
+<b>何时调整：</b>保持开启——正是它避免了一次糟糕时刻让你整局都承受着更高的延迟。如果音频反复
+增大缩小、你能明显听出来，就把它关掉。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_decay_maxbackoff"><![CDATA[
+        限制驱动在反复掉帧后回退的最大幅度。<br /><br />
+<b>何时调整：</b>对持续吃力的设备把它调高，让驱动被允许退到一个真正安全的位置。想控制延迟就把它调低。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_decay_punish_ms"><![CDATA[
+        断音之后驱动延迟收缩的时长。<br /><br />
+<b>何时更改：</b>如果缓冲区收缩过于激进、断音反复出现，就调高它。这是对衰减行为的刹车。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_decay_quiet_ms"><![CDATA[
+        音频通路需连续干净运行多久，驱动才会考虑缩小缓冲区。<br /><br />
+<b>何时调整：</b>调高会让缩小更保守，适合偶尔出现负载突增的设备。调低可在卡顿之后更快恢复低延迟。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_exclusive"><![CDATA[
+        向 Android 申请音频设备的独占访问，绕过常规混音器。<br /><br />
+<b>0</b>：共享。<br />
+<b>1</b>：独占 —— 在设备允许的情况下延迟更低。<br /><br />
+<b>何时调整：</b>想追求最低音频延迟时就开启。并非所有设备都会授予，而在授予之后，其他应用可能无法同时播放声音。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_log"><![CDATA[
+        DirectAudio 驱动的日志。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时调整：</b>反馈音频问题时把它打开，这样缓冲区大小和掉音次数都会被记录下来。反馈完记得再关掉。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_maxms"><![CDATA[
+        自适应路径最多可增长到的缓冲区上限，单位为毫秒。<br /><br />
+<b>何时修改：</b>DirectAudio 检测到断音时会自动增大缓冲区，此项决定其上限。
+设备在高负载下持续爆音就调高；希望延迟有上限、哪怕偶尔断音，就调低。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_minperiod_ms"><![CDATA[
+        唤醒间隔的下限，防止驱动轮询过快。<br /><br />
+<b>何时调整：</b>若音频明显占用 CPU 或耗电，可适当调高。调得过高会导致驱动无法及时填满缓冲区。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_ms"><![CDATA[
+        我们 DirectAudio 驱动的目标音频缓冲大小，单位为毫秒。<br /><br />
+数值越小，动作与声音之间的延迟越低，但爆音的风险越大。数值越大越稳妥。<br /><br />
+<b>何时修改：</b>音频设置对话框会按预设自动设定此项——只有在自定义模式下才需要动它。音频爆音就调大，声音拖在画面之后就调小。超过约
+62.5 毫秒就超出了我们验证过安全的范围。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_period_ms"><![CDATA[
+        音频驱动唤醒以交付更多采样的频率。<br /><br />
+<b>何时更改：</b>周期越短，时序越紧，CPU 唤醒也越多。除非你正针对特定的断音模式调参，
+否则不要改动。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_stall_ms"><![CDATA[
+        音频通路需要静音多久，看门狗才判定它已经停止工作。<br /><br />
+<b>何时调整：</b>调低可更快从卡顿中恢复，但可能在本该安静的正常段落里重启音频。如果你在
+本来一切正常时听到音频重启，就调高它。
+        ]]></string>
+    <string name="env_var_help__banner_audio_direct_watchdog"><![CDATA[
+        监视音频链路是否卡死，并在卡死时重启它。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时更改：</b>保持开启。若没有它，音频卡死在该次会话中就是永久性的——
+声音会直接停止，且不再恢复。
+        ]]></string>
+    <string name="env_var_help__bcn_astc_only_2p"><![CDATA[
+        强制每个块都使用两个分区，而不是按块逐个选择。<br /><br />
+<b>0</b>：按块选择。<br />
+<b>1</b>：始终使用两个。<br /><br />
+<b>何时调整：</b>多数情况下只是一次画质实验。对那些毫无收益的块，它只是白白耗时，所以通常不如
+单独使用 BCN_ASTC_TRY_2P 划算。
+        ]]></string>
+    <string name="env_var_help__bcn_astc_try_2p"><![CDATA[
+        允许 ASTC 编码器尝试双分区块，从而更好地表现细节丰富的区域。<br /><br />
+<b>0</b>：仅单分区。更快。<br />
+<b>1</b>：尝试双分区。质量更高，更慢。<br /><br />
+<b>何时更改：</b>如果转码后的纹理看起来有块状感，就开启它。预计加载会更久。
+        ]]></string>
+    <string name="env_var_help__bcn_astc_use_large_steps"><![CDATA[
+        让 ASTC 编码器以更粗的步长进行搜索。<br /><br />
+<b>0</b>：精细搜索。更慢，画质更好。<br />
+<b>1</b>：粗略搜索。更快，画质更差。<br /><br />
+<b>何时更改：</b>来自 BCn 层的 Fcharan 分支。当加载速度比纹理质量更重要时开启。
+        ]]></string>
+    <string name="env_var_help__bcn_compute_auto"><![CDATA[
+        让计算层自行决定是否需要进行转码。<br /><br />
+<b>0</b>：遵循显式设置。<br />
+<b>1</b>：自动检测。<br /><br />
+<b>何时调整：</b>自动是合理的默认值。如果你想不管计算层怎么选、都强制使用某个目标格式，就把它关掉。
+        ]]></string>
+    <string name="env_var_help__bcn_compute_image_view"><![CDATA[
+        使用存储图像路径而非缓冲区路径进行计算转码。<br /><br />
+<b>0</b>：缓冲区路径。<br />
+<b>1</b>：存储图像路径。<br /><br />
+<b>何时调整：</b>这是一种替代实现——如果纹理显示损坏或该层崩溃，可试试另一个设置。
+        ]]></string>
+    <string name="env_var_help__bcn_layer_log_level"><![CDATA[
+        BCn 层记录多少日志，例如 <b>info</b> 或 <b>error</b>。<br /><br />
+<b>何时更改：</b>诊断纹理问题时先调高，之后再调回去。纹理转码一直在进行，
+        所以这里开详细日志的开销很大。
+        ]]></string>
+    <string name="env_var_help__bcn_max_staging_cache_mb"><![CDATA[
+        等待转码的纹理所占用的内存预算，单位为 MB。<br /><br />
+<b>何时调整：</b>若加载缓慢且设备内存有余，可调高——暂存空间越大，卡顿越少。若游戏在加载时出现内存不足，则调低。
+        ]]></string>
+    <string name="env_var_help__bcn_profile_transfers"><![CDATA[
+        记录该层处理的每次纹理传输的耗时。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时修改：</b>仅用于诊断——用来判断是不是转码导致了加载缓慢。它本身很吵，也会消耗性能。
+        ]]></string>
+    <string name="env_var_help__bcn_queue_throttle_limit"><![CDATA[
+        同时可排队的转码任务数量。<br /><br />
+<b>何时更改：</b>若转码和游戏抢占 GPU 时间、导致加载时帧率下滑，请调低；调高可让纹理更早准备就绪。
+        ]]></string>
+    <string name="env_var_help__bcn_transcode_to_astc"><![CDATA[
+        重新编码 BCn 纹理时改用 ASTC。ASTC 是 Mali GPU 处理得最好的格式。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时修改：</b>在 Mali 上通常就是这个选择。需要启用计算层。画质比 ETC 更高，但生成更慢。
+        ]]></string>
+    <string name="env_var_help__bcn_transcode_to_etc1"><![CDATA[
+        以 ETC1 为目标，这是最古老、支持最广泛的压缩格式。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时更改：</b>作为最后手段。ETC1 没有 alpha 通道，因此透明效果会变差——尽可能改用 ETC2
+或 ASTC。
+        ]]></string>
+    <string name="env_var_help__bcn_transcode_to_etc2"><![CDATA[
+        改为以 ETC2 作为目标格式，而不是 ASTC。几乎所有 Android GPU 都支持 ETC2。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时调整：</b>当 ASTC 不可用或太慢时。它的画质低于 ASTC，尤其是在细节锐利或带透明度通道的贴图上。
+        ]]></string>
+    <string name="env_var_help__compat_emulate_null_descriptors"><![CDATA[
+        模拟空描述符，让着色器可以引用未绑定的资源。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：模拟。<br /><br />
+<b>何时调整：</b>这是兼容层上的一项 DX12 需求。若没有它，那些留有未绑定槽位的游戏会在第一次
+触碰该槽位的绘制调用上崩溃。
+        ]]></string>
+    <string name="env_var_help__compat_emulate_push_descriptors"><![CDATA[
+        模拟推送描述符，这是向 GPU 快速传递着色器参数的一种方式。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：模拟。<br /><br />
+<b>何时更改：</b>在兼容层上跑 DX12 游戏时保持开启 —— 有数款游戏用到推送描述符，关掉就启动不了。
+        ]]></string>
+    <string name="env_var_help__compat_emulate_sparse_binding"><![CDATA[
+        模拟稀疏绑定——即用分散的内存片段拼建大资源的能力——Mali 并不支持该特性。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：模拟。<br /><br />
+<b>何时调整：</b>使用分块或流式资源的游戏需要它，否则会在启动时失败。模拟会消耗内存并拖慢速度，
+不需要它的游戏请保持关闭。
+        ]]></string>
+    <string name="env_var_help__compat_force_masking"><![CDATA[
+        强制让兼容层自行应用写入掩码，而不是依赖驱动。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：强制。<br /><br />
+<b>何时修改：</b>一个渲染正确性方面的变通方案。当 Mali 上的颜色或透明效果出错，
+而其他设置都解释不了时，可以试试它。
+        ]]></string>
+    <string name="env_var_help__dxvk_async"><![CDATA[
+        在后台编译着色器管线，而不是停下游戏等待。<br /><br />
+<b>0</b>：关闭。结果正确，但首次遇到新效果时会卡顿。<br />
+<b>1</b>：开启。流畅得多，代价是在着色器编译期间物体短暂显示异常或完全不显示。<br /><br />
+<b>何时更改：</b>对容易卡顿的游戏请开启。仅在支持异步的 DXVK 构建上有效
+        —— 我们的构建是 gplasync 构建，具备该支持。
+        ]]></string>
+    <string name="env_var_help__dxvk_config"><![CDATA[
+        以内联方式写入 DXVK 设置，使用 <b>key=value</b> 形式，多组之间以分号分隔。<br /><br />
+<b>何时调整：</b>适合无需维护配置文件的临时微调——例如
+<b>d3d11.maxFeatureLevel=11_0</b>，为误判的游戏强制使用较旧的功能级别。
+内容较长时，用 DXVK_CONFIG_FILE 更方便。
+        ]]></string>
+    <string name="env_var_help__dxvk_config_file"><![CDATA[
+        指向一个存放 DXVK 设置的 dxvk.conf 文件路径。<br /><br />
+<b>何时更改：</b>当你想复用一组调整项，或使用他人发布的单游戏配置时。该路径位于容器内，因此通常位于游戏文件夹或 Windows 盘符下的某处。
+        ]]></string>
+    <string name="env_var_help__dxvk_disable_timeline_semaphores"><![CDATA[
+        让 DXVK 避开 Vulkan 时间线信号量，改用较旧的同步路径。<br /><br />
+<b>0</b>：使用它们。（默认）<br />
+<b>1</b>：避开它们。<br /><br />
+<b>何时调整：</b>针对时间线信号量支持有缺陷的驱动提供的兼容性回退方案——症状是卡死或 GPU 崩溃，而不是画面异常。
+        ]]></string>
+    <string name="env_var_help__dxvk_filter_device_name"><![CDATA[
+        将 DXVK 限制到名称包含此文本的 GPU。<br /><br />
+<b>何时更改：</b>仅在设备暴露多块 Vulkan GPU 且 DXVK 选错时才需要。其他情况请留空 —— 匹配不到
+任何 GPU 的名称会让游戏完全无 GPU 可用。
+        ]]></string>
+    <string name="env_var_help__dxvk_frame_rate"><![CDATA[
+        在 DXVK 内部限制帧率。<br /><br />
+<b>0</b> ：不限制。<br />
+其他数值：即该帧每秒帧数。<br /><br />
+<b>何时修改：</b>在手机上把帧率限制到 30 或 60，往往比让游戏满速狂跑更顺滑、更凉快、也更耐久。对于帧率极高时物理或计时会出错的游戏同样有用。
+        ]]></string>
+    <string name="env_var_help__dxvk_gplasynccache"><![CDATA[
+        在多次运行之间缓存异步管线编译的结果。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时调整：</b>与 DXVK_ASYNC 搭配使用——两者都开启时，着色器编译期间那些短暂的画面瑕疵只会出现一次，而不是每次启动都出现。
+        ]]></string>
+    <string name="env_var_help__dxvk_hud"><![CDATA[
+        DXVK 的屏幕叠加显示。各项可任意组合。<br /><br />
+<b>fps</b> 帧率 · <b>frametimes</b> 帧时间图表 · <b>gpuload</b> GPU 占用率 ·
+<b>memory</b> 显存 · <b>devinfo</b> GPU 名称与驱动 · <b>drawcalls</b>、
+<b>pipelines</b>、<b>compiler</b> 负载细节 · <b>scale=</b> 与 <b>opacity=</b> 控制
+外观。<br /><br />
+<b>何时修改：</b>想知道游戏是 GPU 受限还是别的原因受限，就加上 <b>fps</b> 和 <b>gpuload</b>。
+<b>compiler</b> 在排查卡顿时很有用，因为它能显示着色器正在编译。正常游玩时全部关掉——叠加显示本身也要花一点性能。
+        ]]></string>
+    <string name="env_var_help__dxvk_log_level"><![CDATA[
+        DXVK 向其日志文件写入的详细程度。<br /><br />
+<b>none</b> · <b>error</b> · <b>warn</b> · <b>info</b> · <b>debug</b>，详细程度依次递增。<br /><br />
+<b>何时更改：</b>诊断图形问题时提高为 <b>info</b> 或 <b>debug</b>——
+日志会记录 GPU、驱动、扩展和 DXVK 版本，这通常是首先值得检查的内容。用完后调回去；debug 日志记录很慢。
+        ]]></string>
+    <string name="env_var_help__dxvk_state_cache"><![CDATA[
+        决定 DXVK 是否把已编译的着色器管线保存到磁盘，让之后的运行一开始就是热的。<br /><br />
+<b>0</b>：关闭，每次运行都重新编译。<br />
+<b>1</b>：开启。（默认）<br /><br />
+<b>何时调整：</b>保持开启 —— 首次进入某个区域时着色器编译会造成卡顿，而缓存正是为了避免它再次发生。只有缓存损坏导致崩溃时才关闭，然后删除缓存文件。
+        ]]></string>
+    <string name="env_var_help__enable_bcn_compute"><![CDATA[
+        启用独立的 BCn 计算层，它与驱动包装器分开提供。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时调整：</b>在 Mali 搭配 Original 包装器时这一项很关键 —— 该包装器本身不支持
+BCn，此时计算层是压缩纹理能够工作的唯一途径。配合 WRAPPER_EMULATE_BCN=0 使用，
+避免重复处理。在 Adreno 上无需开启。
+        ]]></string>
+    <string name="env_var_help__enable_dxvk_mali_compat_layer"><![CDATA[
+        启用补齐 Mali GPU 所缺 D3D 特性的兼容层。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时更改：</b>仅适用于 Mali 设备，且其中许多 DX11 和 DX12 游戏必须开启。在 Adreno 上毫无作用。
+        ]]></string>
+    <string name="env_var_help__fex_diskcache"><![CDATA[
+        FEX 是否把已翻译的 x86 代码保存到磁盘，让后续启动预热。正常情况下每次启动都会重新翻译，游戏关闭后即被丢弃。<br /><br />
+<b>0</b>：关闭，每次运行都重新翻译全部内容。（默认）<br />
+<b>1</b>：开启，复用之前翻译过的内容。<br /><br />
+<b>何时改动：</b>如果某个游戏在新区域加载时卡顿，或首次加载时间很长，可以开启它。收益会在第二次及之后的启动中体现，前提是缓存里已有内容。需要 FEXCore 2609 或更新版本；旧版本会忽略该变量。<br /><br />
+<b>风险：</b>上游尚未加入任何清理机制，缓存没有大小上限，也从不淘汰旧条目——它只会不断增长，且在最会于运行中自行生成代码的游戏上增长最快。它还可能察觉不到游戏已经更新，继续保留过期条目。缓存位于容器的 AppData 文件夹；空间不足或游戏更新后出现异常时，删除它即可。
+        ]]></string>
+    <string name="env_var_help__fd_dev_features"><![CDATA[
+        覆盖 freedreno/Turnip 驱动中的设备特性标志。<br /><br />
+<b>enable_tp_ubwc_flag_hint=1</b> 与 <b>storage_8bit=1</b> 会开启驱动原本关闭的
+能力。<br /><br />
+<b>何时修改：</b>只有针对某款游戏的专门指南要求时才改。这些设置会改变驱动声称支持的
+内容，改错会直接造成画面损坏，而不是给出一个明确的报错。
+        ]]></string>
+    <string name="env_var_help__gallium_hud"><![CDATA[
+        由 Mesa 的 Gallium 驱动绘制的性能覆盖层，与 DXVK 的覆盖层相互独立。<br /><br />
+<b>simple</b> · <b>fps</b> · <b>frametime</b>。<br /><br />
+<b>何时更改：</b>仅对 OpenGL 游戏有用，DXVK 游戏不会显示它。D3D 游戏请改用 DXVK_HUD。
+        ]]></string>
+    <string name="env_var_help__ir3_shader_debug"><![CDATA[
+        Mesa 中 Adreno 着色器编译器的标志位。<br /><br />
+<b>nouboopt</b>、<b>nopreamble</b>、<b>noearlypreamble</b> 各自关闭一项编译器优化。<br /><br />
+<b>何时调整：</b>仅在需要绕过着色器编译器缺陷、解决某个特定游戏的画面错乱时使用。每一项都会
+损失性能。
+        ]]></string>
+    <string name="env_var_help__mesa_extension_max_year"><![CDATA[
+        隐藏给定年份之后引入的所有 OpenGL 扩展。<br /><br />
+<b>何时更改：</b>用于那些会遍历扩展列表、遇到不认识的内容就出错的老游戏。设为 2005 之类的值，
+可让驱动看起来像那个年代的硬件。
+        ]]></string>
+    <string name="env_var_help__mesa_gl_version_override"><![CDATA[
+        强制指定报告给游戏的 OpenGL 版本字符串，例如 <b>4.6</b> 或 <b>3.3COMPAT</b>。<br /><br />
+<b>何时调整：</b>用于那些认为驱动太旧而拒绝启动的 OpenGL 游戏。但谎报一个驱动实际给不了的版本，通常只会变成崩溃，所以两种做法都是赌运气。
+        ]]></string>
+    <string name="env_var_help__mesa_glthread"><![CDATA[
+        在独立线程上提交 OpenGL 命令。<br /><br />
+<b>false</b> ：关闭。<br />
+<b>true</b> ：开启——当游戏主线程是瓶颈时可有所帮助。<br /><br />
+<b>何时调整：</b>对受 CPU 限制的 OpenGL 游戏值得一试。但若游戏自己也从多个线程使用 GL，可能导致卡顿或崩溃。
+        ]]></string>
+    <string name="env_var_help__mesa_no_error"><![CDATA[
+        跳过 OpenGL 错误检查，以获得少量性能提升。<br /><br />
+<b>0</b>：正常检查。（默认）<br />
+<b>1</b>：跳过检查。<br /><br />
+<b>何时调整：</b>很少值得开启。会产生错误的游戏会以不可预测的方式出错，而不是干净地失败，这会让其他问题的排查变得困难得多。
+        ]]></string>
+    <string name="env_var_help__mesa_shader_cache_disable"><![CDATA[
+        关闭 Mesa 的磁盘着色器缓存。<br /><br />
+<b>false</b> ：启用缓存。（默认）<br />
+<b>true</b> ：禁用——每次运行都重新编译。<br /><br />
+<b>何时修改：</b>基本永远不需要，除非要测试缓存损坏是否导致了崩溃或画面异常。长期禁用的代价是首次运行永远卡顿。
+        ]]></string>
+    <string name="env_var_help__mesa_vk_wsi_present_mode"><![CDATA[
+        已完成的帧如何交给显示器。<br /><br />
+<b>fifo</b>：等待显示器。无撕裂，以刷新率为上限。最省电。<br />
+<b>mailbox</b>：始终备好最新一帧，丢弃较旧的帧。流畅无撕裂，但更耗电。<br />
+<b>immediate</b>：帧一完成就显示。延迟最低，可能出现撕裂。<br />
+<b>relaxed</b>：类似 fifo，但游戏跟不上时允许撕裂。<br /><br />
+<b>何时更改：</b>帧生成需要 <b>mailbox</b> 或 <b>immediate</b> —— 在 fifo 上无效。
+        否则 fifo 是稳妥的默认值，immediate 用于追求最低输入延迟。
+        ]]></string>
+    <string name="env_var_help__pulse_latency_msec"><![CDATA[
+        PulseAudio 会预先缓冲多少音频，单位为毫秒。<br /><br />
+数值越低，声音响应越快，但出现爆音的风险更高。数值越高越稳妥，但音频延迟更大。<br /><br />
+<b>何时需要调整：</b>如果负载下音频出现爆音或断流，就调高（60-120）。如果声音明显滞后于动作，就调低（20-40）。仅对 PulseAudio 后端生效。
+        ]]></string>
+    <string name="env_var_help__tu_debug"><![CDATA[
+        Turnip 的调试与行为标志，这是面向 Adreno GPU 的开源 Vulkan 驱动。<br /><br />
+其中大部分是诊断类（<b>startup</b>、<b>perf</b>、<b>nir</b>），另一些则用于禁用优化（<b>noubwc</b>、<b>nolrz</b>、<b>sysmem</b>、<b>forcebin</b>）。<br /><br />
+<b>何时更改：</b>这些禁用标志属于兼容性变通手段 —— 其中 <b>nolrz</b> 和 <b>noubwc</b> 能修好某些游戏的渲染故障，代价是损失速度。诊断标志应当出现在错误报告里，而不是日常游玩中。
+        ]]></string>
+    <string name="env_var_help__vkd3d_config"><![CDATA[
+        VKD3D 行为标志，可同时启用多个。<br /><br />
+<b>何时更改：</b>这些是有针对性的规避方案——大多用于特定游戏中的特定 bug。
+除非某款游戏的专门指南另有说明，否则留空。
+        ]]></string>
+    <string name="env_var_help__vkd3d_debug"><![CDATA[
+        VKD3D 向日志写入多少内容。<br /><br />
+<b>none</b> · <b>err</b> · <b>fixme</b> · <b>warn</b> · <b>trace</b>，详细程度依次递增。<br /><br />
+<b>何时调整：</b>当 D3D12 游戏出现异常时调高。<b>trace</b> 体积巨大且很慢 —— 只在短时间内使用。
+        ]]></string>
+    <string name="env_var_help__vkd3d_feature_level"><![CDATA[
+        VKD3D 报告的最高 D3D12 功能级别。<br /><br />
+<b>12_2</b> 至 <b>11_0</b>。<br /><br />
+<b>何时更改：</b>若游戏请求 GPU 并不具备的功能并直接崩溃（而非回退），请调低。只有在游戏以硬件
+过旧为由拒绝启动时才调高。
+        ]]></string>
+    <string name="env_var_help__vkd3d_shader_model"><![CDATA[
+        VKD3D 向游戏报告的最高 D3D12 着色器模型。<br /><br />
+<b>6_6</b> 至 <b>5_1</b>，由新到旧。<br /><br />
+<b>何时调整：</b>当游戏请求你的驱动实际无法编译的着色器时就调低它 —— 症状是加载后不久
+崩溃或画面黑屏。调低后游戏会改用更简单的路径。
+        ]]></string>
+    <string name="env_var_help__vkd3d_swapchain_latency_frames"><![CDATA[
+        VKD3D 允许游戏提前排队的帧数。<br /><br />
+调低意味着输入延迟更小，但 GPU 更容易空闲；调高意味着帧节奏更平滑，但延迟更大。<br /><br />
+<b>何时更改：</b>如果 D3D12 游戏操作感觉迟滞，请调低（1 或 2）。如果 GPU 尚有余量但帧率仍不稳定，请调高。
+        ]]></string>
+    <string name="env_var_help__wine_disable_fullscreen_hack"><![CDATA[
+        Wine 通常会拦截游戏的全屏分辨率更改并将其伪装，从而让桌面保持真实分辨率。<br /><br />
+<b>0</b>：保留此变通处理。（默认）<br />
+<b>1</b>：禁用，让游戏真正切换显示模式。<br /><br />
+<b>何时调整：</b>如果游戏全屏被拉伸、偏移，或显示的画面区域不对，就禁用它。
+        ]]></string>
+    <string name="env_var_help__wine_do_not_create_dxgi_device_manager"><![CDATA[
+        阻止 Wine 创建硬件视频解码所依附的 DXGI 设备管理器。<br /><br />
+<b>0</b> ：正常行为。<br />
+<b>1</b> ：跳过创建。<br /><br />
+<b>何时修改：</b>适用于初始化视频播放时就崩溃或卡死的游戏——通常发生在开场影片
+或过场动画处。
+        ]]></string>
+    <string name="env_var_help__wine_fast_yield"><![CDATA[
+        我们自己的快速让步（fast-yield）开关。有些游戏会自旋一个工作线程，反复请求系统让别的任务先跑；在手机上，不管帧率上限设成多少，这都会让一个核心长期跑满 100%。<br /><br />
+<b>0</b>：正常的让步行为。（默认）<br />
+<b>1</b>：让步变成空操作，让线程不再白烧核心。<br /><br />
+<b>何时调整：</b>当某个游戏有一个核心占用 100%、设备发烫，而帧率受限却表现正常时，就把它打开。测试者在《赛博朋克》上实测：主核心从 100% 降到约 0-3%，功耗从约 5.3W 降到约 3.9W，帧率不变。<br /><br />
+<b>风险：</b>空操作式的让步可能让原本等着运行的线程饿死，这会让部分游戏卡死。它还需要构建时带此开关的层——Proton 10.0-2 及更新版本才有；更早的层会完全忽略该变量。
+        ]]></string>
+    <string name="env_var_help__wine_fullscreen_fsr"><![CDATA[
+        为全屏游戏提供 AMD FidelityFX Super Resolution 超分辨率放大。以较低的内部
+分辨率渲染后再放大，可带来显著的性能提升。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时调整：</b>当游戏以原生分辨率运行缓慢时开启。它仅对真正以全屏方式运行、
+且分辨率低于原生分辨率的游戏生效——已经处于原生分辨率的游戏没有可放大的内容。
+        ]]></string>
+    <string name="env_var_help__wine_fullscreen_fsr_strength"><![CDATA[
+        FSR 对放大后画面的锐化力度。数值越低越锐利。<br /><br />
+典型范围 <b>0</b> 到 <b>5</b>；<b>2</b> 是常用的中间值。<br /><br />
+<b>何时调整：</b>仅在开启 WINE_FULLSCREEN_FSR 时有意义。画面显得发虚就调低，锐化让边缘显得生硬或有噪点就调高。
+        ]]></string>
+    <string name="env_var_help__wine_gst_no_gl"><![CDATA[
+        阻止 GStreamer（负责解码游戏内视频）使用 GPU。<br /><br />
+<b>0</b>：允许 GPU 解码。<br />
+<b>1</b>：强制 CPU 解码。<br /><br />
+<b>何时修改：</b>过场动画崩溃、把游戏卡死或画面花屏时，设为 1。
+CPU 解码较慢，但在模拟环境下可靠得多。
+        ]]></string>
+    <string name="env_var_help__wine_new_mediasource"><![CDATA[
+        为游戏内视频选用 Wine 较新的媒体管线。<br /><br />
+<b>0</b> ：旧管线。<br />
+<b>1</b> ：新管线。<br /><br />
+<b>何时修改：</b>当过场动画黑屏、无声、卡顿或让游戏卡死时，试试切换到另一项设置。哪一项可用因游戏而异。
+        ]]></string>
+    <string name="env_var_help__vblank_mode"><![CDATA[
+        Mesa 的 OpenGL 垂直同步控制。<br /><br />
+<b>0</b> ：从不等待屏幕刷新（关闭垂直同步）。<br /><br />
+<b>何时更改：</b>请改用容器或游戏设置中 OpenGL 卡片里的“关闭垂直同步”；它会设置 vblank_mode=0。
+在此处填入的值会被保留，并优先于该开关。
+        ]]></string>
+    <string name="env_var_help__winhub_x11_egl"><![CDATA[
+        覆盖“快速 OpenGL”设置。<br /><br />
+<b>1</b>：通过 Wine\'s EGL 后端开启，即使该设置已关闭或被置灰（仍需应用随附的库，以及 Wine 带 EGL 后端的层）。<br />
+<b>0</b>：关闭，无论该设置怎么写（同样优先于 WINHUB_X11_GLX）。<br /><br />
+<b>何时调整：</b>几乎不需要 —— 请使用容器或游戏设置里 OpenGL 卡片中的“快速”，它会按层选择 EGL 或 GLX。这一项用于测试该开关并不提供支持的层或驱动。
+        ]]></string>
+    <string name="env_var_help__winhub_x11_glx"><![CDATA[
+        强制「快速 OpenGL」走 GLX 路径：X 服务器会为该会话开启自身的 GLX 支持（以及 DRI3/Present
+1.2），而 Wine\'s GLX 则通过 Zink 加载内置的 OpenGL 库。<br /><br />
+<b>1</b>：无论哪一层都启用 GLX 路径。<br /><br />
+<b>何时需要调整：</b>当你想在原本会走 EGL 的图层上试试 GLX 路径时。较旧的 Wine 与 x86-64 图层本来就走这条路径。WINHUB_X11_EGL=0 仍然可以关闭快速 OpenGL。
+        ]]></string>
+    <string name="env_var_help__wine_x11forceglx"><![CDATA[
+        强制 X11 驱动走 GLX 路径，而不用其较新的默认路径。<br /><br />
+<b>0</b>：正常。<br />
+<b>1</b>：强制 GLX。<br /><br />
+<b>何时更改：</b>作为兼容性回退，适用于画面全黑或无法创建上下文的 OpenGL 游戏。
+        ]]></string>
+    <string name="env_var_help__winedebug"><![CDATA[
+        Wine 的日志通道，控制写入 wine_debug.log 的内容。<br /><br />
+<b>-all</b> ：全部静音。速度最快。<br />
+<b>fixme-all</b> ：隐藏嘈杂的 fixme 消息，保留错误信息。<br />
+<b>+seh</b> ：异常详情 —— 排查崩溃时有用。<br />
+<b>+relay</b> ：记录每一次 API 调用。日志极其庞大且速度很慢。<br />
+<b>warn+all</b> ：警告级别及以上的全部内容。<br /><br />
+<b>何时调整：</b>除非正在诊断问题，否则不要动它。像
+"+loaddll,+seh" 这样的自定义值会原样保留。记录日志确实消耗性能，开启后一旦卡死可能
+写出数百 MB 的日志。
+        ]]></string>
+    <string name="env_var_help__winedlloverrides"><![CDATA[
+        告诉 Wine 使用它自带的 DLL 版本，还是游戏附带的版本。<br /><br />
+格式为 <b>name=b</b> 表示使用 Wine 内置版本，<b>name=n</b> 表示使用游戏的原生文件，<b>name=n,b</b> 表示优先使用原生、失败时回退。多个条目用分号分隔。<br /><br />
+<b>何时更改：</b>常见情况是游戏自带某个库的副本，且比 Wine 的更好用，或反之。编辑器会检测游戏文件夹中的 DLL，并为每个文件提供开关，比手动输入省事。
+        ]]></string>
+    <string name="env_var_help__wineesync"><![CDATA[
+        基于 Eventfd 的线程同步。Windows 程序彼此之间不断等待；相比 Wine 默认的服务器往返，esync 让这些等待的代价低得多。<br /><br />
+<b>0</b>：关闭，走常规的 Wine 服务器路径。<br />
+<b>1</b>：开启。在多线程游戏中往往能大幅提升帧率。<br /><br />
+<b>何时更改：</b>在我们大多数层里默认开启，通常值得保留。如果某款游戏死锁或卡在加载界面，就关掉它 —— esync 已知会让部分作品死锁。
+        ]]></string>
+    <string name="env_var_help__winefsync"><![CDATA[
+        基于 Futex 的同步机制。用途与 esync 相同，但采用更新的内核机制，在内核支持的
+情况下通常更快。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时修改：</b>需要内核支持，而许多 Android 设备并不具备；不可用时会被静默忽略。
+如果开启后毫无变化，说明你的内核不支持它——请退回 esync。
+        ]]></string>
+    <string name="env_var_help__winevmemmaxsize"><![CDATA[
+        限制 Wine 向游戏报告的显存大小，单位为 MB。<br /><br />
+<b>何时调整：</b>有些游戏在得知显存大小异常时会出问题——分配过多而耗尽，或干脆拒绝启动。填入
+2048 或 4096 之类的合理数值即可解决。除非游戏有内存相关的问题，否则请留空。
+        ]]></string>
+    <string name="env_var_help__wrapper_bcn_astc"><![CDATA[
+        把 BCn 纹理重新编码为 ASTC，Mali GPU 可直接原生读取该格式。属于包装器集成路径的一部分。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时修改：</b>适用于运行压缩纹理游戏的 Mali 设备，且必须使用带有该集成路径的包装器。此路径仅支持 ASTC——ETC 需要独立的层。
+        ]]></string>
+    <string name="env_var_help__wrapper_bcn_gpu"><![CDATA[
+        让 BCn 解码在 GPU 而非 CPU 上执行。<br /><br />
+<b>0</b>：CPU。<br />
+<b>1</b>：GPU。<br /><br />
+<b>何时调整：</b>GPU 解码通常快得多，可缩短加载时间，但会占用游戏同样需要的 GPU 资源。如果开启后帧率下降，请切回 CPU。
+        ]]></string>
+    <string name="env_var_help__wrapper_device_id"><![CDATA[
+        向游戏报告一个不同的 Vulkan 设备 ID。<br /><br />
+<b>何时更改：</b>与厂商 ID 搭配使用，适用于按编号识别 GPU 并走特定硬件路径的游戏。很少需要。
+        ]]></string>
+    <string name="env_var_help__wrapper_device_name"><![CDATA[
+        向游戏报告另一个 GPU 名称。<br /><br />
+<b>何时修改：</b>用于会检查 GPU 名称而拒绝运行的游戏，或会启用某条有问题厂商路径的游戏。
+对驱动而言纯属表面文章——它只改变游戏被告知的内容。
+        ]]></string>
+    <string name="env_var_help__wrapper_diag"><![CDATA[
+        开启封装层自身的诊断日志。<br /><br />
+<b>0</b>：关闭。<br />
+<b>1</b>：开启。<br /><br />
+<b>何时更改：</b>用于诊断驱动层面的问题，事后记得关掉
+        —— 图形路径上的日志会拖慢性能。
+        ]]></string>
+    <string name="env_var_help__wrapper_disable_placed"><![CDATA[
+        禁用 wrapper 中按固定地址放置的内存分配。<br /><br />
+<b>0</b> ：正常。<br />
+<b>1</b> ：禁用。<br /><br />
+<b>何时调整：</b>这是一项兼容性开关，用于处理对该分配方式有问题的驱动。
+若遇到其他设置都无法解决的内存相关崩溃，可以试试。
+        ]]></string>
+    <string name="env_var_help__wrapper_disable_present_wait"><![CDATA[
+        停止包装器使用 present-wait 扩展来实现帧节奏控制。<br /><br />
+<b>0</b>：启用。<br />
+<b>1</b>：禁用。<br /><br />
+<b>何时改动：</b>适用于 present-wait 已损坏的驱动，作为一种回退方案。症状是游戏在尝试显示第一帧时卡住。
+        ]]></string>
+    <string name="env_var_help__wrapper_driver_id"><![CDATA[
+        覆盖封装层上报的驱动标识字符串。<br /><br />
+<b>何时更改：</b>某些游戏和中间层会依驱动厂商走不同的代码路径。修改此项可避开在我们的技术栈上
+弊大于利的厂商专用兼容处理。
+        ]]></string>
+    <string name="env_var_help__wrapper_emulate_bcn"><![CDATA[
+        驱动封装内部的 BCn 纹理模拟。桌面游戏分发的 BC/DXT 压缩纹理，Mali GPU 无法原生读取。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：基础。<br />
+<b>2</b> ：完整。<br />
+<b>3</b> ：自动。（默认）<br /><br />
+<b>何时更改：</b>只有 leegao 和 GameNative 封装实现了此项——Winlator 基础封装和 Bionic 封装会忽略它。
+在 Adreno 上无需设置，因为这些 GPU 能原生读取 BCn。如果你改用独立计算层，请将其设为 0，以避免两次转码。
+        ]]></string>
+    <string name="env_var_help__wrapper_extension_blacklist"><![CDATA[
+        用逗号分隔的 Vulkan 扩展列表，所列扩展会对游戏隐藏。<br /><br />
+<b>何时需要调整：</b>当游戏用到的某个扩展虽然被驱动上报、却实现得不好时——结果通常是画面破损或 GPU 挂起。把该扩展隐藏起来，可以迫使游戏改走可用的路径。
+        ]]></string>
+    <string name="env_var_help__wrapper_max_image_count"><![CDATA[
+        限制交换链最多可持有多少张图像。<br /><br />
+图像越少，延迟和内存占用越小；越多，画面节奏越平稳。<br /><br />
+<b>何时修改：</b>设为 2 或 3 可降低输入延迟。设得过少会让帧率不稳，因为 GPU 要等图像释放。
+        ]]></string>
+    <string name="env_var_help__wrapper_no_bcn_thread"><![CDATA[
+        在使用纹理的线程上转码纹理，而不是交给后台工作线程。<br /><br />
+<b>0</b>：后台线程。（默认）<br />
+<b>1</b>：内联。<br /><br />
+<b>何时调整：</b>这是调试与稳定性上的回退方案。内联转码会在转码期间卡住游戏，所以做好加载停顿变长的准备。
+        ]]></string>
+    <string name="env_var_help__wrapper_no_patch_opconstcomp"><![CDATA[
+        阻止封装库在把某个 SPIR-V 着色器结构交给驱动之前对其改写。<br /><br />
+<b>0</b>：照常打补丁。（默认）<br />
+<b>1</b>：不动着色器。<br /><br />
+<b>何时调整：</b>该补丁用于绕过驱动缺陷；如果着色器在不需此变通方案的驱动上编译失败或渲染异常，值得尝试关闭它。
+        ]]></string>
+    <string name="env_var_help__wrapper_reduce_depth_format"><![CDATA[
+        使用比游戏所请求更简单的深度缓冲格式。<br /><br />
+<b>0</b>：按原要求执行。<br />
+<b>1</b>：降低精度。<br /><br />
+<b>何时更改：</b>用于兼容那些对某些深度格式吃力的 GPU。典型症状
+        是 z-fighting、几何体缺失或阴影渲染异常。
+        ]]></string>
+    <string name="env_var_help__wrapper_resource_type"><![CDATA[
+        覆盖封装层对图形资源的分类方式。<br /><br />
+<b>何时调整：</b>这是一项进阶兼容性选项——除非某个游戏的指南指定了取值，否则请留空。
+        ]]></string>
+    <string name="env_var_help__wrapper_safe_create_device"><![CDATA[
+        以更保守的方式创建 Vulkan 设备，一次申请更少的可选特性。<br /><br />
+<b>0</b> ：正常。<br />
+<b>1</b> ：安全路径。<br /><br />
+<b>何时修改：</b>游戏一启动、画面还没出来就崩溃时试试它——这种情况往往意味着设备创建失败。
+        ]]></string>
+    <string name="env_var_help__wrapper_use_bcn_cache"><![CDATA[
+        缓存转码后的纹理，让转码只做一次，而不是每次加载纹理都重做。<br /><br />
+<b>0</b> ：关闭。<br />
+<b>1</b> ：开启。<br /><br />
+<b>何时修改：</b>存储空间够的话值得开启——它能明显缩短重复加载的时间。空间紧张就关掉。
+        ]]></string>
+    <string name="env_var_help__wrapper_vendor_id"><![CDATA[
+        向游戏报告不同的 GPU 厂商 ID。<br /><br />
+<b>何时调整：</b>适用于会启用厂商专属渲染路径的游戏。声明驱动并不具备其扩展的厂商
+通常会让情况更糟，因此请仅在明确建议下修改。
+        ]]></string>
+    <string name="env_var_help__wrapper_vk_version"><![CDATA[
+        封装层向游戏报告的 Vulkan 版本，例如 <b>1.4</b>。<br /><br />
+<b>何时更改：</b>用于拒绝在驱动实际报告的版本下运行的游戏或翻译层。声称一个驱动无法提供的版本，
+只是把故障推后，而不会修复它。
+        ]]></string>
+    <string name="env_var_help__wrapper_vmem_max_size"><![CDATA[
+        限制包装器上报的显存大小，单位为 MB。<b>0</b> 表示不设置。<br /><br />
+<b>何时改动：</b>适用于按上报显存进行分配、随后却分配失败的游戏，或者显存数值看起来不对就拒绝启动的游戏。可以先用 2048 或 4096 这样的整数作为起点。
+        ]]></string>
+    <string name="env_var_help__zink_debug"><![CDATA[
+        Zink（基于 Vulkan 的 OpenGL 层）的调试标志。<br /><br />
+<b>validation</b> 启用 Vulkan 校验层；<b>sync</b> 强制同步提交；<b>nir</b>、<b>spirv</b> 和 <b>tgsi</b> 转储各着色器阶段。<br /><br />
+<b>何时更改：</b>仅用于诊断。<b>sync</b> 偶尔可用来判断崩溃是否为同步问题，但这里的每个选项都很慢。
+        ]]></string>
+    <string name="env_var_help__zink_descriptors"><![CDATA[
+        Zink —— 在 Vulkan 之上运行 OpenGL —— 管理描述符的方式。<br /><br />
+<b>auto</b>：交给 Zink 决定。（默认）<br />
+<b>lazy</b>：最简单，通常也最快。<br />
+<b>cached</b>：复用描述符集。<br />
+<b>notemplates</b>：避免使用更新模板，属于兼容性回退方案。<br /><br />
+<b>何时更改：</b>仅对通过 Zink 运行的 OpenGL 游戏生效。想提速度可以试试 <b>lazy</b>，如果驱动崩溃就用 <b>notemplates</b>。
+        ]]></string>
+    <string name="gog_login_title">登录 GOG</string>
+    <string name="gog_login_provider_title">使用你的提供商登录</string>
+    <string name="gog_login_finishing">正在完成登录…</string>
+    <string name="gog_login_reload">重新加载</string>
+    <string name="gog_login_close">关闭</string>
+    <string name="gog_login_retry">重试</string>
+    <string name="gog_login_error_network">无法加载 GOG 登录页面。\n\n%1$s</string>
+    <string name="gog_login_error_http">GOG 登录页面返回了错误（HTTP %1$d）。</string>
+    <string name="gog_login_error_ssl">登录页面未通过安全检查，因此未加载。</string>
+    <string name="gog_login_error_verification">登录验证失败，请重试</string>
+    <string name="gog_login_error_generic">登录出错，请重试</string>
+    <string name="gog_login_error_idp_blocked">该登录服务商拒绝在应用内加载。\n\n请改用 GOG 邮箱和密码登录。如果你的 GOG 账号还没有密码，请先在手机浏览器中访问 gog.com 设置一个。</string>
+    <string name="help_linux_name"><![CDATA[
+        <b>名称</b><br /><br />
+        该条目在库中卡片上显示的名称。它既不会传给 Steam 客户端，也不会传给客户端启动的游戏——它只是你在应用里找到这个条目的方式。
+    ]]></string>
+    <string name="help_linux_icon"><![CDATA[
+        <b>图标</b><br /><br />
+        此条目在库中卡片上显示的图片。它既不会进入 Steam 客户端，也不会进入客户端启动的游戏——它只是这个应用的封面图。
+    ]]></string>
+    <string name="help_linux_screen_size"><![CDATA[
+        <b>屏幕尺寸</b><br /><br />
+        Linux 会话渲染所用的分辨率。它决定 gamescope 输出的尺寸，因此会同时作用于 <b>Steam 客户端和该客户端启动的每个游戏</b>——大屏幕模式及其中的游戏都绘制到这一路输出里。尺寸越小，GPU 负担越轻，画面会被放大填满你的屏幕。
+    ]]></string>
+    <string name="help_linux_screen_alignment"><![CDATA[
+        <b>屏幕对齐</b><br /><br />
+        画面无法填满屏幕时，会话画面在屏幕上的位置——居中、顶部还是底部。它同时作用于<b>两者</b>：Steam 客户端以及由客户端启动的游戏，因为它们共用同一个输出。选择顶部或底部可腾出另一半屏幕用于屏幕控制。
+    ]]></string>
+    <string name="help_linux_fullscreen_mode"><![CDATA[
+        <b>全屏模式</b><br /><br />
+        当会话画面与屏幕形状不一致时如何适配 —— 保持原样、加黑边适配、拉伸、填充，或按整数倍缩放。它同时作用于 <b>Steam 客户端和客户端启动的游戏</b>，因为两者都渲染到同一输出。
+    ]]></string>
+    <string name="help_linux_hdr_output"><![CDATA[
+        <b>HDR 输出</b><br /><br />
+        以 HDR 把本会话的画面送到你的屏幕。合成器会为整个会话开启 HDR 通路，因此 Steam 客户端和它启动的游戏<b>两者</b>都会覆盖到。在不支持 HDR10 的屏幕上，该设置会置灰，会话以普通 SDR 运行。
+    ]]></string>
+    <string name="help_linux_prefer_game_dlls"><![CDATA[
+        <b>优先使用游戏目录内的 DLL</b><br /><br />
+        让游戏加载自带的某些支持 DLL，而不是 Proton 提供的版本，许多 wrapper 和模组加载器需要如此。此项仅对<b>由客户端启动的游戏</b>有效——Steam 客户端是原生 Linux 程序，没有 Windows DLL。该会话内所有内容共用一个环境，因此此设置会作用于你从客户端启动的每个游戏，而不是单个游戏。
+    ]]></string>
+    <string name="help_linux_env_vars"><![CDATA[
+        <b>环境变量</b><br /><br />
+        Linux 会话启动时传入的额外设置。它们会同时作用于 Steam 客户端和该客户端启动的游戏：客户端带着它们启动，每个游戏再经由 Steam 和 Proton 继承。此处设置的变量会覆盖 FEXCore 预设中的同名变量。
+    ]]></string>
+    <string name="help_linux_fps_limiter"><![CDATA[ <b>帧率限制</b><br /><br /> Steam 客户端不使用此项。合成器的刷新率对整个会话只设定一次，因此为某个游戏设置的上限也会把客户端菜单一并压住——把限制设为 60，大屏幕模式在 144 Hz 屏幕上也只能跑 60。Linux 会话则始终按本屏幕的最高刷新率运行。若要限制某个特定游戏的帧率，请使用该游戏自己的设置。 ]]></string>
+    <string name="help_linux_fexcore_preset"><![CDATA[
+        <b>FEXCore 预设</b><br /><br />
+        用于调整 FEX，它负责把游戏的 x86 代码翻译为 ARM。仅作用于<b>客户端启动的游戏</b>：这些游戏在 Proton 内运行 x86 代码，而 Steam 客户端本身是原生 ARM64 版本，从不经过 FEX。预设会在启动时交给会话，你在环境变量中设置的内容会覆盖它。
+    ]]></string>
+    <string name="help_linux_controls_profile"><![CDATA[
+        <b>控制配置</b><br /><br />
+        会话使用的屏幕按键布局。它同时作用于<b>两者</b>：Steam 客户端以及由客户端启动的游戏。覆盖层覆盖整个会话，因此同一套按键既操作大屏幕模式，也操作其中的游戏。保持为“无”时，若未连接实体手柄，会话会启用内置的虚拟手柄布局。
+    ]]></string>
+    <string name="help_linux_touchscreen_mode"><![CDATA[
+        <b>触摸屏模式</b><br /><br />
+        让触摸直接在你触碰的位置产生一次点击，而不是把鼠标指针移到那里。它同时作用于 <b>Steam 客户端</b>和客户端启动的游戏，因为它改变了整个会话接收触摸事件的方式。
+    ]]></string>
+    <string name="help_linux_autohide_controls"><![CDATA[
+        <b>连接手柄时隐藏屏幕控件</b><br /><br />
+        一旦连接物理手柄，就隐藏屏幕上的按键，手柄断开后再恢复显示。它对 Steam 客户端和客户端启动的游戏<b>都</b>生效，因为这个覆盖层作用于整个会话。
+    ]]></string>
+    <string name="help_linux_player_slots"><![CDATA[
+        <b>玩家槽位</b><br /><br />
+        将你的控制器固定为玩家 1、2、3 和 4，使其不再在每次启动时互换位置。它同时作用于 <b>Steam 客户端</b>和该客户端启动的游戏，因为会话会按这里设定的顺序把手柄依次交出。除非某个手柄总是以错误的玩家身份出现，否则请保持容器的默认设置。
+    ]]></string>
+    <string name="help_linux_gyro_enabled"><![CDATA[
+        <b>体感瞄准</b><br /><br />
+        把倾斜设备变成瞄准或指针移动。它会 <b>同时</b> 作用于 Steam 客户端和客户端启动的游戏，因为体感会在整个会话中作为手柄或鼠标输入送入。更细的参数——死区与平滑——位于“容器设置”中。
+    ]]></string>
+    <string name="help_linux_processor_affinity"><![CDATA[
+        <b>处理器关联</b><br /><br />
+        选择允许该会话在哪些 CPU 核心上运行。它<b>同时</b>作用于 Steam 客户端和客户端启动的游戏：合成器会按真实进程 ID 找到每个程序，并把它固定到这些核心上。全部核心都勾选则交由 Android 自行调度，通常这是最佳选择。
+    ]]></string>
+    <string name="help_linux_client_cores"><![CDATA[
+        <b>Steam 客户端核心</b><br /><br />
+        选择 <b>Steam 客户端</b>及其界面合成器可运行在哪些 CPU 核心上。它只影响客户端及其菜单，绝不影响它启动的游戏——那些游戏在下方有各自的列表。Steam 默认会把界面渲染器限制在本设备的部分核心上，这就是大屏幕模式可能显得迟钝的原因；你在此勾选的内容会取代该选择。
+    ]]></string>
+    <string name="help_linux_game_cores"><![CDATA[
+        <b>游戏核心</b><br /><br />
+        选择<b>从 Steam 客户端启动的游戏</b>可以运行在哪些 CPU 核心上。它只作用于游戏本身 —— 客户端及其菜单仍沿用上面的列表。全部核心都勾选则让 Android 自行分配，通常是最佳选择。
+    ]]></string>
+    <string-array name="linux_loading_hints">
+        <item>首次运行会从 Valve 下载 Steam 客户端，随后再下载它的更新 —— 网络状况良好时只需几分钟。</item>
+        <item>客户端画出第一帧之前屏幕会一直保持黑色；只要这个时钟在走，就没有卡住。</item>
+        <item>Steam 更新后会自行重启一次。这属正常，它会自己回来。</item>
+        <item>手柄在 Steam 中显示为 Xbox 360 手柄。没有手柄时，会显示屏幕手柄。</item>
+        <item>你安装的游戏通过应用配置的 ARM64 Proton 运行；内容中提供的 Proton 会按游戏逐个替换它。</item>
+    </string-array>
+    <string name="help_linux_draw_driver">"<b>绘制驱动（Linux 运行时）</b> —— 仅限 Linux Steam 客户端。\n\n这是在 Linux 运行时内部负责<b>绘制</b>的 Vulkan 驱动。会话中的一切都会用到它：gamescope 的合成、Steam 客户端自身的界面（其 OpenGL 经由运行时的 Zink 转为 Vulkan），以及客户端启动的每一个游戏（Direct3D 经由 Proton 的 DXVK/VKD3D 转为 Vulkan）。一个选择即可同时覆盖客户端和它的游戏。\n\n<b>运行时默认</b>是构建该运行时所使用的 Turnip。其他任何选项都是你在 内容 → 已安装 → Linux 运行时驱动 下导入的驱动。只能导入 <b>-Linux</b> 版 Turnip 压缩包：客户端及其游戏都是 Linux 进程，根本无法加载 Android 或 Wayland 驱动。\n\n运行时内部不会被改动 —— 只是把 Vulkan 加载器指向你选定的驱动，因此切回默认是即时生效的。如果导入的驱动被删除，会话会静默回到运行时默认驱动。\n\n这一项并不是把画面显示到屏幕上的驱动。那是上方的<b>显示驱动（Android 侧）</b>，两者始终同时参与：这个负责绘制帧，那个负责显示帧。"</string>
+    <string name="help_linux_display_driver"><![CDATA[
+        <b>显示驱动（Android 侧）</b><br /><br />
+        Linux 会话涉及两个显卡驱动，这是其中之一。它是应用加载的 Android 驱动，负责接收会话已渲染好的帧并把它显示到你的屏幕上。它同时影响 Steam 客户端<b>和</b>它的游戏，因为你看到的一切都要经过它。把它设为“系统”会导致黑屏。客户端及其游戏实际渲染所用的，是 Linux 运行时内部的另一个驱动，不在这里选择。
+    ]]></string>
+    <string name="help_linux_audio_driver"><![CDATA[
+        <b>音频驱动</b><br /><br />
+        声音如何离开会话并到达 Android。在这条路径上，只有 <b>PulseAudio</b> 能传出声音，并且同时为 <b>两者</b> 传声：Steam 客户端以及由客户端启动的游戏。选其他任何值都会让整个会话静音，所以请保持 PulseAudio。
+    ]]></string>
+    <string name="help_linux_microphone"><![CDATA[
+        <b>麦克风</b><br /><br />
+        允许游戏使用麦克风进行语音聊天。它面向的是<b>客户端启动的游戏</b>，而不是 Steam 客户端本身。在 Linux 会话中它目前还不起作用：这个开关只为 Windows 一侧接好了线路，而负责把声音送入的 Linux 一侧尚未就位。
+    ]]></string>
+    <string name="social_hub_tab_label">社区中心</string>
+    <string name="social_hub_help_title">社交中心</string>
+    <string name="social_hub_help_body">面向所有 WinHub 玩家的共享动态流。帖子存放在一个公开的 GitHub 仓库中，因此任何人都能在浏览器里阅读。使用 GitHub 登录后即可发帖和回复；你附上的图片会传到公共图床，所有人都能看到。</string>
+    <string name="social_hub_welcome_tagline">WinHub 玩家共用的动态流——发帖、回复、分享截图，无需离开游戏。</string>
+    <string name="social_hub_continue_github">使用 GitHub 继续</string>
+    <string name="social_hub_retry">重试</string>
+    <string name="social_hub_enter_code">在 GitHub 上输入此代码</string>
+    <string name="social_hub_open_device">打开 github.com/login/device</string>
+    <string name="social_hub_sign_in_hint">登录 GitHub 后即可发帖和回复。</string>
+    <string name="social_hub_refresh">刷新</string>
+    <string name="social_hub_sign_out">退出登录</string>
+    <string name="social_hub_loading_feed">正在加载动态…</string>
+    <string name="social_hub_empty_feed">暂无帖子</string>
+    <string name="social_hub_empty_feed_hint">发起话题——所有正在玩 WinHub 的人都能看到。</string>
+    <string name="social_hub_new_post">新帖子</string>
+    <string name="social_hub_search_hint">搜索帖子</string>
+    <string name="social_hub_search_empty">没有帖子与你的搜索匹配</string>
+    <string name="social_hub_search_empty_hint">换个关键词试试，或清空搜索以查看全部内容。</string>
+    <string name="social_hub_search_clear">清除搜索</string>
+    <string name="social_hub_new_post_title">新帖子</string>
+    <string name="social_hub_post_title_field">标题</string>
+    <string name="social_hub_post_body_field">你在想什么？</string>
+    <string name="social_hub_attach_hint">添加图片（将公开上传）</string>
+    <string name="social_hub_pick_image">附加图片</string>
+    <string name="social_hub_uploading">正在上传图片…</string>
+    <string name="social_hub_post_action">发布</string>
+    <string name="social_hub_posting">正在发布…</string>
+    <string name="social_hub_no_replies">还没有回复。来开始这场对话吧。</string>
+    <string name="social_hub_reply_hint">回复…</string>
+    <string name="social_hub_send">发送</string>
+    <string name="social_hub_back">返回动态流</string>
+    <string name="social_hub_delete_post_title">要删除此帖子吗？</string>
+    <string name="social_hub_delete_post_body">它会从所有人的信息流中消失。这是软删除——记录仍保留在 GitHub 上。</string>
+    <string name="social_hub_delete_reply_title">删除此回复？</string>
+    <string name="social_hub_delete_reply_body">你的回复会从该帖中移除，所有人都看不到。</string>
+    <string name="social_hub_delete">删除</string>
+    <string name="social_hub_delete_post">删除帖子</string>
+    <string name="social_hub_delete_reply">删除回复</string>
+    <string name="social_hub_attachments">此帖附带的图片</string>
+    <string name="social_hub_reply_count_one">%d 条回复</string>
+    <string name="social_hub_reply_count_many">%d 条回复</string>
+    <string name="social_hub_images_more">另有 %1$d 条</string>
+    <string name="social_hub_subtab_feed">动态</string>
+    <string name="social_hub_subtab_configs">游戏配置</string>
+    <string name="social_hub_subtab_profile">配置</string>
+    <string name="social_hub_configs_upload">上传</string>
+    <string name="social_hub_configs_sign_in_hint">请在“动态”标签页登录后上传配置。</string>
+    <string name="social_hub_configs_loading">正在加载配置…</string>
+    <string name="social_hub_configs_empty">暂无配置</string>
+    <string name="social_hub_configs_empty_hint">分享你的游戏设置，他人可一键导入。</string>
+    <string name="social_hub_configs_working">处理中…</string>
+    <string name="social_hub_configs_pick_exe">选择游戏的 .exe</string>
+    <string name="social_hub_configs_import">导入</string>
+    <string name="social_hub_configs_close">关闭</string>
+    <string name="social_hub_configs_back">返回</string>
+    <string name="social_hub_configs_upload_title">上传配置</string>
+    <string name="social_hub_configs_loading_games">正在加载你的游戏…</string>
+    <string name="social_hub_configs_no_games">未找到游戏。请先添加游戏。</string>
+    <string name="social_hub_configs_note_hint">备注（可选）</string>
+    <string name="social_hub_configs_share">分享</string>
+    <string name="social_hub_configs_search_hint">搜索配置</string>
+    <string name="social_hub_configs_matches_device">与我的设备匹配</string>
+    <string name="social_hub_configs_no_match">没有匹配的配置</string>
+    <string name="social_hub_configs_no_match_hint">换个关键词试试，或关闭设备筛选。</string>
+    <string name="social_hub_configs_stats">%1$d 个赞 • %2$d 条回复</string>
+    <string name="social_hub_configs_like">点赞（%1$d）</string>
+    <string name="social_hub_configs_liked">已点赞 (%1$d)</string>
+    <string name="social_hub_configs_tab_library">库</string>
+    <string name="social_hub_configs_tab_shared">共享</string>
+    <string name="social_hub_configs_library_loading">正在加载配置库…</string>
+    <string name="social_hub_configs_library_error">无法加载游戏库</string>
+    <string name="social_hub_configs_library_error_hint">请检查网络连接，然后点击刷新。</string>
+    <string name="social_hub_configs_library_count">%1$d 个配置</string>
+    <string name="social_hub_configs_library_match">与你的设备匹配</string>
+    <string name="xbox_saving_on_exit">正在保存并上传你的 Xbox 存档…</string>
+    <string name="controller_identity_label">控制器标识</string>
+    <string name="help_controller_identity"><![CDATA[游戏看到的是哪种控制器。<br /><br /><b>通用</b>（默认）：兼容一切，与以前一致。<br /><b>Xbox 360 / One / Series</b>：游戏会把该手柄当作 Xbox 控制器；最好搭配 <b>Direct XInput</b> 以获得实时输入和振动。<br /><b>经典 DirectInput 手柄</b>：适用于不接受 Xbox 手柄的老游戏；它总能让 DirectInput 游戏识别到控制器。<br /><b>PlayStation / Nintendo / Joy-Con / Steam Deck</b>（实验性）：游戏可能显示对应按键图标；不支持陀螺仪、触摸板、灯条或触控板，少数游戏可能检测不到手柄，此时请切回通用或 Xbox。<br /><br />如果手柄在游戏中消失，请切回通用。<br /><br />在游戏内更改（控制 › 手柄）时，控制器会以新类型重新连接；切换为经典 DirectInput 手柄或从它切出，将在下次启动时生效。]]></string>
+    <string name="help_controller_identity_game"><![CDATA[游戏能看到的手柄类型。<br /><br /><b>通用</b>（默认）：兼容一切，与以往相同。<br /><b>Xbox 360 / One / Series</b>：游戏会把手柄当作 Xbox 手柄；建议搭配 <b>Direct XInput</b> 以获得实时输入与振动。<br /><b>经典 DirectInput 手柄</b>：适用于不接受 Xbox 手柄的老游戏；它总能确保 DirectInput 游戏识别到手柄。<br /><b>PlayStation / Nintendo / Joy-Con / Steam Deck</b>（实验性）：游戏中可能显示相应按键图标；不支持陀螺仪、触控板、灯条或触摸板，少数游戏可能无法识别手柄，若出现这种情况请切回通用或 Xbox。<br /><br />若手柄在游戏中消失，请切回通用。<br /><br />在游戏内切换（控制 › 手柄）后，手柄会以新类型重新连接；切换至或切离经典 DirectInput 手柄则在下一次启动时生效。<br /><br /><i>覆盖此游戏的容器设置。</i>]]></string>
+    <string name="dinput_visible">DirectInput 游戏能识别该控制器</string>
+    <string name="help_dinput_visible"><![CDATA[让 DirectInput 游戏（许多老游戏、赛车游戏、方向盘）能够识别手柄。关闭后会从 DirectInput 中隐藏手柄，避免同时支持 XInput 和 DirectInput 的游戏把它识别两次。使用经典 DirectInput 手柄标识时会始终开启此项。]]></string>
+    <string name="help_dinput_visible_game"><![CDATA[让 DirectInput 游戏（许多老游戏、赛车游戏、方向盘）能识别该控制器。关闭后会将其从 DirectInput 中隐藏，这样同时支持 XInput 与 DirectInput 的游戏就不会重复识别。使用 Classic DirectInput 手柄身份时会始终开启此项。<br /><br /><i>会覆盖此游戏的容器设置。</i>]]></string>
+    <string name="dinput_vibration">DirectInput 振动</string>
+    <string name="dinput_vibration_summary">DirectInput 游戏（赛车、飞行以及许多老游戏）可让控制器振动。默认开启。</string>
+    <string name="help_dinput_vibration"><![CDATA[<b>DirectInput 震动</b><br /><br />让 DirectInput 游戏可以驱动控制器震动：普通振动，以及赛车和飞行游戏发送给方向盘或摇杆的力反馈效果，都会通过控制器的两个马达呈现。它遵循震动设置（震动的目标与强度）。默认开启。<br /><br />持续的力量（例如赛车游戏保持方向盘回正）会在几秒后减弱，控制器不会一直嗡嗡作响。<br /><br />DirectInput 游戏只有在能看到控制器时才有震动（<i>DirectInput 游戏可以看到控制器</i>）。关闭后：DirectInput 游戏无法让控制器震动。<br /><br />更改会在控制器重新连接时生效（在游戏内可通过 控制 › 手柄 完成），或在下次启动时生效。环境变量中的 HERMES_DINPUT_FF 优先于该设置。]]></string>
+    <string name="help_dinput_vibration_game"><![CDATA[<b>DirectInput 振动</b><br /><br />让 DirectInput 游戏能够驱动手柄振动：普通震动，以及竞速和飞行游戏发送给方向盘或飞行摇杆的力反馈效果，通过手柄的两个马达呈现。它会遵循振动设置（震动目标与强度）。默认开启。<br /><br />持续不变的力（例如赛车游戏把方向盘保持在正中）会在几秒后衰减，因此手柄不会一直嗡嗡作响。<br /><br />DirectInput 游戏只有在能识别到手柄时才能感受到振动（<i>DirectInput 游戏可以识别手柄</i>）。关闭：DirectInput 游戏无法让手柄振动。<br /><br />更改会在手柄重新连接时生效（在游戏内可通过 控制 › 手柄 完成），或在下次启动时生效。环境变量中的 HERMES_DINPUT_FF 优先于本设置。<br /><br /><i>为此游戏覆盖容器设置。</i>]]></string>
+    <string name="hermes_xinput_switching">允许游戏内切换</string>
+    <string name="hermes_xinput_switching_summary">无需重启，即可在游戏内菜单中开启或关闭 Direct XInput。</string>
+    <string name="help_hermes_xinput_switching"><![CDATA[<b>允许游戏内切换</b><br /><br />无论 Direct XInput 是开是关，都会安装 WinHub\'s XInput DLL，并与 Wine 自带的 XInput 并列共存，这样游戏运行中可在游戏内菜单的「控制 › 手柄」里切换两者（手柄会重新连接）。<br /><br />默认开启。关闭后：Direct XInput 保持游戏启动时的状态，更改需重启游戏。]]></string>
+    <string name="help_hermes_xinput_switching_game"><![CDATA[<b>允许游戏中切换</b><br /><br />无论 Direct XInput 是开启还是关闭，都会安装 WinHub 的 XInput DLL，并让 Wine 自带的 XInput 与之并存，这样游戏运行时就能在游戏内菜单的「控制 › 手柄」里在两者之间切换（手柄会重新连接）。<br /><br />默认开启。关闭时：Direct XInput 保持游戏启动时的状态，要更改需重启游戏。<br /><br /><i>会覆盖该游戏所属的容器设置。</i>]]></string>
+    <string name="hermes_xinput_over_game_dll">使用 Direct XInput 替代游戏自带的 XInput DLL</string>
+    <string name="help_hermes_xinput_over_game_dll"><![CDATA[<b>用 Direct XInput 覆盖游戏自带的 XInput DLL</b><br /><br />有些游戏会在 EXE 旁边自带一份 XInput DLL（常见的是微软的 xinput1_3.dll）。Wine 会先加载这份副本，而不是 WinHub 的；微软那份需要 Windows 专用驱动，于是游戏会看不到手柄。所以默认情况下，WinHub 会给这个 DLL 提供 Wine 自己的 XInput，行为与 Direct XInput 之前一致，并且只提示一次。<br /><br /><b>开启</b>：游戏运行期间，它自带的副本会被改名（xinput1_3.dll 变成 xinput1_3.dll.hermes-disabled），从而使用 Direct XInput；会话结束时再改回原名，若会话意外结束，则在下次启动应用或启动游戏时改回。不会删除或覆盖任何文件。<br /><br />如果环境变量里为同一个 DLL 设置了 <i>优先使用游戏文件夹中的 DLL</i> 条目，则以那条为准。<br /><br />默认关闭。仅对当前游戏生效。]]></string>
+    <string name="stick_pacing_label">摇杆更新频率</string>
+    <string name="help_stick_pacing"><![CDATA[摇杆动作送达游戏的频率。<br /><br /><b>自动</b>（默认）：游戏每绘制一帧就更新一次摇杆，直至达到所设上限（默认每秒 60 次）。绘制快于读取输入的游戏永远不会落后，所以你松手后摇杆会立刻停住。<br /><b>固定</b>：不论游戏如何，都按此频率每秒更新这么多次。<br /><b>不节制</b>：每次变化都立即发出（最顺滑，但读取输入较慢的游戏可能跟不上摇杆）。<br /><br />立即生效，游戏内同样适用。环境变量中的 HERMES_AXIS_HZ / HERMES_AXIS_AUTO_MAX 优先级高于此项设置。]]></string>
+    <string name="help_stick_pacing_game"><![CDATA[摇杆动作多久传递到游戏一次。<br /><br /><b>自动</b>（默认）：游戏每绘制一帧就发一次摇杆更新，上限为设定值（默认每秒 60 次）。绘制速度快于读取输入的游戏永远不会落后，所以松开摇杆后会立刻停住。<br /><b>固定</b>：无论游戏怎么跑，都按此数值每秒更新。<br /><b>不节流</b>：每次变化都立即发出（最顺滑，但读取输入较慢的游戏可能跟不上摇杆）。<br /><br />立即生效，游戏中同样有效。环境变量里的 HERMES_AXIS_HZ / HERMES_AXIS_AUTO_MAX 优先级高于此设置。<br /><br /><i>覆盖本游戏的容器设置。</i>]]></string>
+    <string name="hermes_xinput">Direct XInput（HERMES）</string>
+    <string name="hermes_xinput_summary">XInput 游戏会直接读取控制器，不经过输入队列。新建容器默认开启。</string>
+    <string name="help_hermes_xinput"><![CDATA[<b>Direct XInput（HERMES）</b><br /><br />XInput 游戏直接从 WinHub 读取控制器，而不再经过 Wine 的控制器队列：始终是最新的摇杆位置，没有额外延迟，并包含振动。新建容器默认开启；3.1.7-pre4 之前创建的容器保留各自的设置。<br /><br />关闭：XInput 照旧经过 Wine。如果某款游戏行为异常，就为它单独关闭此选项。]]></string>
+    <string name="help_hermes_xinput_game"><![CDATA[<b>Direct XInput（HERMES）</b><br /><br />XInput 游戏直接从 WinHub 读取手柄，而不再经过 Wine\'的控制器队列：始终是最新的摇杆位置，不附加延迟，并包含振动。<br /><br />关闭：XInput 照旧经过 Wine。若某款游戏行为异常，就为它关掉此项。<br /><br /><i>会覆盖此游戏的容器设置。</i>]]></string>
+    <string name="help_mali_panvk"><![CDATA[
+        <b>Mali（PanVK）</b><br /><br />
+        用于 Arm Mali GPU 上的 FristOneRR PanVK 驱动（github.com/FristOneRR/FristOneRR-Panvk-Driver，MIT 许可）。Mali 模式会在 Wayland 适配器中应用 FristOneRR 的调整：对游戏隐藏 VK_KHR_present_id、VK_KHR_present_wait 和 VK_KHR_dynamic_rendering，并为这个驱动启用它的两个同步规避项（跳过 GPU 提交等待、跳过取帧信号）。这三项各自在“高级”里有独立开关；两个同步规避项是给 DXVK 游戏用的，如果 D3D12 游戏表现异常或出现画面撕裂，就把它们关掉。当驱动名称包含 \'panvk\' 时它会自动开启；你也可以随时手动切换。<br /><br />
+        <b>BCn 贴图</b><br />
+        开启 Mali 模式会把 BCn 贴图模拟设为 <b>none</b>。用这个驱动把 BCn 贴图转成 ASTC 可能让手机冻结或重启；只有在游戏出现贴图破损或缺失时才尝试其他设置。<br /><br />
+        <b>高级</b><br />
+        FristOneRR 列为安全的那些驱动变量。留在“自动”/“默认”时完全不会设置。PANVK_ATOM_STRIDE 只在自动检测失败时使用（日志中出现 [KFAULT]）；PANVK_TRACE 会把驱动跟踪写入日志。<br /><br />
+        致谢：感谢 FristOneRR 提供 PanVK 驱动及这些调整。
+    ]]></string>
+    <string name="mali_panvk_advanced">高级 PanVK 设置</string>
+    <string name="mali_panvk_atom_stride_hint">仅在自动检测失败时使用（日志中出现 [KFAULT]）。</string>
+    <string name="mali_panvk_bcn_warning">使用此驱动把 BCn 纹理转换为 ASTC 可能导致手机冻结或重启；只有在游戏出现纹理破损或缺失时才尝试。</string>
+    <string name="mali_panvk_default">自动 / 默认</string>
+    <string name="mali_panvk_heap_hint">默认：内存的四分之一，1024–3072 MB。</string>
+    <string name="mali_panvk_hide_exts">隐藏 present-wait / 动态渲染扩展</string>
+    <string name="mali_panvk_mode">Mali (PanVK) 模式</string>
+    <string name="mali_panvk_mode_hint">Wayland 适配层中的 FristOneRR\'s PanVK 调优：隐藏 present_id、present_wait 与 dynamic_rendering，另含两项同步变通。使用 PanVK 驱动时默认开启。</string>
+    <string name="mali_panvk_no_acquire_signal">跳过帧获取信号</string>
+    <string name="mali_panvk_no_submit_waits">跳过 GPU 提交等待</string>
+    <string name="mali_panvk_out_of_range">超出范围：不使用。</string>
+    <string name="mali_panvk_poly_heap_hint">默认：16 MB。</string>
+    <string name="mali_panvk_sync_hint">这两项跳过只针对 DXVK 游戏：如果 D3D12 游戏运行异常或出现画面撕裂，请把它们关掉。acquire 跳过需要配合 submit-wait 跳过使用。</string>
+    <string name="mali_panvk_tiler_heap_hint">默认：512 MB。</string>
+    <string name="mali_panvk_trace">PANVK_TRACE（驱动跟踪）</string>
+    <string name="xmb_store_back">返回</string>
+    <string name="xmb_store_details">详情</string>
+</resources>
