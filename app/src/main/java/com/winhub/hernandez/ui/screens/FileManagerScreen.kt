@@ -890,7 +890,7 @@ fun FileManagerScreen(
                     if (folderName.isNotBlank()) createFolder(currentDir, folderName)
                 }) { Text(I18n.s(R.string.create)) }
             },
-            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text("Cancel") } },
         )
     }
 
@@ -933,7 +933,7 @@ fun FileManagerScreen(
                     if (file != null && newName.isNotBlank()) performRename(file, newName)
                 }) { Text(I18n.s(R.string.ui_rename_2)) }
             },
-            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text("Cancel") } },
         )
     }
 
@@ -972,9 +972,9 @@ fun FileManagerScreen(
                 TextButton(onClick = {
                     selectedEntry = null
                     performDelete(file)
-                }) { Text(I18n.s(R.string.preset_action_delete)) }
+                }) { Text("Delete") }
             },
-            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text("Cancel") } },
         )
     }
 
@@ -1031,9 +1031,9 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = bulkDeleteNow) { Text(I18n.s(R.string.preset_action_delete), color = MaterialTheme.colorScheme.error) }
+                TextButton(onClick = bulkDeleteNow) { Text("Delete", color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text("Cancel") } },
         )
     }
 
@@ -1085,7 +1085,7 @@ fun FileManagerScreen(
             confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { conflictChoice = ConflictChoice.SKIP; pendingConflict = null }) {
-                    Text(I18n.s(R.string.cancel))
+                    Text("Cancel")
                 }
             },
         )
@@ -1166,7 +1166,7 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text("Cancel") } },
         )
     }
 
@@ -1207,7 +1207,7 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text("Cancel") } },
         )
     }
 
@@ -1624,7 +1624,7 @@ fun FileManagerScreen(
                     )
                     MenuItemDivider()
                     DropdownMenuItem(
-                        text = { Text(I18n.s(R.string.ui_drive_z)) },
+                        text = { Text("Drive Z:") },
                         leadingIcon = {
                             Icon(Icons.Filled.Storage, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         },
@@ -1880,12 +1880,12 @@ fun FileManagerScreen(
                     onClick = { pendingBulkDelete = entries.filter { it.absolutePath in selectedPaths } },
                     contentPadding = selBarPadding,
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
-                ) { Text(I18n.s(R.string.preset_action_delete), color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
+                ) { Text("Delete", color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
                 Spacer(Modifier.width(4.dp))
                 OutlinedButton(
                     onClick = { selectionMode = false; selectedPaths = emptySet() },
                     contentPadding = selBarPadding,
-                ) { Text(I18n.s(R.string.wrapper_catalog_close), fontSize = 12.sp) }
+                ) { Text("Done", fontSize = 12.sp) }
             }
         }
 
@@ -1908,7 +1908,7 @@ fun FileManagerScreen(
                     color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { clipboardFiles = emptyList(); isCutOperation = false }) {
-                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
             }
         }
@@ -1940,7 +1940,7 @@ fun FileManagerScreen(
                             isOperationRunning = false
                             operationDeterminate = false
                             loadDirectory(currentDir, resetScroll = false)
-                        }) { Text(I18n.s(R.string.cancel), fontSize = 12.sp) }
+                        }) { Text("Cancel", fontSize = 12.sp) }
                     }
                 }
                 Spacer(Modifier.height(4.dp))
@@ -2238,7 +2238,7 @@ private fun FileContextMenuItems(
     val canRun = isDir || file.name.lowercase().let { it.endsWith(".exe") || it.endsWith(".bat") || it.endsWith(".msi") || it.endsWith(".sh") }
     // Enter multi-select on this item (replaces the old long-press-only entry point).
     DropdownMenuItem(
-        text = { Text(I18n.s(R.string.ui_select)) },
+        text = { Text("Select") },
         leadingIcon = { Icon(Icons.Filled.Checklist, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onSelect() },
     )
@@ -2246,7 +2246,7 @@ private fun FileContextMenuItems(
     // Properties: basic info + Read-only / Hidden toggles, for ANY file or folder (handy for config
     // files like .txt/.cfg/.ini). Kept near the top since it's a common reason to open this menu.
     DropdownMenuItem(
-        text = { Text(I18n.s(R.string.ui_properties)) },
+        text = { Text("Properties") },
         leadingIcon = { Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onProperties() },
     )
@@ -2331,7 +2331,7 @@ private fun FileContextMenuItems(
     )
     MenuItemDivider()
     DropdownMenuItem(
-        text = { Text(I18n.s(R.string.preset_action_delete)) },
+        text = { Text("Delete") },
         leadingIcon = { Icon(Icons.Filled.Delete, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onDelete() },
     )
@@ -2901,7 +2901,7 @@ private fun FilePropertiesDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(I18n.s(R.string.ui_properties)) },
+        title = { Text("Properties") },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 // ── Basic info ──
@@ -2952,7 +2952,7 @@ private fun FilePropertiesDialog(
                 // ── Hidden ── Wine's DOS hidden bit in the user.DOSATTRIB xattr.
                 val hiddenSupported = state?.hiddenSupported == true
                 AttributeToggleRow(
-                    label = I18n.s(R.string.ui_hidden),
+                    label = "Hidden",
                     description = if (state != null && !hiddenSupported)
                         "This storage can't store the hidden flag."
                     else "Marks the file hidden in Windows (Wine's hidden attribute).",
@@ -2976,7 +2976,7 @@ private fun FilePropertiesDialog(
                 )
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
     )
 }
 

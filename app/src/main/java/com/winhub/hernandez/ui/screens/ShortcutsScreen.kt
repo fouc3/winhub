@@ -1371,7 +1371,7 @@ fun ShortcutsScreen(
                 }) { Text(I18n.s(R.string.ui_browse)) }
             },
             dismissButton = {
-                TextButton(onClick = { exePickerFor = null }) { Text(I18n.s(R.string.cancel)) }
+                TextButton(onClick = { exePickerFor = null }) { Text("Cancel") }
             },
         )
     }
@@ -1428,7 +1428,7 @@ fun ShortcutsScreen(
                 TextButton(onClick = {
                     showImportMethodPicker = false
                     pendingImportContainerIndex = -1
-                }) { Text(I18n.s(R.string.cancel)) }
+                }) { Text("Cancel") }
             },
         )
     }
@@ -1534,7 +1534,7 @@ fun ShortcutsScreen(
                         folderScanSelected = emptySet()
                         pendingImportContainerIndex = -1
                     },
-                ) { Text(I18n.s(R.string.cancel)) }
+                ) { Text("Cancel") }
             },
         )
     }
@@ -1579,7 +1579,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showImportContainerPicker = false }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { showImportContainerPicker = false }) { Text("Cancel") } },
         )
     }
 
@@ -1767,7 +1767,7 @@ fun ShortcutsScreen(
                     ).show()
                 }) { Text(I18n.s(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemove = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmRemove = null }) { Text("Cancel") } },
         )
     }
 
@@ -1801,7 +1801,7 @@ fun ShortcutsScreen(
                 }) { Text(I18n.s(R.string.remove), color = DangerRed) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmRemoveSelected = false }) { Text(I18n.s(R.string.cancel)) }
+                TextButton(onClick = { confirmRemoveSelected = false }) { Text("Cancel") }
             },
         )
     }
@@ -1841,7 +1841,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { cloneTarget = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { cloneTarget = null }) { Text("Cancel") } },
         )
     }
 
@@ -1934,7 +1934,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { backupFormatShortcut = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { backupFormatShortcut = null }) { Text("Cancel") } },
         )
     }
 
@@ -1994,7 +1994,7 @@ fun ShortcutsScreen(
         var didReset by remember { mutableStateOf(false) }
         OutlinedAlertDialog(
             onDismissRequest = { propertiesShortcut = null },
-            title = { Text(I18n.s(R.string.ui_properties)) },
+            title = { Text("Properties") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(if (didReset) "Number of times played: 0" else "Number of times played: $playCount")
@@ -2075,7 +2075,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { scrapeTarget = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { scrapeTarget = null }) { Text("Cancel") } },
         )
     }
 
@@ -2149,7 +2149,7 @@ fun ShortcutsScreen(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text(I18n.s(R.string.ui_upload_to_community))
+                        Text("Upload to community")
                     }
                 }
                 // Manage the configs the user has shared (list / delete / edit description). Reinstall-
@@ -2409,7 +2409,7 @@ fun ShortcutsScreen(
                     }) { Text(I18n.s(R.string.ui_replace)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = dismissReplace) { Text(I18n.s(R.string.cancel)) }
+                    TextButton(onClick = dismissReplace) { Text("Cancel") }
                 },
             )
         }
@@ -2521,7 +2521,7 @@ fun ShortcutsScreen(
                                                 OutlinedButton(onClick = { deleteUploadRow = row }) {
                                                     Icon(Icons.Filled.Delete, null, modifier = Modifier.size(18.dp))
                                                     Spacer(Modifier.width(6.dp))
-                                                    Text(I18n.s(R.string.preset_action_delete))
+                                                    Text("Delete")
                                                 }
                                                 Spacer(Modifier.weight(1f))
                                                 Button(
@@ -2568,9 +2568,9 @@ fun ShortcutsScreen(
                             Toast.makeText(context, "Couldn't reach the server.", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }) { Text(I18n.s(R.string.preset_action_delete)) }
+                }) { Text("Delete") }
             },
-            dismissButton = { TextButton(onClick = { deleteUploadRow = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { deleteUploadRow = null }) { Text("Cancel") } },
         )
     }
 
@@ -2710,7 +2710,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { applyPicker = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { applyPicker = null }) { Text("Cancel") } },
         )
     }
 
@@ -2726,7 +2726,7 @@ fun ShortcutsScreen(
                     runCommunityApply(sc, pick)
                 }) { Text(I18n.s(R.string.ui_apply_anyway)) }
             },
-            dismissButton = { TextButton(onClick = { applyMismatch = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { applyMismatch = null }) { Text("Cancel") } },
         )
     }
 
@@ -2756,7 +2756,7 @@ fun ShortcutsScreen(
                     }
                 }
             },
-            dismissButton = { TextButton(onClick = { exportResult = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { exportResult = null }) { Text("Cancel") } },
         )
     }
 
@@ -2791,7 +2791,7 @@ fun ShortcutsScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { importedConfigUri = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { importedConfigUri = null }) { Text("Cancel") } },
         )
     }
 
@@ -2898,12 +2898,12 @@ fun ShortcutsScreen(
                     }
                     if (res.advisories.isNotEmpty()) {
                         Divider(color = DividerColor)
-                        Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelLarge, color = OnSurface)
+                        Text("Heads up", style = MaterialTheme.typography.labelLarge, color = OnSurface)
                         res.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { applyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
+            confirmButton = { TextButton(onClick = { applyResult = null }) { Text("Done") } },
         )
     }
 
@@ -3035,7 +3035,7 @@ fun ShortcutsScreen(
                     }
                 }) { Text(if (eaSetupBusy) "Starting…" else "Set up") }
             },
-            dismissButton = { TextButton(enabled = !eaSetupBusy, onClick = { eaSetupFor = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(enabled = !eaSetupBusy, onClick = { eaSetupFor = null }) { Text("Cancel") } },
         )
     }
     launchChoiceFor?.let { s ->
@@ -3172,7 +3172,7 @@ fun ShortcutsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateHandle?.cancel() }) {
-                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.primary)
+                    Text("Cancel", color = MaterialTheme.colorScheme.primary)
                 }
             },
         )
@@ -3561,7 +3561,7 @@ internal fun MyAccountDialog(
                         )
                         ErrorText()
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text(I18n.s(R.string.social_hub_configs_back)) }
+                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text("Back") }
                             Spacer(Modifier.weight(1f))
                             Button(
                                 enabled = !busy && username.isNotBlank() && recoveryKeyInput.isNotBlank() && newPassword.isNotBlank(),
@@ -3743,7 +3743,7 @@ private fun SmartComponentInstallRow(
             )
             when {
                 done -> Icon(
-                    Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
+                    Icons.Filled.CheckCircle, contentDescription = "Installed",
                     tint = installedBlue, modifier = Modifier.size(20.dp),
                 )
                 busy || catalogLoading -> CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
@@ -3755,7 +3755,7 @@ private fun SmartComponentInstallRow(
                             shortlist.closest.isEmpty() -> onBrowseAll()
                             else -> expanded = !expanded
                         }
-                    }) { Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary) }
+                    }) { Text("Install", color = MaterialTheme.colorScheme.primary) }
                 }
             }
         }
@@ -3812,8 +3812,8 @@ private fun SmartComponentInstallRow(
             onDismissRequest = { confirmProfile = null },
             title = { Text("Install ${p.verName}?") },
             text = { Text("Download and install ${mc.type} ${p.verName}, then apply it to this shortcut?") },
-            confirmButton = { TextButton(onClick = { install(p) }) { Text(I18n.s(R.string.ui_install)) } },
-            dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text(I18n.s(R.string.cancel)) } },
+            confirmButton = { TextButton(onClick = { install(p) }) { Text("Install") } },
+            dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text("Cancel") } },
         )
     }
 }
@@ -3912,12 +3912,12 @@ private fun SmartDriverInstallRow(
             )
             when {
                 done -> Icon(
-                    Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
+                    Icons.Filled.CheckCircle, contentDescription = "Installed",
                     tint = installedBlue, modifier = Modifier.size(20.dp),
                 )
                 busy || loading -> CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                 else -> TextButton(onClick = { onInstallClick() }) {
-                    Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary)
+                    Text("Install", color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -3987,8 +3987,8 @@ private fun SmartDriverInstallRow(
             onDismissRequest = { confirmEntry = null },
             title = { Text("Quick install ${e.displayName}?") },
             text = { Text("Download and install this Turnip driver from ${e.source}, then apply it to this shortcut?") },
-            confirmButton = { TextButton(onClick = { install(e) }) { Text(I18n.s(R.string.ui_install)) } },
-            dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text(I18n.s(R.string.cancel)) } },
+            confirmButton = { TextButton(onClick = { install(e) }) { Text("Install") } },
+            dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text("Cancel") } },
         )
     }
 }
@@ -4216,13 +4216,13 @@ internal fun CommunityCatalogBrowser(
                     // Left-pane control 1 — store filter group (Left/Right cycles the focused chip).
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 0) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.ALL, onClick = { storeFilter = CatalogStoreFilter.ALL; leftZone = true; leftRow = 1; storeChipFocus = 0 }, label = { Text(I18n.s(R.string.binding_filter_all)) })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.ALL, onClick = { storeFilter = CatalogStoreFilter.ALL; leftZone = true; leftRow = 1; storeChipFocus = 0 }, label = { Text("All") })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 1) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.STEAM, onClick = { storeFilter = CatalogStoreFilter.STEAM; leftZone = true; leftRow = 1; storeChipFocus = 1 }, label = { Text(I18n.s(R.string.ui_steam)) })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.STEAM, onClick = { storeFilter = CatalogStoreFilter.STEAM; leftZone = true; leftRow = 1; storeChipFocus = 1 }, label = { Text("Steam") })
                         }
                         DpadHighlight(focused = leftZone && leftRow == 1 && storeChipFocus == 2) {
-                            FilterChip(selected = storeFilter == CatalogStoreFilter.TITLE, onClick = { storeFilter = CatalogStoreFilter.TITLE; leftZone = true; leftRow = 1; storeChipFocus = 2 }, label = { Text(I18n.s(R.string.social_hub_post_title_field)) })
+                            FilterChip(selected = storeFilter == CatalogStoreFilter.TITLE, onClick = { storeFilter = CatalogStoreFilter.TITLE; leftZone = true; leftRow = 1; storeChipFocus = 2 }, label = { Text("Title") })
                         }
                     }
                     // Left-pane control 2 — Matches my device.
@@ -4291,7 +4291,7 @@ internal fun CommunityCatalogBrowser(
                 ) {
                     if (selectedGame != null) {
                         IconButton(onClick = { selectedIdentity = null }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back))
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                         }
                     }
                     Text(
@@ -5006,7 +5006,7 @@ private fun CommunityConfigDetailDialog(
                             }
                         }
                         if (pre.advisories.isNotEmpty()) {
-                            Text(I18n.s(R.string.ui_heads_up), style = MaterialTheme.typography.labelMedium, color = OnSurface)
+                            Text("Heads up", style = MaterialTheme.typography.labelMedium, color = OnSurface)
                             pre.advisories.forEach { Text("• $it", style = MaterialTheme.typography.bodySmall, color = OnSurfaceVariant) }
                         }
                     }
@@ -5352,14 +5352,14 @@ private fun ShortcutOverflowButton(
             modifier = Modifier.outlinedMenuCard(),
         ) {
             DropdownMenuItem(
-                text = { Text(I18n.s(R.string.settings)) },
+                text = { Text("Settings") },
                 leadingIcon = { Icon(Icons.Filled.Settings, null) },
                 onClick = { menuExpanded = false; onSettings() },
             )
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
                 DropdownMenuItem(
-                    text = { Text(I18n.s(R.string.ui_game_doctor)) },
+                    text = { Text("Game Doctor") },
                     leadingIcon = { Icon(Icons.Filled.Healing, null) },
                     onClick = { menuExpanded = false; openDoctor(shortcut) },
                 )
@@ -5372,7 +5372,7 @@ private fun ShortcutOverflowButton(
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text(I18n.s(R.string.ui_clone_to_container)) },
+                text = { Text("Clone to container") },
                 leadingIcon = { Icon(Icons.Filled.ContentCopy, null) },
                 onClick = { menuExpanded = false; onClone() },
             )
@@ -5452,7 +5452,7 @@ private fun ShortcutOverflowButton(
             )
             MenuItemDivider()
             DropdownMenuItem(
-                text = { Text(I18n.s(R.string.ui_properties)) },
+                text = { Text("Properties") },
                 leadingIcon = { Icon(Icons.Filled.Info, null) },
                 onClick = { menuExpanded = false; onProperties() },
             )
@@ -5615,15 +5615,15 @@ private fun ShortcutGridItem(
             onDismissRequest = { menuExpanded = false },
             modifier = Modifier.outlinedMenuCard(),
         ) {
-            DropdownMenuItem(text = { Text(I18n.s(R.string.settings)) }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
+            DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
-                DropdownMenuItem(text = { Text(I18n.s(R.string.ui_game_doctor)) }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
+                DropdownMenuItem(text = { Text("Game Doctor") }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
                 MenuItemDivider()
             }
             DropdownMenuItem(text = { Text(I18n.s(R.string.remove)) }, leadingIcon = { Icon(Icons.Filled.Delete, null) }, onClick = { menuExpanded = false; onRemove() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_clone_to_container)) }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
+            DropdownMenuItem(text = { Text("Clone to container") }, leadingIcon = { Icon(Icons.Filled.ContentCopy, null) }, onClick = { menuExpanded = false; onClone() })
             MenuItemDivider()
             DropdownMenuItem(text = { Text(I18n.s(R.string.ui_copy_to_drive_c)) }, leadingIcon = { Icon(Icons.Filled.DriveFileMove, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onCopyToDriveC() })
             MenuItemDivider()
@@ -5655,7 +5655,7 @@ private fun ShortcutGridItem(
             MenuItemDivider()
             DropdownMenuItem(text = { Text(I18n.s(R.string.ui_view_logs)) }, leadingIcon = { Icon(Icons.Filled.Description, null) }, onClick = { menuExpanded = false; onViewLogs() })
             MenuItemDivider()
-            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_properties)) }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
+            DropdownMenuItem(text = { Text("Properties") }, leadingIcon = { Icon(Icons.Filled.Info, null) }, onClick = { menuExpanded = false; onProperties() })
         }
     }
 }
@@ -5791,7 +5791,7 @@ internal fun GameDetailsSheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = I18n.s(R.string.cancel), tint = OnSurface)
+                        Icon(Icons.Default.Close, contentDescription = "Cancel", tint = OnSurface)
                     }
                     Text(
                         text = I18n.s(R.string.ui_edit_game),
@@ -7575,7 +7575,7 @@ internal fun ShortcutSettingsDialogScreen(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(I18n.s(R.string.ui_storage), fontSize = 14.sp)
+                            Text("Storage", fontSize = 14.sp)
                             Text(
                                 storageLabel,
                                 fontSize = 11.sp,
@@ -7637,7 +7637,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(I18n.s(R.string.ui_force_denuvo_ownership_token), fontSize = 14.sp)
+                                Text("Force Denuvo ownership token", fontSize = 14.sp)
                                 Text(
                                     "Force the ownership token for Denuvo games we don't auto-detect",
                                     fontSize = 11.sp,
@@ -7656,7 +7656,7 @@ internal fun ShortcutSettingsDialogScreen(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(I18n.s(R.string.ui_launch_offline), fontSize = 14.sp)
+                                Text("Launch offline", fontSize = 14.sp)
                                 Text(
                                     "Skip Epic sign-in for this game (no online features)",
                                     fontSize = 11.sp,
@@ -8141,7 +8141,7 @@ internal fun ShortcutSettingsDialogScreen(
                             onValueChange = {},
                             readOnly = true,
                             label = { Text(I18n.s(R.string.performance)) },
-                            trailingIcon = { Icon(Icons.Default.KeyboardArrowRight, contentDescription = I18n.s(R.string.xmb_all_games_open)) },
+                            trailingIcon = { Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Open") },
                             // Accent-colored outline so this opener stands out from the grey menu fields.
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -8290,7 +8290,7 @@ internal fun ShortcutSettingsDialogScreen(
                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                     DpDrop(
                         dp, "emulator",
-                        label = I18n.s(R.string.retro_opt_emulator),
+                        label = "Emulator",
                         options = EmulatorLabels.options(emulatorEntries, isArm64EC),
                         selected = emulatorShown,
                         onSelect = {
@@ -8317,7 +8317,7 @@ internal fun ShortcutSettingsDialogScreen(
                         dp, "lcAll",
                         value = lcAll,
                         onValueChange = { lcAll = it },
-                        label = I18n.s(R.string.lc_all),
+                        label = "LC_ALL",
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )
@@ -8403,7 +8403,7 @@ internal fun ShortcutSettingsDialogScreen(
                         if (!isLinuxEntry) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DpCheck(dp, "disableXInput", checked = disabledXInput, onCheckedChange = { disabledXInput = it })
-                            Text(I18n.s(R.string.ui_disable_xinput))
+                            Text("Disable XInput")
                         }
                         ControllerOverrideRows(dp, shortcut.container, ctrlOv)
                         }
@@ -9758,7 +9758,7 @@ private fun DeckShortcutSettingsBody(
                                     DeckTextRow("Exec arguments", value = execArgs, onValueChange = { execArgs = it })
                                 }
                                 DeckRow(
-                                    label = I18n.s(R.string.ui_launch_method),
+                                    label = "Launch method",
                                     hint = if (!launchModeRemembered) "Ask every launch" else when (launchMode) {
                                         "RealSteam" -> "SteamLite (real Steam client)"
                                         "Goldberg" -> "Goldberg (offline emulator)"
@@ -10000,7 +10000,7 @@ private fun DeckShortcutSettingsBody(
                                         if (archLoaded && !isArm64EC) EmulatorLabels.box64EntryOf(emulatorEntries)
                                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                                     DeckChoiceRow(
-                                        label = I18n.s(R.string.retro_opt_emulator),
+                                        label = "Emulator",
                                         options = EmulatorLabels.options(emulatorEntries, isArm64EC).map { it to it },
                                         selected = emulatorShown,
                                         onPick = { selectedEmulator = EmulatorLabels.fromDisplay(it, emulatorEntries, isArm64EC) },
@@ -10072,7 +10072,7 @@ private fun DeckShortcutSettingsBody(
                                         label = I18n.s(R.string.ui_wayland_adapter_settings_2),
                                         hint = I18n.s(R.string.ui_profile_switches_gpu_name_spoof_memory_cap_blank_the),
                                     ) {
-                                        DeckValueChip(text = I18n.s(R.string.xmb_all_games_open), open = false, onClick = { showWaylandAdapterDialog = true })
+                                        DeckValueChip(text = "Open", open = false, onClick = { showWaylandAdapterDialog = true })
                                     }
                                     val hdrUnavailable = remember { com.winhub.hernandez.display.WaylandHdr.unavailableReason(context) }
                                     val containerHdr = shortcut.container.isWaylandHdr()
@@ -10536,7 +10536,7 @@ private fun DeckShortcutSettingsBody(
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { onDismiss() }
+                DeckButton("Cancel", primary = false) { onDismiss() }
                 DeckButton(I18n.s(R.string.save)) { save(); onDismiss() }
             }
         }
@@ -10842,7 +10842,7 @@ private fun DeckAdvancedTab(
                     onPick = onBox64VersionChange,
                 )
                 DeckRow("$emulatorLabel Downloads") {
-                    DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onShowBox64DownloadSheet() }
+                    DeckButton("Download", primary = false) { onShowBox64DownloadSheet() }
                 }
                 val presetNames = box64Presets.map { it.name }
                 val b64Id = box64Presets.getOrNull(selectedBox64PresetIndex)?.id ?: ""
@@ -10882,7 +10882,7 @@ private fun DeckAdvancedTab(
                         onPick = onFexVersionChange,
                     )
                     DeckRow("FEXCore Downloads") {
-                        DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onShowFexCoreDownloadSheet() }
+                        DeckButton("Download", primary = false) { onShowFexCoreDownloadSheet() }
                     }
                 }
                 val fexNames = fexCorePresets.map { it.name }
@@ -11284,7 +11284,7 @@ private fun ScWinComponentsTab(components: androidx.compose.runtime.snapshots.Sn
             Spacer(Modifier.height(8.dp))
         }
         if (general.isNotEmpty()) {
-            SectionBox(title = I18n.s(R.string.general)) {
+            SectionBox(title = "General") {
                 general.forEach { comp ->
                     LabeledDropdown(
                         label = comp.label,
@@ -11466,7 +11466,7 @@ private fun ScAdvancedTab(
         // A Linux session hands the FEXCore preset to the games the Steam client launches whatever the
         // container's Windows architecture is, so the section is offered there even off arm64ec.
         if (isArm64EC || isLinuxEntry) {
-            SectionBox(title = I18n.s(R.string.fexcore_config)) {
+            SectionBox(title = "FEXCore") {
                 // The version picks which FEX build is staged into the container for the Wine
                 // launcher; the Linux runtime carries its own, so only the preset is offered there.
                 if (!isLinuxEntry) {
@@ -12311,7 +12311,7 @@ internal fun CopyToDriveCCoordinator(
                     enabled = validationError == null && sourceSize != null,
                 ) { Text(I18n.s(R.string.copy)) }
             },
-            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
         )
 
         CopyToCPhase.OVERWRITE -> OutlinedAlertDialog(
@@ -12338,7 +12338,7 @@ internal fun CopyToDriveCCoordinator(
                     startCopy(CopyGameToDriveC.destRootFor(target.container, sourceRoot.name), cleanFirst = true)
                 }) { Text(I18n.s(R.string.ui_overwrite)) }
             },
-            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
         )
 
         CopyToCPhase.COPYING -> {
@@ -12375,7 +12375,7 @@ internal fun CopyToDriveCCoordinator(
                     }
                 },
                 confirmButton = {
-                    TextButton(onClick = { cancelFlag.set(true) }) { Text(I18n.s(R.string.cancel)) }
+                    TextButton(onClick = { cancelFlag.set(true) }) { Text("Cancel") }
                 },
             )
         }
@@ -12528,7 +12528,7 @@ internal fun ChangeExecutableCoordinator(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = onFinished) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = onFinished) { Text("Cancel") } },
         )
     }
 }

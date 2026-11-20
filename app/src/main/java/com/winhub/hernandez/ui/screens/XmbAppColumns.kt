@@ -119,7 +119,7 @@ internal fun xmbFileManagerMenu(dir: File): XmbMenu = XmbMenu(
 internal fun xmbSettingsMenu(xmb: XmbScope): XmbMenu {
     val prefs = PreferenceManager.getDefaultSharedPreferences(xmb.context)
     return XmbMenu(
-        title = I18n.s(R.string.settings),
+        title = "Settings",
         icon = Icons.Filled.Settings,
         rows = {
             val xs = this
@@ -158,7 +158,7 @@ internal fun xmbGraphicsMenu(xmb: XmbScope): XmbMenu {
     val slots = mutableStateOf<List<WrapperManager.WrapperSlot>>(emptyList())
     var loading = false
     return XmbMenu(
-        title = I18n.s(R.string.ui_graphics),
+        title = "Graphics",
         icon = Icons.Filled.Memory,
         rows = {
             if (!loading) {

@@ -1480,7 +1480,7 @@ private fun TopLevelFields(
         // StringUtils.parseIdentifier() persists as "box64". See EmulatorLabels.
         if (viewModel.isArm64EC) {
             LabeledDropdown(
-                label = I18n.s(R.string.retro_opt_emulator),
+                label = "Emulator",
                 options = EmulatorLabels.options(viewModel.emulatorEntries, true),
                 selectedOption = EmulatorLabels.display(viewModel.selectedEmulator, true),
                 enabled = viewModel.emulatorEnabled,
@@ -1810,7 +1810,7 @@ private fun TopLevelFields(
             OutlinedTextField(
                 value = viewModel.lcAll,
                 onValueChange = { viewModel.lcAll = it },
-                label = { Text(I18n.s(R.string.lc_all)) },
+                label = { Text("LC_ALL") },
                 modifier = Modifier.weight(1f)
             )
             var showLcMenu by remember { mutableStateOf(false) }
@@ -1983,7 +1983,7 @@ private fun WineConfigTab(
         // System section — "Run as administrator" (default ON) toggles UAC in the prefix. Backed by
         // EnableLUA in .wine/system.reg (source of truth): the VM reads it on load and writes it on
         // save/create (mirrors the DirectInput mouse-warp registry idiom above).
-        SectionBox(title = I18n.s(R.string.system)) {
+        SectionBox(title = "System") {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(I18n.s(R.string.ui_run_as_administrator))
@@ -2041,7 +2041,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
             }
         }
         if (generalItems.isNotEmpty()) {
-            SectionBox(title = I18n.s(R.string.general)) {
+            SectionBox(title = "General") {
                 generalItems.forEach { comp ->
                     WinComponentRow(comp) { idx ->
                         val i = viewModel.winComponents.indexOfFirst { it.key == comp.key }
@@ -2182,7 +2182,7 @@ private fun DriveRow(
             onValueChange = onPathChange,
             modifier = Modifier.weight(1f),
             singleLine = true,
-            label = { Text(I18n.s(R.string.ui_path)) }
+            label = { Text("Path") }
         )
         IconButton(onClick = onBrowse) {
             Icon(Icons.Default.FolderOpen, contentDescription = null)
@@ -2277,7 +2277,7 @@ private fun AdvancedTab(
 
         // FEXCore section (arm64ec only)
         if (viewModel.isArm64EC) {
-            SectionBox(title = I18n.s(R.string.fexcore_config)) {
+            SectionBox(title = "FEXCore") {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     LabeledDropdown(
                         label = stringResource(R.string.fexcore_version),
@@ -5217,7 +5217,7 @@ internal fun DxvkConfigDialog(
                             enabled = !isProcessing,
                             modifier = Modifier.size(40.dp)
                         ) {
-                            Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.preset_action_delete), tint = MaterialTheme.colorScheme.error)
+                            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
                         }
                         IconButton(
                             onClick = { pickVegasLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, "Select VEGAS package")) },
@@ -5972,7 +5972,7 @@ internal fun DxvkConfigDialog(
                             onDismissRequest = { valuePickerRow = null },
                             title = { Text(row.key) },
                             confirmButton = {
-                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text("Done") }
                             },
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -6052,7 +6052,7 @@ internal fun DxvkConfigDialog(
                                         Spacer(Modifier.height(16.dp))
                                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                             TextButton(onClick = { pendingDeleteKey = null }) {
-                                                Text(I18n.s(R.string.cancel))
+                                                Text("Cancel")
                                             }
                                             Button(
                                                 onClick = {
@@ -6738,7 +6738,7 @@ internal fun StockConfigDownloadSheet(
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(Modifier.height(8.dp))
-                TextButton(onClick = { retryKey++ }) { Text(I18n.s(R.string.ui_retry)) }
+                TextButton(onClick = { retryKey++ }) { Text("Retry") }
             }
         } else {
             androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxWidth().padding(bottom = 24.dp)) {

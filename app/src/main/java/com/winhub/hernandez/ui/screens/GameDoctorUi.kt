@@ -192,7 +192,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
         onClose()
     }
 
-    DeckConfigDialog(title = I18n.s(R.string.ui_game_doctor), subtitle = shortcut.name, onDismiss = close) {
+    DeckConfigDialog(title = "Game Doctor", subtitle = shortcut.name, onDismiss = close) {
         val r = session.report
         if (r == null) {
             Row(

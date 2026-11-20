@@ -117,7 +117,7 @@ internal fun MoveStorageDialog(
                 Text(if (toSd) "Move to SD card" else "Move to internal")
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 
@@ -181,7 +181,7 @@ internal fun MoveProgressDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                 ) {
-                    TextButton(onClick = onCancel, enabled = copying) { Text(I18n.s(R.string.cancel)) }
+                    TextButton(onClick = onCancel, enabled = copying) { Text("Cancel") }
                 }
             }
         }

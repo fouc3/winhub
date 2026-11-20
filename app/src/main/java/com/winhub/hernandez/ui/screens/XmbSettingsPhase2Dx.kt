@@ -107,7 +107,7 @@ private fun p2WineD3DMenu(xmb: XmbScope, s: Shortcut): XmbMenu {
         rows += XmbRow.Choice("csmt", "CSMT", Icons.Filled.Speed, onOff, cur.csmt) { v -> write(sel().copy(csmt = v)) }
         val names = withCur(gpuNames, cur.gpuName)
         if (names.isNotEmpty()) {
-            rows += XmbRow.Choice(I18n.s(R.string.ui_gpuname), ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard, p2Unique(names), cur.gpuName) { v ->
+            rows += XmbRow.Choice("gpuName", ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard, p2Unique(names), cur.gpuName) { v ->
                 write(sel().copy(gpuName = v))
             }
         } else rows += XmbRow.Info(I18n.s(R.string.ui_gpuloading), ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard, "Loading…")
@@ -314,7 +314,7 @@ private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
             P2_ANISO_LABELS.getOrElse(cur.aniso) { P2_ANISO_LABELS[0] }, subtitle = texNote) { v ->
             write(sel().copy(aniso = P2_ANISO_LABELS.indexOf(v).coerceAtLeast(0)))
         }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_lodbias), "Texture sharpness", Icons.Filled.Image, P2_LOD_LABELS,
+        rows += XmbRow.Choice("lodBias", "Texture sharpness", Icons.Filled.Image, P2_LOD_LABELS,
             P2_LOD_LABELS.getOrElse(cur.lod) { P2_LOD_LABELS[0] }, subtitle = texNote) { v ->
             write(sel().copy(lod = P2_LOD_LABELS.indexOf(v).coerceAtLeast(0)))
         }

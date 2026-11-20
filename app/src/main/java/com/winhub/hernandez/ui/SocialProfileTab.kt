@@ -150,7 +150,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
         val shownBitmap = picked
         if (deck) {
             DeckGroup("Profile") {
-                DeckRow(label = I18n.s(R.string.ui_picture), hint = I18n.s(R.string.ui_choose_a_new_profile_picture)) {
+                DeckRow(label = "Picture", hint = I18n.s(R.string.ui_choose_a_new_profile_picture)) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         if (shownBitmap != null) {
                             Image(

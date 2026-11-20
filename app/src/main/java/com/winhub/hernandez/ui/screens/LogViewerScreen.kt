@@ -424,7 +424,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { if (!busy) onDismiss() }
+                DeckButton("Cancel", primary = false) { if (!busy) onDismiss() }
                 DeckButton(if (busy) "Working…" else "Continue on GitHub", primary = true) { if (!busy) submit() }
             }
         }
@@ -480,7 +480,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 Text(if (busy) "Working…" else "Continue on GitHub")
             }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } }
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } }
     )
 }
 

@@ -967,7 +967,7 @@ internal fun DeckWineD3DConfigEditor(
         )
         DeckChoiceRow(label = I18n.s(R.string.strict_shader_math), options = ssmOptions, selected = ssm, onPick = { ssm = it })
         DeckChoiceRow(label = I18n.s(R.string.offscreen_rendering_mode), options = ormOptions, selected = orm, onPick = { orm = it })
-        DeckChoiceRow(label = I18n.s(R.string.renderer), options = rendOptions, selected = renderer, onPick = { renderer = it })
+        DeckChoiceRow(label = "Renderer", options = rendOptions, selected = renderer, onPick = { renderer = it })
     }
     fun buildConfig(): String {
         val cfg = com.winhub.hernandez.contentdialog.WineD3DConfigDialog.parseConfig(initialConfig)
@@ -988,7 +988,7 @@ internal fun DeckWineD3DConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
+        DeckButton("Done") { onConfirm(buildConfig()) }
     }
 }
 
@@ -1063,7 +1063,7 @@ internal fun DeckVulkanConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
+        DeckButton("Done") { onConfirm(buildConfig()) }
     }
 }
 
@@ -1258,7 +1258,7 @@ internal fun DeckFpsConfigEditor(
         DeckButton(I18n.s(R.string.ui_export_diagnostics), primary = false) {
             com.winhub.hernandez.widget.exportHudDiagnostics(diagContext)
         }
-        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
+        DeckButton("Done") { onConfirm(buildConfig()) }
     }
 }
 
@@ -1598,7 +1598,7 @@ internal fun DeckGraphicsDriverConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
+        DeckButton("Done") { onConfirm(buildConfig()) }
     }
 }
 
@@ -1923,7 +1923,7 @@ internal fun DeckDxvkConfigEditor(
             if (onOpenConfigDownload != null) {
                 Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(I18n.s(R.string.ui_manage_vegas_builds), color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
-                    DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { onOpenConfigDownload() }
+                    DeckButton("Download", primary = false) { onOpenConfigDownload() }
                 }
             }
         } else {
@@ -2119,7 +2119,7 @@ internal fun DeckDxvkConfigEditor(
     }
 
     Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
-        DeckButton(I18n.s(R.string.wrapper_catalog_close)) { onConfirm(buildConfig()) }
+        DeckButton("Done") { onConfirm(buildConfig()) }
     }
 
     if (showAddKey) {

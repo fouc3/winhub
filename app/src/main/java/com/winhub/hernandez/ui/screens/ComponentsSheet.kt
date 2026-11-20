@@ -127,7 +127,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
             confirmButton = {
                 TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text(I18n.s(R.string._continue)) }
             },
-            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text("Cancel") } },
         )
     }
 
@@ -255,10 +255,10 @@ private fun ComponentRow(
             }
             when {
                 isInstalling -> CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
+                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
                     tint = installedBlue, modifier = Modifier.size(22.dp))
                 installable -> IconButton(onClick = onInstall, enabled = enabled) {
-                    Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install), tint = cs.primary)
+                    Icon(Icons.Filled.Download, contentDescription = "Install", tint = cs.primary)
                 }
                 else -> Box(
                     Modifier.background(cs.surfaceContainerHigh, RoundedCornerShape(6.dp))

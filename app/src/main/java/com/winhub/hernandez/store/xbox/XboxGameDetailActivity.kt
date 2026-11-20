@@ -249,7 +249,7 @@ class XboxGameDetailActivity : ComponentActivity() {
                 else AlertDialog.Builder(this@XboxGameDetailActivity, R.style.StoreAlertDialogDark)
                     .setTitle(I18n.s(R.string.ui_choose_the_pc_package))
                     .setItems(list.map { it.label }.toTypedArray()) { _, which -> XboxDownloads.start(applicationContext, game, list[which].contentId) }
-                    .setNegativeButton(I18n.s(R.string.cancel), null).show()
+                    .setNegativeButton("Cancel", null).show()
             }
         }
     }
@@ -285,6 +285,6 @@ class XboxGameDetailActivity : ComponentActivity() {
                     refresh()
                 }
             }
-            .setNegativeButton(I18n.s(R.string.cancel), null).show()
+            .setNegativeButton("Cancel", null).show()
     }
 }

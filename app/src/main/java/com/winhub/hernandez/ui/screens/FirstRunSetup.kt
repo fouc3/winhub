@@ -367,7 +367,7 @@ private fun WizardFooter(step: Int, wide: Boolean, extraCount: Int, onBack: () -
                 modifier = Modifier.weight(1f),
             )
         }
-        if (step > 0) DeckButton(I18n.s(R.string.social_hub_configs_back), primary = false, onClick = onBack)
+        if (step > 0) DeckButton("Back", primary = false, onClick = onBack)
         DeckButton(if (step == LAST_STEP) "Install" else "Next", primary = true, onClick = onNext)
     }
 }
@@ -1075,7 +1075,7 @@ private fun CodeCard(state: SocialHubStore.LoginState.AwaitingUser, onOpen: () -
         Text(state.status, color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             DeckButton(I18n.s(R.string.ui_open_github), primary = true, onClick = onOpen)
-            DeckButton(I18n.s(R.string.cancel), primary = false, onClick = onCancel)
+            DeckButton("Cancel", primary = false, onClick = onCancel)
         }
     }
 }

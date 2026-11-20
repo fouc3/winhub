@@ -173,7 +173,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                 .padding(horizontal = 22.dp, vertical = 18.dp),
         ) {
             Text(
-                text = I18n.s(R.string.ui_storage),
+                text = "Storage",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
@@ -670,7 +670,7 @@ private fun DeckConfirmDialog(
                 .fillMaxWidth()
                 .padding(top = 10.dp),
         ) {
-            DeckButton(I18n.s(R.string.cancel), primary = false) { onDismiss() }
+            DeckButton("Cancel", primary = false) { onDismiss() }
             Spacer(Modifier.width(8.dp))
             if (danger) DeckDangerButton(confirmLabel, onConfirm)
             else DeckButton(confirmLabel) { onConfirm() }
@@ -1028,7 +1028,7 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = I18n.s(R.string.ui_properties),
+                    text = "Properties",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,

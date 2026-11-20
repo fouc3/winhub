@@ -140,7 +140,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             DeckButton(I18n.s(R.string.ui_import_wrapper), primary = true) { browse(null, true) }
-            DeckButton(I18n.s(R.string.wrapper_catalog_download), primary = false) { showCatalog = true }
+            DeckButton("Download", primary = false) { showCatalog = true }
             DeckButton(context.getString(R.string.wrapper_reset_all), primary = false) { confirmResetAll = true }
         }
     }
@@ -174,7 +174,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { pendingImportUri = null; pendingInspection = null }
+                DeckButton("Cancel", primary = false) { pendingImportUri = null; pendingInspection = null }
                 DeckButton(I18n.s(R.string.preset_action_import), primary = true) {
                     val name = importNameDraft.trim()
                     val id = StringUtils.parseIdentifier(name)
@@ -210,7 +210,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { deleteTarget = null }
+                DeckButton("Cancel", primary = false) { deleteTarget = null }
                 DeckButton(context.getString(R.string.wrapper_delete), primary = true) {
                     manager.deleteImported(toDelete.identifier)
                     deleteTarget = null
@@ -231,7 +231,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { confirmResetAll = false }
+                DeckButton("Cancel", primary = false) { confirmResetAll = false }
                 DeckButton(context.getString(R.string.wrapper_reset_all), primary = true) {
                     manager.resetAll()
                     confirmResetAll = false

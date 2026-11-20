@@ -288,7 +288,7 @@ private fun SaveItem(
                 modifier = Modifier.outlinedMenuCard(),
             ) {
                 DropdownMenuItem(
-                    text = { Text(I18n.s(R.string.edit)) },
+                    text = { Text("Edit") },
                     leadingIcon = { Icon(Icons.Filled.Edit, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp)) },
                     onClick = { menuExpanded = false; onEdit() },
                 )
@@ -416,7 +416,7 @@ private fun NewSaveDialog(
             }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }
@@ -456,7 +456,7 @@ private fun EditSaveDialog(
             }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }
@@ -516,7 +516,7 @@ private fun TransferSaveDialog(
             }) { Text(I18n.s(R.string.transfer)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }
@@ -575,7 +575,7 @@ private fun ImportContainerSelectDialog(
             }) { Text(I18n.s(R.string.preset_action_import)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }

@@ -128,7 +128,7 @@ private fun PanelContent(
         }
         // What Microsoft sends depends on the device profile we report: the PC profile gave 2560x1440 on the
         // Pocket FIT (10-23), so it is labelled by profile, not by a fixed size.
-        Choice(I18n.s(R.string.ui_resolution), listOf("720p" to "720p (phone profile)", "1080p" to "Best (PC profile)", "1080p_hq" to "1080p HQ (TV profile)"),
+        Choice("Resolution", listOf("720p" to "720p (phone profile)", "1080p" to "Best (PC profile)", "1080p_hq" to "1080p HQ (TV profile)"),
             settings.resolution, pending { it.resolution != settings.resolution }) { onChange(settings.copy(resolution = it)) }
         Choice(I18n.s(R.string.ui_server_region), listOf("" to "Automatic") + regions.map { it to it }, settings.region,
             pending { it.region != settings.region }) { onChange(settings.copy(region = it)) }
@@ -218,7 +218,7 @@ private fun PanelContent(
                 onChange(settings.copy(profile = name.trim()))
                 naming = false
             }) { Text(I18n.s(R.string.save)) } },
-            dismissButton = { TextButton(onClick = { naming = false }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { naming = false }) { Text("Cancel") } },
         )
     }
 }

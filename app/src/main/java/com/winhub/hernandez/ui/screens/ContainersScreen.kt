@@ -347,7 +347,7 @@ fun ContainersScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showImportPicker = false }) { Text(I18n.s(R.string.cancel)) }
+                TextButton(onClick = { showImportPicker = false }) { Text("Cancel") }
             },
         )
     }
@@ -367,7 +367,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.duplicate)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
                     },
                 )
             }
@@ -383,7 +383,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.remove)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
                     },
                 )
             }
@@ -422,7 +422,7 @@ fun ContainersScreen(
                         }) { Text(if (remote != null) "Download & update" else "Update") }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
                     },
                 )
             }
@@ -495,7 +495,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.ui_revert)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
                     },
                 )
             }
@@ -539,7 +539,7 @@ fun ContainersScreen(
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = null }) { Text(I18n.s(R.string.cancel)) } },
+            confirmButton = { TextButton(onClick = { saveFlow = null }) { Text("Cancel") } },
         )
         is SaveFlow.RestoreSource -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -568,7 +568,7 @@ fun ContainersScreen(
                     ) { Text(I18n.s(R.string.pick_via_system), modifier = Modifier.weight(1f)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text(I18n.s(R.string.social_hub_configs_back)) } },
+            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text("Back") } },
         )
         is SaveFlow.Confirm -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -594,7 +594,7 @@ fun ContainersScreen(
                     }
                 }) { Text(I18n.s(R.string.ui_restore)) }
             },
-            dismissButton = { TextButton(onClick = { saveFlow = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { saveFlow = null }) { Text("Cancel") } },
         )
         is SaveFlow.BackupScope -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -613,7 +613,7 @@ fun ContainersScreen(
                     ) { Text("${stringResource(R.string.save_backup_scope_game)} ▸", modifier = Modifier.weight(1f)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text(I18n.s(R.string.social_hub_configs_back)) } },
+            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text("Back") } },
         )
         is SaveFlow.GamePicker -> {
             val shortcuts = remember(flow.container.id) { vm.shortcutsFor(flow.container) }
@@ -639,7 +639,7 @@ fun ContainersScreen(
                         }
                     }
                 },
-                confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text(I18n.s(R.string.social_hub_configs_back)) } },
+                confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text("Back") } },
             )
         }
         is SaveFlow.GameSaves -> GameSavesDialog(
@@ -672,7 +672,7 @@ fun ContainersScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text(I18n.s(R.string.social_hub_configs_back)) }
+                TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text("Back") }
             },
         )
     }
@@ -838,7 +838,7 @@ private fun ContainerItem(
                 IconButton(onClick = { menuExpanded = true }) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
-                        contentDescription = I18n.s(R.string.settings),
+                        contentDescription = "Settings",
                         tint = OnSurfaceVariant,
                     )
                 }
@@ -848,7 +848,7 @@ private fun ContainerItem(
                     modifier = Modifier.outlinedMenuCard(),
                 ) {
                     DropdownMenuItem(
-                        text = { Text(I18n.s(R.string.edit)) },
+                        text = { Text("Edit") },
                         leadingIcon = { Icon(Icons.Filled.Edit, null) },
                         onClick = { menuExpanded = false; onEdit() },
                     )
@@ -1182,7 +1182,7 @@ private fun GameSavesDialog(
                 },
             ) { Text(stringResource(R.string.save_backup_next)) }
         },
-        dismissButton = { TextButton(onClick = onBack) { Text(I18n.s(R.string.social_hub_configs_back)) } },
+        dismissButton = { TextButton(onClick = onBack) { Text("Back") } },
     )
 }
 
@@ -1230,7 +1230,7 @@ private fun ManualAddDialog(container: Container, onPick: (File) -> Unit, onCanc
                 Text(stringResource(R.string.save_backup_add_folder_here))
             }
         },
-        dismissButton = { TextButton(onClick = onCancel) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onCancel) { Text("Cancel") } },
     )
 }
 

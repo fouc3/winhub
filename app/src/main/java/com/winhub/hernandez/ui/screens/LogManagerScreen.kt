@@ -578,7 +578,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             context, "Deleted $n file${if (n == 1) "" else "s"}",
                             android.widget.Toast.LENGTH_SHORT
                         ).show()
-                    }) { Text(I18n.s(R.string.preset_action_delete), color = DangerRed) }
+                    }) { Text("Delete", color = DangerRed) }
                 }
             },
             dismissButton = {
@@ -614,7 +614,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     ).show()
                 }) { Text(I18n.s(R.string.ui_delete_all), color = DangerRed) }
             },
-            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text(I18n.s(R.string.cancel)) } }
+            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text("Cancel") } }
         )
     }
 
@@ -948,7 +948,7 @@ internal fun AllChannelsDialog(
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
-                    placeholder = { Text(I18n.s(R.string.ui_search), fontSize = 12.sp) },
+                    placeholder = { Text("Search", fontSize = 12.sp) },
                     singleLine = true,
                     textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp),
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),

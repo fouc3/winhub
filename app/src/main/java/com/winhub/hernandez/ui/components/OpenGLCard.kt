@@ -91,7 +91,7 @@ fun OpenGLCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, top = 2.dp),
         ) {
-            Text(I18n.s(R.string.opengl), fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
+            Text("OpenGL", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
             IconButton(
                 onClick = onHelp,
                 modifier = Modifier

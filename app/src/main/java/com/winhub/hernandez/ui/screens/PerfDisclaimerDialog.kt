@@ -134,7 +134,7 @@ fun PerfDisclaimerDialog(
                 }
 
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                    TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+                    TextButton(onClick = onDismiss) { Text("Cancel") }
                     Spacer(Modifier.width(8.dp))
                     Button(onClick = { if (canConfirm) { onConfirm(); } }, enabled = canConfirm) {
                         Text(confirmLabel)

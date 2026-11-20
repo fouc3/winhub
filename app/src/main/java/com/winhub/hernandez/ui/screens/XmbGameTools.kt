@@ -442,7 +442,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         // The dialog's short-circuit: toast and stop. The column repeats it so it isn't empty.
         val msg = if (info.onDriveC) "\"$name\" already runs from Drive C." else "Couldn't locate this game's files on disk."
         xmb.toast(msg)
-        return XmbMenu(title = I18n.s(R.string.ui_copy_to_drive_c_2), icon = Icons.Filled.DriveFileMove) {
+        return XmbMenu(title = "Copy to Drive C", icon = Icons.Filled.DriveFileMove) {
             XmbTools.para("msg", msg, Icons.Filled.Info, ctx)
         }
     }
@@ -551,7 +551,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             ) {
                 val p = progress
                 buildList<XmbRow> {
-                    add(XmbRow.Action(key = "cancel", label = I18n.s(R.string.cancel), icon = Icons.Filled.Close) { cancel.set(true) })
+                    add(XmbRow.Action(key = "cancel", label = "Cancel", icon = Icons.Filled.Close) { cancel.set(true) })
                     val pct = if (p.totalBytes > 0L) "${(p.copiedBytes * 100L / p.totalBytes).coerceIn(0L, 100L)}%" else ""
                     add(XmbRow.Info("progress", "Copying to Drive C…", Icons.Filled.DriveFileMove, value = pct))
                     if (p.totalBytes > 0L) add(XmbRow.Info("bytes", "${fmt(p.copiedBytes)} / ${fmt(p.totalBytes)}", Icons.Filled.Storage))
@@ -633,7 +633,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
     measure()
     return XmbMenu(
-        title = I18n.s(R.string.ui_copy_to_drive_c_2),
+        title = "Copy to Drive C",
         icon = Icons.Filled.DriveFileMove,
         initialKey = "copy",
         onClose = { main.isOpen = false; sizeJob?.cancel() },

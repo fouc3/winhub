@@ -176,7 +176,7 @@ private fun UpdateFailedCard(
                     onClick = onRetry,
                     colors = ButtonDefaults.buttonColors(containerColor = UpdateGreen, contentColor = Color.White),
                     modifier = Modifier.heightIn(min = 48.dp).focusRequester(retryFocus),
-                ) { Text(I18n.s(R.string.ui_retry), fontSize = 14.sp) }
+                ) { Text("Retry", fontSize = 14.sp) }
             }
         }
     }

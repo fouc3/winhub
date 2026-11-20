@@ -319,10 +319,10 @@ fun ColumnScope.AdrenoDriverListPane(
                                     },
                                 )
                         }
-                    }) { Text(I18n.s(R.string.wrapper_catalog_download)) }
+                    }) { Text("Download") }
                 },
                 dismissButton = {
-                    TextButton(onClick = { pendingEntry = null }) { Text(I18n.s(R.string.cancel)) }
+                    TextButton(onClick = { pendingEntry = null }) { Text("Cancel") }
                 },
             )
         } else {
@@ -417,7 +417,7 @@ private fun EntryRow(
             )
             Icon(
                 imageVector = Icons.Filled.CloudDownload,
-                contentDescription = I18n.s(R.string.wrapper_catalog_download),
+                contentDescription = "Download",
                 tint = cs.primary,
                 modifier = Modifier.size(22.dp),
             )
@@ -451,14 +451,14 @@ private fun EntryRow(
                     overflow = TextOverflow.Ellipsis,
                 )
                 if (installed) {
-                    Text(I18n.s(R.string.wrapper_installed), style = MaterialTheme.typography.labelSmall, color = installedBlue)
+                    Text("Installed", style = MaterialTheme.typography.labelSmall, color = installedBlue)
                 }
             }
             if (installed) {
-                Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed), tint = installedBlue,
+                Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
                     modifier = Modifier.size(20.dp))
             } else {
-                Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary,
+                Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
                     modifier = Modifier.size(22.dp))
             }
         }
@@ -511,7 +511,7 @@ private fun CenteredError(message: String, onRetry: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
             )
             Spacer(Modifier.height(12.dp))
-            TextButton(onClick = onRetry) { Text(I18n.s(R.string.ui_retry)) }
+            TextButton(onClick = onRetry) { Text("Retry") }
         }
     }
 }
@@ -655,7 +655,7 @@ private fun ManageSourcesDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+            TextButton(onClick = onDismiss) { Text("Done") }
         },
     )
 }

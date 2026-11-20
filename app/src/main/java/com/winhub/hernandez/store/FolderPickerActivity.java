@@ -259,7 +259,7 @@ public class FolderPickerActivity extends Activity {
                     showThemedMessage("Failed to create folder");
                 }
             })
-            .setNegativeButton(I18n.s(R.string.cancel), null)
+            .setNegativeButton("Cancel", null)
             .show();
     }
 

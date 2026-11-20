@@ -524,7 +524,7 @@ fun GamesWallScreen(navController: NavController) {
             onDismissRequest = { applyResult = null },
             title = { Text(if (res.ok) "Config applied" else "Couldn't apply") },
             text = { Text(res.message, color = TXT.copy(alpha = 0.85f)) },
-            confirmButton = { TextButton(onClick = { applyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
+            confirmButton = { TextButton(onClick = { applyResult = null }) { Text("Done") } },
         )
     }
 }

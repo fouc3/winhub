@@ -556,7 +556,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
             .setTitle("Uninstall $dlgTitle?")
             .setMessage(I18n.s(R.string.ui_this_will_delete_all_installed_game_files))
             .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ -> doUninstall() }
-            .setNegativeButton(I18n.s(R.string.cancel), null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -1151,7 +1151,7 @@ private fun GogDlcContent(
             )
             when {
                 state?.installed == true -> Text(
-                    text = I18n.s(R.string.wrapper_installed),
+                    text = "Installed",
                     style = MaterialTheme.typography.labelSmall,
                     color = INSTALLED_GREEN,
                     fontWeight = FontWeight.Bold,
@@ -1168,7 +1168,7 @@ private fun GogDlcContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 else -> StoreActionButton(
-                    text = I18n.s(R.string.ui_install),
+                    text = "Install",
                     onClick = { if (dlcId.isNotEmpty()) onInstall(dlcId, dlcTitle) },
                     enabled = dlcId.isNotEmpty(),
                 )

@@ -685,7 +685,7 @@ class GogGamesActivity : ComponentActivity() {
 
     private fun startDownload(game: GogGame) {
         val dlState = GameDownloadState(
-            buttonText = I18n.s(R.string.cancel),
+            buttonText = "Cancel",
             buttonColor = 0xFFCC3333.toInt(),
             progressVisible = true,
             progress = 0,
@@ -1046,7 +1046,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
+                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameListCard(
@@ -1076,7 +1076,7 @@ private fun GogGamesScreen(
                             val context = LocalContext.current
                             val dlState = downloadStates[game.gameId]
                                 ?: if (GogInstallState.isInstalled(context, game.gameId))
-                                    GameDownloadState(isInstalled = true, buttonText = I18n.s(R.string.ui_add_to_launcher))
+                                    GameDownloadState(isInstalled = true, buttonText = "Add to Launcher")
                                 else null
                             val isExpanded = expandedGameId == game.gameId
                             GameGridTile(
@@ -1518,10 +1518,10 @@ private fun InstallConfirmDialog(
             TextButton(
                 onClick = onConfirm,
                 enabled = canInstall,
-            ) { Text(I18n.s(R.string.ui_install), color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
+            ) { Text("Install", color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
     )
 }

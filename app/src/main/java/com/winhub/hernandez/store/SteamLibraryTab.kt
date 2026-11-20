@@ -418,7 +418,7 @@ fun SteamLibraryTab(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             when {
                 state.games.isEmpty() && !state.isLoading -> StoreNotice(
-                    title = I18n.s(R.string.ui_no_games_yet),
+                    title = "No games yet",
                     body = "Nothing in this account's Steam library has synced yet. Pull a fresh sync " +
                         "with Refresh, or add a free game from the Store tab.",
                     actionLabel = "Refresh",
@@ -585,7 +585,7 @@ private fun LibraryCapsuleCard(
                     modifier = Modifier.fillMaxWidth().steamFocusRing(RoundedCornerShape(7.dp)),
                     shape = RoundedCornerShape(7.dp),
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                ) { Text(I18n.s(R.string.retro_opt_play), style = MaterialTheme.typography.labelSmall, maxLines = 1) }
+                ) { Text("Play", style = MaterialTheme.typography.labelSmall, maxLines = 1) }
             } else {
                 StoreActionButton(
                     action = StoreAction.Download,
@@ -803,7 +803,7 @@ internal fun SteamSignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
         title = { Text(I18n.s(R.string.ui_sign_out_of_steam)) },
         text = { Text(I18n.s(R.string.ui_your_saved_login_will_be_removed_you_will_need_to_sig)) },
         confirmButton = { TextButton(onClick = onConfirm) { Text(I18n.s(R.string.ui_sign_out)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 

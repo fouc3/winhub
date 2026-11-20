@@ -419,7 +419,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                             TextButton(onClick = {
                                 showCloudDisclaimer = false
                                 pendingCloudMove = null
-                            }) { Text(I18n.s(R.string.cancel)) }
+                            }) { Text("Cancel") }
                         },
                     )
                 }
@@ -655,7 +655,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 downloadProgressValue = 0
                 progressTextVisible = false
                 progressText = ""
-                statusText = I18n.s(R.string.ui_not_installed)
+                statusText = "Not installed"
                 gameStatus = GameStatus.NOT_INSTALLED
                 installBtnEnabled = true
                 installBtnText = "Install"
@@ -993,7 +993,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         refreshMoveStorageOffer(g)
 
         if (g.isInstalled) {
-            statusText = I18n.s(R.string.wrapper_installed)
+            statusText = "Installed"
             gameStatus = GameStatus.INSTALLED
             installBtnText = "Uninstall"
             installAction = InstallAction.UNINSTALL
@@ -1020,7 +1020,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                 }
             }
         } else {
-            statusText = I18n.s(R.string.ui_not_installed)
+            statusText = "Not installed"
             gameStatus = GameStatus.NOT_INSTALLED
             installBtnText = "Install"
             installAction = InstallAction.INSTALL
@@ -1246,7 +1246,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
         downloadProgressValue = 0
         progressTextVisible = false
         progressText = ""
-        statusText = I18n.s(R.string.ui_not_installed)
+        statusText = "Not installed"
         gameStatus = GameStatus.NOT_INSTALLED
         installBtnText = "Install"
         installAction = InstallAction.INSTALL
@@ -1883,7 +1883,7 @@ private fun SteamGameDetailScreen(
                 if (unownedDlc.isNotEmpty()) {
                     Spacer(Modifier.height(14.dp))
                     Text(
-                        text = I18n.s(R.string.ui_not_owned),
+                        text = "Not owned",
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -2015,7 +2015,7 @@ private fun SteamGameDetailScreen(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = I18n.s(R.string.social_hub_configs_back),
+                    contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -2266,7 +2266,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissDlcSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+                ) { Text("Done") }
             }
         }
     }
@@ -2385,7 +2385,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissBranchSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+                ) { Text("Done") }
             }
         }
     }
@@ -2876,8 +2876,8 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = I18n.s(R.string.ui_unlocked))
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = I18n.s(R.string.ui_locked))
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = "Unlocked")
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = "Locked")
                 AchvLegendItem(swatch = { Text("🔒", fontSize = 11.sp) }, label = "Hidden")
             }
         }
@@ -2985,7 +2985,7 @@ private fun GoldbergModeDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+            TextButton(onClick = onDismiss) { Text("Done") }
         },
     )
 }
@@ -3296,7 +3296,7 @@ private fun CloudSavesSection(
                     // Cloud row — Download (Cloud → Library) / Upload (Library → Cloud, additive).
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = I18n.s(R.string.ui_cloud),
+                        text = "Cloud",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3450,7 +3450,7 @@ private fun CloudConfirmDialog(
             TextButton(onClick = onConfirm) { Text(action) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }
@@ -3783,13 +3783,13 @@ private fun DownloadSpeedPickerDialog(
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
-                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = onDismiss) { Text("Cancel") }
                         Spacer(Modifier.width(4.dp))
                         Button(
                             onClick = {
                                 onDownload(options[selected].second, debugLog, installToSd)
                             },
-                        ) { Text(I18n.s(R.string.wrapper_catalog_download)) }
+                        ) { Text("Download") }
                     }
                 }
             }
@@ -3930,11 +3930,11 @@ private fun DownloadSpeedPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = { onDownload(options[selected].second, debugLog, installToSd) }) {
-                Text(I18n.s(R.string.wrapper_catalog_download))
+                Text("Download")
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }

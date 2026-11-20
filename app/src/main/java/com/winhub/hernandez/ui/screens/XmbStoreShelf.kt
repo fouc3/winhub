@@ -307,7 +307,7 @@ private fun StoreShelfCard(
                     .background(Color.Black.copy(alpha = 0.62f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_not_installed), tint = Color.White, modifier = Modifier.size(12.dp))
+                Icon(Icons.Filled.Download, contentDescription = "Not installed", tint = Color.White, modifier = Modifier.size(12.dp))
             }
         }
     }

@@ -623,7 +623,7 @@ fun StoreActionButton(
         ) {
             Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
-            Text(I18n.s(R.string.wrapper_catalog_download), style = style, maxLines = 1)
+            Text("Download", style = style, maxLines = 1)
         }
 
         StoreAction.NotOwned -> OutlinedButton(
@@ -634,7 +634,7 @@ fun StoreActionButton(
             contentPadding = pad,
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         ) {
-            Text(I18n.s(R.string.ui_not_owned), style = style, maxLines = 1)
+            Text("Not owned", style = style, maxLines = 1)
         }
     }
 }

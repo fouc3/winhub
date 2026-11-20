@@ -963,7 +963,7 @@ private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
             )
         },
         confirmButton = { TextButton(onClick = onConfirm) { Text("OK") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 
@@ -985,7 +985,7 @@ private fun UpdateBanner(versionName: String, onUpdate: () -> Unit, onDismiss: (
             modifier = Modifier.weight(1f),
         )
         TextButton(onClick = onUpdate) {
-            Text(I18n.s(R.string.wrapper_update), color = ink, fontWeight = FontWeight.Bold)
+            Text("Update", color = ink, fontWeight = FontWeight.Bold)
         }
         TextButton(onClick = onDismiss) {
             Text(I18n.s(R.string.ui_skip), color = ink)
@@ -1025,7 +1025,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                         .padding(horizontal = 8.dp)
                 )
                 Text(
-                    text = I18n.s(R.string.app_name),
+                    text = "WinHub",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface

@@ -496,7 +496,7 @@ fun AudioSettingsDialog(
                 }
 
                 Row(Modifier.fillMaxWidth().padding(14.dp)) {
-                    OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) { Text(I18n.s(R.string.cancel)) }
+                    OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) { Text("Cancel") }
                     Spacer(Modifier.width(10.dp))
                     Button(onClick = { onSave(cfg) }, modifier = Modifier.weight(1f)) { Text(I18n.s(R.string.save)) }
                 }

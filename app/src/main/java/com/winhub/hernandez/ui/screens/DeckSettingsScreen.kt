@@ -435,7 +435,7 @@ internal fun DeckSettingsScreen() {
         // ── Header ──
         Column(modifier = Modifier.fillMaxWidth().padding(start = 22.dp, end = 22.dp, top = 18.dp, bottom = 10.dp)) {
             Text(
-                text = I18n.s(R.string.settings),
+                text = "Settings",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
@@ -530,7 +530,7 @@ internal fun DeckSettingsScreen() {
         when (settingsTab) {
         0 -> {
         // ── Steam ──
-        DeckGroup(title = I18n.s(R.string.ui_steam)) {
+        DeckGroup(title = "Steam") {
             DeckRow(label = I18n.s(R.string.ui_steam_chat_notifications)) {
                 DeckToggle(steamChat) {
                     steamChat = it
@@ -567,7 +567,7 @@ internal fun DeckSettingsScreen() {
             )
             DeckRow(label = "Install / Remove", hint = I18n.s(R.string.ui_add_a_sf2_or_remove_a_custom_one)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DeckButton(I18n.s(R.string.ui_install)) {
+                    DeckButton("Install") {
                         installSFInAppLauncher.launch(
                             InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont"),
                         )
@@ -628,7 +628,7 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Mali ──
-        DeckGroup(title = I18n.s(R.string.ui_mali)) {
+        DeckGroup(title = "Mali") {
             DeckRow(
                 label = I18n.s(R.string.ui_force_mali_mode),
                 hint = I18n.s(R.string.ui_use_this_if_the_app_doesn_t_detect_a_non_adreno_gpu),
@@ -645,7 +645,7 @@ internal fun DeckSettingsScreen() {
         DeckGroup(title = I18n.s(R.string.ui_settings_view)) { DeckViewModeRow() }
 
         // ── Game Doctor ──
-        DeckGroup(title = I18n.s(R.string.ui_game_doctor)) {
+        DeckGroup(title = "Game Doctor") {
             var doctorAuto by remember { mutableStateOf(GameDoctor.isAutoEnabled(context)) }
             DeckRow(
                 label = I18n.s(R.string.ui_auto_step_down),
@@ -660,7 +660,7 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Box64 ──
-        DeckGroup(title = I18n.s(R.string.box64)) {
+        DeckGroup(title = "Box64") {
             DeckChoiceRow(
                 label = I18n.s(R.string.box64_preset),
                 options = box64Presets.map { it.id to it.name },
@@ -895,7 +895,7 @@ internal fun DeckSettingsScreen() {
         // ── Retro library ── (landscape only, like the Home it switches on)
         if (!portraitUi) DeckGroup(title = I18n.s(R.string.retro_title)) {
             DeckRow(
-                label = I18n.s(R.string.retro_opt_folder),
+                label = "ROM folder",
                 hint = retroRoot ?: "Not chosen yet. WinHub looks in ROMs and Games when you open the retro library",
             ) {
                 DeckButton(I18n.s(R.string.ui_choose), primary = false) {
@@ -903,7 +903,7 @@ internal fun DeckSettingsScreen() {
                 }
             }
             DeckRow(
-                label = I18n.s(R.string.retro_hint_consoles),
+                label = "Consoles",
                 hint = if (retroConsoleCount == 0) "None picked. Pick the consoles whose games the retro library shows" else "$retroConsoleCount picked",
             ) {
                 DeckButton(I18n.s(R.string.ui_choose), primary = false) { showRetroConsoles = true }
@@ -918,7 +918,7 @@ internal fun DeckSettingsScreen() {
                     retroHidden = 0
                 }
             }
-            DeckRow(label = I18n.s(R.string.retro_opt_rescan), hint = I18n.s(R.string.ui_looks_for_new_and_missing_rom_files_the_next_time_the)) {
+            DeckRow(label = "Rescan library", hint = I18n.s(R.string.ui_looks_for_new_and_missing_rom_files_the_next_time_the)) {
                 DeckButton(I18n.s(R.string.ui_rescan), primary = false) {
                     RetroSession.scan = null
                     Toast.makeText(context, "The retro library rescans when you open it", Toast.LENGTH_SHORT).show()
@@ -1099,7 +1099,7 @@ internal fun DeckSettingsScreen() {
         // ── Logs ──
         DeckGroup(title = I18n.s(R.string.logs)) {
             DeckRow(label = I18n.s(R.string.ui_open_log_manager), hint = "Wine / Box64 logging and log location") {
-                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showLogManager = true }
+                DeckButton("Open", primary = false) { showLogManager = true }
             }
         }
 
@@ -1178,7 +1178,7 @@ internal fun DeckSettingsScreen() {
         // ── Performance ──
         DeckGroup(title = I18n.s(R.string.performance)) {
             DeckRow(label = I18n.s(R.string.ui_open_performance_settings)) {
-                DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { showPerformance = true }
+                DeckButton("Open", primary = false) { showPerformance = true }
             }
         }
         }
@@ -1216,7 +1216,7 @@ internal fun DeckSettingsScreen() {
                     label = "Download & install V ${update.versionName}",
                     hint = (update.notes.takeIf { it.isNotBlank() } ?: "Downloads in the background and opens the installer") + sizeMb,
                 ) {
-                    DeckButton(I18n.s(R.string.ui_install), primary = true) {
+                    DeckButton("Install", primary = true) {
                         activity?.let { UpdateManager.downloadAndInstall(it, update) {} }
                     }
                 }

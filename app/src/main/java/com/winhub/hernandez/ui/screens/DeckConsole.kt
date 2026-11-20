@@ -378,7 +378,7 @@ private fun DeckQuickMenu(onDismiss: () -> Unit, onGo: (String) -> Unit) {
         ) {
             Text(I18n.s(R.string.ui_quick_menu), color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             QuickLevelRow(
-                label = I18n.s(R.string.ui_volume),
+                label = "Volume",
                 icon = Icons.Filled.VolumeUp,
                 level = volume / maxVolume.toFloat(),
                 onMinus = {
@@ -552,11 +552,11 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Image(
                 painter = painterResource(R.drawable.deck_boot_logo),
-                contentDescription = I18n.s(R.string.app_name),
+                contentDescription = "WinHub",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(120.dp).graphicsLayer { scaleX = pulse; scaleY = pulse },
             )
-            Text(I18n.s(R.string.app_name), color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp)
+            Text("WinHub", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp)
             Text(I18n.s(R.string.ui_starting_services), color = Deck.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(bottom = 10.dp))
             names.forEach { name ->
                 val (state, detail) = status[name] ?: (0 to "Waiting")

@@ -226,7 +226,7 @@ internal fun CatalogItem.xmbRating(): String? =
 fun CatalogPriceRow(item: CatalogItem, modifier: Modifier = Modifier) {
     when {
         item.isFree -> Text(
-            text = I18n.s(R.string.ui_free_2),
+            text = "Free",
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = StoreFreeGreen,
@@ -318,7 +318,7 @@ fun CatalogActionButton(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Spacer(Modifier.width(6.dp))
-            Text(I18n.s(R.string.social_hub_configs_working), style = style, maxLines = 1)
+            Text("Working…", style = style, maxLines = 1)
         }
 
         is CatalogAction.Open -> Button(

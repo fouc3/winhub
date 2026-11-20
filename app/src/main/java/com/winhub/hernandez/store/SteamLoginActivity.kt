@@ -293,7 +293,7 @@ private fun SteamGuardDialog(
         )
         Spacer(Modifier.height(8.dp))
         DeckButton(
-            text = I18n.s(R.string.cancel),
+            text = "Cancel",
             primary = false,
             onClick = onCancel,
             modifier = Modifier.fillMaxWidth(),
@@ -323,7 +323,7 @@ private fun SteamLoginScreen(
     ) {
         Spacer(Modifier.height(20.dp))
         Text(
-            text = I18n.s(R.string.ui_steam),
+            text = "Steam",
             color = DeckPalette.onBackground,
             fontSize = 34.sp,
             fontWeight = FontWeight.Black,

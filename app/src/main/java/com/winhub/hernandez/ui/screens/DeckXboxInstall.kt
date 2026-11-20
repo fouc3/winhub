@@ -71,7 +71,7 @@ internal fun DeckXboxInstall(game: XboxGame, onBack: () -> Unit, onOpenStore: ((
                     XboxDownloads.start(appCtx, game, c.contentId)
                 }
             }
-            DeckButton(I18n.s(R.string.cancel), primary = false, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { choices = null }
+            DeckButton("Cancel", primary = false, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { choices = null }
         }
     }
 

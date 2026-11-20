@@ -176,7 +176,7 @@ private fun StartProgramsOrderDialog(state: StartProgramsState, onDismiss: () ->
         ) {
             val from = picked
             if (from != null) DeckButton(I18n.s(R.string.remove), primary = false) { state.remove(from); picked = null }
-            DeckButton(I18n.s(R.string.wrapper_catalog_close), primary = true, onClick = onDismiss)
+            DeckButton("Done", primary = true, onClick = onDismiss)
         }
     }
 }

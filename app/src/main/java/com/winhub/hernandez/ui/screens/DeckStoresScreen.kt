@@ -382,7 +382,7 @@ private fun DeckLibraryPane(screen: Screen, context: Context, onGameClick: (Deck
                 contentAlignment = Alignment.Center,
             ) {
                 DeckEmptyState(
-                    title = I18n.s(R.string.ui_no_games_yet),
+                    title = "No games yet",
                     body = I18n.s(R.string.ui_sign_in_to_this_store_and_sync_to_fill_its_library),
                 )
             }
@@ -1406,7 +1406,7 @@ private fun DeckStoreSettingsPane(
             DeckRow(
                 label = I18n.s(R.string.xmb_tab_downloads),
                 hint = if (activeDownloads > 0) "$activeDownloads active" else "Nothing downloading",
-                control = { DeckButton(I18n.s(R.string.xmb_all_games_open), primary = false) { onOpenDownloads() } },
+                control = { DeckButton("Open", primary = false) { onOpenDownloads() } },
             )
         }
     }

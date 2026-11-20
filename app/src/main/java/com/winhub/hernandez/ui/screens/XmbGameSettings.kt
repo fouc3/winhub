@@ -203,7 +203,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         val newBase = v.replace(Regex("""[\\/:*?"<>|]"""), "_").trim()
         if (newBase.isNotEmpty() && newBase != s.name) renameAndReturn(xmb, s, newBase)
     }
-    rows += XmbRow.Text(I18n.s(R.string.ui_execargs), "Exec arguments", Icons.Filled.ShortText, p.ex("execArgs", ""), subtitle = "Extra command-line arguments") { v ->
+    rows += XmbRow.Text("execArgs", "Exec arguments", Icons.Filled.ShortText, p.ex("execArgs", ""), subtitle = "Extra command-line arguments") { v ->
         xmb.set(p, "execArgs", v.ifEmpty { null })
     }
     val onC = runCatching { WinePath.isOnRemovableStorage(c, s.path) }.getOrDefault(false)
@@ -265,7 +265,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     val sizes = p.arr(R.array.screen_size_entries)
     val rawSize = p.ex("screenSize", c.getScreenSize())
     val sizeLabel = sizes.firstOrNull { StringUtils.parseIdentifier(it).equals(rawSize, ignoreCase = true) } ?: "Custom"
-    rows += XmbRow.Choice(I18n.s(R.string.ui_screensize), p.str(R.string.screen_size), Icons.Filled.DesktopWindows, sizes, sizeLabel) { v ->
+    rows += XmbRow.Choice("screenSize", p.str(R.string.screen_size), Icons.Filled.DesktopWindows, sizes, sizeLabel) { v ->
         if (v == "Custom") {
             val w = if (rawSize.contains("x")) rawSize.substringBefore("x") else "800"
             val h = if (rawSize.contains("x")) rawSize.substringAfter("x") else "600"
@@ -280,15 +280,15 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
             if (!ok) xmb.toast("Width and height must be even numbers")
             xmb.set(p, "screenSize", if (ok) "${nw}x$nh" else Container.DEFAULT_SCREEN_SIZE)
         }
-        rows += XmbRow.Text(I18n.s(R.string.ui_customw), "Width", Icons.Filled.AspectRatio, w, subtitle = I18n.s(R.string.ui_even_numbers_only), numeric = true) { setWH(it, h) }
-        rows += XmbRow.Text(I18n.s(R.string.ui_customh), "Height", Icons.Filled.AspectRatio, h, subtitle = I18n.s(R.string.ui_even_numbers_only), numeric = true) { setWH(w, it) }
+        rows += XmbRow.Text("customW", "Width", Icons.Filled.AspectRatio, w, subtitle = I18n.s(R.string.ui_even_numbers_only), numeric = true) { setWH(it, h) }
+        rows += XmbRow.Text("customH", "Height", Icons.Filled.AspectRatio, h, subtitle = I18n.s(R.string.ui_even_numbers_only), numeric = true) { setWH(w, it) }
     }
     val saValues = listOf("", "0", "1", "2")
     val saLabels = listOf(p.str(R.string.use_container_default), p.str(R.string.screen_alignment_center), p.str(R.string.screen_alignment_top), p.str(R.string.screen_alignment_bottom))
     val sa = p.ex("screenAlignment", "")
     // Alignment and fullscreen mode apply on X11 and Wayland alike (the compositor fits the desktop
     // with the same modes), so neither row is gated on the backend.
-    rows += XmbRow.Choice(I18n.s(R.string.ui_screenalignment), "Screen alignment", Icons.Filled.DesktopWindows, saLabels, saLabels[saValues.indexOf(sa).coerceAtLeast(0)]) { v ->
+    rows += XmbRow.Choice("screenAlignment", "Screen alignment", Icons.Filled.DesktopWindows, saLabels, saLabels[saValues.indexOf(sa).coerceAtLeast(0)]) { v ->
         xmb.set(p, "screenAlignment", saValues[saLabels.indexOf(v)].ifEmpty { null })
     }
     val fsLabels = listOf(p.str(R.string.fullscreen_mode_default), p.str(R.string.fullscreen_mode_off), p.str(R.string.fullscreen_mode_fit),
@@ -311,7 +311,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     // Greyed on Wayland (the downscale lives in the X11 Vulkan renderer only) and then DISPLAYS
     // "Not used on Wayland"; the stored value is left untouched.
     val rsShown = if (waylandGame) "Not used on Wayland" else rsLabels[rsValues.indexOf(rs).coerceAtLeast(0)]
-    rows += XmbRow.Choice(I18n.s(R.string.ui_renderscale), "Render scale", Icons.Filled.AspectRatio, if (waylandGame) listOf(rsShown) else rsLabels, rsShown, subtitle = I18n.s(R.string.ui_supersampling),
+    rows += XmbRow.Choice("renderScale", "Render scale", Icons.Filled.AspectRatio, if (waylandGame) listOf(rsShown) else rsLabels, rsShown, subtitle = I18n.s(R.string.ui_supersampling),
         disabledReason = if (waylandGame) "Not used on Wayland: the compositor has no supersampling downscale" else null) { v ->
         val nv = rsValues[rsLabels.indexOf(v)]
         xmb.set(p, "renderScale", if (nv == "1.0") null else nv)
@@ -426,7 +426,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
                 "Used for the game (through the Wayland adapter) and for putting its frames on screen."
             else -> "Used by the Wayland compositor to put frames on screen; the game renders on the Wayland game driver below."
         }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_gfxdriver), p.str(R.string.graphics_driver), Icons.Filled.Memory, turnips,
+        rows += XmbRow.Choice("gfxDriver", p.str(R.string.graphics_driver), Icons.Filled.Memory, turnips,
             compositorDriverLabel(compositorVersion, turnips, turnipsLoaded),
             subtitle = gfxSubtitle) { v ->
             xmb.set(p, "graphicsDriverConfig", withGraphicsDriverVersion(gdc, v))
@@ -486,7 +486,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
             xmb.set(p, WaylandHdr.EXTRA, hdrValues[hdrLabels.indexOf(v)].ifEmpty { null })
         }
     } else {
-        rows += XmbRow.Choice(I18n.s(R.string.ui_gfxdriver), p.str(R.string.graphics_driver), Icons.Filled.Memory, gfxEntries, p.labelFor(gfxEntries, gfxId)) { v ->
+        rows += XmbRow.Choice("gfxDriver", p.str(R.string.graphics_driver), Icons.Filled.Memory, gfxEntries, p.labelFor(gfxEntries, gfxId)) { v ->
             xmb.set(p, "graphicsDriver", StringUtils.parseIdentifier(v))
         }
     }
@@ -498,7 +498,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     if (!waylandGame) rows += XmbRow.External("wrappers", "Manage wrappers", Icons.Filled.Cloud, subtitle = I18n.s(R.string.ui_import_or_remove_wrapper_drivers)) { host.openWrapperManager() }
     val dxEntries = p.arr(R.array.dxwrapper_entries)
     val dxId = p.ex("dxwrapper", c.getDXWrapper())
-    rows += XmbRow.Choice(I18n.s(R.string.ui_dxwrapper), "DX wrapper", Icons.Filled.Layers, dxEntries, p.labelFor(dxEntries, dxId)) { v ->
+    rows += XmbRow.Choice("dxWrapper", "DX wrapper", Icons.Filled.Layers, dxEntries, p.labelFor(dxEntries, dxId)) { v ->
         val nid = StringUtils.parseIdentifier(v)
         // Leaving VEGAS strips its config-file key, as the editor does.
         if (dxId.contains("vegas") && !nid.contains("vegas")) {
@@ -527,17 +527,17 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         val native = p.ex("native", if (c.isRendererNative()) "true" else "false") == "true"
         rows += XmbRow.Toggle("vkNative", "Native renderer", Icons.Filled.DesktopWindows, native) { xmb.set(p, "native", if (it) "true" else "false") }
         val swap = p.ex("swapRB", if (c.getRendererSwapRB()) "true" else "false") == "true"
-        rows += XmbRow.Choice(I18n.s(R.string.ui_vkcolors), "Colors", Icons.Filled.Image, listOf("BGRA", "RGBA"), if (swap) "RGBA" else "BGRA") { v ->
+        rows += XmbRow.Choice("vkColors", "Colors", Icons.Filled.Image, listOf("BGRA", "RGBA"), if (swap) "RGBA" else "BGRA") { v ->
             xmb.set(p, "swapRB", if (v == "RGBA") "true" else "false")
         }
         val pmValues = listOf("fifo", "mailbox", "immediate")
         val pmLabels = listOf(p.str(R.string.renderer_present_mode_fifo), p.str(R.string.renderer_present_mode_mailbox), p.str(R.string.renderer_present_mode_immediate))
         val pm = p.ex("presentMode", c.getRendererPresentMode())
-        rows += XmbRow.Choice(I18n.s(R.string.ui_vkpresent), "Present mode", Icons.Filled.Speed, pmLabels, pmLabels[pmValues.indexOf(pm).coerceAtLeast(0)],
+        rows += XmbRow.Choice("vkPresent", "Present mode", Icons.Filled.Speed, pmLabels, pmLabels[pmValues.indexOf(pm).coerceAtLeast(0)],
             disabledReason = if (native) "Set by the native renderer" else null) { v -> xmb.set(p, "presentMode", pmValues[pmLabels.indexOf(v)]) }
         val drivers = (listOf("system") + runCatching { com.winhub.hernandez.contents.AdrenotoolsManager(p.context).enumarateInstalledDrivers().toList() }.getOrDefault(emptyList())).distinct()
         val rd = p.ex("rendererDriverId", c.getRendererDriverId())
-        rows += XmbRow.Choice(I18n.s(R.string.ui_vkdriver), "Renderer driver", Icons.Filled.Memory, drivers, if (rd in drivers) rd else "system",
+        rows += XmbRow.Choice("vkDriver", "Renderer driver", Icons.Filled.Memory, drivers, if (rd in drivers) rd else "system",
             subtitle = I18n.s(R.string.ui_driver_the_compositor_runs_on)) { v -> xmb.set(p, "rendererDriverId", v) }
     }
     // Renderer sub-options are X11-only; hidden on Wayland like the container/shortcut editors do
@@ -594,7 +594,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     // and the in-game drawer arms the engine picked here.
     val fgShown = fgLabels[fgEngines.indexOf(fg).coerceAtLeast(0)]
     rows += XmbRow.Header("hFg", "Frame generation")
-    rows += XmbRow.Choice(I18n.s(R.string.ui_framegen), "Frame generation", Icons.Filled.Speed, fgLabels, fgShown,
+    rows += XmbRow.Choice("frameGen", "Frame generation", Icons.Filled.Speed, fgLabels, fgShown,
         subtitle = if (!lsfgDll) "Import a Lossless.dll in Settings to enable LSFG" else null,
         disabledReason = when {
             !waylandGame && rend != "Vulkan" -> "Frame generation requires the Vulkan renderer"

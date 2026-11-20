@@ -511,7 +511,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
 private fun XboxLoginScreen(backendReady: Boolean, message: String?, onLoginClick: () -> Unit) {
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
         Column(Modifier.fillMaxWidth().padding(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(I18n.s(R.string.ui_xbox), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text("Xbox", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
             Text(I18n.s(R.string.ui_sign_in_with_your_microsoft_account_to_download_the_p),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)

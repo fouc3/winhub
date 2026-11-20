@@ -312,21 +312,21 @@ internal fun xmbDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             rows += XmbRow.Link("extensions", ctx.getString(R.string.graphics_driver_available_extensions), Icons.Filled.Extension,
                 value = "$enabled/${allExtensions.size}", subtitle = "Hide extensions from games") { p2ExtensionsMenu(xmb, { allExtensions }, { rawCfg() }, { ch -> write(ch) }) }
         }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_gpuname), ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard,
+        rows += XmbRow.Choice("gpuName", ctx.getString(R.string.gpu_name), Icons.Filled.DeveloperBoard,
             uniq(gpuNames, cfg.gpuName), cfg.gpuName) { v -> write { it.gpuName = v } }
         if (memEntries.isNotEmpty()) {
             rows += XmbRow.Choice("memory", ctx.getString(R.string.graphics_driver_max_device_memory), Icons.Filled.Memory,
                 memEntries, memLabel(cfg.maxDeviceMemory)) { v -> write { it.maxDeviceMemory = StringUtils.parseNumber(v) } }
         }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_presentmode), ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
+        rows += XmbRow.Choice("presentMode", ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
             uniq(presentModes, cfg.presentMode), cfg.presentMode) { v -> write { it.presentMode = v } }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_resourcetype), ctx.getString(R.string.graphics_driver_resource_type), Icons.Filled.Memory,
+        rows += XmbRow.Choice("resourceType", ctx.getString(R.string.graphics_driver_resource_type), Icons.Filled.Memory,
             uniq(resourceTypes, cfg.resourceType), cfg.resourceType) { v -> write { it.resourceType = v } }
 
         rows += XmbRow.Header("hBcn", "BCn textures")
         rows += XmbRow.Info("gpuNote", (if (gpuModel.isNotEmpty()) "GPU: $gpuModel — " else "") +
             "BCn/compat layers apply to Mali and other non-Qualcomm GPUs", Icons.Filled.Info)
-        rows += XmbRow.Choice(I18n.s(R.string.ui_bcnemulation), ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
+        rows += XmbRow.Choice("bcnEmulation", ctx.getString(R.string.graphics_driver_bcn_emulation), Icons.Filled.Layers,
             uniq(bcnEmulations, cfg.bcnEmulation), cfg.bcnEmulation) { v -> write { it.bcnEmulation = v } }
         rows += XmbRow.Choice(I18n.s(R.string.ui_bcntype), ctx.getString(R.string.graphics_driver_bcn_emulation_type), Icons.Filled.Layers,
             uniq(bcnTypes, cfg.bcnEmulationType), cfg.bcnEmulationType) { v -> write { it.bcnEmulationType = v } }
@@ -415,7 +415,7 @@ internal fun xmbWaylandDriverConfigMenu(xmb: XmbScope, shortcut: Shortcut): XmbM
                 memEntries, memLabel(cfg["maxDeviceMemory"] ?: "0"),
                 subtitle = I18n.s(R.string.ui_what_directx_games_are_told_the_gpu_memory_is)) { v -> write("maxDeviceMemory", StringUtils.parseNumber(v)) }
         }
-        rows += XmbRow.Choice(I18n.s(R.string.ui_presentmode), ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
+        rows += XmbRow.Choice("presentMode", ctx.getString(R.string.graphics_driver_present_modes), Icons.Filled.Speed,
             presentLabels, presentLabels[presentValues.indexOf(storedPresent)],
             subtitle = I18n.s(R.string.ui_wayland_offers_mailbox_and_fifo_immediate_needs_teari)) { v ->
             write("presentMode", presentValues[presentLabels.indexOf(v)])

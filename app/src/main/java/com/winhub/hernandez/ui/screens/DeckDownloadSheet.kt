@@ -155,7 +155,7 @@ internal fun DeckContentDownloadSheet(
             profiles.isEmpty() -> {
                 DeckConfigNote("No components available — check your connection and retry.", error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { refreshKey++ }
+                    DeckButton("Retry", primary = false) { refreshKey++ }
                 }
             }
             else -> profiles.forEach { profile ->
@@ -251,7 +251,7 @@ private fun DeckDownloadRow(
                     Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = DeckPalette.error)
                 }
                 else -> IconButton(onClick = onDownload) {
-                    Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = DeckPalette.primary)
+                    Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = DeckPalette.primary)
                 }
             }
         }
@@ -333,7 +333,7 @@ internal fun DeckStockConfigSheet(
             rows.isEmpty() -> {
                 DeckConfigNote("Couldn't reach the releases feed — check connection and retry.", error = true)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    DeckButton(I18n.s(R.string.ui_retry), primary = false) { retryKey++ }
+                    DeckButton("Retry", primary = false) { retryKey++ }
                 }
             }
             else -> rows.forEach { rel ->

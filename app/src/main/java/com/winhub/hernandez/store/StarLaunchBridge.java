@@ -187,7 +187,7 @@ public final class StarLaunchBridge {
                                 writeShortcut(activity, chosen, gameName, exePath, coverArtUrl, epic);
                                 if (postAdd != null) postAdd.onAdded(chosen);
                         })
-                        .setNegativeButton(I18n.s(R.string.cancel), null)
+                        .setNegativeButton("Cancel", null)
                         .show());
 
             } catch (Exception e) {
@@ -235,7 +235,7 @@ public final class StarLaunchBridge {
                                     storeSource, preferSgdbCover,
                                     (success, message) -> showToast(activity, message));
                         })
-                        .setNegativeButton(I18n.s(R.string.cancel), null)
+                        .setNegativeButton("Cancel", null)
                         .show());
             } catch (Exception e) {
                 Log.e(TAG, "addToLauncher(store) failed", e);

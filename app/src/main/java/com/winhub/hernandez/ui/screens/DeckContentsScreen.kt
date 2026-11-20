@@ -1291,7 +1291,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = I18n.s(R.string.wrapper_installed),
+                    text = "Installed",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,

@@ -94,7 +94,7 @@ internal fun XmbSettingsRail(
                         .clip(backShape)
                         .clickable(onClick = onBack),
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back), tint = ink.onSurface, modifier = Modifier.size(22.dp))
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = ink.onSurface, modifier = Modifier.size(22.dp))
                 }
             }
             Spacer(Modifier.width(8.dp))

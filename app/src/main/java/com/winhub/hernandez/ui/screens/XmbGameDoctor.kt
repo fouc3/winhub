@@ -26,7 +26,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     lateinit var menu: XmbMenu
 
     menu = XmbMenu(
-        title = I18n.s(R.string.ui_game_doctor),
+        title = "Game Doctor",
         icon = Icons.Filled.Healing,
         initialKey = "busy",
         onClose = { if (session.changed) xmb.reloadGames() },

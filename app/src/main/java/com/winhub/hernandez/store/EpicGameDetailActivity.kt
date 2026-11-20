@@ -523,7 +523,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                     }
                 }
             }
-            .setNegativeButton(I18n.s(R.string.cancel), null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 

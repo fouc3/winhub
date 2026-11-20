@@ -125,7 +125,7 @@ internal fun FriendsTabButton(isSelected: Boolean, unread: Boolean, onClick: () 
         }
         Icon(
             imageVector = Icons.Filled.People,
-            contentDescription = I18n.s(R.string.xmb_tab_friends),
+            contentDescription = "Friends",
             tint = tintColor,
             modifier = Modifier.size(22.dp),
         )
@@ -192,7 +192,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
         if (showHelp) {
             AlertDialog(
                 onDismissRequest = { showHelp = false },
-                title = { Text(I18n.s(R.string.xmb_tab_friends)) },
+                title = { Text("Friends") },
                 text = { Text(HELP_TEXT) },
                 confirmButton = { TextButton(onClick = { showHelp = false }) { Text("OK") } },
             )
@@ -386,7 +386,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
                 value = draft,
                 onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text(I18n.s(R.string.xmb_fr_message), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text("Message", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 maxLines = 3,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { send() }),
@@ -395,7 +395,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
             IconButton(onClick = send, enabled = draft.isNotBlank()) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = I18n.s(R.string.social_hub_send),
+                    contentDescription = "Send",
                     tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onSurfaceVariant,
                 )

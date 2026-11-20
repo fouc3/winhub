@@ -261,7 +261,7 @@ fun ContentDownloadSheet(
                     onContentChanged()
                 }) { Text(I18n.s(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text(I18n.s(R.string.cancel)) } }
+            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text("Cancel") } }
         )
     }
 
@@ -632,7 +632,7 @@ private fun DownloadContentItem(
                 when {
                     busy -> {}
                     isLocal -> {
-                        Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed), tint = installedBlue,
+                        Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
                             modifier = Modifier.size(20.dp))
                         Spacer(Modifier.width(14.dp))
                         Icon(Icons.Filled.Info, contentDescription = I18n.s(R.string.ui_info), tint = cs.onSurfaceVariant,
@@ -641,9 +641,9 @@ private fun DownloadContentItem(
                         Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = Color(0xFFEF5350), // intentional: destructive-action red
                             modifier = Modifier.size(20.dp).clickable(onClick = onRemove))
                     }
-                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
+                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
                         tint = installedBlue, modifier = Modifier.size(20.dp))
-                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary,
+                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
                         modifier = Modifier.size(22.dp))
                 }
             }

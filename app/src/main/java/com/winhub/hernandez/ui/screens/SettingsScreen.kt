@@ -534,7 +534,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     }
                 }) { Text(I18n.s(R.string.ui_restore)) }
             },
-            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text(I18n.s(R.string.cancel)) } }
+            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text("Cancel") } }
         )
     }
 
@@ -961,7 +961,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }
                 ImportSourceIconButton(
                     icon = Icons.Default.Add,
-                    contentDescription = I18n.s(R.string.ui_install),
+                    contentDescription = "Install",
                     tint = MaterialTheme.colorScheme.onSurface,
                     onInApp = { prepareSFInstall(); installSFInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, "Select SoundFont")) },
                     onSystem = { prepareSFInstall(); installSFLauncher.launch(arrayOf("*/*")) },

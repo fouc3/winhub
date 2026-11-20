@@ -122,7 +122,7 @@ internal fun DeckDownloadsPanel(onBack: () -> Unit) {
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.size(6.dp))
-            Text(I18n.s(R.string.social_hub_configs_back), color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text("Back", color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(Modifier.size(14.dp))
         Text(
@@ -300,7 +300,7 @@ private fun DeckDownloadRow(
                     }
                 }
                 if (row.isActive) {
-                    DeckButton(I18n.s(R.string.cancel), primary = false) { row.cancel?.invoke() }
+                    DeckButton("Cancel", primary = false) { row.cancel?.invoke() }
                 } else {
                     DeckButton(I18n.s(R.string.xmb_dl_act_dismiss), primary = false) { DownloadRegistry.remove(row.key) }
                 }

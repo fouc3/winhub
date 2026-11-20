@@ -318,7 +318,7 @@ fun InputControlsScreen() {
                     }
             }
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
-                DeckButton(I18n.s(R.string.cancel), primary = false) { showImportChooser = false }
+                DeckButton("Cancel", primary = false) { showImportChooser = false }
             }
         }
     }
@@ -346,7 +346,7 @@ fun InputControlsScreen() {
                     CircularProgressIndicator(color = DeckPalette.primary)
                 }
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                    DeckButton(I18n.s(R.string.cancel), primary = false) { showDownloadDialog = false }
+                    DeckButton("Cancel", primary = false) { showDownloadDialog = false }
                 }
             }
         } else {
@@ -551,7 +551,7 @@ fun InputControlsScreen() {
             Row(verticalAlignment = Alignment.Bottom) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = I18n.s(R.string.ui_controls),
+                        text = "Controls",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = DeckPalette.onBackground,
@@ -696,7 +696,7 @@ fun InputControlsScreen() {
                                     )
                                     DeckMenuDivider()
                                     DropdownMenuItem(
-                                        text = { Text(I18n.s(R.string.preset_action_delete), color = DeckPalette.onBackground) },
+                                        text = { Text("Delete", color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.Delete, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = {
                                             showOverflow = false

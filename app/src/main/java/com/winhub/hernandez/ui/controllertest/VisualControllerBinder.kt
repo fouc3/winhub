@@ -301,7 +301,7 @@ private fun BindEditor(
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             Text("Bind: ", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
             Text(t?.name ?: id, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = BIND_BLUE, modifier = Modifier.weight(1f))
-            TextButton(onClick = onDone) { Text(I18n.s(R.string.wrapper_catalog_close), fontSize = 12.sp) }
+            TextButton(onClick = onDone) { Text("Done", fontSize = 12.sp) }
         }
         Text(
             "Currently: " + (currentLabel ?: "native (pass-through)"),

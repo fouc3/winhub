@@ -647,7 +647,7 @@ fun BigPictureScreen(navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Text(I18n.s(R.string.ui_no_games_yet), color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Text("No games yet", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(16.dp))
                     Button(onClick = { navController.navigate(Screen.Games.route) }) { Text(I18n.s(R.string.ui_add_games)) }
                 }
@@ -734,7 +734,7 @@ fun BigPictureScreen(navController: NavController) {
                                 ) {
                                     Icon(Icons.Filled.PlayArrow, contentDescription = null)
                                     Spacer(Modifier.width(8.dp))
-                                    Text(I18n.s(R.string.retro_opt_play), fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                                    Text("Play", fontSize = 17.sp, fontWeight = FontWeight.Bold)
                                 }
                                 Spacer(Modifier.width(12.dp))
                                 OutlinedButton(
@@ -930,7 +930,7 @@ fun BigPictureScreen(navController: NavController) {
                                 "Needs ${mc.label}${mc.wanted.ifBlank { "" }.let { if (it.isBlank()) "" else " ($it)" }}",
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text(I18n.s(R.string.ui_install)) }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text("Install") }
                         }
                     }
                     res.missingDrivers.forEach { md ->
@@ -940,14 +940,14 @@ fun BigPictureScreen(navController: NavController) {
                                 "Needs GPU driver ${md.wanted}",
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text(I18n.s(R.string.ui_install)) }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text("Install") }
                         }
                     }
                     res.advisories.forEach { Text("• $it", color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp) }
                 }
             },
             confirmButton = {
-                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text(I18n.s(R.string.wrapper_catalog_close)) }
+                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text("Done") }
             },
         )
     }
@@ -1107,7 +1107,7 @@ fun BigPictureScreen(navController: NavController) {
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateHandle?.cancel() }) {
-                    Text(I18n.s(R.string.cancel), color = MaterialTheme.colorScheme.primary)
+                    Text("Cancel", color = MaterialTheme.colorScheme.primary)
                 }
             },
         )
@@ -1548,7 +1548,7 @@ private fun GameCommunitySheet(
                     } else {
                         Icon(Icons.Filled.CloudUpload, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text(I18n.s(R.string.ui_upload_to_community))
+                        Text("Upload to community")
                     }
                 }
             }
@@ -1714,7 +1714,7 @@ private fun GameCommunitySheet(
             title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
             text = { Text("You've already shared a config for \"${existing.game}\". Replace it with this one?") },
             confirmButton = { TextButton(onClick = { replacePrompt = null; proceed() }) { Text(I18n.s(R.string.ui_replace)) } },
-            dismissButton = { TextButton(onClick = dismissReplace) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = dismissReplace) { Text("Cancel") } },
         )
     }
 }

@@ -368,7 +368,7 @@ internal fun SoundsStep(vm: FirstRunViewModel, modifier: Modifier) {
             onClick = { vm.setSounds(ctx, DeckSound.PHONE) },
         ) { SoundGlyph("◉") }
         WizChoice(
-            title = I18n.s(R.string.vibration_mode_off), body = I18n.s(R.string.ui_no_navigation_sounds), selected = snd == DeckSound.OFF,
+            title = "Off", body = I18n.s(R.string.ui_no_navigation_sounds), selected = snd == DeckSound.OFF,
             onClick = { vm.setSounds(ctx, DeckSound.OFF) },
         ) { SoundGlyph("∅") }
         Text(I18n.s(R.string.ui_change_it_any_time_in_settings_navigation_sounds), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
@@ -391,10 +391,10 @@ private fun SoundGlyph(symbol: String) {
 internal fun SoundTry(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.Center) {
         DeckGroup("Try it") {
-            DeckRow("Move", "Stepping along a list") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.MOVE) } }
-            DeckRow("Select", "Opening something") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.SELECT) } }
-            DeckRow("Back", "Going up a level") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.BACK) } }
-            DeckRow("Tab", "Changing page") { DeckButton(I18n.s(R.string.retro_opt_play), primary = false) { DeckSound.play(DeckSound.TAB) } }
+            DeckRow("Move", "Stepping along a list") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.MOVE) } }
+            DeckRow("Select", "Opening something") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.SELECT) } }
+            DeckRow("Back", "Going up a level") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.BACK) } }
+            DeckRow("Tab", "Changing page") { DeckButton("Play", primary = false) { DeckSound.play(DeckSound.TAB) } }
         }
     }
 }

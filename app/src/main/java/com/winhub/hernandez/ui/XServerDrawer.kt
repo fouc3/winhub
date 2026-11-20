@@ -3482,7 +3482,7 @@ private fun PadSection() {
         }
     }
 
-    Text(I18n.s(R.string.vibration_mode_controller), color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+    Text("Controller", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
     Spacer(Modifier.height(4.dp))
 
     // Controller type. The Classic DirectInput pad changes how winebus presents every pad, which it
@@ -4685,7 +4685,7 @@ private fun ProcessorAffinityDialog(
                 },
             ) { Text("OK") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 

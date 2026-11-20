@@ -695,7 +695,7 @@ private fun xmbAppMenu(onGo: (Screen) -> Unit, onOpenContainer: (Int?) -> Unit):
                         onGo(d)
                     }
             }
-        } + XmbRow.Link(key = "graphics", label = I18n.s(R.string.ui_graphics), icon = Icons.Filled.Memory) {
+        } + XmbRow.Link(key = "graphics", label = "Graphics", icon = Icons.Filled.Memory) {
             xmbGraphicsMenu(xs)
         }
     },

@@ -77,7 +77,7 @@ internal fun DeckViewSwitch() {
     val advanced = DeckSettingsMode.advanced(context)
     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         DeckButton(I18n.s(R.string.ui_simple), primary = !advanced) { DeckSettingsMode.set(context, false) }
-        DeckButton(I18n.s(R.string.advanced), primary = advanced) { DeckSettingsMode.set(context, true) }
+        DeckButton("Advanced", primary = advanced) { DeckSettingsMode.set(context, true) }
     }
 }
 

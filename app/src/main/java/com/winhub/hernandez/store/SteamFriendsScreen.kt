@@ -165,7 +165,7 @@ private fun FriendsTopBar(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = I18n.s(R.string.social_hub_configs_back),
+                    contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -173,7 +173,7 @@ private fun FriendsTopBar(
             Spacer(Modifier.width(8.dp))
         }
         Text(
-            text = I18n.s(R.string.xmb_tab_friends),
+            text = "Friends",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(start = 4.dp),
@@ -733,7 +733,7 @@ private fun OutgoingRequestRow(
         }
         Spacer(Modifier.width(8.dp))
         TextButton(onClick = onCancel, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-            Text(I18n.s(R.string.cancel))
+            Text("Cancel")
         }
     }
 }
@@ -1027,7 +1027,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
     )
 }
 
@@ -1100,7 +1100,7 @@ private fun ConnectState() {
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = I18n.s(R.string.xmb_fr_disconnected_title),
+            text = "Not connected to Steam",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -1392,7 +1392,7 @@ fun ChatScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = I18n.s(R.string.social_hub_configs_back),
+                        contentDescription = "Back",
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
@@ -1538,7 +1538,7 @@ fun ChatScreen(
                     value = draft,
                     onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text(I18n.s(R.string.xmb_fr_message)) },
+                    placeholder = { Text("Message") },
                     maxLines = 4,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                     keyboardActions = KeyboardActions(onSend = {
@@ -1562,7 +1562,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = I18n.s(R.string.social_hub_send),
+                        contentDescription = "Send",
                         tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                     )

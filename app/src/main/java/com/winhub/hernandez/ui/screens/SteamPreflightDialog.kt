@@ -366,7 +366,7 @@ fun SteamPreflightDialog(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
+                TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
             },
         )
     }
@@ -436,7 +436,7 @@ private fun failCardFor(
             "$needSignIn. Sign in again to play online with SteamLite, or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_launch_with_goldberg), color = cs.onSurfaceVariant) }
+            TextButton(onClick = onGoldberg) { Text("Launch with Goldberg", color = cs.onSurfaceVariant) }
             TextButton(onClick = onSignIn) { Text(I18n.s(R.string.xmb_store_card_signed_out), color = cs.primary) }
         }
         offline != null -> FailCardModel(
@@ -444,9 +444,9 @@ private fun failCardFor(
             "$offline. You can retry, launch anyway (the game's own Steam client will try to sign in), or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_goldberg), color = cs.onSurfaceVariant) }
+            TextButton(onClick = onGoldberg) { Text("Goldberg", color = cs.onSurfaceVariant) }
             TextButton(onClick = launchAnyway) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
-            TextButton(onClick = retry) { Text(I18n.s(R.string.ui_retry), color = cs.primary) }
+            TextButton(onClick = retry) { Text("Retry", color = cs.primary) }
         }
         updateOffer != null -> FailCardModel(
             "Update available",
@@ -456,7 +456,7 @@ private fun failCardFor(
             red = false,
         ) {
             TextButton(onClick = launchThisBuild) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
-            TextButton(onClick = onUpdate) { Text(I18n.s(R.string.wrapper_update), color = cs.primary) }
+            TextButton(onClick = onUpdate) { Text("Update", color = cs.primary) }
         }
         clientOffer != null && !clientUpdating -> {
             val size = if (clientOffer.downloadMb > 0) " (~${clientOffer.downloadMb} MB)" else ""
@@ -477,7 +477,7 @@ private fun failCardFor(
                 if (!clientOffer.required) {
                     TextButton(onClick = launchInstalledClient) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
                 }
-                TextButton(onClick = updateClient) { Text(I18n.s(R.string.wrapper_update), color = cs.primary) }
+                TextButton(onClick = updateClient) { Text("Update", color = cs.primary) }
             }
         }
         else -> null
@@ -545,7 +545,7 @@ private fun LandscapePreflight(
                         LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = false)
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
+                        TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
                     }
                 }
             } else {
@@ -564,7 +564,7 @@ private fun LandscapePreflight(
                             LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = true)
                         }
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel), color = cs.onSurfaceVariant) }
+                            TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
                         }
                     }
                 }

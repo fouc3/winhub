@@ -718,7 +718,7 @@ private fun StorefrontTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = I18n.s(R.string.ui_steam),
+            text = "Steam",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,

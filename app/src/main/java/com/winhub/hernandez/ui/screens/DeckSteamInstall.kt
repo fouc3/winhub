@@ -275,9 +275,9 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                     )
                 }
                 Spacer(Modifier.size(14.dp))
-                DeckButton(I18n.s(R.string.ui_install), primary = true) { start() }
+                DeckButton("Install", primary = true) { start() }
                 Spacer(Modifier.size(8.dp))
-                DeckButton(I18n.s(R.string.cancel), primary = false) { pickerOpen = false }
+                DeckButton("Cancel", primary = false) { pickerOpen = false }
             }
         }
     }

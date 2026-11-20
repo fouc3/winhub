@@ -532,7 +532,7 @@ class AmazonGamesActivity : ComponentActivity() {
         val idx = downloadStates.indexOfFirst { it.first == productId }
         if (idx >= 0) {
             downloadStates[idx] = productId to DownloadState(
-                progress = 100, statusText = I18n.s(R.string.wrapper_installed),
+                progress = 100, statusText = "Installed",
                 isVisible = false, isComplete = true,
             )
         }
@@ -1391,10 +1391,10 @@ private fun InstallConfirmDialog(
             }
         },
         confirmButton = {
-            Button(onClick = onConfirm) { Text(I18n.s(R.string.ui_install)) }
+            Button(onClick = onConfirm) { Text("Install") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }

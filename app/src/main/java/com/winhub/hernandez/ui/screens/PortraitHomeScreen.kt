@@ -268,7 +268,7 @@ private fun PortraitContinueBanner(entry: HubEntry, onOpen: () -> Unit, onPlay: 
                 ) {
                     Icon(Icons.Filled.PlayArrow, contentDescription = null, tint = Deck.onPrimary)
                     Spacer(Modifier.size(6.dp))
-                    Text(I18n.s(R.string.retro_opt_play), color = Deck.onPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text("Play", color = Deck.onPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
                     hubOriginLabel(entry) + " · " + hours,

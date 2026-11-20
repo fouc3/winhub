@@ -654,7 +654,7 @@ private fun StatTiles(c: ProfileTabContent, columns: Int = 4) {
         ),
         ProfileStat(
             value = if (c.friendsCount > 0) fmtCount(c.friendsCount) else "—",
-            label = I18n.s(R.string.xmb_tab_friends),
+            label = "Friends",
             onClick = c.onOpenFriends,
         ),
     )

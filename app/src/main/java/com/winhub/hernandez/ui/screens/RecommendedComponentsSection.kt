@@ -220,7 +220,7 @@ fun RecommendedComponentsSection(
             confirmButton = {
                 TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text(I18n.s(R.string._continue)) }
             },
-            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text("Cancel") } },
         )
     }
 
@@ -318,11 +318,11 @@ private fun RecommendedChipGroup(
                                 modifier = Modifier.size(16.dp), strokeWidth = 2.dp,
                             )
                             isInstalled -> Icon(
-                                Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.wrapper_installed),
+                                Icons.Filled.CheckCircle, contentDescription = "Installed",
                                 modifier = Modifier.size(18.dp),
                             )
                             else -> Icon(
-                                Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install),
+                                Icons.Filled.Download, contentDescription = "Install",
                                 modifier = Modifier.size(18.dp),
                             )
                         }

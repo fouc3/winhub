@@ -160,7 +160,7 @@ fun InstallProgressDialog(
                 Spacer(Modifier.height(16.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     if (!terminal) {
-                        TextButton(onClick = onCancel) { Text(I18n.s(R.string.cancel), color = cs.primary) }
+                        TextButton(onClick = onCancel) { Text("Cancel", color = cs.primary) }
                     } else {
                         TextButton(onClick = onDismiss) {
                             Text(if (state.phase == ContentDownloadPhase.DONE) "Done" else "Close", color = cs.primary)

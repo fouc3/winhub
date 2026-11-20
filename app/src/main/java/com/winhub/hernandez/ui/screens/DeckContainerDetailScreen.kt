@@ -205,7 +205,7 @@ internal fun DeckContainerDetailScreen(
                 },
                 modifier = Modifier.focusRequester(backFocus),
             ) {
-                Icon(Icons.Default.ArrowBack, contentDescription = I18n.s(R.string.social_hub_configs_back), tint = Deck.onBackground)
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Deck.onBackground)
             }
             Spacer(Modifier.width(4.dp))
             Column(Modifier.weight(1f)) {
@@ -401,7 +401,7 @@ internal fun DeckContainerDetailScreen(
                                 label = I18n.s(R.string.ui_wayland_adapter_settings_2),
                                 hint = I18n.s(R.string.ui_profile_switches_gpu_name_spoof_memory_cap),
                             ) {
-                                DeckValueChip(text = I18n.s(R.string.xmb_all_games_open), open = false, onClick = { showWaylandAdapterDialog = true })
+                                DeckValueChip(text = "Open", open = false, onClick = { showWaylandAdapterDialog = true })
                             }
                             DeckRow(
                                 label = com.winhub.hernandez.display.WaylandHdr.TITLE,
@@ -479,7 +479,7 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Renderer") {
                         DeckChoiceRow(
-                            label = I18n.s(R.string.renderer),
+                            label = "Renderer",
                             options = viewModel.rendererEntries.map { it to it },
                             selected = viewModel.selectedRenderer,
                             onPick = { viewModel.selectedRenderer = it },
@@ -544,7 +544,7 @@ internal fun DeckContainerDetailScreen(
                                     if (fastGlReason == null) {
                                         DeckToggle(viewModel.fastOpenGL) { viewModel.fastOpenGL = it }
                                     } else {
-                                        Text(I18n.s(R.string.vibration_mode_off), color = DeckPalette.onSurfaceVariant)
+                                        Text("Off", color = DeckPalette.onSurfaceVariant)
                                     }
                                 },
                             )
@@ -659,7 +659,7 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.emulatorEnabled) {
                             DeckGroup("Emulator") {
                                 DeckChoiceRow(
-                                    label = I18n.s(R.string.retro_opt_emulator),
+                                    label = "Emulator",
                                     options = viewModel.emulatorEntries.map { it to it },
                                     selected = viewModel.selectedEmulator,
                                     onPick = { viewModel.selectedEmulator = it },
@@ -748,9 +748,9 @@ internal fun DeckContainerDetailScreen(
                     5 -> {
                         DeckGroup("Environment") {
                         DeckConfigSection(
-                            label = I18n.s(R.string.ui_env_vars),
+                            label = "Env Vars",
                             hint = I18n.s(R.string.ui_key_value_pairs),
-                            title = I18n.s(R.string.ui_env_vars),
+                            title = "Env Vars",
                             sectionKey = "envVars",
                             style = configEditorStyle,
                             openSection = openSection,
@@ -873,7 +873,7 @@ internal fun DeckContainerDetailScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            DeckButton(I18n.s(R.string.cancel), primary = false) { onNavigateBack() }
+            DeckButton("Cancel", primary = false) { onNavigateBack() }
             Spacer(Modifier.weight(1f))
             DeckButton(saveLabel, primary = true) {
                 if (!viewModel.isSaving) viewModel.confirm(

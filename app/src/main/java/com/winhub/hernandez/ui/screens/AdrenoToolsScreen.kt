@@ -171,7 +171,7 @@ fun AdrenoToolsScreen() {
                 }) { Text(I18n.s(R.string.remove)) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmRemoveIndex = null }) { Text(I18n.s(R.string.cancel)) }
+                TextButton(onClick = { confirmRemoveIndex = null }) { Text("Cancel") }
             },
         )
     }

@@ -108,7 +108,7 @@ object GogRedistInstaller {
                         "They'll be installed into \"${container.name}\". A brief setup window will " +
                         "appear for each one and close on its own."
                 )
-                .setPositiveButton(I18n.s(R.string.ui_install)) { _, _ -> installPrereqs(activity, container, gameId) }
+                .setPositiveButton("Install") { _, _ -> installPrereqs(activity, container, gameId) }
                 .setNegativeButton(I18n.s(R.string.ui_skip), null)
                 .show()
         }
@@ -141,7 +141,7 @@ object GogRedistInstaller {
                 AlertDialog.Builder(activity, R.style.StoreAlertDialogDark)
                     .setTitle(I18n.s(R.string.ui_install_prerequisites_into))
                     .setItems(names) { _, which -> promptAndInstall(activity, containers[which], gameId) }
-                    .setNegativeButton(I18n.s(R.string.cancel), null)
+                    .setNegativeButton("Cancel", null)
                     .show()
             }
         }.also { it.name = "gog-redist-picker" }.start()

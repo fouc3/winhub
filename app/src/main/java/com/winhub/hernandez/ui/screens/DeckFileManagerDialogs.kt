@@ -339,7 +339,7 @@ internal fun DeckFmPropertiesDialog(
     }
 
     DeckFmDialog(
-        title = I18n.s(R.string.ui_properties),
+        title = "Properties",
         subtitle = file.name,
         onDismiss = onDismiss,
         confirmLabel = "Done",
@@ -382,7 +382,7 @@ internal fun DeckFmPropertiesDialog(
         val hiddenSupported = state?.hiddenSupported == true
         val hiddenEnabled = state != null && hiddenSupported && !busy
         DeckRow(
-            label = I18n.s(R.string.ui_hidden),
+            label = "Hidden",
             hint = if (state != null && !hiddenSupported) "This storage can't store the hidden flag."
             else "Marks the file hidden in Windows (Wine's hidden attribute).",
         ) {

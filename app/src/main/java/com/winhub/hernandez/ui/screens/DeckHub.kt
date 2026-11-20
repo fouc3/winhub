@@ -691,7 +691,7 @@ internal fun DeckHubGamePage(
                         modifier = Modifier.size(18.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text(I18n.s(R.string.social_hub_configs_back), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                    Text("Back", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
 
@@ -737,11 +737,11 @@ internal fun DeckHubGamePage(
                 Spacer(Modifier.height(18.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     HubGradientButton(
-                        text = I18n.s(R.string.retro_opt_play),
+                        text = "Play",
                         modifier = Modifier.focusRequester(playFocus),
                         onClick = onPlay,
                     )
-                    DeckButton(I18n.s(R.string.settings), primary = false, onClick = onSettings)
+                    DeckButton("Settings", primary = false, onClick = onSettings)
                 }
             }
         }
@@ -839,7 +839,7 @@ internal fun DeckAddModeMenu(onPick: (HubAddMode) -> Unit, onDismiss: () -> Unit
                 icon = Icons.Filled.SportsEsports,
             ) { onPick(HubAddMode.CRONOS) }
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(I18n.s(R.string.cancel), color = DeckPalette.onSurfaceVariant)
+                Text("Cancel", color = DeckPalette.onSurfaceVariant)
             }
         }
     }
@@ -1093,7 +1093,7 @@ internal fun HubConfirmDialog(
                                     )
                                     Spacer(Modifier.width(10.dp))
                                     Text(
-                                        text = I18n.s(R.string.ui_steam),
+                                        text = "Steam",
                                         fontSize = 11.sp,
                                         color = DeckPalette.primary,
                                     )
@@ -1134,7 +1134,7 @@ internal fun HubConfirmDialog(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     OutlinedButton(onClick = onDismiss) {
-                        Text(I18n.s(R.string.cancel), color = DeckPalette.onBackground)
+                        Text("Cancel", color = DeckPalette.onBackground)
                     }
                     Spacer(Modifier.width(10.dp))
                     HubGradientButton("Add") {
@@ -1305,7 +1305,7 @@ internal fun DeckLaunchMethodDialog(
                 modifier = Modifier.fillMaxWidth(),
             )
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(I18n.s(R.string.cancel), color = DeckPalette.onSurfaceVariant)
+                Text("Cancel", color = DeckPalette.onSurfaceVariant)
             }
         }
     }

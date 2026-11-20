@@ -77,7 +77,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
     val context = LocalContext.current
     OutlinedAlertDialog(
         onDismissRequest = onClose,
-        title = { Text(I18n.s(R.string.ui_clone_to_container)) },
+        title = { Text("Clone to container") },
         text = {
             if (containers.isEmpty()) {
                 Text(I18n.s(R.string.ui_no_containers_yet))
@@ -101,7 +101,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
     )
 }
 
@@ -172,7 +172,7 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
     )
 }
 

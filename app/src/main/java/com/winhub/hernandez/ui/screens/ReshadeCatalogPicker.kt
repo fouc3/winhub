@@ -289,7 +289,7 @@ private fun ReshadeCatalogSheet(
                 }
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.End) {
-                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.wrapper_catalog_close), color = cs.primary) }
+                TextButton(onClick = onDismiss) { Text("Done", color = cs.primary) }
             }
         }
     }
@@ -313,10 +313,10 @@ private fun ReshadeCatalogSheet(
                             onCatalogChanged()              // parent rescans the drop-in folder
                         } else errorMsg = "Couldn't delete ${entry.name}."
                     }
-                }) { Text(I18n.s(R.string.preset_action_delete), color = cs.error) }
+                }) { Text("Delete", color = cs.error) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text(I18n.s(R.string.cancel), color = cs.primary) }
+                TextButton(onClick = { pendingDelete = null }) { Text("Cancel", color = cs.primary) }
             },
         )
     }
@@ -433,8 +433,8 @@ private fun ReshadeCatalogRow(
                         modifier = Modifier.size(22.dp),
                     )
                 }
-                offline -> Icon(Icons.Filled.CloudOff, contentDescription = I18n.s(R.string.xmb_fr_section_offline), tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
-                else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.wrapper_catalog_download), tint = cs.primary, modifier = Modifier.size(22.dp))
+                offline -> Icon(Icons.Filled.CloudOff, contentDescription = "Offline", tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary, modifier = Modifier.size(22.dp))
             }
         }
         if (isBusy) {

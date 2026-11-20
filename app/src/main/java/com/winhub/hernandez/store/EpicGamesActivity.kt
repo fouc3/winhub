@@ -364,8 +364,8 @@ class EpicGamesActivity : ComponentActivity() {
         val dialog = AlertDialog.Builder(this)
             .setTitle("Install ${game.title}?")
             .setView(content)
-            .setPositiveButton(I18n.s(R.string.ui_install), null)
-            .setNegativeButton(I18n.s(R.string.cancel), null)
+            .setPositiveButton("Install", null)
+            .setNegativeButton("Cancel", null)
             .create()
         dialog.show()
 
@@ -658,7 +658,7 @@ private fun EpicGamesScreen(
                 modifier = Modifier.height(40.dp),
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             Text(
-                text = I18n.s(R.string.ui_epic_games),
+                text = "Epic Games",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

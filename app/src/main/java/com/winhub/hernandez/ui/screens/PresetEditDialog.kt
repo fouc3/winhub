@@ -407,7 +407,7 @@ internal fun PresetEditDialog(
                         onSaved()
                     }) { Text(I18n.s(R.string.reset), color = MaterialTheme.colorScheme.error) }
                 }
-                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.cancel)) }
+                TextButton(onClick = onDismiss) { Text("Cancel") }
             }
         },
     )

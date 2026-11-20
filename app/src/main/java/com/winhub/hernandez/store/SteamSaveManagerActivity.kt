@@ -462,7 +462,7 @@ internal fun SaveManagerScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = I18n.s(R.string.social_hub_configs_back),
+                        contentDescription = "Back",
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
@@ -838,7 +838,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                             }) { Text(I18n.s(R.string.xmb_fr_off_button)) }
                         },
                         dismissButton = {
-                            TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.cancel)) }
+                            TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
                         },
                     )
                 } else {
@@ -925,7 +925,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         TextButton(onClick = { commit(false); pendingToggle = null }) { Text(I18n.s(R.string._continue)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.cancel)) }
+                        TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
                     },
                 )
             } else {
@@ -1145,7 +1145,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { backupFor = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { backupFor = null }) { Text("Cancel") } },
         )
     }
 
@@ -1201,7 +1201,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text(I18n.s(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text("Cancel") } },
         )
     }
 
@@ -1914,7 +1914,7 @@ private fun SaveStatusRow(
                 // Can't sync without a container — tell the user how to enable it (tap-through opens
                 // the detail page where they can set it up).
                 Text(
-                    text = I18n.s(R.string.ui_add_this_game_to_a_container_first_to_sync),
+                    text = "Add this game to a container first to sync.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,

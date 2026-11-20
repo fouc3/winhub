@@ -118,7 +118,7 @@ internal fun WinHubLogoAnimation(modifier: Modifier = Modifier, still: Boolean =
         animationSpec = infiniteRepeatable(tween(LOOP_MS, easing = LinearEasing)),
         label = I18n.s(R.string.ui_whlogot),
     )
-    Canvas(modifier.aspectRatio(VIEW_W / VIEW_H).semantics { contentDescription = I18n.s(R.string.app_name) }) {
+    Canvas(modifier.aspectRatio(VIEW_W / VIEW_H).semantics { contentDescription = "WinHub" }) {
         // The phase is read here, in the draw pass, so the loop never recomposes anything.
         val t = if (frozen) STILL_T else loop.value
         // Draw in the SVG's own coordinates: shift its viewBox to the origin, then scale to the canvas.

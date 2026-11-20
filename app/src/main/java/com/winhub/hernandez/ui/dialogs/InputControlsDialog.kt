@@ -121,7 +121,7 @@ fun InputControlsDialog(state: XServerDialogState) {
             }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.cancel)) }
+            TextButton(onClick = { state.dismiss() }) { Text("Cancel") }
         }
     )
 }

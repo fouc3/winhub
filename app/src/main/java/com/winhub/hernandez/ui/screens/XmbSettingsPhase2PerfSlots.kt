@@ -128,7 +128,7 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
         rows += XmbRow.Header("hNow", "This device now")
         rows += XmbRow.Info(I18n.s(R.string.ui_gpuclock), "GPU clock", Icons.Filled.Memory, readouts["gpuMhz"] ?: "…")
-        rows += XmbRow.Info(I18n.s(R.string.ui_soctemp), "SoC temp", Icons.Filled.Speed, readouts["socTemp"] ?: "…")
+        rows += XmbRow.Info("socTemp", "SoC temp", Icons.Filled.Speed, readouts["socTemp"] ?: "…")
         rows += XmbRow.Info("governor", "Governor", Icons.Filled.Tune, readouts["governor"] ?: "…")
 
         rows += XmbRow.Header("hProfile", "Power profile")

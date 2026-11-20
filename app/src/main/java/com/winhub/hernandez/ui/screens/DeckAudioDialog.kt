@@ -107,7 +107,7 @@ internal fun DeckAudioSettingsDialog(
             modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            DeckButton(I18n.s(R.string.cancel), primary = false, onClick = onDismiss)
+            DeckButton("Cancel", primary = false, onClick = onDismiss)
             DeckButton(I18n.s(R.string.save), primary = true) { onSave(cfg) }
         }
     }

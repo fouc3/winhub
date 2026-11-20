@@ -217,7 +217,7 @@ private fun ProfileTopBar(onBack: () -> Unit, onViewOnSteam: () -> Unit, onRemov
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = I18n.s(R.string.social_hub_configs_back),
+                contentDescription = "Back",
                 tint = MaterialTheme.colorScheme.onBackground,
             )
         }
