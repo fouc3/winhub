@@ -652,7 +652,7 @@ private fun RequestsHeader(count: Int) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Friend requests — $count",
+            text = I18n.s(R.string.ui_friend_requests_count, count),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold,
@@ -1157,7 +1157,7 @@ internal fun SectionHeader(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "$label — $count",
+                text = I18n.s(R.string.ui_label_count, label, count),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.weight(1f),

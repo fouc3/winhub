@@ -153,7 +153,7 @@ fun MediaTab(
 
             media == null || media.isEmpty -> StoreNotice(
                 title = I18n.s(R.string.ui_no_media),
-                body = "$storeLabel published no videos or screenshots for this title.",
+                body = I18n.s(R.string.ui_store_published_no_media, storeLabel),
             )
 
             else -> {

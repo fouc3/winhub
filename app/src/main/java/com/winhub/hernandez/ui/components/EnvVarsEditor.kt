@@ -1078,7 +1078,7 @@ private fun AddEnvVarPicker(
                                 IconButton(onClick = { pickerHelp = candidateHelp }) {
                                     Icon(
                                         Icons.Outlined.HelpOutline,
-                                        contentDescription = "About $known",
+                                        contentDescription = I18n.s(R.string.ui_about_name, known),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                 }

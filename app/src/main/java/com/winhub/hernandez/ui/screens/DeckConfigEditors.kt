@@ -280,7 +280,7 @@ internal fun DeckChoiceRowWithDownload(
         }
         if (onDownload != null) {
             IconButton(onClick = onDownload, modifier = Modifier.padding(end = 6.dp)) {
-                Icon(Icons.Filled.Download, contentDescription = "Download $label", tint = DeckPalette.primary)
+                Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_download_name, label), tint = DeckPalette.primary)
             }
         }
     }

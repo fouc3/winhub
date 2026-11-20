@@ -197,7 +197,7 @@ internal fun DeckLaunchLandscapeCard(
                     LaunchLabel("Options")
                     LaunchChoiceRow(
                         title = I18n.s(R.string.ui_remember_my_choice),
-                        subtitle = "Skip this menu next time for $gameName.",
+                        subtitle = I18n.s(R.string.ui_skip_menu_next_time_name, gameName),
                         selected = rememberChoice,
                         accent = accent,
                         onClick = { onRemember(!rememberChoice) },

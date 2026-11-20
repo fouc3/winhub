@@ -140,7 +140,7 @@ internal fun MoveProgressDialog(
         Surface(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.surface) {
             Column(modifier = Modifier.padding(22.dp)) {
                 Text(
-                    text = "Moving $gameName",
+                    text = I18n.s(R.string.ui_moving_name, gameName),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,

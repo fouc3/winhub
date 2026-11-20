@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.layout.Box
@@ -104,7 +107,7 @@ internal fun UninstallProgressDialog(gameName: String) {
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(28.dp), strokeWidth = 3.dp)
                 Text(
-                    text = "Uninstalling $gameName…",
+                    text = I18n.s(R.string.ui_uninstalling_name, gameName),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(start = 20.dp),

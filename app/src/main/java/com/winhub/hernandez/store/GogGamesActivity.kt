@@ -1430,7 +1430,7 @@ private fun GameGridTile(
 @Composable
 private fun GenBadge(generation: Int) {
     Text(
-        text = "Gen $generation",
+        text = I18n.s(R.string.ui_gen_generation, generation),
         fontSize = 10.sp,
         color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier

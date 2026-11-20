@@ -6488,4 +6488,21 @@
     <string name="ui_the_sd_card_is_slower_than_internal_storage_some_games_s_3">⚠️ SD 卡比内部存储慢。部分游戏会卡在</string>
     <string name="ui_the_sd_card_is_slower_than_internal_storage_some_games_s_4">⚠️ SD 卡比内部存储慢。部分游戏会在以下情形卡住：</string>
     <string name="ui_this_is_an_ea_game_ea_s_activation_can_treat_a_new_insta_2">⚠️ 这是 EA 游戏。EA 的激活机制可能会将新的安装位置</string>
+    <string name="ui_update_available_v">有可用更新 — V %1$s</string>
+    <string name="ui_uninstalling_name">正在卸载 %1$s…</string>
+    <string name="ui_queued_position">排队中 · #%1$s</string>
+    <string name="ui_gen_generation">第 %1$s 代</string>
+    <string name="ui_moving_name">正在移动 %1$s</string>
+    <string name="ui_total_online">共 %1$s 人 · %2$s 在线</string>
+    <string name="ui_friend_requests_count">好友请求 — %1$s</string>
+    <string name="ui_label_count">%1$s — %2$s</string>
+    <string name="ui_updated_when">更新于 %1$s</string>
+    <string name="ui_library_path">库：%1$s</string>
+    <string name="ui_store_published_no_media">%1$s 没有为这款游戏发布视频或截图。</string>
+    <string name="ui_about_name">关于 %1$s</string>
+    <string name="ui_finish_installing_name">完成 %1$s 的安装</string>
+    <string name="ui_download_name">下载 %1$s</string>
+    <string name="ui_skip_menu_next_time_name">下次为 %1$s 跳过此菜单。</string>
+    <string name="ui_cores_of_cores">%1$s / %2$s 核心</string>
+    <string name="ui_cpu_cores_the_game_may_run_on">游戏可以使用的 CPU 核心</string>
 </resources>

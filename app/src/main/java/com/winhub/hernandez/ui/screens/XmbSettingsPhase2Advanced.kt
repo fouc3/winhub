@@ -182,7 +182,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val cores = Runtime.getRuntime().availableProcessors()
         val checkedCores = p2CpuChecked(shortcut, cores).size
         rows += XmbRow.Link("cpu", ctx.getString(R.string.processor_affinity), Icons.Filled.Memory,
-            value = "$checkedCores of $cores cores", subtitle = "CPU cores the game may run on") { p2CpuMenu(xmb, shortcut) }
+            value = I18n.s(R.string.ui_cores_of_cores, checkedCores, cores), subtitle = I18n.s(R.string.ui_cpu_cores_the_game_may_run_on)) { p2CpuMenu(xmb, shortcut) }
 
         // Sharpness (VKBasalt)
         rows += XmbRow.Header("hSharpness", "Sharpness (VKBasalt)")

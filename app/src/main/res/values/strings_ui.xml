@@ -6699,4 +6699,21 @@
     <string name="ui_the_sd_card_is_slower_than_internal_storage_some_games_s_3">"⚠️ The SD card is slower than internal storage. Some games stall on "</string>
     <string name="ui_the_sd_card_is_slower_than_internal_storage_some_games_s_4">"⚠️ The SD card is slower than internal storage. Some games stall while "</string>
     <string name="ui_this_is_an_ea_game_ea_s_activation_can_treat_a_new_insta_2">"⚠️ This is an EA game. EA\'s activation can treat a new install location "</string>
+    <string name="ui_update_available_v">Update available — V %1$s</string>
+    <string name="ui_uninstalling_name">Uninstalling %1$s…</string>
+    <string name="ui_queued_position">Queued · #%1$s</string>
+    <string name="ui_gen_generation">Gen %1$s</string>
+    <string name="ui_moving_name">Moving %1$s</string>
+    <string name="ui_total_online">%1$s total · %2$s online</string>
+    <string name="ui_friend_requests_count">Friend requests — %1$s</string>
+    <string name="ui_label_count">%1$s — %2$s</string>
+    <string name="ui_updated_when">Updated %1$s</string>
+    <string name="ui_library_path">Library: %1$s</string>
+    <string name="ui_store_published_no_media">%1$s published no videos or screenshots for this title.</string>
+    <string name="ui_about_name">About %1$s</string>
+    <string name="ui_finish_installing_name">Finish installing %1$s</string>
+    <string name="ui_download_name">Download %1$s</string>
+    <string name="ui_skip_menu_next_time_name">Skip this menu next time for %1$s.</string>
+    <string name="ui_cores_of_cores">%1$s of %2$s cores</string>
+    <string name="ui_cpu_cores_the_game_may_run_on">CPU cores the game may run on</string>
 </resources>

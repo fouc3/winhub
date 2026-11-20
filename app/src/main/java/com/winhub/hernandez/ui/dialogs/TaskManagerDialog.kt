@@ -90,7 +90,7 @@ fun TaskManagerDialog(state: XServerDialogState) {
                 Text(I18n.s(R.string.task_manager), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Processes: $count",
+                    text = I18n.s(R.string.ui_processes_count, count),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

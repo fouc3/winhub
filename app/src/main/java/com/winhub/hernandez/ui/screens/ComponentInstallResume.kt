@@ -75,7 +75,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
     OutlinedAlertDialog(
         onDismissRequest = { /* keep until the user chooses */ },
         containerColor = cs.surfaceContainerHigh,
-        title = { Text("Finish installing $name", color = cs.onSurface) },
+        title = { Text(I18n.s(R.string.ui_finish_installing_name, name), color = cs.onSurface) },
         text = {
             Column {
                 Text(

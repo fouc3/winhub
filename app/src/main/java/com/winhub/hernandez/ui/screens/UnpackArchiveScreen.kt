@@ -342,7 +342,7 @@ fun UnpackArchiveScreen(
                 if (powerMode == PowerMode.MANUAL) {
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        "$manualCores of $cores cores",
+                        I18n.s(R.string.ui_cores_of_cores, manualCores, cores),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 12.sp,
                     )

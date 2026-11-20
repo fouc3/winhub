@@ -768,7 +768,7 @@ private fun QueuedCard(
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Queued · #$position",
+                    text = I18n.s(R.string.ui_queued_position, position),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

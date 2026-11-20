@@ -2324,7 +2324,7 @@ private fun SteamGameDetailScreen(
                             )
                             val updated = formatBranchUpdated(b.timeUpdated)
                             if (updated.isNotEmpty()) Text(
-                                text = "Updated $updated",
+                                text = I18n.s(R.string.ui_updated_when, updated),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -3235,7 +3235,7 @@ private fun CloudSavesSection(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "Library: $libraryPath",
+                    text = I18n.s(R.string.ui_library_path, libraryPath),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

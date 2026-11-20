@@ -980,7 +980,7 @@ private fun UpdateBanner(versionName: String, onUpdate: () -> Unit, onDismiss: (
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Update available — V $versionName",
+            text = I18n.s(R.string.ui_update_available_v, versionName),
             color = ink,
             fontWeight = FontWeight.SemiBold,
             fontSize = 13.sp,

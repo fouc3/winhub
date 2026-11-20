@@ -245,7 +245,7 @@ private fun FriendsTabHeader(
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = "$total total · $online online",
+                text = I18n.s(R.string.ui_total_online, total, online),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
