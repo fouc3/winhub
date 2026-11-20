@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<!-- Simplified Chinese (zh-CN). Entries missing here fall back to values/. -->
 <resources>
     <string name="retro_switch_to_retro">切换到复古</string>
     <string name="retro_switch_to_pc">切换到 PC 游戏库</string>

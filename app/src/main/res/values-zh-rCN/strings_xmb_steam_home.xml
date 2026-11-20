@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<!-- Simplified Chinese (zh-CN). Entries missing here fall back to values/. -->
 <resources>
     <string name="steam_lib_uninstall_kept">%1$s 已从 Bannerlator 移除。其文件属于另一个 Steam 客户端，已予保留。</string>
     <string name="xmb_all_games">所有游戏</string>

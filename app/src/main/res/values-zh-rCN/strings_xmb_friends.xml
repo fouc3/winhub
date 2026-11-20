@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Simplified Chinese (zh-CN) localization. Entries not present here fall back to values/. -->
+<!-- Simplified Chinese (zh-CN). Entries missing here fall back to values/. -->
 <resources>
     <string name="xmb_fr_add">添加好友</string>
     <string name="xmb_fr_settings">设置</string>
