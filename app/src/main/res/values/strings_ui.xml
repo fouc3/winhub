@@ -8300,4 +8300,7 @@
     <string name="ui_continue">Continue</string>
     <string name="ui_reset_2">Reset</string>
     <string name="ui_toggle">Toggle</string>
+    <string name="ui_pick_another_exe">Pick another .exe</string>
+    <string name="ui_available_extensions_count">Available Extensions (%1$s/%2$s)</string>
+    <string name="ui_hours_short">%1$s h</string>
 </resources>

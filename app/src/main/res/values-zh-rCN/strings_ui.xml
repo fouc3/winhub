@@ -8086,4 +8086,7 @@
     <string name="ui_continue">继续</string>
     <string name="ui_reset_2">重置</string>
     <string name="ui_toggle">切换</string>
+    <string name="ui_pick_another_exe">选择其他 .exe</string>
+    <string name="ui_available_extensions_count">可用扩展（%1$s/%2$s）</string>
+    <string name="ui_hours_short">%1$s 小时</string>
 </resources>

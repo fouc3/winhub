@@ -39,7 +39,7 @@ internal fun DeckGlossarySheet(onDismiss: () -> Unit, initialQuery: String = "")
     }
 
     DeckConfigDialog(title = I18n.s(R.string.ui_what_is_all_this), onDismiss = onDismiss) {
-        DeckTextRow(label = "Search", hint = I18n.s(R.string.ui_filter_terms), value = query, onValueChange = { query = it })
+        DeckTextRow(label = I18n.s(R.string.ui_search), hint = I18n.s(R.string.ui_filter_terms), value = query, onValueChange = { query = it })
         Column(
             modifier = Modifier
                 .fillMaxWidth()

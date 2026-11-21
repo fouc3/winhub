@@ -85,13 +85,13 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
         )
         if (!portrait) {
             WizOptionGroup(I18n.s(R.string.ui_interface_look), I18n.s(R.string.ui_glass_puts_every_page_on_see_through_glass_and_a_game_s), PreviewView.SETTINGS, vm) {
-                WizOption("Glass", I18n.s(R.string.ui_see_through_pages_on_the_game_s_art), glass, Modifier.weight(1f), badge = "Recommended") { vm.setLook(ctx, GlassLook.GLASS) }
+                WizOption("Glass", I18n.s(R.string.ui_see_through_pages_on_the_game_s_art), glass, Modifier.weight(1f), badge = I18n.s(R.string.ui_recommended_2)) { vm.setLook(ctx, GlassLook.GLASS) }
                 WizOption("Material", I18n.s(R.string.ui_the_plain_deck_look), !glass, Modifier.weight(1f)) { vm.setLook(ctx, GlassLook.MATERIAL) }
             }
             WizOptionGroup(I18n.s(R.string.ui_home_style), I18n.s(R.string.ui_where_your_games_stores_and_social_live), PreviewView.HOME, vm) {
                 WizOption(
                     "Steam", I18n.s(R.string.ui_one_row_of_covers_at_the_bottom_one_shelf_per_store_stor),
-                    home == DeckHomeStyle.STEAM, Modifier.weight(1f), badge = "Recommended",
+                    home == DeckHomeStyle.STEAM, Modifier.weight(1f), badge = I18n.s(R.string.ui_recommended_2),
                 ) { vm.setHome(ctx, DeckHomeStyle.STEAM) }
                 WizOption("Full XMB", "Stores and Social as cards above your games", home == DeckHomeStyle.FULL_XMB, Modifier.weight(1f)) {
                     vm.setHome(ctx, DeckHomeStyle.FULL_XMB)
@@ -100,7 +100,7 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
             WizOptionGroup(I18n.s(R.string.ui_game_settings), I18n.s(R.string.ui_what_a_game_s_settings_opens_from_home), PreviewView.SETTINGS, vm) {
                 WizOption(
                     "Classic", I18n.s(R.string.ui_a_settings_page_on_glass_over_the_game_s_art_small_tabs),
-                    gset == GameSettingsStyle.CLASSIC, Modifier.weight(1f), badge = "Recommended",
+                    gset == GameSettingsStyle.CLASSIC, Modifier.weight(1f), badge = I18n.s(R.string.ui_recommended_2),
                 ) { vm.setGameSettings(ctx, GameSettingsStyle.CLASSIC) }
                 WizOption("XMB", "The settings as XMB columns beside the game", gset == GameSettingsStyle.XMB, Modifier.weight(1f)) {
                     vm.setGameSettings(ctx, GameSettingsStyle.XMB)
@@ -112,7 +112,7 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
         WizOptionGroup(
             "Store style", if (glass) "The Glass look always uses XMB store pages" else I18n.s(R.string.ui_how_each_store_opens), PreviewView.STORES, vm,
         ) {
-            WizOption("XMB", I18n.s(R.string.ui_each_store_as_its_own_full_screen_xmb_page), xmb, Modifier.weight(1f), badge = "Recommended") {
+            WizOption("XMB", I18n.s(R.string.ui_each_store_as_its_own_full_screen_xmb_page), xmb, Modifier.weight(1f), badge = I18n.s(R.string.ui_recommended_2)) {
                 vm.setStore(ctx, com.winhub.hernandez.ui.deck.StoreStyle.XMB)
             }
             WizOption("Deck", I18n.s(R.string.ui_stores_stay_inside_the_deck_pages), !xmb, Modifier.weight(1f), enabled = !glass) {
@@ -361,7 +361,7 @@ internal fun SoundsStep(vm: FirstRunViewModel, modifier: Modifier) {
         StepHeading(SOUNDS, I18n.s(R.string.ui_pick_your_sounds), I18n.s(R.string.ui_the_d_pad_and_buttons_make_a_sound_as_you_move_through_d))
         WizChoice(
             title = I18n.s(R.string.ui_steamos), body = I18n.s(R.string.ui_app_own_soft_set_plays_at_the_media_volume), selected = snd == DeckSound.STEAMOS,
-            onClick = { vm.setSounds(ctx, DeckSound.STEAMOS) }, badge = "Recommended",
+            onClick = { vm.setSounds(ctx, DeckSound.STEAMOS) }, badge = I18n.s(R.string.ui_recommended_2),
         ) { SoundGlyph("♪") }
         WizChoice(
             title = I18n.s(R.string.ui_phone), body = I18n.s(R.string.ui_system_click_sounds_follows_your_touch_sounds_switch), selected = snd == DeckSound.PHONE,

@@ -158,7 +158,7 @@ internal fun xmbGraphicsMenu(xmb: XmbScope): XmbMenu {
     val slots = mutableStateOf<List<WrapperManager.WrapperSlot>>(emptyList())
     var loading = false
     return XmbMenu(
-        title = "Graphics",
+        title = I18n.s(R.string.ui_graphics),
         icon = Icons.Filled.Memory,
         rows = {
             if (!loading) {

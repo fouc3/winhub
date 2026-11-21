@@ -329,7 +329,7 @@ fun describeLocation(file: File, containers: List<Container>, imagefsDir: File):
         return FavLocation(
             storage = FavStorage.CONTAINER,
             containerName = null,
-            driveLabel = "Drive Z:",
+            driveLabel = I18n.s(R.string.ui_drive_z),
             displayPath = I18n.s(R.string.ui_z_remainder),
         )
     }
@@ -356,7 +356,7 @@ internal fun badgeColors(loc: FavLocation): Pair<Color, Color> {
     return when {
         loc.storage == FavStorage.INTERNAL -> Color(0xFF2E5FB0) to white   // blue
         loc.storage == FavStorage.SD -> Color(0xFF2E7D32) to white         // green
-        loc.driveLabel == "Drive Z:" -> Color(0xFF6A3FB0) to white         // purple
+        loc.driveLabel == I18n.s(R.string.ui_drive_z) -> Color(0xFF6A3FB0) to white         // purple
         loc.storage == FavStorage.CONTAINER -> Color(0xFF8F6A00) to white  // amber (Drive C:)
         else -> Color(0xFF555555) to white                                 // grey
     }
@@ -1274,7 +1274,7 @@ fun FileManagerScreen(
                                 },
                             )
                         }
-                        if (imagefsDir.isDirectory) add(locItem("Drive Z:", Icons.Filled.Storage, imagefsDir))
+                        if (imagefsDir.isDirectory) add(locItem(I18n.s(R.string.ui_drive_z), Icons.Filled.Storage, imagefsDir))
                     },
                 ),
             )
@@ -1624,7 +1624,7 @@ fun FileManagerScreen(
                     )
                     MenuItemDivider()
                     DropdownMenuItem(
-                        text = { Text("Drive Z:") },
+                        text = { Text(I18n.s(R.string.ui_drive_z)) },
                         leadingIcon = {
                             Icon(Icons.Filled.Storage, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         },

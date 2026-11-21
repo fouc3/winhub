@@ -940,7 +940,7 @@ private fun RecentRow(game: SteamFriendsStore.RecentGame, onClick: () -> Unit) {
                 modifier = Modifier.weight(1f),
             )
             Text(
-                text = "${fmtCount(game.hours.roundToInt())}h",
+                text = I18n.s(R.string.ui_hours_short, fmtCount(game.hours.roundToInt())),
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

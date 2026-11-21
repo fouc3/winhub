@@ -1451,7 +1451,7 @@ internal fun DeckGraphicsDriverConfigEditor(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Available Extensions ($enabled/${allExtensions.size})", color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
+                Text(I18n.s(R.string.ui_available_extensions_count, enabled, allExtensions.size), color = DeckPalette.onBackground, fontSize = 14.sp, modifier = Modifier.weight(1f))
                 DeckButton(I18n.s(R.string.ui_manage), primary = false) { showExtPicker = true }
             }
         }
@@ -1847,7 +1847,7 @@ internal fun DeckDxvkConfigEditor(
                 }
             }
             if (ok) { if (isStockPath) stockEdited = true; toggleVersion++ }
-            else if (activity != null) Toast.makeText(activity, "Failed to update config file", Toast.LENGTH_SHORT).show()
+            else if (activity != null) Toast.makeText(activity, I18n.s(R.string.ui_failed_to_update_config_file), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -532,7 +532,7 @@ private class P2Reshade(val xmb: XmbScope, val shortcut: Shortcut) {
                 rows += XmbRow.Info("unsupported", "ReShade only applies to DXVK/VKD3D (Vulkan) games; it has no effect with this DX wrapper.", Icons.Filled.Warning)
             }
             rows += XmbRow.Link("browse", "Browse / download effects", Icons.Filled.CloudDownload,
-                value = "${st.order.size} in loadout", subtitle = "Pick installed effects or fetch new ones") { catalogMenu() }
+                value = "${st.order.size} in loadout", subtitle = I18n.s(R.string.ui_pick_installed_effects_or_fetch_new_ones)) { catalogMenu() }
             if (st.order.isEmpty()) {
                 rows += XmbRow.Info("empty", I18n.s(R.string.ui_no_effects_in_the_loadout), Icons.Filled.Info)
                 return@body rows

@@ -210,7 +210,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     rows += XmbRow.Link("storage", "Storage", Icons.Filled.Folder,
         value = if (onC) "SD card / USB storage" else I18n.s(R.string.ui_current_drive), subtitle = I18n.s(R.string.ui_move_to_drive_c)) { xmbCopyToDriveCMenu(xmb, s) }
     rows += XmbRow.Link("exe", "Executable", Icons.Filled.SwapHoriz,
-        value = File(s.path ?: "").name.ifEmpty { "Unknown" }, subtitle = "Pick another .exe") { xmbChangeExeMenu(xmb, s) }
+        value = File(s.path ?: "").name.ifEmpty { "Unknown" }, subtitle = I18n.s(R.string.ui_pick_another_exe)) { xmbChangeExeMenu(xmb, s) }
     rows += XmbRow.Link("icon", "Icon", Icons.Filled.Image, subtitle = I18n.s(R.string.ui_pick_an_image_for_this_game)) { iconPickerMenu(xmb, s) }
 
     if (s.getExtra("storeSource") == "epic") {

@@ -677,7 +677,7 @@ private fun xmbCommunityDetailMenu(xmb: XmbScope, s: Shortcut, pick: CommunityPi
         onClose = { me.isOpen = false; job.cancel() },
     ) {
         val rows = ArrayList<XmbRow>()
-        rows += XmbRow.Action(key = "apply", label = "Apply", icon = Icons.Filled.Download, subtitle = I18n.s(R.string.ui_config_from_fromlabel)) { applyThis() }
+        rows += XmbRow.Action(key = "apply", label = I18n.s(R.string.ui_apply_2), icon = Icons.Filled.Download, subtitle = I18n.s(R.string.ui_config_from_fromlabel)) { applyThis() }
 
         // Provenance — prefers the config's own meta, falling back to the device row.
         val d = detail
