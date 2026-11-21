@@ -320,7 +320,7 @@ fun ControllerTestPanel(
                 modifier = Modifier.weight(1f)
             )
             val batt = snapshot?.batteryPct ?: -1
-            if (batt in 0..100) Text("Battery $batt%", fontSize = 11.sp, color = cs.onSurfaceVariant)
+            if (batt in 0..100) Text(I18n.s(R.string.ui_battery_2, batt), fontSize = 11.sp, color = cs.onSurfaceVariant)
         }
         Spacer(Modifier.height(8.dp))
 

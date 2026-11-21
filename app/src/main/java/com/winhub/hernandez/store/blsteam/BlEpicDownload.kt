@@ -82,7 +82,7 @@ object BlEpicDownload {
         try {
             BlSteamClient.ensureLoaded()
         } catch (t: Throwable) {
-            val msg = "lib: ${t.javaClass.simpleName}: ${t.message}"
+            val msg = I18n.s(R.string.ui_lib, t.javaClass.simpleName, t.message)
             Log.w(TAG, "engine unavailable — $msg")
             return Result(false, false, false, msg, 0L, 0, 0)
         }
@@ -120,7 +120,7 @@ object BlEpicDownload {
                 caBundlePath, maxWorkers, processWorkers, inner,
             )
         } catch (t: Throwable) {
-            val msg = "nativeStart: ${t.javaClass.simpleName}: ${t.message}"
+            val msg = I18n.s(R.string.ui_nativestart, t.javaClass.simpleName, t.message)
             Log.w(TAG, "engine unavailable — $msg")
             return Result(false, false, false, msg, 0L, 0, 0)
         }

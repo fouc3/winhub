@@ -205,7 +205,7 @@ internal fun DeckContainerDetailScreen(
                 },
                 modifier = Modifier.focusRequester(backFocus),
             ) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Deck.onBackground)
+                Icon(Icons.Default.ArrowBack, contentDescription = I18n.s(R.string.ui_back), tint = Deck.onBackground)
             }
             Spacer(Modifier.width(4.dp))
             Column(Modifier.weight(1f)) {
@@ -479,7 +479,7 @@ internal fun DeckContainerDetailScreen(
                         }
                         DeckGroup("Renderer") {
                         DeckChoiceRow(
-                            label = "Renderer",
+                            label = I18n.s(R.string.ui_renderer_2),
                             options = viewModel.rendererEntries.map { it to it },
                             selected = viewModel.selectedRenderer,
                             onPick = { viewModel.selectedRenderer = it },
@@ -659,7 +659,7 @@ internal fun DeckContainerDetailScreen(
                         if (viewModel.emulatorEnabled) {
                             DeckGroup("Emulator") {
                                 DeckChoiceRow(
-                                    label = "Emulator",
+                                    label = I18n.s(R.string.ui_emulator),
                                     options = viewModel.emulatorEntries.map { it to it },
                                     selected = viewModel.selectedEmulator,
                                     onPick = { viewModel.selectedEmulator = it },

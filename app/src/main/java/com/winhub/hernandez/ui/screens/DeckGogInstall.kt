@@ -128,7 +128,7 @@ internal fun DeckGogInstall(game: GogGame, onBack: () -> Unit, onOpenStore: (() 
                     main.post { errorText = msg }
                 }
                 override fun onCancelled() {
-                    main.post { status = "Cancelled"; pct = -1 }
+                    main.post { status = I18n.s(R.string.ui_cancelled_2); pct = -1 }
                 }
             }
             StoreDownloadHooks.registerDownload(

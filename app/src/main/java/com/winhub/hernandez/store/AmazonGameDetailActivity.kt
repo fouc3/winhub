@@ -791,7 +791,7 @@ private fun AmazonGameDetailScreen(
     val gear = buildList {
         // onInstallClick doubles as Cancel while the label reads "Cancel".
         if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstallClick))
-        if (setExeBtnVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExeClick))
+        if (setExeBtnVisible) add(StoreGearItem("🎯", I18n.s(R.string.ui_set_exe_u2026), onClick = onSetExeClick))
         if (installed) add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdatesEnabled, onClick = onCheckUpdatesClick))
         if (updateBtnVisible) add(StoreGearItem("⬆️", I18n.s(R.string.ui_update_now), onClick = onUpdateNowClick))
         if (uninstallBtnVisible) add(StoreGearItem("🗑️", "Uninstall", danger = true, onClick = onUninstallClick))

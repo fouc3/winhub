@@ -61,7 +61,7 @@ public final class EpicGameFixes {
     private EpicGameFixes() {}
 
     /** The registry value name Bethesda titles read their install directory from. */
-    private static final String BETHESDA_INSTALLED_PATH = I18n.s(R.string.ui_installed_path);
+    private static String BETHESDA_INSTALLED_PATH = I18n.s(R.string.ui_installed_path);
 
     /** appName -> Bethesda registry key that needs an "Installed Path" value. */
     private static final Map<String, String> REGISTRY_INSTALLED_PATH = new HashMap<>();

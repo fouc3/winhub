@@ -138,7 +138,7 @@ internal fun DeckEpicInstall(game: EpicGame, onBack: () -> Unit, onOpenStore: ((
                         installPath = installDir.absolutePath,
                         bytes = prefs.getLong("epic_size_${game.appName}", 0L),
                     )
-                    main.post { finished = true; pct = 100; status = "Installed." }
+                    main.post { finished = true; pct = 100; status = I18n.s(R.string.ui_installed_3) }
                 } catch (e: Exception) {
                     if (!cancelled.get()) {
                         StoreDownloadHooks.markFailed(Store.EPIC, game.appName, e.message ?: I18n.s(R.string.ui_unknown_error_2))
@@ -149,7 +149,7 @@ internal fun DeckEpicInstall(game: EpicGame, onBack: () -> Unit, onOpenStore: ((
         },
         onCancel = {
             cancelled.set(true)
-            status = "Cancelling..."
+            status = I18n.s(R.string.ui_cancelling)
         },
     )
 }

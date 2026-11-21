@@ -299,7 +299,7 @@ internal fun DeckSettingsScreen() {
             prefs.edit().putString("lsfg_dll_source", "store").apply()
             lsfgDllStatus = lsfgDllStatusText()
             buildLsfgShaderCache()
-            Toast.makeText(context, "Lossless.dll set from Steam store install.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18n.s(R.string.ui_lossless_dll_set_from_steam_store_install), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             lsfgDllStatus = I18n.s(R.string.ui_detect_failed) + e.message
             Toast.makeText(context, I18n.s(R.string.ui_detect_failed) + e.message, Toast.LENGTH_LONG).show()
@@ -435,7 +435,7 @@ internal fun DeckSettingsScreen() {
         // ── Header ──
         Column(modifier = Modifier.fillMaxWidth().padding(start = 22.dp, end = 22.dp, top = 18.dp, bottom = 10.dp)) {
             Text(
-                text = "Settings",
+                text = I18n.s(R.string.ui_settings),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
@@ -628,7 +628,7 @@ internal fun DeckSettingsScreen() {
         }
 
         // ── Mali ──
-        DeckGroup(title = "Mali") {
+        DeckGroup(title = I18n.s(R.string.ui_mali)) {
             DeckRow(
                 label = I18n.s(R.string.ui_force_mali_mode),
                 hint = I18n.s(R.string.ui_use_this_if_the_app_doesn_t_detect_a_non_adreno_gpu),
@@ -903,7 +903,7 @@ internal fun DeckSettingsScreen() {
                 }
             }
             DeckRow(
-                label = "Consoles",
+                label = I18n.s(R.string.ui_consoles),
                 hint = if (retroConsoleCount == 0) "None picked. Pick the consoles whose games the retro library shows" else "$retroConsoleCount picked",
             ) {
                 DeckButton(I18n.s(R.string.ui_choose), primary = false) { showRetroConsoles = true }
@@ -1155,7 +1155,7 @@ internal fun DeckSettingsScreen() {
             DeckRow(label = I18n.s(R.string.ui_detect_from_steam_store), hint = I18n.s(R.string.ui_find_lossless_dll_in_a_store_install)) {
                 DeckButton(I18n.s(R.string.ui_detect), primary = false) { detectLosslessDllFromStore() }
             }
-            DeckRow(label = "Import Lossless.dll", hint = I18n.s(R.string.ui_pick_your_own_copy)) {
+            DeckRow(label = I18n.s(R.string.ui_import_lossless_dll), hint = I18n.s(R.string.ui_pick_your_own_copy)) {
                 DeckButton(I18n.s(R.string.preset_action_import), primary = false) {
                     importLosslessDllInAppLauncher.launch(
                         InAppFilePicker.buildIntent(context, InAppFilePicker.DLL, "Select Lossless.dll"),
@@ -1163,7 +1163,7 @@ internal fun DeckSettingsScreen() {
                 }
             }
             if (lsfgDllFile.isFile) {
-                DeckRow(label = "Remove Lossless.dll") {
+                DeckRow(label = I18n.s(R.string.ui_remove_lossless_dll)) {
                     DeckButton(I18n.s(R.string.remove), primary = false) {
                         lsfgDllFile.delete()
                         com.winhub.hernandez.core.LsfgNative.cacheFile(context).delete()
@@ -1213,7 +1213,7 @@ internal fun DeckSettingsScreen() {
             availableUpdate?.let { update ->
                 val sizeMb = update.downloadSize.takeIf { it > 0 }?.let { " (${it / (1024 * 1024)} MB)" } ?: ""
                 DeckRow(
-                    label = "Download & install V ${update.versionName}",
+                    label = I18n.s(R.string.ui_download_install_v, update.versionName),
                     hint = (update.notes.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_downloads_in_the_background_and_opens_the_installer)) + sizeMb,
                 ) {
                     DeckButton("Install", primary = true) {

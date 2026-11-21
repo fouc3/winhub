@@ -687,7 +687,7 @@ private fun LibraryDetailBody(
                 if (game.sizeBytes > 0) MutedLine(fmtLibrarySize(game.sizeBytes))
                 if (game.metacriticScore > 0) {
                     Text(
-                        text = "Metacritic: ${game.metacriticScore}",
+                        text = I18n.s(R.string.ui_metacritic_3, game.metacriticScore),
                         style = MaterialTheme.typography.bodySmall,
                         // Semantic review-score colours, deliberately not themed (unchanged).
                         color = when {

@@ -314,7 +314,7 @@ fun LaunchMethodSheet(
                         } else {
                             val installed = SteamLiteComponent.versionLabel(check.installed)
                             clientNote = "Update failed — launching installed $installed"
-                            Toast.makeText(context, "SteamLite update failed — launching installed $installed", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_steamlite_update_failed_launching_installed, installed), Toast.LENGTH_LONG).show()
                         }
                         doLaunch()
                     }
@@ -706,7 +706,7 @@ private fun ColumnScope.OptionsBlock(
     if (isSteam) {
         OptionRow(
             title = I18n.s(R.string.ui_controller_passthrough),
-            badge = "NEW",
+            badge = I18n.s(R.string.ui_new),
             subtitle = if (compact) null else I18n.s(R.string.ui_send_the_pad_straight_to_the_game_for_classic_games_hl2),
             accent = accent,
             compact = compact,
@@ -715,7 +715,7 @@ private fun ColumnScope.OptionsBlock(
         )
         OptionRow(
             title = I18n.s(R.string.ui_requires_secure_vac_launch),
-            badge = "NEW",
+            badge = I18n.s(R.string.ui_new),
             subtitle = if (compact) null else when (detectedVac) {
                 true -> I18n.s(R.string.ui_detected_vac_secured_steam_must_start_it_up_to_60_s_wait)
                 false -> I18n.s(R.string.ui_detected_no_vac_direct_start_after_15_s_is_fine)
@@ -897,7 +897,7 @@ private fun SteamLiteClientBlock(
                 )
                 Spacer(Modifier.weight(1f))
             }
-            else -> Text("SteamLite client up to date ($installed)", style = lineStyle, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
+            else -> Text(I18n.s(R.string.ui_steamlite_client_up_to_date, installed), style = lineStyle, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
         }
         Spacer(Modifier.width(6.dp))
         HelpDot(accent, highlighted = false, onClick = { toggleHelp(HELP_STEAMLITE_CLIENT) })

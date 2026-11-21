@@ -267,7 +267,7 @@ fun SteamPreflightDialog(
                         } else {
                             val installed = SteamLiteComponent.versionLabel(offer.installed)
                             states[Step.CLIENT] = StepState.WARN to "Update failed — launching installed $installed"
-                            Toast.makeText(context, "SteamLite update failed — launching installed $installed", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_steamlite_update_failed_launching_installed, installed), Toast.LENGTH_LONG).show()
                         }
                         clientOffer = null
                         launching = true
@@ -444,7 +444,7 @@ private fun failCardFor(
             "$offline. You can retry, launch anyway (the game's own Steam client will try to sign in), or launch offline with Goldberg.",
             red = true,
         ) {
-            TextButton(onClick = onGoldberg) { Text("Goldberg", color = cs.onSurfaceVariant) }
+            TextButton(onClick = onGoldberg) { Text(I18n.s(R.string.ui_goldberg), color = cs.onSurfaceVariant) }
             TextButton(onClick = launchAnyway) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
             TextButton(onClick = retry) { Text(I18n.s(R.string.ui_retry), color = cs.primary) }
         }
@@ -456,7 +456,7 @@ private fun failCardFor(
             red = false,
         ) {
             TextButton(onClick = launchThisBuild) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
-            TextButton(onClick = onUpdate) { Text("Update", color = cs.primary) }
+            TextButton(onClick = onUpdate) { Text(I18n.s(R.string.ui_update), color = cs.primary) }
         }
         clientOffer != null && !clientUpdating -> {
             val size = if (clientOffer.downloadMb > 0) " (~${clientOffer.downloadMb} MB)" else ""
@@ -477,7 +477,7 @@ private fun failCardFor(
                 if (!clientOffer.required) {
                     TextButton(onClick = launchInstalledClient) { Text(I18n.s(R.string.ui_launch_anyway), color = cs.onSurfaceVariant) }
                 }
-                TextButton(onClick = updateClient) { Text("Update", color = cs.primary) }
+                TextButton(onClick = updateClient) { Text(I18n.s(R.string.ui_update), color = cs.primary) }
             }
         }
         else -> null

@@ -1374,7 +1374,7 @@ private fun InstallConfirmDialog(
 
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Install ${game.title}?") },
+        title = { Text(I18n.s(R.string.ui_install_2, game.title)) },
         text = {
             Column {
                 Text(
@@ -1384,14 +1384,14 @@ private fun InstallConfirmDialog(
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Available storage:  ${AmazonGamesActivity.formatBytes(freeBytes)}",
+                    text = I18n.s(R.string.ui_available_storage, AmazonGamesActivity.formatBytes(freeBytes)),
                     fontSize = 14.sp,
                     color = Color(0xFF88CC88), // semantic storage-ok green
                 )
             }
         },
         confirmButton = {
-            Button(onClick = onConfirm) { Text("Install") }
+            Button(onClick = onConfirm) { Text(I18n.s(R.string.ui_install)) }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text("Cancel") }

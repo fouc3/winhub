@@ -59,7 +59,7 @@ private fun EpicFriendRow(f: EpicUserData.Friend, modifier: Modifier = Modifier)
             )
             if (f.since.length >= 10) {
                 Text(
-                    text = "Friends since ${f.since.take(10)}",
+                    text = I18n.s(R.string.ui_friends_since, f.since.take(10)),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,

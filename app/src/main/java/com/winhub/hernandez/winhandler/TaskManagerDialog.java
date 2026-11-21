@@ -1,5 +1,8 @@
 package com.winhub.hernandez.winhandler;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -200,7 +203,7 @@ public class TaskManagerDialog extends ContentDialog implements OnGetProcessInfo
         int avgClockSpeed = totalClockSpeed / clockSpeeds.length;
         TextView tvCPUTitle = findViewById(R.id.TVCPUTitle);
         byte cpuUsagePercent = (byte)(((float)avgClockSpeed / maxClockSpeed) * 100.0f);
-        tvCPUTitle.setText("CPU ("+cpuUsagePercent+"%)");
+        tvCPUTitle.setText(I18n.s(R.string.ui_cpu)+cpuUsagePercent+"%)");
     }
 
     private void updateMemoryInfoView() {

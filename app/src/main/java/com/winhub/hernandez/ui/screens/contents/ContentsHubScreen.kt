@@ -338,7 +338,7 @@ private fun ComponentTab(vm: ContentsHubViewModel) {
                 Spacer(Modifier.height(8.dp))
                 if (items.isEmpty()) {
                     Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text("No releases found for $title.", color = cs.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_no_releases_found_for, title), color = cs.onSurfaceVariant)
                     }
                 } else {
                     LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
@@ -511,7 +511,7 @@ private fun SearchResultsPane(vm: ContentsHubViewModel, modifier: Modifier = Mod
             Spacer(Modifier.height(8.dp))
             if (searchResults.isEmpty()) {
                 Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("No components match “$query”.", color = cs.onSurfaceVariant)
+                    Text(I18n.s(R.string.ui_no_components_match, query), color = cs.onSurfaceVariant)
                 }
             } else {
                 LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
@@ -778,7 +778,7 @@ private fun ComponentRow(vm: ContentsHubViewModel, item: ContentsHubViewModel.Ca
                 saved = saved, enabled = !busy,
                 onClick = {
                     if (saved) {
-                        Toast.makeText(context, "Already saved to $baseDisplay${item.type}/. Long-press to re-download.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_already_saved_to_long_press_to_re_download, baseDisplay, item.type), Toast.LENGTH_SHORT).show()
                     } else vm.saveArchive(item)
                 },
                 onLongClick = { vm.saveArchive(item, force = true) },
@@ -1028,10 +1028,10 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
                 scope.launch {
                     val r = withContext(Dispatchers.IO) { runCatching { waylandManager.installDriver(uri, name) } }
                     r.onSuccess { id ->
-                        Toast.makeText(context, "Imported Wayland game driver: ${waylandManager.getDriverName(id)}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_imported_wayland_game_driver_5, waylandManager.getDriverName(id)), Toast.LENGTH_LONG).show()
                         refreshKey++
                     }.onFailure { e ->
-                        Toast.makeText(context, "Not imported: ${e.message ?: e.javaClass.simpleName}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_not_imported, e.message ?: e.javaClass.simpleName), Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -1063,7 +1063,7 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
         Spacer(Modifier.height(6.dp))
         Text(I18n.s(R.string.ui_the_vulkan_driver_a_game_renders_on_under_the_wayland_di) +
             "libvulkan_freedreno*.so built for Wayland/Linux (optional libdrm.so, meta.json). Android Turnip " +
-            "zips (vulkan.adXXXX.so) belong under GPU Drivers above and are rejected here.",
+            I18n.s(R.string.ui_zips_vulkan_adxxxx_so_belong_under_gpu_drivers_above_and),
             style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
         Spacer(Modifier.height(10.dp))
         PrimaryButton(I18n.s(R.string.ui_import_wayland_game_driver_zip), Icons.Filled.FolderOpen, enabled = true,
@@ -1224,7 +1224,7 @@ private fun InstalledComponentFolder(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(p.verName, style = MaterialTheme.typography.bodySmall, color = cs.onSurface,
                             maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold)
-                        Text("Code ${p.verCode}", style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant)
+                        Text(I18n.s(R.string.ui_code_2, p.verCode), style = MaterialTheme.typography.labelSmall, color = cs.onSurfaceVariant)
                     }
                     IconButton(onClick = { onRemove(p) }) { Icon(Icons.Filled.DeleteOutline, "Remove", tint = cs.onSurfaceVariant) }
                 }

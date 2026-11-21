@@ -72,7 +72,7 @@ internal fun DeckAudioSettingsDialog(
             if (directBuffer) {
                 DeckSliderRow(
                     label = I18n.s(R.string.ui_audio_buffer),
-                    hint = "≈${shown.latencyMsec + ANDROID_OUTPUT_MS} ms total · ${shown.latencyMsec} ms buffer" +
+                    hint = I18n.s(R.string.ui_ms_total_ms_buffer, shown.latencyMsec + ANDROID_OUTPUT_MS, shown.latencyMsec) +
                         if (!latencyLive) "  · next launch" else "",
                     value = shown.latencyMsec.toFloat(),
                     range = 4f..120f,

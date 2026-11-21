@@ -482,7 +482,7 @@ internal object BlDepotInstaller {
                     val onDisk = SteamDepotDownloader.dirSizeBytes(installDir)
                     val finalInstall = maxOf(lastInstallDone.get(), onDisk)
                     dlog("=== Download complete: appId=$appId — ${completed.size} owned depot(s) validated " +
-                            "against their manifests" +
+                            I18n.s(R.string.ui_against_their_manifests) +
                             (if (deniedSkipped.isNotEmpty()) ", ${deniedSkipped.size} denied depot(s) skipped" else "") +
                             "; on-disk ${fmt(onDisk)} ===")
                     BlSteamEngineLog.log("DL", "complete app=$appId depots=${completed.size} skipped=${deniedSkipped.size} onDisk=${fmt(onDisk)}")

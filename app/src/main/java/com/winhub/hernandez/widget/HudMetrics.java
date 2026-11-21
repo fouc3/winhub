@@ -2,6 +2,9 @@ package com.winhub.hernandez.widget;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -826,7 +829,7 @@ public class HudMetrics {
                     : (smoothedBatteryRuntimeHours * RUNTIME_SMOOTHING_OLD_WEIGHT)
                         + (rawHours * RUNTIME_SMOOTHING_NEW_WEIGHT);
                 smoothedBatteryRuntimeHours = smoothed;
-                runtimeText = "LEFT " + formatRuntimeHours(smoothed);
+                runtimeText = I18n.s(R.string.ui_left) + formatRuntimeHours(smoothed);
             }
         }
         return new Battery(watts, charging, percent, tempC, runtimeText);

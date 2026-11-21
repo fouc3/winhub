@@ -126,7 +126,7 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                         XmbRow.Link(
                             key = "f:${f.name}", label = f.name, icon = Icons.Filled.InsertDriveFile,
                             value = LogInventory.humanBytes(f.length()),
-                            subtitle = "Updated ${runLabel(f.lastModified())}",
+                            subtitle = I18n.s(R.string.ui_updated, runLabel(f.lastModified())),
                         ) { xmbLogFileMenu(xmb, f) }
                     )
                 }

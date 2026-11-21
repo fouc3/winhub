@@ -173,7 +173,7 @@ internal fun DeckContainersScreen(onEditContainer: (Int) -> Unit, vm: Containers
                 .padding(horizontal = 22.dp, vertical = 18.dp),
         ) {
             Text(
-                text = "Storage",
+                text = I18n.s(R.string.ui_storage),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = DeckPalette.onBackground,
@@ -1028,7 +1028,7 @@ internal fun DeckPropertiesDialog(container: Container, onDismiss: () -> Unit) {
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Properties",
+                    text = I18n.s(R.string.ui_properties),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,

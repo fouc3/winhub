@@ -643,7 +643,7 @@ private fun DownloadContentItem(
                     }
                     communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
                         tint = installedBlue, modifier = Modifier.size(20.dp))
-                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
+                    else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = cs.primary,
                         modifier = Modifier.size(22.dp))
                 }
             }

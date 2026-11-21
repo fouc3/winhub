@@ -144,7 +144,7 @@ internal fun PortraitGamePage(
                     .border(if (backFocused) 2.dp else 1.dp, if (backFocused) Deck.primary else Color(0x55FFFFFF), backShape)
                     .clickable(interactionSource = backSource, indication = null, onClick = onBack),
             ) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.Filled.ArrowBack, contentDescription = I18n.s(R.string.ui_back), tint = Color.White)
             }
         }
 

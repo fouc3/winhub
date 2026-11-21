@@ -104,7 +104,7 @@ private fun FriendRow(f: GogUserData.Friend, modifier: Modifier = Modifier) {
             )
             if (f.userSince.isNotBlank()) {
                 Text(
-                    text = "On GOG since ${f.userSince.take(10)}",
+                    text = I18n.s(R.string.ui_on_gog_since, f.userSince.take(10)),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,

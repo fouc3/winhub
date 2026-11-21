@@ -280,7 +280,7 @@ Column(modifier = Modifier.weight(1f)) {
                                         }
                                     }
                                 ) {
-                                    Icon(Icons.Filled.Download, contentDescription = "Download", tint = MaterialTheme.colorScheme.primary)
+                                    Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_download_2), tint = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         }

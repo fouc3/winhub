@@ -119,7 +119,7 @@ internal fun xmbFileManagerMenu(dir: File): XmbMenu = XmbMenu(
 internal fun xmbSettingsMenu(xmb: XmbScope): XmbMenu {
     val prefs = PreferenceManager.getDefaultSharedPreferences(xmb.context)
     return XmbMenu(
-        title = "Settings",
+        title = I18n.s(R.string.ui_settings),
         icon = Icons.Filled.Settings,
         rows = {
             val xs = this

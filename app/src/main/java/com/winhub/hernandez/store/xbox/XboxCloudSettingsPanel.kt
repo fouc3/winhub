@@ -122,7 +122,7 @@ private fun PanelContent(
                 (if (lsfg) listOf("lsfg" to I18n.s(R.string.ui_lsfg_2), "lsfg3" to I18n.s(R.string.ui_lsfg_3), "lsfg4" to I18n.s(R.string.ui_lsfg_4)) else emptyList()),
                 settings.frameGen) { onChange(settings.copy(frameGen = it)) }
             Text(I18n.s(R.string.ui_native_engine_experimental_google_s_webrtc_and_bannerlat) +
-                "can add frames. LSFG uses the Lossless.dll imported in Settings. Screen effects and the overlay levels " +
+                I18n.s(R.string.ui_can_add_frames_lsfg_uses_the_lossless_dll_imported_in_se) +
                 I18n.s(R.string.ui_apply_to_the_web_engine), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 6.dp))
         }
@@ -295,7 +295,7 @@ private fun SliderRow(label: String, value: Int, min: Int, max: Int, onValue: (I
         Text(label, Modifier.width(72.dp), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         androidx.compose.material3.Slider(value = value.toFloat(), onValueChange = { onValue(it.toInt().coerceIn(min, max)) },
             valueRange = min.toFloat()..max.toFloat(), modifier = noFocus.weight(1f))
-        Text("$value fps", Modifier.width(72.dp), textAlign = TextAlign.End, style = MaterialTheme.typography.bodyMedium,
+        Text(I18n.s(R.string.ui_fps_2, value), Modifier.width(72.dp), textAlign = TextAlign.End, style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface)
     }
 }

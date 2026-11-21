@@ -190,7 +190,7 @@ fun VisualControllerBinder(
                     .padding(horizontal = 10.dp, vertical = 8.dp)
             ) {
                 Column(Modifier.weight(1f)) {
-                    Text("Remapping is ON — $boundN of ${BIND_TARGETS.size} mapped", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = WARN)
+                    Text(I18n.s(R.string.ui_remapping_is_on_of_mapped, boundN, BIND_TARGETS.size), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = WARN)
                     Text(I18n.s(R.string.ui_unbound_buttons_go_silent_in_game_they_no_longer_act), fontSize = 11.sp, color = cs.onSurfaceVariant)
                 }
                 Spacer(Modifier.width(8.dp))
@@ -258,7 +258,7 @@ fun VisualControllerBinder(
 private fun BindSummary(labels: Map<String, String?>, boundN: Int, onSelect: (String) -> Unit) {
     val cs = MaterialTheme.colorScheme
     Column(Modifier.fillMaxWidth()) {
-        Text("Bindings · $boundN of ${BIND_TARGETS.size} mapped", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
+        Text(I18n.s(R.string.ui_bindings_of_mapped, boundN, BIND_TARGETS.size), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
         Spacer(Modifier.height(6.dp))
         BIND_TARGETS.forEach { t ->
             val label = labels[t.id]
@@ -299,7 +299,7 @@ private fun BindEditor(
     val t = BIND_BY_ID[id]
     Column(Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Text("Bind: ", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
+            Text(I18n.s(R.string.ui_bind_2), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = cs.onSurface)
             Text(t?.name ?: id, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = BIND_BLUE, modifier = Modifier.weight(1f))
             TextButton(onClick = onDone) { Text("Done", fontSize = 12.sp) }
         }
@@ -358,7 +358,7 @@ private fun BindEditor(
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             if (t?.native != null) {
                 OutlinedButton(onClick = onNative, shape = RoundedCornerShape(9.dp), contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)) {
-                    Text("Native (${t.name})", fontSize = 11.sp)
+                    Text(I18n.s(R.string.ui_native, t.name), fontSize = 11.sp)
                 }
             }
             Button(

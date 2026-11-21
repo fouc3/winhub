@@ -226,7 +226,7 @@ internal fun CatalogItem.xmbRating(): String? =
 fun CatalogPriceRow(item: CatalogItem, modifier: Modifier = Modifier) {
     when {
         item.isFree -> Text(
-            text = "Free",
+            text = I18n.s(R.string.ui_free_2),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = StoreFreeGreen,
@@ -352,7 +352,7 @@ fun CatalogActionButton(
         ) {
             Icon(Icons.Filled.OpenInNew, contentDescription = null, modifier = Modifier.size(13.dp))
             Spacer(Modifier.width(4.dp))
-            Text("View on $storeLabel", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_view_on_2, storeLabel), style = style, maxLines = 1)
         }
     }
 }

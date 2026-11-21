@@ -137,7 +137,7 @@ object CommunityConfigApply {
                 Log.w(TAG, I18n.s(R.string.ui_failed_to_persist_shortcut_after_apply), e)
                 return result.copy(
                     ok = false,
-                    message = "Failed to save shortcut: ${e.message ?: e.javaClass.simpleName}",
+                    message = I18n.s(R.string.ui_failed_to_save_shortcut, e.message ?: e.javaClass.simpleName),
                 )
             }
         }
@@ -541,7 +541,7 @@ object CommunityConfigApply {
         is InstalledComponents.Resolution.Match -> r.token // null = already aligned
         InstalledComponents.Resolution.Missing -> {
             val have = current?.takeIf { it.isNotBlank() }?.let { " you have $it —" } ?: ""
-            val text = "config wants $label $wanted;$have install it to honor."
+            val text = I18n.s(R.string.ui_config_wants_install_it_to_honor, label, wanted, have)
             // Sheet-installable types get a structured entry (→ Install button); anything without a
             // missingType falls through to a plain advisory line. (Turnip has its own MissingDriver path.)
             if (missing != null && missingType != null) {

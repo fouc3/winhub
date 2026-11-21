@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -139,7 +142,7 @@ public final class WaylandAdapter {
         String json = manifest.toString(2);
         if (MaliPanvk.isMaliGpu()) json = json.replace("\\/", "/");
         if (!FileUtils.writeString(icd, json))
-            throw new IOException("cannot write icd.json");
+            throw new IOException(I18n.s(R.string.ui_cannot_write_icd_json));
     }
 
     /** First 12 hex of the asset's sha256, or null when the APK has no adapter asset. */

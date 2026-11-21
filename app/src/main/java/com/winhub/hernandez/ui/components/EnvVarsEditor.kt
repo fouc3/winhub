@@ -759,13 +759,13 @@ private fun EnvVarRow(
             IconButton(onClick = { showHelp = true }) {
                 Icon(
                     Icons.Outlined.HelpOutline,
-                    contentDescription = "About ${row.name}",
+                    contentDescription = I18n.s(R.string.ui_about_3, row.name),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
         IconButton(onClick = onRemove) {
-            Icon(Icons.Default.Delete, contentDescription = "Remove ${row.name}")
+            Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.ui_remove, row.name))
         }
     }
     if (showHelp && help != null) HelpTextDialog(help) { showHelp = false }
@@ -812,7 +812,7 @@ private fun EnvValueField(
     val arrow: (@Composable () -> Unit)? = if (presets.isEmpty()) null else {
         @Composable {
             IconButton(onClick = { expanded = true }) {
-                Icon(Icons.Default.ArrowDropDown, contentDescription = "Presets for $name")
+                Icon(Icons.Default.ArrowDropDown, contentDescription = I18n.s(R.string.ui_presets_for, name))
             }
         }
     }

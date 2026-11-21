@@ -553,7 +553,7 @@ class GogGameDetailActivity : ComponentActivity(), GogRedistInstaller.Host {
     private fun confirmUninstall() {
         val dlgTitle = title
         androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Uninstall $dlgTitle?")
+            .setTitle(I18n.s(R.string.ui_uninstall_2, dlgTitle))
             .setMessage(I18n.s(R.string.ui_this_will_delete_all_installed_game_files))
             .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ -> doUninstall() }
             .setNegativeButton("Cancel", null)
@@ -922,7 +922,7 @@ private fun GogGameDetailScreen(
     val gear = buildList {
         // onInstall doubles as Cancel while the button label reads "Cancel" (see onInstallClicked).
         if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstall))
-        if (setExeVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExe))
+        if (setExeVisible) add(StoreGearItem("🎯", I18n.s(R.string.ui_set_exe_u2026), onClick = onSetExe))
         if (copyVisible) add(StoreGearItem("📁", I18n.s(R.string.ui_copy_to_downloads), onClick = onCopy))
         if (updatesInstalled) {
             add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdateEnabled, onClick = onCheckUpdate))
@@ -1157,7 +1157,7 @@ private fun GogDlcContent(
                     fontWeight = FontWeight.Bold,
                 )
                 state?.installing == true -> Text(
-                    text = "Installing… ${state.pct}%",
+                    text = I18n.s(R.string.ui_installing_4, state.pct),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Bold,
@@ -1168,7 +1168,7 @@ private fun GogDlcContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 else -> StoreActionButton(
-                    text = "Install",
+                    text = I18n.s(R.string.ui_install),
                     onClick = { if (dlcId.isNotEmpty()) onInstall(dlcId, dlcTitle) },
                     enabled = dlcId.isNotEmpty(),
                 )

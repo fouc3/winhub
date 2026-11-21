@@ -930,7 +930,7 @@ fun BigPictureScreen(navController: NavController) {
                                 "Needs ${mc.label}${mc.wanted.ifBlank { "" }.let { if (it.isBlank()) "" else " ($it)" }}",
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text("Install") }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpInstallFor = mc }) { Text(I18n.s(R.string.ui_install)) }
                         }
                     }
                     res.missingDrivers.forEach { md ->
@@ -940,7 +940,7 @@ fun BigPictureScreen(navController: NavController) {
                                 I18n.s(R.string.ui_needs_gpu_driver_md_wanted),
                                 color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f),
                             )
-                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text("Install") }
+                            com.winhub.hernandez.ui.components.TextButton(onClick = { bpDriverFor = md }) { Text(I18n.s(R.string.ui_install)) }
                         }
                     }
                     res.advisories.forEach { Text(I18n.s(R.string.ui_it), color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp) }

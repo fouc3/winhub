@@ -462,7 +462,7 @@ internal fun SaveManagerScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.ui_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
@@ -625,7 +625,7 @@ internal fun SaveManagerScreen(
                             .padding(start = 12.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
                     ) {
                         Text(
-                            text = "⚠️ $needSync game${plural(needSync)} need syncing",
+                            text = I18n.s(R.string.ui_game_need_syncing, needSync, plural(needSync)),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer,
                             fontWeight = FontWeight.Medium,
@@ -1182,7 +1182,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                                 .padding(vertical = 8.dp),
                         ) {
                             Text(I18n.s(R.string.ui_restore_latest_backup), color = MaterialTheme.colorScheme.primary)
-                            Text("Backed up ${relTime(s.lastBackupMillis)}", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                            Text(I18n.s(R.string.ui_backed_up, relTime(s.lastBackupMillis)), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                         }
                     }
                     Column(

@@ -83,7 +83,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
                 is ComponentExecInstaller.Result.Launched -> { /* session launched; return target consumed after restart */ }
                 is ComponentExecInstaller.Result.Done -> { markInstalled(c.name); ComponentInstallReturn.clear(context) }
                 is ComponentExecInstaller.Result.Error -> {
-                    message = "Couldn't install ${c.name}: ${res.message}"
+                    message = I18n.s(R.string.ui_couldn_t_install, c.name, res.message)
                     ComponentInstallReturn.clear(context)
                 }
             }
@@ -115,7 +115,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
         OutlinedAlertDialog(
             onDismissRequest = { confirmExec = null },
             containerColor = cs.surfaceContainerHigh,
-            title = { Text("Run ${c.name} installer", color = cs.onSurface) },
+            title = { Text(I18n.s(R.string.ui_run_installer, c.name), color = cs.onSurface) },
             text = {
                 Text(
                     "This opens the container to a Windows desktop and runs the ${c.name} installer. " +
@@ -203,7 +203,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
                                                     }
                                                     installing = null
                                                     if (err == null) markInstalled(c.name)
-                                                    else message = "Couldn't install ${c.name}: $err"
+                                                    else message = I18n.s(R.string.ui_couldn_t_install_2, c.name, err)
                                                 }
                                             }
                                         }
@@ -258,7 +258,7 @@ private fun ComponentRow(
                 isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
                     tint = installedBlue, modifier = Modifier.size(22.dp))
                 installable -> IconButton(onClick = onInstall, enabled = enabled) {
-                    Icon(Icons.Filled.Download, contentDescription = "Install", tint = cs.primary)
+                    Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install), tint = cs.primary)
                 }
                 else -> Box(
                     Modifier.background(cs.surfaceContainerHigh, RoundedCornerShape(6.dp))

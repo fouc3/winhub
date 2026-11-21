@@ -618,7 +618,7 @@ private fun FmStorageMeter(ui: DeckFmUi) {
         )
         if (ui.freeSpace > 0) {
             Text(
-                text = "${StringUtils.formatBytes(ui.freeSpace)} free",
+                text = I18n.s(R.string.ui_free_4, StringUtils.formatBytes(ui.freeSpace)),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 12.5.sp,
                 maxLines = 1,
@@ -738,7 +738,7 @@ private fun FmSelectionBar(ui: DeckFmUi, act: DeckFmActions) {
     FmBar {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "${ui.selectedPaths.size} selected",
+                text = I18n.s(R.string.ui_selected_2, ui.selectedPaths.size),
                 color = DeckPalette.onBackground,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,

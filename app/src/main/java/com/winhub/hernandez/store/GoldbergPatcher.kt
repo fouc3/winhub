@@ -226,7 +226,7 @@ object GoldbergPatcher {
         // Cold Client Loader must sit beside the game exe and launch it. Pick the
         // best game exe (same scorer the launch flow uses).
         val gameExe = AmazonLaunchHelper.choosePrimaryExe(root, gameName)
-            ?: return false to "Couldn't find a game .exe to attach the Cold Client Loader to."
+            ?: return false to I18n.s(R.string.ui_couldn_t_find_a_game_exe_to_attach_the_cold_client_loade)
         val exeDir = gameExe.parentFile ?: root
 
         // Copy every loader support file (steamclient dlls, loader exes,

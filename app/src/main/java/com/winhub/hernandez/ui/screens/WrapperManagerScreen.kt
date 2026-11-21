@@ -787,7 +787,7 @@ private fun importNeeds(caps: WrapperManager.WrapperCaps, gpu: GpuInfo, version:
         out.add(I18n.s(R.string.ui_plain_vulkan_icd_wrapper_no_extra_layer_settings))
     }
     if (version == "Unknown") {
-        out.add("No version.txt — version will show Unknown.")
+        out.add(I18n.s(R.string.ui_no_version_txt_version_will_show_unknown))
     }
     return out
 }

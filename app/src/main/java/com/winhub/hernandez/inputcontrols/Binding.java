@@ -2,6 +2,9 @@ package com.winhub.hernandez.inputcontrols;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import androidx.annotation.NonNull;
 
 import com.winhub.hernandez.xserver.Pointer;
@@ -40,17 +43,17 @@ public enum Binding {
             case KEY_INSERT:
                 return "INSERT";
             case KEY_SHIFT_L:
-                return "L SHIFT";
+                return I18n.s(R.string.ui_l_shift);
             case KEY_SHIFT_R:
-                return "R SHIFT";
+                return I18n.s(R.string.ui_r_shift);
             case KEY_CTRL_L:
-                return "L CTRL";
+                return I18n.s(R.string.ui_l_ctrl);
             case KEY_CTRL_R:
-                return "R CTRL";
+                return I18n.s(R.string.ui_r_ctrl);
             case KEY_ALT_L:
-                return "L ALT";
+                return I18n.s(R.string.ui_l_alt);
             case KEY_ALT_R:
-                return "R ALT";
+                return I18n.s(R.string.ui_r_alt);
             case KEY_BRACKET_LEFT:
                 return "[";
             case KEY_BRACKET_RIGHT:

@@ -335,7 +335,7 @@ fun ContainersScreen(
                                 onClick = {
                                     showImportPicker = false
                                     vm.importContainer(dir) {
-                                        Toast.makeText(context, "Container imported: ${dir.name}", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, I18n.s(R.string.ui_container_imported, dir.name), Toast.LENGTH_SHORT).show()
                                     }
                                 },
                                 modifier = Modifier.fillMaxWidth(),
@@ -477,7 +477,7 @@ fun ContainersScreen(
                 val oldLabel = ContainerLayerUpdater.codeLabel(action.snapshot.oldEntry)
                 OutlinedAlertDialog(
                     onDismissRequest = { confirmDialog = null },
-                    title = { Text("Revert layer to $oldLabel?") },
+                    title = { Text(I18n.s(R.string.ui_revert_layer_to, oldLabel)) },
                     text = {
                         Text(
                             "\"${action.container.name}\" goes back from ${action.container.wineVersion} to " +
@@ -568,7 +568,7 @@ fun ContainersScreen(
                     ) { Text(I18n.s(R.string.pick_via_system), modifier = Modifier.weight(1f)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text("Back") } },
+            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text(I18n.s(R.string.ui_back)) } },
         )
         is SaveFlow.Confirm -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -613,7 +613,7 @@ fun ContainersScreen(
                     ) { Text("${stringResource(R.string.save_backup_scope_game)} ▸", modifier = Modifier.weight(1f)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text("Back") } },
+            confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.Fork(flow.container) }) { Text(I18n.s(R.string.ui_back)) } },
         )
         is SaveFlow.GamePicker -> {
             val shortcuts = remember(flow.container.id) { vm.shortcutsFor(flow.container) }
@@ -639,7 +639,7 @@ fun ContainersScreen(
                         }
                     }
                 },
-                confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text("Back") } },
+                confirmButton = { TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text(I18n.s(R.string.ui_back)) } },
             )
         }
         is SaveFlow.GameSaves -> GameSavesDialog(
@@ -672,7 +672,7 @@ fun ContainersScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text("Back") }
+                TextButton(onClick = { saveFlow = SaveFlow.BackupScope(flow.container) }) { Text(I18n.s(R.string.ui_back)) }
             },
         )
     }
@@ -790,7 +790,7 @@ private fun ContainerItem(
                                 Spacer(Modifier.width(4.dp))
                             }
                             Text(
-                                text = "Update layer \u2192 ${ContainerLayerUpdater.codeLabel(layerTarget)}",
+                                text = I18n.s(R.string.ui_update_layer_u2192, ContainerLayerUpdater.codeLabel(layerTarget)),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 1,
@@ -838,7 +838,7 @@ private fun ContainerItem(
                 IconButton(onClick = { menuExpanded = true }) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
-                        contentDescription = "Settings",
+                        contentDescription = I18n.s(R.string.ui_settings),
                         tint = OnSurfaceVariant,
                     )
                 }
@@ -891,7 +891,7 @@ private fun ContainerItem(
                     if (layerSnapshot != null) {
                         MenuItemDivider()
                         DropdownMenuItem(
-                            text = { Text("Revert layer to ${ContainerLayerUpdater.codeLabel(layerSnapshot.oldEntry)}…") },
+                            text = { Text(I18n.s(R.string.ui_revert_layer_to_2, ContainerLayerUpdater.codeLabel(layerSnapshot.oldEntry))) },
                             leadingIcon = { Icon(Icons.Filled.SettingsBackupRestore, null) },
                             onClick = { menuExpanded = false; onRevertLayer(layerSnapshot) },
                         )
@@ -1182,7 +1182,7 @@ private fun GameSavesDialog(
                 },
             ) { Text(stringResource(R.string.save_backup_next)) }
         },
-        dismissButton = { TextButton(onClick = onBack) { Text("Back") } },
+        dismissButton = { TextButton(onClick = onBack) { Text(I18n.s(R.string.ui_back)) } },
     )
 }
 

@@ -100,7 +100,7 @@ fun AppTopBar(
             when {
                 showBack -> Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.ui_back),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
                 avatarUrl != null -> AccountAvatar(

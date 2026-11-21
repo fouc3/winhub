@@ -238,7 +238,7 @@ private fun FriendsTabHeader(
             verticalAlignment = Alignment.Bottom,
         ) {
             Text(
-                text = "Friends",
+                text = I18n.s(R.string.ui_friends),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,

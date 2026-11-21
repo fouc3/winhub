@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -124,13 +127,13 @@ public final class LsfgNative {
             case STATUS_OK:
                 return "Ready";
             case STATUS_NOT_INSTALLED:
-                return "Import your own Lossless.dll in Settings first";
+                return I18n.s(R.string.ui_import_your_own_lossless_dll_in_settings_first);
             case STATUS_UNREADABLE_FILE:
-                return "Lossless.dll could not be read";
+                return I18n.s(R.string.ui_lossless_dll_could_not_be_read);
             case STATUS_NOT_PORTABLE_EXECUTABLE:
                 return I18n.s(R.string.ui_that_file_is_not_a_windows_dll);
             case STATUS_MISSING_SHADERS:
-                return "This Lossless.dll does not contain the frame-generation shaders";
+                return I18n.s(R.string.ui_this_lossless_dll_does_not_contain_the_frame_generation);
             case STATUS_TRANSLATION_FAILED:
                 return I18n.s(R.string.ui_the_frame_generation_shaders_could_not_be_translated_for);
             case STATUS_CACHE_UNUSABLE:

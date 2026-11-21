@@ -103,7 +103,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 if (!saveJsonFile.exists()) {
                     withContext(Dispatchers.Main) {
                         _isLoading.value = false
-                        Toast.makeText(context, "Save .json file is missing.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18n.s(R.string.ui_save_json_file_is_missing), Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -128,7 +128,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
 
                 withContext(Dispatchers.Main) {
                     _isLoading.value = false
-                    Toast.makeText(context, "Save exported to ${exportFile.absolutePath}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_save_exported_to, exportFile.absolutePath), Toast.LENGTH_LONG).show()
                     if (shareAfterExport) {
                         val authority = context.packageName + ".tileprovider"
                         val fileUri = FileProvider.getUriForFile(context, authority, exportFile)

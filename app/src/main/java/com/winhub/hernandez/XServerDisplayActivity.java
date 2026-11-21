@@ -5,6 +5,9 @@ import com.winhub.hernandez.util.I18n;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import static com.winhub.hernandez.core.AppUtils.showToast;
 
 import android.Manifest;
@@ -1796,8 +1799,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
             if (isFinishing() || isDestroyed()) return;
             setPausedState(true);
             XServerDialogState.INSTANCE.showInfoToast(
-                    "TV DISCONNECTED", "paused",
-                    "The game is paused. Resume from the drawer.");
+                    I18n.s(R.string.ui_tv_disconnected), "paused",
+                    I18n.s(R.string.ui_the_game_is_paused_resume_from_the_drawer));
         }, 500);
     }
 
@@ -3824,7 +3827,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     private void prepareLsfgNative() {
         if (!com.winhub.hernandez.core.LsfgNative.isDllAvailable(this)) {
             Log.w("XServerDisplayActivity",
-                "LSFG Native selected but no Lossless.dll imported (Settings) - leaving frame gen off");
+                I18n.s(R.string.ui_lsfg_native_selected_but_no_lossless_dll_imported_settin));
             lsfgNativeStatus = com.winhub.hernandez.core.LsfgNative.STATUS_NOT_INSTALLED;
             refreshNativeFgAvailability(true, 0);
             return;
@@ -14691,7 +14694,7 @@ return true;
         String list = com.winhub.hernandez.perf.CpuTopology.INSTANCE.detectBigCoreCpuList();
         if (!bigCoresLogged) {
             bigCoresLogged = true;
-            String msg = "prefer big cores: " + com.winhub.hernandez.perf.CpuTopology.INSTANCE.describeBigCores();
+            String msg = I18n.s(R.string.ui_prefer_big_cores_3) + com.winhub.hernandez.perf.CpuTopology.INSTANCE.describeBigCores();
             Log.i("XServerDisplayActivity", msg);
             if (waylandMode) {
                 try { com.winhub.hernandez.wayland.WaylandCompositor.nativeLogPerf(msg); } catch (Throwable ignored) {}
@@ -15016,7 +15019,7 @@ return true;
                     if (child.getWidth() < xServer.screenInfo.width || child.getHeight() < xServer.screenInfo.height
                             || child.getParent() != xServer.windowManager.rootWindow
                             || (title != null && !title.isEmpty()
-                                && !title.equalsIgnoreCase("Default - Wine desktop"))) {
+                                && !title.equalsIgnoreCase(I18n.s(R.string.ui_default_wine_desktop)))) {
                         result.add(child);
                         continue;
                     }

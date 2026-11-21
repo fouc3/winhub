@@ -394,7 +394,7 @@ private fun p2EnvVarMenu(env: P2Env, name: String, occ: Int): XmbMenu {
                 val onValue = known?.options?.getOrNull(1) ?: "1"
                 val checked = cur == onValue || cur == "1" || cur == "true"
                 rows += XmbRow.Toggle("value", name, Icons.Filled.Tune, checked,
-                    subtitle = "Stored as $name=${if (checked) onValue else offValue}") { on ->
+                    subtitle = I18n.s(R.string.ui_stored_as, name, if (checked) onValue else offValue)) { on ->
                     env.setAt(name, occ, if (on) onValue else offValue)
                 }
             }

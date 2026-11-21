@@ -504,7 +504,7 @@ class EpicGameDetailActivity : ComponentActivity() {
 
     private fun confirmUninstall() {
         AlertDialog.Builder(this)
-            .setTitle("Uninstall $title?")
+            .setTitle(I18n.s(R.string.ui_uninstall, title))
             .setMessage(I18n.s(R.string.ui_this_will_delete_all_installed_game_files))
             .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ ->
                 val an = appName ?: return@setPositiveButton
@@ -907,7 +907,7 @@ private fun EpicGameDetailScreen(
     val gear = buildList {
         // onInstallClick doubles as Cancel (keep / delete dialog) while the label reads "Cancel".
         if (downloading) add(StoreGearItem("🗑", I18n.s(R.string.ui_cancel_download_2), danger = true, onClick = onInstallClick))
-        if (setExeBtnVisible) add(StoreGearItem("🎯", "Set .exe…", onClick = onSetExeClick))
+        if (setExeBtnVisible) add(StoreGearItem("🎯", I18n.s(R.string.ui_set_exe_u2026), onClick = onSetExeClick))
         if (installed) {
             add(StoreGearItem("🔄", I18n.s(R.string.ui_check_for_updates_2), enabled = checkUpdatesEnabled, onClick = onCheckUpdates))
             add(StoreGearItem("🩹", "Verify / repair files", enabled = verifyEnabled, onClick = onVerifyRepair))

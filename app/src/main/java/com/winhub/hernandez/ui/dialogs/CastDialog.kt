@@ -84,7 +84,7 @@ fun CastDialog(state: XServerDialogState) {
                     CastHelp()
                     Spacer(Modifier.height(8.dp))
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = { showHelp = false }) { Text("Back") }
+                        TextButton(onClick = { showHelp = false }) { Text(I18n.s(R.string.ui_back)) }
                     }
                     return@Column
                 }

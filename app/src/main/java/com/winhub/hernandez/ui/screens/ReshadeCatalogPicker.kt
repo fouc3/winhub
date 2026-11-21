@@ -299,7 +299,7 @@ private fun ReshadeCatalogSheet(
     pendingDelete?.let { entry ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("Delete ${entry.name}?") },
+            title = { Text(I18n.s(R.string.ui_delete_4, entry.name)) },
             text = { Text(I18n.s(R.string.ui_this_removes_the_downloaded_effect_from_storage_and_t)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -433,8 +433,8 @@ private fun ReshadeCatalogRow(
                         modifier = Modifier.size(22.dp),
                     )
                 }
-                offline -> Icon(Icons.Filled.CloudOff, contentDescription = "Offline", tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
-                else -> Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary, modifier = Modifier.size(22.dp))
+                offline -> Icon(Icons.Filled.CloudOff, contentDescription = I18n.s(R.string.ui_offline), tint = cs.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = cs.primary, modifier = Modifier.size(22.dp))
             }
         }
         if (isBusy) {

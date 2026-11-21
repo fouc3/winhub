@@ -53,7 +53,7 @@ object EmuAccountIdentity {
         // holds per-appid save data and achievements for OTHER games, which a per-game backup has no
         // business dragging in.
         Emu(
-            label = "Goldberg",
+            label = I18n.s(R.string.ui_goldberg),
             root = "AppData/Roaming/GSE Saves/settings",
             idFiles = listOf("force_account_steamid.txt", "user_steam_id.txt", "configs.user.ini"),
             iniKey = "account_steamid",

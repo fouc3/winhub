@@ -396,7 +396,7 @@ fun StoreCapsule(
             StorefrontLog.artOutcome(
                 appId,
                 source = resolver.source,
-                msg = "app $appId: no Steam CDN capsule — RESCUED by ${resolver.source}",
+                msg = I18n.s(R.string.ui_app_no_steam_cdn_capsule_rescued_by, appId, resolver.source),
             )
         } else {
             // Advance; the effect re-runs on the new index and tries the next source.
@@ -623,7 +623,7 @@ fun StoreActionButton(
         ) {
             Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
-            Text("Download", style = style, maxLines = 1)
+            Text(I18n.s(R.string.ui_download_2), style = style, maxLines = 1)
         }
 
         StoreAction.NotOwned -> OutlinedButton(

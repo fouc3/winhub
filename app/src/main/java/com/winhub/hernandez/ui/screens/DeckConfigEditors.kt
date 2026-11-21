@@ -821,13 +821,13 @@ private fun DeckEnvVarRow(
                 IconButton(onClick = { showHelp = true }) {
                     Icon(
                         Icons.Outlined.HelpOutline,
-                        contentDescription = "About ${row.name}",
+                        contentDescription = I18n.s(R.string.ui_about_3, row.name),
                         tint = DeckPalette.onSurfaceVariant,
                     )
                 }
             }
             IconButton(onClick = onRemove) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove ${row.name}", tint = DeckPalette.error)
+                Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.ui_remove, row.name), tint = DeckPalette.error)
             }
         }
         if (fullWidthField) {
@@ -945,7 +945,7 @@ internal fun DeckWineD3DConfigEditor(
     var orm by remember { mutableStateOf(config.get("OffscreenRenderingMode").ifEmpty { "fbo" }) }
     var renderer by remember { mutableStateOf(config.get("renderer").ifEmpty { "gl" }) }
 
-    DeckConfigPanel("WineD3D Configuration") {
+    DeckConfigPanel(I18n.s(R.string.ui_wined3d_configuration)) {
         DeckChoiceRow(label = I18n.s(R.string.ui_csmt), options = csmtOptions, selected = csmt, onPick = { csmt = it })
         DeckChoiceRow(
             label = I18n.s(R.string.gpu_name),
@@ -967,7 +967,7 @@ internal fun DeckWineD3DConfigEditor(
         )
         DeckChoiceRow(label = I18n.s(R.string.strict_shader_math), options = ssmOptions, selected = ssm, onPick = { ssm = it })
         DeckChoiceRow(label = I18n.s(R.string.offscreen_rendering_mode), options = ormOptions, selected = orm, onPick = { orm = it })
-        DeckChoiceRow(label = "Renderer", options = rendOptions, selected = renderer, onPick = { renderer = it })
+        DeckChoiceRow(label = I18n.s(R.string.ui_renderer_2), options = rendOptions, selected = renderer, onPick = { renderer = it })
     }
     fun buildConfig(): String {
         val cfg = com.winhub.hernandez.contentdialog.WineD3DConfigDialog.parseConfig(initialConfig)
@@ -2073,7 +2073,7 @@ internal fun DeckDxvkConfigEditor(
                         if (!gated) {
                             Row(modifier = Modifier.fillMaxWidth().padding(end = 8.dp), horizontalArrangement = Arrangement.End) {
                                 IconButton(onClick = { pendingDeleteKey = row.key }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete ${row.key}", tint = DeckPalette.error)
+                                    Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.ui_delete_3, row.key), tint = DeckPalette.error)
                                 }
                             }
                         }
@@ -2164,7 +2164,7 @@ internal fun DeckDxvkConfigEditor(
             Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.End) {
                 DeckButton(I18n.s(R.string.remove), primary = true) {
                     applyDeleteKey(delKey); pendingDeleteKey = null
-                    if (activity != null) Toast.makeText(activity, "Removed $delKey — Restore to undo", Toast.LENGTH_SHORT).show()
+                    if (activity != null) Toast.makeText(activity, I18n.s(R.string.ui_removed_restore_to_undo, delKey), Toast.LENGTH_SHORT).show()
                 }
             }
         }

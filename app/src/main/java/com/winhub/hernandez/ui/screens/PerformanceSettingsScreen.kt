@@ -252,7 +252,7 @@ private fun RootToggle(key: String, label: String, granted: Boolean, harnessProv
 
 private fun rootStateLabel(state: RootManager.RootState): String = when (state) {
     RootManager.RootState.UNKNOWN -> "checking…"
-    RootManager.RootState.UNAVAILABLE -> "not available on this device"
+    RootManager.RootState.UNAVAILABLE -> I18n.s(R.string.ui_not_available_on_this_device)
     RootManager.RootState.AVAILABLE_NOT_GRANTED -> I18n.s(R.string.ui_available_not_granted)
     RootManager.RootState.GRANTED -> "granted"
     RootManager.RootState.DENIED -> "denied"
@@ -310,12 +310,12 @@ private fun InfoButton(onClick: () -> Unit) {
 }
 
 private object PerfCopy {
-    const val SUSTAINED = "Keeps clock speeds steady instead of spiking and dropping, so long sessions stay smoother. Safe, no root."
-    const val PRIORITY = "Gives the game's rendering higher priority than other apps for more CPU time. Safe, no root."
-    const val BIG_CORES = "Pins the game to your fastest CPU cores instead of the efficiency cores. Safe, no root."
-    const val CPU_GOV = "Forces the CPU to run fast instead of ramping on demand. Faster, more heat and battery. (Root)"
+    val SUSTAINED = I18n.s(R.string.ui_keeps_clock_speeds_steady_instead_of_spiking_and_droppin)
+    val PRIORITY = I18n.s(R.string.ui_gives_the_game_s_rendering_higher_priority_than_other_ap)
+    val BIG_CORES = I18n.s(R.string.ui_pins_the_game_to_your_fastest_cpu_cores_instead_of_the_e)
+    val CPU_GOV = I18n.s(R.string.ui_forces_the_cpu_to_run_fast_instead_of_ramping_on_demand)
     const val CPU_FREQ = "Pins the CPU at max clock so it never slows down. Top performance, highest heat/battery. (Root)"
-    const val CORES_ONLINE = "Stops cores being put to sleep, keeping every core available. (Root)"
+    val CORES_ONLINE = I18n.s(R.string.ui_stops_cores_being_put_to_sleep_keeping_every_core_availa)
     val GPU_CLOCK =
         I18n.s(R.string.ui_pins_the_gpu_at_top_speed_so_it_stops_dropping_clocks_to) +
         "consistent, but hotter and heavier on battery.\n\n" +
@@ -326,8 +326,8 @@ private object PerfCopy {
         I18n.s(R.string.ui_device_s_own_heat_protection_still_applies_and_the_setti) +
         "background the app, or it crashes.\n\n" +
         I18n.s(R.string.ui_on_non_adreno_gpus_mali_xclipse_powervr_this_toggle_need)
-    const val THERMAL = "Removes your device's built-in heat protection. ⚠️ Can overheat — the Temperature Watchdog is your only safety net with this on. (Root)"
-    const val FAN = "Runs the fan at full speed for max cooling (devices with a fan). (Root)"
+    val THERMAL = I18n.s(R.string.ui_removes_your_device_s_built_in_heat_protection_can_overh)
+    val FAN = I18n.s(R.string.ui_runs_the_fan_at_full_speed_for_max_cooling_devices_with)
     val FREE_MEM_SECTION =
         "Two ways to free memory, from lightest to strongest.\n\n" +
         "Drop file caches (Tier 1)\n" +

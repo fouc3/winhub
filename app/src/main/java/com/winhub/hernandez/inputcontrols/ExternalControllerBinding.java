@@ -2,6 +2,9 @@ package com.winhub.hernandez.inputcontrols;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -63,17 +66,17 @@ public class ExternalControllerBinding {
     public String toString() {
         switch (keyCode) {
             case AXIS_X_NEGATIVE:
-                return "AXIS X-";
+                return I18n.s(R.string.ui_axis_x_2);
             case AXIS_X_POSITIVE:
-                return "AXIS X+";
+                return I18n.s(R.string.ui_axis_x);
             case AXIS_Y_NEGATIVE:
-                return "AXIS Y-";
+                return I18n.s(R.string.ui_axis_y_2);
             case AXIS_Y_POSITIVE:
-                return "AXIS Y+";
+                return I18n.s(R.string.ui_axis_y);
             case AXIS_Z_NEGATIVE:
-                return "AXIS Z-";
+                return I18n.s(R.string.ui_axis_z_2);
             case AXIS_Z_POSITIVE:
-                return "AXIS Z+";
+                return I18n.s(R.string.ui_axis_z);
             case AXIS_RZ_NEGATIVE:
                 return I18n.s(R.string.ui_axis_rz_2);
             case AXIS_RZ_POSITIVE:

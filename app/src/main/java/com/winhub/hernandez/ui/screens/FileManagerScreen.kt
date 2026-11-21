@@ -2238,7 +2238,7 @@ private fun FileContextMenuItems(
     val canRun = isDir || file.name.lowercase().let { it.endsWith(".exe") || it.endsWith(".bat") || it.endsWith(".msi") || it.endsWith(".sh") }
     // Enter multi-select on this item (replaces the old long-press-only entry point).
     DropdownMenuItem(
-        text = { Text("Select") },
+        text = { Text(I18n.s(R.string.ui_select)) },
         leadingIcon = { Icon(Icons.Filled.Checklist, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onSelect() },
     )
@@ -2674,7 +2674,7 @@ private fun FavoriteCard(
                     when {
                         loc.containerName != null -> Row {
                             Text(
-                                text = "Container: ",
+                                text = I18n.s(R.string.ui_container_3),
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 11.sp,
                             )
@@ -2952,7 +2952,7 @@ private fun FilePropertiesDialog(
                 // ── Hidden ── Wine's DOS hidden bit in the user.DOSATTRIB xattr.
                 val hiddenSupported = state?.hiddenSupported == true
                 AttributeToggleRow(
-                    label = "Hidden",
+                    label = I18n.s(R.string.ui_hidden),
                     description = if (state != null && !hiddenSupported)
                         I18n.s(R.string.ui_this_storage_can_t_store_the_hidden_flag)
                     else I18n.s(R.string.ui_marks_the_file_hidden_in_windows_wine_s_hidden_attrib),

@@ -59,7 +59,7 @@ val OPENGL_VSYNC_ICON: ImageVector = Icons.Filled.LockOpen
 fun openGLFastNote(reason: String?): String? = when (reason) {
     null -> null
     com.winhub.hernandez.core.FastOpenGL.NEEDS_TURNIP -> I18n.s(R.string.ui_needs_turnip_driver)
-    com.winhub.hernandez.core.FastOpenGL.NOT_BUNDLED -> "not in this build"
+    com.winhub.hernandez.core.FastOpenGL.NOT_BUNDLED -> I18n.s(R.string.ui_not_in_this_build_2)
     else -> reason.replaceFirstChar { it.lowercase() }
 }
 

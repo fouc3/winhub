@@ -165,7 +165,7 @@ private fun FriendsTopBar(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.ui_back),
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -173,7 +173,7 @@ private fun FriendsTopBar(
             Spacer(Modifier.width(8.dp))
         }
         Text(
-            text = "Friends",
+            text = I18n.s(R.string.ui_friends),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(start = 4.dp),
@@ -1392,7 +1392,7 @@ fun ChatScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.ui_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
@@ -1538,7 +1538,7 @@ fun ChatScreen(
                     value = draft,
                     onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Message") },
+                    placeholder = { Text(I18n.s(R.string.ui_message)) },
                     maxLines = 4,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                     keyboardActions = KeyboardActions(onSend = {
@@ -1562,7 +1562,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = "Send",
+                        contentDescription = I18n.s(R.string.ui_send),
                         tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                     )

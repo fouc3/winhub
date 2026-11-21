@@ -44,7 +44,7 @@ internal fun DeckComponentStatusGroup() {
         rows.forEach { row ->
             DeckRow(
                 label = row.kind,
-                hint = "Installed: ${row.current}" +
+                hint = I18n.s(R.string.ui_installed_4, row.current) +
                     (row.latest?.let { "  ·  Newest: $it" } ?: if (checking) "" else "  ·  Newest: can't reach the catalog"),
             ) {
                 val offer = row.offer

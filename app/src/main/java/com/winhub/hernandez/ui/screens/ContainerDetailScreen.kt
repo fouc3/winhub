@@ -1480,7 +1480,7 @@ private fun TopLevelFields(
         // StringUtils.parseIdentifier() persists as "box64". See EmulatorLabels.
         if (viewModel.isArm64EC) {
             LabeledDropdown(
-                label = "Emulator",
+                label = I18n.s(R.string.ui_emulator),
                 options = EmulatorLabels.options(viewModel.emulatorEntries, true),
                 selectedOption = EmulatorLabels.display(viewModel.selectedEmulator, true),
                 enabled = viewModel.emulatorEnabled,
@@ -1820,7 +1820,7 @@ private fun TopLevelFields(
             DropdownMenu(expanded = showLcMenu, onDismissRequest = { showLcMenu = false }) {
                 viewModel.lcAllEntries.forEach { lc ->
                     DropdownMenuItem(
-                        text = { Text("$lc.UTF-8") },
+                        text = { Text(I18n.s(R.string.ui_utf_8, lc)) },
                         onClick = { viewModel.lcAll = "$lc.UTF-8"; showLcMenu = false }
                     )
                 }
@@ -2041,7 +2041,7 @@ private fun WinComponentsTab(viewModel: ContainerDetailViewModel) {
             }
         }
         if (generalItems.isNotEmpty()) {
-            SectionBox(title = "General") {
+            SectionBox(title = I18n.s(R.string.ui_general)) {
                 generalItems.forEach { comp ->
                     WinComponentRow(comp) { idx ->
                         val i = viewModel.winComponents.indexOfFirst { it.key == comp.key }
@@ -2182,7 +2182,7 @@ private fun DriveRow(
             onValueChange = onPathChange,
             modifier = Modifier.weight(1f),
             singleLine = true,
-            label = { Text("Path") }
+            label = { Text(I18n.s(R.string.ui_path)) }
         )
         IconButton(onClick = onBrowse) {
             Icon(Icons.Default.FolderOpen, contentDescription = null)

@@ -32,7 +32,7 @@ public class AmazonAuthClient {
     static final String DEREGISTER_URL = "https://api.amazon.com/auth/deregister";
 
     static final String USER_AGENT   = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0";
-    static final String APP_NAME     = I18n.s(R.string.ui_agslauncher_for_windows);
+    static String APP_NAME     = I18n.s(R.string.ui_agslauncher_for_windows);
     static final String APP_VERSION  = "1.0.0";
     static final String DEVICE_TYPE  = "A2UMVHOX7UP4V7";
     static final String OS_VERSION   = "10.0.19044.0";

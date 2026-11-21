@@ -50,7 +50,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
         val target = runCatching { ComponentInstallReturn.get(context) }.getOrNull()
         ComponentInstallReturn.clear(context)
         installedName?.let {
-            runCatching { Toast.makeText(context, "Installed $it.", Toast.LENGTH_SHORT).show() }
+            runCatching { Toast.makeText(context, I18n.s(R.string.ui_installed_5, it), Toast.LENGTH_SHORT).show() }
         }
         // Tier 2: ask the Shortcuts screen to open this shortcut's settings once we arrive.
         target?.shortcutBase?.let { base ->
@@ -117,7 +117,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
                                 catch (t: Throwable) { android.util.Log.w("ComponentInstallResume", I18n.s(R.string.ui_installscript_resume_failed), t) }
                             }
                         }
-                        is ComponentExecInstaller.Result.Error -> message = "Couldn't finish $name: ${res.message}"
+                        is ComponentExecInstaller.Result.Error -> message = I18n.s(R.string.ui_couldn_t_finish, name, res.message)
                         null -> {}
                     }
                 }

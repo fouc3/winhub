@@ -452,7 +452,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                             showSpeedPicker = false
                             lastSpeedTier = tier
                             installBtnEnabled = false
-                            installBtnText = "Starting…"
+                            installBtnText = I18n.s(R.string.ui_starting_2)
                             // SD toggle → install under <sd>/bannerlator/steam_games; else internal default.
                             val installRoot = if (installToSd) sdTarget?.steamGamesBase?.absolutePath else null
                             downloadHandle = SteamDepotDownloader.installApp(
@@ -2019,7 +2019,7 @@ private fun SteamGameDetailScreen(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = I18n.s(R.string.ui_back),
                     tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -2634,7 +2634,7 @@ private fun AchievementProgressBlock(done: Int, total: Int, pct: Int) {
         }
         Spacer(Modifier.height(6.dp))
         Text(
-            text = "$pct% complete",
+            text = I18n.s(R.string.ui_complete, pct),
             fontSize = 11.sp,
             color = AchvInk3,
             modifier = Modifier.align(Alignment.End),
@@ -2871,7 +2871,7 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 Text(desc, fontSize = 12.sp, color = AchvInk2, lineHeight = 17.sp)
                 if (selected.unlocked && selected.unlockTimeSec > 0L) {
                     Spacer(Modifier.height(3.dp))
-                    Text("Unlocked ${formatUnlockDate(selected.unlockTimeSec)}", fontSize = 11.sp, color = AchvGold)
+                    Text(I18n.s(R.string.ui_unlocked_2, formatUnlockDate(selected.unlockTimeSec)), fontSize = 11.sp, color = AchvGold)
                 }
             }
             Spacer(Modifier.height(9.dp))
@@ -2880,9 +2880,9 @@ private fun AchievementCaptionBar(selected: SteamAchievement?, modifier: Modifie
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = "Unlocked")
-                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = "Locked")
-                AchvLegendItem(swatch = { Text("🔒", fontSize = 11.sp) }, label = "Hidden")
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = true) }, label = I18n.s(R.string.ui_unlocked))
+                AchvLegendItem(swatch = { AchvLegendSwatch(unlocked = false) }, label = I18n.s(R.string.ui_locked))
+                AchvLegendItem(swatch = { Text("🔒", fontSize = 11.sp) }, label = I18n.s(R.string.ui_hidden))
             }
         }
     }
@@ -3058,7 +3058,7 @@ private fun GoldbergSection(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "Downloading… ${(downloadProgress.coerceIn(0f, 1f) * 100).toInt()}%",
+                    text = I18n.s(R.string.ui_downloading, (downloadProgress.coerceIn(0f, 1f) * 100).toInt()),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -3079,7 +3079,7 @@ private fun GoldbergSection(
                     onClick = onDownloadClick,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("$verb Steam Emulator$sizeSuffix", maxLines = 1) }
+                ) { Text(I18n.s(R.string.ui_steam_emulator, verb, sizeSuffix), maxLines = 1) }
             }
         }
 
@@ -3300,7 +3300,7 @@ private fun CloudSavesSection(
                     // Cloud row — Download (Cloud → Library) / Upload (Library → Cloud, additive).
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "Cloud",
+                        text = I18n.s(R.string.ui_cloud),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -3486,8 +3486,8 @@ private fun DownloadSpeedPickerDialog(
     // Higher tiers download faster but use more RAM/CPU during decompression.
     val options = listOf(
         "Slow — lowest RAM/CPU" to DownloadSpeedConfig.TIER_SLOW,
-        "Medium — balanced" to DownloadSpeedConfig.TIER_MEDIUM,
-        "Fast — recommended" to DownloadSpeedConfig.TIER_FAST,
+        I18n.s(R.string.ui_medium_balanced) to DownloadSpeedConfig.TIER_MEDIUM,
+        I18n.s(R.string.ui_fast_recommended) to DownloadSpeedConfig.TIER_FAST,
         "Blazing — fastest, highest RAM/CPU" to DownloadSpeedConfig.TIER_BLAZING,
     )
     var selected by remember { mutableIntStateOf(selectedIndex) }
@@ -3726,8 +3726,8 @@ private fun DownloadSpeedPickerDialog(
                                         Spacer(Modifier.height(6.dp))
                                         DownloadDialogWarning(
                                             text = I18n.s(R.string.ui_don_t_post_this_log_publicly_share_it_only_directly) +
-                                                "with the developer or someone you trust — unless you're " +
-                                                "debugging it yourself.",
+                                                I18n.s(R.string.ui_with_the_developer_or_someone_you_trust_unless_you_re) +
+                                                I18n.s(R.string.ui_debugging_it_yourself),
                                         )
                                     }
                                 }
@@ -3754,7 +3754,7 @@ private fun DownloadSpeedPickerDialog(
                                             color = cs.onSurface,
                                         )
                                         Text(
-                                            text = "${sdTarget.label} · ${SteamSdInstall.fmtBytes(sdTarget.freeBytes)} free",
+                                            text = I18n.s(R.string.ui_free_3, sdTarget.label, SteamSdInstall.fmtBytes(sdTarget.freeBytes)),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = cs.onSurfaceVariant,
                                         )
@@ -3762,7 +3762,7 @@ private fun DownloadSpeedPickerDialog(
                                             Spacer(Modifier.height(6.dp))
                                             DownloadDialogWarning(
                                                 text = I18n.s(R.string.ui_the_sd_card_is_slower_than_internal_storage_some) +
-                                                    "games stall on intro movies or asset loads from the card — " +
+                                                    I18n.s(R.string.ui_games_stall_on_intro_movies_or_asset_loads_from_the_card) +
                                                     "if that happens, open the shortcut and use \"Copy game to " +
                                                     "Drive C\" to move it onto fast internal storage.",
                                             )
@@ -3793,7 +3793,7 @@ private fun DownloadSpeedPickerDialog(
                             onClick = {
                                 onDownload(options[selected].second, debugLog, installToSd)
                             },
-                        ) { Text("Download") }
+                        ) { Text(I18n.s(R.string.ui_download_2)) }
                     }
                 }
             }
@@ -3910,7 +3910,7 @@ private fun DownloadSpeedPickerDialog(
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "${sdTarget.label} · ${SteamSdInstall.fmtBytes(sdTarget.freeBytes)} free",
+                                text = I18n.s(R.string.ui_free_3, sdTarget.label, SteamSdInstall.fmtBytes(sdTarget.freeBytes)),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -3934,7 +3934,7 @@ private fun DownloadSpeedPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = { onDownload(options[selected].second, debugLog, installToSd) }) {
-                Text("Download")
+                Text(I18n.s(R.string.ui_download_2))
             }
         },
         dismissButton = {

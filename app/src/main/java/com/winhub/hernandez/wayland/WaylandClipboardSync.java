@@ -26,7 +26,7 @@ import android.util.Log;
 public final class WaylandClipboardSync implements WaylandCompositor.ClipboardListener,
         WaylandCompositor.ClipboardRequestListener, ClipboardManager.OnPrimaryClipChangedListener {
     private static final String TAG = "WaylandClipboard";
-    private static final String GUEST_LABEL = I18n.s(R.string.ui_wayland_guest);
+    private static String GUEST_LABEL = I18n.s(R.string.ui_wayland_guest);
 
     private final Context context;
     private final ClipboardManager clipboard;

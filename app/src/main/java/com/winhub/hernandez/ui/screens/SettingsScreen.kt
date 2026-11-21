@@ -514,7 +514,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     }
                 }) { Text(I18n.s(R.string.yes)) }
             },
-            dismissButton = { TextButton(onClick = { showBackupDialog = false }) { Text("No") } }
+            dismissButton = { TextButton(onClick = { showBackupDialog = false }) { Text(I18n.s(R.string.ui_no)) } }
         )
     }
 
@@ -961,7 +961,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 }
                 ImportSourceIconButton(
                     icon = Icons.Default.Add,
-                    contentDescription = "Install",
+                    contentDescription = I18n.s(R.string.ui_install),
                     tint = MaterialTheme.colorScheme.onSurface,
                     onInApp = { prepareSFInstall(); installSFInAppLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.SF2, I18n.s(R.string.ui_select_soundfont))) },
                     onSystem = { prepareSFInstall(); installSFLauncher.launch(arrayOf("*/*")) },

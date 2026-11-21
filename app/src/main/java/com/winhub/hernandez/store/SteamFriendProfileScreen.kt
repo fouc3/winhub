@@ -217,7 +217,7 @@ private fun ProfileTopBar(onBack: () -> Unit, onViewOnSteam: () -> Unit, onRemov
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = I18n.s(R.string.ui_back),
                 tint = MaterialTheme.colorScheme.onBackground,
             )
         }
@@ -590,7 +590,7 @@ private fun RecentGameCard(game: SteamFriendsStore.RecentGame) {
             modifier = Modifier.padding(top = 5.dp),
         )
         Text(
-            text = "${game.hours.roundToInt()} hrs",
+            text = I18n.s(R.string.ui_hrs, game.hours.roundToInt()),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,

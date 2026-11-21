@@ -691,7 +691,7 @@ internal fun DeckHubGamePage(
                         modifier = Modifier.size(18.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Back", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                    Text(I18n.s(R.string.ui_back), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
 
@@ -995,7 +995,7 @@ internal fun HubConfirmDialog(
                                 modifier = Modifier.padding(end = 8.dp).size(20.dp),
                             )
                             Text(
-                                text = "Container · ${containerNames[containerIdx.coerceIn(0, containerNames.size - 1)]}",
+                                text = I18n.s(R.string.ui_container_4, containerNames[containerIdx.coerceIn(0, containerNames.size - 1)]),
                                 fontSize = 13.sp,
                                 color = DeckPalette.onBackground,
                                 maxLines = 1,
@@ -1626,9 +1626,9 @@ internal fun DeckCronosReviewDialog(
                 vkd3dVer?.let { append(" / vkd3d ") ; append(it) }
             },
             "Emulator" to (runCatching { container.emulator }.getOrNull() ?: "?"),
-            "Box64 preset" to (runCatching { container.box64Preset }.getOrNull() ?: "-"),
-            "FEXCore preset" to (runCatching { container.getFEXCorePreset() }.getOrNull() ?: "-"),
-            "Screen size" to (runCatching { container.screenSize }.getOrNull() ?: "?"),
+            I18n.s(R.string.ui_box64_preset) to (runCatching { container.box64Preset }.getOrNull() ?: "-"),
+            I18n.s(R.string.ui_fexcore_preset) to (runCatching { container.getFEXCorePreset() }.getOrNull() ?: "-"),
+            I18n.s(R.string.ui_screen_size) to (runCatching { container.screenSize }.getOrNull() ?: "?"),
             "Audio" to (runCatching { container.audioDriver }.getOrNull() ?: "?"),
         )
     }

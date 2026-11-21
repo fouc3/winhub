@@ -260,7 +260,7 @@ fun UnpackArchiveScreen(
                     }
                     typeLoading -> "reading…"
                     detectedType != null -> detectedType
-                    else -> "not an archive"
+                    else -> I18n.s(R.string.ui_not_an_archive)
                 }
                 Text(
                     "${StringUtils.formatBytes(sourceSize)}  •  $typeText",
@@ -413,7 +413,7 @@ fun UnpackArchiveScreen(
             if (engineMissing && !isInno) {
                 WarnCard {
                     Text(
-                        "The 7-Zip engine (lib7zz.so) isn't executable on this build. Extraction is unavailable.",
+                        I18n.s(R.string.ui_the_7_zip_engine_lib7zz_so_isn_t_executable_on_this_buil),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                     )
                 }
@@ -720,9 +720,9 @@ fun UnpackArchiveScreen(
                                 Text(
                                     if (freeArc)
                                         I18n.s(R.string.ui_it_may_use_srep_or_a_codec_this_build_can_t_decode_insta) +
-                                            "Setup.exe inside a Winlator container, or unpack it on a PC."
+                                            I18n.s(R.string.ui_setup_exe_inside_a_winlator_container_or_unpack_it_on_a)
                                     else
-                                        "This InnoSetup repack must be installed by running Setup.exe inside a Winlator container.",
+                                        I18n.s(R.string.ui_this_innosetup_repack_must_be_installed_by_running_setup),
                                     color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                                 )
                                 Spacer(Modifier.height(8.dp))
@@ -771,7 +771,7 @@ private fun RunSetupInContainer(exe: File) {
         )
         else -> Box {
             Button(onClick = { if (containers.size == 1) launch(containers.first()) else menu = true }) {
-                Text("Run ${exe.name} in a container")
+                Text(I18n.s(R.string.ui_run_in_a_container, exe.name))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                 containers.forEach { c ->

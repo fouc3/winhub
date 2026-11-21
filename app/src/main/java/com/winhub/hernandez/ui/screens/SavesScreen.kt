@@ -219,7 +219,7 @@ fun SavesScreen(vm: SavesViewModel = viewModel()) {
             onConfirm = { container ->
                 transferTarget = null
                 vm.transferSave(save, container) { ok, msg ->
-                    Toast.makeText(context, if (ok) "Transfer complete" else msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, if (ok) I18n.s(R.string.ui_transfer_complete) else msg, Toast.LENGTH_SHORT).show()
                 }
             },
         )

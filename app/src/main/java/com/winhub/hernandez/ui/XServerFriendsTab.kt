@@ -125,7 +125,7 @@ internal fun FriendsTabButton(isSelected: Boolean, unread: Boolean, onClick: () 
         }
         Icon(
             imageVector = Icons.Filled.People,
-            contentDescription = "Friends",
+            contentDescription = I18n.s(R.string.ui_friends),
             tint = tintColor,
             modifier = Modifier.size(22.dp),
         )
@@ -386,7 +386,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
                 value = draft,
                 onValueChange = { draft = it; if (it.isNotEmpty()) SteamFriendsStore.sendTyping(friend.steamId) },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Message", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                placeholder = { Text(I18n.s(R.string.ui_message), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 maxLines = 3,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { send() }),
@@ -395,7 +395,7 @@ private fun InGameChatThread(friend: SteamFriendsStore.SteamFriend, onBack: () -
             IconButton(onClick = send, enabled = draft.isNotBlank()) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Send",
+                    contentDescription = I18n.s(R.string.ui_send),
                     tint = if (draft.isNotBlank()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onSurfaceVariant,
                 )

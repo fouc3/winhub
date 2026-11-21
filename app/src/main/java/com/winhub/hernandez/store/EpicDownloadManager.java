@@ -5,6 +5,9 @@ import com.winhub.hernandez.util.I18n;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -234,7 +237,7 @@ public class EpicDownloadManager {
 
     /** Log the cancel point, flush debug, and return false — the common cancel exit. */
     private static boolean cancelOut(android.content.Context ctx, StringBuilder dbg, String where) {
-        dbg.append("CANCELLED ").append(where).append("\n");
+        dbg.append(I18n.s(R.string.ui_cancelled)).append(where).append("\n");
         writeDebug(ctx, dbg);
         Log.i(TAG, I18n.s(R.string.ui_epic_install_cancelled) + where + ")");
         return false;
@@ -252,7 +255,7 @@ public class EpicDownloadManager {
         dbg.append("=== BH Epic Debug ===\n");
         dbg.append("installDirPath=").append(installDirPath).append("\n");
         try {
-            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, "before start");
+            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, I18n.s(R.string.ui_before_start));
             progress(progressCallback, I18n.s(R.string.ui_parsing_cdn_urls), 0);
 
             List<CdnUrl> cdnUrls = parseCdnUrls(manifestApiJson);
@@ -281,7 +284,7 @@ public class EpicDownloadManager {
             dbg.append("manifestBytes=").append(manifestBytes.length).append("\n");
             Log.i(TAG, I18n.s(R.string.ui_manifest_bytes) + manifestBytes.length);
 
-            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, "after manifest download");
+            if (isCancelled(cancelFlag)) return cancelOut(ctx, dbg, I18n.s(R.string.ui_after_manifest_download));
             progress(progressCallback, I18n.s(R.string.ui_parsing_manifest), 0);
             EpicManifest.ParsedManifest manifest = parseManifest(manifestBytes);
             if (manifest == null) {

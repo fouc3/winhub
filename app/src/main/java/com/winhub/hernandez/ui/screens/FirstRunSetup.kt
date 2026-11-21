@@ -966,7 +966,7 @@ private fun InstallPlan(picked: List<ExtraPick>, modifier: Modifier) {
         ) {
             Row(Modifier.fillMaxWidth().padding(bottom = 6.dp)) {
                 Text(I18n.s(R.string.ui_install_plan), color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, modifier = Modifier.weight(1f))
-                Text("${1 + FIRST_RUN_CONTENTS.size + picked.size} items", color = DeckPalette.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text(I18n.s(R.string.ui_items, 1 + FIRST_RUN_CONTENTS.size + picked.size), color = DeckPalette.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
             PlanRow(I18n.s(R.string.ui_system_files), "Always", false)
             FIRST_RUN_CONTENTS.forEach { PlanRow(it.label, "Included", false) }
@@ -1051,7 +1051,7 @@ private fun ConnectedCard(account: GitHubAuthClient.Account, onDisconnect: () ->
         ) {
             Icon(Icons.Filled.Check, null, tint = DeckPalette.good, modifier = Modifier.size(26.dp))
             Column {
-                Text("Connected as @${account.login}", color = DeckPalette.onBackground, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                Text(I18n.s(R.string.ui_connected_as, account.login), color = DeckPalette.onBackground, fontSize = 17.sp, fontWeight = FontWeight.Bold)
                 Text(I18n.s(R.string.ui_configs_posts_and_votes_are_ready), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)
             }
         }

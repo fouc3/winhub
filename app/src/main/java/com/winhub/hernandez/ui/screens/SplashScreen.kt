@@ -299,7 +299,7 @@ private fun SplashProgress(
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = "STEP ${(step + 1).coerceAtMost(stepLabels.size)} OF ${stepLabels.size}",
+                text = I18n.s(R.string.ui_step_of, (step + 1).coerceAtMost(stepLabels.size), stepLabels.size),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.SemiBold,

@@ -987,7 +987,7 @@ private fun UpdateBanner(versionName: String, onUpdate: () -> Unit, onDismiss: (
             modifier = Modifier.weight(1f),
         )
         TextButton(onClick = onUpdate) {
-            Text("Update", color = ink, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_update), color = ink, fontWeight = FontWeight.Bold)
         }
         TextButton(onClick = onDismiss) {
             Text(I18n.s(R.string.ui_skip), color = ink)

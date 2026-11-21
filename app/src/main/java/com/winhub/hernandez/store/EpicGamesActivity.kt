@@ -355,14 +355,14 @@ class EpicGamesActivity : ComponentActivity() {
             })
 
             addView(TextView(this@EpicGamesActivity).apply {
-                text = "Available storage:  ${formatBytes(freeBytes)}"
+                text = I18n.s(R.string.ui_available_storage_2, formatBytes(freeBytes))
                 setTextColor(0xFF88CC88.toInt())
                 textSize = 14f
             })
         }
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Install ${game.title}?")
+            .setTitle(I18n.s(R.string.ui_install_2, game.title))
             .setView(content)
             .setPositiveButton("Install", null)
             .setNegativeButton("Cancel", null)
@@ -375,7 +375,7 @@ class EpicGamesActivity : ComponentActivity() {
         }
 
         if (game.installSize > 0) {
-            (content.getChildAt(0) as TextView).text = "Download size:  ${formatBytes(game.installSize)}"
+            (content.getChildAt(0) as TextView).text = I18n.s(R.string.ui_download_size, formatBytes(game.installSize))
         } else {
             lifecycleScope.launch(Dispatchers.IO) {
                 var size = 0L
@@ -658,7 +658,7 @@ private fun EpicGamesScreen(
                 modifier = Modifier.height(40.dp),
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             Text(
-                text = "Epic Games",
+                text = I18n.s(R.string.ui_epic_games),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

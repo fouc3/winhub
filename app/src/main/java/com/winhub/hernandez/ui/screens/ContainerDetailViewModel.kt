@@ -570,7 +570,7 @@ class ContainerDetailViewModel(app: Application) : AndroidViewModel(app) {
     )
 
     val xrMappingLabels = listOf(
-        "Button A", "Button B", "Button X", "Button Y",
+        I18n.s(R.string.ui_button_a), I18n.s(R.string.ui_button_b), I18n.s(R.string.ui_button_x), I18n.s(R.string.ui_button_y),
         "Button Grip", I18n.s(R.string.ui_button_trigger),
         "Thumbstick Up", I18n.s(R.string.ui_thumbstick_down), I18n.s(R.string.ui_thumbstick_left), I18n.s(R.string.ui_thumbstick_right)
     )

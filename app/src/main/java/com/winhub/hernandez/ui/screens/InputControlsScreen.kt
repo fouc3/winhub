@@ -551,7 +551,7 @@ fun InputControlsScreen() {
             Row(verticalAlignment = Alignment.Bottom) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = "Controls",
+                        text = I18n.s(R.string.ui_controls),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = DeckPalette.onBackground,
@@ -875,7 +875,7 @@ fun InputControlsScreen() {
                                                         for (other in controllers) {
                                                             if (other.getId() == controller.getId() || other.getControllerBindingCount() == 0) continue
                                                             DeckMenuDivider()
-                                                            DropdownMenuItem(text = { Text("From ${other.getName()}", color = DeckPalette.onBackground) }, onClick = {
+                                                            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_from, other.getName()), color = DeckPalette.onBackground) }, onClick = {
                                                                 currentProfile?.loadControllers()
                                                                 val src = currentProfile?.getController(other.getId())
                                                                 if (src != null && src.getControllerBindingCount() > 0) {

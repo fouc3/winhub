@@ -352,7 +352,7 @@ fun AudioSettingsDialog(
                     }
                     TextButton(onClick = onDismiss) { Text("✕", color = cs.onSurface, fontSize = 16.sp) }
                 }
-                Text("Balance crackle-free vs low delay  ·  $scopeLabel",
+                Text(I18n.s(R.string.ui_balance_crackle_free_vs_low_delay, scopeLabel),
                     color = cs.onSurfaceVariant, fontSize = 12.5.sp,
                     modifier = Modifier.padding(16.dp, 0.dp, 16.dp, 10.dp))
 

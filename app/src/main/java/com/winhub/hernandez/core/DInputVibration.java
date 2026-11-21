@@ -25,7 +25,7 @@ public final class DInputVibration {
     public static final String EXTRA = "dinputVibration";
     public static final String ENV = "HERMES_DINPUT_FF";
     /** What the rows say while {@value #ENV} decides. */
-    public static final String ENV_LOCKED = I18n.s(R.string.ui_set_by) + ENV + " in the env vars.";
+    public static String ENV_LOCKED = I18n.s(R.string.ui_set_by) + ENV + " in the env vars.";
 
     /** HermesWriter.setFfMode: unset (= on), on, off. */
     public static final int FF_MODE_UNSET = 0;

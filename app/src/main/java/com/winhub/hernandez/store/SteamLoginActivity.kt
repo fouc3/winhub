@@ -209,7 +209,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         statusText = ""
         guardDialog = GuardDialogData(
             title   = if (codeWrong) I18n.s(R.string.ui_incorrect_code_try_again) else I18n.s(R.string.ui_steam_guard),
-            message = "Enter the code Steam sent to your email ending in \u2026$emailDomain",
+            message = I18n.s(R.string.ui_enter_the_code_steam_sent_to_your_email_ending_in_u2026, emailDomain),
         )
     }
 

@@ -501,7 +501,7 @@ private fun LevelChip(level: Int) {
             .background(LocalAccentDim.current)
             .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
             .padding(horizontal = 7.dp, vertical = 2.dp)
-            .semantics { contentDescription = "Steam account level $level" },
+            .semantics { contentDescription = I18n.s(R.string.ui_steam_account_level, level) },
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -654,7 +654,7 @@ private fun StatTiles(c: ProfileTabContent, columns: Int = 4) {
         ),
         ProfileStat(
             value = if (c.friendsCount > 0) fmtCount(c.friendsCount) else "—",
-            label = "Friends",
+            label = I18n.s(R.string.ui_friends),
             onClick = c.onOpenFriends,
         ),
     )

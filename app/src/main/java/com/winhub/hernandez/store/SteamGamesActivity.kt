@@ -102,7 +102,7 @@ private fun SteamLibraryScreen(onBack: () -> Unit) {
                 IconButton(onClick = onBack, modifier = Modifier.steamFocusRing()) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = I18n.s(R.string.ui_back),
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }

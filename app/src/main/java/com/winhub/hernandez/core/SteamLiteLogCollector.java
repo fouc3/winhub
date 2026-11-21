@@ -64,8 +64,8 @@ public final class SteamLiteLogCollector {
     private static final int ENGINE_LINES_MAX = 400;
     // Exact "watching ... for exit (<path>)" suffixes from the agent's launch log; the "for exit ("
     // prefix keeps the steamservice line ("... will use CreateProcess fallback") from matching.
-    private static final String LAUNCHER_SECURE_MARK   = I18n.s(R.string.ui_for_exit_launchapp_path);
-    private static final String LAUNCHER_FALLBACK_MARK = I18n.s(R.string.ui_for_exit_createprocess_fallback);
+    private static String LAUNCHER_SECURE_MARK   = I18n.s(R.string.ui_for_exit_launchapp_path);
+    private static String LAUNCHER_FALLBACK_MARK = I18n.s(R.string.ui_for_exit_createprocess_fallback);
     private static final long DX_SCAN_TAIL_BYTES   = 1L * 1024 * 1024;
 
     /** The Steam logs we include, in the debug-flow order the summary reads top-to-bottom. */

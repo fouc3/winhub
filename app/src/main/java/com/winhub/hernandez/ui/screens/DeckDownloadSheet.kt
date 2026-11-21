@@ -141,7 +141,7 @@ internal fun DeckContentDownloadSheet(
         }
     }
 
-    DeckConfigDialog(title = "Download " + types.first().toString().removePrefix("CONTENT_TYPE_").replace('_', ' '), onDismiss = onDismiss) {
+    DeckConfigDialog(title = I18n.s(R.string.ui_download_3) + types.first().toString().removePrefix("CONTENT_TYPE_").replace('_', ' '), onDismiss = onDismiss) {
         DeckConfigNote(I18n.s(R.string.ui_tap_a_version_to_download_and_install_it_installed_bu))
         when {
             loading -> {
@@ -251,7 +251,7 @@ private fun DeckDownloadRow(
                     Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = DeckPalette.error)
                 }
                 else -> IconButton(onClick = onDownload) {
-                    Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = DeckPalette.primary)
+                    Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = DeckPalette.primary)
                 }
             }
         }
@@ -359,7 +359,7 @@ internal fun DeckStockConfigSheet(
                                             ).show()
                                         }
                                         is VegasStockConfigFetcher.ParkResult.Fail ->
-                                            Toast.makeText(context, "Failed: ${res.reason}", Toast.LENGTH_LONG).show()
+                                            Toast.makeText(context, I18n.s(R.string.ui_failed_2, res.reason), Toast.LENGTH_LONG).show()
                                     }
                                 }
                             } else Modifier,

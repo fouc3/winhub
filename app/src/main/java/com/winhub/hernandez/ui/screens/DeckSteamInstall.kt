@@ -270,7 +270,7 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                 if (sd != null) {
                     DeckRow(
                         label = I18n.s(R.string.ui_install_to_sd_card),
-                        hint = "${sd.label} - ${SteamSdInstall.fmtBytes(sd.freeBytes)} free",
+                        hint = I18n.s(R.string.ui_free_5, sd.label, SteamSdInstall.fmtBytes(sd.freeBytes)),
                         control = { DeckToggle(sdEnabled) { sdEnabled = it } },
                     )
                 }

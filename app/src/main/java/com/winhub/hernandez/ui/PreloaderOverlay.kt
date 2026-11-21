@@ -493,7 +493,7 @@ private fun FailureCard(failure: Failure?) {
                 shape = RoundedCornerShape(999.dp),
             ) {
                 Text(
-                    text = "Failed · ${failure.stage}",
+                    text = I18n.s(R.string.ui_failed, failure.stage),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
@@ -555,7 +555,7 @@ private fun FailureCard(failure: Failure?) {
             }
             if (failure.loggingEnabled && !failure.logDir.isNullOrEmpty()) {
                 Text(
-                    text = "Log saved to ${failure.logDir}",
+                    text = I18n.s(R.string.ui_log_saved_to, failure.logDir),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

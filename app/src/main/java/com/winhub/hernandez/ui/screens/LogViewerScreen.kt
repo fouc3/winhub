@@ -335,7 +335,7 @@ private fun LogViewerBody(entry: LogInventory.Entry, onClose: () -> Unit) {
                 }
                 ViewerAction("Copy", modifier = Modifier.weight(1f)) {
                     clipboard.setText(AnnotatedString(shown.joinToString("\n")))
-                    Toast.makeText(context, "Copied ${shown.size} lines", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, I18n.s(R.string.ui_copied_lines, shown.size), Toast.LENGTH_SHORT).show()
                 }
                 ViewerAction("Share", primary = true, modifier = Modifier.weight(1f)) {
                     selected?.let { shareLogFile(context, it) }
@@ -414,11 +414,11 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 DeckRow(I18n.s(R.string.ui_also_app_logcat_and_crash_reports)) { DeckToggle(includeApp) { includeApp = it } }
             }
             DeckConfigNote(
-                "Saved as a zip in Downloads. E-mail addresses, auth tokens and your Steam " +
+                I18n.s(R.string.ui_saved_as_a_zip_in_downloads_e_mail_addresses_auth_tokens) +
                     "account name are stripped; file paths are kept so they stay useful for " +
-                    "debugging, so glance over them if a folder name identifies you. GitHub " +
+                    I18n.s(R.string.ui_debugging_so_glance_over_them_if_a_folder_name_identifie) +
                     "can't receive a file from a link, so attach the zip with the paperclip once " +
-                    "the form opens."
+                    I18n.s(R.string.ui_the_form_opens)
             )
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = 12.dp),

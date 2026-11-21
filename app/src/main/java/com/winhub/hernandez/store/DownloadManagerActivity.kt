@@ -404,7 +404,7 @@ private fun DownloadManagerScreen(
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = I18n.s(R.string.ui_back),
                         )
                     }
                 },
@@ -569,7 +569,7 @@ private fun DownloadCard(
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.height(32.dp),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
-                            ) { Text("Launch", style = MaterialTheme.typography.labelSmall) }
+                            ) { Text(I18n.s(R.string.ui_launch), style = MaterialTheme.typography.labelSmall) }
                             OutlinedButton(
                                 onClick = { onUninstall(entry) },
                                 shape = RoundedCornerShape(8.dp),
@@ -601,7 +601,7 @@ private fun DownloadCard(
 
                     DownloadState.CANCELLED -> {
                         Text(
-                            text = "Cancelled",
+                            text = I18n.s(R.string.ui_cancelled_2),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

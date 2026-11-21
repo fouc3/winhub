@@ -94,7 +94,7 @@ internal fun DeckInstallShell(
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.size(6.dp))
-            Text("Back", color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_back), color = Deck.onSurfaceVariant, fontSize = 13.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(Modifier.size(14.dp))
 

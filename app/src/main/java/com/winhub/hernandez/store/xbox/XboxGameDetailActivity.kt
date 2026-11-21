@@ -276,7 +276,7 @@ class XboxGameDetailActivity : ComponentActivity() {
 
     private fun confirmUninstall() {
         AlertDialog.Builder(this, R.style.StoreAlertDialogDark)
-            .setTitle("Uninstall ${game.title}?")
+            .setTitle(I18n.s(R.string.ui_uninstall_3, game.title))
             .setMessage(I18n.s(R.string.ui_game_files_are_deleted_shortcuts_that_point_to_it_sto))
             .setPositiveButton(I18n.s(R.string.xmb_dl_act_uninstall)) { _, _ ->
                 lifecycleScope.launch {

@@ -1,5 +1,8 @@
 package com.winhub.hernandez;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -90,8 +93,8 @@ final class ControllerSaveTarget {
     }
 
     private void noteSaved(String what) {
-        lastSaved = toGame ? "Saved for " + shortcut.name + " only."
-                : "Saved for every game in " + container.getName() + ".";
+        lastSaved = toGame ? I18n.s(R.string.ui_saved_for) + shortcut.name + " only."
+                : I18n.s(R.string.ui_saved_for_every_game_in) + container.getName() + ".";
         Log.i(TAG, what + ": " + lastSaved);
         publish();
     }

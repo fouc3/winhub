@@ -70,10 +70,10 @@ public final class WaylandGameDriver {
             "the normal path and is used automatically when nothing else is chosen.";
 
     /** The editors' expander title for the fallback choices. */
-    public static final String FALLBACK_EXPANDER = I18n.s(R.string.ui_advanced_use_a_layer_bundled_or_imported_wayland_driver);
+    public static String FALLBACK_EXPANDER = I18n.s(R.string.ui_advanced_use_a_layer_bundled_or_imported_wayland_driver);
 
     /** Editor label of the adapter choice. */
-    public static final String ADAPTER_LABEL = I18n.s(R.string.ui_adapter_uses_your_graphics_driver);
+    public static String ADAPTER_LABEL = I18n.s(R.string.ui_adapter_uses_your_graphics_driver);
 
     /** The launch-time decision. */
     public static final class Resolution {

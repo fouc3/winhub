@@ -149,7 +149,7 @@ fun RecommendedComponentsSection(
                 is ComponentExecInstaller.Result.Launched -> { /* session launched; return target consumed after restart */ }
                 is ComponentExecInstaller.Result.Done -> { markInstalled(c.name); ComponentInstallReturn.clear(context) }
                 is ComponentExecInstaller.Result.Error -> {
-                    message = "Couldn't install ${c.name}: ${res.message}"
+                    message = I18n.s(R.string.ui_couldn_t_install, c.name, res.message)
                     ComponentInstallReturn.clear(context)
                 }
             }
@@ -189,7 +189,7 @@ fun RecommendedComponentsSection(
                     }
                     installing = null
                     if (err == null) markInstalled(c.name)
-                    else message = "Couldn't install ${c.name}: $err"
+                    else message = I18n.s(R.string.ui_couldn_t_install_2, c.name, err)
                 }
             }
         }
@@ -208,7 +208,7 @@ fun RecommendedComponentsSection(
         OutlinedAlertDialog(
             onDismissRequest = { confirmExec = null },
             containerColor = cs.surfaceContainerHigh,
-            title = { Text("Install ${c.name}", color = cs.onSurface) },
+            title = { Text(I18n.s(R.string.ui_install_3, c.name), color = cs.onSurface) },
             text = {
                 Text(
                     "This installs ${c.name} into this game's container (shared by every shortcut on it). " +
@@ -322,7 +322,7 @@ private fun RecommendedChipGroup(
                                 modifier = Modifier.size(18.dp),
                             )
                             else -> Icon(
-                                Icons.Filled.Download, contentDescription = "Install",
+                                Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install),
                                 modifier = Modifier.size(18.dp),
                             )
                         }

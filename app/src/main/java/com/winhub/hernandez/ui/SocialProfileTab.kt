@@ -150,7 +150,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
         val shownBitmap = picked
         if (deck) {
             DeckGroup("Profile") {
-                DeckRow(label = "Picture", hint = I18n.s(R.string.ui_choose_a_new_profile_picture)) {
+                DeckRow(label = I18n.s(R.string.ui_picture), hint = I18n.s(R.string.ui_choose_a_new_profile_picture)) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         if (shownBitmap != null) {
                             Image(
@@ -171,7 +171,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
                 }
                 DeckRow(
                     label = I18n.s(R.string.ui_display_name),
-                    hint = "${name.length}/${SocialProfiles.MAX_NAME} - leave empty to use @${acct.login}",
+                    hint = I18n.s(R.string.ui_leave_empty_to_use, name.length, SocialProfiles.MAX_NAME, acct.login),
                 ) {
                     ControllerTextField(
                         value = name,
@@ -216,7 +216,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             label = { Text(I18n.s(R.string.ui_display_name)) },
             placeholder = { Text(acct.login) },
             singleLine = true,
-            supportingText = { Text("${name.length}/${SocialProfiles.MAX_NAME} · leave empty to use @${acct.login}") },
+            supportingText = { Text(I18n.s(R.string.ui_leave_empty_to_use_2, name.length, SocialProfiles.MAX_NAME, acct.login)) },
             modifier = Modifier.fillMaxWidth(),
         )
 

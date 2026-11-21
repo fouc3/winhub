@@ -40,7 +40,7 @@ fun FirstWaylandLaunchDialog(state: XServerDialogState) {
                         I18n.s(R.string.ui_can_make_the_app_hang),
             )
         },
-        confirmButton = { TextButton(onClick = { choose(true) }) { Text("Launch") } },
+        confirmButton = { TextButton(onClick = { choose(true) }) { Text(I18n.s(R.string.ui_launch)) } },
         dismissButton = { TextButton(onClick = { choose(false) }) { Text("Cancel") } },
     )
 }

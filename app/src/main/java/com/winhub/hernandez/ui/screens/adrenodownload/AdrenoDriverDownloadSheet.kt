@@ -298,7 +298,7 @@ fun ColumnScope.AdrenoDriverListPane(
                                         pendingEntry = null
                                         if (driverId.isNotEmpty()) {
                                             installRefreshKey++ // re-enumerate so the Installed badge picks it up
-                                            Toast.makeText(context, "Installed: $driverId", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, I18n.s(R.string.ui_installed_6, driverId), Toast.LENGTH_SHORT).show()
                                             onDriverInstalled(driverId)
                                         } else {
                                             Toast.makeText(
@@ -319,7 +319,7 @@ fun ColumnScope.AdrenoDriverListPane(
                                     },
                                 )
                         }
-                    }) { Text("Download") }
+                    }) { Text(I18n.s(R.string.ui_download_2)) }
                 },
                 dismissButton = {
                     TextButton(onClick = { pendingEntry = null }) { Text("Cancel") }
@@ -417,7 +417,7 @@ private fun EntryRow(
             )
             Icon(
                 imageVector = Icons.Filled.CloudDownload,
-                contentDescription = "Download",
+                contentDescription = I18n.s(R.string.ui_download_2),
                 tint = cs.primary,
                 modifier = Modifier.size(22.dp),
             )
@@ -458,7 +458,7 @@ private fun EntryRow(
                 Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
                     modifier = Modifier.size(20.dp))
             } else {
-                Icon(Icons.Filled.CloudDownload, contentDescription = "Download", tint = cs.primary,
+                Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = cs.primary,
                     modifier = Modifier.size(22.dp))
             }
         }

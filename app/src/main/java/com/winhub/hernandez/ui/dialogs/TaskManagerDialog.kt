@@ -182,7 +182,7 @@ private fun ProcessRow(proc: XServerDialogState.TmProcess, state: XServerDialogS
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = "PID ${proc.pid}  •  ${proc.formattedMemory}",
+                text = I18n.s(R.string.ui_pid, proc.pid, proc.formattedMemory),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

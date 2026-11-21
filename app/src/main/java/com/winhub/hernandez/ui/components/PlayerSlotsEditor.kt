@@ -98,7 +98,7 @@ fun PlayerSlotsEditor(
     if (deck) {
         Column(modifier.fillMaxWidth()) {
             DeckConfigNote(
-                "Pin a controller (or the on-screen pad) to a player slot so the launch order is consistent. " +
+                I18n.s(R.string.ui_pin_a_controller_or_the_on_screen_pad_to_a_player_slot_s) +
                     "Applied on launch; the in-game side menu still lets you change it live."
             )
             if (rows.isEmpty()) {

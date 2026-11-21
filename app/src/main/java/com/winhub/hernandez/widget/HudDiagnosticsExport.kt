@@ -45,7 +45,7 @@ fun exportHudDiagnostics(context: Context) {
         }
         main.post {
             result.onSuccess { out ->
-                Toast.makeText(app, "Saved to Downloads › ${out.name}", Toast.LENGTH_LONG).show()
+                Toast.makeText(app, I18n.s(R.string.ui_saved_to_downloads, out.name), Toast.LENGTH_LONG).show()
             }.onFailure {
                 Toast.makeText(app, I18n.s(R.string.ui_couldn_t_export_diagnostics), Toast.LENGTH_SHORT).show()
             }

@@ -2,6 +2,9 @@ package com.winhub.hernandez.contents;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.res.AssetManager;
 import android.net.Uri;
 
@@ -273,14 +276,14 @@ public class AdrenotoolsManager {
             kind = meta.optString("kind", "");
         }
         catch (Exception e) {
-            return "meta.json is unreadable (" + e.getMessage() + ")";
+            return I18n.s(R.string.ui_meta_json_is_unreadable) + e.getMessage() + ")";
         }
         if ("linux-vulkan-icd".equals(kind))
             return I18n.s(R.string.ui_this_is_a_linux_runtime_driver_no_longer_supported);
         if ("wayland-game-driver".equals(kind))
             return "this is a Wayland game driver (import it under \"Wayland game drivers\")";
         if (libraryName.isEmpty())
-            return "meta.json names no libraryName, so nothing could be handed to AdrenoTools";
+            return I18n.s(R.string.ui_meta_json_names_no_libraryname_so_nothing_could_be_hande);
         if (!new File(dir, libraryName).isFile())
             return "meta.json names " + libraryName + I18n.s(R.string.ui_which_is_not_in_the_zip);
         return null;

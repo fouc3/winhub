@@ -522,7 +522,7 @@ fun GamesWallScreen(navController: NavController) {
     applyResult?.let { res ->
         AlertDialog(
             onDismissRequest = { applyResult = null },
-            title = { Text(if (res.ok) "Config applied" else "Couldn't apply") },
+            title = { Text(if (res.ok) I18n.s(R.string.ui_config_applied) else I18n.s(R.string.ui_couldn_t_apply)) },
             text = { Text(res.message, color = TXT.copy(alpha = 0.85f)) },
             confirmButton = { TextButton(onClick = { applyResult = null }) { Text("Done") } },
         )

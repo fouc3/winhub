@@ -40,7 +40,7 @@ public class DXVKConfigDialog {
     // Sentinel version for the DDraw-Wrapper=D7VK version dropdown. Means "use the bundled, offline
     // d7vk.tzst asset" (the default). Any other value is a downloaded CONTENT_TYPE_D7VK profile,
     // identified by "verName-verCode" (mirrors the VKD3D version identifier).
-    public static final String D7VK_BUNDLED = I18n.s(R.string.ui_bundled_default);
+    public static String D7VK_BUNDLED = I18n.s(R.string.ui_bundled_default);
 
     // ---- Texture filtering (dxwrapperConfig keys, so a game shortcut overrides the container) ----
     // anisotropy: "0"/absent = leave the game's own filtering; 2/4/8/16 = force that anisotropy on

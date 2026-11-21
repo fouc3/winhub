@@ -407,7 +407,7 @@ internal fun xmbChangeExeMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
     lateinit var browse: XmbBrowse
     browse = XmbBrowse(
-        xmb, "Select the game's .exe", XmbTools.storageRoots(ctx, driveC),
+        xmb, I18n.s(R.string.ui_select_the_game_s_exe), XmbTools.storageRoots(ctx, driveC),
         accept = { it.isFile && isSupported(it.name) },
         pickDir = false,
         onPick = { file ->
@@ -454,7 +454,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     var copied by mutableStateOf(false)
     var sizeJob: Job? = null
     val main = XmbOpen()
-    val notAncestor = "That folder doesn't contain this game's .exe. Pick the folder the game runs from."
+    val notAncestor = I18n.s(R.string.ui_that_folder_doesn_t_contain_this_game_s_exe_pick_the)
 
     fun fmt(bytes: Long) = XmbTools.size(ctx, bytes)
 
@@ -699,7 +699,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                         Icons.Filled.Info, ctx,
                     )
                 )
-                addAll(XmbTools.para("hint", "Pick the folder that holds everything the game needs, not just the .exe.", Icons.Filled.Info, ctx))
+                addAll(XmbTools.para("hint", I18n.s(R.string.ui_pick_the_folder_that_holds_everything_the_game_needs), Icons.Filled.Info, ctx))
             }
         }
     }
@@ -774,7 +774,7 @@ internal fun xmbScrapeCoverMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             covers.forEachIndexed { i, (thumb, url) ->
                 add(
                     XmbRow.Action(
-                        key = "c:$url", label = "Cover ${i + 1}", icon = Icons.Filled.Image, thumbnail = thumb,
+                        key = "c:$url", label = I18n.s(R.string.ui_cover, i + 1), icon = Icons.Filled.Image, thumbnail = thumb,
                         thumbnailLarge = true,
                         disabledReason = if (saving) I18n.s(R.string.ui_saving_cover) else null,
                     ) { useCover(url) }
@@ -987,8 +987,8 @@ private fun xmbRestoreContainerMenu(xmb: XmbScope, zip: File, parent: XmbOpen): 
                             xmb.confirm(
                                 XmbConfirm(
                                     title = I18n.s(R.string.ui_restore_saves),
-                                    message = "Restore ${zip.name} into \"$cname\"? Save files already there with the same names are replaced.",
-                                    okLabel = "Restore",
+                                    message = I18n.s(R.string.ui_restore_into_confirm, zip.name, cname),
+                                    okLabel = I18n.s(R.string.ui_restore),
                                 )
                             ) { restore(c) }
                         }

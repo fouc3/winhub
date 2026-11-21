@@ -148,7 +148,7 @@ private fun FmCheckRow(label: String, icon: ImageVector, checked: Boolean, onCli
                 .background(if (checked) DeckPalette.primary else androidx.compose.ui.graphics.Color.Transparent)
                 .border(2.dp, if (checked) DeckPalette.primary else DeckPalette.onSurfaceVariant, CircleShape),
         ) {
-            if (checked) Icon(Icons.Filled.Check, contentDescription = "On", tint = DeckPalette.onPrimary, modifier = Modifier.size(16.dp))
+            if (checked) Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_on), tint = DeckPalette.onPrimary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -339,7 +339,7 @@ internal fun DeckFmPropertiesDialog(
     }
 
     DeckFmDialog(
-        title = "Properties",
+        title = I18n.s(R.string.ui_properties),
         subtitle = file.name,
         onDismiss = onDismiss,
         confirmLabel = "Done",
@@ -382,7 +382,7 @@ internal fun DeckFmPropertiesDialog(
         val hiddenSupported = state?.hiddenSupported == true
         val hiddenEnabled = state != null && hiddenSupported && !busy
         DeckRow(
-            label = "Hidden",
+            label = I18n.s(R.string.ui_hidden),
             hint = if (state != null && !hiddenSupported) "This storage can't store the hidden flag."
             else I18n.s(R.string.ui_marks_the_file_hidden_in_windows_wine_s_hidden_attrib),
         ) {

@@ -41,7 +41,7 @@ public final class WaylandHdr {
     /** The extra's key on the container and on a shortcut. */
     public static final String EXTRA = "waylandHdr";
 
-    public static final String TITLE = I18n.s(R.string.ui_hdr_output_hdr10);
+    public static String TITLE = I18n.s(R.string.ui_hdr_output_hdr10);
 
     /** The setting's help text (every editor shows the same words). */
     public static final String HELP_TEXT =

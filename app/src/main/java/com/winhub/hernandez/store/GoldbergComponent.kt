@@ -144,7 +144,7 @@ object GoldbergComponent {
         val url = o.optString("url").trim()
         if (url.isEmpty()) return null
         return Catalog(
-            name = o.optString("name").ifBlank { "Steam Emulator (Goldberg)" },
+            name = o.optString("name").ifBlank { I18n.s(R.string.ui_steam_emulator_goldberg) },
             version = o.optInt("version", 1),
             url = url,
             fileSize = o.optString("file_size").toLongOrNull() ?: o.optLong("file_size", 0L),

@@ -66,7 +66,7 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
             errorText = null
             started = true
             pct = 0
-            status = "Connecting..."
+            status = I18n.s(R.string.ui_connecting_2)
             cancelled.set(false)
             DownloadRegistry.init(appCtx)
             DownloadScope.io.launch {
@@ -136,7 +136,7 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                         installPath = installDir.absolutePath,
                         bytes = prefs.getLong("amazon_size_${game.productId}", 0L),
                     )
-                    main.post { finished = true; pct = 100; status = "Installed." }
+                    main.post { finished = true; pct = 100; status = I18n.s(R.string.ui_installed_3) }
                 } catch (e: Exception) {
                     if (!cancelled.get()) {
                         StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, e.message ?: I18n.s(R.string.ui_unknown_error_2))
@@ -147,7 +147,7 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
         },
         onCancel = {
             cancelled.set(true)
-            status = "Cancelling..."
+            status = I18n.s(R.string.ui_cancelling)
         },
     )
 }

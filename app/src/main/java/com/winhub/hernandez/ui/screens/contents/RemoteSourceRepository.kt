@@ -53,7 +53,7 @@ class RemoteSourceRepository(private val context: Context) {
             downloadedKeys.remove("$sourceName::$componentType::$fileName")
         }
 
-        const val GPU_DRIVER_TYPE = "GPU Drivers"
+        val GPU_DRIVER_TYPE = I18n.s(R.string.ui_gpu_drivers)
         val GPU_DRIVER_KEYWORDS = listOf("turnip", "adreno", "qualcomm", "mesa")
 
         /** Display name of the built-in Official catalog source (ContentsManager.REMOTE_PROFILES). */

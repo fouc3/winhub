@@ -2,6 +2,9 @@ package com.winhub.hernandez.contents;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -165,7 +168,7 @@ public class WaylandGameDriverManager {
             }
             if (soName == null) {
                 throw new IllegalArgumentException("No libvulkan_freedreno*.so in this zip. A Turnip zip made for "
-                        + "Android (vulkan.adXXXX.so) is not a Wayland game driver.");
+                        + I18n.s(R.string.ui_android_vulkan_adxxxx_so_is_not_a_wayland_game_driver));
             }
             File so = new File(tmpDir, LIB_NAME);
             if (!isAarch64Elf(so)) {

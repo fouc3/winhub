@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.runtime.Composable
 import com.winhub.hernandez.core.WineUtils
 
@@ -11,7 +14,7 @@ import com.winhub.hernandez.core.WineUtils
 @Composable
 internal fun DeckStartupServiceRows(enabled: Set<String>, onToggle: (rawName: String, on: Boolean) -> Unit) {
     DeckConfigNote(
-        "Custom starts with every service off. Turn on only what you need. " +
+        I18n.s(R.string.ui_custom_starts_with_every_service_off_turn_on_only_what_y_2) +
             "Disabling Wine Bus/HID can break controllers.",
     )
     WineUtils.STARTUP_SERVICES.forEachIndexed { i, entry ->

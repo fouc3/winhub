@@ -378,7 +378,7 @@ private fun DeckQuickMenu(onDismiss: () -> Unit, onGo: (String) -> Unit) {
         ) {
             Text(I18n.s(R.string.ui_quick_menu), color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             QuickLevelRow(
-                label = "Volume",
+                label = I18n.s(R.string.ui_volume),
                 icon = Icons.Filled.VolumeUp,
                 level = volume / maxVolume.toFloat(),
                 onMinus = {

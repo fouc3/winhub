@@ -1345,7 +1345,7 @@ private fun GameGridTile(
                         )
                         .padding(horizontal = 4.dp, vertical = 2.dp),
                 ) {
-                    Text("Gen ${game.generation}", fontSize = 8.sp, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(I18n.s(R.string.ui_gen, game.generation), fontSize = 8.sp, color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
 
@@ -1483,7 +1483,7 @@ private fun InstallConfirmDialog(
 ) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Install ${game.title}?") },
+        title = { Text(I18n.s(R.string.ui_install_2, game.title)) },
         text = {
             Column {
                 val sizeText = if (gameSize > 0) "Game size:  ${GogDownloadManager.formatBytes(gameSize)}"
@@ -1498,7 +1498,7 @@ private fun InstallConfirmDialog(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "Available storage:  ${GogDownloadManager.formatBytes(freeBytes)}",
+                    text = I18n.s(R.string.ui_available_storage_3, GogDownloadManager.formatBytes(freeBytes)),
                     fontSize = 14.sp,
                     color = if (notEnoughSpace) MaterialTheme.colorScheme.error
                     else Color(0xFF88CC88), // semantic storage-ok green
@@ -1518,7 +1518,7 @@ private fun InstallConfirmDialog(
             TextButton(
                 onClick = onConfirm,
                 enabled = canInstall,
-            ) { Text("Install", color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
+            ) { Text(I18n.s(R.string.ui_install), color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }

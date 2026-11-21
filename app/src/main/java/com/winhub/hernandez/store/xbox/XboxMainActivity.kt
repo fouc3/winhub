@@ -473,7 +473,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
     Column(modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState()).padding(top = 12.dp)) {
         StoreSection(title = I18n.s(R.string.ui_account)) {
             Text(account, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-            Text("${state.games.size} PC games · ${state.games.count { it.gamePass }} through PC Game Pass · ${state.installedIds.size} installed",
+            Text(I18n.s(R.string.ui_pc_games_through_pc_game_pass_installed, state.games.size, state.games.count { it.gamePass }, state.installedIds.size),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         StoreSection(title = I18n.s(R.string.ui_cloud_saves_experimental)) {

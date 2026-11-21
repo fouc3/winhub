@@ -60,12 +60,12 @@ fun UpdateHost() {
     val state by UpdateManager.download.collectAsState()
     when (val s = state) {
         is DownloadState.Downloading -> UpdateProgressCard(
-            title = "Updating to V ${s.info.versionName}",
+            title = I18n.s(R.string.ui_updating_to_v, s.info.versionName),
             subtitle = if (s.small) "Downloading a small update…" else I18n.s(R.string.ui_downloading_the_update),
             bytes = s.bytes, total = s.total, bytesPerSec = s.bytesPerSec,
         )
         is DownloadState.Rebuilding -> UpdateProgressCard(
-            title = "Updating to V ${s.info.versionName}",
+            title = I18n.s(R.string.ui_updating_to_v, s.info.versionName),
             subtitle = I18n.s(R.string.ui_building_the_update_from_the_installed_app),
             bytes = s.bytes, total = s.total, bytesPerSec = 0L,
         )

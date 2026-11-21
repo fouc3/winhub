@@ -330,7 +330,7 @@ private fun SlotPicker(row: XServerDialogState.PlayerSlotRow, state: XServerDial
             onClick = { expanded = true },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(9.dp),
-        ) { Text("Slot: $selectedLabel", fontSize = 12.sp) }
+        ) { Text(I18n.s(R.string.ui_slot_2, selectedLabel), fontSize = 12.sp) }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

@@ -1407,7 +1407,7 @@ fun ShortcutsScreen(
                     }
                     MenuOptionCard(
                         title = I18n.s(R.string.ui_add_games_folder),
-                        subtitle = "Pick the folder holding all your games — each one is scanned for its .exe",
+                        subtitle = I18n.s(R.string.ui_pick_the_folder_holding_all_your_games_each_one_is_scann),
                         icon = Icons.Default.Folder,
                     ) {
                         showImportMethodPicker = false
@@ -3561,7 +3561,7 @@ internal fun MyAccountDialog(
                         )
                         ErrorText()
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text("Back") }
+                            TextButton(onClick = { showReset = false; error = null }, enabled = !busy) { Text(I18n.s(R.string.ui_back)) }
                             Spacer(Modifier.weight(1f))
                             Button(
                                 enabled = !busy && username.isNotBlank() && recoveryKeyInput.isNotBlank() && newPassword.isNotBlank(),
@@ -3755,7 +3755,7 @@ private fun SmartComponentInstallRow(
                             shortlist.closest.isEmpty() -> onBrowseAll()
                             else -> expanded = !expanded
                         }
-                    }) { Text("Install", color = MaterialTheme.colorScheme.primary) }
+                    }) { Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary) }
                 }
             }
         }
@@ -3812,7 +3812,7 @@ private fun SmartComponentInstallRow(
             onDismissRequest = { confirmProfile = null },
             title = { Text(I18n.s(R.string.ui_install_p_vername_2)) },
             text = { Text(I18n.s(R.string.ui_download_and_install_mc_type_p_vername_then_apply_it)) },
-            confirmButton = { TextButton(onClick = { install(p) }) { Text("Install") } },
+            confirmButton = { TextButton(onClick = { install(p) }) { Text(I18n.s(R.string.ui_install)) } },
             dismissButton = { TextButton(onClick = { confirmProfile = null }) { Text("Cancel") } },
         )
     }
@@ -3917,7 +3917,7 @@ private fun SmartDriverInstallRow(
                 )
                 busy || loading -> CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                 else -> TextButton(onClick = { onInstallClick() }) {
-                    Text("Install", color = MaterialTheme.colorScheme.primary)
+                    Text(I18n.s(R.string.ui_install), color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -3987,7 +3987,7 @@ private fun SmartDriverInstallRow(
             onDismissRequest = { confirmEntry = null },
             title = { Text(I18n.s(R.string.ui_quick_install_e_displayname)) },
             text = { Text(I18n.s(R.string.ui_download_and_install_this_turnip_driver_from_e_source)) },
-            confirmButton = { TextButton(onClick = { install(e) }) { Text("Install") } },
+            confirmButton = { TextButton(onClick = { install(e) }) { Text(I18n.s(R.string.ui_install)) } },
             dismissButton = { TextButton(onClick = { confirmEntry = null }) { Text("Cancel") } },
         )
     }
@@ -4291,7 +4291,7 @@ internal fun CommunityCatalogBrowser(
                 ) {
                     if (selectedGame != null) {
                         IconButton(onClick = { selectedIdentity = null }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.Filled.ArrowBack, contentDescription = I18n.s(R.string.ui_back))
                         }
                     }
                     Text(
@@ -5352,7 +5352,7 @@ private fun ShortcutOverflowButton(
             modifier = Modifier.outlinedMenuCard(),
         ) {
             DropdownMenuItem(
-                text = { Text("Settings") },
+                text = { Text(I18n.s(R.string.ui_settings)) },
                 leadingIcon = { Icon(Icons.Filled.Settings, null) },
                 onClick = { menuExpanded = false; onSettings() },
             )
@@ -5615,7 +5615,7 @@ private fun ShortcutGridItem(
             onDismissRequest = { menuExpanded = false },
             modifier = Modifier.outlinedMenuCard(),
         ) {
-            DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
+            DropdownMenuItem(text = { Text(I18n.s(R.string.ui_settings)) }, leadingIcon = { Icon(Icons.Filled.Settings, null) }, onClick = { menuExpanded = false; onSettings() })
             MenuItemDivider()
             LocalGameDoctor.current?.let { openDoctor ->
                 DropdownMenuItem(text = { Text(I18n.s(R.string.ui_game_doctor)) }, leadingIcon = { Icon(Icons.Filled.Healing, null) }, onClick = { menuExpanded = false; openDoctor(shortcut) })
@@ -7575,7 +7575,7 @@ internal fun ShortcutSettingsDialogScreen(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Storage", fontSize = 14.sp)
+                            Text(I18n.s(R.string.ui_storage), fontSize = 14.sp)
                             Text(
                                 storageLabel,
                                 fontSize = 11.sp,
@@ -8290,7 +8290,7 @@ internal fun ShortcutSettingsDialogScreen(
                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                     DpDrop(
                         dp, "emulator",
-                        label = "Emulator",
+                        label = I18n.s(R.string.ui_emulator),
                         options = EmulatorLabels.options(emulatorEntries, isArm64EC),
                         selected = emulatorShown,
                         onSelect = {
@@ -10000,7 +10000,7 @@ private fun DeckShortcutSettingsBody(
                                         if (archLoaded && !isArm64EC) EmulatorLabels.box64EntryOf(emulatorEntries)
                                         else EmulatorLabels.display(selectedEmulator, isArm64EC)
                                     DeckChoiceRow(
-                                        label = "Emulator",
+                                        label = I18n.s(R.string.ui_emulator),
                                         options = EmulatorLabels.options(emulatorEntries, isArm64EC).map { it to it },
                                         selected = emulatorShown,
                                         onPick = { selectedEmulator = EmulatorLabels.fromDisplay(it, emulatorEntries, isArm64EC) },
@@ -11283,7 +11283,7 @@ private fun ScWinComponentsTab(components: androidx.compose.runtime.snapshots.Sn
             Spacer(Modifier.height(8.dp))
         }
         if (general.isNotEmpty()) {
-            SectionBox(title = "General") {
+            SectionBox(title = I18n.s(R.string.ui_general)) {
                 general.forEach { comp ->
                     LabeledDropdown(
                         label = comp.label,
@@ -12462,7 +12462,7 @@ internal fun ChangeExecutableCoordinator(
         }
         val file = InAppFilePicker.pickedPath(result.data)?.let { File(it) }
         if (file == null || !file.isFile || !isSupported(file.name)) {
-            Toast.makeText(context, "Pick a .exe, .lnk, or .desktop file.", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18n.s(R.string.ui_pick_a_exe_lnk_or_desktop_file), Toast.LENGTH_LONG).show()
             onFinished(); return@rememberLauncherForActivityResult
         }
         // Ask about launch args only when there are some to keep; otherwise apply straight away.
@@ -12476,7 +12476,7 @@ internal fun ChangeExecutableCoordinator(
             InAppFilePicker.buildIntent(
                 context,
                 InAppFilePicker.SHORTCUT,
-                "Select the game's .exe",
+                I18n.s(R.string.ui_select_the_game_s_exe),
                 initialDir = info.exeAndroid?.parentFile?.absolutePath,
                 driveCPath = driveC?.absolutePath,
             )
@@ -12507,7 +12507,7 @@ internal fun ChangeExecutableCoordinator(
                     ) {
                         Text(I18n.s(R.string.ui_keep_arguments), color = MaterialTheme.colorScheme.primary)
                         Text(
-                            "Launch the new .exe with the same arguments",
+                            I18n.s(R.string.ui_launch_the_new_exe_with_the_same_arguments),
                             color = OnSurfaceVariant,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -12519,7 +12519,7 @@ internal fun ChangeExecutableCoordinator(
                     ) {
                         Text(I18n.s(R.string.ui_clear_arguments), color = MaterialTheme.colorScheme.primary)
                         Text(
-                            "Launch the new .exe with no arguments",
+                            I18n.s(R.string.ui_launch_the_new_exe_with_no_arguments),
                             color = OnSurfaceVariant,
                             style = MaterialTheme.typography.bodySmall,
                         )

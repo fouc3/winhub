@@ -180,7 +180,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
 
     DeckConfigDialog(
         title = I18n.s(R.string.ui_log_manager),
-        subtitle = "Saving to " + (logDir?.absolutePath ?: "—"),
+        subtitle = I18n.s(R.string.ui_saving_to) + (logDir?.absolutePath ?: "—"),
         onDismiss = onClose,
     ) {
         Column(
@@ -207,7 +207,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     DeckGroup("Recording") {
                         LogSwitchRow(
                             "Wine debug", I18n.s(R.string.ui_slows_games_down_for_diagnosing_a_problem_2), wineDebug,
-                            onInfo = { info = "Wine debug" to LogCopy.WINE },
+                            onInfo = { info = I18n.s(R.string.ui_wine_debug) to LogCopy.WINE },
                         ) { wineDebug = it; prefs.edit().putBoolean("enable_wine_debug", it).apply() }
                         if (wineDebug) {
                             val chips = buildList<Triple<String, Boolean, () -> Unit>> {
@@ -237,7 +237,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     DeckGroup("App") {
                         LogSwitchRow(
                             "Android logcat", I18n.s(R.string.ui_winhub_s_own_output_only), logcat,
-                            onInfo = { info = "Android logcat" to LogCopy.LOGCAT },
+                            onInfo = { info = I18n.s(R.string.ui_android_logcat) to LogCopy.LOGCAT },
                         ) { logcat = it; prefs.edit().putBoolean("enable_logcat", it).apply() }
                         PrefSwitchRow(prefs, "enable_crash_reports", true, I18n.s(R.string.ui_crash_reports),
                             I18n.s(R.string.ui_nothing_runs_until_something_crashes_2),
@@ -279,7 +279,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         )
                         LogSwitchRow(
                             "Folder for each game", I18n.s(R.string.ui_each_game_keeps_its_own_folder_2), perGame,
-                            onInfo = { info = "Folder for each game" to LogCopy.PER_GAME },
+                            onInfo = { info = I18n.s(R.string.ui_folder_for_each_game) to LogCopy.PER_GAME },
                         ) { perGame = it; prefs.edit().putBoolean(LogLocation.PREF_PER_GAME, it).apply(); refreshTick++ }
                     }
                     DeckGroup("Housekeeping") {
@@ -308,7 +308,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 LogAction("Browse", LogActionKind.NEUTRAL) { browseDir = logDir }
                                 LogAction(
-                                    "Clear all", LogActionKind.DANGER,
+                                    I18n.s(R.string.ui_clear_all), LogActionKind.DANGER,
                                     modifier = Modifier.alpha(if (entries.isEmpty()) 0.4f else 1f),
                                 ) { if (entries.isNotEmpty()) confirmClearAll = true }
                             }
@@ -468,7 +468,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
             DeckConfigNote(
                 "Saved with your logs under the \"" + ExitReasonReporter.FOLDER +
                     "\" folder. Exit #0 is the most recent; a NATIVE_CRASH entry includes the " +
-                    "signal and the top backtrace frames."
+                    I18n.s(R.string.ui_signal_and_the_top_backtrace_frames)
             )
             Text(
                 report,

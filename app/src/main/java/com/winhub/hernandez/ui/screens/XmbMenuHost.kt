@@ -664,7 +664,7 @@ private fun XmbPickerPanel(
                 p.row.label, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold,
                 maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f),
             )
-            Text("${p.row.options.size} options", color = Color(0xFF9A9AA5), fontSize = 12.sp)
+            Text(I18n.s(R.string.ui_options_2, p.row.options.size), color = Color(0xFF9A9AA5), fontSize = 12.sp)
         }
         Box(Modifier.fillMaxWidth().height(1.dp).background(Color.White.copy(alpha = 0.08f)))
         LazyColumn(state = listState, modifier = Modifier.weight(1f).fillMaxWidth()) {

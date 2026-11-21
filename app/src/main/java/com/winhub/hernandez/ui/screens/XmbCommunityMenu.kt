@@ -449,7 +449,7 @@ internal fun xmbCommunityConfigsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu
         val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val start = File(downloads, "bannerlator/game-configs").takeIf { it.isDirectory } ?: downloads
         return xmbFileBrowserMenu(
-            xmb, "Select a config .json", start, XmbTools.storageRoots(ctx, null),
+            xmb, I18n.s(R.string.ui_select_a_config_json), start, XmbTools.storageRoots(ctx, null),
             accept = { it.isFile && it.name.lowercase().endsWith(".json") },
             onPick = { f ->
                 xmb.pop()   // the browser's one remaining column

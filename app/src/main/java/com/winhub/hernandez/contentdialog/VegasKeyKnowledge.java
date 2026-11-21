@@ -5,6 +5,9 @@ import com.winhub.hernandez.util.I18n;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -790,7 +793,7 @@ public final class VegasKeyKnowledge {
         }
 
         private IllegalArgumentException error(String msg) {
-            return reject("parse error at " + i + ": " + msg);
+            return reject(I18n.s(R.string.ui_parse_error_at) + i + ": " + msg);
         }
     }
 }
