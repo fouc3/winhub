@@ -737,7 +737,7 @@ internal fun DeckHubGamePage(
                 Spacer(Modifier.height(18.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     HubGradientButton(
-                        text = "Play",
+                        text = I18n.s(R.string.ui_play),
                         modifier = Modifier.focusRequester(playFocus),
                         onClick = onPlay,
                     )
@@ -839,7 +839,7 @@ internal fun DeckAddModeMenu(onPick: (HubAddMode) -> Unit, onDismiss: () -> Unit
                 icon = Icons.Filled.SportsEsports,
             ) { onPick(HubAddMode.CRONOS) }
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text("Cancel", color = DeckPalette.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_cancel_2), color = DeckPalette.onSurfaceVariant)
             }
         }
     }
@@ -1134,7 +1134,7 @@ internal fun HubConfirmDialog(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     OutlinedButton(onClick = onDismiss) {
-                        Text("Cancel", color = DeckPalette.onBackground)
+                        Text(I18n.s(R.string.ui_cancel_2), color = DeckPalette.onBackground)
                     }
                     Spacer(Modifier.width(10.dp))
                     HubGradientButton(I18n.s(R.string.add)) {
@@ -1305,7 +1305,7 @@ internal fun DeckLaunchMethodDialog(
                 modifier = Modifier.fillMaxWidth(),
             )
             TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text("Cancel", color = DeckPalette.onSurfaceVariant)
+                Text(I18n.s(R.string.ui_cancel_2), color = DeckPalette.onSurfaceVariant)
             }
         }
     }

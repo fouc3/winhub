@@ -178,7 +178,7 @@ internal fun DeckInstallShell(
         Spacer(Modifier.size(14.dp))
 
         if (finished || installed) {
-            Text("Installed", color = Deck.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text(I18n.s(R.string.ui_installed_7), color = Deck.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
             if (addGame != null) {
                 Spacer(Modifier.size(10.dp))
                 DeckButton(I18n.s(R.string.xmb_hint_add_game), primary = true) { addOpen = true }

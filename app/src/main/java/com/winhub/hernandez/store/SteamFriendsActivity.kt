@@ -373,7 +373,7 @@ fun SteamSocialSettingsSheet(onDismiss: () -> Unit) {
                 )
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done)) } },
     )
 }
 

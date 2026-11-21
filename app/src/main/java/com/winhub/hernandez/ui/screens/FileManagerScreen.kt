@@ -890,7 +890,7 @@ fun FileManagerScreen(
                     if (folderName.isNotBlank()) createFolder(currentDir, folderName)
                 }) { Text(I18n.s(R.string.create)) }
             },
-            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showNewFolderDialog = false }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -933,7 +933,7 @@ fun FileManagerScreen(
                     if (file != null && newName.isNotBlank()) performRename(file, newName)
                 }) { Text(I18n.s(R.string.ui_rename_2)) }
             },
-            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { renameTarget = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -972,9 +972,9 @@ fun FileManagerScreen(
                 TextButton(onClick = {
                     selectedEntry = null
                     performDelete(file)
-                }) { Text("Delete") }
+                }) { Text(I18n.s(R.string.ui_delete_5)) }
             },
-            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { selectedEntry = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -1031,9 +1031,9 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = bulkDeleteNow) { Text("Delete", color = MaterialTheme.colorScheme.error) }
+                TextButton(onClick = bulkDeleteNow) { Text(I18n.s(R.string.ui_delete_5), color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingBulkDelete = emptyList() }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -1085,7 +1085,7 @@ fun FileManagerScreen(
             confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { conflictChoice = ConflictChoice.SKIP; pendingConflict = null }) {
-                    Text("Cancel")
+                    Text(I18n.s(R.string.ui_cancel_2))
                 }
             },
         )
@@ -1166,7 +1166,7 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingRun = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -1207,7 +1207,7 @@ fun FileManagerScreen(
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingAddShortcut = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -1880,12 +1880,12 @@ fun FileManagerScreen(
                     onClick = { pendingBulkDelete = entries.filter { it.absolutePath in selectedPaths } },
                     contentPadding = selBarPadding,
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
-                ) { Text("Delete", color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.ui_delete_5), color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
                 Spacer(Modifier.width(4.dp))
                 OutlinedButton(
                     onClick = { selectionMode = false; selectedPaths = emptySet() },
                     contentPadding = selBarPadding,
-                ) { Text("Done", fontSize = 12.sp) }
+                ) { Text(I18n.s(R.string.ui_done), fontSize = 12.sp) }
             }
         }
 
@@ -1908,7 +1908,7 @@ fun FileManagerScreen(
                     color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { clipboardFiles = emptyList(); isCutOperation = false }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+                    Text(I18n.s(R.string.ui_cancel_2), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
             }
         }
@@ -1940,7 +1940,7 @@ fun FileManagerScreen(
                             isOperationRunning = false
                             operationDeterminate = false
                             loadDirectory(currentDir, resetScroll = false)
-                        }) { Text("Cancel", fontSize = 12.sp) }
+                        }) { Text(I18n.s(R.string.ui_cancel_2), fontSize = 12.sp) }
                     }
                 }
                 Spacer(Modifier.height(4.dp))
@@ -2331,7 +2331,7 @@ private fun FileContextMenuItems(
     )
     MenuItemDivider()
     DropdownMenuItem(
-        text = { Text("Delete") },
+        text = { Text(I18n.s(R.string.ui_delete_5)) },
         leadingIcon = { Icon(Icons.Filled.Delete, null, tint = MaterialTheme.colorScheme.primary) },
         onClick = { onDismissMenu(); onDelete() },
     )
@@ -2976,7 +2976,7 @@ private fun FilePropertiesDialog(
                 )
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done)) } },
     )
 }
 

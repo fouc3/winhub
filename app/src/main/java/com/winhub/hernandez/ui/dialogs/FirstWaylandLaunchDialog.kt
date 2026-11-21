@@ -41,6 +41,6 @@ fun FirstWaylandLaunchDialog(state: XServerDialogState) {
             )
         },
         confirmButton = { TextButton(onClick = { choose(true) }) { Text(I18n.s(R.string.ui_launch)) } },
-        dismissButton = { TextButton(onClick = { choose(false) }) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = { choose(false) }) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }

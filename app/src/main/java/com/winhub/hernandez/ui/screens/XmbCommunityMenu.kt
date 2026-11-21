@@ -821,7 +821,7 @@ private fun xmbCommunityApplyMenu(
             buildList<XmbRow> {
                 add(XmbRow.Header("title", if (r.ok) I18n.s(R.string.ui_config_applied) else I18n.s(R.string.ui_couldn_t_apply)))
                 add(
-                    XmbRow.Action(key = "done", label = "Done", icon = Icons.Filled.Check) {
+                    XmbRow.Action(key = "done", label = I18n.s(R.string.ui_done), icon = Icons.Filled.Check) {
                         val reload = reloadPending
                         reloadPending = false
                         me.close(xmb)
@@ -934,7 +934,7 @@ private fun xmbReplaceUploadMenu(xmb: XmbScope, gameName: String, gate: Completa
     ) {
         listOf<XmbRow>(
             XmbRow.Header("title", I18n.s(R.string.ui_replace_your_shared_config)),
-            XmbRow.Action(key = "cancel", label = "Cancel", icon = Icons.Filled.Close) { me.close(xmb) },
+            XmbRow.Action(key = "cancel", label = I18n.s(R.string.ui_cancel_2), icon = Icons.Filled.Close) { me.close(xmb) },
             XmbRow.Action(key = "replace", label = I18n.s(R.string.ui_replace), icon = Icons.Filled.CloudUpload) {
                 gate.complete(true)
                 me.close(xmb)
@@ -1043,7 +1043,7 @@ private fun xmbMyUploadMenu(xmb: XmbScope, row: MyUploadRow, onDeleted: (String)
                 subtitle = "${desc.length}/500",
                 disabledReason = busy ?: if (descLoading) I18n.s(R.string.ui_loading_description) else null,
             ) { saveDescription(it) },
-            XmbRow.Action(key = "delete", label = "Delete", icon = Icons.Filled.Delete, danger = true, disabledReason = busy) { delete() },
+            XmbRow.Action(key = "delete", label = I18n.s(R.string.ui_delete_5), icon = Icons.Filled.Delete, danger = true, disabledReason = busy) { delete() },
         )
     }
 }

@@ -831,7 +831,7 @@ private fun FooterRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TextButton(onClick = onDismiss) {
-            Text("Cancel", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
+            Text(I18n.s(R.string.ui_cancel_2), style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
         }
         Spacer(Modifier.weight(1f))
         Button(

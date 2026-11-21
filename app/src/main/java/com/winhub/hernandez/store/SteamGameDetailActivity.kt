@@ -419,7 +419,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                             TextButton(onClick = {
                                 showCloudDisclaimer = false
                                 pendingCloudMove = null
-                            }) { Text("Cancel") }
+                            }) { Text(I18n.s(R.string.ui_cancel_2)) }
                         },
                     )
                 }
@@ -523,7 +523,7 @@ class SteamGameDetailActivity : ComponentActivity(), SteamRepository.SteamEventL
                         title = { Text(I18n.s(R.string.ui_steam_emulator_goldberg)) },
                         text = { Text(msg) },
                         confirmButton = {
-                            TextButton(onClick = { goldbergMessage = null }) { Text("OK") }
+                            TextButton(onClick = { goldbergMessage = null }) { Text(I18n.s(R.string.ui_ok)) }
                         },
                     )
                 }
@@ -1784,7 +1784,7 @@ private fun SteamGameDetailScreen(
                     if (branches.any { it.name != "public" }) {
                         Spacer(Modifier.height(6.dp))
                         Text(
-                            text = "Branch: " + if (selectedBranch == "public") "public (default)" else selectedBranch,
+                            text = I18n.s(R.string.ui_branch_2) + if (selectedBranch == "public") "public (default)" else selectedBranch,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary,
                         )
@@ -2270,7 +2270,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissDlcSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("Done") }
+                ) { Text(I18n.s(R.string.ui_done)) }
             }
         }
     }
@@ -2389,7 +2389,7 @@ private fun SteamGameDetailScreen(
                     onClick = onDismissBranchSheet,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                ) { Text("Done") }
+                ) { Text(I18n.s(R.string.ui_done)) }
             }
         }
     }
@@ -2989,7 +2989,7 @@ private fun GoldbergModeDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Done") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done)) }
         },
     )
 }
@@ -3454,7 +3454,7 @@ private fun CloudConfirmDialog(
             TextButton(onClick = onConfirm) { Text(action) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }
@@ -3787,7 +3787,7 @@ private fun DownloadSpeedPickerDialog(
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
-                        TextButton(onClick = onDismiss) { Text("Cancel") }
+                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
                         Spacer(Modifier.width(4.dp))
                         Button(
                             onClick = {
@@ -3938,7 +3938,7 @@ private fun DownloadSpeedPickerDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }

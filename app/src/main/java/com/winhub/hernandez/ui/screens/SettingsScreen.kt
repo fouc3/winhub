@@ -534,7 +534,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     }
                 }) { Text(I18n.s(R.string.ui_restore)) }
             },
-            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showRestoreConfirm = false; pendingRestoreUri = null }) { Text(I18n.s(R.string.ui_cancel_2)) } }
         )
     }
 
@@ -1190,7 +1190,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(I18n.s(R.string.cursor_speed), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, modifier = Modifier.weight(1f))
-                Text(I18n.s(R.string.ui_cursorspeed_100_toint), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                Text(I18n.s(R.string.ui_cursorspeed_100_toint, (cursorSpeed * 100).toInt()), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
             }
             Slider(
                 value = cursorSpeed,
@@ -1493,7 +1493,7 @@ private fun ScaleSlider(
                 fontSize = 14.sp,
             )
             Text(
-                text = I18n.s(R.string.ui_value_100_roundtoint),
+                text = I18n.s(R.string.ui_value_100_roundtoint, (value * 100).roundToInt()),
                 color = OnSurface,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,

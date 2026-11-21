@@ -84,7 +84,7 @@ fun VibrationDialog(state: XServerDialogState) {
             }
         },
         confirmButton = {
-            TextButton(onClick = { state.dismiss() }) { Text("OK") }
+            TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.ui_ok)) }
         }
     )
 }

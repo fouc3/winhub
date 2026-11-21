@@ -368,7 +368,7 @@ internal fun SoundsStep(vm: FirstRunViewModel, modifier: Modifier) {
             onClick = { vm.setSounds(ctx, DeckSound.PHONE) },
         ) { SoundGlyph("◉") }
         WizChoice(
-            title = "Off", body = I18n.s(R.string.ui_no_navigation_sounds), selected = snd == DeckSound.OFF,
+            title = I18n.s(R.string.ui_off), body = I18n.s(R.string.ui_no_navigation_sounds), selected = snd == DeckSound.OFF,
             onClick = { vm.setSounds(ctx, DeckSound.OFF) },
         ) { SoundGlyph("∅") }
         Text(I18n.s(R.string.ui_change_it_any_time_in_settings_navigation_sounds), color = DeckPalette.onSurfaceVariant, fontSize = 13.sp)

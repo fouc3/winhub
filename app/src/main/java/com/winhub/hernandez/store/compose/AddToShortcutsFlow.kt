@@ -124,7 +124,7 @@ fun ContainerPickerDialog(
         },
         confirmButton = {},
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }
@@ -154,7 +154,7 @@ fun AddResultDialog(
             title = { Text(I18n.s(R.string.ui_couldn_t_add_shortcut)) },
             text = { Text(result.message) },
             confirmButton = {
-                TextButton(onClick = onDismiss) { Text("OK") }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_ok)) }
             },
         )
     }

@@ -401,7 +401,7 @@ internal fun DeckContainerDetailScreen(
                                 label = I18n.s(R.string.ui_wayland_adapter_settings_2),
                                 hint = I18n.s(R.string.ui_profile_switches_gpu_name_spoof_memory_cap),
                             ) {
-                                DeckValueChip(text = "Open", open = false, onClick = { showWaylandAdapterDialog = true })
+                                DeckValueChip(text = I18n.s(R.string.ui_open_2), open = false, onClick = { showWaylandAdapterDialog = true })
                             }
                             DeckRow(
                                 label = com.winhub.hernandez.display.WaylandHdr.TITLE,
@@ -544,7 +544,7 @@ internal fun DeckContainerDetailScreen(
                                     if (fastGlReason == null) {
                                         DeckToggle(viewModel.fastOpenGL) { viewModel.fastOpenGL = it }
                                     } else {
-                                        Text("Off", color = DeckPalette.onSurfaceVariant)
+                                        Text(I18n.s(R.string.ui_off), color = DeckPalette.onSurfaceVariant)
                                     }
                                 },
                             )

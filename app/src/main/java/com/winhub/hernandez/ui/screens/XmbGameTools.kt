@@ -551,7 +551,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             ) {
                 val p = progress
                 buildList<XmbRow> {
-                    add(XmbRow.Action(key = "cancel", label = "Cancel", icon = Icons.Filled.Close) { cancel.set(true) })
+                    add(XmbRow.Action(key = "cancel", label = I18n.s(R.string.ui_cancel_2), icon = Icons.Filled.Close) { cancel.set(true) })
                     val pct = if (p.totalBytes > 0L) "${(p.copiedBytes * 100L / p.totalBytes).coerceIn(0L, 100L)}%" else ""
                     add(XmbRow.Info("progress", I18n.s(R.string.ui_copying_to_drive_c), Icons.Filled.DriveFileMove, value = pct))
                     if (p.totalBytes > 0L) add(XmbRow.Info("bytes", "${fmt(p.copiedBytes)} / ${fmt(p.totalBytes)}", Icons.Filled.Storage))

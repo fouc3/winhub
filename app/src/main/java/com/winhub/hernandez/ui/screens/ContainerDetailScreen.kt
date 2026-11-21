@@ -1983,7 +1983,7 @@ private fun WineConfigTab(
         // System section — "Run as administrator" (default ON) toggles UAC in the prefix. Backed by
         // EnableLUA in .wine/system.reg (source of truth): the VM reads it on load and writes it on
         // save/create (mirrors the DirectInput mouse-warp registry idiom above).
-        SectionBox(title = "System") {
+        SectionBox(title = I18n.s(R.string.ui_system)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(I18n.s(R.string.ui_run_as_administrator))
@@ -2371,7 +2371,7 @@ private fun AdvancedTab(
             if (viewModel.vibrationMode != Container.VIBRATION_MODE_OFF) {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    I18n.s(R.string.ui_stringresource_r_string_vibration_intensity_label_vie),
+                    I18n.s(R.string.ui_stringresource_r_string_vibration_intensity_label_vie, stringResource(R.string.vibration_intensity_label), viewModel.vibrationIntensity),
                     style = MaterialTheme.typography.bodySmall
                 )
                 Slider(
@@ -5217,7 +5217,7 @@ internal fun DxvkConfigDialog(
                             enabled = !isProcessing,
                             modifier = Modifier.size(40.dp)
                         ) {
-                            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
+                            Icon(Icons.Default.Delete, contentDescription = I18n.s(R.string.ui_delete_5), tint = MaterialTheme.colorScheme.error)
                         }
                         IconButton(
                             onClick = { pickVegasLauncher.launch(InAppFilePicker.buildIntent(context, InAppFilePicker.WCP, I18n.s(R.string.ui_select_vegas_package))) },
@@ -5824,7 +5824,7 @@ internal fun DxvkConfigDialog(
                                     }
                                 }
                             },
-                            confirmButton = { TextButton(onClick = { showCatalogDialog = false }) { Text("OK") } }
+                            confirmButton = { TextButton(onClick = { showCatalogDialog = false }) { Text(I18n.s(R.string.ui_ok)) } }
                         )
                     }
                     if (showKeyDocSheet) {
@@ -5866,7 +5866,7 @@ internal fun DxvkConfigDialog(
                                     }
                                 }
                             },
-                            confirmButton = { TextButton(onClick = { liveReport = null }) { Text("OK") } }
+                            confirmButton = { TextButton(onClick = { liveReport = null }) { Text(I18n.s(R.string.ui_ok)) } }
                         )
                     }
                     // Only meaningful while a config file is actually in play — hidden under
@@ -5905,7 +5905,7 @@ internal fun DxvkConfigDialog(
                                     )
                                 }
                             },
-                            confirmButton = { TextButton(onClick = { showNotes = false }) { Text("OK") } }
+                            confirmButton = { TextButton(onClick = { showNotes = false }) { Text(I18n.s(R.string.ui_ok)) } }
                         )
                     }
                     // Option B backup picker: newest-first list of .bak archives beside the live
@@ -5972,7 +5972,7 @@ internal fun DxvkConfigDialog(
                             onDismissRequest = { valuePickerRow = null },
                             title = { Text(row.key) },
                             confirmButton = {
-                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text("Done") }
+                                TextButton(onClick = { if (customValueDraft.isNotBlank()) applyValue(row.key, customValueDraft.trim()); valuePickerRow = null }) { Text(I18n.s(R.string.ui_done)) }
                             },
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -6052,7 +6052,7 @@ internal fun DxvkConfigDialog(
                                         Spacer(Modifier.height(16.dp))
                                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                             TextButton(onClick = { pendingDeleteKey = null }) {
-                                                Text("Cancel")
+                                                Text(I18n.s(R.string.ui_cancel_2))
                                             }
                                             Button(
                                                 onClick = {
@@ -6485,7 +6485,7 @@ internal fun FpsCounterConfigDialog(
                 }
 
                 Spacer(Modifier.height(12.dp))
-                Text(I18n.s(R.string.ui_hud_scale_hudscale), style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_hud_scale_hudscale, hudScale), style = MaterialTheme.typography.bodySmall)
                 Slider(
                     value = hudScale.toFloat(),
                     onValueChange = { hudScale = it.toInt().coerceAtLeast(50) },
@@ -6493,7 +6493,7 @@ internal fun FpsCounterConfigDialog(
                 )
 
                 Spacer(Modifier.height(4.dp))
-                Text(I18n.s(R.string.ui_hud_opacity_hudopacity), style = MaterialTheme.typography.bodySmall)
+                Text(I18n.s(R.string.ui_hud_opacity_hudopacity, hudOpacity), style = MaterialTheme.typography.bodySmall)
                 Slider(
                     value = hudOpacity.toFloat(),
                     onValueChange = { hudOpacity = it.toInt() },
@@ -7077,7 +7077,7 @@ private fun VGlossarySheet(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("OK")
+                        Text(I18n.s(R.string.ui_ok))
                     }
                 }
             }

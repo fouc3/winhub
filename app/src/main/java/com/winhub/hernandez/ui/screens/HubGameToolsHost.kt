@@ -101,7 +101,7 @@ private fun HubCloneDialog(s: Shortcut, containers: List<Container>, onClose: ()
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }
 
@@ -172,7 +172,7 @@ private fun HubCoverSearchDialog(s: Shortcut, onClose: () -> Unit, onSaved: () -
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onClose) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }
 

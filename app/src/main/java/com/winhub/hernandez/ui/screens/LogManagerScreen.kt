@@ -578,7 +578,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             context, "Deleted $n file${if (n == 1) "" else "s"}",
                             android.widget.Toast.LENGTH_SHORT
                         ).show()
-                    }) { Text("Delete", color = DangerRed) }
+                    }) { Text(I18n.s(R.string.ui_delete_5), color = DangerRed) }
                 }
             },
             dismissButton = {
@@ -614,7 +614,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     ).show()
                 }) { Text(I18n.s(R.string.ui_delete_all), color = DangerRed) }
             },
-            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmClearAll = false }) { Text(I18n.s(R.string.ui_cancel_2)) } }
         )
     }
 

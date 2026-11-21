@@ -696,7 +696,7 @@ fun InputControlsScreen() {
                                     )
                                     DeckMenuDivider()
                                     DropdownMenuItem(
-                                        text = { Text("Delete", color = DeckPalette.onBackground) },
+                                        text = { Text(I18n.s(R.string.ui_delete_5), color = DeckPalette.onBackground) },
                                         leadingIcon = { Icon(Icons.Default.Delete, null, tint = DeckPalette.onSurfaceVariant) },
                                         onClick = {
                                             showOverflow = false

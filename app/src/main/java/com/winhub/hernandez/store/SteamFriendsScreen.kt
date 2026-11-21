@@ -733,7 +733,7 @@ private fun OutgoingRequestRow(
         }
         Spacer(Modifier.width(8.dp))
         TextButton(onClick = onCancel, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-            Text("Cancel")
+            Text(I18n.s(R.string.ui_cancel_2))
         }
     }
 }
@@ -772,7 +772,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
             val link = withContext(Dispatchers.IO) { SteamQuickInvite.create() }
             inviteLink = link
             generating = false
-            if (link == null) Toast.makeText(ctx, "Couldn't create an invite link", Toast.LENGTH_SHORT).show()
+            if (link == null) Toast.makeText(ctx, I18n.s(R.string.ui_couldn_t_create_an_invite_link), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -1027,7 +1027,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done)) } },
     )
 }
 

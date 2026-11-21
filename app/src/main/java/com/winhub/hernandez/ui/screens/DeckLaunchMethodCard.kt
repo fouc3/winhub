@@ -214,7 +214,7 @@ internal fun DeckLaunchLandscapeCard(
                             .clickable(onClick = onDismiss),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text("Cancel", color = cs.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                        Text(I18n.s(R.string.ui_cancel_2), color = cs.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }

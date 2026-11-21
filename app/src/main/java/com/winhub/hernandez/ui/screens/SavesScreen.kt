@@ -413,10 +413,10 @@ private fun NewSaveDialog(
                 } else {
                     Toast.makeText(context, I18n.s(R.string.ui_fill_all_fields), Toast.LENGTH_SHORT).show()
                 }
-            }) { Text("OK") }
+            }) { Text(I18n.s(R.string.ui_ok)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }
@@ -453,10 +453,10 @@ private fun EditSaveDialog(
                 } else {
                     Toast.makeText(context, I18n.s(R.string.name_required), Toast.LENGTH_SHORT).show()
                 }
-            }) { Text("OK") }
+            }) { Text(I18n.s(R.string.ui_ok)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }
@@ -516,7 +516,7 @@ private fun TransferSaveDialog(
             }) { Text(I18n.s(R.string.transfer)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }
@@ -575,7 +575,7 @@ private fun ImportContainerSelectDialog(
             }) { Text(I18n.s(R.string.preset_action_import)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }

@@ -322,7 +322,7 @@ fun ColumnScope.AdrenoDriverListPane(
                     }) { Text(I18n.s(R.string.ui_download_2)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { pendingEntry = null }) { Text("Cancel") }
+                    TextButton(onClick = { pendingEntry = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                 },
             )
         } else {
@@ -451,11 +451,11 @@ private fun EntryRow(
                     overflow = TextOverflow.Ellipsis,
                 )
                 if (installed) {
-                    Text("Installed", style = MaterialTheme.typography.labelSmall, color = installedBlue)
+                    Text(I18n.s(R.string.ui_installed_7), style = MaterialTheme.typography.labelSmall, color = installedBlue)
                 }
             }
             if (installed) {
-                Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
+                Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.ui_installed_7), tint = installedBlue,
                     modifier = Modifier.size(20.dp))
             } else {
                 Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = cs.primary,
@@ -655,7 +655,7 @@ private fun ManageSourcesDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Done") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done)) }
         },
     )
 }

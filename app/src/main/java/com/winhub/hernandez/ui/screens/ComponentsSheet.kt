@@ -107,7 +107,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
             onDismissRequest = { message = null },
             containerColor = cs.surfaceContainerHigh,
             text = { Text(m, color = cs.onSurface) },
-            confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } },
+            confirmButton = { TextButton(onClick = { message = null }) { Text(I18n.s(R.string.ui_ok)) } },
         )
     }
 
@@ -127,7 +127,7 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
             confirmButton = {
                 TextButton(onClick = { val comp = c; confirmExec = null; runExecInstall(comp) }) { Text(I18n.s(R.string._continue)) }
             },
-            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { confirmExec = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -255,7 +255,7 @@ private fun ComponentRow(
             }
             when {
                 isInstalling -> CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
+                isInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.ui_installed_7),
                     tint = installedBlue, modifier = Modifier.size(22.dp))
                 installable -> IconButton(onClick = onInstall, enabled = enabled) {
                     Icon(Icons.Filled.Download, contentDescription = I18n.s(R.string.ui_install), tint = cs.primary)

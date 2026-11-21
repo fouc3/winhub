@@ -1115,7 +1115,7 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
                     manager.removeDriver(id); confirmRemoveDriver = null; refreshKey++; vm.refreshStatus()
                 }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveDriver = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveDriver = null }) { Text(I18n.s(R.string.ui_cancel_2), color = cs.primary) } },
         )
     }
 
@@ -1133,7 +1133,7 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
                     waylandManager.removeDriver(id); confirmRemoveWaylandDriver = null; refreshKey++
                 }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveWaylandDriver = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveWaylandDriver = null }) { Text(I18n.s(R.string.ui_cancel_2), color = cs.primary) } },
         )
     }
 
@@ -1150,7 +1150,7 @@ private fun InstalledTab(vm: ContentsHubViewModel) {
                     confirmRemoveProfile = null; refreshKey++; vm.refreshStatus()
                 }) { Text(I18n.s(R.string.remove), color = cs.primary) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text("Cancel", color = cs.primary) } },
+            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text(I18n.s(R.string.ui_cancel_2), color = cs.primary) } },
         )
     }
 }
@@ -1313,7 +1313,7 @@ private fun AddRepoDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                 }
             }) { Text(I18n.s(R.string.ui_add_source), color = cs.primary) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel", color = cs.primary) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2), color = cs.primary) } },
     )
 }
 

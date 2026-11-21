@@ -682,7 +682,7 @@ fun UnpackArchiveScreen(
                         OutlinedButton(
                             onClick = { UnpackService.cancel(context) },
                             border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
-                        ) { Text("Cancel", color = MaterialTheme.colorScheme.error) }
+                        ) { Text(I18n.s(R.string.ui_cancel_2), color = MaterialTheme.colorScheme.error) }
                         Spacer(Modifier.width(8.dp))
                         Button(onClick = onClose) { Text(I18n.s(R.string.ui_minimize)) }
                     }
@@ -695,7 +695,7 @@ fun UnpackArchiveScreen(
                     UnpackPhase.DONE -> {
                         Spacer(Modifier.height(4.dp))
                         SectionCard {
-                            Text("Done", color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                            Text(I18n.s(R.string.ui_done), color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 "${state.filesExtracted} files • ${StringUtils.formatBytes(state.archiveSize)} in ${humanDuration(state.elapsedMs)}",

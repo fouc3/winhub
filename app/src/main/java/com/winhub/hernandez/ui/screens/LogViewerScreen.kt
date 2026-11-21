@@ -480,7 +480,7 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                 Text(if (busy) "Working…" else I18n.s(R.string.ui_continue_on_github))
             }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) } }
     )
 }
 

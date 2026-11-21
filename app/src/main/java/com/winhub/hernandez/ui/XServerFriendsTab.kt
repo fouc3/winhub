@@ -194,7 +194,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
                 onDismissRequest = { showHelp = false },
                 title = { Text(I18n.s(R.string.xmb_tab_friends)) },
                 text = { Text(HELP_TEXT) },
-                confirmButton = { TextButton(onClick = { showHelp = false }) { Text("OK") } },
+                confirmButton = { TextButton(onClick = { showHelp = false }) { Text(I18n.s(R.string.ui_ok)) } },
             )
         }
 

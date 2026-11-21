@@ -685,7 +685,7 @@ class GogGamesActivity : ComponentActivity() {
 
     private fun startDownload(game: GogGame) {
         val dlState = GameDownloadState(
-            buttonText = "Cancel",
+            buttonText = I18n.s(R.string.ui_cancel_2),
             buttonColor = 0xFFCC3333.toInt(),
             progressVisible = true,
             progress = 0,
@@ -737,7 +737,7 @@ class GogGamesActivity : ComponentActivity() {
                 runOnUiThread {
                     downloadStates[game.gameId] = GameDownloadState(
                         progress = 100,
-                        status = "Installed",
+                        status = I18n.s(R.string.ui_installed_7),
                         isInstalled = true,
                         buttonText = I18n.s(R.string.xmb_hint_add_game),
                         buttonColor = 0xFF0055FF.toInt(),
@@ -1521,7 +1521,7 @@ private fun InstallConfirmDialog(
             ) { Text(I18n.s(R.string.ui_install), color = if (canInstall) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
     )
 }

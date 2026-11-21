@@ -41,10 +41,10 @@ fun NewTaskDialog(state: XServerDialogState) {
                 val cmd = command.trim()
                 if (cmd.isNotEmpty()) state.onTmNewTaskSubmit?.invoke(cmd)
                 state.dismiss()
-            }) { Text("OK") }
+            }) { Text(I18n.s(R.string.ui_ok)) }
         },
         dismissButton = {
-            TextButton(onClick = { state.dismiss() }) { Text("Cancel") }
+            TextButton(onClick = { state.dismiss() }) { Text(I18n.s(R.string.ui_cancel_2)) }
         }
     )
 }

@@ -964,8 +964,8 @@ private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
                 "the All Files Access permission must be granted. Press OK to open Android Settings."
             )
         },
-        confirmButton = { TextButton(onClick = onConfirm) { Text("OK") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        confirmButton = { TextButton(onClick = onConfirm) { Text(I18n.s(R.string.ui_ok)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }
 

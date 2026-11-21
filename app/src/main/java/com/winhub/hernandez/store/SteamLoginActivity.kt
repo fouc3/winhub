@@ -293,7 +293,7 @@ private fun SteamGuardDialog(
         )
         Spacer(Modifier.height(8.dp))
         DeckButton(
-            text = "Cancel",
+            text = I18n.s(R.string.ui_cancel_2),
             primary = false,
             onClick = onCancel,
             modifier = Modifier.fillMaxWidth(),

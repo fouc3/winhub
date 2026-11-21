@@ -241,7 +241,7 @@ fun ContentDownloadSheet(
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { showInfoProfile = null }) { Text("OK") } }
+            confirmButton = { TextButton(onClick = { showInfoProfile = null }) { Text(I18n.s(R.string.ui_ok)) } }
         )
     }
 
@@ -261,7 +261,7 @@ fun ContentDownloadSheet(
                     onContentChanged()
                 }) { Text(I18n.s(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmRemoveProfile = null }) { Text(I18n.s(R.string.ui_cancel_2)) } }
         )
     }
 
@@ -271,7 +271,7 @@ fun ContentDownloadSheet(
             onDismissRequest = { errorMsg = null },
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             text = { Text(msg, color = MaterialTheme.colorScheme.onSurface) },
-            confirmButton = { TextButton(onClick = { errorMsg = null }) { Text("OK") } }
+            confirmButton = { TextButton(onClick = { errorMsg = null }) { Text(I18n.s(R.string.ui_ok)) } }
         )
     }
 
@@ -632,7 +632,7 @@ private fun DownloadContentItem(
                 when {
                     busy -> {}
                     isLocal -> {
-                        Icon(Icons.Filled.CheckCircle, contentDescription = "Installed", tint = installedBlue,
+                        Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.ui_installed_7), tint = installedBlue,
                             modifier = Modifier.size(20.dp))
                         Spacer(Modifier.width(14.dp))
                         Icon(Icons.Filled.Info, contentDescription = I18n.s(R.string.ui_info), tint = cs.onSurfaceVariant,
@@ -641,7 +641,7 @@ private fun DownloadContentItem(
                         Icon(Icons.Filled.Delete, contentDescription = I18n.s(R.string.remove), tint = Color(0xFFEF5350), // intentional: destructive-action red
                             modifier = Modifier.size(20.dp).clickable(onClick = onRemove))
                     }
-                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = "Installed",
+                    communityInstalled -> Icon(Icons.Filled.CheckCircle, contentDescription = I18n.s(R.string.ui_installed_7),
                         tint = installedBlue, modifier = Modifier.size(20.dp))
                     else -> Icon(Icons.Filled.CloudDownload, contentDescription = I18n.s(R.string.ui_download_2), tint = cs.primary,
                         modifier = Modifier.size(22.dp))

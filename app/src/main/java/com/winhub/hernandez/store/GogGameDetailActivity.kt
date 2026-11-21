@@ -1151,7 +1151,7 @@ private fun GogDlcContent(
             )
             when {
                 state?.installed == true -> Text(
-                    text = "Installed",
+                    text = I18n.s(R.string.ui_installed_7),
                     style = MaterialTheme.typography.labelSmall,
                     color = INSTALLED_GREEN,
                     fontWeight = FontWeight.Bold,

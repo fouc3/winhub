@@ -1394,7 +1394,7 @@ private fun InstallConfirmDialog(
             Button(onClick = onConfirm) { Text(I18n.s(R.string.ui_install)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) }
         },
     )
 }

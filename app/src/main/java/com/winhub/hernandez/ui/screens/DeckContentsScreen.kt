@@ -916,7 +916,7 @@ internal fun DeckMeta(icon: ImageVector, text: String) {
 @Composable
 private fun DeckDownloadStatus(state: ContentDownloadState) {
     val label = when (state.phase) {
-        ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint)
+        ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint, (state.fraction * 100).toInt())
         ContentDownloadPhase.INSTALLING -> if (state.saveOnly) I18n.s(R.string.ui_saving_to_my_files) else "Installing"
         ContentDownloadPhase.DONE -> if (state.saveOnly) "Saved" else "Installed"
         ContentDownloadPhase.ERROR -> state.error ?: "Failed"
@@ -1293,7 +1293,7 @@ private fun DeckContentsInstalledTab(vm: ContentsHubViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "Installed",
+                    text = I18n.s(R.string.ui_installed_7),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = DeckPalette.onBackground,
@@ -1913,7 +1913,7 @@ private fun DeckInstallDialog(
             Spacer(Modifier.height(8.dp))
         }
         val label = when (state.phase) {
-            ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint)
+            ContentDownloadPhase.DOWNLOADING -> I18n.s(R.string.ui_downloading_state_fraction_100_toint, (state.fraction * 100).toInt())
             ContentDownloadPhase.INSTALLING -> if (state.saveOnly) I18n.s(R.string.ui_saving_to_my_files) else "Installing"
             ContentDownloadPhase.DONE -> if (state.saveOnly) I18n.s(R.string.ui_saved_to_my_files) else "Installed"
             ContentDownloadPhase.ERROR -> if (state.cancelled) "Cancelled" else state.error ?: "Failed"

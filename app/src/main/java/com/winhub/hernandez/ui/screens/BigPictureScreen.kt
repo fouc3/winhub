@@ -734,7 +734,7 @@ fun BigPictureScreen(navController: NavController) {
                                 ) {
                                     Icon(Icons.Filled.PlayArrow, contentDescription = null)
                                     Spacer(Modifier.width(8.dp))
-                                    Text("Play", fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                                    Text(I18n.s(R.string.ui_play), fontSize = 17.sp, fontWeight = FontWeight.Bold)
                                 }
                                 Spacer(Modifier.width(12.dp))
                                 OutlinedButton(
@@ -947,7 +947,7 @@ fun BigPictureScreen(navController: NavController) {
                 }
             },
             confirmButton = {
-                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text("Done") }
+                com.winhub.hernandez.ui.components.TextButton(onClick = { communityApplyResult = null }) { Text(I18n.s(R.string.ui_done)) }
             },
         )
     }
@@ -1060,7 +1060,7 @@ fun BigPictureScreen(navController: NavController) {
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        I18n.s(R.string.ui_componentdownloadprogress_coercein_0f_1f_100_toint_th),
+                        I18n.s(R.string.ui_componentdownloadprogress_coercein_0f_1f_100_toint_th, (componentDownloadProgress.coerceIn(0f, 1f) * 100).toInt()),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1098,7 +1098,7 @@ fun BigPictureScreen(navController: NavController) {
                         // Prefix a live "N%" once real download progress starts; the indeterminate
                         // "checking/setup" phase (fraction < 0) shows just the phase label.
                         if (steamUpdateProgress >= 0f)
-                            I18n.s(R.string.ui_steamupdateprogress_coercein_0f_1f_100_toint_steamupd)
+                            I18n.s(R.string.ui_steamupdateprogress_coercein_0f_1f_100_toint_steamupd, (steamUpdateProgress.coerceIn(0f, 1f) * 100).toInt(), steamUpdateLabel)
                         else steamUpdateLabel,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -1107,7 +1107,7 @@ fun BigPictureScreen(navController: NavController) {
             },
             confirmButton = {
                 TextButton(onClick = { steamUpdateHandle?.cancel() }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.primary)
+                    Text(I18n.s(R.string.ui_cancel_2), color = MaterialTheme.colorScheme.primary)
                 }
             },
         )
@@ -1714,7 +1714,7 @@ private fun GameCommunitySheet(
             title = { Text(I18n.s(R.string.ui_replace_your_shared_config)) },
             text = { Text(I18n.s(R.string.ui_you_ve_already_shared_a_config_for_existing_game_repl)) },
             confirmButton = { TextButton(onClick = { replacePrompt = null; proceed() }) { Text(I18n.s(R.string.ui_replace)) } },
-            dismissButton = { TextButton(onClick = dismissReplace) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = dismissReplace) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 }

@@ -838,7 +838,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                             }) { Text(I18n.s(R.string.xmb_fr_off_button)) }
                         },
                         dismissButton = {
-                            TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
+                            TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                         },
                     )
                 } else {
@@ -855,7 +855,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                                     "written to your Steam profile.",
                             )
                         },
-                        confirmButton = { TextButton(onClick = { pendingToggle = null }) { Text("OK") } },
+                        confirmButton = { TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.ui_ok)) } },
                     )
                 }
                 return@let
@@ -925,7 +925,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         TextButton(onClick = { commit(false); pendingToggle = null }) { Text(I18n.s(R.string._continue)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { pendingToggle = null }) { Text("Cancel") }
+                        TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                     },
                 )
             } else {
@@ -954,7 +954,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         )
                     },
                     confirmButton = {
-                        TextButton(onClick = { pendingToggle = null }) { Text("OK") }
+                        TextButton(onClick = { pendingToggle = null }) { Text(I18n.s(R.string.ui_ok)) }
                     },
                 )
             }
@@ -1145,7 +1145,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { backupFor = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { backupFor = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 
@@ -1201,7 +1201,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { restoreChooser = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 

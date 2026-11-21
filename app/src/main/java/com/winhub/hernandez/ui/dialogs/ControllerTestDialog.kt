@@ -447,9 +447,9 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
                         state.onProfilesChanged?.run()   // keep the Touch dropdown live after a rename
                     }
                     renaming = false
-                }) { Text("OK") }
+                }) { Text(I18n.s(R.string.ui_ok)) }
             },
-            dismissButton = { TextButton(onClick = { renaming = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { renaming = false }) { Text(I18n.s(R.string.ui_cancel_2)) } }
         )
     }
 
@@ -470,9 +470,9 @@ private fun InGameBindPanel(state: XServerDialogState, modifier: Modifier) {
                         state.onProfilesChanged?.run()                            // keep the Touch list live
                     }
                     deleting = false
-                }) { Text("Delete") }
+                }) { Text(I18n.s(R.string.ui_delete_5)) }
             },
-            dismissButton = { TextButton(onClick = { deleting = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { deleting = false }) { Text(I18n.s(R.string.ui_cancel_2)) } }
         )
     }
 }

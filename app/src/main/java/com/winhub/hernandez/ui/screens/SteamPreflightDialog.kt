@@ -366,7 +366,7 @@ fun SteamPreflightDialog(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2), color = cs.onSurfaceVariant) }
             },
         )
     }
@@ -545,7 +545,7 @@ private fun LandscapePreflight(
                         LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = false)
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                        TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2), color = cs.onSurfaceVariant) }
                     }
                 }
             } else {
@@ -564,7 +564,7 @@ private fun LandscapePreflight(
                             LandscapeText(gameName, show.caption, fail, helpText, closeHelp, summary = true)
                         }
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = onDismiss) { Text("Cancel", color = cs.onSurfaceVariant) }
+                            TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2), color = cs.onSurfaceVariant) }
                         }
                     }
                 }

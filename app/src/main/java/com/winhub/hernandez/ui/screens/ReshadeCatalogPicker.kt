@@ -289,7 +289,7 @@ private fun ReshadeCatalogSheet(
                 }
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.End) {
-                TextButton(onClick = onDismiss) { Text("Done", color = cs.primary) }
+                TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_done), color = cs.primary) }
             }
         }
     }
@@ -313,10 +313,10 @@ private fun ReshadeCatalogSheet(
                             onCatalogChanged()              // parent rescans the drop-in folder
                         } else errorMsg = "Couldn't delete ${entry.name}."
                     }
-                }) { Text("Delete", color = cs.error) }
+                }) { Text(I18n.s(R.string.ui_delete_5), color = cs.error) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text("Cancel", color = cs.primary) }
+                TextButton(onClick = { pendingDelete = null }) { Text(I18n.s(R.string.ui_cancel_2), color = cs.primary) }
             },
         )
     }

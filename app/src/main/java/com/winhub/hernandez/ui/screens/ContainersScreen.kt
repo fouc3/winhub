@@ -347,7 +347,7 @@ fun ContainersScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showImportPicker = false }) { Text("Cancel") }
+                TextButton(onClick = { showImportPicker = false }) { Text(I18n.s(R.string.ui_cancel_2)) }
             },
         )
     }
@@ -367,7 +367,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.duplicate)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
+                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                     },
                 )
             }
@@ -383,7 +383,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.remove)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
+                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                     },
                 )
             }
@@ -422,7 +422,7 @@ fun ContainersScreen(
                         }) { Text(if (remote != null) "Download & update" else "Update") }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
+                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                     },
                 )
             }
@@ -495,7 +495,7 @@ fun ContainersScreen(
                         }) { Text(I18n.s(R.string.ui_revert)) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { confirmDialog = null }) { Text("Cancel") }
+                        TextButton(onClick = { confirmDialog = null }) { Text(I18n.s(R.string.ui_cancel_2)) }
                     },
                 )
             }
@@ -539,7 +539,7 @@ fun ContainersScreen(
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { saveFlow = null }) { Text("Cancel") } },
+            confirmButton = { TextButton(onClick = { saveFlow = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
         is SaveFlow.RestoreSource -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -594,7 +594,7 @@ fun ContainersScreen(
                     }
                 }) { Text(I18n.s(R.string.ui_restore)) }
             },
-            dismissButton = { TextButton(onClick = { saveFlow = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { saveFlow = null }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
         is SaveFlow.BackupScope -> OutlinedAlertDialog(
             onDismissRequest = { saveFlow = null },
@@ -1230,7 +1230,7 @@ private fun ManualAddDialog(container: Container, onPick: (File) -> Unit, onCanc
                 Text(stringResource(R.string.save_backup_add_folder_here))
             }
         },
-        dismissButton = { TextButton(onClick = onCancel) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onCancel) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }
 

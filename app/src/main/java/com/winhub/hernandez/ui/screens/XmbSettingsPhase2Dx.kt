@@ -600,7 +600,7 @@ private class P2Vegas(
                 else pendingKey = key
             }
             if (pk != null) {
-                rows += XmbRow.Text("addValue", I18n.s(R.string.ui_value_for_pk), Icons.Filled.Add, "", placeholder = "Value") { v ->
+                rows += XmbRow.Text("addValue", I18n.s(R.string.ui_value_for_pk), Icons.Filled.Add, "", placeholder = I18n.s(R.string.ui_value)) { v ->
                     if (v.isNotBlank()) { applyValue(pk, v.trim()); pendingKey = null }
                 }
             }

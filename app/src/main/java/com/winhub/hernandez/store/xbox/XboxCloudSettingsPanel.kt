@@ -218,7 +218,7 @@ private fun PanelContent(
                 onChange(settings.copy(profile = name.trim()))
                 naming = false
             }) { Text(I18n.s(R.string.save)) } },
-            dismissButton = { TextButton(onClick = { naming = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { naming = false }) { Text(I18n.s(R.string.ui_cancel_2)) } },
         )
     }
 }

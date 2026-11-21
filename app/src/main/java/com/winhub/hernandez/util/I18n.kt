@@ -47,5 +47,5 @@ object I18n {
 
     /** Resolves a formatted string resource. */
     @JvmStatic
-    fun s(@StringRes id: Int, vararg args: Any): String = context()?.getString(id, *args) ?: ""
+    fun s(@StringRes id: Int, vararg args: Any?): String = context()?.getString(id, *args) ?: ""
 }

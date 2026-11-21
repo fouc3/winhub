@@ -66,7 +66,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
             onDismissRequest = { message = null },
             containerColor = cs.surfaceContainerHigh,
             text = { Text(m, color = cs.onSurface) },
-            confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } },
+            confirmButton = { TextButton(onClick = { message = null }) { Text(I18n.s(R.string.ui_ok)) } },
         )
     }
 

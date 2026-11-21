@@ -3198,7 +3198,7 @@ private fun ControlsContent(state: XServerDrawerState) {
                     state.setOverlayOpacity(it)
                     state.onOverlayOpacityChange?.run()
                 },
-                format = { I18n.s(R.string.ui_it_100_toint) },
+                format = { I18n.s(R.string.ui_it_100_toint, (it * 100).toInt()) },
             )
 
             // On-screen controls icon style — Fusion (tinted pads, default) or Glass (blurred black glass).
@@ -3887,7 +3887,7 @@ private fun SticksSection() {
         onValueChange = { leftDz = it },
         onValueChangeFinished = { commit(tuning.smoothEdge) },
         steps = 49,
-        format = { I18n.s(R.string.ui_math_round_it_100f) }
+        format = { I18n.s(R.string.ui_math_round_it_100f, Math.round(it * 100f)) }
     )
     LabeledSlider(
         label = stringResource(R.string.stick_left_sensitivity),
@@ -3905,7 +3905,7 @@ private fun SticksSection() {
         onValueChange = { rightDz = it },
         onValueChangeFinished = { commit(tuning.smoothEdge) },
         steps = 49,
-        format = { I18n.s(R.string.ui_math_round_it_100f) }
+        format = { I18n.s(R.string.ui_math_round_it_100f, Math.round(it * 100f)) }
     )
     LabeledSlider(
         label = stringResource(R.string.stick_right_sensitivity),
@@ -4430,7 +4430,7 @@ private fun TmContent() {
     Spacer(Modifier.height(8.dp))
 
     Text(
-        text = I18n.s(R.string.ui_processes_count),
+        text = I18n.s(R.string.ui_processes_count, count),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 12.sp,
     )
@@ -4690,9 +4690,9 @@ private fun ProcessorAffinityDialog(
                     XServerDialogState.onTmSetAffinity?.invoke(proc.pid, mask and allMask)
                     onDismiss()
                 },
-            ) { Text("OK") }
+            ) { Text(I18n.s(R.string.ui_ok)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(I18n.s(R.string.ui_cancel_2)) } },
     )
 }
 

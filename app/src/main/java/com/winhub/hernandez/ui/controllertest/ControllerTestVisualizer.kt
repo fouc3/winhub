@@ -393,7 +393,7 @@ fun ControllerTestPanel(
             }
             if (onDone != null) {
                 Spacer(Modifier.width(8.dp))
-                TextButton(onClick = { onDone() }) { Text("Done") }
+                TextButton(onClick = { onDone() }) { Text(I18n.s(R.string.ui_done)) }
             }
         }
     }
