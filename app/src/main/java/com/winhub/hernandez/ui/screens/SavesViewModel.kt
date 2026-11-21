@@ -55,7 +55,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 saveManager.addSave(title, path, container)
                 withContext(Dispatchers.Main) { refresh(); onDone(true, "") }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { onDone(false, e.message ?: "Failed to add save") }
+                withContext(Dispatchers.Main) { onDone(false, e.message ?: I18n.s(R.string.ui_failed_to_add_save)) }
             }
         }
     }
@@ -66,7 +66,7 @@ class SavesViewModel(app: Application) : AndroidViewModel(app) {
                 saveManager.updateSave(save, newTitle, save.path, save.container)
                 withContext(Dispatchers.Main) { refresh(); onDone(true, "") }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { onDone(false, e.message ?: "Failed to update save") }
+                withContext(Dispatchers.Main) { onDone(false, e.message ?: I18n.s(R.string.ui_failed_to_update_save)) }
             }
         }
     }

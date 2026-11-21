@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -25,7 +28,7 @@ internal class XboxCloudSignalling(
         "sdp" -> sdp(arg)
         "ice" -> ice(arg)
         "keepalive" -> XboxCloudSession.request(session, "POST", "/$path/keepalive", "{}")
-        else -> XboxCloudSession.Reply(0, "unknown request")
+        else -> XboxCloudSession.Reply(0, I18n.s(R.string.ui_unknown_request))
     }
 
     fun start(): XboxCloudSession.Reply {
@@ -41,7 +44,7 @@ internal class XboxCloudSignalling(
     }
 
     fun connect(): XboxCloudSession.Reply {
-        val token = session.userToken ?: return XboxCloudSession.Reply(0, "no cloud transfer token for this account")
+        val token = session.userToken ?: return XboxCloudSession.Reply(0, I18n.s(R.string.ui_no_cloud_transfer_token_for_this_account))
         return XboxCloudSession.request(session, "POST", "/$path/connect", JSONObject().put("userToken", token).toString())
     }
 
@@ -76,6 +79,6 @@ internal class XboxCloudSignalling(
             if (reply.status != 204) return reply
             Thread.sleep(500)
         }
-        return XboxCloudSession.Reply(0, "no answer from the cloud console")
+        return XboxCloudSession.Reply(0, I18n.s(R.string.ui_no_answer_from_the_cloud_console))
     }
 }

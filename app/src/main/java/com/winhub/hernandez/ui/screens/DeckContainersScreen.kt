@@ -576,7 +576,7 @@ private fun DeckCronosCard(
             Spacer(Modifier.height(8.dp))
             if (store) {
                 Text(
-                    text = "Game  " + if (gameSize >= 0) StringUtils.formatBytes(gameSize) else "…",
+                    text = I18n.s(R.string.ui_game) + if (gameSize >= 0) StringUtils.formatBytes(gameSize) else "…",
                     fontSize = 12.5.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = DeckPalette.onBackground,
@@ -584,7 +584,7 @@ private fun DeckCronosCard(
                 Spacer(Modifier.height(2.dp))
             }
             Text(
-                text = "Container  " + if (containerSize >= 0) StringUtils.formatBytes(containerSize) else "…",
+                text = I18n.s(R.string.ui_container_2) + if (containerSize >= 0) StringUtils.formatBytes(containerSize) else "…",
                 fontSize = 12.5.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = DeckPalette.onSurfaceVariant,

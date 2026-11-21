@@ -87,11 +87,11 @@ data class AudioPreset(
 
 val AUDIO_PRESETS = listOf(
     AudioPreset(PRESET_AUTO, "✨", "Auto / Smart", "Recommended",
-        "Starts low-latency, grows the buffer only if it hears crackle.",
+        I18n.s(R.string.ui_starts_low_latency_grows_the_buffer_only_if_it_hears_cra),
         AudioConfig(PRESET_AUTO, 1, true, 0, 0, 100), 0.46f,
         "Aims for the lowest delay your device can hold without crackling.", R.string.help_audio_preset_auto),
     AudioPreset(PRESET_LOW, "⚡", I18n.s(R.string.ui_low_latency), null,
-        "Tightest sync. May crackle under heavy load.",
+        I18n.s(R.string.ui_tightest_sync_may_crackle_under_heavy_load),
         // adaptive TRUE. This rung pinned the buffer with no way to grow, so a title that
         // could not hold it crackled for the whole session with nothing to recover it -
         // the one genuinely dangerous cell in the preset matrix, and on every engine, not
@@ -103,7 +103,7 @@ val AUDIO_PRESETS = listOf(
         AudioConfig(PRESET_LOW, 1, true, 0, 0, 40), 0.10f,
         "Minimal delay; switch to Auto if heavy scenes crackle.", R.string.help_audio_preset_low),
     AudioPreset(PRESET_BALANCED, "⚖️", "Balanced", null,
-        "Calmer buffer with an adaptive safety net.",
+        I18n.s(R.string.ui_calmer_buffer_with_an_adaptive_safety_net),
         AudioConfig(PRESET_BALANCED, 2, true, 0, 0, 100), 0.60f,
         "Smooth all-rounder for most games.", R.string.help_audio_preset_balanced),
     AudioPreset(PRESET_STABLE, "🛡️", I18n.s(R.string.ui_stable_no_crackle), null,
@@ -111,7 +111,7 @@ val AUDIO_PRESETS = listOf(
         AudioConfig(PRESET_STABLE, 0, true, 0, 0, 144), 0.90f,
         "Maximum crackle protection; most audio delay.", R.string.help_audio_preset_stable),
     AudioPreset(PRESET_CUSTOM, "🎛️", "Custom", "Fine-tune",
-        "Set every knob yourself.",
+        I18n.s(R.string.ui_set_every_knob_yourself),
         AudioConfig(PRESET_CUSTOM, 1, true, 0, 0, 100), 0.46f,
         "Manual control of every buffer knob.", R.string.help_audio_preset_custom)
 )
@@ -460,7 +460,7 @@ fun AudioSettingsDialog(
                                 // from the buffer rows below - there is no guest-side latency for this row
                                 // to set, so say that rather than leaving a live-looking slider that does
                                 // nothing.
-                                if (!latencyUsed) "not used by ALSA — set the buffer rows below"
+                                if (!latencyUsed) I18n.s(R.string.ui_not_used_by_alsa_set_the_buffer_rows_below_2)
                                 else (if (directBuffer) "≈${shown.latencyMsec + ANDROID_OUTPUT_MS} ms total · ${shown.latencyMsec} ms buffer"
                                       else "winepulse · ${shown.latencyMsec} ms") +
                                     if (!latencyLive) "  · next launch" else "", cs,

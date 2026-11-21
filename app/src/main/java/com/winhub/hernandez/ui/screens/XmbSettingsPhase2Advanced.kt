@@ -185,7 +185,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             value = I18n.s(R.string.ui_cores_of_cores, checkedCores, cores), subtitle = I18n.s(R.string.ui_cpu_cores_the_game_may_run_on)) { p2CpuMenu(xmb, shortcut) }
 
         // Sharpness (VKBasalt)
-        rows += XmbRow.Header("hSharpness", "Sharpness (VKBasalt)")
+        rows += XmbRow.Header("hSharpness", I18n.s(R.string.ui_sharpness_vkbasalt))
         if (sharpEntries.isNotEmpty()) {
             val fxStored = shortcut.p2Ex("sharpnessEffect", "None")
             rows += XmbRow.Choice("sharpEffect", "Effect", Icons.Filled.Image, sharpEntries,
@@ -208,7 +208,7 @@ internal fun xmbAdvancedMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         }.getOrDefault(0)
         rows += XmbRow.Link("reshade", I18n.s(R.string.ui_reshade_loadout), Icons.Filled.Layers,
             value = if (count == 0) "None" else "$count effect${if (count == 1) "" else "s"}",
-            subtitle = if (reshade.supported()) "Effects, mode and parameters" else "Only applies to DXVK/VKD3D (Vulkan) games") { reshade.loadoutMenu() }
+            subtitle = if (reshade.supported()) I18n.s(R.string.ui_effects_mode_and_parameters) else "Only applies to DXVK/VKD3D (Vulkan) games") { reshade.loadoutMenu() }
         rows
     }
 }
@@ -229,7 +229,7 @@ private fun p2PresetRows(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: PresetK
     val customised = runCatching { PresetOverrides.isCustomised(ctx, isFex, selId, PresetScope.SHORTCUT, c, s) }.getOrDefault(false)
     val label = if (isFex) ctx.getString(R.string.fexcore_preset) else "$emu preset"
     rows += XmbRow.Choice(if (isFex) "fexPreset" else "b64Preset", label, Icons.Filled.Tune, names, names[idx],
-        subtitle = if (customised) "Customised for this game" else null) { v ->
+        subtitle = if (customised) I18n.s(R.string.ui_customised_for_this_game) else null) { v ->
         val i = names.indexOf(v)
         if (i >= 0) p2Put(xmb, s, key, ids[i])
     }
@@ -306,7 +306,7 @@ private fun p2PresetValuesMenu(xmb: XmbScope, s: Shortcut, kind: PresetKind, pre
         val rows = mutableListOf<XmbRow>()
         val customised = runCatching { PresetOverrides.isCustomised(ctx, isFex, presetId, PresetScope.SHORTCUT, c, s) }.getOrDefault(false)
         rows += XmbRow.Info("scope",
-            if (customised) "Customised for this game. Reset makes it follow its container again."
+            if (customised) I18n.s(R.string.ui_customised_for_this_game_reset_makes_it_follow_its_conta)
             else I18n.s(R.string.ui_saved_for_this_game_only_no_other_game_or_container_chan), Icons.Filled.Info)
         if (specs.isEmpty()) rows += XmbRow.Info(I18n.s(R.string.ui_nospecs), I18n.s(R.string.ui_this_preset_has_no_editable_variables), Icons.Filled.Info)
         val vals = current()
@@ -407,7 +407,7 @@ private fun p2PresetManageMenu(xmb: XmbScope, s: Shortcut, d: P2AdvData, kind: P
             val roots = listOf(
                 "Presets" to presetsDir,
                 "Download" to File(ext, "Download"),
-                "Internal storage" to ext,
+                I18n.s(R.string.ui_internal_storage_2) to ext,
             ).filter { it.second.isDirectory }
             val start = if (presetsDir.isDirectory) presetsDir else ext
             xmbFileBrowserMenu(xmb, I18n.s(R.string.ui_import_preset), start, roots, { true }) { f ->

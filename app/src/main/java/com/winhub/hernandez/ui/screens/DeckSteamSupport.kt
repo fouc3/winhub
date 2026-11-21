@@ -73,7 +73,7 @@ internal fun SteamEmptyHome(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(I18n.s(R.string.ui_your_library_is_empty), color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Black)
             Text(
-                "A  Add a game      Down  Stores, Downloads, Friends, Social",
+                I18n.s(R.string.ui_a_add_a_game_down_stores_downloads_friends_social),
                 color = Color.White.copy(alpha = 0.7f),
                 fontSize = 14.sp,
                 modifier = Modifier.padding(top = 8.dp),

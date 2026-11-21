@@ -67,7 +67,7 @@ internal object RetroLibrary {
         "savedata", "save", "saves", "savestates", "states", "savefiles",
         "sdmc", "nand", "shaders", "cache", "log", "logs", "dump", "dumps",
         "screenshots", "cheats", "textures", "texture_cache", "system",
-        "memcards", "memory cards", "bios", "firmware", "firmwares", "tmp", "temp", "config", "configs",
+        "memcards", I18n.s(R.string.ui_memory_cards), "bios", "firmware", "firmwares", "tmp", "temp", "config", "configs",
         "os0", "vs0", "ur0", "tm0", "ud0", "pd0", "sa0", "gro0", "grw0",
         "license", "appmeta", "ppsspp_state", "private", "media", "downloaded_media", "gamelists",
     )

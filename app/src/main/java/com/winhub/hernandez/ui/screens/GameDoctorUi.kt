@@ -210,7 +210,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
             DoctorRow(
                 label = I18n.s(R.string.ui_undo_all_changes), detail = I18n.s(R.string.ui_back_to_how_it_was_before_the_doctor),
                 icon = Icons.Filled.History,
-                disabled = if (session.busy) "Working…" else null,
+                disabled = if (session.busy) I18n.s(R.string.ui_working) else null,
             ) { session.undo { onChanged(); onClose() } }
         }
         r.findings.forEach { f ->
@@ -227,7 +227,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
                     label = t.label, detail = t.detail, icon = Icons.Filled.Build,
                     disabled = when {
                         t.key in session.applied -> "Applied"
-                        session.busy -> "Working…"
+                        session.busy -> I18n.s(R.string.ui_working)
                         else -> null
                     },
                 ) { session.runTweak(t) }
@@ -248,7 +248,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
                     detail = parts.ifBlank { null }, icon = Icons.Filled.Download,
                     disabled = when {
                         session.pickKey(p) in session.applied -> "Applied"
-                        session.busy -> "Working…"
+                        session.busy -> I18n.s(R.string.ui_working)
                         else -> null
                     },
                 ) { session.runPick(p) }
@@ -261,7 +261,7 @@ internal fun GameDoctorDialog(shortcut: Shortcut, onClose: () -> Unit, onChanged
                     label = t.label, detail = t.detail, icon = Icons.Filled.Build,
                     disabled = when {
                         t.key in session.applied -> "Applied"
-                        session.busy -> "Working…"
+                        session.busy -> I18n.s(R.string.ui_working)
                         else -> null
                     },
                 ) { session.runTweak(t) }

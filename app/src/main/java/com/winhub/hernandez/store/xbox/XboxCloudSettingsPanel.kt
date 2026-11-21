@@ -123,7 +123,7 @@ private fun PanelContent(
                 settings.frameGen) { onChange(settings.copy(frameGen = it)) }
             Text(I18n.s(R.string.ui_native_engine_experimental_google_s_webrtc_and_bannerlat) +
                 "can add frames. LSFG uses the Lossless.dll imported in Settings. Screen effects and the overlay levels " +
-                "apply to the web engine.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                I18n.s(R.string.ui_apply_to_the_web_engine), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 6.dp))
         }
         // What Microsoft sends depends on the device profile we report: the PC profile gave 2560x1440 on the
@@ -198,7 +198,7 @@ private fun PanelContent(
         }
         Choice(I18n.s(R.string.ui_overlay_layout), listOf("horizontal" to "Horizontal", "vertical" to "Vertical"), settings.statsLayout) { onChange(settings.copy(statsLayout = it)) }
         Text(I18n.s(R.string.ui_top_right_basic_fps_ping_resolution_detailed_bitrate_dec) +
-            "dropped frames, server.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            I18n.s(R.string.ui_dropped_frames_server), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (section != "overlay-native") Step("Volume", "${settings.volume}%", { onChange(settings.copy(volume = (settings.volume - 25).coerceAtLeast(100))) },
             { onChange(settings.copy(volume = (settings.volume + 25).coerceAtMost(300))) })
         Step("Controller rumble", if (settings.rumble == 0) "Off" else "${settings.rumble}%", { onChange(settings.copy(rumble = (settings.rumble - 25).coerceAtLeast(0))) },

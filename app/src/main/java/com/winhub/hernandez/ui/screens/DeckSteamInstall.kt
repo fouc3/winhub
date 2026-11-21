@@ -204,7 +204,7 @@ internal fun DeckSteamInstall(target: DeckSteamTarget, onBack: () -> Unit, onOpe
                 )
                 main.post { handle = control }
             } catch (t: Throwable) {
-                main.post { starting = false; errorText = t.message ?: "Failed to start download" }
+                main.post { starting = false; errorText = t.message ?: I18n.s(R.string.ui_failed_to_start_download) }
             }
         }
     }

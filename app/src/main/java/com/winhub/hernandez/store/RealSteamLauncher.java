@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -341,7 +344,7 @@ public final class RealSteamLauncher {
             String vacSource;
             if ("1".equals(vacOverride) || "0".equals(vacOverride)) {
                 vacSecure = "1".equals(vacOverride);
-                vacSource = "shortcut override";
+                vacSource = I18n.s(R.string.ui_shortcut_override);
             } else {
                 boolean detected = false;
                 try { detected = repo.getDatabase().isVacSecure(appId); } catch (Throwable ignored) {}

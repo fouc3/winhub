@@ -210,7 +210,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     Column(Modifier.weight(1f)) {
                         Text(I18n.s(R.string.performance), color = cs.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                         Text(
-                            "Applies live to this session · auto-reverts on exit",
+                            I18n.s(R.string.ui_applies_live_to_this_session_auto_reverts_on_exit),
                             color = cs.onSurfaceVariant, fontSize = 11.sp,
                         )
                     }
@@ -332,29 +332,29 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     SectionHead(I18n.s(R.string.ui_quick_controls_no_root))
                     PerfCard {
                         ToggleRowLocal(
-                            "Sustained Performance Mode",
-                            "Holds a stable clock to avoid thermal throttling.",
+                            I18n.s(R.string.ui_sustained_performance_mode),
+                            I18n.s(R.string.ui_holds_a_stable_clock_to_avoid_thermal_throttling_2),
                             checked = sustained, enabled = true,
                             overridden = "sustainedPerfMode" in overridden,
-                            onInfo = { info = "Sustained Performance Mode" to "Holds a stable clock so the SoC doesn't spike-and-throttle. No root required." },
+                            onInfo = { info = I18n.s(R.string.ui_sustained_performance_mode) to I18n.s(R.string.ui_holds_a_stable_clock_so_the_soc_doesn_t_spike_and_thrott) },
                             onReset = { state.onResetPerfKey?.accept("sustainedPerfMode") },
                         ) { setSustained(it) }
                         Divider()
                         ToggleRowLocal(
-                            "Thread Priority Boost",
-                            "Raises emulator thread priority so the scheduler favours the game.",
+                            I18n.s(R.string.ui_thread_priority_boost),
+                            I18n.s(R.string.ui_raises_emulator_thread_priority_so_the_scheduler_favours_2),
                             checked = priority, enabled = true,
                             overridden = "perfPriorityBoost" in overridden,
-                            onInfo = { info = "Thread Priority Boost" to "Raises the emulator's thread priority so the CPU scheduler favours the game over background work." },
+                            onInfo = { info = I18n.s(R.string.ui_thread_priority_boost) to I18n.s(R.string.ui_raises_the_emulator_s_thread_priority_so_the_cpu_schedul) },
                             onReset = { state.onResetPerfKey?.accept("perfPriorityBoost") },
                         ) { setPriority(it) }
                         Divider()
                         ToggleRowLocal(
-                            "Prefer Big Cores",
+                            I18n.s(R.string.ui_prefer_big_cores),
                             "Routes emulator threads onto the big / prime cluster.",
                             checked = bigCores, enabled = true,
                             overridden = "preferBigCores" in overridden,
-                            onInfo = { info = "Prefer Big Cores" to "Pins the emulator's hot threads onto the big / prime CPU cluster instead of the efficiency cores." },
+                            onInfo = { info = I18n.s(R.string.ui_prefer_big_cores) to "Pins the emulator's hot threads onto the big / prime CPU cluster instead of the efficiency cores." },
                             onReset = { state.onResetPerfKey?.accept("preferBigCores") },
                         ) { setBig(it) }
                         Divider()
@@ -362,12 +362,12 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                         val gpuKey = PerfRootApplier.KEY_GPU_CLOCK_LOCK
                         val gpuEnabled = granted || PerfGpuTurbo.isSupported
                         ToggleRowLocal(
-                            "Lock GPU to max clock",
+                            I18n.s(R.string.ui_lock_gpu_to_max_clock),
                             if (gpuEnabled) "Adreno: pinned via /dev/kgsl-3d0 — works without root."
                             else I18n.s(R.string.ui_needs_an_adreno_gpu_or_root_on_other_gpus_2),
                             checked = toggles[gpuKey] ?: false, enabled = gpuEnabled,
                             overridden = gpuKey in overridden,
-                            onInfo = { info = "Lock GPU to max clock" to "Pins the GPU to its top power level. On Adreno this uses the app-owned KGSL turbo property (no root); other GPUs use the root sysfs pin." },
+                            onInfo = { info = I18n.s(R.string.ui_lock_gpu_to_max_clock) to "Pins the GPU to its top power level. On Adreno this uses the app-owned KGSL turbo property (no root); other GPUs use the root sysfs pin." },
                             onReset = { state.onResetPerfKey?.accept(gpuKey) },
                         ) { setRoot(gpuKey, it) }
                     }
@@ -387,26 +387,26 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                     PerfCard {
                         RootToggle(I18n.s(R.string.ui_cpu_governor_performance), PerfRootApplier.KEY_CPU_GOVERNOR,
                             toggles, overridden, granted, harnessProven,
-                            onInfo = { info = "CPU governor → performance" to "Forces every CPU cluster onto the performance governor for the session." },
+                            onInfo = { info = I18n.s(R.string.ui_cpu_governor_performance) to I18n.s(R.string.ui_forces_every_cpu_cluster_onto_the_performance_governor_f) },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CPU_GOVERNOR) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
                         RootToggle(I18n.s(R.string.ui_lock_cpu_frequency_to_max), PerfRootApplier.KEY_CPU_FREQ_LOCK,
                             toggles, overridden, granted, harnessProven,
-                            onInfo = { info = "Lock CPU frequency to max" to "Sets scaling_min_freq = scaling_max_freq on every cluster." },
+                            onInfo = { info = I18n.s(R.string.ui_lock_cpu_frequency_to_max) to "Sets scaling_min_freq = scaling_max_freq on every cluster." },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CPU_FREQ_LOCK) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
                         RootToggle(I18n.s(R.string.ui_keep_all_cores_online), PerfRootApplier.KEY_CORES_ONLINE,
                             toggles, overridden, granted, harnessProven,
-                            onInfo = { info = "Keep all cores online" to "Prevents the kernel from hot-plugging CPU cores offline." },
+                            onInfo = { info = I18n.s(R.string.ui_keep_all_cores_online) to I18n.s(R.string.ui_prevents_the_kernel_from_hot_plugging_cpu_cores_offline) },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_CORES_ONLINE) },
                             onEnableDanger = null, setRoot = { k, v -> setRoot(k, v) })
                         Divider()
                         RootToggle(I18n.s(R.string.ui_disable_thermal_throttling), PerfRootApplier.KEY_THERMAL_DISABLE,
                             toggles, overridden, granted, harnessProven,
                             danger = true,
-                            onInfo = { info = "Disable thermal throttling" to "Stops the thermal engine from clamping clocks. The temperature watchdog stays armed and can revert it." },
+                            onInfo = { info = I18n.s(R.string.ui_disable_thermal_throttling) to I18n.s(R.string.ui_stops_the_thermal_engine_from_clamping_clocks_the_temper) },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_THERMAL_DISABLE) },
                             onEnableDanger = { pendingDanger = PendingDanger(I18n.s(R.string.ui_disable_thermal_throttling)) { setRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } },
                             setRoot = { k, v -> setRoot(k, v) })
@@ -414,7 +414,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                         RootToggle(I18n.s(R.string.ui_fan_to_maximum), PerfRootApplier.KEY_FAN_MAX,
                             toggles, overridden, granted, harnessProven,
                             danger = true,
-                            onInfo = { info = "Fan to maximum" to "Forces active cooling to full speed for the session." },
+                            onInfo = { info = I18n.s(R.string.ui_fan_to_maximum) to I18n.s(R.string.ui_forces_active_cooling_to_full_speed_for_the_session) },
                             onReset = { state.onResetPerfKey?.accept(PerfRootApplier.KEY_FAN_MAX) },
                             onEnableDanger = { pendingDanger = PendingDanger(I18n.s(R.string.ui_fan_to_maximum)) { setRoot(PerfRootApplier.KEY_FAN_MAX, true) } },
                             setRoot = { k, v -> setRoot(k, v) })
@@ -435,7 +435,7 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
                                 "Frees cached files. The system reclaims cache automatically.") { state.onFreeMemory?.run() }
                             Divider()
                             ActionRowLocal(I18n.s(R.string.ui_deep_clean_free_app_memory),
-                                "Force-closes background apps. Won't touch your game or system.") { state.onDeepClean?.run() }
+                                I18n.s(R.string.ui_force_closes_background_apps_won_t_touch_your_game_or_sy)) { state.onDeepClean?.run() }
                         }
                     }
 
@@ -508,10 +508,10 @@ fun PerformanceDashboardDialog(state: XServerDrawerState, onDismiss: () -> Unit)
             text = {
                 Text(
                     "Galaxy Performance and the Power profile above both drive the CPU/GPU clocks, " +
-                        "by different mechanisms (Samsung's SDK vs. the root perf tier). Running both at " +
+                        I18n.s(R.string.ui_by_different_mechanisms_samsung_s_sdk_vs_the_root_perf_t) +
                         "once lets them fight, so clock behaviour can be inconsistent.\n\n" +
                         "Recommended: set the Power profile to \"Off\" so the Samsung SDK alone manages " +
-                        "the clocks. Keep both only if you know what you're doing.",
+                        I18n.s(R.string.ui_the_clocks_keep_both_only_if_you_know_what_you_re_doing),
                 )
             },
             confirmButton = {
@@ -882,28 +882,28 @@ fun PerformanceDashboardDialogPerGame(
                     SectionHead(I18n.s(R.string.ui_quick_controls_no_root))
                     PerfCard {
                         ToggleRowLocal(I18n.s(R.string.ui_sustained_performance_mode),
-                            "Holds a stable clock to avoid thermal throttling.",
+                            I18n.s(R.string.ui_holds_a_stable_clock_to_avoid_thermal_throttling_2),
                             checked = sustained, enabled = true, overridden = sustained != globalOf("sustainedPerfMode"),
-                            onInfo = { info = "Sustained Performance Mode" to "Holds a stable clock so the SoC doesn't spike-and-throttle. No root required." },
+                            onInfo = { info = I18n.s(R.string.ui_sustained_performance_mode) to I18n.s(R.string.ui_holds_a_stable_clock_so_the_soc_doesn_t_spike_and_thrott) },
                             onReset = { onSustained(globalOf("sustainedPerfMode")) }, onToggle = onSustained)
                         Divider()
                         ToggleRowLocal(I18n.s(R.string.ui_thread_priority_boost),
-                            "Raises emulator thread priority so the scheduler favours the game.",
+                            I18n.s(R.string.ui_raises_emulator_thread_priority_so_the_scheduler_favours_2),
                             checked = priority, enabled = true, overridden = priority != globalOf("perfPriorityBoost"),
-                            onInfo = { info = "Thread Priority Boost" to "Raises the emulator's thread priority so the CPU scheduler favours the game." },
+                            onInfo = { info = I18n.s(R.string.ui_thread_priority_boost) to I18n.s(R.string.ui_raises_the_emulator_s_thread_priority_so_the_cpu_schedul_2) },
                             onReset = { onPriority(globalOf("perfPriorityBoost")) }, onToggle = onPriority)
                         Divider()
                         ToggleRowLocal(I18n.s(R.string.ui_prefer_big_cores),
                             "Routes emulator threads onto the big / prime cluster.",
                             checked = bigCores, enabled = true, overridden = bigCores != globalOf("preferBigCores"),
-                            onInfo = { info = "Prefer Big Cores" to "Pins the emulator's hot threads onto the big / prime CPU cluster." },
+                            onInfo = { info = I18n.s(R.string.ui_prefer_big_cores) to "Pins the emulator's hot threads onto the big / prime CPU cluster." },
                             onReset = { onBigCores(globalOf("preferBigCores")) }, onToggle = onBigCores)
                         Divider()
                         val gk = PerfRootApplier.KEY_GPU_CLOCK_LOCK
                         ToggleRowLocal(I18n.s(R.string.ui_lock_gpu_to_max_clock),
                             "Adreno: no-root KGSL turbo; sysfs pin with root.",
                             checked = rootValue(gk), enabled = true, overridden = rootValue(gk) != globalOf(gk),
-                            onInfo = { info = "Lock GPU to max clock" to "Pins the GPU to its top power level (Adreno no-root; other GPUs need root)." },
+                            onInfo = { info = I18n.s(R.string.ui_lock_gpu_to_max_clock) to "Pins the GPU to its top power level (Adreno no-root; other GPUs need root)." },
                             onReset = { onRoot(gk, globalOf(gk)) }, onToggle = { onRoot(gk, it) })
                     }
 
@@ -914,7 +914,7 @@ fun PerformanceDashboardDialogPerGame(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp))
                     PerfCard {
                         rootPresetRow(I18n.s(R.string.ui_cpu_governor_performance), PerfRootApplier.KEY_CPU_GOVERNOR,
-                            "Forces every cluster to the performance governor.", rootValue, onRoot, { k -> globalOf(k) },
+                            I18n.s(R.string.ui_forces_every_cluster_to_the_performance_governor_2), rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = false, arm = null)
                         Divider()
                         rootPresetRow(I18n.s(R.string.ui_lock_cpu_frequency_to_max), PerfRootApplier.KEY_CPU_FREQ_LOCK,
@@ -922,16 +922,16 @@ fun PerformanceDashboardDialogPerGame(
                             setInfo = { info = it }, danger = false, arm = null)
                         Divider()
                         rootPresetRow(I18n.s(R.string.ui_keep_all_cores_online), PerfRootApplier.KEY_CORES_ONLINE,
-                            "Prevents the kernel from hot-plugging cores offline.", rootValue, onRoot, { k -> globalOf(k) },
+                            I18n.s(R.string.ui_prevents_the_kernel_from_hot_plugging_cores_offline_2), rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = false, arm = null)
                         Divider()
                         rootPresetRow(I18n.s(R.string.ui_disable_thermal_throttling), PerfRootApplier.KEY_THERMAL_DISABLE,
-                            "Runtime watchdog still guards.", rootValue, onRoot, { k -> globalOf(k) },
+                            I18n.s(R.string.ui_runtime_watchdog_still_guards_2), rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = true,
                             arm = { pendingDanger = PendingDanger(I18n.s(R.string.ui_disable_thermal_throttling)) { onRoot(PerfRootApplier.KEY_THERMAL_DISABLE, true) } })
                         Divider()
                         rootPresetRow(I18n.s(R.string.ui_fan_to_maximum), PerfRootApplier.KEY_FAN_MAX,
-                            "Forces active cooling to full at launch.", rootValue, onRoot, { k -> globalOf(k) },
+                            I18n.s(R.string.ui_forces_active_cooling_to_full_at_launch_2), rootValue, onRoot, { k -> globalOf(k) },
                             setInfo = { info = it }, danger = true,
                             arm = { pendingDanger = PendingDanger(I18n.s(R.string.ui_fan_to_maximum)) { onRoot(PerfRootApplier.KEY_FAN_MAX, true) } })
                     }

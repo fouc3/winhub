@@ -120,7 +120,7 @@ internal fun HomeStep(vm: FirstRunViewModel, portrait: Boolean, modifier: Modifi
             }
         }
         Text(
-            if (portrait) "Portrait Home is always the cover grid. Change it any time in Settings."
+            if (portrait) I18n.s(R.string.ui_portrait_home_is_always_the_cover_grid_change_it_any_tim)
             else I18n.s(R.string.ui_home_keeps_its_own_style_whatever_the_look_change_any_of),
             color = DeckPalette.onSurfaceVariant, fontSize = 13.sp,
         )
@@ -418,13 +418,13 @@ internal fun StoresStep(modifier: Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier.verticalScroll(rememberScrollState())) {
         StepHeading(
             STORES, I18n.s(R.string.ui_sign_in_to_your_stores),
-            "Sign in to the stores you have and every game you own shows up on Home, one shelf per store. Skip any you don't use.",
+            I18n.s(R.string.ui_sign_in_to_the_stores_you_have_and_every_game_you_own_sh),
         )
         DeckStore.entries.forEach { store ->
             StoreLoginRow(store, signedIn[store] == true) { launchDeckLogin(ctx, store.screen) }
         }
         Text(
-            "Each store opens its own sign-in. Come back here when you're done. You can also sign in later from Stores.",
+            I18n.s(R.string.ui_each_store_opens_its_own_sign_in_come_back_here_when_you),
             color = DeckPalette.onSurfaceVariant, fontSize = 13.sp,
         )
     }
@@ -462,7 +462,7 @@ private fun StoreLoginRow(store: DeckStore, signedIn: Boolean, onSignIn: () -> U
             Icon(Icons.Filled.Check, contentDescription = I18n.s(R.string.ui_signed_in_2), tint = DeckPalette.good, modifier = Modifier.size(22.dp))
         } else {
             Text(
-                "Sign in", color = DeckPalette.onPrimary, fontSize = 14.sp, fontWeight = FontWeight.Bold,
+                I18n.s(R.string.ui_sign_in_2), color = DeckPalette.onPrimary, fontSize = 14.sp, fontWeight = FontWeight.Bold,
                 modifier = Modifier.clip(RoundedCornerShape(10.dp)).background(DeckPalette.primary).padding(horizontal = 14.dp, vertical = 8.dp),
             )
         }

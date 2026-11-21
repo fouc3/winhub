@@ -526,7 +526,7 @@ internal fun EnvVarsEditor(
                 Column(Modifier.weight(1f)) {
                     Text(I18n.s(R.string.ui_prefer_game_folder_dlls))
                     Text(
-                        "Loads the game's own copies of " + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") +
+                        I18n.s(R.string.ui_loads_the_game_s_own_copies_of) + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") +
                             " instead of Wine's. Needed by many wrappers and mod loaders. Graphics DLLs are " +
                             "never included — DXVK/VKD3D own those.",
                         style = MaterialTheme.typography.bodySmall,
@@ -536,7 +536,7 @@ internal fun EnvVarsEditor(
                     // match every other toggle in the app; this line keeps it honest at a glance.
                     if (anyPreferred && !allPreferred) {
                         Text(
-                            "Some game-folder DLLs on — see below.",
+                            I18n.s(R.string.ui_some_game_folder_dlls_on_see_below_2),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -629,7 +629,7 @@ internal fun EnvVarsEditor(
                 )
             } else if (rows.isEmpty()) {
                 Text(
-                    "No environment variables set",
+                    I18n.s(R.string.ui_no_environment_variables_set),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = 12.dp)
@@ -804,7 +804,7 @@ private fun EnvValueField(
     val supporting: (@Composable () -> Unit)? = if (!spaceDropped) null else {
         @Composable {
             Text(
-                "Spaces aren't allowed here — variables are separated by spaces.",
+                I18n.s(R.string.ui_spaces_aren_t_allowed_here_variables_are_separated_by_sp),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -930,7 +930,7 @@ private fun MultiSelectGroup(
             }
         } else if (selected.isEmpty()) {
             Text(
-                "None selected",
+                I18n.s(R.string.ui_none_selected),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 4.dp)
@@ -997,7 +997,7 @@ private fun AddEnvVarPicker(
     // Live "will it save?" feedback under the boxes. null = nothing to say. Pair = (message, isError).
     val previewMsg: Pair<String, Boolean>? = when {
         rawName.isEmpty() && valueQuery.isBlank() -> null
-        name.isEmpty() -> "Won't be saved — enter a variable name" to true
+        name.isEmpty() -> I18n.s(R.string.ui_won_t_be_saved_enter_a_variable_name) to true
         alreadyExists -> "\"$name\" is already in the list" to true
         value.isEmpty() -> "Saves as  $name=  (empty value)" to false
         else -> "Saves as  $name = $value" to false
@@ -1087,7 +1087,7 @@ private fun AddEnvVarPicker(
                     }
                     if (candidates.isEmpty() && !showAddTyped) {
                         Text(
-                            "No matches",
+                            I18n.s(R.string.ui_no_matches),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(12.dp)

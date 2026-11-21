@@ -76,15 +76,15 @@ object WineChannelInfo {
         "err" to I18n.s(R.string.ui_real_errors_on_by_default_and_the_first_thing_to_read),
         "warn" to I18n.s(R.string.ui_warnings_something_unexpected_but_not_fatal_on_by_def),
         "fixme" to I18n.s(R.string.ui_wine_admitting_a_feature_is_missing_or_faked_very_oft),
-        "seh" to "Windows exceptions as they are thrown. Invaluable for a crash, but games throw " +
-            "these constantly, so it makes logs huge and slows the game down noticeably.",
-        "relay" to "Logs every call in and out of a DLL. Extremely detailed and extremely slow — " +
-            "useful for a specific hang, unusable as a general setting.",
+        "seh" to I18n.s(R.string.ui_windows_exceptions_as_they_are_thrown_invaluable_for_a_c) +
+            I18n.s(R.string.ui_these_constantly_so_it_makes_logs_huge_and_slows_the_gam),
+        "relay" to I18n.s(R.string.ui_logs_every_call_in_and_out_of_a_dll_extremely_detailed_a) +
+            I18n.s(R.string.ui_useful_for_a_specific_hang_unusable_as_a_general_setting),
         "snoop" to I18n.s(R.string.ui_like_relay_but_for_calls_wine_did_not_build_itself_sa),
         "exception" to I18n.s(R.string.ui_exception_handling_as_it_unwinds_pairs_with_seh),
         "unwind" to I18n.s(R.string.ui_stack_unwinding_during_exception_handling),
-        "debugstr" to "Text the program itself prints with OutputDebugString — often the " +
-            "developer's own messages.",
+        "debugstr" to I18n.s(R.string.ui_text_the_program_itself_prints_with_outputdebugstring_of) +
+            I18n.s(R.string.ui_developer_s_own_messages),
         "debug_buffer" to I18n.s(R.string.ui_contents_of_buffers_passed_around_dumped_as_hex),
 
         // ── Graphics ──────────────────────────────────────────────────────────────────────
@@ -99,8 +99,8 @@ object WineChannelInfo {
         "d3d_decl" to I18n.s(R.string.ui_vertex_declarations_how_geometry_is_described_to_the),
         "d3dcompiler" to I18n.s(R.string.ui_the_shader_compiler_itself),
         "d3dx" to I18n.s(R.string.ui_the_d3dx_helper_library_games_use_for_textures_maths),
-        "dxgi" to "DXGI — swapchains, display modes and presentation. Good for black-screen, " +
-            "fullscreen and refresh-rate problems.",
+        "dxgi" to I18n.s(R.string.ui_dxgi_swapchains_display_modes_and_presentation_good_for) +
+            I18n.s(R.string.ui_fullscreen_and_refresh_rate_problems),
         "ddraw" to I18n.s(R.string.ui_directdraw_2d_and_pre_direct3d_8_titles),
         "vulkan" to I18n.s(R.string.ui_vulkan_calls_this_is_what_dxvk_and_vkd3d_ultimately_p),
         "opengl" to I18n.s(R.string.ui_opengl_calls),
@@ -261,7 +261,7 @@ object WineChannelInfo {
         "vbscript" to I18n.s(R.string.ui_vbscript),
         "jscript" to "JScript/JavaScript.",
         "mshtml" to I18n.s(R.string.ui_the_embedded_web_browser_control_used_by_some_launche),
-        "actctx" to "Activation contexts and side-by-side assemblies — a common source of " +
+        "actctx" to I18n.s(R.string.ui_activation_contexts_and_side_by_side_assemblies_a_common) +
             "\"the application failed to initialize\" errors.",
         "sxs" to I18n.s(R.string.ui_side_by_side_assembly_resolution_the_same_family_as_a),
         "fusion" to ".NET assembly loading.",
@@ -279,8 +279,8 @@ object WineChannelInfo {
         "winspool" to I18n.s(R.string.ui_the_print_spooler),
 
         // ── Host side ─────────────────────────────────────────────────────────────────────
-        "x11drv" to "The X11 display driver — how Wine's windows reach WinHub's screen. " +
-            "The channel for windowing, fullscreen and mouse-capture problems.",
+        "x11drv" to I18n.s(R.string.ui_the_x11_display_driver_how_wine_s_windows_reach_winhub_s) +
+            I18n.s(R.string.ui_the_channel_for_windowing_fullscreen_and_mouse_capture_p),
         "waylanddrv" to I18n.s(R.string.ui_the_wayland_display_driver_used_by_the_experimental_w),
         "xrandr" to I18n.s(R.string.ui_display_modes_and_refresh_rates_under_x11),
         "xrender" to I18n.s(R.string.ui_x11_accelerated_drawing),

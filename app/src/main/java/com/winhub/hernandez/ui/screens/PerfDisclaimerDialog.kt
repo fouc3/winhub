@@ -34,19 +34,19 @@ import com.winhub.hernandez.R
 
 /** Verbatim risk copy for the hard-gate disclaimers (kept in one place so both surfaces match). */
 object PerfDisclaimerCopy {
-    const val ROOT_RISK =
+    val ROOT_RISK =
         "⚠️ USE AT YOUR OWN RISK — Power-user controls write directly to your device's system files " +
         "(CPU/GPU clocks, thermal, fan). Misuse can cause overheating, instability, rapid battery " +
-        "drain, data loss, or permanent hardware damage, and may void your warranty. WinHub " +
-        "provides these tools with no warranty of any kind — you accept full responsibility for any " +
+        I18n.s(R.string.ui_drain_data_loss_or_permanent_hardware_damage_and_may_voi) +
+        I18n.s(R.string.ui_provides_these_tools_with_no_warranty_of_any_kind_you_ac) +
         "outcome."
 
-    const val WATCHDOG_OFF =
+    val WATCHDOG_OFF =
         "⚠️ DISABLING THERMAL SAFETY — The temperature watchdog is the only automatic protection that " +
-        "rolls your settings back before the device gets dangerously hot. With it OFF, your device can " +
-        "reach damaging temperatures with no software intervention while a game runs — only the chip's " +
-        "own emergency trip remains. Do not leave this off unattended. This setting stays OFF across " +
-        "restarts until you turn it back on yourself — WinHub will not re-enable it for you."
+        I18n.s(R.string.ui_rolls_your_settings_back_before_the_device_gets_dangerou) +
+        I18n.s(R.string.ui_reach_damaging_temperatures_with_no_software_interventio) +
+        I18n.s(R.string.ui_own_emergency_trip_remains_do_not_leave_this_off_unatten) +
+        I18n.s(R.string.ui_restarts_until_you_turn_it_back_on_yourself_winhub_will)
 }
 
 /**

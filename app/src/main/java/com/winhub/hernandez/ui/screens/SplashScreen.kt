@@ -58,11 +58,11 @@ import com.winhub.hernandez.R
 
 private val SETUP_STEPS = listOf(
     "System files",
-    "GE-Proton 11.0-9 arm64ec",
-    "DXVK 2.4.1 gplasync",
-    "FEXCore 2611.1 PPA unix",
-    "VKD3D 3.0.1",
-    "GPU driver",
+    I18n.s(R.string.ui_ge_proton_11_0_9_arm64ec),
+    I18n.s(R.string.ui_dxvk_2_4_1_gplasync),
+    I18n.s(R.string.ui_fexcore_2611_1_ppa_unix),
+    I18n.s(R.string.ui_vkd3d_3_0_1),
+    I18n.s(R.string.ui_gpu_driver),
 )
 
 /**

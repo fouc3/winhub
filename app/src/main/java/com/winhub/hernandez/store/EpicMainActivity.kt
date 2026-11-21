@@ -304,7 +304,7 @@ private fun EpicLoginScreen(onLoginClick: () -> Unit) {
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Sign in to browse the Epic Games Store, claim this week's free games and download your library.",
+                I18n.s(R.string.ui_sign_in_to_browse_the_epic_games_store_claim_this_week_s),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

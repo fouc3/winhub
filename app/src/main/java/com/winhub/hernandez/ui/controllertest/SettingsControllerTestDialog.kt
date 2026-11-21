@@ -158,7 +158,7 @@ fun SettingsControllerTestDialog(
                         ControllerTestPanel(
                             snapshot = snap,
                             title = I18n.s(R.string.ui_test_your_controller),
-                            subtitle = snap?.deviceName?.takeIf { it.isNotEmpty() } ?: (padName ?: "Press any button on your controller"),
+                            subtitle = snap?.deviceName?.takeIf { it.isNotEmpty() } ?: (padName ?: I18n.s(R.string.ui_press_any_button_on_your_controller)),
                             resetKey = Unit,
                             manualArt = manualArt,
                             onArtChange = { manualArt = it },

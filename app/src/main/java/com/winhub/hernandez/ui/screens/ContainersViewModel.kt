@@ -244,7 +244,7 @@ class ContainersViewModel(app: Application) : AndroidViewModel(app) {
                 job(ContentsManager(getApplication()).apply { syncContents() })
             }
             _layerBusy.value = null
-            _message.value = result.getOrElse { it.message ?: "Layer update failed" }
+            _message.value = result.getOrElse { it.message ?: I18n.s(R.string.ui_layer_update_failed) }
             refresh()
         }
     }

@@ -1966,8 +1966,8 @@ fun ShortcutsScreen(
                 text = {
                     Text(
                         if (perGameOff)
-                            "Per-game log folders are turned off, so everything is written to one " +
-                            "shared folder and logs can't be traced back to a single game. Turn them " +
+                            I18n.s(R.string.ui_per_game_log_folders_are_turned_off_so_everything_is_wri) +
+                            I18n.s(R.string.ui_shared_folder_and_logs_can_t_be_traced_back_to_a_single) +
                             I18n.s(R.string.ui_on_in_settings_logs_then_play_s_name_once)
                         else
                             "Nothing has been captured for ${s.name} yet. Logs are written while a " +
@@ -2988,9 +2988,9 @@ fun ShortcutsScreen(
             text = {
                 Text(
                     "\"${s.name}\" is an EA title: it launches through EA Desktop, which isn't installed in this " +
-                        "container yet. WinHub will open one setup session (wine-mono first if the container " +
-                        "lacks it) and run EA's installer — follow its prompts when it shows them. The session closes " +
-                        "by itself when the installer finishes and the app comes back. Then launch the game again and " +
+                        I18n.s(R.string.ui_container_yet_winhub_will_open_one_setup_session_wine_mo) +
+                        I18n.s(R.string.ui_lacks_it_and_run_ea_s_installer_follow_its_prompts_when) +
+                        I18n.s(R.string.ui_by_itself_when_the_installer_finishes_and_the_app_comes) +
                         I18n.s(R.string.ui_sign_in_to_ea_when_it_asks_this_happens_once_per_cont)
                 )
             },
@@ -3841,7 +3841,7 @@ private fun SmartDriverInstallRow(
 
     val label = remember(md) {
         buildString {
-            append("config wants ")
+            append(I18n.s(R.string.ui_config_wants))
             append(md.wanted)
             md.current?.let { append(I18n.s(R.string.ui_you_have)).append(it) }
         }
@@ -4295,7 +4295,7 @@ internal fun CommunityCatalogBrowser(
                         }
                     }
                     Text(
-                        text = selectedGame?.name ?: "Community configs",
+                        text = selectedGame?.name ?: I18n.s(R.string.ui_community_configs_2),
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -5035,7 +5035,7 @@ private fun CommunityConfigDetailDialog(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        "Config details",
+                        I18n.s(R.string.ui_config_details),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f),
                     )
@@ -6123,12 +6123,12 @@ private fun DpCheck(dp: SettingsDpad, id: String, checked: Boolean, onCheckedCha
 
 // Labels for the six root perf keys (extraData name -> display label), matching PerfRootApplier.KEY_*.
 private val ROOT_PERF_LABELS = mapOf(
-    "rootCpuGovernorPerf" to "CPU governor → performance",
-    "rootCpuFreqLockMax" to "Lock CPU frequency to max",
-    "rootAllCoresOnline" to "Keep all cores online",
-    "rootGpuMaxClockLock" to "Lock GPU to max clock",
-    "rootThermalDisable" to "Disable thermal throttling",
-    "rootFanMax" to "Fan to maximum",
+    "rootCpuGovernorPerf" to I18n.s(R.string.ui_cpu_governor_performance),
+    "rootCpuFreqLockMax" to I18n.s(R.string.ui_lock_cpu_frequency_to_max),
+    "rootAllCoresOnline" to I18n.s(R.string.ui_keep_all_cores_online),
+    "rootGpuMaxClockLock" to I18n.s(R.string.ui_lock_gpu_to_max_clock),
+    "rootThermalDisable" to I18n.s(R.string.ui_disable_thermal_throttling),
+    "rootFanMax" to I18n.s(R.string.ui_fan_to_maximum),
 )
 
 /** Per-game override value to persist, or null (clear the extra) when it equals the global default. */
@@ -7622,7 +7622,7 @@ internal fun ShortcutSettingsDialogScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(I18n.s(R.string.ui_epic_online_services_eos_auth), fontSize = 14.sp)
                                 Text(
-                                    "Sign EOS games in with your Epic account",
+                                    I18n.s(R.string.ui_sign_eos_games_in_with_your_epic_account),
                                     fontSize = 11.sp,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -7680,7 +7680,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(I18n.s(R.string.ui_epic_friends_overlay), fontSize = 14.sp)
                                     Text(
-                                        "Experimental — in-game Epic overlay on Shift+F3 (a draggable pill " +
+                                        I18n.s(R.string.ui_experimental_in_game_epic_overlay_on_shift_f3_a_draggabl) +
                                                 I18n.s(R.string.ui_can_summon_it_too_needs_the_container_to_allow_full_s),
                                         fontSize = 11.sp,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -7821,7 +7821,7 @@ internal fun ShortcutSettingsDialogScreen(
                             )
                         } else if (!containerWaylandCapable) {
                             Text(
-                                "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
+                                I18n.s(R.string.ui_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
                                     I18n.s(R.string.ui_the_selected_layer_does_not_include_winewayland_and_i),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -7915,7 +7915,7 @@ internal fun ShortcutSettingsDialogScreen(
                                 if (overrideShown.isEmpty() || overrideShown in waylandGameDriverValues) waylandGameDriverValues
                                 else waylandGameDriverValues + overrideShown)
                             val labels = values.map {
-                                if (it.isEmpty()) "Use container default (" + com.winhub.hernandez.core.WaylandGameDriver.optionLabel(gfxContext, containerChoice, waylandAutoPick) + ")"
+                                if (it.isEmpty()) I18n.s(R.string.ui_use_container_default) + com.winhub.hernandez.core.WaylandGameDriver.optionLabel(gfxContext, containerChoice, waylandAutoPick) + ")"
                                 else com.winhub.hernandez.core.WaylandGameDriver.optionLabel(gfxContext, it, waylandAutoPick)
                             }
                             val selectedLabel = labels[values.indexOf(overrideShown).coerceAtLeast(0)]
@@ -10061,7 +10061,7 @@ private fun DeckShortcutSettingsBody(
                                         label = I18n.s(R.string.ui_wayland_game_driver_2),
                                         hint = I18n.s(R.string.ui_what_the_game_renders_on_the_adapter_uses_the_graphic),
                                         options = gameValues.map {
-                                            it to (if (it.isEmpty()) "Use container default (" +
+                                            it to (if (it.isEmpty()) I18n.s(R.string.ui_use_container_default) +
                                                 com.winhub.hernandez.core.WaylandGameDriver.optionLabel(context, containerChoice, waylandAutoPick) + ")"
                                             else com.winhub.hernandez.core.WaylandGameDriver.optionLabel(context, it, waylandAutoPick))
                                         },
@@ -10078,9 +10078,9 @@ private fun DeckShortcutSettingsBody(
                                     val containerHdr = shortcut.container.isWaylandHdr()
                                     DeckChoiceRow(
                                         label = com.winhub.hernandez.display.WaylandHdr.TITLE,
-                                        hint = hdrUnavailable ?: "HDR10 output on a screen that supports it",
+                                        hint = hdrUnavailable ?: I18n.s(R.string.ui_hdr10_output_on_a_screen_that_supports_it),
                                         options = listOf(
-                                            "" to "Use container default (" + (if (containerHdr) "On" else "Off") + ")",
+                                            "" to I18n.s(R.string.ui_use_container_default) + (if (containerHdr) "On" else "Off") + ")",
                                             "1" to "On", "0" to "Off"),
                                         selected = waylandHdrOverride,
                                         onPick = { if (hdrUnavailable == null) waylandHdrOverride = it },
@@ -10697,8 +10697,8 @@ private fun DeckShortcutSettingsBody(
  *  Controller gets a gamepad). Used by both the portrait top bar and the landscape rail. */
 private fun shortcutTabIcon(title: String): ImageVector = when (title) {
     "General" -> Icons.Filled.Settings
-    "Win Components" -> Icons.Filled.Widgets
-    "Env Vars" -> Icons.Filled.Extension
+    I18n.s(R.string.ui_win_components_2) -> Icons.Filled.Widgets
+    I18n.s(R.string.ui_env_vars) -> Icons.Filled.Extension
     "Graphics" -> Icons.Filled.Memory
     "Advanced" -> Icons.Filled.Tune
     "Controller" -> Icons.Filled.SportsEsports
@@ -10951,7 +10951,7 @@ private fun DeckAdvancedTab(
             )
         }
         if (!isLinuxEntry) {
-            DeckGroup("Sharpness (VKBasalt)") {
+            DeckGroup(I18n.s(R.string.ui_sharpness_vkbasalt)) {
                 DeckChoiceRow(
                     label = I18n.s(R.string.ui_effect),
                     options = sharpnessEffectEntries.map { it to it },
@@ -11166,7 +11166,7 @@ private fun ScTvTab(
                 modifier = Modifier.fillMaxWidth(),
             )
             Text(
-                "What the TV is told to run at.",
+                I18n.s(R.string.ui_what_the_tv_is_told_to_run_at),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -12077,7 +12077,7 @@ private fun XboxRuntimeRow(checked: Boolean, onChange: (Boolean) -> Unit) {
         Column(modifier = Modifier.weight(1f)) {
             Text(I18n.s(R.string.ui_use_the_app_xbox_runtime), fontSize = 14.sp)
             Text(
-                "This game ships Microsoft's own Xbox runtime, which needs Windows' Gaming Services. " +
+                I18n.s(R.string.ui_this_game_ships_microsoft_s_own_xbox_runtime_which_needs) +
                         I18n.s(R.string.ui_turn_off_only_to_try_the_game_s_own),
                 fontSize = 11.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant

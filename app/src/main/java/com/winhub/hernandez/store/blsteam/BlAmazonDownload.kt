@@ -2,6 +2,9 @@
 // (see rust/src/store_dl/amazon/jni.rs).
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -94,7 +97,7 @@ object BlAmazonDownload {
         val handle = nativeStart(planJson, installDir, caBundlePath, maxWorkers, processWorkers, bridge)
         if (handle == 0L) {
             // nativeStart already fired onComplete(false, …) for unusable inputs.
-            return outcome ?: RunResult(false, false, "native start failed", 0L)
+            return outcome ?: RunResult(false, false, I18n.s(R.string.ui_native_start_failed), 0L)
         }
         var cancelSent = false
         try {
@@ -116,7 +119,7 @@ object BlAmazonDownload {
         } finally {
             nativeRelease(handle)
         }
-        val r = outcome ?: RunResult(false, cancelSent, "no completion", 0L)
+        val r = outcome ?: RunResult(false, cancelSent, I18n.s(R.string.ui_no_completion), 0L)
         return RunResult(r.success && !cancelSent, cancelSent, r.error, r.bytesWritten)
     }
 

@@ -283,7 +283,7 @@ object SteamSessionManager {
                 netLatch.await(NETWORK_PROBE_MS + 500L, TimeUnit.MILLISECONDS)
                 val verdict = net
                 if (verdict == null) {
-                    step(Step.NETWORK, StepState.DONE, "Couldn't check")
+                    step(Step.NETWORK, StepState.DONE, I18n.s(R.string.ui_couldn_t_check))
                 } else {
                     Log.i(TAG, "network: ${verdict.logLine()}")
                     step(Step.NETWORK, if (verdict.isWarning) StepState.NOTICE else StepState.DONE, verdict.verdict())

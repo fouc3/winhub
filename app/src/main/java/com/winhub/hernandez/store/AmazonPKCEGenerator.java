@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.util.Base64;
 
 import java.security.MessageDigest;
@@ -49,7 +52,7 @@ public class AmazonPKCEGenerator {
             byte[] hash = digest.digest(verifier.getBytes(StandardCharsets.UTF_8));
             return Base64.encodeToString(hash, Base64.URL_SAFE | Base64.NO_PADDING | Base64.NO_WRAP);
         } catch (Exception e) {
-            throw new RuntimeException("SHA-256 unavailable", e);
+            throw new RuntimeException(I18n.s(R.string.ui_sha_256_unavailable), e);
         }
     }
 
@@ -67,7 +70,7 @@ public class AmazonPKCEGenerator {
             }
             return sb.toString().toUpperCase();
         } catch (Exception e) {
-            throw new RuntimeException("SHA-256 unavailable", e);
+            throw new RuntimeException(I18n.s(R.string.ui_sha_256_unavailable), e);
         }
     }
 }

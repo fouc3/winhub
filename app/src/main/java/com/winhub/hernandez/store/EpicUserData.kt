@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
@@ -82,7 +85,7 @@ object EpicUserData {
 
         val profile = Profile(
             accountId = accountId,
-            displayName = displayName.ifBlank { "Epic account" },
+            displayName = displayName.ifBlank { I18n.s(R.string.ui_epic_account_2) },
             country = country,
             friends = friends.sortedBy { it.displayName.lowercase() },
             friendsAvailable = friendsAvailable,

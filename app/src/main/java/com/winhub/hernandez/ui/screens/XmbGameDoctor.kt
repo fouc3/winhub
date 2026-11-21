@@ -45,7 +45,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     XmbRow.Action(
                         key = "undo", label = I18n.s(R.string.ui_undo_all_changes), icon = Icons.Filled.History,
                         subtitle = I18n.s(R.string.ui_back_to_how_it_was_before_the_doctor),
-                        disabledReason = if (session.busy) "Working…" else null,
+                        disabledReason = if (session.busy) I18n.s(R.string.ui_working) else null,
                     ) {
                         session.undo {
                             xmb.toast(I18n.s(R.string.ui_back_to_how_it_was))
@@ -58,8 +58,8 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             r.findings.forEachIndexed { i, f ->
                 val (label, icon) = when (f.level) {
                     GameDoctor.Level.PROBLEM -> "Problem" to Icons.Filled.Warning
-                    GameDoctor.Level.WARNING -> "Heads up" to Icons.Filled.Info
-                    GameDoctor.Level.TIP -> "Good to know" to Icons.Filled.Info
+                    GameDoctor.Level.WARNING -> I18n.s(R.string.ui_heads_up) to Icons.Filled.Info
+                    GameDoctor.Level.TIP -> I18n.s(R.string.ui_good_to_know) to Icons.Filled.Info
                 }
                 add(XmbRow.Header("h$i", label))
                 addAll(XmbTools.para("f$i", "${f.title}. ${f.detail}", icon, ctx))
@@ -83,7 +83,7 @@ internal fun xmbGameDoctorMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                             value = if (p.matchesDevice) "Your device" else I18n.s(R.string.ui_other_device),
                             disabledReason = when {
                                 session.pickKey(p) in session.applied -> "Applied"
-                                session.busy -> "Working…"
+                                session.busy -> I18n.s(R.string.ui_working)
                                 else -> null
                             },
                         ) { session.runPick(p) { xmb.saved() } }
@@ -113,7 +113,7 @@ private fun tweakRow(key: String, tweak: GameDoctor.Tweak, session: GameDoctorSe
     subtitle = tweak.detail,
     disabledReason = when {
         tweak.key in session.applied -> "Applied"
-        session.busy -> "Working…"
+        session.busy -> I18n.s(R.string.ui_working)
         else -> null
     },
     onClick = { session.runTweak(tweak) },

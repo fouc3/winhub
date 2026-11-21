@@ -707,7 +707,7 @@ private fun ContentsStep(vm: FirstRunViewModel, hub: ContentsHubViewModel, modif
     Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
         StepHeading(
             CONTENTS, I18n.s(R.string.ui_extra_contents),
-            "The same browser as the Contents tab. GE-Proton 11, DXVK, FEXCore, VKD3D and the GPU driver for your chip are always installed. Tick anything else you want now.",
+            I18n.s(R.string.ui_the_same_browser_as_the_contents_tab_ge_proton_11_dxvk_f),
         )
         ContentsBrowser(vm, hub, Modifier.weight(1f).fillMaxWidth())
     }
@@ -1030,7 +1030,7 @@ private fun SocialStep(vm: FirstRunViewModel, modifier: Modifier) {
             }
         }
         Text(
-            "Sign-in goes through GitHub. WinHub can only comment on issues in the public social-hub repo, nothing else.",
+            I18n.s(R.string.ui_sign_in_goes_through_github_winhub_can_only_comment_on_i),
             color = DeckPalette.onSurfaceVariant, fontSize = 13.sp,
         )
     }

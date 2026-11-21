@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.content.Context;
 
 import java.io.File;
@@ -84,7 +87,7 @@ public final class LogInventory {
         if (!loose.isEmpty()) {
             long bytes = 0, newest = 0;
             for (File f : loose) { bytes += f.length(); newest = Math.max(newest, f.lastModified()); }
-            out.add(new Entry(sawFolder ? "Older logs" : "All logs", base,
+            out.add(new Entry(sawFolder ? I18n.s(R.string.ui_older_logs) : I18n.s(R.string.ui_all_logs), base,
                     loose.size(), bytes, newest, false, 0, true));
         }
 

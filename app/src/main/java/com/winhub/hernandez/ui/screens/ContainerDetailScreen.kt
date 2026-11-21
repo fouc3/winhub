@@ -947,7 +947,7 @@ private fun TopLevelFields(
                 )
             } else if (!waylandCapable) {
                 Text(
-                    "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
+                    I18n.s(R.string.ui_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
                         I18n.s(R.string.ui_the_selected_layer_does_not_include_winewayland),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -2778,7 +2778,7 @@ internal fun StartupServicesToggleList(
 ) {
     SectionBox(title = I18n.s(R.string.ui_custom_services)) {
         Text(
-            "Custom starts with every service off — turn on only what you need. " +
+            I18n.s(R.string.ui_custom_starts_with_every_service_off_turn_on_only_what_y) +
                 I18n.s(R.string.ui_disabling_wine_bus_hid_can_break_controllers),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -4113,7 +4113,7 @@ internal fun GraphicsDriverConfigDialog(
                 if (turnipSectionExpanded) {
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Expert-only Turnip debug tokens. Off by default — enable only if you know what " +
+                        I18n.s(R.string.ui_expert_only_turnip_debug_tokens_off_by_default_enable_on) +
                             I18n.s(R.string.ui_they_do_these_are_unioned_with_the_gmem_setting_above),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -4297,7 +4297,7 @@ internal fun GraphicsDriverConfigDialog(
                     Spacer(Modifier.height(8.dp))
                     if (detectedKeys.isEmpty()) {
                         Text(
-                            "No extra settings detected.",
+                            I18n.s(R.string.ui_no_extra_settings_detected),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -4679,7 +4679,7 @@ internal fun DxvkConfigDialog(
     val anisotropyLabels = remember { listOf(I18n.s(R.string.ui_game_default), "2x", "4x", "8x", "16x") }
     val lodBiasLabels = remember {
         listOf(I18n.s(R.string.ui_game_default), I18n.s(R.string.ui_auto_match_scaling_mode), I18n.s(R.string.ui_sharper_0_25), I18n.s(R.string.ui_sharper_0_5),
-               "Sharper (-0.75)", "Sharpest (-1.0)")
+               I18n.s(R.string.ui_sharper_0_75), I18n.s(R.string.ui_sharpest_1_0))
     }
     var selectedAnisotropy by remember {
         val i = DXVKConfigDialog.ANISOTROPY_VALUES.indexOf(config.get("anisotropy"))
@@ -5454,8 +5454,8 @@ internal fun DxvkConfigDialog(
                     SectionLabel("CONFIG")
                     // Guidance for the three config audiences (new / customizer / file-savvy).
                     Text(
-                        "New to configs? Grab a Stock config via ⬇, then pick it below. " +
-                        "Want it your way? Edit anything in a stock config — changes auto-save as your own copy, the original stays untouched. " +
+                        I18n.s(R.string.ui_new_to_configs_grab_a_stock_config_via_then_pick_it_belo) +
+                        I18n.s(R.string.ui_want_it_your_way_edit_anything_in_a_stock_config_changes) +
                         "Prefer managing files yourself? \"Custom config file\" points at any .conf (the built-in way of doing DXVK_CONFIG_FILE). " +
                         I18n.s(R.string.ui_heads_up_builds_silently_ignore_keys_they_don_t_recog),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -5977,7 +5977,7 @@ internal fun DxvkConfigDialog(
                             text = {
                                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                                     Text(
-                                        "Values used in stock configs — pick one, reset to stock, or type your own.",
+                                        I18n.s(R.string.ui_values_used_in_stock_configs_pick_one_reset_to_stock),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -6039,7 +6039,7 @@ internal fun DxvkConfigDialog(
                                 ) {
                                     Column(modifier = Modifier.padding(20.dp)) {
                                         Text(
-                                            "Remove key?",
+                                            I18n.s(R.string.ui_remove_key),
                                             style = MaterialTheme.typography.titleMedium,
                                             color = MaterialTheme.colorScheme.onSurface
                                         )
@@ -6384,7 +6384,7 @@ internal fun FpsCounterConfigDialog(
                 }
                 Spacer(Modifier.height(12.dp))
                 HudThreeStop(
-                    "Detail level",
+                    I18n.s(R.string.ui_detail_level),
                     fusionLevels.map { it.label },
                     fusionLevels.indexOfFirst { it.token == fusionSize }.coerceAtLeast(0)
                 ) { fusionSize = fusionLevels[it].token }
@@ -6720,7 +6720,7 @@ internal fun StockConfigDownloadSheet(
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
             Text(I18n.s(R.string.ui_stock_configs), style = MaterialTheme.typography.titleMedium)
             Text(
-                "Tap a version to fetch its config. Builds without a shipped config show none.",
+                I18n.s(R.string.ui_tap_a_version_to_fetch_its_config_builds_without_a_sh),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

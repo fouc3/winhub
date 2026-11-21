@@ -193,7 +193,7 @@ class XboxMainActivity : ComponentActivity() {
                 XboxCloudActivity.clearWebSignIn(app)
                 XboxCloudSession.clear()
             }
-            XboxDiag.log(app, "signed out")
+            XboxDiag.log(app, I18n.s(R.string.ui_signed_out_2))
             runOnUiThread { account = null; message = I18n.s(R.string.ui_signed_out_of_xbox_installed_games_stay_installed) }
         }.start()
     }
@@ -264,7 +264,7 @@ fun rememberXboxLibrary(account: String, onMessage: (String) -> Unit): XboxLibra
                 }
             }
             result.onSuccess { games = it; status = "" }
-                .onFailure { status = ""; onMessage(it.message ?: "The Xbox library could not be loaded.") }
+                .onFailure { status = ""; onMessage(it.message ?: I18n.s(R.string.ui_the_xbox_library_could_not_be_loaded)) }
             syncing = false
         }
     }
@@ -483,7 +483,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
                 Switch(checked = cloud, onCheckedChange = { cloud = it; XboxMainActivity.prefs(ctx).edit().putBoolean(XboxMainActivity.PREF_CLOUD_SAVES, it).apply() })
             }
             Text(I18n.s(R.string.ui_off_by_default_saves_then_stay_on_this_device_turning_it) +
-                "use a test account first.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                I18n.s(R.string.ui_use_a_test_account_first), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         StoreSection(title = I18n.s(R.string.ui_cloud_gaming)) {
             Text(I18n.s(R.string.ui_resolution_region_bitrate_picture_effects_stats_and_s),
@@ -500,7 +500,7 @@ private fun XboxProfileTab(account: String, state: XboxLibraryState, modifier: M
             Spacer(Modifier.height(6.dp))
             Text(I18n.s(R.string.ui_backend_xodus_gpl_3_0_with_xodus_nexus_mit_and_droiddeck) +
                 "Cloud player: Greenlight's WebRTC client by UnknownSKL (MIT); stream settings and sharpening after " +
-                "Better xCloud by redphx (MIT). " +
+                I18n.s(R.string.ui_better_xcloud_by_redphx_mit) +
                 "Diagnostics: Download/Bannerlator/xbox_diag.txt", style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }

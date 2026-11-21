@@ -194,7 +194,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    "Log Manager",
+                    I18n.s(R.string.ui_log_manager),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f)
@@ -302,7 +302,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     exitAutosave,
                     hint = I18n.s(R.string.ui_records_native_crashes_without_root),
                     enabled = ExitReasonReporter.isSupported(),
-                    onInfo = { info = "Exit reasons" to LogCopy.EXIT_REASONS }) {
+                    onInfo = { info = I18n.s(R.string.ui_exit_reasons) to LogCopy.EXIT_REASONS }) {
                     exitAutosave = it; putBool(ExitReasonReporter.PREF_AUTOSAVE, it)
                 }
                 // Developer switch for the native Rust Steam engine (docs/STEAM_RUST_ENGINE_PLAN.md).
@@ -342,10 +342,10 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // adaptive window may ramp to, so a weak link still settles below it. Next download.
                 Spacer(Modifier.height(4.dp))
                 PickRow(
-                    "Store download speed",
+                    I18n.s(R.string.ui_store_download_speed),
                     "Ceiling for the Rust Epic / GOG / Amazon engines. Tap to change; applies to the next download.",
                     action = com.winhub.hernandez.store.StoreDownloadTier.label(storeDlTier),
-                    onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES },
+                    onInfo = { info = I18n.s(R.string.ui_rust_store_engines) to LogCopy.RUST_STORE_ENGINES },
                 ) {
                     storeDlTier = com.winhub.hernandez.store.StoreDownloadTier.next(storeDlTier)
                     com.winhub.hernandez.store.StoreDownloadTier.set(context, storeDlTier)
@@ -356,7 +356,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 Spacer(Modifier.height(4.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     CardAction(
-                        "Capture logcat now",
+                        I18n.s(R.string.ui_capture_logcat_now),
                         modifier = Modifier.weight(1f).alpha(if (logcat) 1f else 0.4f)
                     ) {
                         if (!logcat) return@CardAction
@@ -369,12 +369,12 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             refreshTick++
                         }
                     }
-                    InfoDot { info = "Capture logcat now" to LogCopy.CAPTURE_NOW }
+                    InfoDot { info = I18n.s(R.string.ui_capture_logcat_now) to LogCopy.CAPTURE_NOW }
                 }
                 Spacer(Modifier.height(4.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     CardAction(
-                        "Read last crash",
+                        I18n.s(R.string.ui_read_last_crash),
                         modifier = Modifier.weight(1f).alpha(if (ExitReasonReporter.isSupported()) 1f else 0.4f)
                     ) {
                         if (!ExitReasonReporter.isSupported()) return@CardAction
@@ -389,7 +389,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                             refreshTick++
                         }
                     }
-                    InfoDot { info = "Exit reasons" to LogCopy.EXIT_REASONS }
+                    InfoDot { info = I18n.s(R.string.ui_exit_reasons) to LogCopy.EXIT_REASONS }
                 }
             }
 
@@ -402,7 +402,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                         sub = if (keepLast == 0) "No history — each run replaces the last"
                               else "$keepLast launch${if (keepLast == 1) "" else "es"} per game",
                         action = "▾",
-                        onInfo = { info = "Keep last launches" to LogCopy.KEEP_LAST },
+                        onInfo = { info = I18n.s(R.string.ui_keep_last_launches) to LogCopy.KEEP_LAST },
                         onClick = { showKeepMenu = true }
                     )
                     DropdownMenu(
@@ -464,7 +464,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
 
             Spacer(Modifier.height(10.dp))
             Text(
-                "Explain the log types",
+                I18n.s(R.string.ui_explain_the_log_types),
                 color = MaterialTheme.colorScheme.primary, fontSize = 12.sp,
                 modifier = Modifier
                     .clickable { showExplainAll = true }
@@ -475,10 +475,10 @@ fun LogManagerScreen(onClose: () -> Unit) {
                 // full stop. Same correction as LogReport and LogViewerScreen: name what is actually
                 // stripped, and say plainly that paths are kept, because a path is often the thing
                 // that makes a log worth having.
-                "E-mail addresses, auth tokens and your Steam account name are scrubbed as logs are " +
+                I18n.s(R.string.ui_e_mail_addresses_auth_tokens_and_your_steam_account_name) +
                     "written. File paths are kept so they stay useful for debugging — glance over " +
-                    "them before sharing if a folder name identifies you. Logcat only ever contains " +
-                    "WinHub's own output.",
+                    I18n.s(R.string.ui_them_before_sharing_if_a_folder_name_identifies_you_logc) +
+                    I18n.s(R.string.ui_winhub_s_own_output),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                 modifier = Modifier.padding(top = 4.dp)
             )
@@ -523,7 +523,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     Text(
                         "Saved with your logs under the \"" + ExitReasonReporter.FOLDER +
                             "\" folder. Exit #0 is the most recent; a NATIVE_CRASH entry includes the " +
-                            "signal and the top backtrace frames.",
+                            I18n.s(R.string.ui_signal_and_the_top_backtrace_frames),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
@@ -560,12 +560,12 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     // Reachable: the loose bucket counts every log-shaped file it finds, but only
                     // the ones we wrote are deletable. A folder holding nothing but a user's own
                     // files lands here, and must not imply we are about to touch them.
-                        "Nothing here was written by WinHub, so there is nothing to delete. " +
+                        I18n.s(R.string.ui_nothing_here_was_written_by_winhub_so_there_is_nothing_t) +
                             "The files in this folder are yours and are left alone."
                     else
                         "Deletes $count log file${if (count == 1) "" else "s"}, including any kept " +
                             "history.\n\nOnly files WinHub wrote are removed — anything else in " +
-                            "that folder is left alone."
+                            I18n.s(R.string.ui_that_folder_is_left_alone)
                 )
             },
             confirmButton = {
@@ -599,7 +599,7 @@ fun LogManagerScreen(onClose: () -> Unit) {
                     "Deletes $count log file${if (count == 1) "" else "s"} across ${entries.size} " +
                         "folder${if (entries.size == 1) "" else "s"}, including kept history.\n\n" +
                         "Only files WinHub wrote are removed. Other files in your log folder — " +
-                        "including anything you put there yourself — are left alone."
+                        I18n.s(R.string.ui_including_anything_you_put_there_yourself_are_left_alone)
                 )
             },
             confirmButton = {
@@ -820,7 +820,7 @@ private fun WineChannelGroup(
         }
 
         Text(
-            "Reset to defaults",
+            I18n.s(R.string.ui_reset_to_defaults),
             color = MaterialTheme.colorScheme.primary, fontSize = 12.sp,
             modifier = Modifier
                 .clickable {
@@ -956,7 +956,7 @@ internal fun AllChannelsDialog(
 
                 if (visible.isEmpty()) {
                     Text(
-                        if (selectedOnly && query.isBlank()) "No channels are on."
+                        if (selectedOnly && query.isBlank()) I18n.s(R.string.ui_no_channels_are_on)
                         else "Nothing matches \"$query\".",
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -1142,7 +1142,7 @@ internal fun relativeTime(millis: Long): String {
     if (millis <= 0) return "—"
     val mins = (System.currentTimeMillis() - millis) / 60000
     return when {
-        mins < 1 -> "just now"
+        mins < 1 -> I18n.s(R.string.ui_just_now)
         mins < 60 -> "$mins min ago"
         mins < 60 * 24 -> "${mins / 60} hr ago"
         mins < 60 * 48 -> "yesterday"
@@ -1183,7 +1183,7 @@ private fun LogToggle(
 @Composable
 private fun InfoDot(onClick: () -> Unit) {
     IconButton(onClick = onClick, modifier = Modifier.size(28.dp)) {
-        Icon(Icons.Outlined.HelpOutline, "What's this?",
+        Icon(Icons.Outlined.HelpOutline, I18n.s(R.string.ui_what_this),
             tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
     }
 }
@@ -1193,42 +1193,42 @@ private fun InfoDot(onClick: () -> Unit) {
  * decide with — two of these are genuinely expensive to leave on.
  */
 internal object LogCopy {
-    const val PER_GAME =
+    val PER_GAME =
         "No performance cost.\n\n" +
-        "Gives each game its own folder inside your log location, named after the game, so one " +
-        "game's logs don't get mixed up with another's. Turn it off to keep everything in a single " +
+        I18n.s(R.string.ui_gives_each_game_its_own_folder_inside_your_log_location) +
+        I18n.s(R.string.ui_game_s_logs_don_t_get_mixed_up_with_another_s_turn_it_of) +
         "folder like older versions did.\n\n" +
-        "Logs written before you turned this on are left exactly where they are."
+        I18n.s(R.string.ui_logs_written_before_you_turned_this_on_are_left_exactly)
 
-    const val WINE =
+    val WINE =
         "⚠️ SLOWS GAMES DOWN. Only turn this on to diagnose a problem, then turn it back off.\n\n" +
-        "Records what Wine itself is doing. Every message is written to disk as the game runs, and " +
+        I18n.s(R.string.ui_records_what_wine_itself_is_doing_every_message_is_writt) +
         "Wine produces a lot of them — the \"seh\" channel alone logs an entry every time the game " +
-        "raises an exception, which normal Windows programs do constantly. Adding heavier channels " +
+        I18n.s(R.string.ui_raises_an_exception_which_normal_windows_programs_do_con) +
         "such as \"relay\" can make a game many times slower.\n\n" +
-        "This is the log to enable when a game won't start, crashes, or dies at launch."
+        I18n.s(R.string.ui_this_is_the_log_to_enable_when_a_game_won_t_start_crashe)
 
-    const val BOX64 =
+    val BOX64 =
         "⚠️ SLOWS GAMES DOWN at higher verbosity.\n\n" +
-        "Records what the x86 translator (Box64 or FEXCore) is doing while it converts the game's " +
-        "PC instructions to run on your phone. Useful for a game that crashes in a way Wine's own " +
+        I18n.s(R.string.ui_records_what_the_x86_translator_box64_or_fexcore_is_doin) +
+        I18n.s(R.string.ui_pc_instructions_to_run_on_your_phone_useful_for_a_game_t) +
         "log doesn't explain, or one that misbehaves only under one emulator.\n\n" +
-        "Leave off for normal play."
+        I18n.s(R.string.ui_leave_off_for_normal_play)
 
-    const val DXVK =
+    val DXVK =
         "Little to no performance cost.\n\n" +
         "Records what the graphics translation layers report — DXVK for DirectX 9/10/11, VKD3D for " +
         "DirectX 12. Almost everything they write happens while the game is starting: which GPU and " +
         "driver were picked, which features are missing, why a shader failed.\n\n" +
-        "This is the log to check for black screens, missing textures or a game that refuses a " +
-        "graphics feature. Safe to leave on."
+        I18n.s(R.string.ui_this_is_the_log_to_check_for_black_screens_missing_textu) +
+        I18n.s(R.string.ui_graphics_feature_safe_to_leave_on)
 
-    const val CONTROLLER =
+    val CONTROLLER =
         "Little to no performance cost.\n\n" +
-        "Records how the controller reached the game, for when the controls don't work. It covers " +
+        I18n.s(R.string.ui_records_how_the_controller_reached_the_game_for_when_the) +
         "XInput games (Direct XInput and Wine's own XInput) and DirectInput games, plus vibration. " +
-        "It notes the controller settings the game launched with, which controller went to which " +
-        "player, every in-game change in Controls › Pad, and how much input the app sent and the game " +
+        I18n.s(R.string.ui_it_notes_the_controller_settings_the_game_launched_with) +
+        I18n.s(R.string.ui_player_every_in_game_change_in_controls_pad_and_how_much) +
         "actually read.\n\n" +
         "Everything lands in a single \"controller.txt\" next to that game's other logs, written when " +
         "the game exits. It opens with a checklist (PASS / FAIL / WARN) for each player, so you can see " +
@@ -1236,80 +1236,80 @@ internal object LogCopy {
         "never read it, or Direct XInput never loaded. Send that file when you report a controller " +
         "problem — play long enough to try the controls, then quit the game normally.\n\n" +
         "Wine games only; the Linux runtime keeps its own controller diagnostics. Nothing is recorded " +
-        "while this is off."
+        I18n.s(R.string.ui_while_this_is_off)
 
-    const val STEAMLITE =
+    val STEAMLITE =
         "Little to no performance cost.\n\n" +
-        "Collects the REAL Steam client's own logs — the ones it writes for itself while a game runs " +
+        I18n.s(R.string.ui_collects_the_real_steam_client_s_own_logs_the_ones_it_wr) +
         "under SteamLite (the online / VAC launch path). That covers your login and network connection, " +
         "which game it launched, downloads, cloud saves and achievements. Steam writes these small files " +
         "as it goes, so leaving this on costs you essentially nothing.\n\n" +
-        "It ONLY produces anything when a game is actually launched through SteamLite. A normal launch, " +
-        "or a Goldberg (offline) launch, writes nothing at all — so there is no output to find unless you " +
+        I18n.s(R.string.ui_it_only_produces_anything_when_a_game_is_actually_launch) +
+        I18n.s(R.string.ui_or_a_goldberg_offline_launch_writes_nothing_at_all_so_th) +
         "played online through the real client.\n\n" +
         "Everything is gathered into a single \"steamlite.txt\" next to that game's other logs, and it " +
-        "opens with a plain-English summary of what ran plus an auto-scan that flags common problems " +
+        I18n.s(R.string.ui_opens_with_a_plain_english_summary_of_what_ran_plus_an_a) +
         "(a VAC-insecure launch, a login taken over by another device, a cloud-save conflict) so you " +
         "don't have to read the raw logs.\n\n" +
-        "Your Steam account name and auth tokens are scrubbed out as it is written, and your Steam ID is " +
-        "partially masked — but a masked Steam ID may still remain, which is normal and safe to share."
+        I18n.s(R.string.ui_your_steam_account_name_and_auth_tokens_are_scrubbed_out) +
+        I18n.s(R.string.ui_partially_masked_but_a_masked_steam_id_may_still_remain)
 
-    const val LOGCAT =
+    val LOGCAT =
         "No performance cost.\n\n" +
-        "Android's own system log, as it relates to WinHub. It is captured on demand — when you " +
+        I18n.s(R.string.ui_android_s_own_system_log_as_it_relates_to_winhub_it_is_c) +
         "tap \"Capture logcat now\", or when the app crashes — not continuously, so switching it on " +
         "does not cost you any frames.\n\n" +
-        "It contains WINHUB'S OUTPUT ONLY. Android does not let an app read other apps' logs " +
+        I18n.s(R.string.ui_it_contains_winhub_s_output_only_android_does_not_let_an) +
         "without root, and we deliberately don't offer a system-wide capture even with root: it " +
         "would sweep up other apps' private data into a file you're likely to share. If you have " +
-        "root and need the full system log, use a dedicated logcat reader."
+        I18n.s(R.string.ui_root_and_need_the_full_system_log_use_a_dedicated_logcat)
 
-    const val CRASH =
+    val CRASH =
         "No performance cost — nothing runs until something actually crashes.\n\n" +
-        "If WinHub itself crashes, a report is saved with your device model, Android version, " +
-        "app version, what went wrong, and the last few hundred lines of the app's log. That is " +
+        I18n.s(R.string.ui_if_winhub_itself_crashes_a_report_is_saved_with_your_dev) +
+        I18n.s(R.string.ui_app_version_what_went_wrong_and_the_last_few_hundred_lin) +
         "exactly what's needed to work out a crash after the fact.\n\n" +
         "Reports are kept with your other logs under \"App & crash logs\"."
 
-    const val CAPTURE_NOW =
-        "Takes a snapshot of WinHub's recent Android log right now and saves it with your other " +
+    val CAPTURE_NOW =
+        I18n.s(R.string.ui_takes_a_snapshot_of_winhub_s_recent_android_log_right_no) +
         "logs.\n\n" +
-        "Useful when something went wrong but the app didn't crash — capture it while the problem is " +
-        "fresh, then share it."
+        I18n.s(R.string.ui_useful_when_something_went_wrong_but_the_app_didn_t_cras) +
+        I18n.s(R.string.ui_fresh_then_share_it)
 
-    const val EXIT_REASONS =
+    val EXIT_REASONS =
         "Reads Android's own record of why WinHub last shut down or crashed — no root needed.\n\n" +
         "This is the ONLY way to see a NATIVE crash on an unrooted device: those die in a separate " +
-        "system process, so they never show up in the logcat capture or the Java crash report, and " +
-        "the app just restarts looking fine. For a native crash this shows the signal (e.g. SIGSEGV) " +
+        I18n.s(R.string.ui_system_process_so_they_never_show_up_in_the_logcat_captu) +
+        I18n.s(R.string.ui_the_app_just_restarts_looking_fine_for_a_native_crash_th) +
         "and the top backtrace frames — the actual cause, not a hint.\n\n" +
         "The system keeps this record across the crash, so \"Read last crash\" works even if you only " +
-        "turn this on afterwards. The toggle just controls whether a report is also saved " +
-        "automatically each time the app starts. Needs Android 11 or newer."
+        I18n.s(R.string.ui_turn_this_on_afterwards_the_toggle_just_controls_whether) +
+        I18n.s(R.string.ui_automatically_each_time_the_app_starts_needs_android_11)
 
-    const val KEEP_LAST =
+    val KEEP_LAST =
         "How many past runs to keep for each game.\n\n" +
         "When a game launches, the previous run's logs are moved into a \"previous\" folder rather " +
-        "than being overwritten, and anything older than this many runs is deleted. The current " +
+        I18n.s(R.string.ui_than_being_overwritten_and_anything_older_than_this_many) +
         "run's files keep their normal names, so the newest log is always the obvious one.\n\n" +
-        "Set it to 0 to keep no history at all."
+        I18n.s(R.string.ui_set_it_to_0_to_keep_no_history_at_all)
 
-    const val RUST_ENGINE =
+    val RUST_ENGINE =
         "On by default — no performance cost in game.\n\n" +
-        "Runs the whole Steam side of WinHub (sign-in, library, downloads, cloud saves, " +
+        I18n.s(R.string.ui_runs_the_whole_steam_side_of_winhub_sign_in_library_down) +
         "achievements, friends) on the app's native engine. Needs an app restart to take effect.\n\n" +
         "Turn it off only if something Steam-related misbehaves: that switches back to the legacy " +
-        "Java engine for this release — nothing is lost. While the native engine is on, its own log " +
-        "is added to the SteamLite bundle so a problem can be traced."
+        I18n.s(R.string.ui_java_engine_for_this_release_nothing_is_lost_while_the_n) +
+        I18n.s(R.string.ui_is_added_to_the_steamlite_bundle_so_a_problem_can_be_tra)
 
-    const val RUST_STORE_ENGINES =
+    val RUST_STORE_ENGINES =
         "On by default — no performance cost in game.\n\n" +
         "Fetches Epic, GOG and Amazon game files with the app's native download engine (the same " +
-        "adaptive multi-connection fetcher the Steam engine uses). Everything else about a download " +
+        I18n.s(R.string.ui_adaptive_multi_connection_fetcher_the_steam_engine_uses) +
         "— what is installed, resume, shortcuts, cloud saves — is unchanged.\n\n" +
-        "Each switch is read when a download starts, so flipping one applies to the next download " +
+        I18n.s(R.string.ui_each_switch_is_read_when_a_download_starts_so_flipping_o) +
         "of that store without a restart. Turn a store off if its downloads misbehave: that store " +
-        "goes back to its Java downloader — nothing is lost."
+        I18n.s(R.string.ui_goes_back_to_its_java_downloader_nothing_is_lost)
 
     fun explainAll(): String = buildString {
         append("Costs performance while on\n\n")

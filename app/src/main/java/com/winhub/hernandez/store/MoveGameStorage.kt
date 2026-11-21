@@ -242,7 +242,7 @@ object MoveGameStorage {
                     val newWin = repoint(ctx, sc, plan.source, plan.dest)
                         ?: throw MoveException(
                             "Couldn't update the shortcut \"${sc.name}\" — it may be out of drive letters. " +
-                                "Nothing was moved."
+                                I18n.s(R.string.ui_nothing_was_moved)
                         )
                     if (before != null) undo.add(sc.file to before)
                     Log.i(TAG, "repointed '${sc.name}' (container ${sc.container.id}) -> $newWin")
@@ -314,7 +314,7 @@ object MoveGameStorage {
         }
         throw MoveException(
             "The copy didn't come out complete ($detail). " +
-                "Nothing was moved — the game is still where it was."
+                I18n.s(R.string.ui_nothing_was_moved_the_game_is_still_where_it_was)
         )
     }
 

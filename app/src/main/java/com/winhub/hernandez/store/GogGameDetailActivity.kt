@@ -1007,8 +1007,8 @@ private fun GogGameDetailScreen(
                 if (prereqsVisible) {
                     StoreSection(title = I18n.s(R.string.ui_prerequisites)) {
                         StoreStatusText(
-                            "This game needs Microsoft runtimes (Visual C++, .NET, …). Install them into a " +
-                                "container's Wine prefix so the game can start. A brief setup window appears for each."
+                            I18n.s(R.string.ui_this_game_needs_microsoft_runtimes_visual_c_net_install) +
+                                I18n.s(R.string.ui_container_s_wine_prefix_so_the_game_can_start_a_brief_se)
                         )
                         Spacer(Modifier.height(8.dp))
                         StoreActionButton(

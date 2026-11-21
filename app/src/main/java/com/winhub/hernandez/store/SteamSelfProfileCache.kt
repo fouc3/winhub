@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import com.winhub.hernandez.store.blsteam.BlPlayerProfile
 import org.json.JSONArray
@@ -168,7 +171,7 @@ object SteamSelfProfileCache {
         }
         return SteamFriendsStore.FriendProfile(
             steamId = steamId,
-            personaName = o.optString("personaName", "").takeIf { it.isNotBlank() } ?: "Steam user",
+            personaName = o.optString("personaName", "").takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_steam_user),
             realName = str(o, "realName"),
             avatarUrl = str(o, "avatarUrl"),
             level = if (o.has("level") && !o.isNull("level")) o.optInt("level") else null,

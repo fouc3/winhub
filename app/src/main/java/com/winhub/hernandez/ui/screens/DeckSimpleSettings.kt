@@ -186,7 +186,7 @@ internal fun DeckSimpleContainerPage(viewModel: ContainerDetailViewModel) {
             label = I18n.s(R.string.graphics_driver),
             hint = if (wayland && compositorDriverUnusable(currentDriver, drivers.map { it.first }, drivers.isNotEmpty()))
                 "Wayland needs a Turnip driver here; \"System\" or a missing driver shows a black screen"
-            else if (wayland) "The Turnip build the Wayland compositor and the game run on"
+            else if (wayland) I18n.s(R.string.ui_the_turnip_build_the_wayland_compositor_and_the_game_run)
             else I18n.s(R.string.ui_turnip_build_the_game_renders_on),
             options = withCurrent(currentDriver, drivers),
             selected = currentDriver,
@@ -280,7 +280,7 @@ internal fun xmbSimpleMenu(xmb: XmbScope, p: XmbPrefs): XmbMenu {
         val dbLabels = listOf(I18n.s(R.string.ui_container_default) + (if (containerWayland) "Wayland" else "X11") + ")", "X11", "Wayland")
         rows += XmbRow.Choice("sBackend", I18n.s(R.string.ui_display_backend), Icons.Filled.DesktopWindows, dbLabels,
             dbLabels[dbValues.indexOf(dbOverride).coerceAtLeast(0)],
-            subtitle = if (waylandCapable) "Wayland routes the game through the embedded compositor"
+            subtitle = if (waylandCapable) I18n.s(R.string.ui_wayland_routes_the_game_through_the_embedded_composit)
                 else I18n.s(R.string.ui_wayland_needs_a_layer_with_winewayland_this_container_s),
             disabledOptions = if (waylandCapable) emptySet() else setOf(dbLabels[2])) { v ->
             write("displayBackend", dbValues[dbLabels.indexOf(v)].ifEmpty { null })

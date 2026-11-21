@@ -139,8 +139,8 @@ internal fun DeckAmazonInstall(game: AmazonGame, onBack: () -> Unit, onOpenStore
                     main.post { finished = true; pct = 100; status = "Installed." }
                 } catch (e: Exception) {
                     if (!cancelled.get()) {
-                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, e.message ?: "Unknown error")
-                        main.post { errorText = e.message ?: "Unknown error"; started = false }
+                        StoreDownloadHooks.markFailed(Store.AMAZON, game.productId, e.message ?: I18n.s(R.string.ui_unknown_error_2))
+                        main.post { errorText = e.message ?: I18n.s(R.string.ui_unknown_error_2); started = false }
                     }
                 }
             }

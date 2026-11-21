@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -227,7 +230,7 @@ public final class SteamRepository {
                 rustSignedInElsewhere = false;
                 logoffRecoveryAttempts = 0;
                 lastSessionStatus = "LoggedIn";
-                setStatus(SteamStatus.ONLINE, "rust engine logged on");
+                setStatus(SteamStatus.ONLINE, I18n.s(R.string.ui_rust_engine_logged_on));
                 BlSteamEngineLog.log("SESSION", "logged on (steamId known=" + (steamId64 != 0L) + ", cell=" + pGet("cell_id", 0) + ")");
                 Log.i(RUST_TAG, SteamLogRedactor.redact("logged on as " + pGet("username", "") + " steamId=" + steamId64));
                 // Same event the JavaSteam onLoggedOn emits, so the login screens / pill react alike.
@@ -247,7 +250,7 @@ public final class SteamRepository {
                 // Connect-only (no saved sign-in): the channel is up for the login screens; the pill
                 // stays "Signed out" like a signed-out JavaSteam session would show nothing.
                 if (!isLoggedInPrefs()) setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_connected_no_saved_sign_in));
-                else setStatus(SteamStatus.CONNECTING, "rust engine state " + state);
+                else setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_rust_engine_state) + state);
             } else {
                 BlSteamEngineLog.log("SESSION", "disconnected"
                         + (realSteamSuspended ? " (paused for the in-game Steam session)"
@@ -258,7 +261,7 @@ public final class SteamRepository {
                 else if (loggingOut)          setStatus(SteamStatus.SIGNED_OUT, "rust engine: signed out");
                 else if (rustTokenRejected)   setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_rust_engine_refresh_token_rejected_needs_re_auth));
                 else if (rustSignedInElsewhere) setStatus(SteamStatus.SIGNED_IN_ELSEWHERE, "rust engine: account owned by another client");
-                else if (!rustScheduleReconnect()) setStatus(SteamStatus.OFFLINE, "rust engine disconnected");
+                else if (!rustScheduleReconnect()) setStatus(SteamStatus.OFFLINE, I18n.s(R.string.ui_rust_engine_disconnected));
                 emit("Disconnected");
             }
         }
@@ -397,7 +400,7 @@ public final class SteamRepository {
         rustReconnectAttempts++;
         final int attempt = rustReconnectAttempts;
         long delayMs = attempt * 2000L;   // 2s, 4s, 6s, 8s, 10s
-        setStatus(SteamStatus.CONNECTING, "rust engine auto-reconnect attempt " + attempt);
+        setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_rust_engine_auto_reconnect_attempt) + attempt);
         Log.i(RUST_TAG, "auto-reconnect in " + delayMs + "ms (attempt " + attempt + ")");
         try {
             rustScheduler().schedule(() -> {
@@ -476,7 +479,7 @@ public final class SteamRepository {
             // One entry = "playing appId"; an empty list = "no longer playing". Client OS type 16 =
             // Windows 10, the same value the engine's logon reports.
             s.notifyGamesPlayed(appId > 0 ? "[{\"gameId\":" + appId + "}]" : "[]", 16);
-            slog("presence: " + (appId > 0 ? "in game " + appId : "left game") + " (" + why + ")");
+            slog("presence: " + (appId > 0 ? I18n.s(R.string.ui_in_game_3) + appId : I18n.s(R.string.ui_left_game)) + " (" + why + ")");
             return true;
         } catch (Throwable t) {
             Log.w(PRESENCE_TAG, I18n.s(R.string.ui_games_played_failed) + why + ")", t);
@@ -736,7 +739,7 @@ public final class SteamRepository {
                 if (prev == null) { lines.add("ONLY-NOW  app " + e.getKey() + ": " + e.getValue()); continue; }
                 if (prev.equals(e.getValue())) { same++; continue; }
                 changed++;
-                lines.add("CHANGED   app " + e.getKey() + "\n    prev: " + prev + "\n    now:  " + e.getValue());
+                lines.add(I18n.s(R.string.ui_changed_app) + e.getKey() + "\n    prev: " + prev + "\n    now:  " + e.getValue());
             }
             int onlyPrev = 0;
             for (Integer id : before.keySet()) if (!after.containsKey(id)) { onlyPrev++; lines.add(I18n.s(R.string.ui_only_prev_app) + id + ": " + before.get(id)); }
@@ -1184,7 +1187,7 @@ public final class SteamRepository {
         // backing out). Only claim CONNECTING when a token logon is actually about to run.
         setStatus(loggedIn ? SteamStatus.ONLINE
                            : (isLoggedInPrefs() ? SteamStatus.CONNECTING : SteamStatus.SIGNED_OUT),
-                  "CM connected");
+                  I18n.s(R.string.ui_cm_connected));
 
         if (isLoggedInPrefs()) {
             Log.i(TAG, SteamLogRedactor.redact(I18n.s(R.string.ui_auto_login_as) + pGet("username", "")));
@@ -1333,7 +1336,7 @@ public final class SteamRepository {
         rustSignedInElsewhere = false;
         rustReconnectAttempts = 0;
         if (!isLoggedInPrefs()) return;
-        setStatus(SteamStatus.CONNECTING, "user tapped reconnect");
+        setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_user_tapped_reconnect));
         if (rustEngine) { rustConnect("reconnectNow"); return; }
         if (!connected) {
             connect();                                              // onConnected auto-logs-in
@@ -1435,7 +1438,7 @@ public final class SteamRepository {
                     @Override public void onAvailable(Network network) {
                         // A new default network (Wi-Fi ↔ hotspot, VPN up/down) = a different NAT:
                         // drop the cached pre-flight network verdict so the next launch re-tests.
-                        try { NetworkProbe.invalidate("default network " + network); } catch (Throwable ignored) {}
+                        try { NetworkProbe.invalidate(I18n.s(R.string.ui_default_network) + network); } catch (Throwable ignored) {}
                         onNetworkAvailable("onAvailable");
                     }
                     @Override public void onCapabilitiesChanged(Network network, NetworkCapabilities caps) {
@@ -1541,7 +1544,7 @@ public final class SteamRepository {
         if ((forced || !cb.isUserInitiated()) && pumping.get() && reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
             reconnectAttempts++;
             long delayMs = reconnectAttempts * 2000L;  // 2s, 4s, 6s, 8s, 10s
-            setStatus(SteamStatus.CONNECTING, "auto-reconnect attempt " + reconnectAttempts);
+            setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_auto_reconnect_attempt) + reconnectAttempts);
             Log.i(TAG, I18n.s(R.string.ui_auto_reconnect_in) + delayMs + "ms (attempt " + reconnectAttempts + ")");
             if (pumpHandler != null) {
                 pumpHandler.postDelayed(() -> {
@@ -1581,7 +1584,7 @@ public final class SteamRepository {
         loggedIn = true;
         logoffRecoveryAttempts = 0;   // fresh session established — reset involuntary-logoff recovery budget
         lastSessionStatus = "LoggedIn";
-        setStatus(SteamStatus.ONLINE, "logged in");
+        setStatus(SteamStatus.ONLINE, I18n.s(R.string.ui_logged_in));
         emit("LoggedIn:" + sid64);
         Log.i(TAG, SteamLogRedactor.redact(I18n.s(R.string.ui_logged_in_as) + pGet("username", "")));
     }
@@ -1624,7 +1627,7 @@ public final class SteamRepository {
         // The pill shows "Signed in elsewhere" and the user taps to reconnect once they've signed out there.
         if (loggingOut || r == EResult.LoggedInElsewhere || r == EResult.LogonSessionReplaced) {
             setStatus(loggingOut ? SteamStatus.SIGNED_OUT : SteamStatus.SIGNED_IN_ELSEWHERE,
-                    loggingOut ? "user sign-out" : "replaced by another client: " + r.name());
+                    loggingOut ? I18n.s(R.string.ui_user_sign_out) : "replaced by another client: " + r.name());
             emit("LoggedOut");
             return;
         }
@@ -1637,7 +1640,7 @@ public final class SteamRepository {
         if (pumping.get() && isLoggedInPrefs() && steamClient != null
                 && logoffRecoveryAttempts < MAX_LOGOFF_RECOVERY) {
             logoffRecoveryAttempts++;
-            setStatus(SteamStatus.CONNECTING, "involuntary logoff recovery " + logoffRecoveryAttempts);
+            setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_involuntary_logoff_recovery_2) + logoffRecoveryAttempts);
             Log.i(TAG, I18n.s(R.string.ui_involuntary_logoff) + r + ") -> forcing reconnect+relogin (recovery "
                     + logoffRecoveryAttempts + "/" + MAX_LOGOFF_RECOVERY + ")");
             forceReconnect = true;
@@ -2395,7 +2398,7 @@ public final class SteamRepository {
         loggingOn.set(true);
         logonStartedAt = now;
         loggingOut = false;   // a fresh logon means we are no longer in a sign-out
-        setStatus(SteamStatus.CONNECTING, "logon posted");
+        setStatus(SteamStatus.CONNECTING, I18n.s(R.string.ui_logon_posted));
         Runnable work = () -> {
             LogOnDetails details = new LogOnDetails();
             details.setUsername(username);
@@ -2572,7 +2575,7 @@ public final class SteamRepository {
         synchronized (licenses) { licenses.clear(); }
         cachedGameRows = null;
         SteamLogRedactor.clearSecrets();   // creds are being removed; forget them from the redactor too
-        setStatus(SteamStatus.SIGNED_OUT, "user logout");
+        setStatus(SteamStatus.SIGNED_OUT, I18n.s(R.string.ui_user_logout));
         Log.i(TAG, I18n.s(R.string.ui_logged_out));
         emit("LoggedOut");
         if (rustEngine && !realSteamSuspended) {

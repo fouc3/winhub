@@ -170,7 +170,7 @@ class SteamForegroundService : Service() {
 
         val ch = NotificationChannel(
             CHANNEL_ID,
-            "Steam Connection",
+            I18n.s(R.string.ui_steam_connection),
             NotificationManager.IMPORTANCE_LOW,
         ).apply {
             description = I18n.s(R.string.ui_keeps_steam_connection_alive_while_browsing_or_downlo)

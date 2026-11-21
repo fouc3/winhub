@@ -82,7 +82,7 @@ object ComponentUpdates {
         }
         out += Status(
             KIND_PROTON,
-            guarded("Proton") { ProtonUpdateChecker.installedLabel(app) } ?: "Not installed",
+            guarded("Proton") { ProtonUpdateChecker.installedLabel(app) } ?: I18n.s(R.string.ui_not_installed),
             inspection?.newest?.let { ProtonUpdateChecker.label(it) },
             protonUpdate,
         )
@@ -95,8 +95,8 @@ object ComponentUpdates {
             val newest = driver.newest
             val newer = newest != null && (driver.have == null || DriverUpdateChecker.compareRank(newest.rank, driver.have.rank) > 0)
             out += Status(
-                "Graphics driver",
-                driver.have?.label ?: "Not installed",
+                I18n.s(R.string.ui_graphics_driver),
+                driver.have?.label ?: I18n.s(R.string.ui_not_installed),
                 newest?.label,
                 if (newest != null && newer) guarded("driver") { driverOfferFor(app, newest, driver.have?.label ?: "none installed") } else null,
             )
@@ -111,7 +111,7 @@ object ComponentUpdates {
             (have == null || DriverUpdateChecker.compareRank(fexRank(newestFex.verName)!!, fexRank(have.verName)!!) > 0)
         out += Status(
             KIND_FEX,
-            have?.verName ?: "Not installed",
+            have?.verName ?: I18n.s(R.string.ui_not_installed),
             newestFex?.verName,
             if (newestFex != null && fexNewer) guarded("FEXCore") { fexOfferFor(app, newestFex, have?.verName ?: "none installed") } else null,
         )

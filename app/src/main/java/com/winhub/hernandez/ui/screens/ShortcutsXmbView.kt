@@ -878,7 +878,7 @@ internal fun XmbInfo(s: Shortcut, playtime: String?, descLines: Int) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.Schedule, contentDescription = null, tint = Color(0xFFBBBBBB), modifier = Modifier.size(13.dp))
             Spacer(Modifier.width(4.dp))
-            Text(playtime ?: "Not played yet", color = factColor, fontSize = 12.sp)
+            Text(playtime ?: I18n.s(R.string.ui_not_played_yet), color = factColor, fontSize = 12.sp)
         }
         if (details.genres.isNotEmpty()) Text(details.genres.take(3).joinToString(" · "), color = factColor, fontSize = 12.sp)
         details.releaseYear?.takeIf { it.isNotBlank() }?.let { Text(it, color = factColor, fontSize = 12.sp) }

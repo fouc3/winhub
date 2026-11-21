@@ -446,7 +446,7 @@ class EpicGameDetailActivity : ComponentActivity() {
                 EpicEosDetector.scanAsync(appCtx, an, installDir, null)
                 onInstallComplete()
             } catch (e: Exception) {
-                if (!cancelled.get()) onInstallError(e.message ?: "Unknown error")
+                if (!cancelled.get()) onInstallError(e.message ?: I18n.s(R.string.ui_unknown_error_2))
             }
         }
     }
@@ -642,7 +642,7 @@ class EpicGameDetailActivity : ComponentActivity() {
         val dir = prefs!!.getString("epic_dir_$an", null)
         if (dir == null) { resultBarMsg = "Not installed"; return }
         verifyEnabled = false
-        verifyStatusText = "Verifying…"
+        verifyStatusText = I18n.s(R.string.ui_verifying)
         val appCtx = applicationContext
         DownloadScope.io.launch {
             try {

@@ -304,7 +304,7 @@ private fun ComponentTab(vm: ContentsHubViewModel) {
             Text(I18n.s(R.string.ui_components), style = MaterialTheme.typography.titleLarge, color = cs.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(
-                "Browse every component family across all repositories",
+                I18n.s(R.string.ui_browse_every_component_family_across_all_repositories),
                 style = MaterialTheme.typography.bodyMedium, color = cs.onSurfaceVariant,
             )
             Spacer(Modifier.height(12.dp))
@@ -763,7 +763,7 @@ private fun ComponentRow(vm: ContentsHubViewModel, item: ContentsHubViewModel.Ca
                 PrimaryButton("Installed", Icons.Filled.CheckCircle, enabled = false,
                     container = InstalledGreen.copy(alpha = 0.16f), content = InstalledGreen, modifier = Modifier.weight(1f)) {}
             } else {
-                PrimaryButton(if (busy) "Working…" else "Download & Install", Icons.Filled.Download,
+                PrimaryButton(if (busy) I18n.s(R.string.ui_working) else "Download & Install", Icons.Filled.Download,
                     enabled = !busy, container = cs.primary, content = Color.Black, modifier = Modifier.weight(1f)) {
                     ContentsInstaller.install(
                         context.applicationContext, item.type, item.sourceName, item.versionName,
@@ -1477,7 +1477,7 @@ private fun LocationDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit) {
                 Text("Raw archives are filed under <folder>/components/<type>/ — next to WinHub's logs and saves.",
                     style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
                 Spacer(Modifier.height(10.dp))
-                MenuRow(Icons.Filled.Folder, "Downloads › bannerlator (default)") {
+                MenuRow(Icons.Filled.Folder, I18n.s(R.string.ui_downloads_bannerlator_default)) {
                     vm.library.setDefaultBase(); vm.refreshBase(); vm.refreshFolders(); onDismiss()
                 }
                 MenuItemDivider()

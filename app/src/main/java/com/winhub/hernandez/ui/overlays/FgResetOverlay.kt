@@ -80,7 +80,7 @@ private fun FgResetCard(onResume: () -> Unit) {
             modifier = Modifier.padding(horizontal = 28.dp, vertical = 22.dp)
         ) {
             Text(
-                "Frame generation updated",
+                I18n.s(R.string.ui_frame_generation_updated),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -88,7 +88,7 @@ private fun FgResetCard(onResume: () -> Unit) {
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                "Restarting the display so the change applies cleanly.",
+                I18n.s(R.string.ui_restarting_the_display_so_the_change_applies_cleanly),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 fontSize = 13.sp,
                 textAlign = TextAlign.Center

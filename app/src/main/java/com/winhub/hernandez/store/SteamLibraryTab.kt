@@ -420,7 +420,7 @@ fun SteamLibraryTab(
                 state.games.isEmpty() && !state.isLoading -> StoreNotice(
                     title = I18n.s(R.string.ui_no_games_yet),
                     body = I18n.s(R.string.ui_nothing_in_this_account_s_steam_library_has_synced_yet_p) +
-                        "with Refresh, or add a free game from the Store tab.",
+                        I18n.s(R.string.ui_with_refresh_or_add_a_free_game_from_the_store_tab),
                     actionLabel = "Refresh",
                     onAction = state.refresh,
                     modifier = Modifier.align(Alignment.Center),
@@ -432,11 +432,11 @@ fun SteamLibraryTab(
                     title = typeFilter.emptyMessage(),
                     body = when (typeFilter) {
                         LibraryTypeFilter.DEMOS ->
-                            "Demos you have installed from the Steam store will appear here."
+                            I18n.s(R.string.ui_demos_you_have_installed_from_the_steam_store_will_appea)
                         LibraryTypeFilter.INSTALLED ->
-                            "Games and demos you download from your library will appear here."
+                            I18n.s(R.string.ui_games_and_demos_you_download_from_your_library_will_appe)
                         else ->
-                            "Nothing in your library matches this filter."
+                            I18n.s(R.string.ui_nothing_in_your_library_matches_this_filter)
                     },
                     actionLabel = if (typeFilter != LibraryTypeFilter.ALL) "Show all" else null,
                     onAction = if (typeFilter != LibraryTypeFilter.ALL) {

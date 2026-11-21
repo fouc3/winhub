@@ -99,7 +99,7 @@ object SocialProfiles {
 
     /** Saves [name] / [avatarUrl] as the signed-in user's profile. Blank values clear back to GitHub's. Returns an error or null. */
     suspend fun save(name: String, avatarUrl: String?): String? = withContext(Dispatchers.IO) {
-        val account = SocialHubStore.accountOrNull() ?: return@withContext "Sign in to GitHub first."
+        val account = SocialHubStore.accountOrNull() ?: return@withContext I18n.s(R.string.ui_sign_in_to_github_first)
         val login = account.login.lowercase()
         val cleanName = sanitizeName(name)
         val cleanAvatar = avatarUrl?.takeIf { it.startsWith(AVATAR_HOST) }.orEmpty()

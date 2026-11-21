@@ -1,5 +1,8 @@
 package com.winhub.hernandez.util
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import android.content.Intent
 import com.winhub.hernandez.XServerDisplayActivity
@@ -50,7 +53,7 @@ object ContainerExeRunner {
             }
         }.getOrElse { failure ->
             return if (failure is WinePath.NoFreeDriveLetterException) {
-                "No free drive letters left in this container — remove one in its Drives tab"
+                I18n.s(R.string.ui_no_free_drive_letters_left_in_this_container_remove_one)
             } else {
                 "Couldn't prepare ${exe.name} to run"
             }

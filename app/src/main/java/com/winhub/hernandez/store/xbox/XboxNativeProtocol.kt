@@ -83,7 +83,7 @@ internal class XboxNativeProtocol(
         when (data.optString("type")) {
             "HandshakeAck" -> {
                 handshakeDone = true
-                log("handshake done")
+                log(I18n.s(R.string.ui_handshake_done))
                 // Greenlight's order: authorization (announces controller 0 and removes it), input start, config.
                 send(control, JSONObject().put("message", "authorizationRequest").put("accessKey", "4BDB3609-C1F1-4195-9B37-FEFF45DA8B8E").toString())
                 gamepadChanged(0, true); gamepadChanged(0, false)

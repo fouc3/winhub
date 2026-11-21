@@ -208,7 +208,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         isLoading = false
         statusText = ""
         guardDialog = GuardDialogData(
-            title   = if (codeWrong) "Incorrect code — try again" else "Steam Guard",
+            title   = if (codeWrong) I18n.s(R.string.ui_incorrect_code_try_again) else I18n.s(R.string.ui_steam_guard),
             message = "Enter the code Steam sent to your email ending in \u2026$emailDomain",
         )
     }
@@ -217,7 +217,7 @@ class SteamLoginActivity : ComponentActivity(), SteamAuthManager.AuthListener {
         isLoading = false
         statusText = ""
         guardDialog = GuardDialogData(
-            title   = if (codeWrong) "Incorrect code — try again" else "Steam Guard",
+            title   = if (codeWrong) I18n.s(R.string.ui_incorrect_code_try_again) else I18n.s(R.string.ui_steam_guard),
             message = I18n.s(R.string.ui_enter_the_code_from_your_steam_guard_mobile_authentic),
         )
     }

@@ -106,7 +106,7 @@ object GogRedistInstaller {
                 .setMessage(
                     "This game needs: $listStr.\n\n" +
                         "They'll be installed into \"${container.name}\". A brief setup window will " +
-                        "appear for each one and close on its own."
+                        I18n.s(R.string.ui_appear_for_each_one_and_close_on_its_own)
                 )
                 .setPositiveButton("Install") { _, _ -> installPrereqs(activity, container, gameId) }
                 .setNegativeButton(I18n.s(R.string.ui_skip), null)
@@ -222,7 +222,7 @@ object GogRedistInstaller {
                 // across the app-restart a session forces — so a multi-redist game (e.g. Witcher 2 EE)
                 // is driven to completion automatically. Each step carries its own GOG:<depId> marker.
                 val component = Component(
-                    name = "GOG Prerequisites",
+                    name = I18n.s(R.string.ui_gog_prerequisites),
                     description = I18n.s(R.string.ui_auto_installed_gog_redistributables),
                     provider = "gog",
                     status = "ready",
@@ -300,7 +300,7 @@ object GogRedistInstaller {
         files.firstOrNull {
             it.extension.equals("exe", true) && !it.name.equals(wrapper.name, ignoreCase = true)
         }?.let { return it to "" }
-        log.add("extraction produced no inner installer")
+        log.add(I18n.s(R.string.ui_extraction_produced_no_inner_installer))
         return null
     }
 

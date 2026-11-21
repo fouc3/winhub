@@ -458,7 +458,7 @@ fun StoreCapsule(
                         } else {
                             StorefrontLog.artCandidateFailed(
                                 "app $appId: all ${candidates.size} Steam CDN candidate(s) failed — " +
-                                    "starting the async resolvers",
+                                    I18n.s(R.string.ui_starting_the_async_resolvers),
                             )
                         }
                         attempt = next
@@ -477,7 +477,7 @@ fun StoreCapsule(
                 onError = {
                     StorefrontLog.artCandidateFailed(
                         "app $appId: art from ${CAPSULE_RESOLVERS.getOrNull(resolverIndex)?.source} " +
-                            "failed to load — trying the next source",
+                            I18n.s(R.string.ui_failed_to_load_trying_the_next_source),
                     )
                     resolvedUrl = null
                     resolverIndex += 1

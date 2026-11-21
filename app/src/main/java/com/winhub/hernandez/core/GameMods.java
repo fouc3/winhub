@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -344,9 +347,9 @@ public final class GameMods {
         File m = new File(dir, mod.marker);
         File dll = marker[1] != null ? find(dir, marker[1]) : null;
         if (dll != null && sha256(dll).equals(marker[0])) {
-            if (!dll.delete()) return "could not remove " + dll.getName();
+            if (!dll.delete()) return I18n.s(R.string.ui_could_not_remove) + dll.getName();
             m.delete();
-            return "removed our " + dll.getName();
+            return I18n.s(R.string.ui_removed_our) + dll.getName();
         }
         m.delete();
         return dll != null ? "the game folder's own " + dll.getName() + " left as it is" : null;

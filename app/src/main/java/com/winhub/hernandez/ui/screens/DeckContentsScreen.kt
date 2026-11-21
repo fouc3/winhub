@@ -1570,13 +1570,13 @@ private fun DeckAddSourceDialog(vm: ContentsHubViewModel, onDismiss: () -> Unit)
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    "GPU driver source",
+                    I18n.s(R.string.ui_gpu_driver_source),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = DeckPalette.onBackground,
                 )
                 Text(
-                    "Shared with the AdrenoTools screen",
+                    I18n.s(R.string.ui_shared_with_the_adrenotools_screen),
                     fontSize = 11.sp,
                     color = DeckPalette.onSurfaceVariant,
                 )
@@ -1760,7 +1760,7 @@ private fun DeckContentsSettingsDialog(vm: ContentsHubViewModel, onDismiss: () -
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    "Keep raw archive by default",
+                    I18n.s(R.string.ui_keep_raw_archive_by_default),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = DeckPalette.onBackground,

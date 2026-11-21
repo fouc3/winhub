@@ -948,7 +948,7 @@ private fun FmParentTile(onTap: () -> Unit) {
         }
         Spacer(Modifier.height(6.dp))
         Text(
-            "Parent folder",
+            I18n.s(R.string.ui_parent_folder),
             color = DeckPalette.onSurfaceVariant,
             fontSize = 12.sp,
             fontWeight = FontWeight.SemiBold,

@@ -132,11 +132,11 @@ internal fun dotColor(p: SteamFriendsStore.Presence): Color = when (p) {
 // appears during a SteamLite game, for friends the in-game relay hasn't confirmed yet (never Offline
 // by default — see SteamFriendsStore.agentMergePersona).
 internal val PRESENCE_ORDER = listOf(
-    SteamFriendsStore.Presence.IN_GAME to "In game",
+    SteamFriendsStore.Presence.IN_GAME to I18n.s(R.string.ui_in_game),
     SteamFriendsStore.Presence.ONLINE to "Online",
     SteamFriendsStore.Presence.AWAY to "Away",
     SteamFriendsStore.Presence.OFFLINE to "Offline",
-    SteamFriendsStore.Presence.UNKNOWN to "Status unknown",
+    SteamFriendsStore.Presence.UNKNOWN to I18n.s(R.string.ui_status_unknown),
 )
 
 // ── Friends list ────────────────────────────────────────────────────────────────
@@ -355,7 +355,7 @@ internal fun FriendsOffState(onBack: () -> Unit, showBackButton: Boolean = true)
             Spacer(Modifier.height(8.dp))
             Text(
                 text = I18n.s(R.string.ui_turn_it_on_to_see_your_friends_list_and_their_presence_a) +
-                    "messages. While it's off, no online status is shared.",
+                    I18n.s(R.string.ui_messages_while_it_s_off_no_online_status_is_shared),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -825,7 +825,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 ) { Text(I18n.s(R.string.copy)) }
             }
             Text(
-                "Share this so friends can add you — it's your Steam account number.",
+                I18n.s(R.string.ui_share_this_so_friends_can_add_you_it_s_your_steam_accoun),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 6.dp),
@@ -852,7 +852,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 ) { Text(I18n.s(R.string.add)) }
             }
             Text(
-                "Enter a friend's code to send a request. A full SteamID64 works too.",
+                I18n.s(R.string.ui_enter_a_friend_s_code_to_send_a_request_a_full_steamid64),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 6.dp),
@@ -899,7 +899,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 }
             } else if (query.trim().length >= 2 && !searching) {
                 Text(
-                    "No players found.",
+                    I18n.s(R.string.ui_no_players_found),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),
@@ -955,7 +955,7 @@ private fun AddFriendDialog(onDismiss: () -> Unit) {
                 }
             }
             Text(
-                "A one-time link to share by message. Your friend is added instantly when they open it. Expires after 30 days.",
+                I18n.s(R.string.ui_a_one_time_link_to_share_by_message_your_friend_is_added),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 6.dp),
@@ -1524,7 +1524,7 @@ fun ChatScreen(
                                 else Toast.makeText(ctx, I18n.s(R.string.ui_clipboard_is_empty), Toast.LENGTH_SHORT).show()
                             }
                         } catch (_: Throwable) {
-                            Toast.makeText(ctx, "Couldn't paste", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(ctx, I18n.s(R.string.ui_couldn_t_paste), Toast.LENGTH_SHORT).show()
                         }
                     },
                 ) {

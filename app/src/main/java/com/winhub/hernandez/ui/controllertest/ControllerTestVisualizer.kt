@@ -332,10 +332,10 @@ fun ControllerTestPanel(
         val rs = snapshot?.let { fmt2(it.thumbRX) + ", " + fmt2(it.thumbRY) } ?: "0.00, 0.00"
         val tr = snapshot?.let { pct(it.triggerL) + " · " + pct(it.triggerR) } ?: "0% · 0%"
         val readouts = listOf(
-            "Last input" to lastInput,
-            "Left stick" to ls,
-            "Right stick" to rs,
-            "Triggers L·R" to tr,
+            I18n.s(R.string.ui_last_input) to lastInput,
+            I18n.s(R.string.ui_left_stick) to ls,
+            I18n.s(R.string.ui_right_stick) to rs,
+            I18n.s(R.string.ui_triggers_l_r) to tr,
         )
         if (landscape) {
             Row(

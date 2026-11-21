@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -205,7 +208,7 @@ public final class GameXInputDlls {
                 } else if (orig.exists()) {
                     log.add(orig + I18n.s(R.string.ui_exists_again) + aside.getName() + I18n.s(R.string.ui_left_beside_it_untouched));
                 } else if (aside.renameTo(orig)) {
-                    log.add("put back " + orig);
+                    log.add(I18n.s(R.string.ui_put_back) + orig);
                 } else {
                     log.add("could not put back " + orig + " (still " + aside.getName() + I18n.s(R.string.ui_retried_next_time));
                     continue;
@@ -216,7 +219,7 @@ public final class GameXInputDlls {
                 if (m.isEmpty()) manifest.delete();
                 else store(m, manifest);
             } catch (Exception ex) {
-                log.add("could not update " + manifest + ": " + ex);
+                log.add(I18n.s(R.string.ui_could_not_update) + manifest + ": " + ex);
             }
         }
         return log;
@@ -240,7 +243,7 @@ public final class GameXInputDlls {
             p.store(out, "WinHub: game xinput DLLs moved aside for Direct XInput (core/GameXInputDlls)");
             out.getFD().sync();
         }
-        if (!tmp.renameTo(f)) throw new java.io.IOException("could not write " + f);
+        if (!tmp.renameTo(f)) throw new java.io.IOException(I18n.s(R.string.ui_could_not_write) + f);
     }
 
     static String sha256(File f) throws Exception {

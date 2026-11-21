@@ -31,10 +31,10 @@ internal object XboxManifest {
                     XmlPullParser.END_DOCUMENT -> break
                     XmlPullParser.DOCDECL -> error(I18n.s(R.string.ui_xbox_game_manifests_cannot_contain_a_dtd))
                     XmlPullParser.START_TAG -> {
-                        require(++elements <= 10_000 && parser.depth <= 64) { "Xbox game manifest is too complex." }
+                        require(++elements <= 10_000 && parser.depth <= 64) { I18n.s(R.string.ui_xbox_game_manifest_is_too_complex) }
                         if (parser.depth == 1) { require(!root && parser.name == "Game"); root = true }
                         when (parser.name) {
-                            "Identity" -> identities.add(listOf(attribute(I18n.s(R.string.name)), attribute(I18n.s(R.string.ui_publisher)), attribute(I18n.s(R.string.ui_version))))
+                            "Identity" -> identities.add(listOf(attribute("Name"), attribute("Publisher"), attribute("Version")))
                             "StoreId" -> storeIds.add(parser.nextText().trim())
                             "MainPackageDependency" -> dependencies.add(attribute("Name"))
                             "RelatedProduct" -> related.add(parser.nextText().trim())
@@ -48,7 +48,7 @@ internal object XboxManifest {
                 }
             }
         }
-        require(root && identities.size <= 1 && storeIds.size <= 1 && dependencies.size <= 1) { "Invalid Xbox game manifest." }
+        require(root && identities.size <= 1 && storeIds.size <= 1 && dependencies.size <= 1) { I18n.s(R.string.ui_invalid_xbox_game_manifest) }
         val ids = related.distinct()
         require(ids.size <= 128 && ids.all { it.matches(Regex("[A-Z0-9]{12}")) })
         val identity = identities.singleOrNull()

@@ -139,7 +139,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             scope.launch {
                 working = true
                 val err = SocialProfiles.save("", null)
-                message = err ?: "Back to your GitHub name and picture."
+                message = err ?: I18n.s(R.string.ui_back_to_your_github_name_and_picture)
                 if (err == null) { picked = null; pickedBytes = null; name = "" }
                 working = false
             }
@@ -188,7 +188,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
             }
             message?.let { Text(it, color = cs.onSurfaceVariant, fontSize = 14.sp) }
             Text(
-                "Your name and picture are public and shown on your posts and replies.",
+                I18n.s(R.string.ui_your_name_and_picture_are_public_and_shown_on_your_posts),
                 color = cs.onSurfaceVariant, fontSize = 13.sp,
             )
             return@Column
@@ -234,7 +234,7 @@ internal fun SocialProfileContent(onGoFeed: () -> Unit) {
 
         message?.let { Text(it, color = cs.onSurfaceVariant, fontSize = 14.sp, textAlign = TextAlign.Center) }
         Text(
-            "Your name and picture are public and shown on your posts and replies.",
+            I18n.s(R.string.ui_your_name_and_picture_are_public_and_shown_on_your_posts),
             color = cs.onSurfaceVariant, fontSize = 13.sp, textAlign = TextAlign.Center,
         )
     }

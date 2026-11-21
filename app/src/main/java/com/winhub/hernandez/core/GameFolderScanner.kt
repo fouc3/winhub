@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import com.winhub.hernandez.store.SteamStoreSearch
 import java.io.File

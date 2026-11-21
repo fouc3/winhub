@@ -674,7 +674,7 @@ private fun ActiveContent(
     Text(
         text = when (entry.state) {
             DownloadState.PAUSED -> "Paused — $pct%$sizePart"
-            DownloadState.QUEUED -> "Queued…"
+            DownloadState.QUEUED -> I18n.s(R.string.ui_queued)
             else -> "Downloading… $pct%$sizePart$speedEta"
         },
         style = MaterialTheme.typography.bodySmall,

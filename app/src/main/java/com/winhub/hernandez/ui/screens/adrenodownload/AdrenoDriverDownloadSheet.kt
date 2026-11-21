@@ -226,7 +226,7 @@ fun ColumnScope.AdrenoDriverListPane(
             )
             entries.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
-                    "No drivers found.",
+                    I18n.s(R.string.ui_no_drivers_found),
                     color = cs.onSurfaceVariant,
                 )
             }
@@ -274,7 +274,7 @@ fun ColumnScope.AdrenoDriverListPane(
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            "The driver will be downloaded and installed automatically.",
+                            I18n.s(R.string.ui_the_driver_will_be_downloaded_and_installed_automaticall),
                             style = MaterialTheme.typography.bodySmall,
                             color = cs.onSurfaceVariant,
                         )
@@ -303,7 +303,7 @@ fun ColumnScope.AdrenoDriverListPane(
                                         } else {
                                             Toast.makeText(
                                                 context,
-                                                "Install failed — invalid driver package",
+                                                I18n.s(R.string.ui_install_failed_invalid_driver_package),
                                                 Toast.LENGTH_LONG,
                                             ).show()
                                         }
@@ -476,7 +476,7 @@ private fun CenteredLoading() {
             CircularProgressIndicator()
             Spacer(Modifier.height(8.dp))
             Text(
-                "Loading drivers…",
+                I18n.s(R.string.ui_loading_drivers),
                 color = cs.onSurfaceVariant,
                 style = MaterialTheme.typography.bodySmall,
             )
@@ -500,7 +500,7 @@ private fun CenteredError(message: String, onRetry: () -> Unit) {
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Could not load drivers",
+                I18n.s(R.string.ui_could_not_load_drivers),
                 color = cs.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
             )
@@ -630,7 +630,7 @@ private fun ManageSourcesDialog(
                     val name = newName.trim()
                     when {
                         name.isEmpty() ->
-                            Toast.makeText(context, "Enter a name", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18n.s(R.string.ui_enter_a_name), Toast.LENGTH_SHORT).show()
                         !isGithub && newUrl.isBlank() ->
                             Toast.makeText(context, I18n.s(R.string.ui_enter_a_json_url), Toast.LENGTH_SHORT).show()
                         !isGithub -> {

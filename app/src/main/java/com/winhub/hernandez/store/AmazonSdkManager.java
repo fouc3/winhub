@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -31,7 +34,7 @@ public class AmazonSdkManager {
     private static final String TAG = "BH_AMAZON";
 
     private static final String SDK_DIR          = "amazon_sdk";
-    private static final String SDK_SERVICES_DIR = "Amazon Games Services";
+    private static final String SDK_SERVICES_DIR = I18n.s(R.string.ui_amazon_games_services);
     private static final String VERSION_FILE      = ".sdk_version";
     private static final String LEGACY_DIR        = "Legacy";
     private static final String AGSSDK_DIR        = "AmazonGamesSDK";

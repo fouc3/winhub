@@ -60,13 +60,13 @@ object SteamCloudSaveManager {
 
     /** Honest message shown when a game has no Steam Cloud store (or an upload didn't persist).
      *  The saves are never lost — they stay in the local Library — we just don't lie about the cloud. */
-    private const val NO_CLOUD_MESSAGE =
-        "This game doesn't support Steam Cloud — your saves are backed up locally in the Library."
+    private val NO_CLOUD_MESSAGE =
+        I18n.s(R.string.ui_this_game_doesn_t_support_steam_cloud_your_saves_are_bac)
 
     /** Honest message when a game ACKS the upload commit but Steam retains nothing (an empty manifest
      *  right after a committed N>0 upload — old titles like FlatOut 2). Saves are safe in the Library. */
-    private const val NO_RETENTION_MESSAGE =
-        "This game doesn't keep Steam Cloud saves — your saves are backed up locally in the Library."
+    private val NO_RETENTION_MESSAGE =
+        I18n.s(R.string.ui_this_game_doesn_t_keep_steam_cloud_saves_your_saves_are)
 
     /** Per-app cloud-support cache (PICS `ufs/savefiles` is stable per app). Only DEFINITIVE
      *  true/false is cached; an "unknown" (null) is never stored so it can be retried later. */

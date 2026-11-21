@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -71,9 +74,9 @@ public final class SteamLiteLogCollector {
             { "gameprocess_log.txt",    "game launch/exit" },
             { "remote_connections.txt", "game networking / P2P" },
             { "content_log.txt",        "downloads" },
-            { "cloud_log.txt",          "cloud saves" },
+            { "cloud_log.txt",          I18n.s(R.string.ui_cloud_saves_3) },
             { "stats_log.txt",          "achievements" },
-            { "shader_log.txt",         "shader cache" },
+            { "shader_log.txt",         I18n.s(R.string.ui_shader_cache) },
     };
 
     private SteamLiteLogCollector() {}
@@ -696,7 +699,7 @@ public final class SteamLiteLogCollector {
         if (reason != null) {
             f.add("SESSION CONFLICT: another Steam session conflict = YES — at " + (stamp == null ? "?" : stamp)
                     + ", reason " + reason + " — a second Steam login (another device/PC/session) took over; "
-                    + "this explains any auth or connection drop.");
+                    + I18n.s(R.string.ui_this_explains_any_auth_or_connection_drop));
         } else {
             f.add("SESSION CONFLICT: another Steam session conflict = NO — this client held the session cleanly.");
         }
@@ -788,7 +791,7 @@ public final class SteamLiteLogCollector {
     private static final Pattern STAMP =
             Pattern.compile("\\[(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})\\]");
 
-    private static final Pattern FONT_HANDLES = ci("out of realized font handles");
+    private static final Pattern FONT_HANDLES = ci(I18n.s(R.string.ui_out_of_realized_font_handles));
     private static final Pattern ERR_FONT = Pattern.compile("err:font:");
     private static final Pattern CRASH =
             ci("unhandled exception|\\bc0000005\\b|EXCEPTION_ACCESS_VIOLATION|^\\s*backtrace:");
@@ -841,11 +844,11 @@ public final class SteamLiteLogCollector {
     private static final Conflict[] CONFLICTS = {
             new Conflict(ci("LoggedInElsewhere"),                       "LoggedInElsewhere"),
             new Conflict(ci("LogonSessionReplaced"),                    "LogonSessionReplaced"),
-            new Conflict(ci("account is (currently )?in use"),          "account in use"),
+            new Conflict(ci(I18n.s(R.string.ui_account_is_currently_in_use)),          I18n.s(R.string.ui_account_in_use)),
             new Conflict(ci("another (client|session|computer|device)[^\\n]*(logged on|logged in|connected)"),
-                    "another session logged on"),
-            new Conflict(ci("logged on with this account"),             "another session logged on"),
-            new Conflict(ci("logged in from another"),                  "logged in elsewhere"),
+                    I18n.s(R.string.ui_another_session_logged_on)),
+            new Conflict(ci(I18n.s(R.string.ui_logged_on_with_this_account)),             I18n.s(R.string.ui_another_session_logged_on)),
+            new Conflict(ci(I18n.s(R.string.ui_logged_in_from_another)),                  I18n.s(R.string.ui_logged_in_elsewhere)),
             new Conflict(ci("(RecvMsg)?ClientLoggedOff"),               "ClientLoggedOff"),
     };
 

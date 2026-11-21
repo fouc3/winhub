@@ -343,7 +343,7 @@ private fun LogViewerBody(entry: LogInventory.Entry, onClose: () -> Unit) {
             }
 
             ViewerAction(
-                "Report a problem",
+                I18n.s(R.string.ui_report_a_problem),
                 modifier = Modifier.fillMaxWidth().padding(top = 6.dp)
             ) { reportOpen = true }
         }
@@ -465,11 +465,11 @@ private fun ReportDialog(entry: LogInventory.Entry, runDir: File, onDismiss: () 
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp)
                 }
                 Text(
-                    "Saved as a zip in Downloads. E-mail addresses, auth tokens and your Steam " +
+                    I18n.s(R.string.ui_saved_as_a_zip_in_downloads_e_mail_addresses_auth_tokens) +
                         "account name are stripped; file paths are kept so they stay useful for " +
-                        "debugging, so glance over them if a folder name identifies you. GitHub " +
+                        I18n.s(R.string.ui_debugging_so_glance_over_them_if_a_folder_name_identifie) +
                         "can't receive a file from a link, so attach the zip with 📎 once the " +
-                        "form opens.",
+                        I18n.s(R.string.ui_form_opens),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                     modifier = Modifier.padding(top = 8.dp)
                 )
@@ -542,7 +542,7 @@ internal fun runLabel(millis: Long): String {
     if (millis <= 0) return "earlier"
     val mins = (System.currentTimeMillis() - millis) / 60000
     return when {
-        mins < 1 -> "just now"
+        mins < 1 -> I18n.s(R.string.ui_just_now)
         mins < 60 -> "$mins min ago"
         mins < 60 * 24 -> "${mins / 60} hr ago"
         mins < 60 * 48 -> "yesterday"

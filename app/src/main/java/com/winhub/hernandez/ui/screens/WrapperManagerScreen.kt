@@ -151,7 +151,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
     val gpu = remember {
         val vendor = runCatching { GPUInformation.getVendorID(null, null) }.getOrDefault(0)
         val model = runCatching { GPUInformation.extractModelName(GPUInformation.getRenderer(null, null)) }
-            .getOrNull()?.takeIf { it.isNotBlank() } ?: "this GPU"
+            .getOrNull()?.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_this_gpu)
         GpuInfo(isQualcomm = vendor == 0x5143, model = model)
     }
 
@@ -265,7 +265,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
                         val base = (path?.substringAfterLast('/') ?: uri.lastPathSegment?.substringAfterLast('/'))
                             ?.substringBeforeLast('.')
                             ?.takeIf { it.isNotBlank() }
-                            ?: "Imported wrapper"
+                            ?: I18n.s(R.string.ui_imported_wrapper)
                         importNameDraft = base
                         pendingInspection = inspection
                         pendingImportUri = uri
@@ -508,7 +508,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
                     if (labels.isNotEmpty()) {
                         Spacer(Modifier.size(8.dp))
                         Text(
-                            "Detected capabilities",
+                            I18n.s(R.string.ui_detected_capabilities),
                             style = MaterialTheme.typography.labelMedium,
                             color = cs.onSurfaceVariant,
                         )
@@ -518,7 +518,7 @@ fun WrapperManagerBody(modifier: Modifier = Modifier) {
                     // What will be added / needs to work.
                     Spacer(Modifier.size(10.dp))
                     Text(
-                        "What will be added",
+                        I18n.s(R.string.ui_what_will_be_added),
                         style = MaterialTheme.typography.labelMedium,
                         color = cs.onSurfaceVariant,
                     )
@@ -870,7 +870,7 @@ private fun WrapperDetailBox(
     if (labels.isNotEmpty()) {
         Spacer(Modifier.size(8.dp))
         Text(
-            "Detected capabilities",
+            I18n.s(R.string.ui_detected_capabilities),
             style = MaterialTheme.typography.labelMedium,
             color = cs.onSurfaceVariant,
         )
@@ -949,14 +949,14 @@ private fun EnvVarSection(
                     CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        "Scanning…",
+                        I18n.s(R.string.ui_scanning),
                         style = MaterialTheme.typography.bodySmall,
                         color = cs.onSurfaceVariant,
                     )
                 }
             resolved.isEmpty() ->
                 Text(
-                    "No environment variables detected.",
+                    I18n.s(R.string.ui_no_environment_variables_detected),
                     style = MaterialTheme.typography.bodySmall,
                     color = cs.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = 2.dp),

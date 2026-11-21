@@ -2,6 +2,9 @@ package com.winhub.hernandez.xenvironment.components;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -238,7 +241,7 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
             }
 
             Log.d("GuestProgramLauncherComponent", I18n.s(R.string.ui_fex_unixlib_reconcile) + fexcoreVersion
-                    + " -> " + (copied ? "copied .so" : "DLL-only, cleared"));
+                    + " -> " + (copied ? "copied .so" : I18n.s(R.string.ui_dll_only_cleared)));
         } catch (Exception e) {
             Log.e("GuestProgramLauncherComponent", I18n.s(R.string.ui_fex_unixlib_reconcile_failed) + e.getMessage());
         }

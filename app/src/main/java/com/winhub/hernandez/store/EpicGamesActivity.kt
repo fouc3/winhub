@@ -532,11 +532,11 @@ class EpicGamesActivity : ComponentActivity() {
             } catch (e: Exception) {
                 Log.e(TAG, I18n.s(R.string.ui_startepicdownload_failed), e)
                 if (!cancelled.get()) {
-                    StoreDownloadHooks.markFailed(Store.EPIC, appName, e.message ?: "Unknown error")
+                    StoreDownloadHooks.markFailed(Store.EPIC, appName, e.message ?: I18n.s(R.string.ui_unknown_error_2))
                     withContext(Dispatchers.Main) {
                         cancelRunnables.remove(appName)
                         downloadStates[appName] = GameDownloadState()
-                        resultBarMsg = e.message ?: "Unknown error"
+                        resultBarMsg = e.message ?: I18n.s(R.string.ui_unknown_error_2)
                     }
                 }
             }
@@ -828,7 +828,7 @@ private fun EpicGamesScreen(
 @Composable
 private fun EmptyState(query: String) {
     Text(
-        text = if (query.isBlank()) "Your Epic library is empty"
+        text = if (query.isBlank()) I18n.s(R.string.ui_your_epic_library_is_empty)
         else "No results for \"$query\"",
         fontSize = 14.sp,
         color = MaterialTheme.colorScheme.onSurfaceVariant,

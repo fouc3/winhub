@@ -46,7 +46,7 @@ object ApkPatcher {
         val newSize = b.long
         val newSha = ByteArray(32).also { b.get(it) }
         val ops = b.int
-        if (ops < 0 || ops > 10_000_000) throw IOException("bad op count")
+        if (ops < 0 || ops > 10_000_000) throw IOException(I18n.s(R.string.ui_bad_op_count))
         return Header(oldSize, hex(oldSha), newSize, hex(newSha), ops)
     }
 
@@ -130,7 +130,7 @@ object ApkPatcher {
         var off = 0
         while (off < n) {
             val r = input.read(buf, off, n - off)
-            if (r < 0) throw EOFException("patch is truncated")
+            if (r < 0) throw EOFException(I18n.s(R.string.ui_patch_is_truncated))
             off += r
         }
     }

@@ -251,7 +251,7 @@ fun ContainersScreen(
                                 val msg = if (path != null)
                                     "Exported to $path"
                                 else
-                                    "Export failed or already exists"
+                                    I18n.s(R.string.ui_export_failed_or_already_exists)
                                 Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                             }
                         },
@@ -407,11 +407,11 @@ fun ContainersScreen(
                                 "What is kept: games, saves, shortcuts and container settings.\n\n" +
                                 (if (action.revertable)
                                     "The $oldLabel layer stays installed and a backup of the registry is taken, so you can " +
-                                        "revert from this menu. "
+                                        I18n.s(R.string.ui_revert_from_this_menu)
                                 else
                                     "The $oldLabel layer is no longer installed on this device, so this update cannot be " +
-                                        "reverted afterwards (a registry backup is still taken). ") +
-                                "Make sure nothing is running in this container."
+                                        I18n.s(R.string.ui_reverted_afterwards_a_registry_backup_is_still_taken)) +
+                                I18n.s(R.string.ui_make_sure_nothing_is_running_in_this_container)
                         )
                     },
                     confirmButton = {
@@ -444,14 +444,14 @@ fun ContainersScreen(
                                     "the new version. DXVK, FEX/Box64 and anything a game installed are left as they are; " +
                                     "Wine finishes its own prefix update on the next launch.\n\n" +
                                     "What is kept: installed games, saves, shortcuts and container settings.\n\n" +
-                                    "The old layer stays installed and a backup of the registry is taken first, so " +
+                                    I18n.s(R.string.ui_the_old_layer_stays_installed_and_a_backup_of_the_regist) +
                                     "\"Revert layer\" is available from this container's menu afterwards.\n\n" +
-                                    "Close the game before updating."
+                                    I18n.s(R.string.ui_close_the_game_before_updating)
                             )
                             if (action.snapshot != null) {
                                 Text(
                                     text = "A ${ContainerLayerUpdater.codeLabel(action.snapshot.oldEntry)} snapshot from an " +
-                                        "earlier update exists — revert is available in the menu.",
+                                        I18n.s(R.string.ui_earlier_update_exists_revert_is_available_in_the_menu),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = OnSurfaceVariant,
                                     modifier = Modifier.padding(top = 12.dp),
@@ -482,10 +482,10 @@ fun ContainersScreen(
                         Text(
                             "\"${action.container.name}\" goes back from ${action.container.wineVersion} to " +
                                 "${action.snapshot.oldEntry}.\n\n" +
-                                "The registry is restored from the backup taken before the update (registry changes made " +
+                                I18n.s(R.string.ui_the_registry_is_restored_from_the_backup_taken_before_th) +
                                 "since then are discarded) and the builtin DLLs are refreshed from the $oldLabel layer. " +
                                 "Games, saves, shortcuts and container settings are kept. Requires the $oldLabel layer to " +
-                                "still be installed."
+                                I18n.s(R.string.ui_still_be_installed)
                         )
                     },
                     confirmButton = {
@@ -1354,7 +1354,7 @@ private fun StorageInfoDialog(container: Container, onDismiss: () -> Unit) {
                     }
                     Spacer(modifier = androidx.compose.ui.Modifier.size(6.dp))
                     Text(
-                        "Estimated used space",
+                        I18n.s(R.string.ui_estimated_used_space),
                         fontSize = 11.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

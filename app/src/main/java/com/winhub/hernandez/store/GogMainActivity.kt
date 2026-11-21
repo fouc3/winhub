@@ -325,7 +325,7 @@ private fun GogLoginScreen(onLoginClick: () -> Unit) {
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Sign in to browse the GOG store, claim free games and download your library.",
+                I18n.s(R.string.ui_sign_in_to_browse_the_gog_store_claim_free_games_and_dow),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,

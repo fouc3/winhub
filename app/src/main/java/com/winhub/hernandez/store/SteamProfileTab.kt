@@ -167,7 +167,7 @@ fun SteamProfileTab(
     // Cached profile is a first-class source here too, so the name doesn't pop in late either.
     val displayName = self?.displayName ?: profile?.personaName
         ?: runCatching { SteamRepository.getInstance().displayName }.getOrNull()?.takeIf { it.isNotBlank() }
-        ?: "Steam user"
+        ?: I18n.s(R.string.ui_steam_user)
 
     val onRename: (String) -> Unit = { newName ->
         val trimmed = newName.trim().take(32)
@@ -745,12 +745,12 @@ private fun BadgesRail(c: ProfileTabContent) {
     val badge = c.profile?.favoriteBadge
     val equipped = c.profile?.equipped ?: BlPlayerProfile.EquippedItems.NONE
     val equippedTiles = listOfNotNull(
-        equipped.avatarFrame?.let { it to "Avatar frame" },
-        equipped.animatedAvatar?.let { it to "Animated avatar" },
+        equipped.avatarFrame?.let { it to I18n.s(R.string.ui_avatar_frame) },
+        equipped.animatedAvatar?.let { it to I18n.s(R.string.ui_animated_avatar) },
         equipped.profileBackground?.let { it to "Profile background" },
         equipped.miniProfileBackground?.let { it to "Mini background" },
         equipped.profileModifier?.let { it to "Profile modifier" },
-        equipped.steamDeckKeyboardSkin?.let { it to "Keyboard skin" },
+        equipped.steamDeckKeyboardSkin?.let { it to I18n.s(R.string.ui_keyboard_skin) },
     )
 
     // A showcased badge only earns a tile when we can actually draw something.
@@ -765,7 +765,7 @@ private fun BadgesRail(c: ProfileTabContent) {
         StorefrontLog.i(
             StorefrontLog.PROFILE,
             "showcased badge present (badgeId=${badge.badgeId}, level=${badge.level}) but appId=0 — " +
-                "no resolvable art, tile omitted",
+                I18n.s(R.string.ui_no_resolvable_art_tile_omitted),
         )
     }
     if (badgeArt.isEmpty() && equippedTiles.isEmpty()) return
@@ -890,7 +890,7 @@ private fun RecentlyPlayedList(c: ProfileTabContent, fillsPane: Boolean = false)
             StoreNotice(
                 title = I18n.s(R.string.ui_no_recent_play_data),
                 body = I18n.s(R.string.ui_steam_only_shares_playtime_when_your_game_details_are_pu) +
-                    "Anything you've played recently will show up here once it does.",
+                    I18n.s(R.string.ui_anything_you_ve_played_recently_will_show_up_here_once_i),
             )
         }
         return

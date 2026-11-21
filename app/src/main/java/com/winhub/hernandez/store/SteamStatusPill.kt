@@ -46,7 +46,7 @@ fun SteamStatusPill(
         SteamRepository.SteamStatus.ONLINE ->
             Triple(Color(0xFF3BA55D), "Online", false)
         SteamRepository.SteamStatus.CONNECTING ->
-            Triple(Color(0xFFE0A82E), "Connecting…", false)
+            Triple(Color(0xFFE0A82E), I18n.s(R.string.ui_connecting), false)
         SteamRepository.SteamStatus.SIGNED_IN_ELSEWHERE ->
             Triple(Color(0xFFE07B2E), I18n.s(R.string.ui_signed_in_elsewhere), true)
         SteamRepository.SteamStatus.OFFLINE ->

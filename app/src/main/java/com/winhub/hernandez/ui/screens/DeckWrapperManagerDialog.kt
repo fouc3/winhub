@@ -69,7 +69,7 @@ internal fun DeckWrapperManagerDialog(onDismiss: () -> Unit) {
                         val base = (path?.substringAfterLast('/') ?: uri.lastPathSegment?.substringAfterLast('/'))
                             ?.substringBeforeLast('.')
                             ?.takeIf { it.isNotBlank() }
-                            ?: "Imported wrapper"
+                            ?: I18n.s(R.string.ui_imported_wrapper)
                         importNameDraft = base
                         pendingInspection = inspection
                         pendingImportUri = uri

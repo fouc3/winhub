@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
@@ -176,7 +179,7 @@ public final class LogReport {
         // Overstating this on a public tracker is worse than saying nothing.
         b.append("\n_Scrubbed as they are written: e-mail addresses, auth tokens, and the " +
                 "signed-in Steam account name. File paths are left intact so they stay useful — " +
-                "give them a glance if one of your folder names identifies you. " +
+                I18n.s(R.string.ui_give_them_a_glance_if_one_of_your_folder_names_identifie) +
                 "Attach the zip below — it is at `Download/bannerlator/reports/")
          .append(zip.getName()).append("`._\n");
         return b.toString();

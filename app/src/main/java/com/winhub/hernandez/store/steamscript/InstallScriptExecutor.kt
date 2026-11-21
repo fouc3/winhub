@@ -164,7 +164,7 @@ object InstallScriptExecutor {
                 val staging = "C:\\windows\\temp\\bannerlator_components\\"
                 if (!EaSupport.hasMono(container)) {
                     val msi = EaSupport.stageMonoMsi(context, container)
-                        ?: return Result.Error("wine-mono is required but could not be downloaded")
+                        ?: return Result.Error(I18n.s(R.string.ui_wine_mono_is_required_but_could_not_be_downloaded))
                     preMsis += staging + msi.name
                     Log.i(TAG, "Run-Process needs wine-mono (container ${container.id}) — staged ${msi.name}")
                 }

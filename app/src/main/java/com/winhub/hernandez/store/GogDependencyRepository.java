@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -158,7 +161,7 @@ public final class GogDependencyRepository {
     public static File downloadRedist(DepEntry entry, File destDir, AtomicBoolean cancelled,
                                       ConcurrentLinkedQueue<String> log) {
         if (entry == null) return null;
-        if (entry.internal) { log.add("skip internal dep " + entry.id); return null; }
+        if (entry.internal) { log.add(I18n.s(R.string.ui_skip_internal_dep) + entry.id); return null; }
         if (entry.manifestHash == null || entry.manifestHash.isEmpty()) {
             log.add("dep " + entry.id + " has no manifest hash");
             return null;
@@ -173,7 +176,7 @@ public final class GogDependencyRepository {
             File installer = GogDownloadManager.assembleDependencyInstaller(
                     manifestStr, STORE_BASE, destDir, entry.exePath, cancelled, log);
             if (installer == null || !installer.isFile()) {
-                log.add("dep assembly failed " + entry.id);
+                log.add(I18n.s(R.string.ui_dep_assembly_failed) + entry.id);
                 return null;
             }
             return installer;

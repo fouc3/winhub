@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -171,7 +174,7 @@ public final class StarLaunchBridge {
 
                 if (containers == null || containers.isEmpty()) {
                     h.post(() -> showToast(activity,
-                            "No Wine container found — create one first in the Containers screen."));
+                            I18n.s(R.string.ui_no_wine_container_found_create_one_first_in_the_containe)));
                     return;
                 }
 
@@ -220,7 +223,7 @@ public final class StarLaunchBridge {
                 ArrayList<Container> containers = manager.getContainers();
                 if (containers == null || containers.isEmpty()) {
                     h.post(() -> showToast(activity,
-                            "No Wine container found — create one first in the Containers screen."));
+                            I18n.s(R.string.ui_no_wine_container_found_create_one_first_in_the_containe)));
                     return;
                 }
                 String[] names = new String[containers.size()];

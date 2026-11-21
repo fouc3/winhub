@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -74,7 +77,7 @@ internal fun XmbSteamInfo(
             if (spec.backendLabel.isNotEmpty()) add(spec.backendLabel to ChipCpuColor)
         }
     }
-    val played = playtime ?: "Not played yet"
+    val played = playtime ?: I18n.s(R.string.ui_not_played_yet)
     val genres = remember(details) { details.genres.take(3).joinToString(" · ") }
     val year = details.releaseYear?.takeIf { it.isNotBlank() }
     val score = details.metacritic

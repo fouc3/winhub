@@ -146,7 +146,7 @@ fun GogStoreTab(
                     StoreNotice(
                         title = I18n.s(R.string.ui_store_browsing_is_unavailable),
                         body = I18n.s(R.string.ui_gog_s_catalog_didn_t_answer_search_still_works_and_every) +
-                            "already own is in the Library tab.",
+                            I18n.s(R.string.ui_already_own_is_in_the_library_tab),
                         actionLabel = "Retry",
                         onAction = { reloadKey++ },
                     )

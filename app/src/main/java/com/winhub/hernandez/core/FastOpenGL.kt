@@ -49,7 +49,7 @@ object FastOpenGL {
     /** "OpenGL vsync off": vblank_mode=0, so a GL game's SwapBuffers stops waiting for the refresh. */
     @JvmField val VSYNC_OFF = GlLaunchSwitch(
         "glVsyncOff", I18n.s(R.string.ui_opengl_vsync_off),
-        "Lets OpenGL games run above the screen's refresh rate. Very old games that tie game speed to " +
+        I18n.s(R.string.ui_lets_opengl_games_run_above_the_screen_s_refresh_rate_ve) +
             "frame rate may run too fast: use the FPS limiter.",
         defaultOn = false, envName = "vblank_mode", envValue = "0")
 

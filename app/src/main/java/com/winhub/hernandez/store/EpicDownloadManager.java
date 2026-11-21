@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -438,7 +441,7 @@ public class EpicDownloadManager {
                         String mb    = String.format("%.1f / %.1f MB", done / 1048576.0, fTotalBytes / 1048576.0);
                         String speed = formatSpeed(currentSpeedBps.get());
                         progress(progressCallback,
-                                "Downloading chunks (" + cnt + "/" + totalChunks + ")  " + mb
+                                I18n.s(R.string.ui_downloading_chunks) + cnt + "/" + totalChunks + ")  " + mb
                                 + (speed.isEmpty() ? "" : "  " + speed), pct);
                     });
                 }
@@ -636,7 +639,7 @@ public class EpicDownloadManager {
                     String mb    = String.format("%.1f / %.1f MB", done / 1048576.0, fTotalBytes / 1048576.0);
                     String speed = formatSpeed(currentSpeedBps.get());
                     progress(progressCallback,
-                            "Downloading chunks (" + cnt + "/" + totalChunks + ")  " + mb
+                            I18n.s(R.string.ui_downloading_chunks) + cnt + "/" + totalChunks + ")  " + mb
                             + (speed.isEmpty() ? "" : "  " + speed), pct);
                 }
 

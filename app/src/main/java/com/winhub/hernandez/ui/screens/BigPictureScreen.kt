@@ -1614,7 +1614,7 @@ private fun GameCommunitySheet(
                     val tieOptions = match?.alternatives.orEmpty()
                     if (tieOptions.size > 1) {
                         Text(
-                            "Which game is this?",
+                            I18n.s(R.string.ui_which_game_is_this),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,

@@ -82,7 +82,7 @@ fun AmazonProfileTab(
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StoreFilterChip(I18n.s(R.string.ui_prime_gaming_2), false) { onOpenWeb("https://gaming.amazon.com/home", I18n.s(R.string.ui_prime_gaming_2)) }
-                StoreFilterChip(if (loading) "Refreshing…" else "Refresh", false, onClick = onRefresh)
+                StoreFilterChip(if (loading) I18n.s(R.string.ui_refreshing) else "Refresh", false, onClick = onRefresh)
             }
         }
     }
@@ -105,9 +105,9 @@ fun AmazonProfileTab(
     val about: @Composable () -> Unit = {
         StoreSection(title = I18n.s(R.string.ui_about_amazon_games_here)) {
             StoreStatusText(
-                "Games you claim on Prime Gaming download through Amazon's distribution service and " +
-                    "run without the Amazon Games app. Amazon exposes no friends or catalog API to " +
-                    "third-party clients, so those live on the website.",
+                I18n.s(R.string.ui_games_you_claim_on_prime_gaming_download_through_amazon) +
+                    I18n.s(R.string.ui_run_without_the_amazon_games_app_amazon_exposes_no_frien) +
+                    I18n.s(R.string.ui_third_party_clients_so_those_live_on_the_website),
             )
         }
     }

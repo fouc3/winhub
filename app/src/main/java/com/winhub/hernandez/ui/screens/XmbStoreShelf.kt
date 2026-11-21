@@ -213,7 +213,7 @@ internal fun XmbStoreShelfHome(
         if (list != null && n == 0) {
             StoreShelfMessage(
                 title = if (signedIn) "No ${store.label} games yet" else "${store.label} isn't signed in",
-                body = if (signedIn) "Sync this store's library from Stores and its games will show up here."
+                body = if (signedIn) I18n.s(R.string.ui_sync_this_store_s_library_from_stores_and_its_games_will)
                 else "Sign in to see everything you own on ${store.label}. Its library stays on this shelf, apart from the other stores.",
                 action = if (signedIn) null else "Sign in to ${store.label}",
                 onAction = onSignIn,

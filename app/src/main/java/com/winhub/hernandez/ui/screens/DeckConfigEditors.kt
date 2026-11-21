@@ -1026,7 +1026,7 @@ internal fun DeckVulkanConfigEditor(
         )
         DeckChoiceRow(
             label = I18n.s(R.string.renderer_present_mode),
-            hint = if (nativeRender) "Ignored under native rendering" else null,
+            hint = if (nativeRender) I18n.s(R.string.ui_ignored_under_native_rendering) else null,
             options = listOf(
                 "fifo" to I18n.s(R.string.ui_fifo_vsync),
                 "mailbox" to I18n.s(R.string.ui_mailbox),
@@ -1913,7 +1913,7 @@ internal fun DeckDxvkConfigEditor(
     val isDxvkLike = selectedDxvk.let { it.contains("dxvk") || it.contains("vegas") || it.isNotEmpty() }
 
     DeckConfigPanel(if (isVegas) "VEGAS / VKD3D" else "DXVK / VKD3D") {
-        DeckChoiceRowWithDownload("VKD3D Version", vkd3dVersions.value.map { it to it }, selectedVkd3d, { selectedVkd3d = it }, onDownloadVkd3d)
+        DeckChoiceRowWithDownload(I18n.s(R.string.ui_vkd3d_version), vkd3dVersions.value.map { it to it }, selectedVkd3d, { selectedVkd3d = it }, onDownloadVkd3d)
         if (isVegas) {
             if (filteredDxvk.isEmpty()) {
                 DeckConfigNote(I18n.s(R.string.ui_no_vegas_build_installed_download_one_via_the_config))
@@ -1989,7 +1989,7 @@ internal fun DeckDxvkConfigEditor(
                 Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         DeckChoiceRow(
-                            "Stock Config",
+                            I18n.s(R.string.ui_stock_config),
                             null,
                             stockSources.value.map { it.displayLabel() to it.displayLabel() },
                             selectedStock ?: "",

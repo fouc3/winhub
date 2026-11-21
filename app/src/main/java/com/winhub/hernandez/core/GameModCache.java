@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import com.winhub.hernandez.contents.Downloader;
 
 import java.io.File;
@@ -39,7 +42,7 @@ public final class GameModCache {
         tmp.delete();
         if (!Downloader.downloadFile(asset.url, tmp, progress)) {
             tmp.delete();
-            throw new IOException("download failed");
+            throw new IOException(I18n.s(R.string.ui_download_failed));
         }
         try {
             if (tmp.length() != asset.size) throw new IOException("size " + tmp.length() + ", expected " + asset.size);
@@ -56,7 +59,7 @@ public final class GameModCache {
         out.delete();
         if (!tmp.renameTo(out)) {
             tmp.delete();
-            throw new IOException("cannot rename to " + out);
+            throw new IOException(I18n.s(R.string.ui_cannot_rename_to) + out);
         }
         return out;
     }

@@ -145,7 +145,7 @@ class DownloadForegroundService : Service() {
      */
     private fun buildNotification(): Notification {
         val count = active.size
-        val recent = active.values.maxByOrNull { it.seq }?.text ?: "Preparing…"
+        val recent = active.values.maxByOrNull { it.seq }?.text ?: I18n.s(R.string.ui_preparing)
         val title = if (count > 1) "$count downloads" else "Downloading"
 
         val tapIntent = PendingIntent.getActivity(

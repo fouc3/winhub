@@ -67,7 +67,7 @@ private fun menuHint(label: String): String? = when (label) {
     "Search covers" -> I18n.s(R.string.ui_find_cover_art_on_steamgriddb_and_pick_one)
     "Clone to container" -> I18n.s(R.string.ui_copy_this_shortcut_into_another_container)
     "Copy to Drive C" -> I18n.s(R.string.ui_copy_the_game_folder_onto_the_container_s_c_drive_and_re)
-    "Change executable" -> "Point the shortcut at a different .exe in the game's folder."
+    I18n.s(R.string.ui_change_executable_2) -> "Point the shortcut at a different .exe in the game's folder."
     "Add to favourites" -> I18n.s(R.string.ui_pin_this_game_to_the_favourites_shelf)
     "Remove from favourites" -> I18n.s(R.string.ui_take_this_game_off_the_favourites_shelf)
     "Add to Home Screen" -> I18n.s(R.string.ui_pin_a_launcher_icon_to_android_s_home_screen)

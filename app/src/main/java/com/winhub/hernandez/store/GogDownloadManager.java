@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -480,7 +483,7 @@ public final class GogDownloadManager {
                     if (fileVerified(outFile, df.totalSize, df.md5)) {
                         int done = doneCount.incrementAndGet();
                         int pct  = 15 + (int) ((done / (float) total) * 80);
-                        cb.onProgress("Verified…", pct);
+                        cb.onProgress(I18n.s(R.string.ui_verified), pct);
                         return null;
                     }
 
@@ -526,7 +529,7 @@ public final class GogDownloadManager {
             } // end Java engine
             for (String line : fileLog2) dbg.append(line).append("\n");
             if (cancelled.get()) return "cancelled";
-            if (anyFailed.get()) return "one or more chunks failed to download";
+            if (anyFailed.get()) return I18n.s(R.string.ui_one_or_more_chunks_failed_to_download);
             dbg.append("gen2 download complete: ").append(doneCount.get()).append(" files OK\n");
 
             // Write manifest marker
@@ -812,7 +815,7 @@ public final class GogDownloadManager {
                     if (fileVerified(outFile, df.totalSize, df.md5)) {
                         written.add(df.relativePath);
                         int done = doneCount.incrementAndGet();
-                        cb.onProgress("Verified…", 15 + (int) ((done / (float) total) * 80));
+                        cb.onProgress(I18n.s(R.string.ui_verified), 15 + (int) ((done / (float) total) * 80));
                         return null;
                     }
                     boolean ok = assembleDepotFile(df, outFile, cdnBaseRef, fSecureLinkUrl, fToken,
@@ -981,7 +984,7 @@ public final class GogDownloadManager {
                     if (outFile.exists() && outFile.length() == gf.size) {
                         int done = doneG1.incrementAndGet();
                         int pct  = 15 + (int) ((done / (float) totalG1) * 80);
-                        cb.onProgress("Resuming…", pct);
+                        cb.onProgress(I18n.s(R.string.ui_resuming), pct);
                         return null;
                     }
 

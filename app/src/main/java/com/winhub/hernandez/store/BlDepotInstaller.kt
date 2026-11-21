@@ -228,7 +228,7 @@ internal object BlDepotInstaller {
             val r = resolveBranchManifests(session, appId, selectedBranch, keptRows.map { it.depotId }, db)
             if (r == null) {
                 fail(appId, "Beta branch \"$selectedBranch\" could not be resolved — if it is " +
-                        "password-protected, enter its access code on the game page, then retry")
+                        I18n.s(R.string.ui_password_protected_enter_its_access_code_on_the_game_pag))
                 return
             }
             r

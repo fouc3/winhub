@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import com.winhub.hernandez.store.download.DownloadEntry
 import com.winhub.hernandez.store.download.DownloadRegistry
@@ -46,7 +49,7 @@ object XboxDownloads {
             .map { c -> PackageChoice(c.getString("contentId"),
                 listOf(c.optString("title"), c.optString("packageName"), c.optString("version")).filter { it.isNotBlank() && it != "null" }
                     .joinToString(" · ").ifBlank { c.getString("contentId") }, c) }
-        check(choices.isNotEmpty()) { "This offer has no supported PC package." }
+        check(choices.isNotEmpty()) { I18n.s(R.string.ui_this_offer_has_no_supported_pc_package) }
         return choices
     }
 
@@ -64,7 +67,7 @@ object XboxDownloads {
         XboxDiag.log(app, "download start: ${game.id} fresh=$fresh")
         DownloadScope.io.launch {
             try {
-                check(!XboxRuntime.isActive(game.id)) { "Close this Xbox game before updating it." }
+                check(!XboxRuntime.isActive(game.id)) { I18n.s(R.string.ui_close_this_xbox_game_before_updating_it) }
                 check(XboxAccountStore.signedInAs(app) != null) { "Sign in to Xbox before installing." }
                 folder.mkdirs()
                 var complete = false
@@ -96,7 +99,7 @@ object XboxDownloads {
                             else -> Unit
                         }
                     } }
-                    check(process.process.waitFor(15, TimeUnit.SECONDS)) { "Xbox installer did not exit." }
+                    check(process.process.waitFor(15, TimeUnit.SECONDS)) { I18n.s(R.string.ui_xbox_installer_did_not_exit) }
                     diagnostics.join(2000)
                     if (job.cancelled.get()) return@use
                     val code = process.process.exitValue()
@@ -121,7 +124,7 @@ object XboxDownloads {
                 if (job.cancelled.get()) {
                     if (job.deleteOnCancel) folder.deleteRecursively()
                     StoreDownloadHooks.markCancelled(Store.XBOX, game.id)
-                } else StoreDownloadHooks.markFailed(Store.XBOX, game.id, e.message ?: "Xbox download failed.")
+                } else StoreDownloadHooks.markFailed(Store.XBOX, game.id, e.message ?: I18n.s(R.string.ui_xbox_download_failed))
             } finally {
                 job.child = null
                 jobs.remove(game.id)
@@ -149,7 +152,7 @@ object XboxDownloads {
 
     /** Removes an installed game's files and records. */
     fun uninstall(app: Context, id: String) {
-        check(!XboxRuntime.isActive(id)) { "Close this Xbox game first." }
+        check(!XboxRuntime.isActive(id)) { I18n.s(R.string.ui_close_this_xbox_game_first) }
         val record = XboxInstallState.get(app, id)
         val dir = record?.let { File(it.folder) } ?: folder(app, id)
         if (dir.canonicalPath.startsWith(root(app).canonicalPath + File.separator)) dir.deleteRecursively()

@@ -224,7 +224,7 @@ internal fun SocialHubScreen(deck: Boolean = false, onExit: (() -> Unit)? = null
             if (LocalConfiguration.current.screenHeightDp >= 400) DeckHintBar(
                 hints = buildList {
                     add("A" to "Select")
-                    add("L2/R2" to "Switch tab")
+                    add("L2/R2" to I18n.s(R.string.ui_switch_tab))
                     if (onExit != null) add("B" to "Home") else if (tab != 0) add("B" to "Feed")
                 },
                 modifier = Modifier.padding(horizontal = 24.dp).padding(bottom = 8.dp),
@@ -357,7 +357,7 @@ internal fun SocialConfigsContent() {
                 throw e
             } catch (e: Exception) {
                 Log.w(TAG, "import failed", e)
-                SocialConfigs.ImportOutcome(false, e.message ?: "Import failed.")
+                SocialConfigs.ImportOutcome(false, e.message ?: I18n.s(R.string.ui_import_failed_3))
             }
             importing = ImportUi(title, outcome.message, done = true, ok = outcome.ok)
         }
@@ -770,7 +770,7 @@ private fun LibraryConfigRow(entry: ConfigLibrary.Entry, matchesDevice: Boolean,
             )
         }
         Text(
-            hw.ifBlank { "Unknown device" },
+            hw.ifBlank { I18n.s(R.string.ui_unknown_device) },
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
@@ -986,7 +986,7 @@ private fun ConfigUploadDialog(onDismiss: () -> Unit) {
                                 throw e
                             } catch (e: Exception) {
                                 Log.w(TAG, "export failed", e)
-                                e.message ?: "Could not export this game's settings."
+                                e.message ?: I18n.s(R.string.ui_could_not_export_this_game_s_settings)
                             }
                             if (err == null) onDismiss() else error = err
                         }

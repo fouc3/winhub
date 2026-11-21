@@ -279,7 +279,7 @@ object GogCloudSavePaths {
                 }
                 base = inst; boundary = inst
             }
-            "SAVED_GAMES" -> { base = File(profile, I18n.s(R.string.ui_saved_games)); boundary = profile }
+            "SAVED_GAMES" -> { base = File(profile, "Saved Games"); boundary = profile }
             "DOCUMENTS" -> { base = File(profile, "Documents"); boundary = profile }
             "APPLICATION_DATA_LOCAL", "LOCALAPPDATA" -> { base = File(profile, "AppData/Local"); boundary = profile }
             "APPLICATION_DATA_LOCAL_LOW" -> { base = File(profile, "AppData/LocalLow"); boundary = profile }

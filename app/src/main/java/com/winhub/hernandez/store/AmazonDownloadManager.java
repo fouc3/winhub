@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -146,7 +149,7 @@ public class AmazonDownloadManager {
                     + manifest.totalInstallSize + " bytes total");
 
             if (progress != null) {
-                progress.onProgress(0, manifest.totalInstallSize, "Starting…");
+                progress.onProgress(0, manifest.totalInstallSize, I18n.s(R.string.ui_starting_2));
             }
 
             // Step 4: Download all files — MAX_PARALLEL threads

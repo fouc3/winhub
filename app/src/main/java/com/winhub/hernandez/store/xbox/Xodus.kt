@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.content.Context
 import org.json.JSONObject
 import java.io.Closeable
@@ -104,7 +107,7 @@ internal object Xodus {
                 } catch (t: Throwable) { readError = t; child.process.destroy() }
             }, "xbox-result").apply { start() }
             val diagnostic = diagnostics(app, child)
-            check(child.process.waitFor(timeout, TimeUnit.SECONDS)) { "Xbox request timed out. Try again." }
+            check(child.process.waitFor(timeout, TimeUnit.SECONDS)) { I18n.s(R.string.ui_xbox_request_timed_out_try_again) }
             reader.join(3000); diagnostic.join(3000)
             check(readError == null && !reader.isAlive) { "Xbox returned an invalid response." }
             val code = child.process.exitValue()

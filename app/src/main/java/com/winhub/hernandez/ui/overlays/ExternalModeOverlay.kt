@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.overlays
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.foundation.background
@@ -71,7 +74,7 @@ fun ExternalModeOverlay(state: XServerDialogState) {
                 textAlign = TextAlign.Center
             )
             Text(
-                "Open the menu → TV tab for display options",
+                I18n.s(R.string.ui_open_the_menu_tv_tab_for_display_options),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,

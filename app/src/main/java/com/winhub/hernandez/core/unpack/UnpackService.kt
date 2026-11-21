@@ -367,7 +367,7 @@ class UnpackService : Service() {
                         onProcess = { proc = it },
                     )
                 }
-            }.getOrElse { SevenZip.Result(-1, it.message ?: "exec failed") }
+            }.getOrElse { SevenZip.Result(-1, it.message ?: I18n.s(R.string.ui_exec_failed)) }
 
             // Unwrap a single inner .tar (a .wcp/.tzst/.tar.gz decompresses to just its .tar) so one
             // action lands the real files. 7-Zip path only; best-effort; only when the first pass won.
@@ -493,8 +493,8 @@ class UnpackService : Service() {
                 }
                 doneTitle to doneText
             }
-            UnpackPhase.CANCELLED -> "Unpack cancelled" to s.archiveName
-            else -> "Unpack failed" to (s.errorTail?.lineSequence()?.lastOrNull { it.isNotBlank() } ?: s.archiveName)
+            UnpackPhase.CANCELLED -> I18n.s(R.string.ui_unpack_cancelled) to s.archiveName
+            else -> I18n.s(R.string.ui_unpack_failed) to (s.errorTail?.lineSequence()?.lastOrNull { it.isNotBlank() } ?: s.archiveName)
         }
         val n = Notification.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.stat_sys_download_done)

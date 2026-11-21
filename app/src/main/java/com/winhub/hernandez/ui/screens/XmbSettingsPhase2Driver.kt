@@ -674,19 +674,19 @@ private fun xmbAdapterRows(xmb: XmbScope, shortcut: Shortcut): List<XmbRow> {
         }
     }
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ASYNC_COPY, I18n.s(R.string.ui_asynchronous_copy),
-        "The compositor keeps frames in flight instead of waiting for each screen blit. Turn off if " +
+        I18n.s(R.string.ui_the_compositor_keeps_frames_in_flight_instead_of_waiting) +
             I18n.s(R.string.ui_frames_arrive_out_of_order_or_a_game_stutters_only_on))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_ZERO_COPY, I18n.s(R.string.ui_zero_copy_presentation),
-        "The game's own buffer goes on screen without a copy (lowest latency, less heat). Needs " +
+        I18n.s(R.string.ui_the_game_s_own_buffer_goes_on_screen_without_a_copy_lowe) +
             I18n.s(R.string.ui_sync_file_fences_in_the_driver_see_the_report_turn_of))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_CLIENT_FENCE, I18n.s(R.string.ui_client_render_fences),
-        "With zero-copy, the game's driver tells the compositor when a frame is finished. Turn off " +
+        I18n.s(R.string.ui_with_zero_copy_the_game_s_driver_tells_the_compositor_wh) +
             I18n.s(R.string.ui_only_to_compare_off_can_show_half_drawn_frames))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_UBWC, I18n.s(R.string.ui_ubwc_compressed_buffers),
-        "Frames travel as compressed GPU buffers (less bandwidth). Turn off if the picture shows " +
+        I18n.s(R.string.ui_frames_travel_as_compressed_gpu_buffers_less_bandwidth_t) +
             I18n.s(R.string.ui_garbled_blocks_or_stripes))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_MODIFIERS, I18n.s(R.string.ui_drm_format_modifiers),
-        "Lets the game's driver and the compositor agree on buffer layouts. Off makes the game use " +
+        I18n.s(R.string.ui_lets_the_game_s_driver_and_the_compositor_agree_on_buffe) +
             I18n.s(R.string.ui_plain_linear_buffers_banner_wsi_no_modifiers_1_try_it))
     tri(com.winhub.hernandez.core.WaylandAdapterSettings.KEY_KGSL_SHIM, I18n.s(R.string.ui_kgsl_timing_shim),
         "Works around a Turnip bug where asking \"is the GPU done?\" waits for the whole frame " +

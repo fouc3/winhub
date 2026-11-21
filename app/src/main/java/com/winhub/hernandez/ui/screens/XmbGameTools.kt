@@ -609,7 +609,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             ) + XmbTools.para(
                 "msg",
                 "A folder named \"${sourceRoot.name}\" already exists under C:\\${CopyGameToDriveC.GAMES_SUBDIR}. " +
-                    "Overwrite it, or keep both by copying to a new folder?",
+                    I18n.s(R.string.ui_overwrite_it_or_keep_both_by_copying_to_a_new_folder),
                 Icons.Filled.Info, ctx,
             )
         }
@@ -644,7 +644,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
             val err = validationError
             val size = sourceSize
             val blocked = when {
-                copying -> "Copying…"
+                copying -> I18n.s(R.string.ui_copying_2)
                 err != null -> err
                 size == null -> "Calculating size…"
                 else -> null
@@ -661,7 +661,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                 add(
                     XmbRow.Link(
                         key = "change", label = I18n.s(R.string.ui_change_folder), icon = Icons.Filled.FolderOpen,
-                        disabledReason = if (copying) "Copying…" else null,
+                        disabledReason = if (copying) I18n.s(R.string.ui_copying_2) else null,
                     ) {
                         val roots = XmbTools.storageRoots(ctx, XmbTools.driveC(container))
                         xmbBrowserColumn(
@@ -695,7 +695,7 @@ internal fun xmbCopyToDriveCMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     XmbTools.para(
                         "about",
                         "Copies the game onto this container's C: drive (native app storage) and points " +
-                            "the shortcut there. Fixes games that stall streaming from shared storage.",
+                            I18n.s(R.string.ui_the_shortcut_there_fixes_games_that_stall_streaming_f),
                         Icons.Filled.Info, ctx,
                     )
                 )
@@ -776,7 +776,7 @@ internal fun xmbScrapeCoverMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
                     XmbRow.Action(
                         key = "c:$url", label = "Cover ${i + 1}", icon = Icons.Filled.Image, thumbnail = thumb,
                         thumbnailLarge = true,
-                        disabledReason = if (saving) "Saving cover…" else null,
+                        disabledReason = if (saving) I18n.s(R.string.ui_saving_cover) else null,
                     ) { useCover(url) }
                 )
             }
@@ -883,7 +883,7 @@ internal fun xmbRestoreSavesMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val start = dir.takeIf { it.isDirectory } ?: dir.parentFile?.takeIf { it.isDirectory } ?: downloads
         return xmbFileBrowserMenu(
-            xmb, "Select a save .zip", start, XmbTools.storageRoots(ctx, XmbTools.driveC(shortcut.container)),
+            xmb, I18n.s(R.string.ui_select_a_save_zip), start, XmbTools.storageRoots(ctx, XmbTools.driveC(shortcut.container)),
             accept = { it.isFile && it.extension.lowercase() in exts },
             onPick = { f ->
                 xmb.pop()   // the browser's one remaining column

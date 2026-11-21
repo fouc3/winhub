@@ -246,7 +246,7 @@ object BlSteamEngine {
         if (!s.connect(cmUrl)) {
             Log.w(TAG, I18n.s(R.string.ui_connect_refused_by_native))
             teardown()
-            listener?.onEngineFailure("native connect refused")
+            listener?.onEngineFailure(I18n.s(R.string.ui_native_connect_refused))
         }
     }
 
@@ -309,7 +309,7 @@ object BlSteamEngine {
             // The LoggedOn transition follows via this same observer.
             if (logonRejected) {
                 Log.w(TAG, I18n.s(R.string.ui_token_rejected_by_steam_not_re_logging_on_tearing_down))
-                teardownAsync("refresh token rejected")
+                teardownAsync(I18n.s(R.string.ui_refresh_token_rejected))
                 return
             }
             if (pendingToken.isEmpty()) {
@@ -346,7 +346,7 @@ object BlSteamEngine {
         val ok = s.logonWithRefreshToken(pendingToken, pendingUser, pendingSteamId)
         if (!ok) {
             Log.w(TAG, I18n.s(R.string.ui_logonwithrefreshtoken_refused_by_native))
-            listener?.onEngineFailure("native logon refused")
+            listener?.onEngineFailure(I18n.s(R.string.ui_native_logon_refused))
         }
         return true
     }

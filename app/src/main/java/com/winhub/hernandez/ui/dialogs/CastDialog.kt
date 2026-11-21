@@ -91,7 +91,7 @@ fun CastDialog(state: XServerDialogState) {
 
                 Text(
                     text = "Google TV / Chromecast devices on your Wi-Fi. Nothing to install on the TV. " +
-                        "Tap the “?” for how casting works and the trade-offs.",
+                        I18n.s(R.string.ui_tap_the_for_how_casting_works_and_the_trade_offs),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
@@ -99,7 +99,7 @@ fun CastDialog(state: XServerDialogState) {
                 if (devices.isEmpty()) {
                     Text(
                         text = if (scanning) "Searching…" else I18n.s(R.string.ui_no_devices_found_make_sure_your_tv_is_on_the) +
-                            "same Wi-Fi, then tap Refresh.",
+                            I18n.s(R.string.ui_same_wi_fi_then_tap_refresh),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(vertical = 16.dp)
@@ -134,7 +134,7 @@ fun CastDialog(state: XServerDialogState) {
                                         if (isActive) {
                                             // Connected / connecting: show live status + Disconnect.
                                             val label = when (status) {
-                                                XServerDialogState.CastStatus.CONNECTING -> "Connecting…"
+                                                XServerDialogState.CastStatus.CONNECTING -> I18n.s(R.string.ui_connecting)
                                                 XServerDialogState.CastStatus.CONNECTED  -> "Connected"
                                                 XServerDialogState.CastStatus.FAILED     -> I18n.s(R.string.ui_failed_to_connect)
                                                 else -> ""
@@ -187,8 +187,8 @@ private fun CastHelp() {
             body = I18n.s(R.string.ui_pick_a_google_tv_or_chromecast_from_the_list_nothing),
             pros = listOf(I18n.s(R.string.ui_nothing_to_set_up_on_the_tv), I18n.s(R.string.ui_uses_devices_you_already_have)),
             cons = listOf(
-                "A few seconds of lag (video is buffered) — good for slower games, not fast ones",
-                "Video only for now — the game's sound stays on this device",
+                I18n.s(R.string.ui_a_few_seconds_of_lag_video_is_buffered_good_for_slower_g),
+                I18n.s(R.string.ui_video_only_for_now_the_game_s_sound_stays_on_this_device),
                 "Google TV / Chromecast only — Roku isn't listed here"
             )
         )
@@ -207,7 +207,7 @@ private fun CastHelp() {
         HelpBlock(
             title = I18n.s(R.string.ui_roku_tvs),
             body = I18n.s(R.string.ui_roku_can_t_run_our_app_and_can_t_take_our_stream_use_and) +
-                "Mirroring (in Settings) with the Roku's Screen-mirroring turned on.",
+                I18n.s(R.string.ui_mirroring_in_settings_with_the_roku_s_screen_mirroring_t),
             pros = listOf(I18n.s(R.string.ui_no_app_needed)),
             cons = listOf(I18n.s(R.string.ui_uses_android_s_system_screen_not_this_in_app_list), I18n.s(R.string.ui_depends_on_your_phone_s_miracast))
         )

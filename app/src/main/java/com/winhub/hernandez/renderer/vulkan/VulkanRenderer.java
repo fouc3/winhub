@@ -2,6 +2,9 @@ package com.winhub.hernandez.renderer.vulkan;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -769,7 +772,7 @@ public class VulkanRenderer implements WindowManager.OnWindowModificationListene
             });
         }
         xServerView.queueEvent(this::updateScene);
-        final String msg = mode ? "Native Rendering+ Enabled" : "Native Rendering+ Disabled";
+        final String msg = mode ? I18n.s(R.string.ui_native_rendering_enabled) : I18n.s(R.string.ui_native_rendering_disabled);
         // Use the app's styled toast (white text on a custom background); a raw Toast.makeText here
         // inherits the dark app theme and renders as a black box with invisible text.
         xServerView.post(() -> com.winhub.hernandez.core.AppUtils.showToast(xServerView.getContext(), msg));
@@ -1020,7 +1023,7 @@ public class VulkanRenderer implements WindowManager.OnWindowModificationListene
                 if (r != null) return r;
             }
         }
-        return "renderer not started";
+        return I18n.s(R.string.ui_renderer_not_started);
     }
     public void setNativeColorFormat(int format) {}
     public int getNativeColorFormat() { return 0; }

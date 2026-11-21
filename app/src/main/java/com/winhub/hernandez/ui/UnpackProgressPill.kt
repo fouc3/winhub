@@ -84,7 +84,7 @@ fun UnpackProgressPill(modifier: Modifier = Modifier) {
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
-                        if (listing) "Reading archive…"
+                        if (listing) I18n.s(R.string.ui_reading_archive)
                         else buildString {
                             append("${state.percent}%")
                             if (state.speedBps > 0) append("  •  ${StringUtils.formatBytes(state.speedBps)}/s")

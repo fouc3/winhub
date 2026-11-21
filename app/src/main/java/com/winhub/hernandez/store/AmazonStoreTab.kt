@@ -215,7 +215,7 @@ private fun PrimeGamingCard(onOpenWeb: (url: String, title: String) -> Unit, mod
             Spacer(Modifier.height(6.dp))
             Text(
                 text = I18n.s(R.string.ui_amazon_has_no_browsable_catalog_for_third_party_apps_cla) +
-                    "in the in-app browser — they land in your library here after a sync.",
+                    I18n.s(R.string.ui_in_the_in_app_browser_they_land_in_your_library_here_aft),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

@@ -515,12 +515,12 @@ internal object VegasStockConfigFetcher {
             for (verName in targets) {
                 val parked = java.io.File(confDir, "$verName.conf")
                 if (!Downloader.downloadFile(rel.confUrl, parked, null)) {
-                    last = ParkResult.Fail("download failed"); continue
+                    last = ParkResult.Fail(I18n.s(R.string.ui_download_failed)); continue
                 }
                 recordStockProvenance(confDir, verName, rel.tag, assetName, rel.confUrl)
                 last = ParkResult.Ok(verName)
             }
-            last ?: ParkResult.Fail("no target version derived")
-        }.getOrElse { ParkResult.Fail(it.message ?: "unknown error") }
+            last ?: ParkResult.Fail(I18n.s(R.string.ui_no_target_version_derived))
+        }.getOrElse { ParkResult.Fail(it.message ?: I18n.s(R.string.ui_unknown_error)) }
     }
 }

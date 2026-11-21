@@ -2,6 +2,9 @@ package com.winhub.hernandez.display;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.os.Build;
 import android.view.Display;
 
@@ -191,7 +194,7 @@ public final class DisplayHdrInfo {
           .append(", min ").append(nits(minLuminance))
           .append(" | HDR/SDR headroom ");
         if (Build.VERSION.SDK_INT < 34) sb.append(I18n.s(R.string.ui_not_reportable_below_android_14));
-        else if (!hdrSdrRatioAvailable) sb.append("not available on this display");
+        else if (!hdrSdrRatioAvailable) sb.append(I18n.s(R.string.ui_not_available_on_this_display));
         else sb.append(String.format(java.util.Locale.US, "available (ratio %.2f)", hdrSdrRatio));
         if (highestHdrSdrRatio > 0f)
             sb.append(String.format(java.util.Locale.US, I18n.s(R.string.ui_highest_ratio_2f), highestHdrSdrRatio))

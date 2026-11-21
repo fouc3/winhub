@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -144,7 +147,7 @@ public final class ControllerLog {
         synchronized (log) {
             if (!ok) log.reconnectsFailed++;
         }
-        event("reconnect of slots " + slots + (ok ? " confirmed" : " NOT confirmed (the game's reader did not come back)"));
+        event(I18n.s(R.string.ui_reconnect_of_slots_3) + slots + (ok ? " confirmed" : " NOT confirmed (the game's reader did not come back)"));
     }
 
     /** A rumble datagram (HXR1) reached the app for {@code slot}: Direct XInput's or the effects engine's. */
@@ -329,9 +332,9 @@ public final class ControllerLog {
         long removals = stat(s, HermesWriter.STAT_READER_REMOVALS);
 
         if (publishes > 0) {
-            rows.add(pass(p + "APP", "the app sent " + publishes + " controller updates for slot " + s));
+            rows.add(pass(p + "APP", I18n.s(R.string.ui_the_app_sent) + publishes + " controller updates for slot " + s));
         } else {
-            rows.add(fail(p + "APP", "the app sent nothing for slot " + s
+            rows.add(fail(p + "APP", I18n.s(R.string.ui_the_app_sent_nothing_for_slot) + s
                     + I18n.s(R.string.ui_no_input_from_this_controller_reached_winhub_or_it_was_m)));
         }
         if (failed > 0) {
@@ -392,7 +395,7 @@ public final class ControllerLog {
         long hz = stat(s, HermesWriter.STAT_READER_AXIS_HZ);
         long fallbacks = stat(s, HermesWriter.STAT_READER_AUTO_FALLBACKS);
         if (hz > 0) {
-            rows.add(info(p + "STICKS", "stick updates last paced at " + hz + "/s ("
+            rows.add(info(p + "STICKS", I18n.s(R.string.ui_stick_updates_last_paced_at) + hz + "/s ("
                     + axisMode((int) stat(s, HermesWriter.STAT_READER_AXIS_MODE)) + ")"
                     + (fallbacks > 0 ? ", fell back to fixed 60/s " + fallbacks + " time(s)" : "")));
         }
@@ -426,7 +429,7 @@ public final class ControllerLog {
             case 2: return "60/s fallback, no frame feed";
             case 3: return "fixed";
             case 4: return "unpaced";
-            case 5: return "capped by the auto ceiling";
+            case 5: return I18n.s(R.string.ui_capped_by_the_auto_ceiling);
             default: return "mode " + mode;
         }
     }
@@ -437,12 +440,12 @@ public final class ControllerLog {
             return;
         }
         String[] names = {
-                "publishes", "button edges", "wake calls", "woken", "unplugs", "reader attaches", "reader re-attaches",
-                "reader taps", "reader coalesced", "reader resyncs", "reader frames", "reader events", "reader removals",
-                "instance", "failed publishes", "has backing", "paced frames", "merged axis", "axis hz", "auto fallbacks",
-                "frame interval ns", "game frames", "axis mode", "frame wakes", "helper wakes", "auto max",
-                "control gen applied", "identity gen attached", "identity reads", "control gen", "ff uploads",
-                "ff plays", "ff datagrams", "ff guard fades"};
+                "publishes", I18n.s(R.string.ui_button_edges), I18n.s(R.string.ui_wake_calls), "woken", "unplugs", I18n.s(R.string.ui_reader_attaches), I18n.s(R.string.ui_reader_re_attaches),
+                I18n.s(R.string.ui_reader_taps), I18n.s(R.string.ui_reader_coalesced), I18n.s(R.string.ui_reader_resyncs), I18n.s(R.string.ui_reader_frames), I18n.s(R.string.ui_reader_events), I18n.s(R.string.ui_reader_removals),
+                "instance", I18n.s(R.string.ui_failed_publishes), I18n.s(R.string.ui_has_backing), I18n.s(R.string.ui_paced_frames), I18n.s(R.string.ui_merged_axis), I18n.s(R.string.ui_axis_hz), I18n.s(R.string.ui_auto_fallbacks),
+                I18n.s(R.string.ui_frame_interval_ns), I18n.s(R.string.ui_game_frames), I18n.s(R.string.ui_axis_mode), I18n.s(R.string.ui_frame_wakes), I18n.s(R.string.ui_helper_wakes), I18n.s(R.string.ui_auto_max),
+                I18n.s(R.string.ui_control_gen_applied), I18n.s(R.string.ui_identity_gen_attached), I18n.s(R.string.ui_identity_reads), I18n.s(R.string.ui_control_gen_3), I18n.s(R.string.ui_ff_uploads),
+                I18n.s(R.string.ui_ff_plays), I18n.s(R.string.ui_ff_datagrams), I18n.s(R.string.ui_ff_guard_fades)};
         out.append("slot ").append(s).append(':');
         for (int i = 0; i < names.length; i++) {
             if (i % 6 == 0) out.append("\n ");

@@ -178,10 +178,10 @@ internal fun xmbPerformanceMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
 
 private val P2_SLOT_LABELS = listOf("Auto", I18n.s(R.string.ui_player_1), I18n.s(R.string.ui_player_2), I18n.s(R.string.ui_player_3), I18n.s(R.string.ui_player_4), "Ignore")
 private fun p2SlotValue(label: String): Int = when (label) {
-    "Player 1" -> 0
-    "Player 2" -> 1
-    "Player 3" -> 2
-    "Player 4" -> 3
+    I18n.s(R.string.ui_player_1) -> 0
+    I18n.s(R.string.ui_player_2) -> 1
+    I18n.s(R.string.ui_player_3) -> 2
+    I18n.s(R.string.ui_player_4) -> 3
     "Ignore" -> WinHandler.SLOT_IGNORE
     else -> -1
 }

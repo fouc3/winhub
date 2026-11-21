@@ -82,8 +82,8 @@ object XboxCloudShortcuts {
         prefs(app).edit().remove(key).apply()
         runCatching {
             val manager = ContainerManager(app)
-            val from = manager.getContainerById(link.getInt("from")) ?: error("holding container gone")
-            val to = manager.getContainerById(link.getInt("to")) ?: error("chosen container gone")
+            val from = manager.getContainerById(link.getInt("from")) ?: error(I18n.s(R.string.ui_holding_container_gone))
+            val to = manager.getContainerById(link.getInt("to")) ?: error(I18n.s(R.string.ui_chosen_container_gone))
             var file = File(link.getString("shortcut"))
             check(file.isFile) { "shortcut removed" }
             if (from.id != to.id) {

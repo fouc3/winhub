@@ -412,7 +412,7 @@ fun GamesWallScreen(navController: NavController) {
                 // Games wall.
                 Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
                     Text(
-                        "LIBRARY · GAMES WALL",
+                        I18n.s(R.string.ui_library_games_wall),
                         color = DIM,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,

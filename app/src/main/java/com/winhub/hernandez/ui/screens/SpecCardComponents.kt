@@ -65,7 +65,7 @@ internal const val WAYLAND_RENDERER_CHIP = "Vulkan (Wayland)"
 internal fun rendererLabelOf(renderer: String, wayland: Boolean): String =
     if (wayland) WAYLAND_RENDERER_CHIP else when (renderer.lowercase()) {
         "vulkan", "opengl", "gl" -> "Vulkan (X11)"
-        "egl" -> "EGL (X11)"
+        "egl" -> I18n.s(R.string.ui_egl_x11)
         "surfacedirect" -> "SurfaceDirect (X11)"
         else -> ""
     }

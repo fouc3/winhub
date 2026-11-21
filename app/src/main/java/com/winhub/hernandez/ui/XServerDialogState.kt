@@ -560,17 +560,17 @@ object XServerDialogState {
         val sharedSlot = rows.firstOrNull { it.badge == ToastBadgeType.SHARE }?.slot ?: 0
 
         val (title, sub) = when (reason) {
-            "connected"    -> "CONTROLLER CONNECTED" to "just now"
-            "disconnected" -> "CONTROLLER DISCONNECTED" to "just now"
-            "reset"        -> "INPUT RESET" to "just now"
+            "connected"    -> I18n.s(R.string.ui_controller_connected_2) to I18n.s(R.string.ui_just_now)
+            "disconnected" -> I18n.s(R.string.ui_controller_disconnected) to I18n.s(R.string.ui_just_now)
+            "reset"        -> I18n.s(R.string.ui_input_reset) to I18n.s(R.string.ui_just_now)
             "reassign"     ->
                 if (hasShare) "PLAYER ${sharedSlot + 1} · SHARED" to "updated"
-                else "INPUT UPDATED" to "updated"
+                else I18n.s(R.string.ui_input_updated) to "updated"
             else /* launch */ -> when {
                 hasMouseKb     -> I18n.s(R.string.ui_input_detected)
                 rows.size == 1 -> "CONTROLLER DETECTED"
                 else           -> I18n.s(R.string.ui_controllers_detected)
-            } to "on launch"
+            } to I18n.s(R.string.ui_on_launch)
         }
 
         _toastToken += 1

@@ -361,7 +361,7 @@ private fun TvCompanionScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                "EXTERNAL DISPLAY CONNECTED",
+                I18n.s(R.string.ui_external_display_connected_2),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 letterSpacing = 2.sp,
@@ -376,7 +376,7 @@ private fun TvCompanionScreen(
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                "Playing on " + (if (displayName.isNotEmpty()) displayName else "the external display"),
+                I18n.s(R.string.ui_playing_on) + (if (displayName.isNotEmpty()) displayName else I18n.s(R.string.ui_the_external_display)),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -391,15 +391,15 @@ private fun TvCompanionScreen(
             ) {
                 Column(modifier = Modifier.padding(18.dp)) {
                     Text(
-                        "Please don't touch this screen",
+                        I18n.s(R.string.ui_please_don_t_touch_this_screen),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "Android gives the controller to the screen you last touched. A tap here takes it " +
-                            "away from the TV, and the game stops answering the pad. Play with the controller " +
-                            "and leave the handheld alone.",
+                        I18n.s(R.string.ui_android_gives_the_controller_to_the_screen_you_last_touc) +
+                            I18n.s(R.string.ui_away_from_the_tv_and_the_game_stops_answering_the_pad_pl) +
+                            I18n.s(R.string.ui_and_leave_the_handheld_alone),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -419,8 +419,8 @@ private fun TvCompanionScreen(
             }
             Spacer(Modifier.height(10.dp))
             Text(
-                "Already touched it? This puts the game back in front on the TV, and the controller " +
-                    "follows it there.",
+                I18n.s(R.string.ui_already_touched_it_this_puts_the_game_back_in_front_on_t) +
+                    I18n.s(R.string.ui_follows_it_there),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -430,7 +430,7 @@ private fun TvCompanionScreen(
 
             TextButton(onClick = onEndGame) {
                 Text(
-                    "End the game",
+                    I18n.s(R.string.ui_end_the_game),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

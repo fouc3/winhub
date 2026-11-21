@@ -152,7 +152,7 @@ object CustomSaveVault {
                 else SaveLocator.discover(container, shortcut.name, shortcut.path ?: "", shortcut.wmClass ?: "")
                     .map { it.relPath }
             }
-            if (roots.isEmpty()) return VaultResult(false, 0, null, "no saves")
+            if (roots.isEmpty()) return VaultResult(false, 0, null, I18n.s(R.string.ui_no_saves))
 
             val out = vaultFile(shortcut)
             out.parentFile?.mkdirs()

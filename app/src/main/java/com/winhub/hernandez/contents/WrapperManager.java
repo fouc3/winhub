@@ -2,6 +2,9 @@ package com.winhub.hernandez.contents;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -279,11 +282,11 @@ public class WrapperManager {
      *  extra_libs is a shared-libs payload (no marker). leegao_bcn is the BCn transcode layer (its own
      *  marker) — it overlays the bcn_layer.so that otherwise ships inside extra_libs. */
     public static final Slot[] SLOTS = new Slot[] {
-        new Slot("wrapper.tzst",            "Wrapper (default)",    true,  WRAPPER_MARKER_ENTRY),
-        new Slot("wrapper-original.tzst",   "Wrapper (original)",   true,  WRAPPER_MARKER_ENTRY),
-        new Slot("wrapper-legacy.tzst",     "Wrapper (legacy)",     true,  WRAPPER_MARKER_ENTRY),
-        new Slot("wrapper-leegao.tzst",     "Wrapper (leegao)",     true,  WRAPPER_MARKER_ENTRY),
-        new Slot("wrapper-gamenative.tzst", "Wrapper (GameNative)", true,  WRAPPER_MARKER_ENTRY),
+        new Slot("wrapper.tzst",            I18n.s(R.string.ui_wrapper_default),    true,  WRAPPER_MARKER_ENTRY),
+        new Slot("wrapper-original.tzst",   I18n.s(R.string.ui_wrapper_original),   true,  WRAPPER_MARKER_ENTRY),
+        new Slot("wrapper-legacy.tzst",     I18n.s(R.string.ui_wrapper_legacy),     true,  WRAPPER_MARKER_ENTRY),
+        new Slot("wrapper-leegao.tzst",     I18n.s(R.string.ui_wrapper_leegao),     true,  WRAPPER_MARKER_ENTRY),
+        new Slot("wrapper-gamenative.tzst", I18n.s(R.string.ui_wrapper_gamenative), true,  WRAPPER_MARKER_ENTRY),
         new Slot("leegao_bcn.tzst",         I18n.s(R.string.ui_bcn_layer_leegao),   false, BCN_MARKER_ENTRY),
         new Slot("extra_libs.tzst",         I18n.s(R.string.ui_extra_libraries),      false, null),
     };

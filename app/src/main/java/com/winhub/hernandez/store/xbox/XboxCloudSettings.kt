@@ -139,9 +139,9 @@ data class XboxCloudSettings(
         }
 
         val LANGUAGES = listOf("" to I18n.s(R.string.ui_device_language), "en-US" to I18n.s(R.string.ui_english_us), "en-GB" to I18n.s(R.string.ui_english_uk), "de-DE" to I18n.s(R.string.ui_deutsch),
-            "es-ES" to "Español (España)", "es-MX" to "Español (México)", "fr-FR" to "Français", "it-IT" to "Italiano",
+            "es-ES" to I18n.s(R.string.ui_espa_ol_espa_a), "es-MX" to I18n.s(R.string.ui_espa_ol_m_xico), "fr-FR" to "Français", "it-IT" to "Italiano",
             "ja-JP" to "日本語", "ko-KR" to "한국어", "nl-NL" to "Nederlands", "pl-PL" to "Polski", "pt-BR" to "Português (Brasil)",
-            "pt-PT" to "Português (Portugal)", "ru-RU" to "Русский", "sv-SE" to "Svenska", "tr-TR" to "Türkçe", "zh-CN" to "中文 (简体)",
+            "pt-PT" to "Português (Portugal)", "ru-RU" to "Русский", "sv-SE" to "Svenska", "tr-TR" to I18n.s(R.string.ui_t_rk_e), "zh-CN" to "中文 (简体)",
             "zh-TW" to "中文 (繁體)")
     }
 }

@@ -208,7 +208,7 @@ private fun ReshadeCatalogSheet(
         Column(Modifier.fillMaxWidth().fillMaxHeight(0.92f).padding(bottom = 12.dp)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "ReShade Effects",
+                    I18n.s(R.string.ui_reshade_effects_2),
                     color = cs.onSurface, style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -219,7 +219,7 @@ private fun ReshadeCatalogSheet(
             if (offline && !loading) {
                 Text(
                     if (source == ReshadeCatalog.Source.CACHE)
-                        "Offline — showing a cached list. Connect to download new effects."
+                        I18n.s(R.string.ui_offline_showing_a_cached_list_connect_to_download_new_ef)
                     else I18n.s(R.string.ui_offline_showing_installed_effects_only_connect_to_browse),
                     color = cs.onSurfaceVariant, style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 2.dp),

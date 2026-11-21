@@ -295,7 +295,7 @@ private fun AmazonLoginScreen(onLoginClick: () -> Unit) {
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Sign in to claim Prime Gaming titles and download your Amazon Games library.",
+                I18n.s(R.string.ui_sign_in_to_claim_prime_gaming_titles_and_download_your_a),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

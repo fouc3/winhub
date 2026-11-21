@@ -118,8 +118,8 @@ fun PlayerSlotsEditor(
 
     Column(modifier.fillMaxWidth()) {
         Text(
-            "Pin a controller (or the on-screen pad) to a player slot so the launch order is consistent. " +
-                "Applied on launch — the in-game side menu still lets you change it live.",
+            I18n.s(R.string.ui_pin_a_controller_or_the_on_screen_pad_to_a_player_slot_s) +
+                I18n.s(R.string.ui_applied_on_launch_the_in_game_side_menu_still_lets_you_c),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -127,7 +127,7 @@ fun PlayerSlotsEditor(
 
         if (rows.isEmpty()) {
             Text(
-                "No controllers detected. Connect a controller to assign it, or set a pin here to apply when it's plugged in.",
+                I18n.s(R.string.ui_no_controllers_detected_connect_a_controller_to_assign_i),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

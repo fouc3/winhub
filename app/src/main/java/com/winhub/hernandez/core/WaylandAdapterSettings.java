@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import com.winhub.hernandez.contentdialog.GraphicsDriverConfigDialog;
 
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ public final class WaylandAdapterSettings {
             case PROFILE_SMOOTH: return "Smooth";
             case PROFILE_FAST: return "Fast";
             case PROFILE_COMPAT: return "Compatibility";
-            default: return "Auto (recommended)";
+            default: return I18n.s(R.string.ui_auto_recommended);
         }
     }
 
@@ -126,7 +129,7 @@ public final class WaylandAdapterSettings {
             if (ubwc != null) parts.add("UBWC " + (ubwc ? "on" : "off"));
             if (modifiers != null) parts.add("modifiers " + (modifiers ? "on" : "off"));
             if (kgslShim != null) parts.add("KGSL shim " + (kgslShim ? "on" : "off"));
-            if (subgroupsOff) parts.add("subgroups off");
+            if (subgroupsOff) parts.add(I18n.s(R.string.ui_subgroups_off));
             if (parts.isEmpty()) return I18n.s(R.string.ui_nothing_changed_compositor_and_driver_defaults);
             return String.join(" · ", parts);
         }

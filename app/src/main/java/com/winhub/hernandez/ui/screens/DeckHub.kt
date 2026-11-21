@@ -779,7 +779,7 @@ private fun DeckHubStat(label: String, value: String) {
 internal fun hubPlaytimeLabel(context: Context, name: String): String {
     val ms = context.getSharedPreferences("playtime_stats", Context.MODE_PRIVATE)
         .getLong("${name}_playtime", 0L)
-    if (ms < 60_000L) return "not played yet"
+    if (ms < 60_000L) return I18n.s(R.string.ui_not_played_yet_2)
     val hours = ms / 3_600_000f
     return if (hours < 10f) String.format("%.1f h", hours) else "${hours.toInt()} h"
 }
@@ -816,13 +816,13 @@ internal fun DeckAddModeMenu(onPick: (HubAddMode) -> Unit, onDismiss: () -> Unit
                 .padding(22.dp),
         ) {
             Text(
-                "Add a game",
+                I18n.s(R.string.ui_add_a_game),
                 color = DeckPalette.onBackground,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                "Where should it live?",
+                I18n.s(R.string.ui_where_should_it_live),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 12.5.sp,
                 modifier = Modifier.padding(top = 2.dp, bottom = 16.dp),
@@ -972,7 +972,7 @@ internal fun HubConfirmDialog(
                         Icon(Icons.Filled.SportsEsports, contentDescription = null, tint = DeckPalette.primary, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(10.dp))
                         Text(
-                            "Cronos — a fresh dedicated container named after this game, with just this game's shortcut.",
+                            I18n.s(R.string.ui_cronos_a_fresh_dedicated_container_named_after_this_game),
                             color = DeckPalette.onSurfaceVariant,
                             fontSize = 11.5.sp,
                         )
@@ -1292,7 +1292,7 @@ internal fun DeckLaunchMethodDialog(
                 }
                 Spacer(Modifier.width(10.dp))
                 Text(
-                    "Remember this choice",
+                    I18n.s(R.string.ui_remember_this_choice),
                     color = DeckPalette.onSurfaceVariant,
                     fontSize = 13.sp,
                     modifier = Modifier.align(Alignment.CenterVertically),
@@ -1619,8 +1619,8 @@ internal fun DeckCronosReviewDialog(
     val rows = remember(container, dxvkVer, vkd3dVer) {
         listOf(
             "Wine" to (runCatching { container.wineVersion }.getOrNull() ?: "?"),
-            "Graphics driver" to (runCatching { container.graphicsDriver }.getOrNull() ?: "?"),
-            "DX wrapper" to buildString {
+            I18n.s(R.string.ui_graphics_driver) to (runCatching { container.graphicsDriver }.getOrNull() ?: "?"),
+            I18n.s(R.string.ui_dx_wrapper) to buildString {
                 append(runCatching { container.getDXWrapper() }.getOrNull() ?: "?")
                 dxvkVer?.let { append(" (dxvk ") ; append(it); append(")") }
                 vkd3dVer?.let { append(" / vkd3d ") ; append(it) }
@@ -1646,7 +1646,7 @@ internal fun DeckCronosReviewDialog(
                 .padding(22.dp),
         ) {
             Text(
-                "Cronos created - are these settings right?",
+                I18n.s(R.string.ui_cronos_created_are_these_settings_right),
                 color = DeckPalette.onBackground,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,

@@ -173,13 +173,13 @@ object GoldbergComponent {
 
     private fun downloadBlocking(context: Context, progress: (Float) -> Unit): Pair<Boolean, String> {
         val catalog = loadCatalog()
-            ?: return false to "Couldn't reach the Steam Emulator catalog. Check your connection."
+            ?: return false to I18n.s(R.string.ui_couldn_t_reach_the_steam_emulator_catalog_check_your_con)
 
         val cacheDir = File(context.cacheDir, "goldberg_dl").apply { mkdirs() }
         val archive = File(cacheDir, "goldberg.tzst")
         try {
             if (!Downloader.downloadFile(catalog.url, archive) { f -> progress(f.coerceIn(0f, 1f)) }) {
-                return false to "Download failed. Please try again."
+                return false to I18n.s(R.string.ui_download_failed_please_try_again)
             }
             // Verify the UPPERCASE MD5 from the catalog before trusting the archive (blank = skip).
             if (catalog.checksum.isNotBlank()) {
@@ -199,7 +199,7 @@ object GoldbergComponent {
             // The tar root holds the tier folders, so extract straight into the staging dir.
             if (!TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, archive, staging)) {
                 staging.deleteRecursively()
-                return false to "Couldn't unpack the Steam Emulator package."
+                return false to I18n.s(R.string.ui_couldn_t_unpack_the_steam_emulator_package)
             }
             if (!File(staging, MARKER_REL).exists()) {
                 staging.deleteRecursively()
@@ -208,7 +208,7 @@ object GoldbergComponent {
             if (dest.exists()) dest.deleteRecursively()
             if (!staging.renameTo(dest)) {
                 staging.deleteRecursively()
-                return false to "Couldn't install the Steam Emulator package."
+                return false to I18n.s(R.string.ui_couldn_t_install_the_steam_emulator_package)
             }
             if (!isInstalled(context)) {
                 return false to "Steam Emulator package was missing expected files."
@@ -216,7 +216,7 @@ object GoldbergComponent {
             // Stamp the version we just installed AFTER the extract is confirmed
             // present, so a catalog bump later reads as outdated (see isOutdated).
             writeInstalledVersion(context, catalog.version)
-            return true to "Steam Emulator installed. Pick a mode below."
+            return true to I18n.s(R.string.ui_steam_emulator_installed_pick_a_mode_below)
         } finally {
             archive.delete()
         }

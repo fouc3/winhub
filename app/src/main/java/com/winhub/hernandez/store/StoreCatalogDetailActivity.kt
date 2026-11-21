@@ -190,7 +190,7 @@ private fun CatalogDetailScreen(
         gear = listOf(
             StoreGearItem("🌐", I18n.s(R.string.ui_open_in_browser), enabled = item.storeUrl.isNotBlank()) { onOpenBrowser(item.storeUrl) },
         ),
-        infoLine = if (item.isFree) "Free claims go through the store's own checkout — you'll be signed in there."
+        infoLine = if (item.isFree) I18n.s(R.string.ui_free_claims_go_through_the_store_s_own_checkout_you_ll_b)
         else "Purchases go through $storeLabel. Owned titles appear in your Library after a sync.",
         tabs = tabs,
         selectedTab = tab,
@@ -239,7 +239,7 @@ private fun CatalogDetailScreen(
                 StoreSection(title = I18n.s(R.string.ui_about_this_page)) {
                     StoreStatusText(
                         "This title isn't in your $storeLabel library yet. Get it on the store page and it " +
-                            "will show up under Library with install, DLC and cloud-save controls.",
+                            I18n.s(R.string.ui_will_show_up_under_library_with_install_dlc_and_cloud_sa),
                     )
                 }
             }

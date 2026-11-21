@@ -946,7 +946,7 @@ object SteamDepotDownloader {
                             DepotVerdict.DENIED to (if (expected > 0L)
                                 "DENIED not owned · no transfer, on-disk ${fmtSize(onDisk)} < manifest-true ${fmtSize(manifestSum)} (depot expected $exp)"
                             else
-                                "DENIED not owned · nothing delivered and no manifest content for this account")
+                                I18n.s(R.string.ui_denied_not_owned_nothing_delivered_and_no_manifest_conte))
                     }
                 }
 
@@ -1219,7 +1219,7 @@ object SteamDepotDownloader {
                             }
                         }
                         if (!retryAsResume) {
-                            emitFailed(appId, failure?.message ?: "Unknown error")
+                            emitFailed(appId, failure?.message ?: I18n.s(R.string.ui_unknown_error_2))
                         }
                     }
                 }

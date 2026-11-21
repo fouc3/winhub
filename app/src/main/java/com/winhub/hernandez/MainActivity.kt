@@ -414,7 +414,7 @@ class MainActivity : AppCompatActivity() {
                             st.triggerL, st.triggerR,
                             guideDown,
                             pad.deviceId,
-                            pad.name ?: "Steam Controller",
+                            pad.name ?: I18n.s(R.string.ui_steam_controller),
                             com.winhub.hernandez.ui.controllertest.PadArt.STEAM.ordinal,
                             -1,
                             true,
@@ -960,7 +960,7 @@ private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
         title = { Text(I18n.s(R.string.ui_all_files_access_required)) },
         text = {
             Text(
-                "In order to grant access to additional storage devices such as USB storage, " +
+                I18n.s(R.string.ui_in_order_to_grant_access_to_additional_storage_devices_s) +
                 "the All Files Access permission must be granted. Press OK to open Android Settings."
             )
         },

@@ -1,6 +1,9 @@
 // JNI symbols depend on this package path and class name.
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.util.concurrent.atomic.AtomicLong
 
 // Production handle for the native Steam CM client and auth sessions.
@@ -103,7 +106,7 @@ class BlSteamSession : AutoCloseable {
     fun prepareApp(appId: Int, dlcAppIds: IntArray, callback: BlPrepareAppCallback) {
         val h = nativeHandle.get()
         if (h == 0L) {
-            callback.onPrepareResult(false, "session closed")
+            callback.onPrepareResult(false, I18n.s(R.string.ui_session_closed))
             return
         }
         nativePrepareApp(h, appId, dlcAppIds, callback)
@@ -129,7 +132,7 @@ class BlSteamSession : AutoCloseable {
         }
         val h = nativeHandle.get()
         if (h == 0L) {
-            listener.onComplete(false, "session closed", 0L, 0, 0)
+            listener.onComplete(false, I18n.s(R.string.ui_session_closed), 0L, 0, 0)
             return
         }
         nativeDownloadApp(h, appId, depotIds, manifestIds, branch, installDir,

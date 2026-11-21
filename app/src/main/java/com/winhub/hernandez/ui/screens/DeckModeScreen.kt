@@ -3834,7 +3834,7 @@ private fun DeckHomeCarousel(
                     if (idx == n && slots > n) {
                         Column {
                             Text(
-                                "All Games",
+                                I18n.s(R.string.ui_all_games_2),
                                 color = Color.White,
                                 fontSize = if (xl) titleSp.sp else 22.sp,
                                 lineHeight = if (xl) (titleSp * 1.15f).sp else 25.sp,
@@ -3855,7 +3855,7 @@ private fun DeckHomeCarousel(
                         Column {
                             if (idx == 0 && entry.game != null && hubHasPlaytime(context, entry.title) && (!xl || titleLines == 2)) {
                                 Text(
-                                    "CONTINUE PLAYING",
+                                    I18n.s(R.string.ui_continue_playing),
                                     color = accent,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.SemiBold,

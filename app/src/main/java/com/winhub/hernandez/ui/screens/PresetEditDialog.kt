@@ -270,13 +270,13 @@ internal fun PresetEditDialog(
                 // editor says so at the moment of editing.
                 val scopeNote = when {
                     scope == PresetScope.SHORTCUT && modified ->
-                        "Customised for this game. Reset makes it follow its container again."
+                        I18n.s(R.string.ui_customised_for_this_game_reset_makes_it_follow_its_conta)
                     scope == PresetScope.SHORTCUT ->
-                        "Saved for this game only — no other game or container changes."
+                        I18n.s(R.string.ui_saved_for_this_game_only_no_other_game_or_container_chan)
                     scope == PresetScope.CONTAINER && modified ->
-                        "Customised for this container. Reset makes it follow the shared preset again."
+                        I18n.s(R.string.ui_customised_for_this_container_reset_makes_it_follow_the)
                     scope == PresetScope.CONTAINER ->
-                        "Saved for this container only — the shared preset is left alone."
+                        I18n.s(R.string.ui_saved_for_this_container_only_the_shared_preset_is_left)
                     isBuiltIn && modified -> I18n.s(R.string.ui_built_in_preset_edited_reset_restores_the_original)
                     isBuiltIn -> I18n.s(R.string.ui_built_in_preset_edits_are_saved_separately_and_can_be_re)
                     else -> null
@@ -304,7 +304,7 @@ internal fun PresetEditDialog(
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Environment variables",
+                    I18n.s(R.string.ui_environment_variables),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -439,7 +439,7 @@ private fun VarRow(
             IconButton(onClick = onHelp, modifier = Modifier.size(28.dp)) {
                 Icon(
                     Icons.Outlined.HelpOutline,
-                    contentDescription = "About " + spec.name,
+                    contentDescription = I18n.s(R.string.ui_about_2) + spec.name,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(16.dp),
                 )

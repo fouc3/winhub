@@ -2,6 +2,9 @@ package com.winhub.hernandez.winhandler;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -49,11 +52,11 @@ public final class LiveWineRegistry {
             out.write(JoystickRegistry.toRegFile(desired).getBytes(StandardCharsets.US_ASCII));
         } catch (IOException e) {
             Log.w(TAG, "could not write " + reg, e);
-            main.post(() -> callback.onDone(false, "could not write " + REG_FILE));
+            main.post(() -> callback.onDone(false, I18n.s(R.string.ui_could_not_write) + REG_FILE));
             return;
         }
         if (!winHandler.execRaw(REGEDIT, REGEDIT_ARGS)) {
-            main.post(() -> callback.onDone(false, "regedit command too long"));
+            main.post(() -> callback.onDone(false, I18n.s(R.string.ui_regedit_command_too_long)));
             return;
         }
         new Watch(winHandler, main, callback).start();

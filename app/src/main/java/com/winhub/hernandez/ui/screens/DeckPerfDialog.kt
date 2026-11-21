@@ -108,13 +108,13 @@ internal fun DeckPerformanceDialog(
             DeckRow(I18n.s(R.string.ui_disable_thermal_throttling), I18n.s(R.string.ui_runtime_watchdog_still_guards_2)) {
                 val k = PerfRootApplier.KEY_THERMAL_DISABLE
                 DeckToggle(rootValue(k)) { on ->
-                    if (on) pendingDanger = "Disable thermal throttling" to { onRoot(k, true) } else onRoot(k, false)
+                    if (on) pendingDanger = I18n.s(R.string.ui_disable_thermal_throttling) to { onRoot(k, true) } else onRoot(k, false)
                 }
             }
             DeckRow(I18n.s(R.string.ui_fan_to_maximum), I18n.s(R.string.ui_forces_active_cooling_to_full_at_launch_2)) {
                 val k = PerfRootApplier.KEY_FAN_MAX
                 DeckToggle(rootValue(k)) { on ->
-                    if (on) pendingDanger = "Fan to maximum" to { onRoot(k, true) } else onRoot(k, false)
+                    if (on) pendingDanger = I18n.s(R.string.ui_fan_to_maximum) to { onRoot(k, true) } else onRoot(k, false)
                 }
             }
         }

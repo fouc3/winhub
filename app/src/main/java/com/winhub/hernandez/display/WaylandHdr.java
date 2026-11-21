@@ -2,6 +2,9 @@ package com.winhub.hernandez.display;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.view.Display;
@@ -44,18 +47,18 @@ public final class WaylandHdr {
     public static final String HELP_TEXT =
             "Applies from the next launch: whether the game is offered HDR is decided when it starts " +
             "(DXVK_HDR and the display's HDR offer). Games that support HDR then show it on this screen: " +
-            "their frames go to the display in 10-bit with the HDR10 (BT.2020 PQ) tag. Switch HDR on in " +
+            I18n.s(R.string.ui_their_frames_go_to_the_display_in_10_bit_with_the_hdr10) +
             "the game's own settings too. In game, the drawer's Graphics tab has a live \"HDR output\" " +
-            "switch between real HDR and the same picture tone-mapped to SDR. Screen effects, windows over " +
+            I18n.s(R.string.ui_switch_between_real_hdr_and_the_same_picture_tone_mapped) +
             "the game and windowed games stay HDR (the whole picture is composed in HDR); with frame " +
-            "generation it depends on the screen offering an HDR swapchain, otherwise the picture is " +
+            I18n.s(R.string.ui_generation_it_depends_on_the_screen_offering_an_hdr_swap) +
             "tone-mapped to SDR. Windows is told this screen's peak brightness as Android reports it; " +
             "Android gives no live brightness in nits, so the session log records the live HDR/SDR headroom " +
             "instead. Not the same as the \"HDR\" screen effect.";
 
     /** One line for XMB, whose subtitles are a single line. */
     public static final String HELP_SHORT =
-            "Offer real HDR10 from the next launch (switch HDR on in the game too).";
+            I18n.s(R.string.ui_offer_real_hdr10_from_the_next_launch_switch_hdr_on_in_t);
 
     /** The screen a game started from an editor will run on: the device's built-in display. */
     public static Display targetDisplay(Context context) {

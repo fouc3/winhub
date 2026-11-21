@@ -135,37 +135,37 @@ private fun classifySource(shortcut: Shortcut): GameSource = when {
 private const val HELP_LAUNCH_WITH =
     "How the game talks to Steam. SteamLite = real Steam (online, VAC, real achievements). Goldberg = " +
         "fake offline Steam for single-player. Raw = just run the .exe."
-private const val HELP_STEAMLITE =
-    "SteamLite — the REAL Steam client, signed into your account. Online on VAC servers, real " +
+private val HELP_STEAMLITE =
+    I18n.s(R.string.ui_steamlite_the_real_steam_client_signed_into_your_account) +
         "achievements & cloud saves. Needs internet + a game you own on Steam."
-private const val HELP_GOLDBERG =
+private val HELP_GOLDBERG =
     "Goldberg — a stand-in, offline Steam. No login, lightweight; great for single-player. Achievements " +
-        "emulated on-device. No online multiplayer or VAC. Steam-library games only."
-private const val HELP_RAW =
+        I18n.s(R.string.ui_emulated_on_device_no_online_multiplayer_or_vac_steam_li)
+private val HELP_RAW =
     "Raw — launch the game's .exe directly, with no Steam layer. For DRM-free games or when you just " +
-        "want the game to start."
-private const val HELP_STREAM =
-    "Stream — plays the game on Microsoft's servers with Xbox Cloud Gaming, nothing runs on this device. " +
-        "Needs a steady connection and an Xbox plan that includes cloud play."
-private const val HELP_PASS =
+        I18n.s(R.string.ui_want_the_game_to_start)
+private val HELP_STREAM =
+    I18n.s(R.string.ui_stream_plays_the_game_on_microsoft_s_servers_with_xbox_c) +
+        I18n.s(R.string.ui_needs_a_steady_connection_and_an_xbox_plan_that_includes)
+private val HELP_PASS =
     "For classic games (Half-Life 2, CS:S) that ignore a controller in Real-Steam mode. Hands the pad " +
-        "straight to the game instead of Steam Input. SteamLite only."
-private const val HELP_VAC =
+        I18n.s(R.string.ui_straight_to_the_game_instead_of_steam_input_steamlite_on)
+private val HELP_VAC =
     "On: the game must be started by Steam itself (VAC-secure). If Steam can't, you get a warning and " +
         "up to ~60 s of waiting before a direct start. Off: the game has no VAC, so a direct start after " +
         "~15 s is fine. Auto-detected from Steam's app info (Valve Anti-Cheat category); flip it if a " +
-        "VAC game is misdetected. SteamLite only."
-private const val HELP_REMEMBER =
-    "Saves this launch method for this game and skips the popup next time. You can change it later."
-private const val HELP_DETAILS =
-    "Opens the full Steam game page — achievements grid, DLC and cloud saves."
-private const val HELP_STEAMLITE_CLIENT =
-    "WinHub's small Steam client for online (VAC) launches. Newer versions add features the app " +
+        I18n.s(R.string.ui_vac_game_is_misdetected_steamlite_only)
+private val HELP_REMEMBER =
+    I18n.s(R.string.ui_saves_this_launch_method_for_this_game_and_skips_the_pop)
+private val HELP_DETAILS =
+    I18n.s(R.string.ui_opens_the_full_steam_game_page_achievements_grid_dlc_and)
+private val HELP_STEAMLITE_CLIENT =
+    I18n.s(R.string.ui_winhub_s_small_steam_client_for_online_vac_launches_newe) +
         "relies on (live launch status, in-game friends). Update downloads ~18 MB and re-stages it into " +
-        "your container."
-private const val HELP_GOLDBERG_MODE =
-    "Regular suits most games. Experimental turns on newer features for games Regular can't run. " +
-        "ColdClient runs the game's own launcher (heaviest). Try Regular first."
+        I18n.s(R.string.ui_your_container)
+private val HELP_GOLDBERG_MODE =
+    I18n.s(R.string.ui_regular_suits_most_games_experimental_turns_on_newer_fea) +
+        I18n.s(R.string.ui_coldclient_runs_the_game_s_own_launcher_heaviest_try_reg)
 
 /**
  * The launch-method chooser popup — a COMPACT centered dialog that pops before a game launches. It is
@@ -807,7 +807,7 @@ private fun footerLaunch(
 ): Pair<String, (() -> Unit)?> {
     if (method != LaunchMethod.STEAMLITE || client == null) return "Launch" to doLaunch
     return when {
-        client.updating -> "Updating…" to null
+        client.updating -> I18n.s(R.string.ui_updating) to null
         client.gated -> "Update & Launch" to client.onUpdateAndLaunch
         else -> "Launch" to doLaunch
     }
@@ -913,7 +913,7 @@ private fun SteamLiteClientBlock(
     } else if (ui.gated && check?.required == false) {
         // Optional update: the quieter way past the "Update & Launch" footer.
         Text(
-            "Launch with installed version",
+            I18n.s(R.string.ui_launch_with_installed_version),
             style = lineStyle, color = cs.onSurfaceVariant, fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(top = 4.dp)
@@ -1131,10 +1131,10 @@ private fun BoxScope.HelpTip(text: String?, onDismiss: () -> Unit) {
 private fun sourceSubline(source: GameSource, appId: Int): String = when (source) {
     GameSource.STEAM -> if (appId > 0) "Steam · App $appId" else "Steam"
     GameSource.EPIC -> I18n.s(R.string.ui_epic_raw_launch)
-    GameSource.GOG -> "GOG · DRM-free · Raw"
+    GameSource.GOG -> I18n.s(R.string.ui_gog_drm_free_raw)
     GameSource.AMAZON -> "Amazon Games · Raw"
     GameSource.XBOX -> I18n.s(R.string.ui_xbox_licensed_launch)
-    GameSource.CUSTOM -> "Custom · Raw"
+    GameSource.CUSTOM -> I18n.s(R.string.ui_custom_raw)
 }
 
 private fun methodDescription(method: LaunchMethod, source: GameSource): String = when (method) {

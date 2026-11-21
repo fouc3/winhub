@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.xbox
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import java.io.Closeable
 import java.util.UUID
 
@@ -10,7 +13,7 @@ internal class XboxLaunchLeases(private val now: () -> Long) {
 
     @Synchronized fun active(id: String) = leases.values.any { it.id == id }
     @Synchronized fun begin(id: String, account: String, session: String): String {
-        check(!active(id)) { "This Xbox game is already starting or running." }
+        check(!active(id)) { I18n.s(R.string.ui_this_xbox_game_is_already_starting_or_running) }
         val token = UUID.randomUUID().toString()
         leases[token] = Lease(id, account, session, now() + 180_000)
         return token

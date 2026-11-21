@@ -62,8 +62,8 @@ enum class FusionSize(val token: String, val label: String) {
         val GRAPH_CHIPS = FPS_CHIPS + setOf("FPS Graph", "Power", "Battery")
         val STATS_CHIPS = GRAPH_CHIPS + setOf("GPU", "GPU Temp", "CPU", "Temp", "VRAM", "RAM")
         val EVERYTHING_ONLY = setOf(
-            "GPU model", "0.01% low", "Per-core", "Swap", "Network", "Resolution", "Proton", "Wrapper",
-            "DX ver", "Session", "Clock",
+            I18n.s(R.string.ui_gpu_model), "0.01% low", "Per-core", "Swap", "Network", "Resolution", "Proton", "Wrapper",
+            I18n.s(R.string.ui_dx_ver), "Session", "Clock",
         )
         val EVERYTHING_CHIPS = STATS_CHIPS + EVERYTHING_ONLY
     }

@@ -2,6 +2,9 @@ package com.winhub.hernandez.display;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
@@ -57,14 +60,14 @@ public final class ExternalDisplay {
 
     /** Shown under the switch in every editor (one line, XMB subtitles are single-line). */
     public static final String HELP_LAUNCH =
-            "The game opens on the TV instead of the handheld screen.";
+            I18n.s(R.string.ui_the_game_opens_on_the_tv_instead_of_the_handheld_screen);
     public static final String HELP_MATCH_RES =
             "Renders at the TV's resolution instead of this game's own. Off by default: more pixels costs frame rate.";
     /** The two things a first-time user has to be told before they pull a cable or reach for the screen. */
     public static final String NOTE_UNPLUG =
-            "Pull the cable and the game pauses, then comes back to the handheld screen. Resume it from the drawer.";
+            I18n.s(R.string.ui_pull_the_cable_and_the_game_pauses_then_comes_back_to_th);
     public static final String NOTE_TOUCH =
-            "Touch doesn't reach the TV. Use the controller or a mouse, including for the drawer and the HUD.";
+            I18n.s(R.string.ui_touch_doesn_t_reach_the_tv_use_the_controller_or_a_mouse);
 
     // ── finding the display ──────────────────────────────────────────────────────────────────────────
 

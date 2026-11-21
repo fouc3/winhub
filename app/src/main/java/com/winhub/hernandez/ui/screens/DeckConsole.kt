@@ -503,7 +503,7 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
                 val result = withContext(Dispatchers.IO) { SteamSessionManager.ensureSession(appContext, 12_000L) }
                 status["Steam"] = when (result) {
                     is SteamSessionManager.SessionResult.Ok -> 2 to "Online"
-                    is SteamSessionManager.SessionResult.NeedsSignIn -> 3 to "Sign in needed"
+                    is SteamSessionManager.SessionResult.NeedsSignIn -> 3 to I18n.s(R.string.ui_sign_in_needed)
                     is SteamSessionManager.SessionResult.Offline -> 3 to "Offline"
                 }
             }
@@ -523,7 +523,7 @@ internal fun DeckBootScreen(onDone: () -> Unit) {
                             },
                         )
                     }
-                    status[name] = if (signedIn) 2 to "Signed in" else 3 to "Not signed in"
+                    status[name] = if (signedIn) 2 to I18n.s(R.string.ui_signed_in_2) else 3 to I18n.s(R.string.ui_not_signed_in)
                 }
             }
         }

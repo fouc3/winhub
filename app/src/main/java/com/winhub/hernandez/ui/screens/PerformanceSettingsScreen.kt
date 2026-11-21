@@ -97,7 +97,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
             }
 
             Text(
-                "Global defaults apply to every game unless a game sets its own override " +
+                I18n.s(R.string.ui_global_defaults_apply_to_every_game_unless_a_game_sets_i) +
                     "(in the game's settings or from the in-game menu).",
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp
             )
@@ -105,15 +105,15 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
             // ── Non-root global defaults (always editable) ──
             PerfCard(title = I18n.s(R.string.ui_global_defaults)) {
                 PerfToggle(I18n.s(R.string.ui_sustained_performance_mode), sustained,
-                    onInfo = { info = "Sustained Performance Mode" to PerfCopy.SUSTAINED }) { PerformanceSettings.setSustainedPerfMode(it) }
+                    onInfo = { info = I18n.s(R.string.ui_sustained_performance_mode) to PerfCopy.SUSTAINED }) { PerformanceSettings.setSustainedPerfMode(it) }
                 PerfToggle(I18n.s(R.string.ui_thread_priority_boost), priority,
-                    onInfo = { info = "Thread Priority Boost" to PerfCopy.PRIORITY }) { PerformanceSettings.setPerfPriorityBoost(it) }
+                    onInfo = { info = I18n.s(R.string.ui_thread_priority_boost) to PerfCopy.PRIORITY }) { PerformanceSettings.setPerfPriorityBoost(it) }
                 PerfToggle(I18n.s(R.string.ui_prefer_big_cores), bigCores,
-                    onInfo = { info = "Prefer Big Cores" to PerfCopy.BIG_CORES }) { PerformanceSettings.setPreferBigCores(it) }
+                    onInfo = { info = I18n.s(R.string.ui_prefer_big_cores) to PerfCopy.BIG_CORES }) { PerformanceSettings.setPreferBigCores(it) }
                 // GPU pin lives here (not in the root card) because it now has a non-root path on
                 // Adreno. It still upgrades itself to the stronger sysfs pin when root is granted.
                 RootToggle(PerfRootApplier.KEY_GPU_CLOCK_LOCK, I18n.s(R.string.ui_lock_gpu_to_max_clock), granted, harnessProven,
-                    onInfo = { info = "Lock GPU to max clock" to PerfCopy.GPU_CLOCK })
+                    onInfo = { info = I18n.s(R.string.ui_lock_gpu_to_max_clock) to PerfCopy.GPU_CLOCK })
                 if (!granted && !PerfGpuTurbo.isSupported) {
                     Text(I18n.s(R.string.ui_lock_gpu_to_max_clock_needs_an_adreno_qualcomm_gpu_or),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
@@ -142,15 +142,15 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
 
                 Spacer(Modifier.height(2.dp))
                 RootToggle(PerfRootApplier.KEY_CPU_GOVERNOR, I18n.s(R.string.ui_cpu_governor_performance), granted, harnessProven,
-                    onInfo = { info = "CPU governor → performance" to PerfCopy.CPU_GOV })
+                    onInfo = { info = I18n.s(R.string.ui_cpu_governor_performance) to PerfCopy.CPU_GOV })
                 RootToggle(PerfRootApplier.KEY_CPU_FREQ_LOCK, I18n.s(R.string.ui_lock_cpu_frequency_to_max), granted, harnessProven,
-                    onInfo = { info = "Lock CPU frequency to max" to PerfCopy.CPU_FREQ })
+                    onInfo = { info = I18n.s(R.string.ui_lock_cpu_frequency_to_max) to PerfCopy.CPU_FREQ })
                 RootToggle(PerfRootApplier.KEY_CORES_ONLINE, I18n.s(R.string.ui_keep_all_cores_online), granted, harnessProven,
-                    onInfo = { info = "Keep all cores online" to PerfCopy.CORES_ONLINE })
+                    onInfo = { info = I18n.s(R.string.ui_keep_all_cores_online) to PerfCopy.CORES_ONLINE })
                 RootToggle(PerfRootApplier.KEY_THERMAL_DISABLE, I18n.s(R.string.ui_disable_thermal_throttling), granted, harnessProven,
-                    onInfo = { info = "Disable thermal throttling" to PerfCopy.THERMAL })
+                    onInfo = { info = I18n.s(R.string.ui_disable_thermal_throttling) to PerfCopy.THERMAL })
                 RootToggle(PerfRootApplier.KEY_FAN_MAX, I18n.s(R.string.ui_fan_to_maximum), granted, harnessProven,
-                    onInfo = { info = "Fan to maximum" to PerfCopy.FAN })
+                    onInfo = { info = I18n.s(R.string.ui_fan_to_maximum) to PerfCopy.FAN })
 
                 if (granted && !harnessProven) {
                     Text("Thermal / fan controls are locked until safety-revert is verified on this device.",
@@ -162,7 +162,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     Text(I18n.s(R.string.ui_free_memory), color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-                    InfoButton { info = "Free memory" to PerfCopy.FREE_MEM_SECTION }
+                    InfoButton { info = I18n.s(R.string.ui_free_memory) to PerfCopy.FREE_MEM_SECTION }
                 }
 
                 // TIER 1 — drop file caches (light; near-invisible RAM by design). Root-gated as before.
@@ -185,7 +185,7 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
 
                 // AUTO toggle — persists like the other root defaults; fires at game launch.
                 PerfToggle(I18n.s(R.string.ui_auto_deep_clean_on_launch), autoDeepClean, enabled = granted,
-                    onInfo = { info = "Auto deep-clean on launch" to PerfCopy.AUTO_DEEP_CLEAN }) {
+                    onInfo = { info = I18n.s(R.string.ui_auto_deep_clean_on_launch) to PerfCopy.AUTO_DEEP_CLEAN }) {
                     PerformanceSettings.setRootDefault(PerfRootApplier.KEY_AUTO_DEEP_CLEAN, it)
                 }
             }
@@ -194,15 +194,15 @@ fun PerformanceSettingsScreen(onClose: () -> Unit) {
             // and synced with the in-game surface (both bind the one TempWatchdog singleton). ──
             PerfCard(title = I18n.s(R.string.ui_temperature_watchdog)) {
                 Text(
-                    "Auto-reverts all performance settings before the device gets too hot, anchored to " +
-                        "your device's own thermal trip points. Keep this on unless you know what you're doing.",
+                    I18n.s(R.string.ui_auto_reverts_all_performance_settings_before_the_device) +
+                        I18n.s(R.string.ui_your_device_s_own_thermal_trip_points_keep_this_on_unles),
                     color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp
                 )
                 WatchdogSection()
             }
 
             Text(
-                "Auto-revert on game exit, app background and crash is always on and cannot be disabled.",
+                I18n.s(R.string.ui_auto_revert_on_game_exit_app_background_and_crash_is_alw),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp
             )
 
@@ -304,7 +304,7 @@ private fun PerfToggle(
 @Composable
 private fun InfoButton(onClick: () -> Unit) {
     IconButton(onClick = onClick, modifier = Modifier.size(28.dp)) {
-        Icon(Icons.Outlined.HelpOutline, "What's this?",
+        Icon(Icons.Outlined.HelpOutline, I18n.s(R.string.ui_what_this),
             tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
     }
 }
@@ -316,36 +316,36 @@ private object PerfCopy {
     const val CPU_GOV = "Forces the CPU to run fast instead of ramping on demand. Faster, more heat and battery. (Root)"
     const val CPU_FREQ = "Pins the CPU at max clock so it never slows down. Top performance, highest heat/battery. (Root)"
     const val CORES_ONLINE = "Stops cores being put to sleep, keeping every core available. (Root)"
-    const val GPU_CLOCK =
-        "Pins the GPU at top speed so it stops dropping clocks to save power. Smoother and more " +
+    val GPU_CLOCK =
+        I18n.s(R.string.ui_pins_the_gpu_at_top_speed_so_it_stops_dropping_clocks_to) +
         "consistent, but hotter and heavier on battery.\n\n" +
         "No root needed on Adreno (Qualcomm) GPUs — this is the same \"Adreno turbo\" trick Switch " +
         "emulators use: it asks the GPU driver directly to stop scaling clocks down, through a device " +
         "file the app is already allowed to open.\n\n" +
-        "With root granted, it switches to a stronger system-level clock pin instead. Either way your " +
-        "device's own heat protection still applies, and the setting is undone when you exit the game, " +
+        I18n.s(R.string.ui_with_root_granted_it_switches_to_a_stronger_system_level) +
+        I18n.s(R.string.ui_device_s_own_heat_protection_still_applies_and_the_setti) +
         "background the app, or it crashes.\n\n" +
-        "On non-Adreno GPUs (Mali, Xclipse, PowerVR) this toggle needs root."
+        I18n.s(R.string.ui_on_non_adreno_gpus_mali_xclipse_powervr_this_toggle_need)
     const val THERMAL = "Removes your device's built-in heat protection. ⚠️ Can overheat — the Temperature Watchdog is your only safety net with this on. (Root)"
     const val FAN = "Runs the fan at full speed for max cooling (devices with a fan). (Root)"
-    const val FREE_MEM_SECTION =
+    val FREE_MEM_SECTION =
         "Two ways to free memory, from lightest to strongest.\n\n" +
         "Drop file caches (Tier 1)\n" +
         "Writes to the kernel's drop-caches control to release cached files. This is light and " +
-        "near-invisible by design — the system refills the cache almost immediately, so you'll rarely " +
+        I18n.s(R.string.ui_near_invisible_by_design_the_system_refills_the_cache_al) +
         "see the free-RAM number move. It does NOT close any apps.\n\n" +
         "Deep clean (Tier 2)\n" +
-        "The real RAM free. Force-closes background apps to reclaim memory. It uses Android's own " +
+        I18n.s(R.string.ui_the_real_ram_free_force_closes_background_apps_to_reclai) +
         "\"kill background\" command (am kill-all), which only touches apps the system considers safe " +
         "to kill — it will NOT close your running game, this app, or system/persistent apps. This is " +
         "the same kind of thing a phone's built-in \"RAM cleaner\" / Game Turbo does.\n\n" +
         "Auto deep-clean on launch\n" +
-        "When on, a deep clean runs automatically each time you start a game or container, so it opens " +
+        I18n.s(R.string.ui_when_on_a_deep_clean_runs_automatically_each_time_you_st) +
         "with the most free RAM available.\n\n" +
-        "Root is required for deep clean (and for dropping caches)."
-    const val AUTO_DEEP_CLEAN =
+        I18n.s(R.string.ui_root_is_required_for_deep_clean_and_for_dropping_caches)
+    val AUTO_DEEP_CLEAN =
         "Runs a deep clean automatically every time a game/container launches — force-closes safe " +
-        "background apps (via am kill-all, never your game or system) to free real RAM before you start. (Root)"
+        I18n.s(R.string.ui_background_apps_via_am_kill_all_never_your_game_or_syste)
 }
 
 /** Consolidated explainer body, grouped by root requirement. */

@@ -314,7 +314,7 @@ private fun XServerDrawerContent() {
             ) {
                 Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                     Text(
-                        text = gameTitle.ifBlank { "In game" },
+                        text = gameTitle.ifBlank { I18n.s(R.string.ui_in_game) },
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = DeckPalette.onBackground,
@@ -492,7 +492,7 @@ private fun AudioContent(state: XServerDrawerState) {
     Spacer(Modifier.height(12.dp))
     AccentButton(I18n.s(R.string.ui_reset_audio), Modifier.fillMaxWidth()) { state.onResetAudio?.run() }
     Text(
-        "Fixes lost sound after switching apps.",
+        I18n.s(R.string.ui_fixes_lost_sound_after_switching_apps),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = 11.sp,
         modifier = Modifier.padding(top = 4.dp)
@@ -530,7 +530,7 @@ private fun TvContent(state: XServerDrawerState) {
     SectionHeader(I18n.s(R.string.ui_cast_to_a_tv_wireless))
     Text(
         text = I18n.s(R.string.ui_experimental_video_only_wireless_streaming_is_new_the_pi) +
-            "behind, there's no TV sound yet (game audio stays on this device), and it may take a moment " +
+            I18n.s(R.string.ui_behind_there_s_no_tv_sound_yet_game_audio_stays_on_this) +
             I18n.s(R.string.ui_to_start_or_need_a_second_try),
         color = MaterialTheme.colorScheme.error,
         fontSize = 11.sp,
@@ -1607,7 +1607,7 @@ private fun FrameGenSection(state: XServerDrawerState) {
                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
             )
             Text(
-                "Capture resolution",
+                I18n.s(R.string.ui_capture_resolution),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
@@ -2001,7 +2001,7 @@ private fun ReshadeSection() {
                 }
                 if (item.params.isEmpty()) {
                     Text(
-                        "No tunable parameters.",
+                        I18n.s(R.string.ui_no_tunable_parameters),
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                         fontSize = 11.sp, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
                     )
@@ -2816,13 +2816,13 @@ private fun HudContent(state: XServerDrawerState) {
                 !vrrSupported ->
                     I18n.s(R.string.ui_unavailable_this_display_has_a_single_refresh_rate_so)
                 matchRefreshOn && nativeFgLocksVrr && fgAutoTurnedOn ->
-                    "Auto was turned on for frame generation — the display follows Max FPS × multiplier. " +
+                    I18n.s(R.string.ui_auto_was_turned_on_for_frame_generation_the_display_foll) +
                         (if (fgAutoPerGame) I18n.s(R.string.ui_turn_it_off_if_you_prefer_this_game_will_remember)
                          else I18n.s(R.string.ui_turn_it_off_if_you_prefer_for_this_session))
                 matchRefreshOn && nativeFgLocksVrr ->
                     I18n.s(R.string.ui_auto_is_on_with_frame_generation_running_the_display)
                 nativeFgLocksVrr ->
-                    (if (fgAutoPerGame) "Auto is off for this game while frame generation runs. "
+                    (if (fgAutoPerGame) I18n.s(R.string.ui_auto_is_off_for_this_game_while_frame_generation_runs)
                      else I18n.s(R.string.ui_auto_is_off_while_frame_generation_runs)) +
                         I18n.s(R.string.ui_turn_it_on_to_fit_the_screen_to_max_fps_multiplier) +
                         (if (manualRefreshRate > 0) " Display locked to ${manualRefreshRate} Hz." else "")
@@ -3341,7 +3341,7 @@ private fun ControlsContent(state: XServerDrawerState) {
                 var vibrationMode by remember(initVibrationMode) { mutableIntStateOf(initVibrationMode) }
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    "Rumble Target",
+                    I18n.s(R.string.ui_rumble_target),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -4329,7 +4329,7 @@ private fun RootPerformanceSection(state: XServerDrawerState) {
         ) { state.onFreeMemory?.run() }
         // TIER 2 — the real RAM free (root-only). `am kill-all` never touches the running game/system.
         AdvancedActionRow(
-            "Deep clean (free app memory)", R.drawable.icon_task_manager,
+            I18n.s(R.string.ui_deep_clean_free_app_memory), R.drawable.icon_task_manager,
             subtitle = I18n.s(R.string.ui_force_closes_background_apps_to_free_real_memory_won),
         ) { state.onDeepClean?.run() }
     }

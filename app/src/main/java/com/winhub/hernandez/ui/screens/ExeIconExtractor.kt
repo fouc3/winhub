@@ -1,5 +1,8 @@
 package com.winhub.hernandez.ui.screens
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -109,7 +112,7 @@ internal object ExeIconExtractor {
                     resSectionFile = pointerToRawData
                 }
             }
-            require(resSectionVa >= 0) { "Resource section not located" }
+            require(resSectionVa >= 0) { I18n.s(R.string.ui_resource_section_not_located) }
             resourceDirOffset = resSectionFile + (resourceRva - resSectionVa)
             resourceRvaDelta = resSectionFile - resSectionVa
         }

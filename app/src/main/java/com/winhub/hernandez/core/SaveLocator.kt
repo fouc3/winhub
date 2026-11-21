@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import com.winhub.hernandez.container.Container
 import com.winhub.hernandez.xenvironment.ImageFs
 import org.json.JSONArray
@@ -24,7 +27,7 @@ object SaveLocator {
      */
     private val SAVE_ROOTS = listOf(
         "Documents/My Games",
-        "Saved Games",
+        I18n.s(R.string.ui_saved_games),
         "AppData/Roaming",
         "Documents",
         "AppData/Local",

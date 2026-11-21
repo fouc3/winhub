@@ -84,44 +84,44 @@ import kotlinx.coroutines.delay
 import com.winhub.hernandez.util.I18n
 
 // Plain-terms help copy for the "?" bubbles (same idea as LaunchMethodSheet's: what it is, one breath).
-private const val HELP_PREFLIGHT =
-    "Five quick checks before the game opens, so it starts with a working Steam login, your latest " +
-        "saves, a known network shape, the current build and an up-to-date SteamLite client. Cancel " +
-        "stops it at any point."
-private const val HELP_SESSION =
-    "Makes sure you're signed in to Steam (and refreshes your login if it's about to expire) before " +
-        "the game starts."
-private const val HELP_CLOUD =
-    "Pulls your newest cloud saves into the game folder first so you don't play on an old save. " +
-        "A newer local save is never overwritten."
-private const val HELP_NETWORK =
+private val HELP_PREFLIGHT =
+    I18n.s(R.string.ui_five_quick_checks_before_the_game_opens_so_it_starts_wit) +
+        I18n.s(R.string.ui_saves_a_known_network_shape_the_current_build_and_an_up) +
+        I18n.s(R.string.ui_stops_it_at_any_point)
+private val HELP_SESSION =
+    I18n.s(R.string.ui_makes_sure_you_re_signed_in_to_steam_and_refreshes_your) +
+        I18n.s(R.string.ui_the_game_starts)
+private val HELP_CLOUD =
+    I18n.s(R.string.ui_pulls_your_newest_cloud_saves_into_the_game_folder_first) +
+        I18n.s(R.string.ui_a_newer_local_save_is_never_overwritten)
+private val HELP_NETWORK =
     "How this network handles online game traffic. Steam sign-in and downloads work on any NAT; " +
         "games with their own servers (e.g. Brawlhalla) can fail behind a strict/symmetric NAT such " +
         "as phone hotspots or many VPNs. Fix: home Wi-Fi, a hotspot with port mapping, or a VPN with " +
-        "port forwarding."
+        I18n.s(R.string.ui_port_forwarding)
 private const val HELP_UPDATE =
     "Checks whether Steam has a newer build of the game; you choose whether to update before playing."
-private const val HELP_NEED_SIGN_IN =
+private val HELP_NEED_SIGN_IN =
     "Sign in — open the Steam login, then launch again.\n" +
         "Launch with Goldberg — play offline with the stand-in Steam (no online play, no VAC).\n" +
-        "Cancel — go back without launching."
-private const val HELP_OFFLINE =
+        I18n.s(R.string.ui_cancel_go_back_without_launching)
+private val HELP_OFFLINE =
     "Retry — try to reach Steam again.\n" +
         "Launch anyway — start the game and let its own Steam client try to sign in.\n" +
         "Goldberg — play offline with the stand-in Steam (no online play, no VAC).\n" +
-        "Cancel — go back without launching."
-private const val HELP_UPDATE_OFFER =
+        I18n.s(R.string.ui_cancel_go_back_without_launching)
+private val HELP_UPDATE_OFFER =
     "Update — download the newer build now; launch again when it's done.\n" +
         "Launch anyway — play the build you have (real Steam may refuse it online).\n" +
-        "Cancel — go back without launching."
-private const val HELP_CLIENT =
-    "WinHub's small Steam client for online (VAC) launches. Newer versions add features the app " +
+        I18n.s(R.string.ui_cancel_go_back_without_launching)
+private val HELP_CLIENT =
+    I18n.s(R.string.ui_winhub_s_small_steam_client_for_online_vac_launches_newe) +
         "relies on (live launch status, in-game friends). Update downloads ~18 MB and re-stages it " +
-        "into your container."
-private const val HELP_CLIENT_OFFER =
+        I18n.s(R.string.ui_into_your_container)
+private val HELP_CLIENT_OFFER =
     "Update — download the newest SteamLite package, then launch.\n" +
         "Launch anyway — play with the installed SteamLite; newer app features stay off.\n" +
-        "Cancel — go back without launching."
+        I18n.s(R.string.ui_cancel_go_back_without_launching)
 
 // ── Slideshow model ──────────────────────────────────────────────────────────────────────────────
 
@@ -432,7 +432,7 @@ private fun failCardFor(
     val cs = MaterialTheme.colorScheme
     return when {
         needSignIn != null -> FailCardModel(
-            "Steam isn't ready",
+            I18n.s(R.string.ui_steam_isn_t_ready),
             "$needSignIn. Sign in again to play online with SteamLite, or launch offline with Goldberg.",
             red = true,
         ) {
@@ -440,7 +440,7 @@ private fun failCardFor(
             TextButton(onClick = onSignIn) { Text(I18n.s(R.string.xmb_store_card_signed_out), color = cs.primary) }
         }
         offline != null -> FailCardModel(
-            "Steam is unreachable",
+            I18n.s(R.string.ui_steam_is_unreachable),
             "$offline. You can retry, launch anyway (the game's own Steam client will try to sign in), or launch offline with Goldberg.",
             red = true,
         ) {
@@ -449,7 +449,7 @@ private fun failCardFor(
             TextButton(onClick = retry) { Text(I18n.s(R.string.ui_retry), color = cs.primary) }
         }
         updateOffer != null -> FailCardModel(
-            "Update available",
+            I18n.s(R.string.ui_update_available_2),
             if (updateOffer.installedBuild > 0L && updateOffer.liveBuild > 0L)
                 "Build ${updateOffer.installedBuild} → ${updateOffer.liveBuild}. Real Steam may refuse an out-of-date build online."
             else "A newer build of ${shortcut.name} is available.",

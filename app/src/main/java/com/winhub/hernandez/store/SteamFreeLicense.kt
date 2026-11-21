@@ -107,7 +107,7 @@ object SteamFreeLicense {
                         TAG,
                         "app $appId: GRANTED (libraryUpdated=${result.libraryUpdated}) — PICS library " +
                             "sync KICKED; the app becomes downloadable once the crawl resolves the " +
-                            "granted package(s)",
+                            I18n.s(R.string.ui_granted_package_s),
                     )
                 } catch (t: Throwable) {
                     // The license exists but nothing will turn it into a downloadable app — loud.
@@ -115,7 +115,7 @@ object SteamFreeLicense {
                         TAG,
                         "app $appId: GRANTED but the post-grant PICS library sync FAILED TO START " +
                             "(${t.javaClass.simpleName}: ${t.message}) — the game is licensed but will " +
-                            "NOT appear until a manual Refresh",
+                            I18n.s(R.string.ui_not_appear_until_a_manual_refresh),
                     )
                 }
             }
@@ -155,16 +155,16 @@ object SteamFreeLicense {
             // Transport, NOT licensing. Deliberately worded as a connection problem.
             "no_response" -> Result.Failed(
                 appId,
-                "Steam didn't answer in time. Check your connection and try again.",
+                I18n.s(R.string.ui_steam_didn_t_answer_in_time_check_your_connection_and_tr),
             )
             "bad_response" -> Result.Failed(
                 appId,
-                "Steam's reply couldn't be read. Try again in a moment.",
+                I18n.s(R.string.ui_steam_s_reply_couldn_t_be_read_try_again_in_a_moment),
             )
 
             "invalid_request" -> Result.Failed(
                 appId,
-                "Steam rejected the request for this app.",
+                I18n.s(R.string.ui_steam_rejected_the_request_for_this_app),
             )
 
             else -> Result.Failed(appId, I18n.s(R.string.ui_couldn_t_add_this_to_your_library_try_again))
@@ -179,7 +179,7 @@ object SteamFreeLicense {
         val name = try { EResult.from(eresult)?.name } catch (_: Throwable) { null }
         val suffix = if (name != null && name != "Invalid") " (Steam said: $name)" else ""
         return "Steam wouldn't add this to your library$suffix. Free titles can be region-locked, " +
-            "age-gated, or no longer free."
+            I18n.s(R.string.ui_age_gated_or_no_longer_free)
     }
 
     private fun intList(arr: JSONArray?): List<Int> {

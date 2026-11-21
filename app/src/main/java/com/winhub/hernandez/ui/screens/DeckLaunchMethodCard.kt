@@ -59,7 +59,7 @@ private class LaunchOption(val mode: String, val title: String, val detail: Stri
 private val LAUNCH_OPTIONS = listOf(
     LaunchOption(
         "RealSteam", "SteamLite",
-        "Runs the real Steam client inside the container, so achievements, cloud saves, online play and VAC checks work. Needs a Steam sign-in.",
+        I18n.s(R.string.ui_runs_the_real_steam_client_inside_the_container_so_achie),
         R.drawable.logo_steam,
     ),
     LaunchOption(

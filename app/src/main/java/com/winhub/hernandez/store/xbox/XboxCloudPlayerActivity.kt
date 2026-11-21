@@ -95,7 +95,7 @@ class XboxCloudPlayerActivity : ComponentActivity() {
                 if (closed) return@runOnUiThread
                 result.onSuccess { openPlayer() }.onFailure {
                     XboxDiag.log(applicationContext, "cloud player not started: ${it.javaClass.simpleName}: ${it.message?.take(160)}")
-                    showNotice(it.message ?: "Xbox Cloud Gaming could not start.", withButtons = true)
+                    showNotice(it.message ?: I18n.s(R.string.ui_xbox_cloud_gaming_could_not_start), withButtons = true)
                 }
             }
         }
@@ -151,7 +151,7 @@ class XboxCloudPlayerActivity : ComponentActivity() {
 
         @JavascriptInterface
         fun playing() {
-            XboxDiag.log(applicationContext, "cloud player streaming")
+            XboxDiag.log(applicationContext, I18n.s(R.string.ui_cloud_player_streaming))
             runOnUiThread { web?.requestFocus() }
         }
 
@@ -169,8 +169,8 @@ class XboxCloudPlayerActivity : ComponentActivity() {
     }
 
     private fun handle(op: String, arg: String): XboxCloudSession.Reply {
-        val active = session ?: error("no session")
-        val signals = sessionSignals ?: XboxCloudSignalling(active, titleId ?: error("no title"), settings).also { sessionSignals = it }
+        val active = session ?: error(I18n.s(R.string.ui_no_session))
+        val signals = sessionSignals ?: XboxCloudSignalling(active, titleId ?: error(I18n.s(R.string.ui_no_title)), settings).also { sessionSignals = it }
         return signals.op(op, arg).also { sessionPath = signals.path }
     }
 
@@ -334,7 +334,7 @@ class XboxCloudPlayerActivity : ComponentActivity() {
                         androidx.compose.ui.Modifier.fillMaxHeight().width(400.dp).background(cs.surface.copy(alpha = 0.95f))
                             .verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(vertical = 12.dp),
                     ) {
-                        androidx.compose.material3.Text(intent.getStringExtra("title").orEmpty().ifEmpty { "Xbox Cloud Gaming" },
+                        androidx.compose.material3.Text(intent.getStringExtra("title").orEmpty().ifEmpty { I18n.s(R.string.ui_xbox_cloud_gaming) },
                             style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = cs.onSurface,
                             modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
                         if (menuPage.isEmpty()) {

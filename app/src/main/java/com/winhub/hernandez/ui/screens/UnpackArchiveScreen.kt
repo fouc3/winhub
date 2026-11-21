@@ -232,7 +232,7 @@ fun UnpackArchiveScreen(
                 Icon(Icons.Filled.ArrowBack, "Back", tint = MaterialTheme.colorScheme.primary)
             }
             Text(
-                "Unpack Archive",
+                I18n.s(R.string.ui_unpack_archive_2),
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -380,7 +380,7 @@ fun UnpackArchiveScreen(
                     }
                 }
                 Text(
-                    "Larger buffers can improve throughput reading from FUSE-backed storage.",
+                    I18n.s(R.string.ui_larger_buffers_can_improve_throughput_reading_from_fuse),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 11.sp,
                 )
@@ -394,7 +394,7 @@ fun UnpackArchiveScreen(
                 WarnCard {
                     Text(
                         "All Files Access is off. Extraction writes directly to storage and can't use the " +
-                            "slow SAF fallback for an 80 GB image, so grant access to continue.",
+                            I18n.s(R.string.ui_slow_saf_fallback_for_an_80_gb_image_so_grant_access_to),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                     )
                     Spacer(Modifier.height(8.dp))
@@ -424,8 +424,8 @@ fun UnpackArchiveScreen(
             if (!running && !ignoringBattery) {
                 WarnCard {
                     Text(
-                        "For a job this long, exempt the app from battery optimisation so the system " +
-                            "doesn't pause or kill it in the background. Recommended for 80 GB extracts.",
+                        I18n.s(R.string.ui_for_a_job_this_long_exempt_the_app_from_battery_optimisa) +
+                            I18n.s(R.string.ui_doesn_t_pause_or_kill_it_in_the_background_recommended_f),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                     )
                     Spacer(Modifier.height(8.dp))
@@ -479,8 +479,8 @@ fun UnpackArchiveScreen(
             if (!running && otherJobRunning) {
                 WarnCard {
                     Text(
-                        "Another unpack is already in progress. Only one runs at a time — wait for it to " +
-                            "finish (tap its progress pill to watch), then start this one.",
+                        I18n.s(R.string.ui_another_unpack_is_already_in_progress_only_one_runs_at_a) +
+                            I18n.s(R.string.ui_finish_tap_its_progress_pill_to_watch_then_start_this_on),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                     )
                 }
@@ -507,7 +507,7 @@ fun UnpackArchiveScreen(
                     Spacer(Modifier.height(6.dp))
                     Text(
                         "This file isn't a recognized archive or disc image — it looks like raw data, " +
-                            "nothing to unpack.",
+                            I18n.s(R.string.ui_nothing_to_unpack_2),
                         color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                     )
                 }
@@ -520,7 +520,7 @@ fun UnpackArchiveScreen(
                     Text(
                         "FreeArc decompression is I/O-bound: unarc already auto-parallelizes (4x4), so the " +
                             "real limit is writing the game to your storage — a faster card / internal " +
-                            "storage helps far more than anything else. There's no thread knob to tune.",
+                            I18n.s(R.string.ui_storage_helps_far_more_than_anything_else_there_s_no_thr),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                     )
                 }
@@ -566,7 +566,7 @@ fun UnpackArchiveScreen(
                     WarnCard {
                         Text(
                             "The innoextract engine isn't available on this build, so this GOG/InnoSetup " +
-                                "installer can't be unpacked in-app. You can still install it by running " +
+                                I18n.s(R.string.ui_installer_can_t_be_unpacked_in_app_you_can_still_install) +
                                 "${archive.name} in a container.",
                             color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                         )
@@ -673,8 +673,8 @@ fun UnpackArchiveScreen(
                     }
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        "Safe to leave — this keeps running in the background. Reopen it from the progress " +
-                            "pill or the notification.",
+                        I18n.s(R.string.ui_safe_to_leave_this_keeps_running_in_the_background_reope) +
+                            I18n.s(R.string.ui_pill_or_the_notification),
                         color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp,
                     )
                     Spacer(Modifier.height(10.dp))
@@ -719,7 +719,7 @@ fun UnpackArchiveScreen(
                                 Spacer(Modifier.height(6.dp))
                                 Text(
                                     if (freeArc)
-                                        "It may use SREP or a codec this build can't decode. Install it by running " +
+                                        I18n.s(R.string.ui_it_may_use_srep_or_a_codec_this_build_can_t_decode_insta) +
                                             "Setup.exe inside a Winlator container, or unpack it on a PC."
                                     else
                                         "This InnoSetup repack must be installed by running Setup.exe inside a Winlator container.",

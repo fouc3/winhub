@@ -86,11 +86,11 @@ internal fun xmbLogsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
     if (entry == null) {
         val perGameOff = !LogLocation.isPerGameEnabled(ctx)
         val msg = if (perGameOff) {
-            "Per-game log folders are turned off, so everything is written to one shared folder and logs " +
+            I18n.s(R.string.ui_per_game_log_folders_are_turned_off_so_everything_is_wri_2) +
                 "can't be traced back to a single game. Turn them on in Settings › Logs, then play $name once."
         } else {
             "Nothing has been captured for $name yet. Logs are written while a game runs — play it once, " +
-                "then check back here."
+                I18n.s(R.string.ui_then_check_back_here)
         }
         return XmbMenu(title = I18n.s(R.string.logs), icon = Icons.Filled.Description) {
             XmbTools.para("title", "No logs for $name", Icons.Filled.Info, ctx) +
@@ -210,7 +210,7 @@ private fun xmbLogFileMenu(xmb: XmbScope, file: File): XmbMenu {
             XmbRow.Link(
                 key = "view", label = I18n.s(R.string.xmb_all_view), icon = Icons.Filled.Description,
                 value = LogInventory.humanBytes(file.length()),
-                subtitle = if (v.loaded) count else "Loading…",
+                subtitle = if (v.loaded) count else I18n.s(R.string.ui_loading_2),
             ) { XmbMenu(title = I18n.s(R.string.xmb_all_view), icon = Icons.Filled.Description, panel = XmbLogPanel(v, xmb)) },
             XmbRow.Toggle(key = "follow", label = I18n.s(R.string.ui_follow), icon = Icons.Filled.Sync, value = v.following) { v.following = it },
             XmbRow.Toggle(key = "wrap", label = I18n.s(R.string.ui_wrap), icon = Icons.Filled.WrapText, value = v.wrap) { v.wrap = it },
@@ -221,7 +221,7 @@ private fun xmbLogFileMenu(xmb: XmbScope, file: File): XmbMenu {
             ) { v.query = it },
             XmbRow.Action(
                 key = "copy", label = I18n.s(R.string.copy), icon = Icons.Filled.ContentCopy,
-                disabledReason = if (v.loaded) null else "Loading…",
+                disabledReason = if (v.loaded) null else I18n.s(R.string.ui_loading_2),
             ) {
                 val lines = v.shown
                 val copied = runCatching {
@@ -368,7 +368,7 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
     }
 
     return XmbMenu(title = I18n.s(R.string.ui_report_a_problem), icon = Icons.Filled.BugReport, onClose = { me.isOpen = false }) {
-        val locked = if (busy) "Working…" else null
+        val locked = if (busy) I18n.s(R.string.ui_working) else null
         buildList<XmbRow> {
             add(XmbRow.Text(key = "title", label = I18n.s(R.string.ui_what_went_wrong), icon = Icons.Filled.Edit, value = title, disabledReason = locked) { title = it })
             add(
@@ -389,10 +389,10 @@ private fun xmbLogReportMenu(xmb: XmbScope, entry: LogInventory.Entry, runDir: F
             addAll(
                 XmbTools.para(
                     "note",
-                    "Saved as a zip in Downloads. E-mail addresses, auth tokens and your Steam account name are " +
+                    I18n.s(R.string.ui_saved_as_a_zip_in_downloads_e_mail_addresses_auth_tokens_2) +
                         "stripped; file paths are kept so they stay useful for debugging, so glance over them if a " +
                         "folder name identifies you. GitHub can't receive a file from a link, so attach the zip " +
-                        "with 📎 once the form opens.",
+                        I18n.s(R.string.ui_with_once_the_form_opens),
                     Icons.Filled.Info, ctx,
                 )
             )

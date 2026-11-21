@@ -152,7 +152,7 @@ object GoldbergPatcher {
 
         val targets = analyze(root)
         if (targets.isEmpty()) {
-            return false to "This game doesn't use the Steam API — Goldberg doesn't apply."
+            return false to I18n.s(R.string.ui_this_game_doesn_t_use_the_steam_api_goldberg_doesn_t_app)
         }
 
         // SHARED PREP is idempotent and needed for every non-OFF tier (and does
@@ -171,7 +171,7 @@ object GoldbergPatcher {
         // The downloaded Goldberg component is required from here on. The UI gates
         // tier selection behind the download, but guard defensively anyway.
         if (!GoldbergComponent.isInstalled(context)) {
-            return false to "Download the Steam Emulator component first."
+            return false to I18n.s(R.string.ui_download_the_steam_emulator_component_first)
         }
         val goldberg = GoldbergComponent.installDir(context)
 
@@ -251,7 +251,7 @@ object GoldbergPatcher {
 
         return true to (
             "Cold Client Loader applied to \"$gameName\".\n" +
-                "Re-add this game to Shortcuts so it launches through the loader."
+                I18n.s(R.string.ui_re_add_this_game_to_shortcuts_so_it_launches_through_the)
             )
     }
 

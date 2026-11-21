@@ -164,7 +164,7 @@ object GogLibraryRepo {
             SyncResult.Ok(finalList.sortedBy { it.title.lowercase() }, fetched)
         } catch (e: Exception) {
             Log.w(TAG, "sync failed: ${e.message}")
-            SyncResult.Failed(e.message ?: "Sync failed")
+            SyncResult.Failed(e.message ?: I18n.s(R.string.ui_sync_failed))
         } finally {
             syncing.set(false)
         }

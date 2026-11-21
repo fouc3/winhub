@@ -157,9 +157,9 @@ internal fun p2ContentDownloadMenu(
                     }
                     rows += XmbRow.Action(
                         "r:$key", p.verName ?: key, Icons.Filled.Download,
-                        subtitle = p.desc?.takeIf { it.isNotBlank() } ?: "Download and install",
+                        subtitle = p.desc?.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_download_and_install),
                         value = value,
-                        disabledReason = if (busy) "Already downloading" else null,
+                        disabledReason = if (busy) I18n.s(R.string.ui_already_downloading) else null,
                     ) {
                         started.add(key)
                         startContentDownload(ctx.applicationContext, p)

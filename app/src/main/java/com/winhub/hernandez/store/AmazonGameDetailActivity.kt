@@ -543,7 +543,7 @@ class AmazonGameDetailActivity : ComponentActivity() {
         } else if (installed) {
             "Version not recorded \u2014 tap Check to verify"
         } else {
-            "Install the game first to check for updates."
+            I18n.s(R.string.ui_install_the_game_first_to_check_for_updates)
         }
     }
 
@@ -1016,7 +1016,7 @@ private fun AmazonDlcContent(
                     onClick = {
                         if (dlcBtnText == "Downloading…") return@StoreActionButton
                         dlcBtnText = "Downloading…"
-                        dlcStatusText = "Starting…"
+                        dlcStatusText = I18n.s(R.string.ui_starting_2)
                         onDlcInstall(dlcEid, dlcPid, dlcTitleText)
                     },
                     modifier = Modifier.fillMaxWidth(),

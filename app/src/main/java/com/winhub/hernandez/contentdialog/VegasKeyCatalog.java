@@ -2,6 +2,9 @@ package com.winhub.hernandez.contentdialog;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -98,11 +101,11 @@ public final class VegasKeyCatalog {
         List<Object> buildsRaw = asList(root, "builds", true);
         Set<String> seenTags = new LinkedHashSet<>();
         for (Object o : buildsRaw) {
-            if (!(o instanceof Map)) throw reject("build entry must be an object");
+            if (!(o instanceof Map)) throw reject(I18n.s(R.string.ui_build_entry_must_be_an_object));
             Map<String, Object> e = uncheckedMap(o);
             for (String f : e.keySet())
                 if (!BUILD_FIELDS.contains(f)) throw reject("unknown field in build entry: " + f);
-            String tag = asNonEmptyString(e, "tag", "build entry");
+            String tag = asNonEmptyString(e, "tag", I18n.s(R.string.ui_build_entry));
             if (!seenTags.add(tag)) throw reject("duplicate build tag: " + tag);
             String publishedAt = asNonEmptyString(e, "publishedAt", "build " + tag);
             boolean prerelease = asBool(e, "prerelease");
@@ -121,7 +124,7 @@ public final class VegasKeyCatalog {
         }
 
         Object upRaw = root.get("upstream");
-        if (!(upRaw instanceof Map)) throw reject("upstream must be an object");
+        if (!(upRaw instanceof Map)) throw reject(I18n.s(R.string.ui_upstream_must_be_an_object));
         Map<String, Object> up = uncheckedMap(upRaw);
         for (String f : up.keySet())
             if (!UPSTREAM_FIELDS.contains(f)) throw reject("unknown field in upstream: " + f);
@@ -315,7 +318,7 @@ public final class VegasKeyCatalog {
     static Map<String, Object> parseStrictObject(String json) {
         MiniJson parser = new MiniJson(json);
         Object root = parser.parse();
-        if (!(root instanceof Map)) throw reject("root must be an object");
+        if (!(root instanceof Map)) throw reject(I18n.s(R.string.ui_root_must_be_an_object));
         return uncheckedMap(root);
     }
 
@@ -396,13 +399,13 @@ public final class VegasKeyCatalog {
         Object parse() {
             Object v = value();
             skipWs();
-            if (i < s.length()) throw error("trailing characters");
+            if (i < s.length()) throw error(I18n.s(R.string.ui_trailing_characters));
             return v;
         }
 
         private Object value() {
             skipWs();
-            if (i >= s.length()) throw error("unexpected end");
+            if (i >= s.length()) throw error(I18n.s(R.string.ui_unexpected_end));
             char c = s.charAt(i);
             switch (c) {
                 case '{': return object();
@@ -459,13 +462,13 @@ public final class VegasKeyCatalog {
             while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             if (i < s.length() && s.charAt(i) == '.') {
                 i++;
-                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error("bad fraction");
+                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error(I18n.s(R.string.ui_bad_fraction));
                 while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             }
             if (i < s.length() && (s.charAt(i) == 'e' || s.charAt(i) == 'E')) {
                 i++;
                 if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-')) i++;
-                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error("bad exponent");
+                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error(I18n.s(R.string.ui_bad_exponent));
                 while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             }
             String num = s.substring(start, i);
@@ -481,11 +484,11 @@ public final class VegasKeyCatalog {
             i++;
             StringBuilder sb = new StringBuilder();
             while (true) {
-                if (i >= s.length()) throw error("unterminated string");
+                if (i >= s.length()) throw error(I18n.s(R.string.ui_unterminated_string));
                 char c = s.charAt(i++);
                 if (c == '"') return sb.toString();
                 if (c == '\\') {
-                    if (i >= s.length()) throw error("bad escape");
+                    if (i >= s.length()) throw error(I18n.s(R.string.ui_bad_escape));
                     char e = s.charAt(i++);
                     switch (e) {
                         case '"': sb.append('"'); break;
@@ -497,7 +500,7 @@ public final class VegasKeyCatalog {
                         case 'r': sb.append('\r'); break;
                         case 't': sb.append('\t'); break;
                         case 'u':
-                            if (i + 4 > s.length()) throw error("bad unicode escape");
+                            if (i + 4 > s.length()) throw error(I18n.s(R.string.ui_bad_unicode_escape));
                             sb.append((char) Integer.parseInt(s.substring(i, i + 4), 16));
                             i += 4;
                             break;
@@ -516,7 +519,7 @@ public final class VegasKeyCatalog {
 
         private char peek() {
             skipWs();
-            if (i >= s.length()) throw error("unexpected end");
+            if (i >= s.length()) throw error(I18n.s(R.string.ui_unexpected_end));
             return s.charAt(i);
         }
 

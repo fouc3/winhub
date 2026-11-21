@@ -225,7 +225,7 @@ object RootManager {
                     try {
                         val ok = ensureGrantedBlocking()
                         Log.d(TAG, I18n.s(R.string.ui_silent_re_acquire_grantedonce_flag_set) +
-                            if (ok) "GRANTED, no prompt" else "root revoked -> clearing flag")
+                            if (ok) I18n.s(R.string.ui_granted_no_prompt) else "root revoked -> clearing flag")
                         if (!ok) setGrantedOnce(false)
                     } catch (t: Throwable) { Log.w(TAG, "silent re-acquire failed", t) }
                 }, "root-silent-reacquire").apply { isDaemon = true }.start()

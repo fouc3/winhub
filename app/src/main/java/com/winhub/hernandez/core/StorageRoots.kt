@@ -134,7 +134,7 @@ object StorageRoots {
         )
     }
 
-    private fun Volume.defaultLabel(): String = if (removable) "SD card" else key
+    private fun Volume.defaultLabel(): String = if (removable) I18n.s(R.string.ui_sd_card) else key
 
     /** Appends the volume id to any label used by more than one volume, so entries stay tellable apart. */
     private fun disambiguate(roots: List<StorageRoot>): List<StorageRoot> {

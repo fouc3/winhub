@@ -124,12 +124,12 @@ object GameDoctor {
         )
         if (OUT_OF_MEMORY.containsMatchIn(logs)) out += Finding(
             Level.PROBLEM, I18n.s(R.string.ui_the_game_ran_out_of_memory),
-            "Graphics or system memory ran out. A lower resolution and no frame generation free up the most.",
+            I18n.s(R.string.ui_graphics_or_system_memory_ran_out_a_lower_resolution_and),
             pick("fg_off", "res"),
         )
         if (NO_DEVICE.containsMatchIn(logs)) out += Finding(
             Level.PROBLEM, I18n.s(R.string.ui_the_graphics_device_couldn_t_start),
-            "The game asked for a graphics device the current driver stack can't provide. A shared config for your chip usually carries a driver and DXVK that work.",
+            I18n.s(R.string.ui_the_game_asked_for_a_graphics_device_the_current_driver),
             pick("vulkan"),
         )
         val dlls = MISSING_DLL.findAll(logs).map { it.groupValues[1].lowercase() }.distinct().take(3).toList()
@@ -140,21 +140,21 @@ object GameDoctor {
         )
         if (CRASH.containsMatchIn(logs)) out += Finding(
             Level.PROBLEM, I18n.s(R.string.ui_the_game_crashed),
-            "Wine reported an access violation. That is most often the CPU translation layer or the Windows runtime. A safer FEX preset is the usual first fix.",
+            I18n.s(R.string.ui_wine_reported_an_access_violation_that_is_most_often_the),
             pick("fex_stability", "fex_compat"),
         )
         if (ILLEGAL_INSN.containsMatchIn(logs)) out += Finding(
             Level.PROBLEM, I18n.s(R.string.ui_the_cpu_translator_hit_an_unsupported_instruction),
-            "The game used a CPU instruction the translator can't run in its current mode. The Stability or Compatibility preset trades speed for support.",
+            I18n.s(R.string.ui_the_game_used_a_cpu_instruction_the_translator_can_t_run),
             pick("fex_stability", "fex_compat"),
         )
         if (ANTI_CHEAT.containsMatchIn(logs)) out += Finding(
             Level.WARNING, I18n.s(R.string.ui_anti_cheat_detected),
-            "This game ships kernel-level anti-cheat. Single-player may work, but online play won't.",
+            I18n.s(R.string.ui_this_game_ships_kernel_level_anti_cheat_single_player_ma),
         )
         if (DENUVO.containsMatchIn(logs)) out += Finding(
             Level.WARNING, I18n.s(R.string.ui_denuvo_protection_detected),
-            "Denuvo titles run best with the Denuvo FEX preset.",
+            I18n.s(R.string.ui_denuvo_titles_run_best_with_the_denuvo_fex_preset),
             pick("fex_denuvo"),
         )
         return out
@@ -191,7 +191,7 @@ object GameDoctor {
             Level.WARNING, I18n.s(R.string.ui_frames_queue_up_on_the_wayland_display),
             "In the last run each frame waited about ${median.toInt()} ms on the display layer before it was released " +
                 "(a smooth run is closer to 30-35 ms). That shows up as uneven frame pacing. The Smooth adapter profile " +
-                "paces frames through the compositor instead.",
+                I18n.s(R.string.ui_paces_frames_through_the_compositor_instead),
             listOf(tweak),
         ))
     }
@@ -239,7 +239,7 @@ object GameDoctor {
         val fg = effective(shortcut, "frameGenEngine") { it.frameGenEngine }
         if (fg.isNotBlank() && fg != "off") t["fg_off"] = Tweak(
             "fg_off", I18n.s(R.string.ui_turn_frame_generation_off),
-            "Frame generation spends extra GPU time and memory.",
+            I18n.s(R.string.ui_frame_generation_spends_extra_gpu_time_and_memory),
         ) { it.putExtra("frameGenEngine", "off") }
 
         val size = effective(shortcut, "screenSize") { it.getScreenSize() }
@@ -262,7 +262,7 @@ object GameDoctor {
             val profile = WaylandAdapterSettings.resolve(containerCfg, own.ifEmpty { null }, null, null).profile
             if (profile != WaylandAdapterSettings.PROFILE_SMOOTH) t["wayland_smooth"] = Tweak(
                 "wayland_smooth", I18n.s(R.string.ui_use_the_smooth_wayland_adapter_profile),
-                "Vsync pacing and background copy, no zero-copy. Evens out uneven frame pacing.",
+                I18n.s(R.string.ui_vsync_pacing_and_background_copy_no_zero_copy_evens_out),
             ) {
                 val base = it.getExtra("graphicsDriverConfig", "").ifEmpty {
                     withGraphicsDriverKeys(
@@ -302,7 +302,7 @@ object GameDoctor {
             t["async"] = Tweak(
                 "async",
                 if (on) "Turn DXVK async off" else I18n.s(R.string.ui_turn_dxvk_async_on),
-                if (on) "Fixes missing or flickering objects at the cost of shader stutter."
+                if (on) I18n.s(R.string.ui_fixes_missing_or_flickering_objects_at_the_cost_of_shade)
                 else I18n.s(R.string.ui_compiles_shaders_in_the_background_for_fewer_hitches),
             ) { it.putExtra("dxwrapperConfig", dxCfg.replace(Regex("(^|,)async=[01]"), "$1async=${if (on) 0 else 1}")) }
         }
@@ -326,7 +326,7 @@ object GameDoctor {
         else container?.isExclusiveXInput ?: true
         t["input_exclusive"] = if (exclusive) Tweak(
             "input_exclusive", I18n.s(R.string.ui_turn_exclusive_input_off),
-            "Lets the game read controllers through every input API at once. Try it when the game ignores the pad.",
+            I18n.s(R.string.ui_lets_the_game_read_controllers_through_every_input_api_a),
         ) { it.putExtra(DInputVisibility.EXTRA_EXCLUSIVE, "0") } else Tweak(
             "input_exclusive", I18n.s(R.string.ui_turn_exclusive_input_on),
             "Hands the game one controller path only. Try it when buttons double up or the wrong device answers.",

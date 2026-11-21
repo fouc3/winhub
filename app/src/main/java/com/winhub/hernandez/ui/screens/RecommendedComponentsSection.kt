@@ -212,8 +212,8 @@ fun RecommendedComponentsSection(
             text = {
                 Text(
                     "This installs ${c.name} into this game's container (shared by every shortcut on it). " +
-                        "The container opens to a Windows desktop and runs the installer — click through the " +
-                        "installer window, then close the container to finish. You'll return here afterward.",
+                        I18n.s(R.string.ui_the_container_opens_to_a_windows_desktop_and_runs_the_in) +
+                        I18n.s(R.string.ui_installer_window_then_close_the_container_to_finish_you),
                     color = cs.onSurface,
                 )
             },
@@ -234,7 +234,7 @@ fun RecommendedComponentsSection(
             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
             Spacer(Modifier.width(8.dp))
             Text(
-                "Looking for recommended components…",
+                I18n.s(R.string.ui_looking_for_recommended_components),
                 style = MaterialTheme.typography.bodySmall,
                 color = cs.onSurfaceVariant,
             )

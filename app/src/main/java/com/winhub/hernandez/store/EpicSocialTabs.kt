@@ -120,7 +120,7 @@ fun EpicProfileTab(
                 StoreFilterChip(I18n.s(R.string.ui_account_on_epicgames_com), false) {
                     onOpenWeb("https://www.epicgames.com/account/personal", I18n.s(R.string.ui_epic_account_2))
                 }
-                StoreFilterChip(if (loading) "Refreshing…" else "Refresh", false, onClick = onRefresh)
+                StoreFilterChip(if (loading) I18n.s(R.string.ui_refreshing) else "Refresh", false, onClick = onRefresh)
             }
         }
     }

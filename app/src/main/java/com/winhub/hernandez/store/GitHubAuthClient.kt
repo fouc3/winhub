@@ -195,7 +195,7 @@ object GitHubAuthClient {
                     "access_denied" -> Poll.Denied
                     "expired_token" -> Poll.Expired
                     else -> Poll.Failed(
-                        json.optString("error_description").ifBlank { "Sign-in failed." }
+                        json.optString("error_description").ifBlank { I18n.s(R.string.ui_sign_in_failed) }
                     )
                 }
             }

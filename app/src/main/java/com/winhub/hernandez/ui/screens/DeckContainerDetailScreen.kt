@@ -114,7 +114,7 @@ internal fun DeckContainerDetailScreen(
         else -> viewModel.containerName.ifBlank { "Container" }
     }
     val saveLabel = when {
-        viewModel.isSaving -> "Saving…"
+        viewModel.isSaving -> I18n.s(R.string.ui_saving)
         viewModel.isEditMode -> I18n.s(R.string.ui_save_changes)
         else -> I18n.s(R.string.ui_create_container)
     }
@@ -406,7 +406,7 @@ internal fun DeckContainerDetailScreen(
                             DeckRow(
                                 label = com.winhub.hernandez.display.WaylandHdr.TITLE,
                                 hint = com.winhub.hernandez.display.WaylandHdr.unavailableReason(context)
-                                    ?: "HDR10 output on a screen that supports it",
+                                    ?: I18n.s(R.string.ui_hdr10_output_on_a_screen_that_supports_it),
                                 control = { DeckToggle(viewModel.waylandHdr) { viewModel.waylandHdr = it } },
                             )
                         } else {
@@ -574,7 +574,7 @@ internal fun DeckContainerDetailScreen(
                             // Saved as X11 without this note, which looks like Wayland "reverting".
                             DeckRow(
                                 label = I18n.s(R.string.ui_wayland_is_not_available),
-                                hint = (viewModel.waylandLayerProblem() ?: "This Proton layer cannot run Wayland.") +
+                                hint = (viewModel.waylandLayerProblem() ?: I18n.s(R.string.ui_this_proton_layer_cannot_run_wayland)) +
                                     " It will be saved as X11.",
                                 control = {},
                             )
@@ -583,7 +583,7 @@ internal fun DeckContainerDetailScreen(
                             label = I18n.s(R.string.pref_fullscreen),
                             options = listOf(
                                 "Windowed" to Container.FULLSCREEN_OFF.toString(),
-                                "Fit (letterboxed)" to Container.FULLSCREEN_FIT.toString(),
+                                I18n.s(R.string.ui_fit_letterboxed) to Container.FULLSCREEN_FIT.toString(),
                                 "Stretch" to Container.FULLSCREEN_STRETCH.toString(),
                             ),
                             selected = viewModel.fullscreenMode.toString(),
@@ -615,7 +615,7 @@ internal fun DeckContainerDetailScreen(
                             label = I18n.s(R.string.ui_frame_generation_2),
                             hint = if (viewModel.frameGenEngine != "off" &&
                                 viewModel.selectedRenderer != "Vulkan")
-                                "LSFG Native needs Vulkan — the Renderer switches on pick"
+                                I18n.s(R.string.ui_lsfg_native_needs_vulkan_the_renderer_switches_on_pick)
                             else I18n.s(R.string.ui_lsfg_native_frame_interpolation),
                             options = listOf(
                                 "off" to "Off",

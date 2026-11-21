@@ -340,7 +340,7 @@ internal fun xmbEnvVarsMenu(xmb: XmbScope, shortcut: Shortcut): XmbMenu {
         rows += XmbRow.Header("hCompat", "Compatibility")
         rows += XmbRow.Toggle(
             "preferDlls", I18n.s(R.string.ui_prefer_game_folder_dlls), Icons.Filled.Extension, allPreferred,
-            subtitle = if (anyPreferred && !allPreferred) "Some game-folder DLLs on — see below"
+            subtitle = if (anyPreferred && !allPreferred) I18n.s(R.string.ui_some_game_folder_dlls_on_see_below)
                        else I18n.s(R.string.ui_load_the_game_s_own) + DllOverrides.PREFER_GAME_FOLDER.joinToString(", ") + I18n.s(R.string.ui_instead_of_wine_s),
         ) { on ->
             val cur = overridesNow()

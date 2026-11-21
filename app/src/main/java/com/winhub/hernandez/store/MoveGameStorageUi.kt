@@ -73,7 +73,7 @@ internal fun MoveStorageDialog(
                 // front rather than making them find out.
                 Text(
                     text = I18n.s(R.string.ui_your_saves_cloud_saves_and_achievements_are_kept_they_do) +
-                        "the game folder. The game's shortcut" +
+                        I18n.s(R.string.ui_the_game_folder_the_game_s_shortcut) +
                         (if (plan.shortcuts.size == 1) " is" else "s (${plan.shortcuts.size}) are") +
                         " updated to the new location, so launching works exactly as before.",
                     style = MaterialTheme.typography.bodySmall,
@@ -89,7 +89,7 @@ internal fun MoveStorageDialog(
                     Spacer(Modifier.height(10.dp))
                     Text(
                         text = I18n.s(R.string.ui_the_sd_card_is_slower_than_internal_storage_some_games_s_2) +
-                            "loading from a card — if that happens, move it back, or use Copy game to " +
+                            I18n.s(R.string.ui_loading_from_a_card_if_that_happens_move_it_back_or_use) +
                             "Drive C from the shortcut editor.",
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -98,8 +98,8 @@ internal fun MoveStorageDialog(
                     Spacer(Modifier.height(10.dp))
                     Text(
                         text = I18n.s(R.string.ui_this_is_an_ea_game_ea_s_activation_can_treat_a_new_insta) +
-                            "as a new computer and ask you to sign in and activate again, which uses up " +
-                            "one of your limited activations.",
+                            I18n.s(R.string.ui_as_a_new_computer_and_ask_you_to_sign_in_and_activate_ag) +
+                            I18n.s(R.string.ui_one_of_your_limited_activations),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error,
                     )
@@ -107,7 +107,7 @@ internal fun MoveStorageDialog(
                 Spacer(Modifier.height(10.dp))
                 Text(
                     text = I18n.s(R.string.ui_the_original_copy_is_only_deleted_after_the_new_one_is_c) +
-                        "failed move leaves the game exactly where it is.",
+                        I18n.s(R.string.ui_failed_move_leaves_the_game_exactly_where_it_is),
                     style = MaterialTheme.typography.bodySmall,
                 )
             }

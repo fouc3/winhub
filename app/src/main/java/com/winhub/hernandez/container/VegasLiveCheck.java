@@ -1,5 +1,8 @@
 package com.winhub.hernandez.container;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -168,7 +171,7 @@ public final class VegasLiveCheck {
 
         Object value() {
             skipWs();
-            if (i >= s.length()) throw new IllegalArgumentException("unexpected end");
+            if (i >= s.length()) throw new IllegalArgumentException(I18n.s(R.string.ui_unexpected_end));
             char c = s.charAt(i);
             switch (c) {
                 case '{': return object();
@@ -221,23 +224,23 @@ public final class VegasLiveCheck {
             while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             if (i < s.length() && s.charAt(i) == '.') {
                 i++;
-                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw new IllegalArgumentException("bad fraction");
+                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw new IllegalArgumentException(I18n.s(R.string.ui_bad_fraction));
                 while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             }
             String num = s.substring(start, i);
             try { return num.contains(".") ? (Number) Double.valueOf(num) : (Number) Long.valueOf(num); }
-            catch (NumberFormatException e) { throw new IllegalArgumentException("bad number"); }
+            catch (NumberFormatException e) { throw new IllegalArgumentException(I18n.s(R.string.ui_bad_number)); }
         }
 
         private String string() {
             i++;
             StringBuilder sb = new StringBuilder();
             while (true) {
-                if (i >= s.length()) throw new IllegalArgumentException("unterminated string");
+                if (i >= s.length()) throw new IllegalArgumentException(I18n.s(R.string.ui_unterminated_string));
                 char c = s.charAt(i++);
                 if (c == '"') return sb.toString();
                 if (c == '\\') {
-                    if (i >= s.length()) throw new IllegalArgumentException("bad escape");
+                    if (i >= s.length()) throw new IllegalArgumentException(I18n.s(R.string.ui_bad_escape));
                     char e = s.charAt(i++);
                     switch (e) {
                         case '"': sb.append('"'); break;
@@ -248,7 +251,7 @@ public final class VegasLiveCheck {
                         case 'n': sb.append('\n'); break;
                         case 'r': sb.append('\r'); break;
                         case 't': sb.append('\t'); break;
-                        default: throw new IllegalArgumentException("bad escape");
+                        default: throw new IllegalArgumentException(I18n.s(R.string.ui_bad_escape));
                     }
                 } else sb.append(c);
             }
@@ -259,7 +262,7 @@ public final class VegasLiveCheck {
             i += lit.length();
         }
 
-        private char peek() { skipWs(); if (i >= s.length()) throw new IllegalArgumentException("unexpected end"); return s.charAt(i); }
+        private char peek() { skipWs(); if (i >= s.length()) throw new IllegalArgumentException(I18n.s(R.string.ui_unexpected_end)); return s.charAt(i); }
 
         private void skipWs() {
             while (i < s.length()) {

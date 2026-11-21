@@ -2,6 +2,9 @@ package com.winhub.hernandez;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import static com.winhub.hernandez.core.AppUtils.showToast;
 
 import android.Manifest;
@@ -382,9 +385,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
     private static final long LAUNCH_STILL_WORKING_MS = 90_000L;
     private final Handler launchTimerHandler = new Handler(Looper.getMainLooper());
     private final Runnable launchSlowHintRunnable = () -> preloaderDialog.hint(
-            "Taking longer than usual — first launch can compile shaders. Not frozen, please wait.");
+            I18n.s(R.string.ui_taking_longer_than_usual_first_launch_can_compile_shader));
     private final Runnable launchStillWorkingRunnable = () -> preloaderDialog.hint(
-            "Still working. If this seems stuck, check the log.");
+            I18n.s(R.string.ui_still_working_if_this_seems_stuck_check_the_log));
     private Runnable configChangedCallback = null;
     private boolean isPaused = false;
     // ReShade "freeze-frame preview" (Live preview OFF): the guest is SIGSTOP'd while tuning and each
@@ -1712,7 +1715,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         refreshCachedDisplayRotation();
         // A move between displays arrives here now that colorMode|touchscreen|uiMode are in the
         // manifest's configChanges (before that it recreated the activity and killed the guest).
-        checkSessionDisplay("configuration changed");
+        checkSessionDisplay(I18n.s(R.string.ui_configuration_changed));
         if (configChangedCallback != null) {
             configChangedCallback.run();
             configChangedCallback = null;
@@ -1727,7 +1730,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
      * most direct notice of the move when the platform does dispatch it.
      */
     public void onMovedToDisplay(int displayId, Configuration config) {
-        checkSessionDisplay("moved to display " + displayId);
+        checkSessionDisplay(I18n.s(R.string.ui_moved_to_display) + displayId);
     }
 
     /**
@@ -1767,7 +1770,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         Log.i("XServerDisplayActivity", "TV: session moved from display " + from + " to " + now + " [" + why + "]");
         // The compositor's HDR gate is decided from the display the window is on, so the new screen's
         // capability has to be re-read (and pushed to the compositor) before anything else looks at it.
-        reportHdrCapability("session moved to display " + now);
+        reportHdrCapability(I18n.s(R.string.ui_session_moved_to_display) + now);
         if (wasOnTvLaunchDisplay) onTvDisconnected();
     }
 
@@ -1786,7 +1789,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // Straight away, not on the delay below: the game is on its way back to the handheld and the
         // companion is a task on that same screen — left up, it would sit in front of the game it is
         // still telling the user to watch on the TV.
-        com.winhub.hernandez.display.TvCompanionActivity.dismiss("the session left the external display");
+        com.winhub.hernandez.display.TvCompanionActivity.dismiss(I18n.s(R.string.ui_the_session_left_the_external_display));
         // Own handler: the field one is only built partway through onCreate, and a display can go away
         // before that.
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -2485,7 +2488,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         + I18n.s(R.string.ui_so_this_session_is_not_a_tv_session));
                 // The launcher put the handheld's companion screen up before starting us, and it is now
                 // describing a TV this game is not on — with the game itself about to open behind it.
-                com.winhub.hernandez.display.TvCompanionActivity.dismiss("the launch display was declined");
+                com.winhub.hernandez.display.TvCompanionActivity.dismiss(I18n.s(R.string.ui_the_launch_display_was_declined));
             }
         }
         // Watch the display set from here on, not from the end of setupUI: everything between the two is
@@ -3271,7 +3274,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
     private void evaluateWarmupTick(java.util.List<String> names) {
         if (warmupPhase == 0) return;
-        if (exiting) { stopFirstLaunchWarmup("the session is closing"); return; }
+        if (exiting) { stopFirstLaunchWarmup(I18n.s(R.string.ui_the_session_is_closing)); return; }
         long now = System.currentTimeMillis();
         if (warmupPhase == 1) {
             if (!names.contains("wfm.exe")) {
@@ -3280,7 +3283,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             }
             if (warmupSeenAt == 0) { warmupSeenAt = now; return; }
             if (now - warmupSeenAt < WARMUP_WFM_SETTLE_MS) return;
-            if (!startShortcutInSession()) { stopFirstLaunchWarmup("the game could not be started"); return; }
+            if (!startShortcutInSession()) { stopFirstLaunchWarmup(I18n.s(R.string.ui_the_game_could_not_be_started)); return; }
             Log.i("XServerDisplayActivity", I18n.s(R.string.ui_first_launch_container_is_up_started) + shortcut.path);
             warmupPhase = 2;
             warmupPhaseStartedAt = now;
@@ -3957,7 +3960,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         final boolean lsfg = "lsfg-native".equals(engine);
         final boolean winfg = "bionic".equals(engine) && winFgNativeSession;
         if (!lsfg && !winfg) return "";
-        final String name = lsfg ? "LSFG Native" : "Win-FG Native";
+        final String name = lsfg ? I18n.s(R.string.ui_lsfg_native) : I18n.s(R.string.ui_win_fg_native);
         if (lsfg && lsfgNativeStatus > com.winhub.hernandez.core.LsfgNative.STATUS_OK)
             return I18n.s(R.string.ui_lsfg_native_can_t_start)
                 + com.winhub.hernandez.core.LsfgNative.explain(lsfgNativeStatus) + ".";
@@ -3969,8 +3972,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     String caps = com.winhub.hernandez.wayland.WaylandCompositor.nativeFrameGenCapsReason();
                     boolean version = caps != null && caps.contains("Vulkan version below");
                     return name + I18n.s(R.string.ui_can_t_run_on_this_renderer_driver)
-                        + (version ? "it needs Vulkan 1.3, which this driver doesn't provide."
-                                   : "this driver is missing a feature it needs.")
+                        + (version ? I18n.s(R.string.ui_it_needs_vulkan_1_3_which_this_driver_doesn_t_provide)
+                                   : I18n.s(R.string.ui_this_driver_is_missing_a_feature_it_needs))
                         + I18n.s(R.string.ui_in_this_container_s_settings_set_renderer_driver_to_a_tu)
                         + " then relaunch the game.";
                 }
@@ -3998,8 +4001,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     && com.winhub.hernandez.FeatureFlags.LSFG_NATIVE_EXPERIMENTS_ENABLED
                     && container != null && !container.isLsfgVk11Compat();
                 return name + I18n.s(R.string.ui_can_t_run_on_this_renderer_driver)
-                    + (version ? "it needs Vulkan 1.3, which this driver doesn't provide."
-                               : "this driver is missing a feature it needs.")
+                    + (version ? I18n.s(R.string.ui_it_needs_vulkan_1_3_which_this_driver_doesn_t_provide)
+                               : I18n.s(R.string.ui_this_driver_is_missing_a_feature_it_needs))
                     + I18n.s(R.string.ui_in_this_container_s_settings_set_renderer_driver_to_a_tu)
                     + (offerCompat
                         ? " or turn on \"" + getString(R.string.lsfg_vk11_compat) + "\","
@@ -5510,7 +5513,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // Take the handheld's companion screen down at the START of the shutdown, not at onDestroy:
         // the save/upload phase below can run for many seconds, and the user should not be looking at
         // "playing on the TV" while the game is being shut down.
-        com.winhub.hernandez.display.TvCompanionActivity.dismiss("the session is ending");
+        com.winhub.hernandez.display.TvCompanionActivity.dismiss(I18n.s(R.string.ui_the_session_is_ending));
         // Wayland HDR output: the session's "HDR on screen: ..." line, written while the game is still
         // connected (the compositor writes it once; onDestroy's call is the fallback).
         if (waylandMode) {
@@ -5989,7 +5992,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             SteamAppRef ref = resolveSteamAppRef();   // Room lookup — off-main OK on this worker thread
             if (ref == null) {
                 Log.w("BH_REALSTEAM", "RealSteam requested but appId/installDir unresolved — "
-                        + "falling back to normal launch");
+                        + I18n.s(R.string.ui_falling_back_to_normal_launch));
                 return;
             }
             SteamDatabase.GameRow row = SteamRepository.getInstance().getDatabase().getGame(ref.appId);
@@ -6160,7 +6163,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         final String detail = eaRefusalInPlainWords(reason)
                 + (reason != null ? " EA's reason: \"" + reason + "\"." : "")
                 + " Try again later; if it keeps happening, use \"Deauthorize computers\" in your EA account's "
-                + "security settings.";
+                + I18n.s(R.string.ui_security_settings);
         // The agent is still holding the Steam session for a game that will not come — release it so
         // the guest tears down cleanly behind the card (Close finishes the session either way).
         try { if (steamAgentChannel != null) steamAgentChannel.requestLogoff(); } catch (Throwable ignored) {}
@@ -6196,8 +6199,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
         }
         Log.w(AGENT_TAG, "watchdog: no sign-in result from the agent within " + (AGENT_LOGIN_TIMEOUT_MS / 1000) + "s");
         showAgentFailure(I18n.s(R.string.ui_steam_sign_in),
-                "Steam sign-in did not complete",
-                "The Steam client inside the container reported no sign-in result within "
+                I18n.s(R.string.ui_steam_sign_in_did_not_complete),
+                I18n.s(R.string.ui_the_steam_client_inside_the_container_reported_no_sign_i)
                         + (AGENT_LOGIN_TIMEOUT_MS / 1000) + "s.");
     };
 
@@ -6225,7 +6228,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     int er = obj.optInt("eresult", 0);
                     String reason = obj.optString("reason", "");
                     showAgentFailure(I18n.s(R.string.ui_steam_sign_in),
-                            "Steam rejected the sign-in" + (reason.isEmpty() ? "" : " (" + reason + ")"),
+                            I18n.s(R.string.ui_steam_rejected_the_sign_in) + (reason.isEmpty() ? "" : " (" + reason + ")"),
                             (er != 0 ? "EResult " + er + " — " : "")
                                     + I18n.s(R.string.ui_the_saved_steam_sign_in_did_not_work_inside_the_containe)
                                     + I18n.s(R.string.ui_retry_sign_in_again_from_the_steam_tab_or_launch_offline));
@@ -6239,8 +6242,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 }
                 case "launch_accepted":
                     preloaderHint(realSteamEaChain
-                            ? "Steam accepted the launch — starting EA Desktop (sign in to EA if it asks)…"
-                            : "Steam accepted the launch — starting the game…");
+                            ? I18n.s(R.string.ui_steam_accepted_the_launch_starting_ea_desktop_sign_in_to)
+                            : I18n.s(R.string.ui_steam_accepted_the_launch_starting_the_game));
                     break;
                 case "launch_refused":
                     preloaderHint(I18n.s(R.string.ui_steam_refused_the_launch) + obj.optString("reason", "") + I18n.s(R.string.ui_trying_a_direct_start));
@@ -6257,7 +6260,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         preloaderHint(I18n.s(R.string.ui_steam_couldn_t_start_the_game_itself_started_it_directly));
                     } else if (!winStarted) {
                         showAgentFailure(I18n.s(R.string.ui_steam_launch),
-                                "Steam did not start the game — insecure fallback",
+                                I18n.s(R.string.ui_steam_did_not_start_the_game_insecure_fallback),
                                 "Steam's LaunchApp refused (" + obj.optString("reason", "") + I18n.s(R.string.ui_the_game_can_still_run)
                                         + I18n.s(R.string.ui_without_steam_protection_vac_servers_will_reject_it_and)
                                         + I18n.s(R.string.ui_report_a_wrong_build_retry_launch_offline_with_goldberg),
@@ -6287,8 +6290,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     // An insecure spawn after a vac=false fallback (agentFallbackVac, from the
                     // insecure_fallback event) is the normal outcome for a title without VAC — say
                     // so, instead of the warning that fits a VAC title's fallback.
-                    preloaderHint(secure ? "Game running (secure Steam launch)"
-                            : agentFallbackVac ? "Game running (insecure — no VAC)"
+                    preloaderHint(secure ? I18n.s(R.string.ui_game_running_secure_steam_launch)
+                            : agentFallbackVac ? I18n.s(R.string.ui_game_running_insecure_no_vac)
                             : "Game running (started directly — this title doesn't need a secure launch)");
                     break;
                 }
@@ -6373,7 +6376,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             realSteamSessionHeld = true;
         } catch (Throwable t) {
             Log.w("BH_REALSTEAM", I18n.s(R.string.ui_could_not_suspend_the_app_s_steam_session_the_game_may_h)
-                    + "a session conflict", t);
+                    + I18n.s(R.string.ui_a_session_conflict), t);
         }
     }
 
@@ -7141,7 +7144,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         sessionInForeground = false;
-        stopFirstLaunchWarmup("activity closed");
+        stopFirstLaunchWarmup(I18n.s(R.string.ui_activity_closed));
         // A first-launch notice still on screen belongs to this instance: drop it with the activity.
         if (XServerDialogState.INSTANCE.onFirstWaylandLaunchChoice != null) {
             XServerDialogState.INSTANCE.onFirstWaylandLaunchChoice = null;
@@ -7151,7 +7154,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // game's own watcher, a recents swipe, the system). Every other dismissal is about telling the
         // user something sooner; this one is the guarantee that nothing is left on the handheld
         // describing a session that no longer exists. No-op when it is already gone.
-        com.winhub.hernandez.display.TvCompanionActivity.dismiss("the session is gone");
+        com.winhub.hernandez.display.TvCompanionActivity.dismiss(I18n.s(R.string.ui_the_session_is_gone));
         if (inGameControlsEditor != null) {
             inGameControlsEditor.dispose();
             inGameControlsEditor = null;
@@ -7195,8 +7198,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // Abnormal teardown (no exit() worker ran): never leave the app's Steam session suspended.
         // Non-blocking — the reconnect is posted to the CM pump. No-op unless a real-Steam launch
         // suspended it this session.
-        releaseRealSteamSession("activity destroyed", 0L);
-        clearOfflineSteamPresence("activity destroyed");
+        releaseRealSteamSession(I18n.s(R.string.ui_activity_destroyed), 0L);
+        clearOfflineSteamPresence(I18n.s(R.string.ui_activity_destroyed));
         // Hide the drawer's Friends tab source + leave any in-game chat thread (the full Friends
         // screen's own open/close is untouched).
         try { com.winhub.hernandez.store.InGameFriendsSource.INSTANCE.disarm(); } catch (Throwable ignored) {}
@@ -7496,7 +7499,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
             // Controller passthrough (lever 3): the classic game reads the pad through DirectInput, so it
             // must see it for this RealSteam launch, whatever the container/shortcut value.
             dinputVisible = true;
-            dinputWhy = "controller passthrough";
+            dinputWhy = I18n.s(R.string.ui_controller_passthrough_2);
         } else if (com.winhub.hernandez.core.ControllerIdentity.DINPUT_PAD.equals(padIdentity)) {
             // The Classic DirectInput pad exists for DirectInput games; hidden from them it is no pad at all.
             if (!dinputVisible) dinputWhy = I18n.s(R.string.ui_forced_on_by_the_classic_directinput_pad_identity);
@@ -7802,10 +7805,10 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 String sv = shortcut.getExtra("envVars", "");
                 if (sv != null && !sv.isEmpty() && new EnvVars(sv).has("BANNER_WAYLAND_HDR")) return "shortcut env var";
             }
-            return "container env var";
+            return I18n.s(R.string.ui_container_env_var);
         }
         return !com.winhub.hernandez.display.WaylandHdr.shortcutChoice(shortcut).isEmpty()
-                ? "the game's HDR output setting" : "the container's HDR output setting";
+                ? I18n.s(R.string.ui_the_game_s_hdr_output_setting) : I18n.s(R.string.ui_the_container_s_hdr_output_setting);
     }
 
     /** Set in startWaylandCompositor: HDR output is really on for this session (the switch resolved on,
@@ -7867,7 +7870,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     String dll = e.getKey();
                     if (userNamed.containsKey(dll)) {
                         String order = userNamed.get(dll);
-                        notes.add("the game ships " + e.getValue().getName() + "; yours kept (" + dll + "=" + order + ")"
+                        notes.add(I18n.s(R.string.ui_the_game_ships) + e.getValue().getName() + "; yours kept (" + dll + "=" + order + ")"
                                 + (com.winhub.hernandez.core.GameXInputDlls.nativeFirst(order)
                                         ? ", so the game's own copy loads (Prefer game-folder DLLs)" : ""));
                         continue;
@@ -7875,7 +7878,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     if (overGame && com.winhub.hernandez.core.GameXInputDlls.moveAside(gameXInputManifest(), e.getValue(), notes))
                         continue;
                     builtin.add(dll);
-                    notes.add("the game ships " + e.getValue().getName() + ": Wine's builtin " + dll + " for it (=b)");
+                    notes.add(I18n.s(R.string.ui_the_game_ships) + e.getValue().getName() + ": Wine's builtin " + dll + " for it (=b)");
                 }
                 com.winhub.hernandez.core.GameXInputDlls.Overrides o =
                         com.winhub.hernandez.core.GameXInputDlls.overrides(before, builtin);
@@ -8502,8 +8505,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 Log.i("XServerDisplayActivity", I18n.s(R.string.ui_tv_launch_display) + displayId + " removed");
                 onTvDisconnected();
             }
-            reportHdrCapability("display removed");
-            checkSessionDisplay("display removed");
+            reportHdrCapability(I18n.s(R.string.ui_display_removed));
+            checkSessionDisplay(I18n.s(R.string.ui_display_removed));
         }
         @Override public void onDisplayChanged(int displayId) { reportHdrCapability("display changed"); }
     };
@@ -8534,7 +8537,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
     private void startHdrCapabilityReport() {
         registerDisplayWatch();
-        reportHdrCapability("session start");
+        reportHdrCapability(I18n.s(R.string.ui_session_start));
         if (waylandMode && waylandHdrMode != com.winhub.hernandez.wayland.WaylandCompositor.HDR_MODE_OFF)
             startHdrRatioSampler();
     }
@@ -10043,9 +10046,9 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     cancelLaunchTimers();
                     preloaderDialog.fail(
-                            "Launching Windows",
-                            "The game exited before rendering",
-                            "exit code " + status,
+                            I18n.s(R.string.ui_launching_windows_2),
+                            I18n.s(R.string.ui_the_game_exited_before_rendering),
+                            I18n.s(R.string.ui_exit_code) + status,
                             logDir,
                             launchLoggingEnabled);
                 });
@@ -10124,7 +10127,7 @@ public class XServerDisplayActivity extends AppCompatActivity {
         // Guest is now booting — the tail is unmeasurable, so switch to the indeterminate spinner and
         // arm the not-frozen reassurance timers (cancelled on first render or termination).
         String preloaderGameName = (shortcut != null) ? shortcut.name : container.getName();
-        preloaderDialog.enterGuest("Waiting for " + preloaderGameName + " to render…");
+        preloaderDialog.enterGuest(I18n.s(R.string.ui_waiting_for) + preloaderGameName + " to render…");
         runOnUiThread(this::startLaunchTimers);
 
         // Wayland: the launch overlay must ALWAYS clear so the guest is visible — the compositor
@@ -10354,8 +10357,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
             tvLaunchDeclinedNotified = true;
             try {
                 XServerDialogState.INSTANCE.showInfoToast(
-                        "TV LAUNCH REFUSED", "handheld",
-                        "The system wouldn't open this game on the TV. It's running on the handheld screen.");
+                        I18n.s(R.string.ui_tv_launch_refused), "handheld",
+                        I18n.s(R.string.ui_the_system_wouldn_t_open_this_game_on_the_tv_it_s_runnin));
             } catch (Throwable ignored) {}
         }
         startHdrCapabilityReport();
@@ -10390,8 +10393,8 @@ public class XServerDisplayActivity extends AppCompatActivity {
                         // When auto-switch is off we only notify and wait for the user to open the TV tab.
                         if (connected && externalDisplayController != null && !externalDisplayController.isAutoSwap()) {
                             XServerDialogState.INSTANCE.showInfoToast(
-                                    "EXTERNAL DISPLAY DETECTED", "TV",
-                                    "Open the TV tab in the menu to switch displays");
+                                    I18n.s(R.string.ui_external_display_detected), "TV",
+                                    I18n.s(R.string.ui_open_the_tv_tab_in_the_menu_to_switch_displays));
                         }
                     }
                     @Override public void onGameOnExternalChanged(boolean onExternal) {
@@ -13770,7 +13773,7 @@ return true;
         String key = "hxinput_game_dll_toast:" + (shortcut != null ? shortcut.file.getAbsolutePath() : "") + ":" + names;
         if (preferences.getBoolean(key, false)) return;
         preferences.edit().putBoolean(key, true).apply();
-        XServerDialogState.INSTANCE.showInfoToast("DIRECT XINPUT", "",
+        XServerDialogState.INSTANCE.showInfoToast(I18n.s(R.string.ui_direct_xinput_2), "",
                 "This game ships its own XInput DLL (" + names + I18n.s(R.string.ui_so_wine_s_xinput_is_used_for_it_instead_of_direct_xinput));
     }
 
@@ -14144,7 +14147,7 @@ return true;
             int mult = XServerDrawerState.INSTANCE.getFrameGenMultiplier().getValue();
             vrrRate = cap > 0 ? pickNativeFgRefresh(cap * mult) : 0.0f;
             Log.i("XServerDisplayActivity", "native-fg vrr: " + cap + " x " + mult + " = " + (cap * mult)
-                + " -> display " + (vrrRate > 0f ? vrrRate + " Hz" : "top rate (nothing at or above)"));
+                + " -> display " + (vrrRate > 0f ? vrrRate + " Hz" : I18n.s(R.string.ui_top_rate_nothing_at_or_above)));
         } else if (container != null && autoOn) {
             // Auto (match FPS): vote the panel cadence to follow the displayed FPS while capping.
             if (cap > 0) {
@@ -15095,7 +15098,7 @@ return true;
     private void evaluateInstallerTick() {
         if (componentInstallerExe == null) return;
         // Silent installer (no window ever mapped -> overlay still up): keep its status line current.
-        if (!winStarted) preloaderHint("Installing " + installerLabel()
+        if (!winStarted) preloaderHint(I18n.s(R.string.ui_installing_2) + installerLabel()
                 + I18n.s(R.string.ui_this_can_take_a_few_minutes_leave_it_running_this_screen));
         // Visible installer: repeat the reminder roughly every 45 s so a long install never looks stuck.
         if (winStarted && (++installerTicksTotal % 45) == 0) installerReminderToast();
@@ -15357,7 +15360,7 @@ return true;
             am.getMemoryInfo(mi);
             long used = mi.totalMem - mi.availMem;
             int memPct = (int)(((double) used / mi.totalMem) * 100);
-            ds.setTmMemTitle("Memory (" + memPct + "%)");
+            ds.setTmMemTitle(I18n.s(R.string.ui_memory_2) + memPct + "%)");
             ds.setTmMemInfo(StringUtils.formatBytes(used, false) + " / " +
                 StringUtils.formatBytes(mi.totalMem));
         } catch (Exception ignored) {}

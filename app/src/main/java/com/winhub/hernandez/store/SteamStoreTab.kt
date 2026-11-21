@@ -209,7 +209,7 @@ fun SteamStoreTab(
                     StoreNotice(
                         title = I18n.s(R.string.ui_store_browsing_is_unavailable),
                         body = I18n.s(R.string.ui_steam_s_storefront_feed_didn_t_answer_search_still_works) +
-                            "everything you already own is in the Library tab.",
+                            I18n.s(R.string.ui_everything_you_already_own_is_in_the_library_tab),
                         actionLabel = "Retry",
                         onAction = { reloadKey++ },
                     )
@@ -385,7 +385,7 @@ private fun StoreSearchField(
         singleLine = true,
         placeholder = {
             Text(
-                "Search the Steam catalog…",
+                I18n.s(R.string.ui_search_the_steam_catalog),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -443,7 +443,7 @@ private fun StoreResults(
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         StoreSectionHeader(
-            title = if (searching && results.isEmpty()) "Searching…"
+            title = if (searching && results.isEmpty()) I18n.s(R.string.ui_searching)
             else "${results.size} result${if (results.size == 1) "" else "s"}",
             sub = "“$query”",
         )

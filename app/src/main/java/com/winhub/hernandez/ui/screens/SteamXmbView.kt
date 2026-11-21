@@ -666,7 +666,7 @@ internal fun SteamXmbView(
                         }
                         if (hi.sections) XmbKeyHint("L1 R1", "Section", hs)
                     } else if (hasPad) {
-                        XmbButtonHint("A", Color(0xFF3DDC84), if (onAdd) "Add game" else if (onAll) allLabel else if (centered) "Options" else actions[actIdx].label, hs)
+                        XmbButtonHint("A", Color(0xFF3DDC84), if (onAdd) I18n.s(R.string.ui_add_game) else if (onAll) allLabel else if (centered) "Options" else actions[actIdx].label, hs)
                         XmbButtonHint("B", Color(0xFFFF5252), "Back", hs)
                         if (!m.port && m.w >= 600f) {
                             XmbKeyHint("◀ ▶", "Games", hs); XmbKeyHint("▲ ▼", "Options", hs); XmbKeyHint("L1 R1", if (inDeckShell) "Tabs" else "Jump", hs)
@@ -1238,7 +1238,7 @@ private fun XmbInfo(s: Shortcut, playtime: String?, descLines: Int, storeBadges:
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.Schedule, contentDescription = null, tint = Color(0xFFBBBBBB), modifier = Modifier.size(13.dp))
             Spacer(Modifier.width(4.dp))
-            Text(playtime ?: "Not played yet", color = factColor, fontSize = 12.sp)
+            Text(playtime ?: I18n.s(R.string.ui_not_played_yet), color = factColor, fontSize = 12.sp)
         }
         if (details.genres.isNotEmpty()) Text(details.genres.take(3).joinToString(" · "), color = factColor, fontSize = 12.sp)
         details.releaseYear?.takeIf { it.isNotBlank() }?.let { Text(it, color = factColor, fontSize = 12.sp) }

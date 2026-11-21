@@ -241,13 +241,13 @@ object SteamLiteComponent {
 
     private fun downloadBlocking(context: Context, progress: (Float) -> Unit): Pair<Boolean, String> {
         val catalog = loadCatalog()
-            ?: return false to "Couldn't reach the SteamLite catalog. Check your connection."
+            ?: return false to I18n.s(R.string.ui_couldn_t_reach_the_steamlite_catalog_check_your_connecti)
 
         val cacheDir = File(context.cacheDir, "steamlite_dl").apply { mkdirs() }
         val archive = File(cacheDir, "steamlite.tzst")
         try {
             if (!Downloader.downloadFile(catalog.url, archive) { f -> progress(f.coerceIn(0f, 1f)) }) {
-                return false to "Download failed. Please try again."
+                return false to I18n.s(R.string.ui_download_failed_please_try_again)
             }
             // Verify the UPPERCASE MD5 from the catalog before trusting the archive (blank = skip).
             if (catalog.checksum.isNotBlank()) {
@@ -267,7 +267,7 @@ object SteamLiteComponent {
             // The tar root holds the files directly, so extract straight into the staging dir.
             if (!TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, archive, staging)) {
                 staging.deleteRecursively()
-                return false to "Couldn't unpack the SteamLite package."
+                return false to I18n.s(R.string.ui_couldn_t_unpack_the_steamlite_package)
             }
             if (!File(staging, MARKER_REL).exists()) {
                 staging.deleteRecursively()
@@ -276,7 +276,7 @@ object SteamLiteComponent {
             if (dest.exists()) dest.deleteRecursively()
             if (!staging.renameTo(dest)) {
                 staging.deleteRecursively()
-                return false to "Couldn't install the SteamLite package."
+                return false to I18n.s(R.string.ui_couldn_t_install_the_steamlite_package)
             }
             if (!isInstalled(context)) {
                 return false to "SteamLite package was missing expected files."
@@ -284,7 +284,7 @@ object SteamLiteComponent {
             // Stamp the version we just installed AFTER the extract is confirmed
             // present, so a catalog bump later reads as outdated (see isOutdated).
             writeInstalledVersion(context, catalog.version)
-            return true to "SteamLite installed."
+            return true to I18n.s(R.string.ui_steamlite_installed)
         } finally {
             archive.delete()
         }

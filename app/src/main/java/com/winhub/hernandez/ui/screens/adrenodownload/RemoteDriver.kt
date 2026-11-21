@@ -71,14 +71,14 @@ object DriverSources {
             builtIn = true,
         ),
         RemoteDriverSource(
-            name = "FristOneRR PanVK (Mali)",
-            feeds = listOf(DriverFeed.GithubReleases(I18n.s(R.string.ui_fristonerr), I18n.s(R.string.ui_fristonerr_panvk_driver))),
+            name = I18n.s(R.string.ui_fristonerr_panvk_mali),
+            feeds = listOf(DriverFeed.GithubReleases("FristOneRR", "FristOneRR-Panvk-Driver")),
             builtIn = true,
         ),
         // Built for the Mali-G615.
         RemoteDriverSource(
             name = "PanVK G615 (GunaCharanTeja)",
-            feeds = listOf(DriverFeed.GithubReleases(I18n.s(R.string.ui_gunacharanteja), "panvk-kbase-android", "(?i)-adrenotools\\.zip$")),
+            feeds = listOf(DriverFeed.GithubReleases("GunaCharanTeja", "panvk-kbase-android", "(?i)-adrenotools\\.zip$")),
             builtIn = true,
         ),
     )

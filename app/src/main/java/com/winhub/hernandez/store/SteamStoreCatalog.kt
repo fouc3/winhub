@@ -536,7 +536,7 @@ object SteamStoreCatalog {
         StorefrontLog.w(
             TAG,
             "appdetails: batched request for ${ids.size} id(s) returned nothing parseable — " +
-                "retrying individually",
+                I18n.s(R.string.ui_retrying_individually),
         )
         val out = HashMap<Int, HeaderResult>(ids.size)
         for ((index, id) in ids.withIndex()) {

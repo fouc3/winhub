@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.util.Log;
 
@@ -346,7 +349,7 @@ public final class HermesXInput {
                 return f;
             }
         } catch (Exception e) {
-            f.problem = "cannot read " + sys + ": " + e;
+            f.problem = I18n.s(R.string.ui_cannot_read) + sys + ": " + e;
             return f;
         }
         f.sys32 = sys;
@@ -439,7 +442,7 @@ public final class HermesXInput {
             store(m, marker);
             if (!tmp.renameTo(target)) {
                 tmp.delete();
-                throw new java.io.IOException("could not put " + it.slot + " in place");
+                throw new java.io.IOException(I18n.s(R.string.ui_could_not_put) + it.slot + " in place");
             }
             did.add(it.slot);
         }
@@ -624,7 +627,7 @@ public final class HermesXInput {
             p.store(out, "WinHub: HERMES-XInput installed into this prefix (see core/HermesXInput)");
             out.getFD().sync();
         }
-        if (!tmp.renameTo(marker)) throw new java.io.IOException("could not write " + marker);
+        if (!tmp.renameTo(marker)) throw new java.io.IOException(I18n.s(R.string.ui_could_not_write) + marker);
     }
 
     private static String copyAtomically(InputStream in, File dst) throws Exception {
@@ -635,7 +638,7 @@ public final class HermesXInput {
         try (InputStream src = in) { sha = copyTo(src, tmp); }
         if (!tmp.renameTo(dst)) {
             tmp.delete();
-            throw new java.io.IOException("could not write " + dst);
+            throw new java.io.IOException(I18n.s(R.string.ui_could_not_write) + dst);
         }
         return sha;
     }

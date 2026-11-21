@@ -305,7 +305,7 @@ object CommunityConfigApply {
         config.advisories["wineVersion"]?.let { proton ->
             val containerKey = containerWineVersion?.takeIf { it.isNotBlank() }?.let { ConfigTranslator.protonKey(it) }
             if (containerKey == null || !containerKey.equals(proton, ignoreCase = true)) {
-                val have = containerWineVersion?.takeIf { it.isNotBlank() } ?: "your container's"
+                val have = containerWineVersion?.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_your_container_s)
                 advisories.add("config used $proton (container-only) — your container is $have; change it in the container editor if needed.")
             }
         }
@@ -314,7 +314,7 @@ object CommunityConfigApply {
             changed.isEmpty() && advisories.isEmpty() && missing.isEmpty() && missingDrivers.isEmpty() ->
                 "Already aligned — your shortcut matches this config; nothing to change."
             changed.isEmpty() ->
-                "Nothing changed — this config needs components you don't have installed yet."
+                I18n.s(R.string.ui_nothing_changed_this_config_needs_components_you_don_t_h)
             else -> "Applied ${changed.size} change${if (changed.size == 1) "" else "s"} to \"${shortcut.name}\"."
         }
         return ConfigApplyResult(true, message, changed, missing, advisories, missingDrivers)

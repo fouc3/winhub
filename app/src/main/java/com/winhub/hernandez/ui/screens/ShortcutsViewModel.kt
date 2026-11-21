@@ -1083,9 +1083,9 @@ class ShortcutsViewModel(app: Application) : AndroidViewModel(app) {
         } catch (e: WinePath.NoFreeDriveLetterException) {
             Log.e(TAG, "No free drive letter for ${e.mountPath}", e)
             ImportResult.Error(
-                "This container has no free drive letters left. Remove a drive you no longer " +
-                    "need in the container's Drives tab, or move the game somewhere an " +
-                    "existing drive already covers."
+                I18n.s(R.string.ui_this_container_has_no_free_drive_letters_left_remove_a_d) +
+                    I18n.s(R.string.ui_need_in_the_container_s_drives_tab_or_move_the_game_some) +
+                    I18n.s(R.string.ui_existing_drive_already_covers)
             )
         } catch (e: IOException) {
             Log.e(TAG, I18n.s(R.string.ui_failed_to_write_exe_shortcut), e)

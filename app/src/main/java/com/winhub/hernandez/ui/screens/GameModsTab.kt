@@ -49,7 +49,7 @@ internal class GameModsSetting(
                 GameModCache.get(filesDir, asset) { f -> main.post { status[mod.id] = "${(f * 100).toInt().coerceIn(0, 100)} %" } }
                 "ready"
             } catch (e: Exception) {
-                "download failed"
+                I18n.s(R.string.ui_download_failed)
             }
             main.post { status[mod.id] = done }
         }.apply { isDaemon = true }.start()
@@ -79,7 +79,7 @@ internal fun DeckModsTab(mods: GameModsSetting, programs: StartProgramsState) {
                 DeckRow(
                     label = I18n.s(R.string.ui_no_mods_for_this_game),
                     hint = I18n.s(R.string.ui_reframework_is_for_re_engine_games_and_special_k_for_32) +
-                        "This game's EXE can't take either.",
+                        I18n.s(R.string.ui_this_game_s_exe_can_t_take_either),
                 ) {}
             }
             for (mod in mods.mods) {

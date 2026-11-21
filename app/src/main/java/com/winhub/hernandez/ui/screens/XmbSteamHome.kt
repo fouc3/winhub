@@ -459,7 +459,7 @@ private fun XmbSteamAddCard(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(Icons.Filled.Add, contentDescription = null, tint = accent, modifier = Modifier.size((sl.fW * 0.3f).dp))
             Text(
-                "Add game", color = Color.White, fontSize = (sl.fW * 0.11f).coerceIn(10f, 16f).sp, fontWeight = FontWeight.Bold,
+                I18n.s(R.string.ui_add_game), color = Color.White, fontSize = (sl.fW * 0.11f).coerceIn(10f, 16f).sp, fontWeight = FontWeight.Bold,
                 maxLines = 1, modifier = Modifier.padding(top = 4.dp),
             )
         }

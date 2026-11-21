@@ -768,7 +768,7 @@ fun InputControlsScreen() {
                                     verticalArrangement = Arrangement.spacedBy(10.dp),
                                 ) {
                                     Text(
-                                        "Touch overlay drawn on top of the game. Tap the preview to edit it.",
+                                        I18n.s(R.string.ui_touch_overlay_drawn_on_top_of_the_game_tap_the_preview_t),
                                         color = DeckPalette.onSurfaceVariant, fontSize = 12.sp,
                                     )
                                     val cp = currentProfile
@@ -812,7 +812,7 @@ fun InputControlsScreen() {
 
                                     if (controllers.isEmpty()) {
                                         Text(
-                                            "No controllers yet. Plug in or pair a pad and it shows up here.",
+                                            I18n.s(R.string.ui_no_controllers_yet_plug_in_or_pair_a_pad_and_it_shows_up),
                                             color = DeckPalette.onSurfaceVariant, fontSize = 14.sp,
                                             modifier = Modifier.fillMaxWidth().padding(16.dp),
                                         )
@@ -1130,14 +1130,14 @@ private fun GyroscopeSection() {
 
     DeckGroup("Gyroscope") {
         Text(
-            "Rest the device on a flat surface and calibrate to remove the gyroscope's resting drift.",
+            I18n.s(R.string.ui_rest_the_device_on_a_flat_surface_and_calibrate_to_remov),
             color = DeckPalette.onSurfaceVariant, fontSize = 12.sp,
             modifier = Modifier.padding(start = 12.dp, top = 10.dp, end = 12.dp),
         )
         val summary = when {
             !calibrated -> I18n.s(R.string.ui_not_calibrated)
             abs(biasX) < GyroCalibrator.NEGLIGIBLE_BIAS && abs(biasY) < GyroCalibrator.NEGLIGIBLE_BIAS ->
-                "Very little drift detected — your device already compensates"
+                I18n.s(R.string.ui_very_little_drift_detected_your_device_already_compensat)
             else -> "Bias removed: x %.4f, y %.4f rad/s".format(biasX, biasY)
         }
         DeckRow(label = summary, hint = status.takeIf { it.isNotEmpty() }) {
@@ -1149,7 +1149,7 @@ private fun GyroscopeSection() {
                         activeRun = null
                         status = when (result) {
                             is GyroCalibrator.Result.Success ->
-                                if (result.negligible) "Calibrated — nothing to remove" else "Calibrated"
+                                if (result.negligible) I18n.s(R.string.ui_calibrated_nothing_to_remove) else "Calibrated"
                             GyroCalibrator.Result.Moved -> I18n.s(R.string.ui_hold_the_device_still_and_try_again)
                             GyroCalibrator.Result.NotEnoughSamples -> I18n.s(R.string.ui_couldn_t_sample_try_again)
                             GyroCalibrator.Result.Unavailable -> I18n.s(R.string.ui_gyroscope_unavailable)
@@ -1195,8 +1195,8 @@ private fun SteamControllerSection() {
     DeckGroup(I18n.s(R.string.ui_steam_controller)) {
         Text(
             "Reads the Steam Controller directly, the way Steam does, so it works as a normal gamepad in " +
-                "games. Pair it in Android's Bluetooth settings first, or connect it by USB. Other " +
-                "controllers are not affected. Takes effect the next time a game starts.",
+                I18n.s(R.string.ui_games_pair_it_in_android_s_bluetooth_settings_first_or_c) +
+                I18n.s(R.string.ui_controllers_are_not_affected_takes_effect_the_next_time),
             color = DeckPalette.onSurfaceVariant, fontSize = 12.sp,
             modifier = Modifier.padding(start = 12.dp, top = 10.dp, end = 12.dp),
         )
@@ -1247,9 +1247,9 @@ private fun SteamControllerSection() {
         }
         DeckGroup(I18n.s(R.string.ui_extra_buttons)) {
             Text(
-                "What the four back buttons and the … button do, in every game. To change what the other " +
+                I18n.s(R.string.ui_what_the_four_back_buttons_and_the_button_do_in_every_ga) +
                     "buttons do, bind them on the Controller tab under Default / Any Controller (the Steam " +
-                    "Controller uses those bindings).",
+                    I18n.s(R.string.ui_controller_uses_those_bindings),
                 color = DeckPalette.onSurfaceVariant, fontSize = 12.sp,
                 modifier = Modifier.padding(start = 12.dp, top = 10.dp, end = 12.dp),
             )
@@ -1284,13 +1284,13 @@ private fun steamPaddleOptions(): List<Pair<String, Binding>> {
         "X" to Binding.GAMEPAD_BUTTON_X, "Y" to Binding.GAMEPAD_BUTTON_Y,
         "LB" to Binding.GAMEPAD_BUTTON_L1, "RB" to Binding.GAMEPAD_BUTTON_R1,
         "LT" to Binding.GAMEPAD_BUTTON_L2, "RT" to Binding.GAMEPAD_BUTTON_R2,
-        "L3 (stick click)" to Binding.GAMEPAD_BUTTON_L3, "R3 (stick click)" to Binding.GAMEPAD_BUTTON_R3,
+        I18n.s(R.string.ui_l3_stick_click) to Binding.GAMEPAD_BUTTON_L3, I18n.s(R.string.ui_r3_stick_click) to Binding.GAMEPAD_BUTTON_R3,
         "Start" to Binding.GAMEPAD_BUTTON_START, "Back" to Binding.GAMEPAD_BUTTON_SELECT,
-        "D-Pad Up" to Binding.GAMEPAD_DPAD_UP, "D-Pad Down" to Binding.GAMEPAD_DPAD_DOWN,
-        "D-Pad Left" to Binding.GAMEPAD_DPAD_LEFT, "D-Pad Right" to Binding.GAMEPAD_DPAD_RIGHT,
-        "Mouse left click" to Binding.MOUSE_LEFT_BUTTON,
-        "Mouse right click" to Binding.MOUSE_RIGHT_BUTTON,
-        "Mouse middle click" to Binding.MOUSE_MIDDLE_BUTTON,
+        I18n.s(R.string.ui_d_pad_up) to Binding.GAMEPAD_DPAD_UP, I18n.s(R.string.ui_d_pad_down) to Binding.GAMEPAD_DPAD_DOWN,
+        I18n.s(R.string.ui_d_pad_left) to Binding.GAMEPAD_DPAD_LEFT, I18n.s(R.string.ui_d_pad_right) to Binding.GAMEPAD_DPAD_RIGHT,
+        I18n.s(R.string.ui_mouse_left_click) to Binding.MOUSE_LEFT_BUTTON,
+        I18n.s(R.string.ui_mouse_right_click) to Binding.MOUSE_RIGHT_BUTTON,
+        I18n.s(R.string.ui_mouse_middle_click) to Binding.MOUSE_MIDDLE_BUTTON,
     )
     for (b in Binding.keyboardBindingValues()) {
         if (b != Binding.NONE && b != Binding.SHOW_ANDROID_KEYBOARD) out += "Key: $b" to b

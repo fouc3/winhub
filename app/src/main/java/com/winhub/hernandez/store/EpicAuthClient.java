@@ -2,6 +2,9 @@ package com.winhub.hernandez.store;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.Base64;
 import android.util.Log;
 
@@ -75,7 +78,7 @@ public class EpicAuthClient {
             conn.setConnectTimeout(30000);
             conn.setReadTimeout(30000);
             conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", "Basic " + creds64);
+            conn.setRequestProperty("Authorization", I18n.s(R.string.ui_basic_2) + creds64);
             conn.setRequestProperty("User-Agent",    USER_AGENT);
             conn.setRequestProperty("Content-Type",  "application/x-www-form-urlencoded");
 

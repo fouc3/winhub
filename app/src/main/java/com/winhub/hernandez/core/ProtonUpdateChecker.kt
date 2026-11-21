@@ -96,7 +96,7 @@ object ProtonUpdateChecker {
             key = key,
             entryName = "${ContentProfile.ContentType.CONTENT_TYPE_PROTON}-$key",
             label = label(newest),
-            installedLabel = have?.let { label(it) } ?: "none installed",
+            installedLabel = have?.let { label(it) } ?: I18n.s(R.string.ui_none_installed),
             sizeBytes = ContainerLayerUpdater.probeRemoteSize(newest.remoteUrl),
         ).also { Log.i(TAG, "Newer GE-Proton available: $key (installed ${have?.let { h -> entryKey(h.versionName, h.verCode) }})") }
     }

@@ -2,6 +2,9 @@ package com.winhub.hernandez.contentdialog;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -61,7 +64,7 @@ public final class VegasKeyKnowledge {
         List<Object> vanillaRaw = asList(root, "vanilla", true);
         this.vanilla = new LinkedHashMap<>();
         for (Object o : vanillaRaw) {
-            String k = coerceString(o, "vanilla entry");
+            String k = coerceString(o, I18n.s(R.string.ui_vanilla_entry));
             if (vanilla.containsKey(k)) throw reject("duplicate vanilla key: " + k);
             vanilla.put(k, k);
         }
@@ -71,19 +74,19 @@ public final class VegasKeyKnowledge {
         this.removed = new LinkedHashMap<>();
         this.notes = new LinkedHashMap<>();
         for (Object o : gatedRaw) {
-            if (!(o instanceof Map)) throw reject("gated entry must be an object");
+            if (!(o instanceof Map)) throw reject(I18n.s(R.string.ui_gated_entry_must_be_an_object));
             Map<String, Object> e = uncheckedMap(o);
             for (String f : e.keySet())
                 if (!GATED_ENTRY_FIELDS.contains(f)) throw reject("unknown field in gated entry: " + f);
-            String name = asNonEmptyString(e, "name", "gated entry");
-            String intro = asNonEmptyString(e, "introducedIn", "gated entry " + name);
+            String name = asNonEmptyString(e, "name", I18n.s(R.string.ui_gated_entry));
+            String intro = asNonEmptyString(e, "introducedIn", I18n.s(R.string.ui_gated_entry_2) + name);
             Integer introIdx = released.indexOf(intro);
             if (introIdx < 0) throw reject("gated key " + name + ": introducedIn '" + intro + I18n.s(R.string.ui_not_in_released));
             if (introduced.containsKey(name)) throw reject("duplicate gated key: " + name);
             if (vanilla.containsKey(name)) throw reject("key in both vanilla and gated: " + name);
             introduced.put(name, introIdx);
             if (e.containsKey("removedIn") && e.get("removedIn") != null) {
-                String rem = asNonEmptyString(e, "removedIn", "gated entry " + name);
+                String rem = asNonEmptyString(e, "removedIn", I18n.s(R.string.ui_gated_entry_2) + name);
                 Integer remIdx = released.indexOf(rem);
                 if (remIdx < 0) throw reject("gated key " + name + ": removedIn '" + rem + I18n.s(R.string.ui_not_in_released));
                 if (remIdx <= introIdx) throw reject("gated key " + name + ": removedIn '" + rem + I18n.s(R.string.ui_not_after_introducedin) + intro + "'");
@@ -530,7 +533,7 @@ public final class VegasKeyKnowledge {
             case LATE:
                 return "needs " + nameAt(introduced.get(norm)) + "+";
             case REMOVED:
-                return "removed in " + nameAt(removed.get(norm));
+                return I18n.s(R.string.ui_removed_in) + nameAt(removed.get(norm));
             case UNLISTED:
                 // Namespace-aware honesty: a vegas.* key the manifest can't prove is a
                 // FORK feature by construction — claiming "DXVK still reads it" is true
@@ -562,14 +565,14 @@ public final class VegasKeyKnowledge {
         if (!(sv instanceof Integer) || (Integer) sv != 1)
             throw reject(I18n.s(R.string.ui_schemaversion_must_be_1_got) + sv);
         if (!root.containsKey("forkBuild")) throw reject(I18n.s(R.string.ui_missing_forkbuild));
-        if (!root.containsKey("generated")) throw reject("missing generated");
-        if (!root.containsKey("released")) throw reject("missing released");
+        if (!root.containsKey("generated")) throw reject(I18n.s(R.string.ui_missing_generated));
+        if (!root.containsKey("released")) throw reject(I18n.s(R.string.ui_missing_released));
     }
 
     private static Map<String, Object> parseStrictObject(String json) {
         MiniJson parser = new MiniJson(json);
         Object root = parser.parse();
-        if (!(root instanceof Map)) throw reject("root must be an object");
+        if (!(root instanceof Map)) throw reject(I18n.s(R.string.ui_root_must_be_an_object));
         return uncheckedMap(root);
     }
 
@@ -648,13 +651,13 @@ public final class VegasKeyKnowledge {
         Object parse() {
             Object v = value();
             skipWs();
-            if (i < s.length()) throw error("trailing characters");
+            if (i < s.length()) throw error(I18n.s(R.string.ui_trailing_characters));
             return v;
         }
 
         private Object value() {
             skipWs();
-            if (i >= s.length()) throw error("unexpected end");
+            if (i >= s.length()) throw error(I18n.s(R.string.ui_unexpected_end));
             char c = s.charAt(i);
             switch (c) {
                 case '{': return object();
@@ -712,13 +715,13 @@ public final class VegasKeyKnowledge {
             boolean frac = false, exp = false;
             if (i < s.length() && s.charAt(i) == '.') {
                 frac = true; i++;
-                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error("bad fraction");
+                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error(I18n.s(R.string.ui_bad_fraction));
                 while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             }
             if (i < s.length() && (s.charAt(i) == 'e' || s.charAt(i) == 'E')) {
                 exp = true; i++;
                 if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-')) i++;
-                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error("bad exponent");
+                if (i >= s.length() || !Character.isDigit(s.charAt(i))) throw error(I18n.s(R.string.ui_bad_exponent));
                 while (i < s.length() && Character.isDigit(s.charAt(i))) i++;
             }
             String num = s.substring(start, i);
@@ -734,12 +737,12 @@ public final class VegasKeyKnowledge {
             StringBuilder sb = new StringBuilder();
             i++; // opening quote
             while (true) {
-                if (i >= s.length()) throw error("unterminated string");
+                if (i >= s.length()) throw error(I18n.s(R.string.ui_unterminated_string));
                 char c = s.charAt(i);
                 if (c == '"') { i++; return sb.toString(); }
                 if (c == '\\') {
                     i++;
-                    if (i >= s.length()) throw error("bad escape");
+                    if (i >= s.length()) throw error(I18n.s(R.string.ui_bad_escape));
                     char e = s.charAt(i);
                     switch (e) {
                         case '"': sb.append('"'); break;
@@ -751,7 +754,7 @@ public final class VegasKeyKnowledge {
                         case 'r': sb.append('\r'); break;
                         case 't': sb.append('\t'); break;
                         case 'u': {
-                            if (i + 4 >= s.length()) throw error("bad unicode escape");
+                            if (i + 4 >= s.length()) throw error(I18n.s(R.string.ui_bad_unicode_escape));
                             sb.append((char) Integer.parseInt(s.substring(i + 1, i + 5), 16));
                             i += 4;
                             break;
@@ -760,7 +763,7 @@ public final class VegasKeyKnowledge {
                     }
                     i++;
                 } else {
-                    if (c < 0x20) throw error("control char in string");
+                    if (c < 0x20) throw error(I18n.s(R.string.ui_control_char_in_string));
                     sb.append(c);
                     i++;
                 }
@@ -774,7 +777,7 @@ public final class VegasKeyKnowledge {
 
         private char peek() {
             skipWs();
-            if (i >= s.length()) throw error("unexpected end");
+            if (i >= s.length()) throw error(I18n.s(R.string.ui_unexpected_end));
             return s.charAt(i);
         }
 

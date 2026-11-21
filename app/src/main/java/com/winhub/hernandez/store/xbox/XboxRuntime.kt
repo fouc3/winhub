@@ -179,9 +179,9 @@ object XboxRuntime {
                 while (!socket.exists() && service.process.isAlive && synchronized(state) { generation == current } &&
                     SystemClock.elapsedRealtime() < deadline) Thread.sleep(100)
                 check(socket.exists() && service.process.isAlive) {
-                    "Xbox account service did not become ready. Check your sign-in and network connection."
+                    I18n.s(R.string.ui_xbox_account_service_did_not_become_ready_check_your_sig)
                 }
-                XboxDiag.log(app, "account service ready")
+                XboxDiag.log(app, I18n.s(R.string.ui_account_service_ready))
             } catch (e: Exception) {
                 synchronized(state) { if (child === service) { child = null; owner = null; serviceSocket = null } }
                 service.close()

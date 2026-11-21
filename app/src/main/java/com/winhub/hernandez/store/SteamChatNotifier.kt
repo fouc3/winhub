@@ -100,7 +100,7 @@ object SteamChatNotifier {
 
                 val avatar = avatarUrl?.let { loadAvatar(it) }
                 val sender = Person.Builder()
-                    .setName(senderName.ifBlank { "Steam friend" })
+                    .setName(senderName.ifBlank { I18n.s(R.string.ui_steam_friend) })
                     .apply { avatar?.let { setIcon(IconCompat.createWithBitmap(it)) } }
                     .build()
                 val self = Person.Builder().setName("You").build()
@@ -192,7 +192,7 @@ object SteamChatNotifier {
             if (nm.getNotificationChannel(CHANNEL_ALERT) == null) {
                 val alert = NotificationChannel(
                     CHANNEL_ALERT,
-                    "Steam Messages",
+                    I18n.s(R.string.ui_steam_messages_2),
                     NotificationManager.IMPORTANCE_HIGH,
                 ).apply {
                     description = I18n.s(R.string.ui_chat_messages_from_your_steam_friends_sound_heads_up)
@@ -203,7 +203,7 @@ object SteamChatNotifier {
             if (nm.getNotificationChannel(CHANNEL_SILENT) == null) {
                 val silent = NotificationChannel(
                     CHANNEL_SILENT,
-                    "Steam Messages (silent)",
+                    I18n.s(R.string.ui_steam_messages_silent),
                     NotificationManager.IMPORTANCE_LOW,
                 ).apply {
                     description = I18n.s(R.string.ui_chat_messages_from_your_steam_friends_no_sound)

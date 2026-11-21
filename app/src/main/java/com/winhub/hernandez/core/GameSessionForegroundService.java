@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -90,7 +93,7 @@ public class GameSessionForegroundService extends Service {
                 PendingIntent.FLAG_IMMUTABLE);
         String text = (label != null && !label.isEmpty())
                 ? label + I18n.s(R.string.ui_is_running_do_not_swipe_this_notification)
-                : "Winlator is running, do not kill or swipe this notification";
+                : I18n.s(R.string.ui_winlator_is_running_do_not_kill_or_swipe_this_notificati);
         return new NotificationCompat.Builder(this, XServerDisplayActivity.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_ab_gear_0011)
                 .setContentTitle("Winlator")

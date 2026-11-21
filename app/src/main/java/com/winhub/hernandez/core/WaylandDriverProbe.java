@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -43,7 +46,7 @@ public final class WaylandDriverProbe {
     public static final long WATCHDOG_MS = 5000;
     /** What the dialog says when a session is on screen and the probe is skipped. */
     public static final String SESSION_RUNNING_NOTE =
-            "A game is running, so the driver was not checked. Open this again after the game has closed.";
+            I18n.s(R.string.ui_a_game_is_running_so_the_driver_was_not_checked_open_thi);
 
     /** The parsed report. Field names mirror the JSON keys; a key the probe left out reads as its "no" value. */
     public static final class Report {
@@ -108,7 +111,7 @@ public final class WaylandDriverProbe {
 
         /** One short reason for {@link #zeroCopySafe}'s answer, for the dialog. */
         public String zeroCopyReason() {
-            if (!ok) return "driver could not be checked";
+            if (!ok) return I18n.s(R.string.ui_driver_could_not_be_checked);
             if (!syncFdFence) return I18n.s(R.string.ui_the_driver_cannot_export_sync_file_fences_so_frames_coul);
             return dmabufSyncFileIoctl ? "sync-file fences and the dma-buf sync ioctl both work"
                     : "sync-file fences work (client render fences)";
@@ -228,7 +231,7 @@ public final class WaylandDriverProbe {
         if (t.isAlive()) {
             // The native thread is abandoned (it cannot be killed); it is daemon and bounded on its own side.
             Log.w(TAG, "probe of " + driverId + " did not answer within " + WATCHDOG_MS + " ms");
-            r = failed(driverId, "the driver did not answer within 5 seconds");
+            r = failed(driverId, I18n.s(R.string.ui_the_driver_did_not_answer_within_5_seconds));
         } else if (err[0] != null) {
             Log.e(TAG, "probe of " + driverId + " threw", err[0]);
             r = failed(driverId, "the probe failed: " + err[0].getClass().getSimpleName());
@@ -237,7 +240,7 @@ public final class WaylandDriverProbe {
             try { j = new JSONObject(out[0] == null ? "" : out[0]); }
             catch (Exception e) {
                 Log.w(TAG, "probe of " + driverId + I18n.s(R.string.ui_returned_no_usable_json) + out[0]);
-                j = failed(driverId, "the probe returned an unreadable report").json;
+                j = failed(driverId, I18n.s(R.string.ui_the_probe_returned_an_unreadable_report)).json;
             }
             r = new Report(driverId, j, false);
         }

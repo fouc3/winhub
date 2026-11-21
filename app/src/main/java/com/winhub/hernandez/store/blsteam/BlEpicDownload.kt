@@ -1,6 +1,9 @@
 // JNI symbols depend on this package path and class name (see rust/src/store_dl/epic/jni.rs).
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -123,7 +126,7 @@ object BlEpicDownload {
         }
         if (handle == 0L) {
             val c = completion.get()
-            return Result(false, false, false, c?.error ?: "not started", 0L, 0, totalRef.get())
+            return Result(false, false, false, c?.error ?: I18n.s(R.string.ui_not_started), 0L, 0, totalRef.get())
         }
 
         var cancelSent = false

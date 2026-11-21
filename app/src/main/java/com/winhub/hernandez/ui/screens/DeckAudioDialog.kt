@@ -82,7 +82,7 @@ internal fun DeckAudioSettingsDialog(
             } else {
                 DeckSliderRow(
                     label = I18n.s(R.string.ui_guest_buffer),
-                    hint = (if (!latencyUsed) "not used by ALSA — set the buffer rows below"
+                    hint = (if (!latencyUsed) I18n.s(R.string.ui_not_used_by_alsa_set_the_buffer_rows_below_2)
                             else "winepulse · ${shown.latencyMsec} ms") +
                         if (!latencyLive) "  · next launch" else "",
                     value = shown.latencyMsec.toFloat(),

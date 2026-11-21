@@ -30,11 +30,11 @@ object VegasTierPresets {
     )
 
     val TIERS = listOf(
-        Tier(1, "Tier 1", "Entry — 5xx / 6xx entry (506–620) · GTX 1050 Ti-class",
+        Tier(1, I18n.s(R.string.ui_tier_1), "Entry — 5xx / 6xx entry (506–620) · GTX 1050 Ti-class",
             listOf("506", "508", "509", "512", "610", "615", "616", "618", "619", "620")),
         Tier(2, "Tier 2", I18n.s(R.string.ui_mid_6xx_mid_630_690_642l_gtx_1070_class),
             listOf("630", "640", "642", "650", "660", "680", "690")),
-        Tier(3, "Tier 3", "High — 7xx / 8xx (830, 840) · RTX 3060-class",
+        Tier(3, I18n.s(R.string.ui_tier_3), "High — 7xx / 8xx (830, 840) · RTX 3060-class",
             listOf("730", "740", "750", "830", "840"))
     )
 
@@ -103,16 +103,16 @@ object VegasTierPresets {
      */
     val BUNDLED_NOTES: Map<String, List<String>> = mapOf(
         "2.7.3" to listOf(
-            "Stable · frame pacing fixes",
+            I18n.s(R.string.ui_stable_frame_pacing_fixes),
             "dxvk.enableStarProfile, vegas.enableUpscaler ship commented"
         ),
         "2.7.4" to listOf(
-            "GPL dither warm-up",
-            "Adds vegas.telemetry"
+            I18n.s(R.string.ui_gpl_dither_warm_up),
+            I18n.s(R.string.ui_adds_vegas_telemetry)
         ),
         "3.0" to listOf(
-            "TBDR batch tuning · tile-reuse pass",
-            "vegas.telemetry now stock (was 2.7.4 only)"
+            I18n.s(R.string.ui_tbdr_batch_tuning_tile_reuse_pass),
+            I18n.s(R.string.ui_vegas_telemetry_now_stock_was_2_7_4_only)
         )
     )
 }

@@ -408,7 +408,7 @@ class AmazonGamesActivity : ComponentActivity() {
         if (visibleGames.isEmpty()) {
             val q = searchQuery.trim()
             setSync(
-                if (q.isEmpty()) "Your Amazon library is empty"
+                if (q.isEmpty()) I18n.s(R.string.ui_your_amazon_library_is_empty)
                 else "No results for \"$q\"",
                 false,
             )

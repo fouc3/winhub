@@ -531,7 +531,7 @@ private fun HelpSupportDialog(onDismiss: () -> Unit, onOpenUrl: (String) -> Unit
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    "For bug reports, feature requests, and support, visit the GitHub repository.",
+                    I18n.s(R.string.ui_for_bug_reports_feature_requests_and_support_visit_the_g),
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 SupportLink(

@@ -127,8 +127,8 @@ data class CatalogItem(
 
 /** Tags that mark a title adult (store tags/slug, whatever the catalog calls it). */
 private val MATURE_TAGS = setOf(
-    "mature", "nsfw", "adult", "adult only", "adults only",
-    "nudity", "sexual content", "sexual-content",
+    "mature", "nsfw", "adult", I18n.s(R.string.ui_adult_only), I18n.s(R.string.ui_adults_only),
+    "nudity", I18n.s(R.string.ui_sexual_content), "sexual-content",
 )
 
 /** Whether a store's own tags mark a title as adult. */
@@ -752,7 +752,7 @@ fun CatalogResults(
     val rows = remember(results) { results.distinctBy { it.id } }
     Column(modifier = modifier.fillMaxSize()) {
         StoreSectionHeader(
-            title = if (searching && rows.isEmpty()) "Searching…"
+            title = if (searching && rows.isEmpty()) I18n.s(R.string.ui_searching)
             else "${rows.size} result${if (rows.size == 1) "" else "s"}",
             sub = "“$query”",
         )

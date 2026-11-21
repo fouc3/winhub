@@ -171,8 +171,8 @@ fun WrapperCatalogPicker(
                 // override (rather than adding a new imported wrapper).
                 if (targetSlot != null) {
                     Text(
-                        "Downloading a wrapper installs it as this slot's override. A wrapper that " +
-                            "doesn't match the slot is rejected.",
+                        I18n.s(R.string.ui_downloading_a_wrapper_installs_it_as_this_slot_s_overrid) +
+                            I18n.s(R.string.ui_doesn_t_match_the_slot_is_rejected),
                         style = MaterialTheme.typography.bodySmall,
                         color = cs.onSurfaceVariant,
                         modifier = Modifier.padding(bottom = 8.dp),
@@ -457,7 +457,7 @@ private fun applicabilityChip(targets: List<String>, isQualcomm: Boolean): Strin
         val fam = targets.firstOrNull { it != "adreno" } ?: "Mali"
         fam.replaceFirstChar { it.uppercase() } + " only"
     } else {
-        "Adreno only"
+        I18n.s(R.string.ui_adreno_only)
     }
 }
 

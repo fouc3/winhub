@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store.blsteam
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
@@ -61,7 +64,7 @@ class BlLibraryCrawler(private val session: BlSteamSession) {
             // ── 0. License list (pushed right after logon; poll briefly for it) ─────────────────
             val licenses = awaitLicenses(sink)
             if (licenses == null) { sink.onFailed("cancelled", 0); return }
-            if (licenses.isEmpty()) { sink.onFailed("no licenses received", 0); return }
+            if (licenses.isEmpty()) { sink.onFailed(I18n.s(R.string.ui_no_licenses_received), 0); return }
             sink.onLicenses(licenses)
             if (sink.isCancelled()) { sink.onFailed("cancelled", 0); return }
 

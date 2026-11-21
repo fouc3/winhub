@@ -367,7 +367,7 @@ internal fun DeckSettingsScreen() {
                 checkingUpdate = false
                 availableUpdate = info?.takeIf { it.isNewer }
                 updateNote = info?.takeIf { it.isNewer }?.let { "V ${it.versionName} available" }
-                    ?: "You're on the latest build"
+                    ?: I18n.s(R.string.ui_you_re_on_the_latest_build)
             }
         }
     }
@@ -546,7 +546,7 @@ internal fun DeckSettingsScreen() {
             DeckChoiceRow(
                 label = I18n.s(R.string.ui_steam_connection_region),
                 options = buildList {
-                    add(SteamRegion.AUTO to "Auto (nearest by ping)")
+                    add(SteamRegion.AUTO to I18n.s(R.string.ui_auto_nearest_by_ping_2))
                     SteamRegion.CATALOG.forEach { add(it.code to "${it.name}  (${it.code})") }
                 },
                 selected = steamRegion,
@@ -868,7 +868,7 @@ internal fun DeckSettingsScreen() {
                 label = I18n.s(R.string.ui_home_style),
                 hint = I18n.s(R.string.ui_full_xmb_puts_the_stores_and_social_on_home_as_cards),
                 options = listOf(
-                    DeckHomeStyle.FULL_XMB to "Full XMB",
+                    DeckHomeStyle.FULL_XMB to I18n.s(R.string.ui_full_xmb),
                     DeckHomeStyle.STEAM to "Steam",
                 ),
                 selected = homeStyle,
@@ -896,7 +896,7 @@ internal fun DeckSettingsScreen() {
         if (!portraitUi) DeckGroup(title = I18n.s(R.string.retro_title)) {
             DeckRow(
                 label = I18n.s(R.string.retro_opt_folder),
-                hint = retroRoot ?: "Not chosen yet. WinHub looks in ROMs and Games when you open the retro library",
+                hint = retroRoot ?: I18n.s(R.string.ui_not_chosen_yet_winhub_looks_in_roms_and_games_when_you_o),
             ) {
                 DeckButton(I18n.s(R.string.ui_choose), primary = false) {
                     retroFolderLauncher.launch(InAppFilePicker.buildDirIntent(context, I18n.s(R.string.retro_opt_folder), retroRoot))
@@ -1214,7 +1214,7 @@ internal fun DeckSettingsScreen() {
                 val sizeMb = update.downloadSize.takeIf { it > 0 }?.let { " (${it / (1024 * 1024)} MB)" } ?: ""
                 DeckRow(
                     label = "Download & install V ${update.versionName}",
-                    hint = (update.notes.takeIf { it.isNotBlank() } ?: "Downloads in the background and opens the installer") + sizeMb,
+                    hint = (update.notes.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_downloads_in_the_background_and_opens_the_installer)) + sizeMb,
                 ) {
                     DeckButton("Install", primary = true) {
                         activity?.let { UpdateManager.downloadAndInstall(it, update) {} }

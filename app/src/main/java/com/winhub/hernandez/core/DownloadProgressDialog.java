@@ -5,6 +5,9 @@
 
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
@@ -102,7 +105,7 @@ public class DownloadProgressDialog {
             .setProgress(progress);
 
         ((TextView) dialog.findViewById(R.id.TVProgress))
-            .setText("Installing... " + progress + "%");
+            .setText(I18n.s(R.string.ui_installing_3) + progress + "%");
     }
 
     public void close() {

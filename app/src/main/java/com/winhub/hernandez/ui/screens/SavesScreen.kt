@@ -360,7 +360,7 @@ private fun NewSaveDialog(
                     onExpandedChange = { dropdownExpanded = it },
                 ) {
                     OutlinedTextField(
-                        value = selectedContainer?.getName() ?: if (containers.isEmpty()) "No containers" else "",
+                        value = selectedContainer?.getName() ?: if (containers.isEmpty()) I18n.s(R.string.ui_no_containers) else "",
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(I18n.s(R.string.container)) },
@@ -487,7 +487,7 @@ private fun TransferSaveDialog(
                     onExpandedChange = { dropdownExpanded = it },
                 ) {
                     OutlinedTextField(
-                        value = containers.getOrNull(selectedIndex)?.getName() ?: "No containers",
+                        value = containers.getOrNull(selectedIndex)?.getName() ?: I18n.s(R.string.ui_no_containers),
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(I18n.s(R.string.container)) },
@@ -546,7 +546,7 @@ private fun ImportContainerSelectDialog(
                     onExpandedChange = { dropdownExpanded = it },
                 ) {
                     OutlinedTextField(
-                        value = containers.getOrNull(selectedIndex)?.getName() ?: "No containers",
+                        value = containers.getOrNull(selectedIndex)?.getName() ?: I18n.s(R.string.ui_no_containers),
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(I18n.s(R.string.container)) },

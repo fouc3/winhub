@@ -162,7 +162,7 @@ object SteamGameUpdater {
                 runCheck(appCtx, appId, handle, postProgress, postDone)
             } catch (t: Throwable) {
                 Log.w(TAG, "ensureCurrentBuild($appId) failed", t)
-                postDone(Result.FAILED, t.message ?: "Update check failed")
+                postDone(Result.FAILED, t.message ?: I18n.s(R.string.ui_update_check_failed))
             }
         }, "steam-update-$appId").start()
 
@@ -205,7 +205,7 @@ object SteamGameUpdater {
                 runVerify(appCtx, appId, handle, postProgress, postDone)
             } catch (t: Throwable) {
                 Log.w(TAG, "verifyFiles($appId) failed", t)
-                postDone(Result.FAILED, t.message ?: "Verify failed")
+                postDone(Result.FAILED, t.message ?: I18n.s(R.string.ui_verify_failed_2))
             }
         }, "steam-verify-$appId").start()
 
@@ -376,7 +376,7 @@ object SteamGameUpdater {
         if (liveBuild <= 0L) {
             Log.i(TAG, "app $appId live build unknown (no branch data) — can't verify")
             postDone(Result.OFFLINE_UNKNOWN,
-                "Couldn't check for the latest version (no Steam data for this game yet)."); return
+                I18n.s(R.string.ui_couldn_t_check_for_the_latest_version_no_steam_data_for)); return
         }
 
         // We know the live build and are NOT confirmed current → a delta update is required. That needs a
@@ -472,7 +472,7 @@ object SteamGameUpdater {
                 } else if (event.startsWith("DownloadFailed:")) {
                     val parts = event.split(":")
                     if (parts.getOrNull(1)?.toIntOrNull() == appId) {
-                        val reason = parts.drop(2).joinToString(":").ifBlank { "Update failed" }
+                        val reason = parts.drop(2).joinToString(":").ifBlank { I18n.s(R.string.ui_update_failed) }
                         // Corrupt/incomplete install → clear the engine's resume state and re-run as a
                         // full verify (once). See the method doc. Keep the listener attached so the
                         // verify pass's terminal event is handled; do NOT set `finished`.

@@ -306,8 +306,8 @@ private fun QrLoginScreen(
         ) {
             Text(
                 text = I18n.s(R.string.ui_if_downloads_or_your_session_keep_dropping_after_signing) +
-                        "QR, sign out and use the Username + Password method instead — " +
-                        "it's the more reliable sign-in.",
+                        I18n.s(R.string.ui_qr_sign_out_and_use_the_username_password_method_instead) +
+                        I18n.s(R.string.ui_it_s_the_more_reliable_sign_in),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

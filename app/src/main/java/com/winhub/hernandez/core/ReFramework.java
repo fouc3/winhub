@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -107,7 +110,7 @@ public final class ReFramework {
             int n;
             while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
         }
-        if (to.exists() && !to.delete()) { tmp.delete(); throw new IOException("cannot replace " + to); }
-        if (!tmp.renameTo(to)) { tmp.delete(); throw new IOException("cannot rename to " + to); }
+        if (to.exists() && !to.delete()) { tmp.delete(); throw new IOException(I18n.s(R.string.ui_cannot_replace) + to); }
+        if (!tmp.renameTo(to)) { tmp.delete(); throw new IOException(I18n.s(R.string.ui_cannot_rename_to) + to); }
     }
 }

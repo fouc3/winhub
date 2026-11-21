@@ -80,7 +80,7 @@ internal fun DeckStoreAddFlow(request: DeckAddRequest, onDismiss: () -> Unit) {
         if (resolved == null) {
             Toast.makeText(
                 context,
-                "Couldn't find the installed game — launch it once from the store first",
+                I18n.s(R.string.ui_couldn_t_find_the_installed_game_launch_it_once_from_the),
                 Toast.LENGTH_LONG,
             ).show()
             onDismiss()

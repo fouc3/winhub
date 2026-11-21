@@ -382,7 +382,7 @@ internal fun DeckStockConfigSheet(
                             maxLines = 1,
                         )
                         val sub = buildString {
-                            append(rel.confName ?: "no config asset")
+                            append(rel.confName ?: I18n.s(R.string.ui_no_config_asset))
                             if (rel.date.isNotEmpty()) append("  ·  ${rel.date}")
                         }
                         Text(sub, color = DeckPalette.onSurfaceVariant, fontSize = 12.sp, maxLines = 1)

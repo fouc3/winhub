@@ -220,7 +220,7 @@ private fun PlayerRail(
         Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
             if (rows.isEmpty()) {
                 Text(
-                    "No input devices detected.",
+                    I18n.s(R.string.ui_no_input_devices_detected),
                     style = MaterialTheme.typography.bodySmall,
                     color = cs.onSurfaceVariant
                 )
@@ -360,7 +360,7 @@ private fun TestPanel(state: XServerDialogState, selected: String?, modifier: Mo
     ControllerTestPanel(
         snapshot = snap,
         title = I18n.s(R.string.ui_controller_test),
-        subtitle = selectedRow?.displayName ?: "No controller selected",
+        subtitle = selectedRow?.displayName ?: I18n.s(R.string.ui_no_controller_selected),
         resetKey = selected,
         manualArt = manualArt,
         onArtChange = { manualArt = it },

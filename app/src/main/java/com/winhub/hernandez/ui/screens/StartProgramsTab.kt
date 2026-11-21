@@ -69,9 +69,9 @@ internal class StartProgramsState(stored: String?) {
         StartPrograms.encode(items.map { StartPrograms.Entry(it.path, it.delay.toIntOrNull() ?: 0) })
 }
 
-private const val START_PROGRAMS_HINT =
+private val START_PROGRAMS_HINT =
     "These start with the game, top to bottom. The first waits from the game launching; each next one " +
-        "waits after the one before it starts. A trainer usually needs about 10 s so the game is running."
+        I18n.s(R.string.ui_waits_after_the_one_before_it_starts_a_trainer_usually_n)
 private const val PATH_LABEL = "Windows path, e.g. F:\\Trainers\\Trainer.exe"
 
 private val DELAY_CHOICES = listOf(0, 1, 2, 3, 5, 10, 15, 20, 30, 45, 60, 90, 120, 180, 300)

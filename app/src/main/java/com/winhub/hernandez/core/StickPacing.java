@@ -1,5 +1,8 @@
 package com.winhub.hernandez.core;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import com.winhub.hernandez.container.Container;
 import com.winhub.hernandez.container.Shortcut;
 
@@ -79,9 +82,9 @@ public final class StickPacing {
 
     public String describe() {
         switch (mode) {
-            case MODE_FIXED: return "Fixed " + hz + "/s";
+            case MODE_FIXED: return I18n.s(R.string.ui_fixed) + hz + "/s";
             case MODE_OFF: return "Unpaced";
-            default: return "Auto (up to " + hz + "/s)";
+            default: return I18n.s(R.string.ui_auto_up_to) + hz + "/s)";
         }
     }
 
@@ -90,7 +93,7 @@ public final class StickPacing {
         switch (mode) {
             case MODE_FIXED: return hz + " per second";
             case MODE_OFF: return "";
-            default: return "Up to " + hz + " per second";
+            default: return I18n.s(R.string.ui_up_to) + hz + " per second";
         }
     }
 

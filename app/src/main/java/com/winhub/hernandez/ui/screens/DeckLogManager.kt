@@ -222,17 +222,17 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             DeckConfigChipGrid("Channels · ${channels.size} selected", chips)
                         }
                         PrefSwitchRow(prefs, "enable_box64_logs", false, "Box64 / FEXCore",
-                            "Slows games down at higher verbosity.",
+                            I18n.s(R.string.ui_slows_games_down_at_higher_verbosity_2),
                             onInfo = { info = "Box64 / FEXCore" to LogCopy.BOX64 })
                         PrefSwitchRow(prefs, "enable_dxvk_logs", true, "DXVK & VKD3D",
-                            "Safe to leave on. Mostly written at startup.",
+                            I18n.s(R.string.ui_safe_to_leave_on_mostly_written_at_startup_2),
                             onInfo = { info = "DXVK & VKD3D" to LogCopy.DXVK })
                         PrefSwitchRow(prefs, ControllerLog.PREF_KEY, false, I18n.s(R.string.ui_controller_input),
-                            "For controls that don't work. Written when the game exits.",
-                            onInfo = { info = "Controller input" to LogCopy.CONTROLLER })
+                            I18n.s(R.string.ui_for_controls_that_don_t_work_written_when_the_game_exits),
+                            onInfo = { info = I18n.s(R.string.ui_controller_input) to LogCopy.CONTROLLER })
                         PrefSwitchRow(prefs, "enable_steamlite_logs", false, I18n.s(R.string.ui_steamlite_steam_client),
-                            "Only when a game launches through SteamLite.",
-                            onInfo = { info = "SteamLite (Steam client)" to LogCopy.STEAMLITE })
+                            I18n.s(R.string.ui_only_when_a_game_launches_through_steamlite_2),
+                            onInfo = { info = I18n.s(R.string.ui_steamlite_steam_client) to LogCopy.STEAMLITE })
                     }
                     DeckGroup("App") {
                         LogSwitchRow(
@@ -240,16 +240,16 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             onInfo = { info = "Android logcat" to LogCopy.LOGCAT },
                         ) { logcat = it; prefs.edit().putBoolean("enable_logcat", it).apply() }
                         PrefSwitchRow(prefs, "enable_crash_reports", true, I18n.s(R.string.ui_crash_reports),
-                            "Nothing runs until something crashes.",
-                            onInfo = { info = "Crash reports" to LogCopy.CRASH })
+                            I18n.s(R.string.ui_nothing_runs_until_something_crashes_2),
+                            onInfo = { info = I18n.s(R.string.ui_crash_reports) to LogCopy.CRASH })
                         // Reads Android's own record of why the process died, the only way to see a
                         // native crash without root. The toggle only auto-saves on launch.
                         PrefSwitchRow(prefs, ExitReasonReporter.PREF_AUTOSAVE, false,
-                            if (ExitReasonReporter.isSupported()) "Exit reasons (auto-save on launch)"
+                            if (ExitReasonReporter.isSupported()) I18n.s(R.string.ui_exit_reasons_auto_save_on_launch)
                             else I18n.s(R.string.ui_exit_reasons_needs_android_11),
-                            "Records native crashes without root.",
+                            I18n.s(R.string.ui_records_native_crashes_without_root_2),
                             enabled = ExitReasonReporter.isSupported(),
-                            onInfo = { info = "Exit reasons" to LogCopy.EXIT_REASONS })
+                            onInfo = { info = I18n.s(R.string.ui_exit_reasons) to LogCopy.EXIT_REASONS })
                     }
                 }
 
@@ -301,7 +301,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                             },
                         )
                         DeckRow(
-                            "Total size",
+                            I18n.s(R.string.ui_total_size),
                             LogInventory.humanBytes(LogInventory.totalBytes(entries)) +
                                 " across ${entries.size} " + if (entries.size == 1) "folder" else "folders",
                         ) {
@@ -353,7 +353,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     DeckGroup(I18n.s(R.string.ui_capture_now)) {
                         DeckRow(I18n.s(R.string.ui_capture_logcat_now), I18n.s(R.string.ui_saves_winhub_s_recent_output_to_your_log_folder)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                LogInfoDot { info = "Capture logcat now" to LogCopy.CAPTURE_NOW }
+                                LogInfoDot { info = I18n.s(R.string.ui_capture_logcat_now) to LogCopy.CAPTURE_NOW }
                                 LogAction(
                                     "Capture", LogActionKind.NEUTRAL,
                                     modifier = Modifier.alpha(if (logcat) 1f else 0.4f),
@@ -372,7 +372,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                         }
                         DeckRow(I18n.s(R.string.ui_read_last_crash), I18n.s(R.string.ui_why_android_ended_the_app_last_time_saved_with_your_logs)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                LogInfoDot { info = "Exit reasons" to LogCopy.EXIT_REASONS }
+                                LogInfoDot { info = I18n.s(R.string.ui_exit_reasons) to LogCopy.EXIT_REASONS }
                                 LogAction(
                                     "Read", LogActionKind.NEUTRAL,
                                     modifier = Modifier.alpha(if (ExitReasonReporter.isSupported()) 1f else 0.4f),
@@ -392,22 +392,22 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     }
                     DeckGroup(I18n.s(R.string.ui_native_engines)) {
                         PrefSwitchRow(prefs, BlSteamEngineFlag.PREF_KEY, BlSteamEngineFlag.DEFAULT,
-                            "Native Steam engine (restart required)",
+                            I18n.s(R.string.ui_native_steam_engine_restart_required),
                             "On: the whole Steam session runs natively. Off: legacy Java engine.",
-                            onInfo = { info = "Rust Steam engine" to LogCopy.RUST_ENGINE })
+                            onInfo = { info = I18n.s(R.string.ui_rust_steam_engine) to LogCopy.RUST_ENGINE })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_EPIC, BlStoreEngineFlag.DEFAULT,
                             "Rust engine: Epic downloads", I18n.s(R.string.ui_applies_to_the_next_download),
-                            onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
+                            onInfo = { info = I18n.s(R.string.ui_rust_store_engines) to LogCopy.RUST_STORE_ENGINES })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_GOG, BlStoreEngineFlag.DEFAULT,
                             "Rust engine: GOG downloads", I18n.s(R.string.ui_applies_to_the_next_download),
-                            onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
+                            onInfo = { info = I18n.s(R.string.ui_rust_store_engines) to LogCopy.RUST_STORE_ENGINES })
                         PrefSwitchRow(prefs, BlStoreEngineFlag.PREF_KEY_AMAZON, BlStoreEngineFlag.DEFAULT,
                             "Rust engine: Amazon downloads", I18n.s(R.string.ui_applies_to_the_next_download),
-                            onInfo = { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES })
+                            onInfo = { info = I18n.s(R.string.ui_rust_store_engines) to LogCopy.RUST_STORE_ENGINES })
                         // One app-wide ceiling for the three store engines; tap cycles the tier.
                         DeckRow(I18n.s(R.string.ui_store_download_speed), I18n.s(R.string.ui_ceiling_for_the_epic_gog_and_amazon_engines)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                LogInfoDot { info = "Rust store engines" to LogCopy.RUST_STORE_ENGINES }
+                                LogInfoDot { info = I18n.s(R.string.ui_rust_store_engines) to LogCopy.RUST_STORE_ENGINES }
                                 LogAction(StoreDownloadTier.label(storeDlTier), LogActionKind.NEUTRAL) {
                                     storeDlTier = StoreDownloadTier.next(storeDlTier)
                                     StoreDownloadTier.set(context, storeDlTier)
@@ -422,10 +422,10 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                     }
                     Text(
                         // Names what is actually stripped, and says plainly that paths are kept.
-                        "E-mail addresses, auth tokens and your Steam account name are scrubbed as logs are " +
+                        I18n.s(R.string.ui_e_mail_addresses_auth_tokens_and_your_steam_account_name) +
                             "written. File paths are kept so they stay useful for debugging, so glance over " +
-                            "them before sharing if a folder name identifies you. Logcat only ever contains " +
-                            "WinHub's own output.",
+                            I18n.s(R.string.ui_them_before_sharing_if_a_folder_name_identifies_you_logc) +
+                            I18n.s(R.string.ui_winhub_s_own_output),
                         color = DeckPalette.onSurfaceVariant,
                         fontSize = 12.sp,
                         modifier = Modifier.padding(top = 8.dp, start = 4.dp, end = 4.dp),
@@ -497,12 +497,12 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
             Text(
                 if (count == 0)
                     // The loose bucket counts every log-shaped file, but only ours are deletable.
-                    "Nothing here was written by WinHub, so there is nothing to delete. " +
+                    I18n.s(R.string.ui_nothing_here_was_written_by_winhub_so_there_is_nothing_t) +
                         "The files in this folder are yours and are left alone."
                 else
                     "Deletes $count log file${if (count == 1) "" else "s"}, including any kept " +
                         "history.\n\nOnly files WinHub wrote are removed. Anything else in that " +
-                        "folder is left alone.",
+                        I18n.s(R.string.ui_folder_is_left_alone),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 14.sp,
             )
@@ -529,7 +529,7 @@ internal fun DeckLogManagerDialog(onClose: () -> Unit) {
                 "Deletes $count log file${if (count == 1) "" else "s"} across ${entries.size} " +
                     "folder${if (entries.size == 1) "" else "s"}, including kept history.\n\n" +
                     "Only files WinHub wrote are removed. Other files in your log folder, " +
-                    "including anything you put there yourself, are left alone.",
+                    I18n.s(R.string.ui_including_anything_you_put_there_yourself_are_left_alone_2),
                 color = DeckPalette.onSurfaceVariant,
                 fontSize = 14.sp,
             )
@@ -686,7 +686,7 @@ private fun LogInfoDot(onClick: () -> Unit) {
             .clickable(onClick = onClick),
     ) {
         Icon(
-            Icons.Outlined.HelpOutline, "What's this?",
+            Icons.Outlined.HelpOutline, I18n.s(R.string.ui_what_this),
             tint = DeckPalette.secondary, modifier = Modifier.size(18.dp),
         )
     }

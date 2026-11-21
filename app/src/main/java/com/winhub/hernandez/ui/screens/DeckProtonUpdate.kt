@@ -207,7 +207,7 @@ internal fun DeckComponentUpdateDialog(offer: ComponentUpdates.Offer, onClose: (
                 UpdatePhase.INSTALLED ->
                     if (switchable > 0) {
                         "Installed. Switch $switchable container${if (switchable == 1) "" else "s"} to it now? " +
-                            "Containers keep their other settings, and you can undo this right after."
+                            I18n.s(R.string.ui_containers_keep_their_other_settings_and_you_can_undo_th)
                     } else I18n.s(R.string.ui_installed_pick_it_in_a_container_s_settings)
                 UpdatePhase.SWITCHING -> I18n.s(R.string.ui_switching_containers)
                 UpdatePhase.DONE -> note.orEmpty()

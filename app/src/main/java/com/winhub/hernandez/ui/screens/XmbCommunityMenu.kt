@@ -717,7 +717,7 @@ private fun xmbCommunityDetailMenu(xmb: XmbScope, s: Shortcut, pick: CommunityPi
                         rows += xmbBullets("ch", pre.changed, Icons.Filled.Tune, ctx)
                     }
                     if (pre.missingComponents.isNotEmpty()) {
-                        rows += XmbRow.Header("needs", "Needs a component")
+                        rows += XmbRow.Header("needs", I18n.s(R.string.ui_needs_a_component))
                         rows += xmbBullets("mc", pre.missingComponents.map { it.label }, Icons.Filled.Download, ctx)
                     }
                     if (pre.missingDrivers.isNotEmpty()) {
@@ -763,7 +763,7 @@ private fun xmbCommunityDetailMenu(xmb: XmbScope, s: Shortcut, pick: CommunityPi
                     }
                     rows += XmbRow.Text(
                         key = "addcomment", label = if (commenting) I18n.s(R.string.ui_sending) else "Add a comment", icon = Icons.Filled.Edit,
-                        value = "", placeholder = "Add a comment",
+                        value = "", placeholder = I18n.s(R.string.ui_add_a_comment),
                         disabledReason = if (commenting) I18n.s(R.string.ui_sending) else null,
                     ) { postComment(workerGame, d, it) }
                 }
@@ -835,7 +835,7 @@ private fun xmbCommunityApplyMenu(
                     addAll(xmbBullets("ch", r.changed, Icons.Filled.Tune, ctx))
                 }
                 if (r.missingComponents.isNotEmpty()) {
-                    add(XmbRow.Header("needs", "Needs a component"))
+                    add(XmbRow.Header("needs", I18n.s(R.string.ui_needs_a_component)))
                     addAll(xmbBullets("mc", r.missingComponents.map { it.label }, Icons.Filled.Download, ctx))
                 }
                 if (r.missingDrivers.isNotEmpty()) {

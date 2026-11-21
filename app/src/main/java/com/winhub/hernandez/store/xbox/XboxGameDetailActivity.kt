@@ -194,11 +194,11 @@ class XboxGameDetailActivity : ComponentActivity() {
                         }
                         StoreSection(title = I18n.s(R.string.ui_how_it_runs)) {
                             if (game.pc) Text(I18n.s(R.string.ui_install_the_pc_version_is_downloaded_with_your_license_a) +
-                                "adding it to Games. Each launch checks the license with Microsoft, so play online the first time. " +
+                                I18n.s(R.string.ui_adding_it_to_games_each_launch_checks_the_license_with_m) +
                                 "Cloud saves are ${if (XboxMainActivity.cloudSaves(this@XboxGameDetailActivity)) "on" else "off"} (Xbox › Profile).",
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             if (game.cloud) Text(I18n.s(R.string.ui_stream_plays_on_microsoft_s_servers_with_xbox_cloud_gami) +
-                                "but it needs a steady connection and an Xbox plan that includes cloud play. The first stream may ask you to sign in once.",
+                                I18n.s(R.string.ui_but_it_needs_a_steady_connection_and_an_xbox_plan_that_i),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(top = if (game.pc) 6.dp else 0.dp))
                         }
@@ -244,7 +244,7 @@ class XboxGameDetailActivity : ComponentActivity() {
         lifecycleScope.launch {
             val choices = withContext(Dispatchers.IO) { runCatching { XboxDownloads.resolve(applicationContext, game) } }
             busy = null
-            choices.onFailure { status = it.message ?: "The Xbox package could not be resolved." }.onSuccess { list ->
+            choices.onFailure { status = it.message ?: I18n.s(R.string.ui_the_xbox_package_could_not_be_resolved) }.onSuccess { list ->
                 if (list.size == 1) XboxDownloads.start(applicationContext, game, list.single().contentId)
                 else AlertDialog.Builder(this@XboxGameDetailActivity, R.style.StoreAlertDialogDark)
                     .setTitle(I18n.s(R.string.ui_choose_the_pc_package))

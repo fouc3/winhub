@@ -2,6 +2,9 @@ package com.winhub.hernandez.core;
 
 import com.winhub.hernandez.R;
 import com.winhub.hernandez.util.I18n;
+
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
 import android.util.Log;
 
 import java.io.File;
@@ -297,7 +300,7 @@ public final class WinebusRumblePatcher {
 
     private static byte[] readAll(File f) throws IOException {
         long len = f.length();
-        if (len <= 0 || len > Integer.MAX_VALUE) throw new IOException("bad size " + len);
+        if (len <= 0 || len > Integer.MAX_VALUE) throw new IOException(I18n.s(R.string.ui_bad_size) + len);
         byte[] buf = new byte[(int) len];
         try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
             raf.readFully(buf);

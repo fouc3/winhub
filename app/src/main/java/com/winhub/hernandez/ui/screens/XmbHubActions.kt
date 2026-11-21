@@ -44,9 +44,9 @@ internal fun hubXmbActions(
 ): List<XmbAction> = buildList {
     add(XmbAction(I18n.s(R.string.ui_launch_method), Icons.Filled.Layers) { ops.launchMethod() })
     if (GameSettingsStyle.isClassic(PreferenceManager.getDefaultSharedPreferences(context))) {
-        add(XmbAction("Settings", Icons.Filled.Settings, "Display, graphics, controller…") { ops.openSettings() })
+        add(XmbAction("Settings", Icons.Filled.Settings, I18n.s(R.string.ui_display_graphics_controller)) { ops.openSettings() })
     } else {
-        add(XmbAction("Settings", Icons.Filled.Settings, "Display, graphics, controller…", menu = { xmbSettingsMenu(it, shortcut, host) }))
+        add(XmbAction("Settings", Icons.Filled.Settings, I18n.s(R.string.ui_display_graphics_controller), menu = { xmbSettingsMenu(it, shortcut, host) }))
     }
     add(XmbAction(I18n.s(R.string.ui_game_doctor), Icons.Filled.Healing, I18n.s(R.string.ui_why_it_won_t_run_and_what_to_try), menu = { xmbGameDoctorMenu(it, shortcut) }))
     add(XmbAction(I18n.s(R.string.ui_game_details), Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))

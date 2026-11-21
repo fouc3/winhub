@@ -273,7 +273,7 @@ private fun p2DxvkMenu(xmb: XmbScope, s: Shortcut, isVegas: Boolean): XmbMenu {
                     write(sel().copy(dxvk = v))
                 }
                 rows += XmbRow.Action("vegasDelete", I18n.s(R.string.ui_delete_this_vegas_build), Icons.Filled.Delete, danger = true,
-                    subtitle = cur.dxvk, disabledReason = if (busy) "Working…" else null) {
+                    subtitle = cur.dxvk, disabledReason = if (busy) I18n.s(R.string.ui_working) else null) {
                     val ver = sel().dxvk
                     xmb.confirm(XmbConfirm(I18n.s(R.string.ui_delete_vegas_build), I18n.s(R.string.ui_remove_the_installed_vegas_ver_from_this_device), "Delete", danger = true)) {
                         deleteVegasBuild(ver)

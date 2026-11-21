@@ -204,7 +204,7 @@ object SocialHubStore {
                 },
                 onFailure = { t ->
                     if (BuildConfig.DEBUG) Log.w(TAG, "refresh", t)
-                    _error.value = t.message ?: "Could not load the feed."
+                    _error.value = t.message ?: I18n.s(R.string.ui_could_not_load_the_feed)
                 },
             )
             _loading.value = false
@@ -242,7 +242,7 @@ object SocialHubStore {
             val code = GitHubAuthClient.requestDeviceCode()
             if (code == null) {
                 _loginState.value =
-                    LoginState.Failed(GitHubAuthClient.lastError ?: "Could not start sign-in.")
+                    LoginState.Failed(GitHubAuthClient.lastError ?: I18n.s(R.string.ui_could_not_start_sign_in))
                 return@launch
             }
             _loginState.value = LoginState.AwaitingUser(
@@ -334,7 +334,7 @@ object SocialHubStore {
             _commentsLoading.value = true
             val result = fetchComments(number)
             _comments.value = result.getOrElse { emptyList() }
-            result.exceptionOrNull()?.let { _error.value = it.message ?: "Could not load replies." }
+            result.exceptionOrNull()?.let { _error.value = it.message ?: I18n.s(R.string.ui_could_not_load_replies) }
             _commentsLoading.value = false
         }
     }
@@ -723,7 +723,7 @@ object SocialHubStore {
         }
     } catch (t: Throwable) {
         if (BuildConfig.DEBUG) Log.w(TAG, "execute ${request.url}", t)
-        -1 to (t.message ?: "network error")
+        -1 to (t.message ?: I18n.s(R.string.ui_network_error))
     }
 
     /**

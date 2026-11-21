@@ -958,7 +958,7 @@ private fun GogGamesScreen(
             ) { Text("\u2190", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp) }
             Spacer(Modifier.width(8.dp))
             Text(
-                "GOG Library",
+                I18n.s(R.string.ui_gog_library),
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
@@ -1261,7 +1261,7 @@ private fun ExpandedSection(
         Spacer(Modifier.height(8.dp))
 
         val btnText = downloadState?.buttonText
-            ?: if (isInstalled) "Add to Launcher" else "Install"
+            ?: if (isInstalled) I18n.s(R.string.ui_add_to_launcher) else "Install"
         // Container/content derived from theme at call site (btnText carries the intent);
         // "Cancel" is the only destructive action \u2192 error, everything else \u2192 primary.
         val isCancelBtn = btnText == "Cancel"
@@ -1381,7 +1381,7 @@ private fun GameGridTile(
         if (isExpanded) {
             val isInstalled = downloadState?.isInstalled == true
             val btnText = downloadState?.buttonText
-                ?: if (isInstalled) "Add to Launcher" else "Install"
+                ?: if (isInstalled) I18n.s(R.string.ui_add_to_launcher) else "Install"
             // "Cancel" is the only destructive action \u2192 error; everything else \u2192 primary.
             val isCancelBtn = btnText == "Cancel"
 

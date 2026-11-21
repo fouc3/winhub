@@ -86,9 +86,9 @@ import com.winhub.hernandez.R
 
 private val UnreadDot = Color(0xFFE53935)
 
-private const val HELP_TEXT =
+private val HELP_TEXT =
     "Chat with Steam friends while you play. Shown when friends/chat is enabled; during SteamLite " +
-        "games it works through the in-game Steam client."
+        I18n.s(R.string.ui_games_it_works_through_the_in_game_steam_client)
 
 /** Rail button: the TabIconButton look with a People glyph and an unread dot in the corner. */
 @Composable
@@ -169,7 +169,7 @@ internal fun FriendsContent(state: XServerDrawerState) {
             Text(
                 when (src.kind) {
                     InGameFriendsSource.Kind.AGENT_RELAY -> I18n.s(R.string.ui_via_in_game_steam)
-                    InGameFriendsSource.Kind.APP_SESSION -> "via app session"
+                    InGameFriendsSource.Kind.APP_SESSION -> I18n.s(R.string.ui_via_app_session)
                     else -> ""
                 },
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -244,7 +244,7 @@ private fun InGameFriendsList(
 
     if (friends.isEmpty()) {
         Text(
-            "Waiting for your friends list…",
+            I18n.s(R.string.ui_waiting_for_your_friends_list),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 13.sp,
         )

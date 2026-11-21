@@ -81,7 +81,7 @@ fun ComponentInstallResume(onNavigateToGames: () -> Unit = {}) {
                 Text(
                     if (busy) "Working on $name…"
                     else "The $name installer ran. Finish setting it up in the container? " +
-                        "If it needs another installer, the container will open again.",
+                        I18n.s(R.string.ui_if_it_needs_another_installer_the_container_will_open_ag),
                     color = cs.onSurface,
                 )
                 if (busy) {

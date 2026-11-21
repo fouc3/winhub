@@ -563,7 +563,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
             Spacer(Modifier.height(8.dp))
             if (latest != null && latest.isNewer) {
                 Text(
-                    "Update available", color = Color(0xFFFFC107), fontSize = 13.sp, // intentional: amber = update-available status, semantic not themeable
+                    I18n.s(R.string.ui_update_available_2), color = Color(0xFFFFC107), fontSize = 13.sp, // intentional: amber = update-available status, semantic not themeable
                     fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 4.dp)
                 )
                 if (latest.notes.isNotBlank()) {
@@ -631,7 +631,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = I18n.s(R.string.ui_steam_chat_notifications) to
-                        "Shows an Android notification when a Steam friend messages you and their chat " +
+                        I18n.s(R.string.ui_shows_an_android_notification_when_a_steam_friend_messag) +
                         "isn't open in the app. Tap it to open the chat. Off = messages still arrive, you " +
                         I18n.s(R.string.ui_just_aren_t_told_until_you_open_friends)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
@@ -651,8 +651,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = I18n.s(R.string.ui_show_me_as_in_game) to
-                        "When you launch a Steam game with Goldberg or Raw, tell Steam you're playing it so " +
-                        "friends see it and your playtime counts — like the real Steam client. " +
+                        I18n.s(R.string.ui_when_you_launch_a_steam_game_with_goldberg_or_raw_tell_s) +
+                        I18n.s(R.string.ui_friends_see_it_and_your_playtime_counts_like_the_real_st) +
                         I18n.s(R.string.ui_off_launch_silently_steamlite_launches_always_show_as)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
@@ -670,8 +670,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = I18n.s(R.string.ui_steam_connection_region) to
-                        "Which Steam datacenter to connect to. Auto pings each one and keeps the fastest " +
-                        "for a day, re-testing after a failed connect. Pick a specific one only if Auto " +
+                        I18n.s(R.string.ui_which_steam_datacenter_to_connect_to_auto_pings_each_one) +
+                        I18n.s(R.string.ui_for_a_day_re_testing_after_a_failed_connect_pick_a_speci) +
                         I18n.s(R.string.ui_keeps_choosing_badly_the_store_applies_it_on_its_next)
                 }) { Icon(Icons.Default.Help, "Help", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
@@ -750,9 +750,9 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = {
                     steamHelp = I18n.s(R.string.ui_test_regions_test_network) to
-                        "Test regions pings every Steam datacenter now and shows each one's response time " +
+                        I18n.s(R.string.ui_test_regions_pings_every_steam_datacenter_now_and_shows) +
                         I18n.s(R.string.ui_in_the_list_above_auto_also_remembers_the_fastest_as) +
-                        "Test network checks how this network handles online game traffic (the same " +
+                        I18n.s(R.string.ui_test_network_checks_how_this_network_handles_online_game) +
                         "check the SteamLite launch shows). Steam sign-in and downloads work on any NAT; " +
                         "games with their own servers (e.g. Brawlhalla) can fail behind a strict/symmetric " +
                         "NAT such as phone hotspots or many VPNs. Fix: home Wi-Fi, a hotspot with port " +
@@ -770,8 +770,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                 )
             }
             Text(
-                "Which Steam datacenter to connect to for the store, downloads and the in-game Steam session. " +
-                "Auto pings each datacenter once and remembers the fastest for a day (re-tested after a failed connect). " +
+                I18n.s(R.string.ui_which_steam_datacenter_to_connect_to_for_the_store_downl) +
+                I18n.s(R.string.ui_auto_pings_each_datacenter_once_and_remembers_the_fastes) +
                 I18n.s(R.string.ui_the_store_session_applies_it_on_its_next_connect),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp,
                 modifier = Modifier.padding(start = 12.dp),
@@ -1225,8 +1225,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel(I18n.s(R.string.logs))
         FieldSet {
             Text(
-                "Where logs are saved, which ones to record, how many past runs to keep, and what is " +
-                "on disk for each game. Two log types slow games down while enabled — the manager " +
+                I18n.s(R.string.ui_where_logs_are_saved_which_ones_to_record_how_many_past) +
+                I18n.s(R.string.ui_on_disk_for_each_game_two_log_types_slow_games_down_whil) +
                 I18n.s(R.string.ui_says_which),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)
@@ -1301,7 +1301,7 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSet {
             Text(
                 "LSFG Native needs a Lossless Scaling \"Lossless.dll\". Download Lossless Scaling from the in-app " +
-                "Steam store and tap Detect below — or import your own copy. Either way it is copied into the " +
+                I18n.s(R.string.ui_steam_store_and_tap_detect_below_or_import_your_own_copy) +
                 I18n.s(R.string.ui_app_and_reused_by_any_container_whose_frame_generatio),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)
@@ -1354,8 +1354,8 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
         FieldSetLabel(I18n.s(R.string.performance))
         FieldSet {
             Text(
-                "Global performance defaults (Sustained Performance Mode, Thread Priority Boost, " +
-                "Prefer Big Cores, GPU clock lock) plus the opt-in root controls. Per-game overrides live in " +
+                I18n.s(R.string.ui_global_performance_defaults_sustained_performance_mode_t) +
+                I18n.s(R.string.ui_prefer_big_cores_gpu_clock_lock_plus_the_opt_in_root_con) +
                 I18n.s(R.string.ui_each_game_s_settings_and_the_in_game_menu),
                 color = MaterialTheme.colorScheme.onSurface, fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 6.dp)

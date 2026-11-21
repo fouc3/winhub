@@ -228,7 +228,7 @@ object EpicCloudSavePaths {
             }
             "userprofile" -> { val p = profileOrNull(container) ?: return null; base = p; boundary = p }
             "userdir" -> { val p = profileOrNull(container) ?: return null; base = File(p, "Documents"); boundary = p }
-            "usersavedgames" -> { val p = profileOrNull(container) ?: return null; base = File(p, I18n.s(R.string.ui_saved_games)); boundary = p }
+            "usersavedgames" -> { val p = profileOrNull(container) ?: return null; base = File(p, "Saved Games"); boundary = p }
             // Epic's {appdata} == %LOCALAPPDATA% (verified against Legendary) → AppData/Local.
             "appdata", "localappdata" -> { val p = profileOrNull(container) ?: return null; base = File(p, "AppData/Local"); boundary = p }
             "roamingappdata" -> { val p = profileOrNull(container) ?: return null; base = File(p, "AppData/Roaming"); boundary = p }

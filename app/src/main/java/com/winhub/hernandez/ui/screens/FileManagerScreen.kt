@@ -693,7 +693,7 @@ fun FileManagerScreen(
         val ext = if (dot > 0) name.substring(dot) else ""
         var i = 1
         do {
-            candidate = File(dir, I18n.s(R.string.ui_base_i_ext))
+            candidate = File(dir, "\$base (\$i)\$ext")
             i++
         } while (candidate.exists())
         return candidate
@@ -1072,7 +1072,7 @@ fun FileManagerScreen(
                     listOf(
                         (if (isDir) ConflictChoice.MERGE else ConflictChoice.OVERWRITE) to
                             (if (isDir) "Merge" else "Overwrite"),
-                        ConflictChoice.KEEP_BOTH to "Keep both",
+                        ConflictChoice.KEEP_BOTH to I18n.s(R.string.ui_keep_both),
                         ConflictChoice.SKIP to "Skip",
                     ).forEach { (choice, label) ->
                         TextButton(

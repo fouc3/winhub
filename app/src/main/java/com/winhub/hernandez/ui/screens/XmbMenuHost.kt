@@ -313,7 +313,7 @@ internal fun XmbNavState.hint(xmb: XmbScope): XmbHint {
         is XmbRow.Toggle -> "Toggle"
         is XmbRow.Link, is XmbRow.Choice -> "Open"
         is XmbRow.Text -> "Edit"
-        is XmbRow.External -> "Open ↗"
+        is XmbRow.External -> I18n.s(R.string.ui_open)
         else -> "Select"
     }
     return XmbHint(a, row != null && row.adjustable(), m.siblings != null)
@@ -706,7 +706,7 @@ private fun XmbPickerPanel(
         }
         Box(Modifier.fillMaxWidth().height(1.dp).background(Color.White.copy(alpha = 0.08f)))
         Text(
-            "A  Select     B  Back", color = Color(0xFF9A9AA5), fontSize = 12.sp,
+            I18n.s(R.string.ui_a_select_b_back_2), color = Color(0xFF9A9AA5), fontSize = 12.sp,
             modifier = Modifier.fillMaxWidth().height(33.dp).wrapContentHeight(Alignment.CenterVertically).padding(horizontal = 16.dp),
         )
     }

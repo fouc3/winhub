@@ -119,8 +119,8 @@ fun ComponentsSheet(container: Container, onDismiss: () -> Unit) {
             text = {
                 Text(
                     "This opens the container to a Windows desktop and runs the ${c.name} installer. " +
-                        "Click through the installer window that appears, then close the container when it's " +
-                        "done — you'll be brought back to finish setup.",
+                        I18n.s(R.string.ui_click_through_the_installer_window_that_appears_then_clo) +
+                        I18n.s(R.string.ui_done_you_ll_be_brought_back_to_finish_setup),
                     color = cs.onSurface,
                 )
             },

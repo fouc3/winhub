@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 数组必须与 values/arrays.xml 条目数、顺序完全一致（下标与 *_values 对应） -->
+<resources>
+    <string-array name="screen_size_entries">
+        <item>自定义</item>
+        <item>690x360 (16:9)</item>
+        <item>780x360 (19.5:9)</item>
+        <item>640x480 (4:3)</item>
+        <item>800x600 (4:3)</item>
+        <item>854x480 (16:9)</item>
+        <item>960x544 (16:9)</item>
+        <item>1024x768 (4:3)</item>
+        <item>1280x720 (16:9)</item>
+        <item>1280x800 (16:10)</item>
+        <item>1280x960 (4:3)</item>
+        <item>1280x1024 (5:4)</item>
+        <item>1366x768 (16:9)</item>
+        <item>1440x900 (16:10)</item>
+        <item>1560x720 (19.5:9)</item>
+        <item>1600x900 (16:9)</item>
+        <item>1920x1080 (16:9)</item>
+    </string-array>
+    <string-array name="audio_driver_entries">
+        <item>ALSA</item>
+        <item>PulseAudio</item>
+        <item>DirectAudio（实验性）</item>
+    </string-array>
+    <string-array name="binding_type_entries">
+        <item>键盘</item>
+        <item>鼠标</item>
+        <item>手柄</item>
+    </string-array>
+    <string-array name="ddrawrapper_entries">
+        <item>CnC-DDraw</item>
+        <item>D7VK</item>
+        <item>Dd7To9</item>
+        <item>Dgvoodoo</item>
+        <item>无</item>
+    </string-array>
+    <string-array name="dxvk_max_device_memory_entries">
+        <item>0（默认）</item>
+        <item>512 MB</item>
+        <item>1024 MB</item>
+        <item>2048 MB</item>
+        <item>4096 MB</item>
+    </string-array>
+    <string-array name="device_memory_entries">
+        <item>0（默认）</item>
+        <item>512 MB</item>
+        <item>1024 MB</item>
+        <item>2048 MB</item>
+        <item>4096 MB</item>
+        <item>8192 MB</item>
+        <item>12288 MB</item>
+        <item>16384 MB</item>
+    </string-array>
+    <string-array name="bcn_emulation_entries">
+        <item>无</item>
+        <item>部分</item>
+        <item>完整</item>
+        <item>自动</item>
+    </string-array>
+    <string-array name="bcn_emulation_type_entries">
+        <item>软件</item>
+        <item>计算</item>
+    </string-array>
+    <string-array name="video_memory_size_entries">
+        <item>32 MB</item>
+        <item>64 MB</item>
+        <item>128 MB</item>
+        <item>256 MB</item>
+        <item>512 MB</item>
+        <item>1024 MB</item>
+        <item>2048 MB</item>
+        <item>4096 MB</item>
+    </string-array>
+    <string-array name="dxvk_framerate_entries">
+        <item>0（默认）</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+    </string-array>
+    <string-array name="wincomponent_entries">
+        <item>内置 (Wine)</item>
+        <item>原生 (Windows)</item>
+    </string-array>
+    <string-array name="desktop_theme_entries">
+        <item>浅色</item>
+        <item>深色</item>
+    </string-array>
+    <string-array name="desktop_background_type_entries">
+        <item>图片</item>
+        <item>纯色</item>
+    </string-array>
+    <string-array name="startup_selection_entries">
+        <item>普通（加载全部服务）</item>
+        <item>精简（只加载必要服务）</item>
+        <item>激进（启动时停止服务）</item>
+        <item>自定义（逐个选择服务）</item>
+    </string-array>
+    <string-array name="button_options">
+        <item>A</item>
+        <item>B</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>R1（右肩键）</item>
+        <item>R2（右扳机）</item>
+        <item>L1（左肩键）</item>
+        <item>L2（左扳机）</item>
+        <item>Start</item>
+        <item>Select</item>
+        <item>R3（右摇杆按下）</item>
+        <item>L3（左摇杆按下）</item>
+    </string-array>
+    <string-array name="touchscreenInputModesEntries">
+        <item>触控板</item>
+        <item>模拟触摸屏</item>
+        <item>直接触摸</item>
+    </string-array>
+    <string-array name="transformCapturedPointerEntries">
+        <item>不旋转</item>
+        <item>顺时针</item>
+        <item>逆时针</item>
+        <item>上下颠倒</item>
+        <item>自动（触控板）</item>
+    </string-array>
+    <string-array name="vkbasalt_sharpness_entries">
+        <item>无</item>
+        <item>CAS</item>
+        <item>DLS</item>
+    </string-array>
+</resources>

@@ -1,5 +1,8 @@
 package com.winhub.hernandez.store
 
+import com.winhub.hernandez.R
+import com.winhub.hernandez.util.I18n
+
 import android.util.Log
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -64,12 +67,12 @@ object SteamChatImageUploader {
         fileName: String,
     ): String? {
         if (bytes.isEmpty()) {
-            lastError = "empty image"
+            lastError = I18n.s(R.string.ui_empty_image)
             Log.w(TAG, "upload: empty image")
             return null
         }
         if (webToken.isBlank() || selfId == 0L) {
-            lastError = "not signed in"
+            lastError = I18n.s(R.string.ui_not_signed_in_2)
             Log.w(TAG, "upload: missing token/selfId")
             return null
         }

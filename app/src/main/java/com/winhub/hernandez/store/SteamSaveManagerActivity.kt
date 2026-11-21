@@ -824,10 +824,10 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         title = { Text(I18n.s(R.string.ui_sync_achievements_to_steam)) },
                         text = {
                             Text(
-                                "Turning this ON writes achievements you unlock in-game back to your REAL " +
+                                I18n.s(R.string.ui_turning_this_on_writes_achievements_you_unlock_in_game_b) +
                                     "Steam account and profile. This is a third-party sync — it can't be undone " +
-                                    "on Steam and may not match what official Steam would record. Leave it off " +
-                                    "to keep unlocks local to this device. Turn on anyway?",
+                                    I18n.s(R.string.ui_on_steam_and_may_not_match_what_official_steam_would_rec) +
+                                    I18n.s(R.string.ui_to_keep_unlocks_local_to_this_device_turn_on_anyway),
                             )
                         },
                         confirmButton = {
@@ -851,7 +851,7 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         title = { Text(I18n.s(R.string.ui_achievement_sync_off)) },
                         text = {
                             Text(
-                                "In-game achievement unlocks will stay local to this device and won't be " +
+                                I18n.s(R.string.ui_in_game_achievement_unlocks_will_stay_local_to_this_devi) +
                                     "written to your Steam profile.",
                             )
                         },
@@ -893,29 +893,29 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         Text(
                             when (prompt.kind) {
                                 ToggleKind.STEAM ->
-                                    "Automatic save backup on exit will be OFF for your Steam library games. " +
-                                        "Their saves won't be captured when a game closes — you'll need to back " +
-                                        "them up yourself via a container's backup option or the Save Manager. Continue?"
+                                    I18n.s(R.string.ui_automatic_save_backup_on_exit_will_be_off_for_your_steam) +
+                                        I18n.s(R.string.ui_their_saves_won_t_be_captured_when_a_game_closes_you_ll) +
+                                        I18n.s(R.string.ui_them_up_yourself_via_a_container_s_backup_option_or_the)
                                 ToggleKind.STEAM_UP ->
-                                    "Automatic cloud upload on exit will be OFF for your Steam library games. " +
-                                        "Their saves won't be pushed to Steam Cloud when a game closes — you'll need to " +
-                                        "upload them yourself from the game's detail page Cloud Saves section. Continue?"
+                                    I18n.s(R.string.ui_automatic_cloud_upload_on_exit_will_be_off_for_your_stea) +
+                                        I18n.s(R.string.ui_their_saves_won_t_be_pushed_to_steam_cloud_when_a_game_c) +
+                                        I18n.s(R.string.ui_upload_them_yourself_from_the_game_s_detail_page_cloud_s)
                                 ToggleKind.STEAM_DL ->
-                                    "Automatic cloud download on launch will be OFF for your Steam library games. " +
-                                        "The latest cloud saves won't be pulled in before a game starts — you'll need to " +
-                                        "download them yourself from the game's detail page Cloud Saves section. Continue?"
+                                    I18n.s(R.string.ui_automatic_cloud_download_on_launch_will_be_off_for_your_2) +
+                                        I18n.s(R.string.ui_the_latest_cloud_saves_won_t_be_pulled_in_before_a_game) +
+                                        I18n.s(R.string.ui_download_them_yourself_from_the_game_s_detail_page_cloud)
                                 ToggleKind.GOG ->
-                                    "Automatic cloud upload on exit will be OFF for your GOG library games. " +
-                                        "Their saves won't be pushed to GOG cloud when a game closes — you'll need to " +
-                                        "upload them yourself from the GOG Save Manager tab or the game's detail page. Continue?"
+                                    I18n.s(R.string.ui_automatic_cloud_upload_on_exit_will_be_off_for_your_gog) +
+                                        I18n.s(R.string.ui_their_saves_won_t_be_pushed_to_gog_cloud_when_a_game_clo) +
+                                        I18n.s(R.string.ui_upload_them_yourself_from_the_gog_save_manager_tab_or_th)
                                 ToggleKind.GOG_DL ->
-                                    "Automatic cloud download on launch will be OFF for your GOG library games. " +
-                                        "The latest cloud saves won't be pulled in before a game starts — you'll need to " +
-                                        "download them yourself from the GOG Save Manager tab or the game's detail page. Continue?"
+                                    I18n.s(R.string.ui_automatic_cloud_download_on_launch_will_be_off_for_your) +
+                                        I18n.s(R.string.ui_the_latest_cloud_saves_won_t_be_pulled_in_before_a_game) +
+                                        I18n.s(R.string.ui_download_them_yourself_from_the_gog_save_manager_tab_or)
                                 ToggleKind.CUSTOM ->
-                                    "Automatic save backup on exit will be OFF for your custom-imported games. " +
-                                        "Their saves won't be captured when a game closes — you'll need to back them " +
-                                        "up yourself via a container's backup option or the game's ⋮ menu → " +
+                                    I18n.s(R.string.ui_automatic_save_backup_on_exit_will_be_off_for_your_custo) +
+                                        I18n.s(R.string.ui_their_saves_won_t_be_captured_when_a_game_closes_you_ll_2) +
+                                        I18n.s(R.string.ui_up_yourself_via_a_container_s_backup_option_or_the_game) +
                                         "'Back up saves'. Continue?"
                                 ToggleKind.ACHV_SYNC -> "" // unreachable — handled above
                             },
@@ -938,17 +938,17 @@ private fun SaveManagerSettingsSection(modifier: Modifier = Modifier) {
                         Text(
                             when (prompt.kind) {
                                 ToggleKind.STEAM ->
-                                    "Automatic save backup on exit is ON for your Steam library games."
+                                    I18n.s(R.string.ui_automatic_save_backup_on_exit_is_on_for_your_steam_libra)
                                 ToggleKind.STEAM_UP ->
-                                    "Automatic cloud upload on exit is ON for your Steam library games."
+                                    I18n.s(R.string.ui_automatic_cloud_upload_on_exit_is_on_for_your_steam_libr)
                                 ToggleKind.STEAM_DL ->
-                                    "Automatic cloud download on launch is ON for your Steam library games."
+                                    I18n.s(R.string.ui_automatic_cloud_download_on_launch_is_on_for_your_steam)
                                 ToggleKind.GOG ->
-                                    "Automatic cloud upload on exit is ON for your GOG library games."
+                                    I18n.s(R.string.ui_automatic_cloud_upload_on_exit_is_on_for_your_gog_librar)
                                 ToggleKind.GOG_DL ->
-                                    "Automatic cloud download on launch is ON for your GOG library games."
+                                    I18n.s(R.string.ui_automatic_cloud_download_on_launch_is_on_for_your_gog_li)
                                 ToggleKind.CUSTOM ->
-                                    "Automatic save backup on exit is ON for your custom-imported games."
+                                    I18n.s(R.string.ui_automatic_save_backup_on_exit_is_on_for_your_custom_impo)
                                 ToggleKind.ACHV_SYNC -> "" // unreachable — handled above
                             },
                         )
@@ -1119,7 +1119,7 @@ private fun CustomSaveTab(modifier: Modifier = Modifier, columns: Int = 1, onMes
             text = {
                 Column {
                     Text(
-                        "Which tool is this backup for?",
+                        I18n.s(R.string.ui_which_tool_is_this_backup_for),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -1983,13 +1983,13 @@ private const val PROGRESS_LINGER_MS = 2500L
 
 // Green = settled, amber/orange = local drift, blue = cloud drift, grey = nothing to do / unset.
 private fun pillFor(state: SaveState): Pair<Color, String> = when (state) {
-    SaveState.IN_SYNC        -> Color(0xFF3BA55D) to "In sync"
-    SaveState.LOCAL_ONLY     -> Color(0xFFE0662E) to "Not backed up"
-    SaveState.LOCAL_AHEAD    -> Color(0xFFE0A82E) to "Local ahead"
-    SaveState.CLOUD_AHEAD    -> Color(0xFF4B9CE0) to "Cloud ahead"
-    SaveState.NEVER_SYNCED   -> Color(0xFFE07B2E) to "Never synced"
-    SaveState.NO_CLOUD_SAVES -> Color(0xFF9AA0A6) to "No cloud saves"
-    SaveState.NOT_SET_UP     -> Color(0xFF9AA0A6) to "Not set up"
+    SaveState.IN_SYNC        -> Color(0xFF3BA55D) to I18n.s(R.string.ui_in_sync)
+    SaveState.LOCAL_ONLY     -> Color(0xFFE0662E) to I18n.s(R.string.ui_not_backed_up)
+    SaveState.LOCAL_AHEAD    -> Color(0xFFE0A82E) to I18n.s(R.string.ui_local_ahead)
+    SaveState.CLOUD_AHEAD    -> Color(0xFF4B9CE0) to I18n.s(R.string.ui_cloud_ahead)
+    SaveState.NEVER_SYNCED   -> Color(0xFFE07B2E) to I18n.s(R.string.ui_never_synced)
+    SaveState.NO_CLOUD_SAVES -> Color(0xFF9AA0A6) to I18n.s(R.string.ui_no_cloud_saves)
+    SaveState.NOT_SET_UP     -> Color(0xFF9AA0A6) to I18n.s(R.string.ui_not_set_up)
     SaveState.UNKNOWN        -> Color(0xFF9AA0A6) to "Unknown"
 }
 

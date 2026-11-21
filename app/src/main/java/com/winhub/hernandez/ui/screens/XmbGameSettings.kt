@@ -239,7 +239,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
     val dbOverride = p.ex("displayBackend", "")
     val dbValues = listOf("", Container.DISPLAY_BACKEND_X11, Container.DISPLAY_BACKEND_WAYLAND)
     val dbLabels = listOf(
-        "Container default (" + (if (containerWaylandDefault) "Wayland" else "X11") + ")",
+        I18n.s(R.string.ui_container_default) + (if (containerWaylandDefault) "Wayland" else "X11") + ")",
         "X11", I18n.s(R.string.ui_wayland_experimental))
     val waylandStoredUnusable = dbOverride == Container.DISPLAY_BACKEND_WAYLAND && !waylandCapable
     val waylandGame = if (dbOverride.isEmpty()) containerWaylandDefault
@@ -248,12 +248,12 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         dbLabels[if (waylandStoredUnusable) 1 else dbValues.indexOf(dbOverride).coerceAtLeast(0)],
         subtitle = when {
             waylandGame -> I18n.s(R.string.ui_wayland_experimental_games_render_through_the_embedded_c) +
-                "Needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + ". DX wrapper (DXVK/VKD3D) settings apply as on X11. " +
+                I18n.s(R.string.ui_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + ". DX wrapper (DXVK/VKD3D) settings apply as on X11. " +
                 I18n.s(R.string.ui_the_renderer_options_below_don_t_apply_and_are_disabl)
             waylandStoredUnusable -> I18n.s(R.string.ui_set_to_wayland_but_the_container_s_proton_layer_is_not_w) +
-                "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + "."
+                I18n.s(R.string.ui_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + "."
             !waylandCapable && c.isWaylandBackend -> I18n.s(R.string.ui_the_container_is_set_to_wayland_but_its_proton_layer_is) +
-                "Wayland needs " + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + "."
+                I18n.s(R.string.ui_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT + "."
             !waylandCapable -> I18n.s(R.string.ui_runs_on_the_x11_server_wayland_needs) + com.winhub.hernandez.core.WineWaylandSupport.LAYER_HINT +
                 I18n.s(R.string.ui_the_selected_layer_does_not_include_winewayland_and_i)
             else -> I18n.s(R.string.ui_runs_on_the_x11_server)
@@ -461,7 +461,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
         val wgdInstalled = com.winhub.hernandez.core.WaylandGameDriver.optionValues(p.context)
         val wgdValues = listOf("") + (if (wgdOverride.isEmpty() || wgdOverride in wgdInstalled) wgdInstalled else wgdInstalled + wgdOverride)
         val wgdLabels = wgdValues.map {
-            if (it.isEmpty()) "Container default (" + com.winhub.hernandez.core.WaylandGameDriver.optionLabel(p.context, c.waylandGameDriver, wgdAuto) + ")"
+            if (it.isEmpty()) I18n.s(R.string.ui_container_default) + com.winhub.hernandez.core.WaylandGameDriver.optionLabel(p.context, c.waylandGameDriver, wgdAuto) + ")"
             else com.winhub.hernandez.core.WaylandGameDriver.optionLabel(p.context, it, wgdAuto)
         }
         rows += XmbRow.Choice("waylandGameDriver", I18n.s(R.string.ui_wayland_game_driver_advanced), Icons.Filled.Memory, wgdLabels,
@@ -660,7 +660,7 @@ private fun generalRows(xmb: XmbScope, p: XmbPrefs, host: XmbGameHost): List<Xmb
             xmb.set(p, "midiSoundFont", if (v == midi.first()) null else v)
         }
     }
-    rows += XmbRow.Text("lcAll", "LC_ALL", Icons.Filled.ShortText, p.ex("lc_all", c.getLC_ALL()), subtitle = "Locale the game runs with") { xmb.set(p, "lc_all", it) }
+    rows += XmbRow.Text("lcAll", "LC_ALL", Icons.Filled.ShortText, p.ex("lc_all", c.getLC_ALL()), subtitle = I18n.s(R.string.ui_locale_the_game_runs_with)) { xmb.set(p, "lc_all", it) }
     rows += XmbRow.Toggle("autoClose", I18n.s(R.string.ui_close_when_game_exits), Icons.Filled.Close,
         p.ex("autoCloseOnExit", c.getExtra("autoCloseOnExit", "1") ?: "1") == "1") { xmb.set(p, "autoCloseOnExit", if (it) "1" else "0") }
     return rows

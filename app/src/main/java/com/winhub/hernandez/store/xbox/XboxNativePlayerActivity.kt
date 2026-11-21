@@ -157,7 +157,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
         if (closed) return
         if (connectedOnce) showNotice(I18n.s(R.string.ui_the_connection_to_the_cloud_console_was_lost),
             "The stream stopped reaching this device ($detail). Restart the stream to play again: the game starts over, " +
-                "unsaved progress is lost.", webPlayer = false)
+                I18n.s(R.string.ui_unsaved_progress_is_lost), webPlayer = false)
         else showNotice("The native stream could not start ($stage)",
             "$detail\n\nYou can try again, or use the web player instead (Xbox › Profile › Cloud gaming settings › Player engine).",
             webPlayer = true)
@@ -211,7 +211,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
         if (closed || isChangingConfigurations || signalling == null || endedInBackground) return
         // Android freezes a background app about a minute after it leaves the screen; the connection then dies
         // without a goodbye. End the session cleanly before that and offer a restart on return.
-        log("in the background")
+        log(I18n.s(R.string.ui_in_the_background))
         val end = Runnable { backgroundEnd = null; endInBackground() }
         backgroundEnd = end
         root.postDelayed(end, BACKGROUND_GRACE_MS)
@@ -219,7 +219,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        backgroundEnd?.let { root.removeCallbacks(it); log("back before the stream was ended") }
+        backgroundEnd?.let { root.removeCallbacks(it); log(I18n.s(R.string.ui_back_before_the_stream_was_ended)) }
         backgroundEnd = null
         if (endedInBackground && notice == null) showNotice("The stream ended while Bannerlator was in the background",
             "Cloud sessions are closed after ${BACKGROUND_GRACE_MS / 1000} s away, before Android pauses the app. Restart the " +
@@ -271,7 +271,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
         }
         if (closed) return
 
-        show("Connecting…")
+        show(I18n.s(R.string.ui_connecting))
         // Small network buffer: no playout delay, frames go to the decoder and screen as soon as they are complete.
         val trials = if (settings.smallBuffer) "WebRTC-ForcePlayoutDelay/min_ms:0,max_ms:0/WebRTC-ZeroPlayoutDelay/min_pacing:0ms,max_decode_queue_size:8/" else ""
         PeerConnectionFactory.initialize(PeerConnectionFactory.InitializationOptions.builder(applicationContext)
@@ -391,7 +391,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
                     video?.setFpsTarget(settings.fpsTarget)
                     video?.setFrameGeneration(effectiveFrameGen())
                 }
-                PeerConnection.PeerConnectionState.FAILED -> fail("webrtc", "connection failed")
+                PeerConnection.PeerConnectionState.FAILED -> fail("webrtc", I18n.s(R.string.ui_connection_failed))
                 PeerConnection.PeerConnectionState.DISCONNECTED -> show(I18n.s(R.string.ui_connection_lost))
                 else -> {}
             }
@@ -403,7 +403,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
     private fun attach(receiver: RtpReceiver) = synchronized(this) {
         val track = receiver.track()
         // Always attached: in zero-copy WebRTC delivers no frames, and after a live switch back they flow again.
-        if (track is VideoTrack && !videoAttached) { videoAttached = true; video?.let { track.addSink(it) }; log("video track") }
+        if (track is VideoTrack && !videoAttached) { videoAttached = true; video?.let { track.addSink(it) }; log(I18n.s(R.string.ui_video_track)) }
     }
 
     /** LSFG needs the Lossless.dll imported in Settings and its shader cache built; otherwise Win-FG. */
@@ -419,7 +419,7 @@ class XboxNativePlayerActivity : ComponentActivity() {
         val latch = CountDownLatch(1)
         var result: Result<T>? = null
         start { r -> result = r; latch.countDown() }
-        check(latch.await(15, TimeUnit.SECONDS)) { "WebRTC timed out" }
+        check(latch.await(15, TimeUnit.SECONDS)) { I18n.s(R.string.ui_webrtc_timed_out) }
         return result!!.getOrThrow()
     }
 
@@ -610,8 +610,8 @@ class XboxNativePlayerActivity : ComponentActivity() {
                         style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = cs.onSurface,
                         modifier = androidx.compose.ui.Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
                     fun fgName(mode: String) = when (mode) {
-                        XboxNativeVideo.FG_WINFG -> "Win-FG 2×"; XboxNativeVideo.FG_LSFG -> "LSFG 2×"
-                        XboxNativeVideo.FG_LSFG3 -> "LSFG 3×"; XboxNativeVideo.FG_LSFG4 -> "LSFG 4×"; else -> "Off"
+                        XboxNativeVideo.FG_WINFG -> "Win-FG 2×"; XboxNativeVideo.FG_LSFG -> I18n.s(R.string.ui_lsfg_2)
+                        XboxNativeVideo.FG_LSFG3 -> I18n.s(R.string.ui_lsfg_3); XboxNativeVideo.FG_LSFG4 -> I18n.s(R.string.ui_lsfg_4); else -> "Off"
                     }
                     fun fpsName(s: XboxCloudSettings) = if (s.fpsTarget == 0) "the screen's rate" else "${s.fpsTarget} fps"
                     when (menuPage) {

@@ -70,7 +70,7 @@ object NetworkProbe {
             Nat.OPEN_CONE -> "Open NAT — online play should work" + (maskedIp?.let { " (IP $it)" } ?: "")
             Nat.SYMMETRIC -> I18n.s(R.string.ui_strict_nat_symmetric_some_games_online_modes_won_t_conne)
             Nat.UDP_BLOCKED -> I18n.s(R.string.ui_udp_blocked_online_play_unlikely_on_this_network)
-            Nat.UNKNOWN -> "Couldn't check"
+            Nat.UNKNOWN -> I18n.s(R.string.ui_couldn_t_check)
         }
 
         /** Strict / blocked = worth the user's attention (amber in the UI). */

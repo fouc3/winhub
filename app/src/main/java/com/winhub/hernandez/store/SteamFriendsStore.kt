@@ -548,7 +548,7 @@ object SteamFriendsStore {
     /** Raw EPersonaState code → coarse bucket + label (the engine hands us the code, not the enum). */
     private fun classifyCode(state: Int, gameAppId: Int, gameName: String?): Pair<Presence, String> {
         if (gameAppId != 0 && state != 0) {
-            return Presence.IN_GAME to (gameName?.takeIf { it.isNotBlank() } ?: "In game")
+            return Presence.IN_GAME to (gameName?.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_in_game))
         }
         return when (state) {
             1, 5, 6 -> Presence.ONLINE to "Online"   // Online / LookingToTrade / LookingToPlay
@@ -1567,7 +1567,7 @@ object SteamFriendsStore {
                     StorefrontLog.i(
                         StorefrontLog.PROFILE,
                         "${StorefrontLog.sid(selfId)}: painted from the on-disk mirror — " +
-                            "revalidating in the background",
+                            I18n.s(R.string.ui_revalidating_in_the_background),
                     )
                 }
             }
@@ -1913,7 +1913,7 @@ object SteamFriendsStore {
             if (!SteamPrefs.isChatNotificationsEnabled(ctx)) return
             if (!isAvailable()) return // only while signed in
             val friend = friendMap[id]?.copy(nickname = nicknames[id])
-            val name = friend?.displayName ?: "Steam friend"
+            val name = friend?.displayName ?: I18n.s(R.string.ui_steam_friend)
             val text = if (isImageBody(body)) "📷 Photo" else body
             SteamChatNotifier.notify(ctx, id, name, friend?.avatarUrl, text)
         } catch (t: Throwable) {
@@ -2002,7 +2002,7 @@ object SteamFriendsStore {
     ): Pair<Presence, String> {
         val s = state ?: EPersonaState.Offline
         if (gameAppId != 0 && s != EPersonaState.Offline) {
-            return Presence.IN_GAME to (gameName?.takeIf { it.isNotBlank() } ?: "In game")
+            return Presence.IN_GAME to (gameName?.takeIf { it.isNotBlank() } ?: I18n.s(R.string.ui_in_game))
         }
         return when (s) {
             EPersonaState.Online, EPersonaState.LookingToPlay, EPersonaState.LookingToTrade ->

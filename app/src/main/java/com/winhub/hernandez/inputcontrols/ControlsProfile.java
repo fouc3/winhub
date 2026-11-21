@@ -1,5 +1,8 @@
 package com.winhub.hernandez.inputcontrols;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -321,9 +324,9 @@ public class ControlsProfile implements Comparable<ControlsProfile> {
             int referenceSize) throws JSONException {
         if (elementJSONObject.has(ratioKey)) {
             double ratio = elementJSONObject.getDouble(ratioKey);
-            if (!Double.isFinite(ratio) || ratio <= 0) throw new JSONException("Invalid " + ratioKey);
+            if (!Double.isFinite(ratio) || ratio <= 0) throw new JSONException(I18n.s(R.string.ui_invalid) + ratioKey);
             double scaled = ratio * Math.max(1, referenceSize);
-            if (scaled > Integer.MAX_VALUE) throw new JSONException("Out-of-range " + ratioKey);
+            if (scaled > Integer.MAX_VALUE) throw new JSONException(I18n.s(R.string.ui_out_of_range) + ratioKey);
             return (int)Math.round(scaled);
         }
         if (elementJSONObject.has(legacyPixelKey)) return elementJSONObject.getInt(legacyPixelKey);

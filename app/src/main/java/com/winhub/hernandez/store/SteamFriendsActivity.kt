@@ -350,7 +350,7 @@ fun SteamSocialSettingsSheet(onDismiss: () -> Unit) {
                 SocialSettingRow(
                     title = I18n.s(R.string.ui_enable_steam_friends_chat),
                     subtitle = I18n.s(R.string.ui_see_your_friends_list_presence_and_chat_off_by_default_n) +
-                        "is shared until you turn this on.",
+                        I18n.s(R.string.ui_is_shared_until_you_turn_this_on),
                     checked = socialEnabled,
                     enabled = true,
                     onCheckedChange = { SteamFriendsStore.setSocialEnabled(ctx, it) },

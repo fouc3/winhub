@@ -1,5 +1,8 @@
 package org.webrtc;
 
+import com.winhub.hernandez.R;
+import com.winhub.hernandez.util.I18n;
+
 import android.graphics.ImageFormat;
 import android.media.Image;
 import android.media.ImageReader;
@@ -99,10 +102,10 @@ public class BannerlatorLowLatencyDecoderFactory implements VideoDecoderFactory 
         try {
             w.raw.setOutputSurface(target);
             if (zeroCopy) zeroCopySurface = target;
-            Logging.d("BannerlatorDecoder", "decoder output moved to " + what);
+            Logging.d("BannerlatorDecoder", I18n.s(R.string.ui_decoder_output_moved_to) + what);
             return true;
         } catch (RuntimeException e) {
-            Logging.w("BannerlatorDecoder", "decoder output change to " + what + " failed: " + e);
+            Logging.w("BannerlatorDecoder", I18n.s(R.string.ui_decoder_output_change_to) + what + " failed: " + e);
             return false;
         }
     }
@@ -194,7 +197,7 @@ public class BannerlatorLowLatencyDecoderFactory implements VideoDecoderFactory 
                 fast.setInteger("vendor.qti-ext-dec-picture-order.enable", 1);
                 try {
                     raw.configure(fast, target, crypto, flags);
-                    Logging.d("BannerlatorDecoder", "low-latency decoder configured" + (zeroCopy ? " (zero-copy)" : ""));
+                    Logging.d("BannerlatorDecoder", I18n.s(R.string.ui_low_latency_decoder_configured) + (zeroCopy ? " (zero-copy)" : ""));
                     return;
                 } catch (RuntimeException e) {
                     Logging.w("BannerlatorDecoder", "decoder refused low-latency keys: " + e);

@@ -36,18 +36,18 @@ import kotlin.math.roundToInt
 import com.winhub.hernandez.util.I18n
 import com.winhub.hernandez.R
 
-private const val WATCHDOG_WHATS_THIS =
-    "A safety backstop. If your device gets too hot, it automatically undoes the performance " +
+private val WATCHDOG_WHATS_THIS =
+    I18n.s(R.string.ui_a_safety_backstop_if_your_device_gets_too_hot_it_automat) +
     "settings you've turned on and restores your device to how it was.\n\n" +
-    "It is NOT what throttles your device. Your device has its own built-in thermal protection " +
-    "that lowers clocks when it heats up. The watchdog is separate — it only reverts WinHub's " +
+    I18n.s(R.string.ui_it_is_not_what_throttles_your_device_your_device_has_its) +
+    I18n.s(R.string.ui_that_lowers_clocks_when_it_heats_up_the_watchdog_is_sepa) +
     "changes.\n\n" +
     "It only becomes important once you enable \"Disable thermal throttling,\" which removes your " +
     "device's own protection — then the watchdog is your only software safety net.\n\n" +
     "Presets: Conservative (reverts near your device's normal throttle point) · Balanced " +
     "(recommended — runs hot, reverts before the hard limit) · Aggressive (max performance, little " +
     "margin) · Manual (set your own).\n\n" +
-    "Reverting when you exit a game, background the app, or if it crashes is always on and can't be " +
+    I18n.s(R.string.ui_reverting_when_you_exit_a_game_background_the_app_or_if) +
     "disabled."
 
 /**
@@ -208,13 +208,13 @@ private fun presetInfo(mode: ThresholdMode): String {
     return when (mode) {
         ThresholdMode.CONSERVATIVE ->
             "Reverts near where your device would normally start throttling (~$first°C). " +
-                "Safest, least extra performance."
+                I18n.s(R.string.ui_safest_least_extra_performance)
         ThresholdMode.BALANCED ->
             "Lets it run hot but reverts ~10°C before your device's hard limit (~$ceiling°C). Recommended."
         ThresholdMode.AGGRESSIVE ->
             "Maximum sustained clocks, only ~3°C of margin before the hard limit (~$ceiling°C). " +
-                "For users who know their device."
+                I18n.s(R.string.ui_for_users_who_know_their_device)
         ThresholdMode.MANUAL ->
-            "You choose the exact revert temperature."
+            I18n.s(R.string.ui_you_choose_the_exact_revert_temperature)
     }
 }
